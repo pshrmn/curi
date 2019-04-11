@@ -317,9 +317,9 @@ function renderHandler(req, res) {
 
         <ol>
           <li>
-            By wrapping the routes array in a <IJS>prepare_routes</IJS> call,
-            all of an application's routes are pre-compiled. Without{" "}
-            <IJS>prepare_routes</IJS>, the route pathes would need to be
+            By wrapping the routes array in a <IJS>prepareRoutes</IJS> call, all
+            of an application's routes are pre-compiled. Without{" "}
+            <IJS>prepareRoutes</IJS>, the route pathes would need to be
             re-compiled for every request!
           </li>
           <li>
@@ -330,13 +330,13 @@ function renderHandler(req, res) {
 
         <CodeBlock>
           {`// renderer.js
-import { create_router } from "@curi/router";
-import { reusable_server_history } from "@hickory/in-memory";
+import { createRouter } from "@curi/router";
+import { createReusable } from "@hickory/in-memory";
 
-const server_history = reusable_server_history();
+const reusable = createReusable();
 
 function handler(req, res) {
-  const router = create_router(server_history, routes, {
+  const router = createRouter(reusable, routes, {
     history: { location: req.url }
   });
   router.once(({ response }) => {
@@ -363,24 +363,24 @@ function handler(req, res) {
           </p>
 
           <p>
-            The <IJS>reusable_server_history</IJS> function exported by{" "}
+            The <IJS>createReusable</IJS> function exported by{" "}
             <IJS>@hickory/in-memory</IJS> is made specifically for this job.
             This function takes history options and returns a history
             constructor function.
           </p>
 
           <p>
-            <IJS>reusable_server_history</IJS> creates internal functions for
-            location parsing/stringifying ahead of time so that they don't need
-            to be recreated for every request.
+            <IJS>createReusable</IJS> creates internal functions for location
+            parsing/stringifying ahead of time so that they don't need to be
+            recreated for every request.
           </p>
 
           <CodeBlock>
             {`// handler.js
-import { create_router } from "@curi/router";
-import { reusable_server_history } from "@hickory/in-memory";
+import { createRouter } from "@curi/router";
+import { createReusable } from "@hickory/in-memory";
 
-const server_history = reusable_server_history();`}
+const reusable = createReusable();`}
           </CodeBlock>
 
           <p>
@@ -390,7 +390,7 @@ const server_history = reusable_server_history();`}
 
           <CodeBlock>
             {`function handler(req, res) {
-  const router = create_router(server_history, routes, {
+  const router = createRouter(reusable, routes, {
     history: { location: req.url }
   });
   // ...
@@ -400,7 +400,7 @@ const server_history = reusable_server_history();`}
 
         <HashSection tag="h3" meta={routesMeta}>
           <p>
-            As stated above, the <IJS>prepare_routes</IJS> function is used to
+            As stated above, the <IJS>prepareRoutes</IJS> function is used to
             pre-compile routes, which means that they don't end up being
             re-compiled for every single request. If all of an application's
             routes are synchronous (they don't use <IJS>route.resolve</IJS>),
@@ -437,9 +437,9 @@ import routes from "../client/routes";`}
           <CodeBlock>
             {`// routes.js
 import fetch from "isomorphic-fetch";
-import { prepare_routes } from "@curi/router";
+import { prepareRoutes } from "@curi/router";
 
-export default prepare_routes([
+export default prepareRoutes([
   {
     name: "Test",
     path: "test",
@@ -463,7 +463,7 @@ export default prepare_routes([
 
         <CodeBlock data-line="5-7">
           {`function renderHandler(req, res) {
-  const router = create_router(server_history, routes, {
+  const router = createRouter(reusable, routes, {
     history: { location: req.url }
   });
   router.once(({ response }) => {
@@ -495,14 +495,14 @@ export default prepare_routes([
 
         <CodeBlock data-line="1-2,9-14">
           {`import { renderToString } from "react-dom/server";
-import { create_router_component } from "@curi/react-dom";
+import { createRouterComponent } from "@curi/react-dom";
 
 function renderHandler(req, res) {
-  const router = create_router(server_history, routes, {
+  const router = createRouter(reusable, routes, {
     history: { location: req.url }
   });
   router.once(({ response }) => {
-    const Router = create_router_component(router);
+    const Router = createRouterComponent(router);
     const markup = renderToString(
       <Router>
         <App />
@@ -547,7 +547,7 @@ function renderHandler(req, res) {
 
         <CodeBlock data-line="4-15,28-29">
           {`import { renderToString } from "react-dom/server";
-import { create_router_component } from "@curi/react-dom";
+import { createRouterComponent } from "@curi/react-dom";
 
 function insertMarkup(markup, title) {
   return \`<!doctype html>
@@ -563,11 +563,11 @@ function insertMarkup(markup, title) {
 }
 
 function renderHandler(req, res) {
-  const router = create_router(server_history, routes, {
+  const router = createRouter(reusable, routes, {
     history: { location: req.url }
   });
   router.once(({ response }) => {
-    const Router = create_router_component(router);
+    const Router = createRouterComponent(router);
     const markup = renderToString(
       <Router>
         <App />
@@ -598,10 +598,10 @@ function renderHandler(req, res) {
 
           <CodeBlock data-line="9-12">
             {`import { renderToString } from "react-dom/server";
-import { create_router_component } from "@curi/react-dom";
+import { createRouterComponent } from "@curi/react-dom";
 
 function renderHandler(req, res) {
-  const router = create_router(server_history, routes, {
+  const router = createRouter(reusable, routes, {
     history: { location: req.url }
   });
   router.once(({ response }) => {

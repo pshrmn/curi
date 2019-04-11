@@ -14,7 +14,7 @@
   "dependencies": {
     "@curi/router": "2.0.0-beta.7",
     "@curi/vue": "1.0.0-beta.32",
-    "@hickory/browser": "^2.0.0-beta.10",
+    "@hickory/browser": "^2.0.0-beta.11",
     "vue": "^2.5.22"
   }
 }

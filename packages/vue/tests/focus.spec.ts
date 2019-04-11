@@ -1,18 +1,18 @@
 import "jest";
 import { createLocalVue } from "@vue/test-utils";
-import { in_memory } from "@hickory/in-memory";
-import { create_router, prepare_routes } from "@curi/router";
+import { inMemory } from "@hickory/in-memory";
+import { createRouter, prepareRoutes } from "@curi/router";
 
 import { CuriPlugin } from "@curi/vue";
 
 describe("curi-focus directive", () => {
   let vueWrapper;
 
-  const routes = prepare_routes([
+  const routes = prepareRoutes([
     { name: "Place", path: "place/:name" },
     { name: "Catch All", path: "(.*)" }
   ]);
-  const router = create_router(in_memory, routes);
+  const router = createRouter(inMemory, routes);
 
   const Vue = createLocalVue();
   Vue.use(CuriPlugin, { router });

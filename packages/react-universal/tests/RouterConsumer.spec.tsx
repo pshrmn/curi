@@ -2,11 +2,11 @@ import "jest";
 import React from "react";
 import ReactDOM from "react-dom";
 import { act } from "react-dom/test-utils";
-import { in_memory } from "@hickory/in-memory";
-import { create_router, prepare_routes } from "@curi/router";
+import { inMemory } from "@hickory/in-memory";
+import { createRouter, prepareRoutes } from "@curi/router";
 
 import {
-  create_router_component,
+  createRouterComponent,
   RouterConsumer,
   useResponse
 } from "@curi/react-universal";
@@ -14,7 +14,7 @@ import {
 describe("<RouterConsumer>", () => {
   let node;
   let router, Router;
-  const routes = prepare_routes([
+  const routes = prepareRoutes([
     { name: "Home", path: "" },
     { name: "About", path: "about" },
     { name: "Catch All", path: "(.*)" }
@@ -22,8 +22,8 @@ describe("<RouterConsumer>", () => {
 
   beforeEach(() => {
     node = document.createElement("div");
-    router = create_router(in_memory, routes);
-    Router = create_router_component(router);
+    router = createRouter(inMemory, routes);
+    Router = createRouterComponent(router);
   });
 
   afterEach(() => {
@@ -34,8 +34,8 @@ describe("<RouterConsumer>", () => {
     function App() {
       return (
         <RouterConsumer>
-          {context_router => {
-            expect(context_router).toBe(router);
+          {contextRouter => {
+            expect(contextRouter).toBe(router);
             return null;
           }}
         </RouterConsumer>
@@ -56,7 +56,7 @@ describe("<RouterConsumer>", () => {
     const Test = jest.fn(() => {
       return (
         <RouterConsumer>
-          {context_router => {
+          {contextRouter => {
             return null;
           }}
         </RouterConsumer>

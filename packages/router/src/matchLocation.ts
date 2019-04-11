@@ -1,4 +1,4 @@
-import { with_leading_slash } from "./utils/path";
+import { withLeadingSlash } from "./utils/path";
 
 import { SessionLocation } from "@hickory/root";
 import {
@@ -27,18 +27,18 @@ export interface RealMatch {
 
 type PossibleMatch = RealMatch | MissMatch;
 
-function match_route(
+function matchRoute(
   route: PreparedRoute,
   pathname: string
 ): Array<MatchingRoute> {
-  const reg_exp_match = route.path_matching.re.exec(pathname);
+  const regExpMatch = route.pathMatching.re.exec(pathname);
 
-  if (!reg_exp_match) {
+  if (!regExpMatch) {
     return [];
   }
 
-  const [matched_segment, ...parsed] = reg_exp_match;
-  const params = route.path_matching.keys.reduce(
+  const [matchedSegment, ...parsed] = regExpMatch;
+  const params = route.pathMatching.keys.reduce(
     (acc, key, index) => {
       acc[key.name] = parsed[index];
       return acc;
@@ -54,13 +54,13 @@ function match_route(
   }
 
   // children only need to match against unmatched segments
-  const remaining_segments = pathname.slice(matched_segment.length);
-  if (remaining_segments !== "") {
+  const remainder = pathname.slice(matchedSegment.length);
+  if (remainder !== "") {
     // a parent that ends with a slash will have stripped the leading
     // slash from remaining segments, so re-add it
-    const full_segments = with_leading_slash(remaining_segments);
+    const fullSegments = withLeadingSlash(remainder);
     for (let i = 0, length = route.children.length; i < length; i++) {
-      const matched = match_route(route.children[i], full_segments);
+      const matched = matchRoute(route.children[i], fullSegments);
       if (matched.length) {
         matches = matches.concat(matched);
         break;
@@ -70,45 +70,39 @@ function match_route(
 
   // return matches if a child route matches or this route matches exactly
   return matches.length > 1 ||
-    (route.path_matching.exact && remaining_segments.length === 0)
+    (route.pathMatching.exact && remainder.length === 0)
     ? matches
     : [];
 }
 
-function create_match(
-  route_matches: Array<MatchingRoute>,
+function createMatch(
+  routeMatches: Array<MatchingRoute>,
   location: SessionLocation
 ): RealMatch {
   let partials: Array<string> = [];
   let params: Params = {};
 
-  const best_match: MatchingRoute = route_matches.pop() as MatchingRoute;
+  const best: MatchingRoute = routeMatches.pop() as MatchingRoute;
   // handle ancestor routes
-  route_matches.forEach(match => {
+  routeMatches.forEach(match => {
     partials.push(match.route.public.name);
-    Object.assign(
-      params,
-      parse_params(match.params, match.route.param_parsers)
-    );
+    Object.assign(params, parseParams(match.params, match.route.paramParsers));
   });
   // handle best match
-  Object.assign(
-    params,
-    parse_params(best_match.params, best_match.route.param_parsers)
-  );
+  Object.assign(params, parseParams(best.params, best.route.paramParsers));
 
   return {
-    route: best_match.route,
+    route: best.route,
     match: {
       location,
-      name: best_match.route.public.name,
+      name: best.route.public.name,
       params,
       partials
     }
   };
 }
 
-function parse_params(params: RawParams, fns: ParamParsers = {}): Params {
+function parseParams(params: RawParams, fns: ParamParsers = {}): Params {
   const output: Params = {};
   for (let key in params) {
     let fn = fns[key] || decodeURIComponent;
@@ -117,17 +111,17 @@ function parse_params(params: RawParams, fns: ParamParsers = {}): Params {
   return output;
 }
 
-export function match_location(
+export function matchLocation(
   location: SessionLocation,
   routes: Array<PreparedRoute>
 ): PossibleMatch {
   // determine which route(s) match, then use the exact match
   // as the matched route and the rest as partial routes
-  const route_length = routes.length;
-  for (let i = 0; i < route_length; i++) {
-    const route_matches = match_route(routes[i], location.pathname);
-    if (route_matches.length) {
-      return create_match(route_matches, location);
+  const routeLength = routes.length;
+  for (let i = 0; i < routeLength; i++) {
+    const routeMatches = matchRoute(routes[i], location.pathname);
+    if (routeMatches.length) {
+      return createMatch(routeMatches, location);
     }
   }
 
@@ -138,6 +132,6 @@ export function match_location(
   };
 }
 
-export function is_real_match(match: PossibleMatch): match is RealMatch {
+export function isRealMatch(match: PossibleMatch): match is RealMatch {
   return match.route !== undefined;
 }

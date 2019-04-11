@@ -1,6 +1,6 @@
-import { prepare_routes } from "@curi/router";
+import { prepareRoutes } from "@curi/router";
 
-export default prepare_routes([
+export default prepareRoutes([
   {
     name: "Home",
     path: "",

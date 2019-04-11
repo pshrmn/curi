@@ -1,8 +1,8 @@
-export { RouterProps } from "./create_router_component";
+export { RouterProps } from "./createRouterComponent";
 export { ActiveHookProps, ValidateComponents } from "./hooks/useActive";
 export { NavigatingChildren } from "./hooks/useNavigationHandler";
 
-import create_router_component from "./create_router_component";
+import createRouterComponent from "./createRouterComponent";
 import { ResponseConsumer, RouterConsumer } from "./Context";
 
 import useRouter from "./hooks/useRouter";
@@ -17,7 +17,7 @@ import {
 } from "./hooks/useNavigationHandler";
 
 export {
-  create_router_component,
+  createRouterComponent,
   ResponseConsumer,
   RouterConsumer,
   useRouter,

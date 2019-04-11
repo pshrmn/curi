@@ -83,7 +83,7 @@ if (module.hot) {
   if (module.hot) {
     module.hot.accept("./router", () => {
       const nextRouter = require("./router").default;
-      const Router = create_router_component(nextRouter);
+      const Router = createRouterComponent(nextRouter);
       render(
         <Router>
           <App />

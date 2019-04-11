@@ -1,6 +1,6 @@
 import { MouseEvent, AnchorHTMLAttributes } from "react";
 
-export function can_navigate(
+export function canNavigate(
   event: MouseEvent<HTMLElement>,
   forward: AnchorHTMLAttributes<HTMLAnchorElement>
 ) {

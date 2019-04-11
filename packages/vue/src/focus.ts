@@ -19,7 +19,7 @@ function focus(el: HTMLElement, options: FocusDirectiveProperties) {
   });
 }
 
-const focus_directive: DirectiveOptions = {
+const focusDirective: DirectiveOptions = {
   inserted(el, binding) {
     if (process.env.NODE_ENV !== "production") {
       if (!el.hasAttribute("tabIndex") && el.tabIndex === -1) {
@@ -39,4 +39,4 @@ const focus_directive: DirectiveOptions = {
   }
 };
 
-export default focus_directive;
+export default focusDirective;

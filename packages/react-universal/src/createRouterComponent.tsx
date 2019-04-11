@@ -7,10 +7,10 @@ export interface RouterProps {
   children: React.ReactNode;
 }
 
-export default function create_router_component(
+export default function createRouterComponent(
   router: CuriRouter
 ): React.FunctionComponent<RouterProps> {
-  function initial_state() {
+  function initialState() {
     const { response, navigation } = router.current();
     return {
       router,
@@ -20,14 +20,14 @@ export default function create_router_component(
   }
 
   return function Router(props: RouterProps) {
-    const [response, set_response] = React.useState<Emitted>(initial_state);
+    const [response, setResponse] = React.useState<Emitted>(initialState);
 
     React.useEffect(() => {
       let removed = false;
       const stop = router.observe(
         (emitted: Emitted) => {
           if (!removed) {
-            set_response(emitted);
+            setResponse(emitted);
           }
         },
         { initial: false }

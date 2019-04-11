@@ -1,4 +1,4 @@
-import { prepare_routes } from "@curi/router";
+import { prepareRoutes } from "@curi/router";
 
 import Home from "./components/Home";
 import Contact from "./components/Contact";
@@ -46,4 +46,4 @@ const routes = [
   }
 ];
 
-export default prepare_routes(routes);
+export default prepareRoutes(routes);

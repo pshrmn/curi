@@ -2,13 +2,13 @@ import "jest";
 import React from "react";
 import ReactDOM from "react-dom";
 import { act, Simulate } from "react-dom/test-utils";
-import { in_memory } from "@hickory/in-memory";
-import { create_router, prepare_routes } from "@curi/router";
+import { inMemory } from "@hickory/in-memory";
+import { createRouter, prepareRoutes } from "@curi/router";
 
 import { sleep } from "../../../utils/tests";
 
 import {
-  create_router_component,
+  createRouterComponent,
   useStatefulNavigationHandler
 } from "@curi/react-universal";
 
@@ -41,20 +41,20 @@ describe("useStatefulNavigationHandler", () => {
   describe("event handler", () => {
     it("it uses nav props (name, params, hash, query, and state) to generate nav location", () => {
       const mockNavigate = jest.fn();
-      const routes = prepare_routes([
+      const routes = prepareRoutes([
         { name: "Test", path: "test" },
         { name: "Catch All", path: "(.*)" }
       ]);
-      const router = create_router(in_memory, routes);
+      const router = createRouter(inMemory, routes);
       router.history.navigate = mockNavigate;
-      const Router = create_router_component(router);
+      const Router = createRouterComponent(router);
 
       function AsyncLink(props) {
-        const { event_handler, navigating } = useStatefulNavigationHandler(
+        const { eventHandler, navigating } = useStatefulNavigationHandler(
           props
         );
         return (
-          <a href="#" onClick={event_handler}>
+          <a href="#" onClick={eventHandler}>
             {props.children(navigating)}
           </a>
         );
@@ -83,20 +83,20 @@ describe("useStatefulNavigationHandler", () => {
     it("calls onNav prop func if provided", () => {
       const mockNavigate = jest.fn();
       const onNav = jest.fn();
-      const routes = prepare_routes([
+      const routes = prepareRoutes([
         { name: "Test", path: "test" },
         { name: "Catch All", path: "(.*)" }
       ]);
-      const router = create_router(in_memory, routes);
+      const router = createRouter(inMemory, routes);
       router.history.navigate = mockNavigate;
-      const Router = create_router_component(router);
+      const Router = createRouterComponent(router);
 
       function AsyncLink(props) {
-        const { event_handler, navigating } = useStatefulNavigationHandler(
+        const { eventHandler, navigating } = useStatefulNavigationHandler(
           props
         );
         return (
-          <a href="#" onClick={event_handler}>
+          <a href="#" onClick={eventHandler}>
             {props.children(navigating)}
           </a>
         );
@@ -124,21 +124,21 @@ describe("useStatefulNavigationHandler", () => {
 
       it("does not call history.navigate if canNavigate returns false", () => {
         const mockNavigate = jest.fn();
-        const routes = prepare_routes([
+        const routes = prepareRoutes([
           { name: "Test", path: "test" },
           { name: "Catch All", path: "(.*)" }
         ]);
-        const router = create_router(in_memory, routes);
+        const router = createRouter(inMemory, routes);
         router.history.navigate = mockNavigate;
-        const Router = create_router_component(router);
+        const Router = createRouterComponent(router);
 
         function AsyncLink(props) {
-          const { event_handler, navigating } = useStatefulNavigationHandler(
+          const { eventHandler, navigating } = useStatefulNavigationHandler(
             props,
             canNavigate
           );
           return (
-            <a href="#" onClick={event_handler}>
+            <a href="#" onClick={eventHandler}>
               {props.children(navigating)}
             </a>
           );
@@ -162,20 +162,20 @@ describe("useStatefulNavigationHandler", () => {
 
   describe("navigating", () => {
     it("is false on initial render", () => {
-      const routes = prepare_routes([
+      const routes = prepareRoutes([
         { name: "Test", path: "test" },
         { name: "Catch All", path: "(.*)" }
       ]);
-      const router = create_router(in_memory, routes);
-      const Router = create_router_component(router);
+      const router = createRouter(inMemory, routes);
+      const Router = createRouterComponent(router);
 
       function AsyncLink(props) {
-        const { event_handler, navigating } = useStatefulNavigationHandler(
+        const { eventHandler, navigating } = useStatefulNavigationHandler(
           props
         );
         expect(navigating).toBe(false);
         return (
-          <a href="#" onClick={event_handler}>
+          <a href="#" onClick={eventHandler}>
             {props.children(navigating)}
           </a>
         );
@@ -192,7 +192,7 @@ describe("useStatefulNavigationHandler", () => {
     });
 
     it("is true when navigation starts", () => {
-      const routes = prepare_routes([
+      const routes = prepareRoutes([
         { name: "Test", path: "test" },
         {
           name: "Slow",
@@ -212,14 +212,14 @@ describe("useStatefulNavigationHandler", () => {
         },
         { name: "Catch All", path: "(.*)" }
       ]);
-      const router = create_router(in_memory, routes);
-      const Router = create_router_component(router);
+      const router = createRouter(inMemory, routes);
+      const Router = createRouterComponent(router);
 
       function AsyncLink(props) {
-        const { event_handler, navigating } = useStatefulNavigationHandler(
+        const { eventHandler, navigating } = useStatefulNavigationHandler(
           props
         );
-        return <a onClick={event_handler}>{props.children(navigating)}</a>;
+        return <a onClick={eventHandler}>{props.children(navigating)}</a>;
       }
 
       ReactDOM.render(
@@ -242,7 +242,7 @@ describe("useStatefulNavigationHandler", () => {
     });
 
     it("is false when navigation finishes", async () => {
-      const routes = prepare_routes([
+      const routes = prepareRoutes([
         { name: "Test", path: "test" },
         {
           name: "Slow",
@@ -262,14 +262,14 @@ describe("useStatefulNavigationHandler", () => {
         },
         { name: "Catch All", path: "(.*)" }
       ]);
-      const router = create_router(in_memory, routes);
-      const Router = create_router_component(router);
+      const router = createRouter(inMemory, routes);
+      const Router = createRouterComponent(router);
 
       function AsyncLink(props) {
-        const { event_handler, navigating } = useStatefulNavigationHandler(
+        const { eventHandler, navigating } = useStatefulNavigationHandler(
           props
         );
-        return <a onClick={event_handler}>{props.children(navigating)}</a>;
+        return <a onClick={eventHandler}>{props.children(navigating)}</a>;
       }
 
       ReactDOM.render(

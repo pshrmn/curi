@@ -1,5 +1,5 @@
 import PathToRegexp from "path-to-regexp";
-import { with_leading_slash, join } from "./utils/path";
+import { withLeadingSlash, join } from "./utils/path";
 
 import { Key } from "path-to-regexp";
 import {
@@ -9,29 +9,29 @@ import {
   Params
 } from "@curi/types";
 
-export default function prepare_routes(
-  user_routes: Array<RouteDescriptor>
+export default function prepareRoutes(
+  userRoutes: Array<RouteDescriptor>
 ): PreparedRoutes {
-  const used_names: Set<string> = new Set();
-  return user_routes.map(route => {
-    return create_route(route as RouteDescriptor, null, used_names);
+  const used: Set<string> = new Set();
+  return userRoutes.map(route => {
+    return createRoute(route as RouteDescriptor, null, used);
   });
 }
 
-const create_route = (
+const createRoute = (
   options: RouteDescriptor,
-  parent_path: string | null,
-  used_names: Set<string>
+  parentPath: string | null,
+  used: Set<string>
 ): PreparedRoute => {
   if (process.env.NODE_ENV !== "production") {
-    if (used_names.has(options.name)) {
+    if (used.has(options.name)) {
       throw new Error(
         `Multiple routes have the name "${
           options.name
         }". Route names must be unique.`
       );
     }
-    used_names.add(options.name);
+    used.add(options.name);
   }
 
   const path = options.path;
@@ -42,21 +42,21 @@ const create_route = (
       );
     }
   }
-  let full_path = with_leading_slash(join(parent_path || "", path));
+  let fullPath = withLeadingSlash(join(parentPath || "", path));
 
-  const { match: match_options = {}, compile: compile_options = {} } =
-    options.path_options || {};
+  const { match: matchOptions = {}, compile: compileOptions = {} } =
+    options.pathOptions || {};
   // end defaults to true, so end has to be hardcoded for it to be false
-  // set this resolve setting path_options.end for children
-  const exact = match_options.end == null || match_options.end;
+  // set this resolve setting pathOptions.end for children
+  const exact = matchOptions.end == null || matchOptions.end;
 
   let children: Array<PreparedRoute> = [];
   // when we have child routes, we need to perform non-end matching and
   // create route objects for each child
   if (options.children && options.children.length) {
-    match_options.end = false;
+    matchOptions.end = false;
     children = options.children.map(child => {
-      return create_route(child, full_path, used_names);
+      return createRoute(child, fullPath, used);
     });
   }
 
@@ -64,9 +64,9 @@ const create_route = (
   const keys: Array<Key> = [];
   // path is compiled with a leading slash
   // for optional initial params
-  const re = PathToRegexp(with_leading_slash(path), keys, match_options);
+  const re = PathToRegexp(withLeadingSlash(path), keys, matchOptions);
 
-  const compiled = PathToRegexp.compile(full_path);
+  const compiled = PathToRegexp.compile(fullPath);
 
   return {
     public: {
@@ -76,10 +76,10 @@ const create_route = (
       resolve: options.resolve,
       extra: options.extra,
       pathname(params?: Params) {
-        return compiled(params, compile_options);
+        return compiled(params, compileOptions);
       }
     },
-    path_matching: {
+    pathMatching: {
       re,
       keys,
       exact
@@ -87,6 +87,6 @@ const create_route = (
     sync: options.resolve === undefined,
     response: options.response,
     children,
-    param_parsers: options.params
+    paramParsers: options.params
   };
 };

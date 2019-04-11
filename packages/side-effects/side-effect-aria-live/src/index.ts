@@ -2,7 +2,7 @@ import { Observer, Emitted } from "@curi/types";
 
 export type AriaLiveValue = "assertive" | "polite" | "off";
 
-export default function create_aria_live_side_effect(
+export default function createAriaLiveSideEffect(
   fmt: (emitted: Emitted) => string,
   mode: AriaLiveValue = "assertive"
 ): Observer {

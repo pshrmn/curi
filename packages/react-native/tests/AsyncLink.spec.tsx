@@ -2,13 +2,13 @@ import "jest";
 import React from "react";
 import "react-native";
 import renderer from "react-test-renderer";
-import { in_memory } from "@hickory/in-memory";
-import { create_router, prepare_routes } from "@curi/router";
+import { inMemory } from "@hickory/in-memory";
+import { createRouter, prepareRoutes } from "@curi/router";
 import { TouchableHighlight, Text } from "react-native";
 
 import { sleep } from "../../../utils/tests";
 
-import { create_router_component, AsyncLink } from "@curi/react-native";
+import { createRouterComponent, AsyncLink } from "@curi/react-native";
 
 const { act } = renderer;
 
@@ -26,12 +26,12 @@ function fakeEvent(props = {}) {
 describe("<AsyncLink>", () => {
   describe("anchor", () => {
     it("renders a <TouchableHighlight> by default", () => {
-      const routes = prepare_routes([
+      const routes = prepareRoutes([
         { name: "Test", path: "" },
         { name: "Catch All", path: "(.*)" }
       ]);
-      const router = create_router(in_memory, routes);
-      const Router = create_router_component(router);
+      const router = createRouter(inMemory, routes);
+      const Router = createRouterComponent(router);
       const tree = renderer.create(
         <Router>
           <AsyncLink name="Test">
@@ -44,12 +44,12 @@ describe("<AsyncLink>", () => {
     });
 
     it("when provided, it renders the component instead of an anchor", () => {
-      const routes = prepare_routes([
+      const routes = prepareRoutes([
         { name: "Test", path: "" },
         { name: "Catch All", path: "(.*)" }
       ]);
-      const router = create_router(in_memory, routes);
-      const Router = create_router_component(router);
+      const router = createRouter(inMemory, routes);
+      const Router = createRouterComponent(router);
 
       const StyledAnchor = props => (
         <TouchableHighlight style={{ borderColor: "orange" }} {...props} />
@@ -71,14 +71,14 @@ describe("<AsyncLink>", () => {
     describe("name", () => {
       it("uses the pathname from current response's location if 'name' is not provided", async () => {
         const mockNavigate = jest.fn();
-        const routes = prepare_routes([{ name: "Catch All", path: "(.*)" }]);
-        const router = create_router(in_memory, routes, {
+        const routes = prepareRoutes([{ name: "Catch All", path: "(.*)" }]);
+        const router = createRouter(inMemory, routes, {
           history: {
             locations: ["/the-initial-location"]
           }
         });
         router.history.navigate = mockNavigate;
-        const Router = create_router_component(router);
+        const Router = createRouterComponent(router);
 
         const tree = renderer.create(
           <Router>
@@ -98,16 +98,16 @@ describe("<AsyncLink>", () => {
     });
 
     describe("params", () => {
-      const routes = prepare_routes([
+      const routes = prepareRoutes([
         { name: "Park", path: "park/:name" },
         { name: "Catch All", path: "(.*)" }
       ]);
 
       it("uses params to generate the location to navigate to", async () => {
         const mockNavigate = jest.fn();
-        const router = create_router(in_memory, routes);
+        const router = createRouter(inMemory, routes);
         router.history.navigate = mockNavigate;
-        const Router = create_router_component(router);
+        const Router = createRouterComponent(router);
 
         const params = { name: "Glacier" };
         const tree = renderer.create(
@@ -126,9 +126,9 @@ describe("<AsyncLink>", () => {
 
       it("updates location to navigate to when props change", async () => {
         const mockNavigate = jest.fn();
-        const router = create_router(in_memory, routes);
+        const router = createRouter(inMemory, routes);
         router.history.navigate = mockNavigate;
-        const Router = create_router_component(router);
+        const Router = createRouterComponent(router);
 
         const params = { name: "Glacier" };
         const tree = renderer.create(
@@ -168,13 +168,13 @@ describe("<AsyncLink>", () => {
     describe("hash & query", () => {
       it("merges hash & query props with the pathname when creating href", async () => {
         const mockNavigate = jest.fn();
-        const routes = prepare_routes([
+        const routes = prepareRoutes([
           { name: "Test", path: "test" },
           { name: "Catch All", path: "(.*)" }
         ]);
-        const router = create_router(in_memory, routes);
+        const router = createRouter(inMemory, routes);
         router.history.navigate = mockNavigate;
-        const Router = create_router_component(router);
+        const Router = createRouterComponent(router);
 
         const tree = renderer.create(
           <Router>
@@ -202,17 +202,17 @@ describe("<AsyncLink>", () => {
   describe("forward", () => {
     it("passes forward to the rendered anchor", () => {
       const mockNavigate = jest.fn();
-      const routes = prepare_routes([
+      const routes = prepareRoutes([
         { name: "Test", path: "" },
         { name: "Catch All", path: "(.*)" }
       ]);
-      const router = create_router(in_memory, routes, {
+      const router = createRouter(inMemory, routes, {
         history: {
           locations: ["/the-initial-location"]
         }
       });
       router.history.navigate = mockNavigate;
-      const Router = create_router_component(router);
+      const Router = createRouterComponent(router);
 
       const style = { backgroundColor: "red" };
       const tree = renderer.create(
@@ -230,17 +230,17 @@ describe("<AsyncLink>", () => {
   describe("ref", () => {
     it("returns the anchor's ref, not the link's", () => {
       const mockNavigate = jest.fn();
-      const routes = prepare_routes([
+      const routes = prepareRoutes([
         { name: "Parks", path: "parks" },
         { name: "Catch All", path: "(.*)" }
       ]);
-      const router = create_router(in_memory, routes, {
+      const router = createRouter(inMemory, routes, {
         history: {
           locations: ["/the-initial-location"]
         }
       });
       router.history.navigate = mockNavigate;
-      const Router = create_router_component(router);
+      const Router = createRouterComponent(router);
 
       const ref = React.createRef();
       const tree = renderer.create(
@@ -257,12 +257,12 @@ describe("<AsyncLink>", () => {
 
   describe("children", () => {
     it("is called with the <AsyncLink>'s current navigating state (false on mount)", () => {
-      const routes = prepare_routes([
+      const routes = prepareRoutes([
         { name: "Test", path: "" },
         { name: "Catch All", path: "(.*)" }
       ]);
-      const router = create_router(in_memory, routes);
-      const Router = create_router_component(router);
+      const router = createRouter(inMemory, routes);
+      const Router = createRouterComponent(router);
 
       const tree = renderer.create(
         <Router>
@@ -281,13 +281,13 @@ describe("<AsyncLink>", () => {
     describe("navigation method", () => {
       it('method="anchor"', async () => {
         const mockNavigate = jest.fn();
-        const routes = prepare_routes([
+        const routes = prepareRoutes([
           { name: "Test", path: "" },
           { name: "Catch All", path: "(.*)" }
         ]);
-        const router = create_router(in_memory, routes);
+        const router = createRouter(inMemory, routes);
         router.history.navigate = mockNavigate;
-        const Router = create_router_component(router);
+        const Router = createRouterComponent(router);
 
         const tree = renderer.create(
           <Router>
@@ -305,13 +305,13 @@ describe("<AsyncLink>", () => {
 
       it('method="push"', async () => {
         const mockNavigate = jest.fn();
-        const routes = prepare_routes([
+        const routes = prepareRoutes([
           { name: "Test", path: "" },
           { name: "Catch All", path: "(.*)" }
         ]);
-        const router = create_router(in_memory, routes);
+        const router = createRouter(inMemory, routes);
         router.history.navigate = mockNavigate;
-        const Router = create_router_component(router);
+        const Router = createRouterComponent(router);
 
         const tree = renderer.create(
           <Router>
@@ -329,13 +329,13 @@ describe("<AsyncLink>", () => {
 
       it('method="replace"', async () => {
         const mockNavigate = jest.fn();
-        const routes = prepare_routes([
+        const routes = prepareRoutes([
           { name: "Test", path: "" },
           { name: "Catch All", path: "(.*)" }
         ]);
-        const router = create_router(in_memory, routes);
+        const router = createRouter(inMemory, routes);
         router.history.navigate = mockNavigate;
-        const Router = create_router_component(router);
+        const Router = createRouterComponent(router);
 
         const tree = renderer.create(
           <Router>
@@ -357,7 +357,7 @@ describe("<AsyncLink>", () => {
         // if a link has no on methods, finished will be called almost
         // immediately (although this style should only be used for routes
         // with resolve methods)
-        const routes = prepare_routes([
+        const routes = prepareRoutes([
           {
             name: "Test",
             path: "test",
@@ -371,8 +371,8 @@ describe("<AsyncLink>", () => {
           },
           { name: "Catch All", path: "(.*)" }
         ]);
-        const router = create_router(in_memory, routes);
-        const Router = create_router_component(router);
+        const router = createRouter(inMemory, routes);
+        const Router = createRouterComponent(router);
 
         const tree = renderer.create(
           <Router>
@@ -395,7 +395,7 @@ describe("<AsyncLink>", () => {
       });
 
       it("children(false) when navigation is cancelled", async () => {
-        const routes = prepare_routes([
+        const routes = prepareRoutes([
           { name: "Test", path: "test" },
           {
             name: "Slow",
@@ -415,8 +415,8 @@ describe("<AsyncLink>", () => {
           },
           { name: "Catch All", path: "(.*)" }
         ]);
-        const router = create_router(in_memory, routes);
-        const Router = create_router_component(router);
+        const router = createRouter(inMemory, routes);
+        const Router = createRouterComponent(router);
 
         const tree = renderer.create(
           <Router>
@@ -454,7 +454,7 @@ describe("<AsyncLink>", () => {
       });
 
       it("children(false) when navigation is finished", async () => {
-        const routes = prepare_routes([
+        const routes = prepareRoutes([
           { name: "Test", path: "test" },
           {
             name: "Loader",
@@ -469,8 +469,8 @@ describe("<AsyncLink>", () => {
           },
           { name: "Catch All", path: "(.*)" }
         ]);
-        const router = create_router(in_memory, routes);
-        const Router = create_router_component(router);
+        const router = createRouter(inMemory, routes);
+        const Router = createRouterComponent(router);
 
         const tree = renderer.create(
           <Router>
@@ -505,7 +505,7 @@ describe("<AsyncLink>", () => {
         const mockError = jest.fn();
         console.error = mockError;
 
-        const routes = prepare_routes([
+        const routes = prepareRoutes([
           { name: "Test", path: "test" },
           {
             name: "Blork",
@@ -526,8 +526,8 @@ describe("<AsyncLink>", () => {
           },
           { name: "Catch All", path: "(.*)" }
         ]);
-        const router = create_router(in_memory, routes);
-        const Router = create_router_component(router);
+        const router = createRouter(inMemory, routes);
+        const Router = createRouterComponent(router);
 
         const tree = renderer.create(
           <Router>
@@ -552,13 +552,13 @@ describe("<AsyncLink>", () => {
       it("calls onNav prop func if provided", async () => {
         const mockNavigate = jest.fn();
         const onNav = jest.fn();
-        const routes = prepare_routes([
+        const routes = prepareRoutes([
           { name: "Test", path: "" },
           { name: "Catch All", path: "(.*)" }
         ]);
-        const router = create_router(in_memory, routes);
+        const router = createRouter(inMemory, routes);
         router.history.navigate = mockNavigate;
-        const Router = create_router_component(router);
+        const Router = createRouterComponent(router);
 
         const tree = renderer.create(
           <Router>
@@ -583,13 +583,13 @@ describe("<AsyncLink>", () => {
         const onNav = jest.fn(event => {
           event.preventDefault();
         });
-        const routes = prepare_routes([
+        const routes = prepareRoutes([
           { name: "Test", path: "" },
           { name: "Catch All", path: "(.*)" }
         ]);
-        const router = create_router(in_memory, routes);
+        const router = createRouter(inMemory, routes);
         router.history.navigate = mockNavigate;
-        const Router = create_router_component(router);
+        const Router = createRouterComponent(router);
 
         const tree = renderer.create(
           <Router>
@@ -607,13 +607,13 @@ describe("<AsyncLink>", () => {
 
     it("doesn't call history.navigate if event.preventDefault has been called", () => {
       const mockNavigate = jest.fn();
-      const routes = prepare_routes([
+      const routes = prepareRoutes([
         { name: "Test", path: "" },
         { name: "Catch All", path: "(.*)" }
       ]);
-      const router = create_router(in_memory, routes);
+      const router = createRouter(inMemory, routes);
       router.history.navigate = mockNavigate;
-      const Router = create_router_component(router);
+      const Router = createRouterComponent(router);
 
       const tree = renderer.create(
         <Router>

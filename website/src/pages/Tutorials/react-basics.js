@@ -327,17 +327,17 @@ cd curi-react-bookstore # enter the new app directory`}
 
         <p>We can create an array of routes using the above names and paths.</p>
         <p>
-          <IJS>@curi/router</IJS> provides a <IJS>prepare_routes</IJS> function,
+          <IJS>@curi/router</IJS> provides a <IJS>prepareRoutes</IJS> function,
           which is used to setup routes for the router. We will pass the routes
-          array to <IJS>prepare_routes</IJS> and export the result of that
+          array to <IJS>prepareRoutes</IJS> and export the result of that
           function call.
         </p>
 
         <CodeBlock>
           {`// src/routes.js
-import { prepare_routes } from "@curi/router";
+import { prepareRoutes } from "@curi/router";
 
-export default prepare_routes([
+export default prepareRoutes([
   {
     name: "Home",
     path: ""
@@ -425,17 +425,17 @@ registerServiceWorker();`}
       <HashSection meta={routerMeta}>
         <p>
           We are now ready to create the router. In the <IJS>src/index.js</IJS>{" "}
-          file, we should import the <IJS>create_router</IJS> function from{" "}
+          file, we should import the <IJS>createRouter</IJS> function from{" "}
           <IJS>@curi/router</IJS>. To create the router, call the{" "}
-          <IJS>create_router()</IJS> function passing it the history function
-          and the <IJS>routes</IJS> array.
+          <IJS>createRouter()</IJS> function passing it the history function and
+          the <IJS>routes</IJS> array.
         </p>
 
         <CodeBlock lang="jsx" data-line="4,12">
           {`// src/index.js
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { create_router } from "@curi/router";
+import { createRouter } from "@curi/router";
 import { browser } from '@hickory/browser';
 
 import routes from './routes';
@@ -443,7 +443,7 @@ import './index.css';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 
-const router = create_router(browser, routes);
+const router = createRouter(browser, routes);
 
 ReactDOM.render(<App />, document.getElementById('root'));
 registerServiceWorker();`}
@@ -459,7 +459,7 @@ registerServiceWorker();`}
         </p>
         <p>
           We create a <IJS>Router</IJS> component by passing the router to the{" "}
-          <IJS>create_router_component</IJS> higher-order component.
+          <IJS>createRouterComponent</IJS> higher-order component.
         </p>
 
         <Note>
@@ -475,17 +475,17 @@ registerServiceWorker();`}
           {`// src/index.js
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { create_router } from "@curi/router";
+import { createRouter } from "@curi/router";
 import { browser } from '@hickory/browser';
-import { create_router_component } from "@curi/react-dom";
+import { createRouterComponent } from "@curi/react-dom";
 
 import routes from './routes';
 import './index.css';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 
-const router = create_router(browser, routes);
-const Router = create_router_component(router);
+const router = createRouter(browser, routes);
+const Router = createRouterComponent(router);
 
 ReactDOM.render(<App />, document.getElementById('root'));
 registerServiceWorker();`}
@@ -507,17 +507,17 @@ registerServiceWorker();`}
           {`// src/index.js
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { create_router } from "@curi/router";
+import { createRouter } from "@curi/router";
 import { browser } from '@hickory/browser';
-import { create_router_component } from "@curi/react-dom";
+import { createRouterComponent } from "@curi/react-dom";
 
 import routes from './routes';
 import './index.css';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 
-const router = create_router(browser, routes);
-const Router = create_router_component(router);
+const router = createRouter(browser, routes);
+const Router = createRouterComponent(router);
 
 ReactDOM.render((
   <Router>
@@ -734,14 +734,14 @@ export default function NotFound() {
 
         <CodeBlock data-line="4-7,13-15,20-22,27-29,34-36">
           {`// src/routes.js
-import { prepare_routes } from "@curi/router";
+import { prepareRoutes } from "@curi/router";
 
 import Home from './components/Home';
 import Book from './components/Book';
 import Checkout from './components/Checkout';
 import NotFound from './components/NotFound';
 
-export default prepare_routes([
+export default prepareRoutes([
   {
     name: "Home",
     path: "",

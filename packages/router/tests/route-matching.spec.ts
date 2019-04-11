@@ -1,18 +1,18 @@
 import "jest";
-import { in_memory } from "@hickory/in-memory";
+import { inMemory } from "@hickory/in-memory";
 
-import { create_router, prepare_routes } from "@curi/router";
+import { createRouter, prepareRoutes } from "@curi/router";
 
 describe("route matching/response generation", () => {
   describe("route matching", () => {
     it("ignores leading slash on the pathname", () => {
-      const routes = prepare_routes([
+      const routes = prepareRoutes([
         {
           name: "Test",
           path: "test"
         }
       ]);
-      const router = create_router(in_memory, routes, {
+      const router = createRouter(inMemory, routes, {
         history: {
           locations: ["/test"]
         }
@@ -22,7 +22,7 @@ describe("route matching/response generation", () => {
     });
 
     it("does exact matching", () => {
-      const routes = prepare_routes([
+      const routes = prepareRoutes([
         {
           name: "Test",
           path: "test"
@@ -32,7 +32,7 @@ describe("route matching/response generation", () => {
           path: "(.*)"
         }
       ]);
-      const router = create_router(in_memory, routes, {
+      const router = createRouter(inMemory, routes, {
         history: {
           locations: ["/test/leftovers"]
         }
@@ -43,8 +43,8 @@ describe("route matching/response generation", () => {
 
     describe("no matching routes", () => {
       it("no response is emitted", () => {
-        const routes = prepare_routes([]);
-        const router = create_router(in_memory, routes, {
+        const routes = prepareRoutes([]);
+        const router = createRouter(inMemory, routes, {
           history: {
             locations: ["/test"]
           }
@@ -59,8 +59,8 @@ describe("route matching/response generation", () => {
         const realWarn = console.warn;
         const fakeWarn = (console.warn = jest.fn());
 
-        const routes = prepare_routes([]);
-        const router = create_router(in_memory, routes, {
+        const routes = prepareRoutes([]);
+        const router = createRouter(inMemory, routes, {
           history: {
             locations: ["/test"]
           }
@@ -77,7 +77,7 @@ describe("route matching/response generation", () => {
 
     describe("nested routes", () => {
       it("includes parent in partials if a child matches", () => {
-        const routes = prepare_routes([
+        const routes = prepareRoutes([
           {
             name: "State",
             path: ":state",
@@ -89,7 +89,7 @@ describe("route matching/response generation", () => {
             ]
           }
         ]);
-        const router = create_router(in_memory, routes, {
+        const router = createRouter(inMemory, routes, {
           history: {
             locations: ["/ND/Fargo"]
           }
@@ -100,7 +100,7 @@ describe("route matching/response generation", () => {
       });
 
       it("matches children when parent has trailing slash", () => {
-        const routes = prepare_routes([
+        const routes = prepareRoutes([
           {
             name: "State",
             path: ":state/",
@@ -116,7 +116,7 @@ describe("route matching/response generation", () => {
             path: "(.*)"
           }
         ]);
-        const router = create_router(in_memory, routes, {
+        const router = createRouter(inMemory, routes, {
           history: {
             locations: ["/ND/Fargo/"]
           }
@@ -125,12 +125,12 @@ describe("route matching/response generation", () => {
         expect(response.name).toBe("City");
       });
 
-      it("does non-end parent matching when there are child routes, even if path_options.match.end=true", () => {
-        const routes = prepare_routes([
+      it("does non-end parent matching when there are child routes, even if pathOptions.match.end=true", () => {
+        const routes = prepareRoutes([
           {
             name: "State",
             path: ":state",
-            path_options: { match: { end: true } },
+            pathOptions: { match: { end: true } },
             children: [
               {
                 name: "City",
@@ -139,7 +139,7 @@ describe("route matching/response generation", () => {
             ]
           }
         ]);
-        const router = create_router(in_memory, routes, {
+        const router = createRouter(inMemory, routes, {
           history: {
             locations: ["/ND/Fargo"]
           }
@@ -150,7 +150,7 @@ describe("route matching/response generation", () => {
       });
 
       it("skips parent match if no children match", () => {
-        const routes = prepare_routes([
+        const routes = prepareRoutes([
           {
             name: "State",
             path: ":state",
@@ -166,7 +166,7 @@ describe("route matching/response generation", () => {
             path: "(.*)"
           }
         ]);
-        const router = create_router(in_memory, routes, {
+        const router = createRouter(inMemory, routes, {
           history: {
             locations: ["/MT/Bozeman"]
           }
@@ -177,19 +177,19 @@ describe("route matching/response generation", () => {
       });
     });
 
-    it("matches partial routes if route.path_options.match.end=false", () => {
-      const routes = prepare_routes([
+    it("matches partial routes if route.pathOptions.match.end=false", () => {
+      const routes = prepareRoutes([
         {
           name: "State",
           path: ":state",
-          path_options: { match: { end: false } }
+          pathOptions: { match: { end: false } }
         },
         {
           name: "Not Found",
           path: "(.*)"
         }
       ]);
-      const router = create_router(in_memory, routes, {
+      const router = createRouter(inMemory, routes, {
         history: {
           locations: ["/SD/Sioux City"]
         }
@@ -200,18 +200,18 @@ describe("route matching/response generation", () => {
 
     describe("optional path parameters", () => {
       it("works when optional param is included", () => {
-        const routes = prepare_routes([
+        const routes = prepareRoutes([
           {
             name: "State",
             path: ":state?/about",
-            path_options: { match: { end: false } }
+            pathOptions: { match: { end: false } }
           },
           {
             name: "Not Found",
             path: "(.*)"
           }
         ]);
-        const router = create_router(in_memory, routes, {
+        const router = createRouter(inMemory, routes, {
           history: {
             locations: ["/NY/about"]
           }
@@ -221,18 +221,18 @@ describe("route matching/response generation", () => {
       });
 
       it("works when optional param is NOT included", () => {
-        const routes = prepare_routes([
+        const routes = prepareRoutes([
           {
             name: "State",
             path: ":state?/about",
-            path_options: { match: { end: false } }
+            pathOptions: { match: { end: false } }
           },
           {
             name: "Not Found",
             path: "(.*)"
           }
         ]);
-        const router = create_router(in_memory, routes, {
+        const router = createRouter(inMemory, routes, {
           history: {
             locations: ["/about"]
           }
@@ -247,8 +247,8 @@ describe("route matching/response generation", () => {
     describe("properties", () => {
       describe("location", () => {
         it("is the location used to match routes", () => {
-          const routes = prepare_routes([{ name: "Catch All", path: "(.*)" }]);
-          const router = create_router(in_memory, routes, {
+          const routes = prepareRoutes([{ name: "Catch All", path: "(.*)" }]);
+          const router = createRouter(inMemory, routes, {
             history: {
               locations: ["/other-page"]
             }
@@ -260,13 +260,13 @@ describe("route matching/response generation", () => {
 
       describe("body", () => {
         it("is undefined if not set by route.response()", () => {
-          const routes = prepare_routes([
+          const routes = prepareRoutes([
             {
               name: "Test",
               path: "test"
             }
           ]);
-          const router = create_router(in_memory, routes, {
+          const router = createRouter(inMemory, routes, {
             history: {
               locations: ["/test"]
             }
@@ -277,7 +277,7 @@ describe("route matching/response generation", () => {
 
         it("is the body value of the object returned by route.response()", () => {
           const body = () => "anybody out there?";
-          const routes = prepare_routes([
+          const routes = prepareRoutes([
             {
               name: "Test",
               path: "test",
@@ -288,7 +288,7 @@ describe("route matching/response generation", () => {
               }
             }
           ]);
-          const router = create_router(in_memory, routes, {
+          const router = createRouter(inMemory, routes, {
             history: {
               locations: ["/test"]
             }
@@ -300,7 +300,7 @@ describe("route matching/response generation", () => {
 
       describe("status", () => {
         it("is undefined if not set by route.response()", () => {
-          const routes = prepare_routes([
+          const routes = prepareRoutes([
             {
               name: "Contact",
               path: "contact",
@@ -310,7 +310,7 @@ describe("route matching/response generation", () => {
               ]
             }
           ]);
-          const router = create_router(in_memory, routes, {
+          const router = createRouter(inMemory, routes, {
             history: {
               locations: ["/contact"]
             }
@@ -320,7 +320,7 @@ describe("route matching/response generation", () => {
         });
 
         it("is the status value of object returned by route.response()", () => {
-          const routes = prepare_routes([
+          const routes = prepareRoutes([
             {
               name: "A Route",
               path: "",
@@ -331,7 +331,7 @@ describe("route matching/response generation", () => {
               }
             }
           ]);
-          const router = create_router(in_memory, routes, {
+          const router = createRouter(inMemory, routes, {
             history: {
               locations: ["/"]
             }
@@ -343,13 +343,13 @@ describe("route matching/response generation", () => {
 
       describe("data", () => {
         it("is undefined if not set by route.response()", () => {
-          const routes = prepare_routes([
+          const routes = prepareRoutes([
             {
               name: "A Route",
               path: ""
             }
           ]);
-          const router = create_router(in_memory, routes, {
+          const router = createRouter(inMemory, routes, {
             history: {
               locations: ["/"]
             }
@@ -359,7 +359,7 @@ describe("route matching/response generation", () => {
         });
 
         it("is the data value of the object returned by route.response()", () => {
-          const routes = prepare_routes([
+          const routes = prepareRoutes([
             {
               name: "A Route",
               path: "",
@@ -372,7 +372,7 @@ describe("route matching/response generation", () => {
               }
             }
           ]);
-          const router = create_router(in_memory, routes, {
+          const router = createRouter(inMemory, routes, {
             history: {
               locations: ["/"]
             }
@@ -384,13 +384,13 @@ describe("route matching/response generation", () => {
 
       describe("title", () => {
         it("is undefined if not set by route.response()", () => {
-          const routes = prepare_routes([
+          const routes = prepareRoutes([
             {
               name: "State",
               path: ":state"
             }
           ]);
-          const router = create_router(in_memory, routes, {
+          const router = createRouter(inMemory, routes, {
             history: {
               locations: ["/AZ"]
             }
@@ -401,7 +401,7 @@ describe("route matching/response generation", () => {
         });
 
         it("is the title value of the object returned by route.response()", () => {
-          const routes = prepare_routes([
+          const routes = prepareRoutes([
             {
               name: "State",
               path: ":state",
@@ -412,7 +412,7 @@ describe("route matching/response generation", () => {
               }
             }
           ]);
-          const router = create_router(in_memory, routes, {
+          const router = createRouter(inMemory, routes, {
             history: {
               locations: ["/VA"]
             }
@@ -425,13 +425,13 @@ describe("route matching/response generation", () => {
 
       describe("name", () => {
         it("is the name of the best matching route", () => {
-          const routes = prepare_routes([
+          const routes = prepareRoutes([
             {
               name: "A Route",
               path: "a-route"
             }
           ]);
-          const router = create_router(in_memory, routes, {
+          const router = createRouter(inMemory, routes, {
             history: {
               locations: ["/a-route"]
             }
@@ -443,7 +443,7 @@ describe("route matching/response generation", () => {
 
       describe("partials", () => {
         it("is set using the names of all partially matching routes", () => {
-          const routes = prepare_routes([
+          const routes = prepareRoutes([
             {
               name: "State",
               path: ":state",
@@ -455,7 +455,7 @@ describe("route matching/response generation", () => {
               ]
             }
           ]);
-          const router = create_router(in_memory, routes, {
+          const router = createRouter(inMemory, routes, {
             history: {
               locations: ["/TX/Austin"]
             }
@@ -467,7 +467,7 @@ describe("route matching/response generation", () => {
 
       describe("params", () => {
         it("includes params from partially matched routes", () => {
-          const routes = prepare_routes([
+          const routes = prepareRoutes([
             {
               name: "State",
               path: ":state",
@@ -479,7 +479,7 @@ describe("route matching/response generation", () => {
               ]
             }
           ]);
-          const router = create_router(in_memory, routes, {
+          const router = createRouter(inMemory, routes, {
             history: {
               locations: ["/MT/Bozeman"]
             }
@@ -492,14 +492,14 @@ describe("route matching/response generation", () => {
         });
 
         it("overwrites param name conflicts", () => {
-          const routes = prepare_routes([
+          const routes = prepareRoutes([
             {
               name: "One",
               path: ":id",
               children: [{ name: "Two", path: ":id" }]
             }
           ]);
-          const router = create_router(in_memory, routes, {
+          const router = createRouter(inMemory, routes, {
             history: {
               locations: ["/1/2"]
             }
@@ -510,7 +510,7 @@ describe("route matching/response generation", () => {
 
         describe("parsing params", () => {
           it("uses route.params to parse params", () => {
-            const routes = prepare_routes([
+            const routes = prepareRoutes([
               {
                 name: "number",
                 path: ":num",
@@ -519,7 +519,7 @@ describe("route matching/response generation", () => {
                 }
               }
             ]);
-            const router = create_router(in_memory, routes, {
+            const router = createRouter(inMemory, routes, {
               history: {
                 locations: ["/123"]
               }
@@ -529,7 +529,7 @@ describe("route matching/response generation", () => {
           });
 
           it("parses params from parent routes", () => {
-            const routes = prepare_routes([
+            const routes = prepareRoutes([
               {
                 name: "first",
                 path: ":first",
@@ -547,7 +547,7 @@ describe("route matching/response generation", () => {
                 }
               }
             ]);
-            const router = create_router(in_memory, routes, {
+            const router = createRouter(inMemory, routes, {
               history: {
                 locations: ["/123/456"]
               }
@@ -560,7 +560,7 @@ describe("route matching/response generation", () => {
           });
 
           it("decodes param using decodeURIComponent if param has no function", () => {
-            const routes = prepare_routes([
+            const routes = prepareRoutes([
               {
                 name: "combo",
                 path: ":first/:second",
@@ -569,7 +569,7 @@ describe("route matching/response generation", () => {
                 }
               }
             ]);
-            const router = create_router(in_memory, routes, {
+            const router = createRouter(inMemory, routes, {
               history: {
                 locations: ["/123/test%20ing"]
               }
@@ -582,14 +582,14 @@ describe("route matching/response generation", () => {
           });
 
           it("throws if param parser throws", () => {
-            const routes = prepare_routes([
+            const routes = prepareRoutes([
               {
                 name: "number",
                 path: "(.*)"
               }
             ]);
             expect(() => {
-              const router = create_router(in_memory, routes, {
+              const router = createRouter(inMemory, routes, {
                 history: {
                   locations: ["/%"]
                 }
@@ -601,8 +601,8 @@ describe("route matching/response generation", () => {
 
       describe("error", () => {
         it("is undefined for good responses", () => {
-          const routes = prepare_routes([{ name: "Contact", path: "contact" }]);
-          const router = create_router(in_memory, routes, {
+          const routes = prepareRoutes([{ name: "Contact", path: "contact" }]);
+          const router = createRouter(inMemory, routes, {
             history: {
               locations: ["/contact"]
             }
@@ -612,7 +612,7 @@ describe("route matching/response generation", () => {
         });
 
         it("is the error value on the object returned by route.response()", () => {
-          const routes = prepare_routes([
+          const routes = prepareRoutes([
             {
               name: "A Route",
               path: "",
@@ -623,7 +623,7 @@ describe("route matching/response generation", () => {
               }
             }
           ]);
-          const router = create_router(in_memory, routes, {
+          const router = createRouter(inMemory, routes, {
             history: {
               locations: ["/"]
             }
@@ -635,7 +635,7 @@ describe("route matching/response generation", () => {
 
       describe("redirect", () => {
         it("contains the expected properties", () => {
-          const routes = prepare_routes([
+          const routes = prepareRoutes([
             {
               name: "A Route",
               path: "",
@@ -672,8 +672,8 @@ describe("route matching/response generation", () => {
               firstCall = false;
             }
           };
-          const router = create_router(in_memory, routes, {
-            side_effects: [logger],
+          const router = createRouter(inMemory, routes, {
+            sideEffects: [logger],
             history: {
               locations: ["/"]
             }
@@ -685,7 +685,7 @@ describe("route matching/response generation", () => {
         it("warns when returned object has an invalid property", () => {
           const realWarn = console.warn;
           const fakeWarn = (console.warn = jest.fn());
-          const routes = prepare_routes([
+          const routes = prepareRoutes([
             {
               name: "Contact",
               path: "contact",
@@ -698,7 +698,7 @@ describe("route matching/response generation", () => {
             }
           ]);
           expect(fakeWarn.mock.calls.length).toBe(0);
-          const router = create_router(in_memory, routes, {
+          const router = createRouter(inMemory, routes, {
             history: {
               locations: ["/contact"]
             }
@@ -730,7 +730,7 @@ describe("route matching/response generation", () => {
           return Promise.resolve();
         });
 
-        const routes = prepare_routes([
+        const routes = prepareRoutes([
           {
             name: "Catch All",
             path: ":anything",
@@ -738,7 +738,7 @@ describe("route matching/response generation", () => {
           }
         ]);
 
-        create_router(in_memory, routes, {
+        createRouter(inMemory, routes, {
           history: {
             locations: ["/hello?one=two"]
           }
@@ -753,14 +753,14 @@ describe("route matching/response generation", () => {
           return Promise.resolve();
         });
 
-        const routes = prepare_routes([
+        const routes = prepareRoutes([
           {
             name: "Catch All",
             path: ":anything",
             resolve: spy
           }
         ]);
-        create_router(in_memory, routes, {
+        createRouter(inMemory, routes, {
           external,
           history: {
             locations: ["/hello?one=two"]
@@ -782,7 +782,7 @@ describe("route matching/response generation", () => {
           });
         });
 
-        const routes = prepare_routes([
+        const routes = prepareRoutes([
           {
             name: "First",
             path: "first",
@@ -805,7 +805,7 @@ describe("route matching/response generation", () => {
             resolve: spy
           }
         ]);
-        const router = create_router(in_memory, routes, {
+        const router = createRouter(inMemory, routes, {
           history: {
             locations: ["/first"]
           }
@@ -815,7 +815,7 @@ describe("route matching/response generation", () => {
 
       describe("resolved", () => {
         it("is null when route has no resolve functions", () => {
-          const routes = prepare_routes([
+          const routes = prepareRoutes([
             {
               name: "Catch All",
               path: ":anything",
@@ -825,7 +825,7 @@ describe("route matching/response generation", () => {
               }
             }
           ]);
-          const router = create_router(in_memory, routes, {
+          const router = createRouter(inMemory, routes, {
             history: {
               locations: ["/hello?one=two"]
             }
@@ -833,7 +833,7 @@ describe("route matching/response generation", () => {
         });
 
         it("is null when a resolve function throws", () => {
-          const routes = prepare_routes([
+          const routes = prepareRoutes([
             {
               name: "Catch All",
               path: ":anything",
@@ -846,7 +846,7 @@ describe("route matching/response generation", () => {
               }
             }
           ]);
-          const router = create_router(in_memory, routes, {
+          const router = createRouter(inMemory, routes, {
             history: {
               locations: ["/hello?one=two"]
             }
@@ -854,7 +854,7 @@ describe("route matching/response generation", () => {
         });
 
         it("is the resolve results", () => {
-          const routes = prepare_routes([
+          const routes = prepareRoutes([
             {
               name: "Catch All",
               path: ":anything",
@@ -868,7 +868,7 @@ describe("route matching/response generation", () => {
               }
             }
           ]);
-          const router = create_router(in_memory, routes, {
+          const router = createRouter(inMemory, routes, {
             history: {
               locations: ["/hello?one=two"]
             }
@@ -884,7 +884,7 @@ describe("route matching/response generation", () => {
             return {};
           });
 
-          const routes = prepare_routes([
+          const routes = prepareRoutes([
             {
               name: "Catch All",
               path: ":anything",
@@ -894,7 +894,7 @@ describe("route matching/response generation", () => {
               }
             }
           ]);
-          const router = create_router(in_memory, routes, {
+          const router = createRouter(inMemory, routes, {
             history: {
               locations: ["/hello?one=two"]
             }
@@ -908,7 +908,7 @@ describe("route matching/response generation", () => {
             return {};
           });
 
-          const routes = prepare_routes([
+          const routes = prepareRoutes([
             {
               name: "Catch All",
               path: ":anything",
@@ -918,7 +918,7 @@ describe("route matching/response generation", () => {
               }
             }
           ]);
-          const router = create_router(in_memory, routes, {
+          const router = createRouter(inMemory, routes, {
             history: {
               locations: ["/hello?one=two"]
             }
@@ -928,7 +928,7 @@ describe("route matching/response generation", () => {
 
       describe("match", () => {
         it("receives the response properties based on the matched route", () => {
-          const routes = prepare_routes([
+          const routes = prepareRoutes([
             {
               name: "Catch All",
               path: ":anything",
@@ -946,7 +946,7 @@ describe("route matching/response generation", () => {
               }
             }
           ]);
-          const router = create_router(in_memory, routes, {
+          const router = createRouter(inMemory, routes, {
             history: {
               locations: ["/hello?one=two"]
             }

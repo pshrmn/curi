@@ -1,7 +1,7 @@
 import React from "react";
 
 import { About, APIBlock, IJS } from "../../../../components/package/common";
-import { StaticFilesAPI } from "./api/static_files";
+import { StaticFilesAPI } from "./api/staticFiles";
 import { PathnamesAPI } from "./api/pathnames";
 
 function StaticPackage() {

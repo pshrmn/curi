@@ -15,10 +15,10 @@ export interface BaseNavigationHookProps<T> extends RouteLocation {
     method?: NavType;
 }
 export declare type CanNavigate<T> = (e: T, forward?: object) => boolean;
-export declare function useNavigationHandler<T extends React.BaseSyntheticEvent>(props: NavigationHookProps<T>, can_navigate?: CanNavigate<T>): {
-    event_handler: (event: T) => void;
+export declare function useNavigationHandler<T extends React.BaseSyntheticEvent>(props: NavigationHookProps<T>, canNavigate?: CanNavigate<T>): {
+    eventHandler: (event: T) => void;
 };
-export declare function useStatefulNavigationHandler<T extends React.BaseSyntheticEvent>(props: StatefulNavigationHookProps<T>, can_navigate?: CanNavigate<T>): {
-    event_handler: (event: T) => void;
+export declare function useStatefulNavigationHandler<T extends React.BaseSyntheticEvent>(props: StatefulNavigationHookProps<T>, canNavigate?: CanNavigate<T>): {
+    eventHandler: (event: T) => void;
     navigating: boolean;
 };

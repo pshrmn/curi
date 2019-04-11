@@ -1,20 +1,20 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { create_router } from "@curi/router";
+import { createRouter } from "@curi/router";
 import { browser } from "@hickory/browser";
 import { parse, stringify } from "qs";
-import { create_router_component } from "@curi/react-dom";
+import { createRouterComponent } from "@curi/react-dom";
 
 import routes from "./routes";
 import App from "./components/App";
 
-const router = create_router(browser, routes, {
-  emit_redirects: false,
+const router = createRouter(browser, routes, {
+  emitRedirects: false,
   history: {
     query: { parse, stringify }
   }
 });
-const Router = create_router_component(router);
+const Router = createRouterComponent(router);
 
 ReactDOM.render(
   <Router>

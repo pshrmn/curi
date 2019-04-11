@@ -3,7 +3,7 @@ import { History, HistoryOptions, SessionLocation, PartialLocation, Action, NavT
 export interface RouteDescriptor {
     name: string;
     path: string;
-    path_options?: PathOptions;
+    pathOptions?: PathOptions;
     params?: ParamParsers;
     children?: Array<RouteDescriptor>;
     response?: ResponseFn;
@@ -18,8 +18,8 @@ export interface PathOptions {
 }
 export interface RouterOptions<O = HistoryOptions> {
     route?: Array<Interaction>;
-    side_effects?: Array<Observer>;
-    emit_redirects?: boolean;
+    sideEffects?: Array<Observer>;
+    emitRedirects?: boolean;
     external?: any;
     history?: O;
 }
@@ -114,12 +114,12 @@ export interface PreparedRoute {
     sync: boolean;
     children: Array<PreparedRoute>;
     response?: ResponseFn;
-    path_matching: {
+    pathMatching: {
         exact: boolean;
         re: RegExp;
         keys: Array<Key>;
     };
-    param_parsers?: ParamParsers;
+    paramParsers?: ParamParsers;
 }
 export declare type ResponseFn = (props: Readonly<ResponseBuilder>) => SettableResponseProperties;
 export interface ResponseBuilder {

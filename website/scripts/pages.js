@@ -1,18 +1,18 @@
 const routes = require("../src/routes").default;
-const packages_api = require("../src/constants/packages").default;
-const guides_api = require("../src/constants/guides").default;
-const examples_api = require("../src/constants/examples").default;
-const tutorials_api = require("../src/constants/tutorials").default;
+const packagesAPI = require("../src/constants/packages").default;
+const guidesAPI = require("../src/constants/guides").default;
+const examplesAPI = require("../src/constants/examples").default;
+const tutorialsAPI = require("../src/constants/tutorials").default;
 
-const packageParams = packages_api.all().reduce((acc, pkg) => {
+const packageParams = packagesAPI.all().reduce((acc, pkg) => {
   const pkgs = Object.keys(pkg.versions).map(version => ({
     package: pkg.name,
     version
   }));
   return acc.concat(pkgs);
 }, []);
-const guideParams = guides_api.all().map(p => ({ slug: p.slug }));
-const categories = examples_api.all();
+const guideParams = guidesAPI.all().map(p => ({ slug: p.slug }));
+const categories = examplesAPI.all();
 const exampleParams = Object.keys(categories)
   .map(key => categories[key])
   .reduce((acc, category) => {
@@ -20,7 +20,7 @@ const exampleParams = Object.keys(categories)
     acc = acc.concat(params);
     return acc;
   }, []);
-const tutorialParams = tutorials_api.all().map(t => ({ slug: t.slug }));
+const tutorialParams = tutorialsAPI.all().map(t => ({ slug: t.slug }));
 
 module.exports = [
   { name: "Home" },

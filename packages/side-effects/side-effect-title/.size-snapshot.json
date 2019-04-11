@@ -1,8 +1,8 @@
 {
   "dist/curi-side-effect-title.es.js": {
-    "bundled": 176,
-    "minified": 117,
-    "gzipped": 100,
+    "bundled": 170,
+    "minified": 111,
+    "gzipped": 102,
     "treeshaked": {
       "rollup": {
         "code": 0,
@@ -14,17 +14,17 @@
     }
   },
   "dist/curi-side-effect-title.js": {
-    "bundled": 193,
-    "minified": 130,
-    "gzipped": 109
+    "bundled": 187,
+    "minified": 124,
+    "gzipped": 112
   },
   "dist/curi-side-effect-title.umd.js": {
-    "bundled": 481,
+    "bundled": 475,
     "minified": 263,
     "gzipped": 187
   },
   "dist/curi-side-effect-title.min.js": {
-    "bundled": 481,
+    "bundled": 475,
     "minified": 263,
     "gzipped": 187
   }

@@ -1,7 +1,7 @@
 import { Route, Response, Interaction, Params } from "@curi/types";
 import { SessionLocation } from "@hickory/root";
 
-function possible_name(
+function possible(
   name: string,
   response: Response,
   partial?: boolean
@@ -21,20 +21,20 @@ export interface ActiveCheckOptions {
 }
 
 export default function active(): Interaction {
-  let route_params: { [key: string]: Array<string> } = {};
+  let routeParams: { [key: string]: Array<string> } = {};
 
   return {
     name: "active",
-    register: (route: Route, parent_keys: object): object => {
+    register: (route: Route, parentKeys: object): object => {
       let { name, keys } = route;
       if (keys == null) {
         keys = [];
       }
-      const full_keys = Array.isArray(parent_keys)
-        ? [...parent_keys, ...keys]
+      const fullKeys = Array.isArray(parentKeys)
+        ? [...parentKeys, ...keys]
         : keys;
-      route_params[name] = full_keys;
-      return full_keys;
+      routeParams[name] = fullKeys;
+      return fullKeys;
     },
     get: (
       name: string,
@@ -42,12 +42,12 @@ export default function active(): Interaction {
       options: ActiveCheckOptions = {}
     ): boolean => {
       if (
-        route_params[name] == null ||
-        !possible_name(name, response, options.partial)
+        routeParams[name] == null ||
+        !possible(name, response, options.partial)
       ) {
         return false;
       }
-      const keys = route_params[name];
+      const keys = routeParams[name];
       for (let r = 0, length = keys.length; r < length; r++) {
         const key = keys[r];
         const param = options.params[key];

@@ -9,7 +9,7 @@ import {
   ResponseFn
 } from "@curi/types";
 
-function create_redirect(
+function createRedirect(
   redirect: any,
   interactions: Interactions,
   history: History
@@ -27,7 +27,7 @@ function create_redirect(
   };
 }
 
-const valid_properties: {
+const validProperties: {
   [key in keyof SettableResponseProperties]: boolean
 } = {
   status: true,
@@ -38,53 +38,53 @@ const valid_properties: {
   redirect: true
 };
 
-function valid_response_property(
+function validResponseProperty(
   property: string
 ): property is keyof SettableResponseProperties {
   if (process.env.NODE_ENV !== "production") {
-    if (!valid_properties.hasOwnProperty(property)) {
+    if (!validProperties.hasOwnProperty(property)) {
       console.warn(`"${property}" is not a valid response property. The valid properties are:
 
 status, error, body, data, title, redirect`);
     }
   }
-  return valid_properties.hasOwnProperty(property);
+  return validProperties.hasOwnProperty(property);
 }
 
-export default function finish_response(
-  create_response: ResponseFn,
+export default function finishResponse(
+  createResponse: ResponseFn,
   match: IntrinsicResponse,
   interactions: Interactions,
-  resolved_results: ResolveResults | null,
+  resolvedResults: ResolveResults | null,
   history: History,
   external: any
 ): Response {
-  const { resolved = null, error = null } = resolved_results || {};
+  const { resolved = null, error = null } = resolvedResults || {};
 
-  const response_modifiers = create_response({
+  const responseModifiers = createResponse({
     resolved,
     error,
     match,
     external
   });
 
-  if (!response_modifiers) {
+  if (!responseModifiers) {
     return match;
   }
 
   // only merge the valid properties onto the response
-  return Object.keys(response_modifiers).reduce(
+  return Object.keys(responseModifiers).reduce(
     (acc, key) => {
-      if (valid_response_property(key)) {
+      if (validResponseProperty(key)) {
         if (key === "redirect") {
           // special case
-          acc[key] = create_redirect(
-            response_modifiers[key],
+          acc[key] = createRedirect(
+            responseModifiers[key],
             interactions,
             history
           );
         } else {
-          acc[key] = response_modifiers[key];
+          acc[key] = responseModifiers[key];
         }
       }
       return acc;

@@ -1,20 +1,20 @@
 import "jest";
-import { in_memory } from "@hickory/in-memory";
-import { create_router, prepare_routes } from "@curi/router";
+import { inMemory } from "@hickory/in-memory";
+import { createRouter, prepareRoutes } from "@curi/router";
 
-import create_ancestors from "@curi/route-ancestors";
+import ancestors from "@curi/route-ancestors";
 
 describe("ancestors route interaction", () => {
   it("is called using router.route.ancestors()", () => {
-    const routes = prepare_routes([{ name: "Catch All", path: "(.*)" }]);
-    const router = create_router(in_memory, routes, {
-      route: [create_ancestors()]
+    const routes = prepareRoutes([{ name: "Catch All", path: "(.*)" }]);
+    const router = createRouter(inMemory, routes, {
+      route: [ancestors()]
     });
     expect(router.route.ancestors).toBeDefined();
   });
 
   describe("routes", () => {
-    const routes = prepare_routes([
+    const routes = prepareRoutes([
       {
         name: "League",
         path: "league/:lID",
@@ -33,8 +33,8 @@ describe("ancestors route interaction", () => {
       },
       { name: "Catch All", path: "(.*)" }
     ]);
-    const router = create_router(in_memory, routes, {
-      route: [create_ancestors()]
+    const router = createRouter(inMemory, routes, {
+      route: [ancestors()]
     });
 
     it("returns all ancestors when level is undefined (or null)", () => {
@@ -46,8 +46,8 @@ describe("ancestors route interaction", () => {
     });
 
     it("returns undefined when level is not a postive integer", () => {
-      const bad_args = ["no", 0];
-      bad_args.forEach(arg => {
+      const badArgs = ["no", 0];
+      badArgs.forEach(arg => {
         expect(router.route.ancestors("Player", arg)).toBeUndefined();
       });
     });

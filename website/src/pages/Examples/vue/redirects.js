@@ -43,7 +43,7 @@ function AuthenticationExample() {
         </p>
 
         <CodeBlock lang="javascript">
-          {`const routes = prepare_routes([
+          {`const routes = prepareRoutes([
   // ...,
   {
     name: 'Protected',

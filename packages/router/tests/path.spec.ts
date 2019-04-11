@@ -1,12 +1,12 @@
 import "jest";
-import { in_memory } from "@hickory/in-memory";
+import { inMemory } from "@hickory/in-memory";
 
-import { create_router, prepare_routes } from "@curi/router";
+import { createRouter, prepareRoutes } from "@curi/router";
 
-describe("route.path_options.match", () => {
+describe("route.pathOptions.match", () => {
   describe("default options", () => {
     it("sensitive = false", () => {
-      const routes = prepare_routes([
+      const routes = prepareRoutes([
         {
           name: "Test",
           path: "here"
@@ -16,7 +16,7 @@ describe("route.path_options.match", () => {
           path: "(.*)"
         }
       ]);
-      const router = create_router(in_memory, routes, {
+      const router = createRouter(inMemory, routes, {
         history: {
           locations: ["/Here"]
         }
@@ -26,7 +26,7 @@ describe("route.path_options.match", () => {
     });
 
     it("strict = false", () => {
-      const routes = prepare_routes([
+      const routes = prepareRoutes([
         {
           name: "Test",
           path: "here"
@@ -36,7 +36,7 @@ describe("route.path_options.match", () => {
           path: "(.*)"
         }
       ]);
-      const router = create_router(in_memory, routes, {
+      const router = createRouter(inMemory, routes, {
         history: {
           locations: ["/here/"]
         }
@@ -46,7 +46,7 @@ describe("route.path_options.match", () => {
     });
 
     it("end = true", () => {
-      const routes = prepare_routes([
+      const routes = prepareRoutes([
         {
           name: "Test",
           path: "here"
@@ -56,7 +56,7 @@ describe("route.path_options.match", () => {
           path: "(.*)"
         }
       ]);
-      const router = create_router(in_memory, routes, {
+      const router = createRouter(inMemory, routes, {
         history: {
           locations: ["/here/again"]
         }
@@ -68,18 +68,18 @@ describe("route.path_options.match", () => {
 
   describe("user provided options", () => {
     it("sensitive = true", () => {
-      const routes = prepare_routes([
+      const routes = prepareRoutes([
         {
           name: "Test",
           path: "here",
-          path_options: { match: { sensitive: true } }
+          pathOptions: { match: { sensitive: true } }
         },
         {
           name: "Not Found",
           path: "(.*)"
         }
       ]);
-      const router = create_router(in_memory, routes, {
+      const router = createRouter(inMemory, routes, {
         history: {
           locations: ["/Here"]
         }
@@ -89,18 +89,18 @@ describe("route.path_options.match", () => {
     });
 
     it("strict = true", () => {
-      const routes = prepare_routes([
+      const routes = prepareRoutes([
         {
           name: "Test",
           path: "here",
-          path_options: { match: { strict: true } }
+          pathOptions: { match: { strict: true } }
         },
         {
           name: "Not Found",
           path: "(.*)"
         }
       ]);
-      const router = create_router(in_memory, routes, {
+      const router = createRouter(inMemory, routes, {
         history: {
           locations: ["/here/"]
         }
@@ -110,18 +110,18 @@ describe("route.path_options.match", () => {
     });
 
     it("end = false", () => {
-      const routes = prepare_routes([
+      const routes = prepareRoutes([
         {
           name: "Test",
           path: "here",
-          path_options: { match: { end: false } }
+          pathOptions: { match: { end: false } }
         },
         {
           name: "Not Found",
           path: "(.*)"
         }
       ]);
-      const router = create_router(in_memory, routes, {
+      const router = createRouter(inMemory, routes, {
         history: {
           locations: ["/here/again"]
         }

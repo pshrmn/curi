@@ -111,7 +111,7 @@ curiStore(router, store);`}
 
           <CodeBlock lang="html">
             {`<script>
-const routes = prepare_routes([
+const routes = prepareRoutes([
   {
     name: "Home",
     path: "",

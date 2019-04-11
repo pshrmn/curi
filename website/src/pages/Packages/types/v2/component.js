@@ -11,11 +11,11 @@ function TypesPkg() {
           types used by the various packages.
         </p>
         <CodeBlock>
-          {`import { create_router } from "@curi/router";
+          {`import { createRouter } from "@curi/router";
 
 import { CuriRouter } from "@curi/types";
 
-const router: CuriRouter = create_router(browser, routes);`}
+const router: CuriRouter = createRouter(browser, routes);`}
         </CodeBlock>
       </About>
     </React.Fragment>

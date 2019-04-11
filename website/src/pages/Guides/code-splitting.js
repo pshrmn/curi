@@ -62,7 +62,7 @@ function CodeSplittingGuide() {
 import Contact from './components/Contact';
 import ContactMethod from './components/ContactMethod';
 
-const routes = prepare_routes([
+const routes = prepareRoutes([
   {
     name: 'Home',
     path: '',
@@ -127,7 +127,7 @@ const routes = prepare_routes([
         </p>
 
         <CodeBlock>
-          {`const routes = prepare_routes([
+          {`const routes = prepareRoutes([
   {
     name: 'Home',
     path: '',

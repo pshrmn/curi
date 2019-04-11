@@ -144,8 +144,8 @@ const stop = router.observe(fn);`}
           </Note>
 
           <CodeBlock lang="jsx">
-            {`const Router = create_router_component(router);
-              
+            {`const Router = createRouterComponent(router);
+
 function setup() {
   ReactDOM.render((
     <Router>
@@ -249,8 +249,8 @@ router.observe(observer);`}
 }
 
 // as a side-effect
-const router = create_router(browser, routes, {
-  side_effects: [{ fn: logger }]
+const router = createRouter(browser, routes, {
+  sideEffects: [{ fn: logger }]
 });
 
 // as an observer

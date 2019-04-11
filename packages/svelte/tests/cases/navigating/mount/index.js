@@ -1,10 +1,10 @@
-import { in_memory } from "@hickory/in-memory";
-import { create_router, prepare_routes } from "@curi/router";
-import { curi_store } from "@curi/svelte";
+import { inMemory } from "@hickory/in-memory";
+import { createRouter, prepareRoutes } from "@curi/router";
+import { curiStore } from "@curi/svelte";
 
 import app from "./app.html";
 
-const routes = prepare_routes([
+const routes = prepareRoutes([
   { name: "Home", path: "" },
   { name: "Sync", path: "sync" },
   {
@@ -28,8 +28,8 @@ const routes = prepare_routes([
   { name: "Catch All", path: "(.*)" }
 ]);
 
-const router = create_router(in_memory, routes);
-const store = curi_store(router);
+const router = createRouter(inMemory, routes);
+const store = curiStore(router);
 
 export default function render() {
   const target = document.createElement("div");

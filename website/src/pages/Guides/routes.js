@@ -38,7 +38,7 @@ const propertiesMeta = {
 
 const prepareMeta = {
   title: "Preparing Routes",
-  hash: "prepare_routes"
+  hash: "prepareRoutes"
 };
 
 const noMatchMeta = {
@@ -99,7 +99,7 @@ function RoutesGuide() {
           </p>
 
           <CodeBlock>
-            {`const routes = prepare_routes([
+            {`const routes = prepareRoutes([
   {
     path: "" // matches the root "/"
   },
@@ -117,7 +117,7 @@ function RoutesGuide() {
           </p>
 
           <CodeBlock>
-            {`const routes = prepare_routes([
+            {`const routes = prepareRoutes([
   {
     name: "Home",
     path: ""
@@ -233,7 +233,7 @@ function RoutesGuide() {
           <CodeBlock>
             {`import User from "./components/User";
 
-const routes = prepare_routes([
+const routes = prepareRoutes([
   {
     name: "User",
     path: "u/:id",
@@ -273,7 +273,7 @@ const routes = prepare_routes([
         </p>
 
         <CodeBlock lang="js">
-          {`const routes = prepare_routes([
+          {`const routes = prepareRoutes([
   { name: "One", path: "one" },
   { name: "Two", path: "two", children: [
     { name: "And a half", path: "point-five" },
@@ -315,7 +315,7 @@ const routes = prepare_routes([
 
         <HashSection meta={walkthroughMeta} tag="h3">
           <CodeBlock>
-            {`const routes = prepare_routes([
+            {`const routes = prepareRoutes([
   {
     name: 'Home',
     path: '',
@@ -356,7 +356,7 @@ const routes = prepare_routes([
           </p>
 
           <CodeBlock>
-            {`const routes = prepare_routes([
+            {`const routes = prepareRoutes([
   {
     name: 'Home',
     path: '',
@@ -392,8 +392,8 @@ const routes = prepare_routes([
         <HashSection meta={optionsMeta} tag="h3">
           <p>
             You can control whether a route does exact or partial matching with{" "}
-            <Link hash="path_options">
-              <IJS>path_options</IJS>
+            <Link hash="pathOptions">
+              <IJS>pathOptions</IJS>
             </Link>{" "}
             property. If you set <IJS>{`{ end: false }`}</IJS>, a route that
             partially matches will consider itself matched.
@@ -407,7 +407,7 @@ const routes = prepare_routes([
 {
   name: 'Album',
   path: 'a/:albumID',
-  path_options: {
+  pathOptions: {
     parse: {
       end: false
     }
@@ -419,20 +419,20 @@ const routes = prepare_routes([
 
       <HashSection meta={prepareMeta}>
         <p>
-          The routes array should be wrapped in a <IJS>prepare_routes()</IJS>{" "}
+          The routes array should be wrapped in a <IJS>prepareRoutes()</IJS>{" "}
           call. This will pre-build the routes for the router, which is
           especially useful for server rendering, where a new router is created
           for every request.
         </p>
 
         <CodeBlock>
-          {`import { prepare_routes } from "@curi/router";
+          {`import { prepareRoutes } from "@curi/router";
 
 // plain routes
 const routes = [...]
 
 // prepared routes
-export default prepare_routes(routes);`}
+export default prepareRoutes(routes);`}
         </CodeBlock>
       </HashSection>
     </React.Fragment>

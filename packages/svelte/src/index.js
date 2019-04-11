@@ -1,3 +1,3 @@
-import curi_store from "./store.js";
+import curiStore from "./store.js";
 
-export { curi_store };
+export { curiStore };

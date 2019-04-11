@@ -1,11 +1,11 @@
-import { prepare_routes } from "@curi/router";
+import { prepareRoutes } from "@curi/router";
 
 import Home from "./components/Home";
 import Product from "./components/Product";
 import Detail from "./components/Detail";
 import NotFound from "./components/NotFound";
 
-export default prepare_routes([
+export default prepareRoutes([
   {
     name: "Home",
     path: "",
