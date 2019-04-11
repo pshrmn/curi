@@ -1,8 +1,8 @@
 import { meta as createRouterComponentMeta } from "./api/create_router_component";
 import { meta as LinkMeta } from "./api/link";
 import { meta as AsyncLinkMeta } from "./api/asynclink";
-import { meta as useRouterMeta } from "./api/useRouter";
 import { meta as useResponseMeta } from "./api/useResponse";
+import { meta as useRouterMeta } from "./api/useRouter";
 import { meta as useActiveMeta } from "./api/useActive";
 import { meta as useNavigationFocusMeta } from "./api/useNavigationFocus";
 import { meta as useNavigatingMeta } from "./api/useNavigating";
@@ -26,8 +26,8 @@ export default [
       createRouterComponentMeta,
       LinkMeta,
       AsyncLinkMeta,
-      useRouterMeta,
       useResponseMeta,
+      useRouterMeta,
       useActiveMeta,
       useNavigationFocusMeta,
       useNavigatingMeta,

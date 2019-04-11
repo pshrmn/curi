@@ -5,8 +5,8 @@ import { About, APIBlock, IJS } from "../../../../components/package/common";
 import { CreateRouterComponentAPI } from "./api/create_router_component";
 import { LinkAPI } from "./api/link";
 import { AsyncLinkAPI } from "./api/asynclink";
-import { UseRouterAPI } from "./api/useRouter";
 import { UseResponseAPI } from "./api/useResponse";
+import { UseRouterAPI } from "./api/useRouter";
 import { UseActiveAPI } from "./api/useActive";
 import { UseNavigatingAPI } from "./api/useNavigating";
 import { UseLocationAPI } from "./api/useLocation";
@@ -34,8 +34,8 @@ function ReactNativePkg() {
         <CreateRouterComponentAPI />
         <LinkAPI />
         <AsyncLinkAPI />
-        <UseRouterAPI />
         <UseResponseAPI />
+        <UseRouterAPI />
         <UseActiveAPI />
         <UseNavigatingAPI />
         <UseLocationAPI />
