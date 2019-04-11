@@ -46,7 +46,7 @@ export default prepare_routes([
     path: "redirect",
     response: () => {
       return {
-        redirect_to: {
+        redirect: {
           name: "Home"
         }
       };

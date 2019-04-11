@@ -15,7 +15,7 @@ export default prepare_routes([
     response: () => {
       return {
         body: Home,
-        redirect_to: {
+        redirect: {
           name: "Products"
         }
       };
