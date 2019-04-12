@@ -17,7 +17,7 @@ export function UseResponseAPI() {
       <p>
         The <IJS>useResponse</IJS> hook reads the current <IJS>response</IJS>,{" "}
         <IJS>navigation</IJS>, and <IJS>router</IJS> values from React's
-        context.
+        context. This will be called every time a new response is emitted.
       </p>
 
       <CodeBlock lang="jsx">

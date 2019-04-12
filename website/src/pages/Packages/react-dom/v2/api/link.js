@@ -23,17 +23,17 @@ export function LinkAPI() {
   return (
     <HashSection meta={meta}>
       <p>
-        A <IJS>Link</IJS> is for navigating within your application using an
-        anchor element (<Cmp>a</Cmp>). When the rendered element is clicked,
-        instead of reloading the page it will use your router object's history
-        object to navigate.
+        A <IJS>Link</IJS> is use for in-app navigation. By default, the
+        component renders an anchor element (<Cmp>a</Cmp>). When the rendered
+        element is clicked, instead of reloading the page it will use the router
+        to navigate.
       </p>
 
       <p>
         With the <IJS>Link</IJS>, instead of providing a URI to navigate to, you
-        specify the name of the route that you want to link to. Then, the
-        pathname of the URI you want the component to link to will be
-        automatically generated for you.
+        specify the name of the route that you want to link to. The pathname of
+        the URI you want the component to link to will be automatically
+        generated for you.
       </p>
 
       <CodeBlock lang="jsx">
@@ -45,11 +45,15 @@ export function LinkAPI() {
 
       <HashSection tag="h3" meta={propsMeta}>
         <HashSection tag="h4" meta={{ title: "name", hash: "Link-name" }}>
-          <p>The name of the route that you want to navigate to.</p>
           <p>
-            If <IJS>name</IJS> is not provided, the <IJS>Link</IJS> will re-use
-            the current location's <IJS>pathname</IJS>. This is useful for
-            linking to hashes within the current page.
+            The name of the route that the <IJS>Link</IJS> should navigate to
+            when it is clicked.
+          </p>
+
+          <p>
+            To navigate within the same location, the <IJS>name</IJS> can be
+            skipped. This is useful for linking to hashes within the current
+            page.
           </p>
 
           <CodeBlock lang="jsx">
@@ -60,8 +64,8 @@ export function LinkAPI() {
 
         <HashSection tag="h4" meta={{ title: "params", hash: "Link-params" }}>
           <p>
-            If the route that you want to navigate to (or any of its parents)
-            include path parameters, you can specify them using the params prop.
+            If the named route (or any of its parents) include path parameters,
+            they must be provided using the <IJS>params</IJS> prop.
           </p>
 
           <CodeBlock lang="jsx">
@@ -78,10 +82,8 @@ export function LinkAPI() {
           }}
         >
           <p>
-            While the pathname of the location to navigate to will be generated
-            for you, this does not cover over location properties (query, hash,
-            and state). The <IJS>query</IJS>, <IJS>hash</IJS>, and{" "}
-            <IJS>state</IJS> props are used to pass these values.
+            The <IJS>query</IJS>, <IJS>hash</IJS>, and <IJS>state</IJS> values
+            for the location to navigate to.
           </p>
 
           <CodeBlock lang="jsx">
@@ -119,10 +121,9 @@ export function LinkAPI() {
 
         <HashSection tag="h4" meta={{ title: "anchor", hash: "Link-anchor" }}>
           <p>
-            By default, when you render a <IJS>Link</IJS>, an anchor element
-            will be rendered. <IJS>anchor</IJS> lets you provide your own
-            component to be rendered instead. This can be useful for using
-            styled components to navigate.
+            A <IJS>Link</IJS> renders an anchor element by default, but this can
+            be changed using the <IJS>anchor</IJS> prop. This can be useful for
+            using styled components.
           </p>
           <Warning>
             <p>
@@ -148,18 +149,11 @@ export function LinkAPI() {
   forward={{
     className: "home"
   }}
->Home</Link>
+>
+  Home
+</Link>
 // <a href="/" class="home">Home</a>`}
           </CodeBlock>
-
-          <Note>
-            <p>
-              Previously, any extra props passed to a <IJS>Link</IJS> would be
-              forwarded to the anchor component. This behavior is now deprecated
-              and will be removed in <IJS>@curi/react-native</IJS> v2. Please
-              use the <IJS>forward</IJS> prop instead.
-            </p>
-          </Note>
         </HashSection>
       </HashSection>
     </HashSection>

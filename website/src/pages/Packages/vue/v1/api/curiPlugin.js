@@ -36,7 +36,7 @@ export function CuriPluginAPI() {
       <CodeBlock>
         {`import { CuriPlugin } from '@curi/vue';
 
-const router = create_router(history, routes);
+const router = createRouter(history, routes);
 Vue.use(CuriPlugin, { router });`}
       </CodeBlock>
     </HashSection>

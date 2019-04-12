@@ -20,7 +20,7 @@ export function ResponseConsumerAPI() {
   return (
     <HashSection meta={meta}>
       <p>
-        A context consumer component for injecting router values into
+        A context consumer component for injecting response values into
         components. Its primary use case is in class components.
       </p>
 

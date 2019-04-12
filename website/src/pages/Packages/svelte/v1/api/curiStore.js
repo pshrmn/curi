@@ -28,7 +28,7 @@ export function CuriStoreAPI() {
       <CodeBlock>
         {`import { curiStore } from '@curi/svelte';
 
-const router = create_router(history, routes);
+const router = createRouter(history, routes);
 const store = curiStore(router);`}
       </CodeBlock>
 
@@ -41,7 +41,7 @@ const store = curiStore(router);`}
         {`import { curiStore } from '@curi/svelte';
 import { Store } from 'svelte/store';
 
-const router = create_router(history, routes);
+const router = createRouter(history, routes);
 const store = new Store({...});
 curiStore(router, store);`}
       </CodeBlock>

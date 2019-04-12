@@ -70,7 +70,7 @@ function SyncAndAsyncGuide() {
               If the initial route that matches is async and you try to render
               immediately, the <IJS>response</IJS> will be <IJS>null</IJS>. You
               can wait to render until the initial response is ready with{" "}
-              <IJS>router.once()</IJS>.
+              <IJS>router.once</IJS>.
             </p>
 
             <CodeBlock>

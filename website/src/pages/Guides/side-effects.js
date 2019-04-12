@@ -37,8 +37,8 @@ function UsingSideEffectsGuide() {
 
         <p>
           Curi side effects are permanent router response handlers that are run
-          after those registered using <IJS>router.observe()</IJS> and{" "}
-          <IJS>router.once()</IJS>.
+          after those registered using <IJS>router.observe</IJS> and{" "}
+          <IJS>router.once</IJS>.
         </p>
 
         <p>
@@ -71,8 +71,8 @@ function UsingSideEffectsGuide() {
 
         <p>
           Side effects are always run after observers registered using{" "}
-          <IJS>router.observe()</IJS> and <IJS>router.once()</IJS>. Because
-          those forms of response handler registration are primarily used for
+          <IJS>router.observe</IJS> and <IJS>router.once</IJS>. Because those
+          forms of response handler registration are primarily used for
           rendering the application, this means that the side effects will be
           called after the application has re-rendered.
         </p>

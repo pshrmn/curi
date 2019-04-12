@@ -6,8 +6,7 @@ import {
   CodeBlock,
   IJS,
   Note,
-  Warning,
-  ScrollableTable
+  Warning
 } from "../../../../../components/package/common";
 
 export const meta = {
@@ -19,7 +18,10 @@ export function RoutePropertiesAPI() {
   return (
     <HashSection meta={meta}>
       <HashSection meta={{ title: "route.name", hash: "name" }} tag="h3">
-        <p>A string, this must be unique for every route.</p>
+        <p>
+          A string that will be used to identify a route. This must be unique
+          for every route.
+        </p>
 
         <CodeBlock>
           {`[
@@ -32,26 +34,35 @@ export function RoutePropertiesAPI() {
 
       <HashSection meta={{ title: "route.path", hash: "path" }} tag="h3">
         <p>
-          A string pattern describing what the route matches. Whenever the
-          router receives a new location, it will loop through the known route
-          paths to determine which one matches the new location's{" "}
-          <IJS>pathname</IJS> the best.
+          A string pattern describing what the route matches. <IJS>path</IJS>{" "}
+          strings should not have a leading slash.
         </p>
+
+        <CodeBlock>
+          {`[
+  { path: "" }, // yes
+  { path: "/" }, // no
+]`}
+        </CodeBlock>
+
         <p>
-          Curi uses{" "}
-          <a href="https://github.com/pillarjs/path-to-regexp#parameters">
+          A route's <IJS>path</IJS> is used to check if it matches a location's{" "}
+          <IJS>pathname</IJS>. When the <IJS>path</IJS> matches, the route is
+          selected.
+        </p>
+
+        <p>
+          Path matching is done using regular expressions compiled by{" "}
+          <a href="https://github.com/pillarjs/path-to-regexp">
             <IJS>path-to-regexp</IJS>
-          </a>{" "}
-          for path matching, which enables routes to have{" "}
-          <a href="https://github.com/pillarjs/path-to-regexp#parameters">
-            path parameters
           </a>
-          . When a route with parameters matches a location, the parameters will
-          be be parsed from the location's <IJS>pathname</IJS>.
-        </p>
-        <p>
-          <IJS>path</IJS> strings should <strong>not</strong> have a leading
-          slash.
+          . A path can include{" "}
+          <a href="https://github.com/pillarjs/path-to-regexp#parameters">
+            parameters
+          </a>
+          , which are dynamic variables that are parsed from a location's{" "}
+          <IJS>pathname</IJS>. For advanced path formatting, please read{" "}
+          <IJS>path-to-regexp</IJS>'s documentaion.
         </p>
 
         <CodeBlock>
@@ -92,8 +103,17 @@ export function RoutePropertiesAPI() {
         </p>
 
         <p>
-          The <IJS>resolve</IJS> function is called every time that a route
-          matches the current location.
+          Every time that a route with a <IJS>resolve</IJS> function matches,
+          the route's <IJS>resolve</IJS> function will be called. Simple caching
+          can be done with the <IJS>once</IJS> function from{" "}
+          <Link
+            name="Package"
+            params={{ package: "helpers", version: "v2" }}
+            hash="once"
+          >
+            <IJS>@curi/helpers</IJS>
+          </Link>
+          , while more advanced caching is left to the user.
         </p>
 
         <p>
@@ -118,12 +138,12 @@ export function RoutePropertiesAPI() {
             a Redux store) in <IJS>resolve</IJS> because it is possible that
             navigating to the route might be cancelled. If you must perform side
             effects for a route, you should do so in the route's{" "}
-            <IJS>response</IJS> function.
+            <IJS>response</IJS> function, but even that should be avoided.
           </p>
         </Note>
 
         <p>
-          The value resolved by the <IJS>resolve</IJS> function will be passed
+          The value returned by the <IJS>resolve</IJS> function will be passed
           to the route's <IJS>response</IJS> function through its{" "}
           <IJS>resolved</IJS> property. If there is an uncaught error,{" "}
           <IJS>resolved</IJS> will be <IJS>null</IJS> and the <IJS>error</IJS>{" "}
@@ -146,208 +166,115 @@ export function RoutePropertiesAPI() {
         </CodeBlock>
       </HashSection>
 
-      <HashSection meta={{ title: "route.response()", hash: "response" }}>
+      <HashSection meta={{ title: "route.response", hash: "response" }}>
+        <p>A function for modifying the response object.</p>
+
         <p>
-          A function for modifying the response object. This returns an object
-          whose properties will be merged with the matched route properties to
-          create the "final" response.
+          The object returned by a route's <IJS>response</IJS> function will be
+          merged with the route's intrinsic match properties to create the
+          response object.
         </p>
+
         <p>
           Only valid properties will be merged onto the response; everything
           else will be ignored. The valid properties are:
         </p>
 
-        <ol>
-          <li>
+        <HashSection
+          tag="h3"
+          meta={{ title: "Arguments", hash: "response-arguments" }}
+        >
+          <HashSection
+            tag="h4"
+            meta={{ title: "options", hash: "response-options" }}
+          >
             <p>
-              <IJS>body</IJS> - This is usually what you will render.
-            </p>
-
-            <CodeBlock>
-              {`import Home from "./components/Home";
-const routes = prepareRoutes([
-  {
-    name: "Home",
-    path: "",
-    response() {
-      return { body: Home };
-    }
-  },
-  // ...
-]);
-// response = { body: Home, ... }`}
-            </CodeBlock>
-          </li>
-          <li>
-            <p>
-              <IJS>status</IJS> - A number. This is useful for redirects or
-              locations caught by your catch-all route while using server-side
-              rendering. The default status value is <IJS>200</IJS>.
+              A <IJS>response</IJS> function is passed an object with a number
+              of properties that can be useful for modifying the response.
             </p>
 
             <CodeBlock>
               {`{
-  response(){
-    return {
-      status: 301,
-      redirectTo: {...}
-    };
-  }
-}
-// response = { status: 301, ... }`}
-            </CodeBlock>
-          </li>
-          <li>
-            <p>
-              <IJS>error</IJS> - If an error occurs with the route's{" "}
-              <IJS>resolve</IJS> function, you might want to attach an error
-              message to the response.
-            </p>
-
-            <CodeBlock>
-              {`{
-  resolve() {
-    return Promise.reject("woops!");
-  },
-  response({ error }) {
-    return { error };
-  }
-}
-// response = { error: "woops!", ... }`}
-            </CodeBlock>
-          </li>
-          <li>
-            <p>
-              <IJS>data</IJS> - Anything you want it to be.
-            </p>
-
-            <CodeBlock>
-              {`{
-  response() {
-    return { data: Math.random() };
-  }
-}
-// response = { data: 0.8651606708109429, ... }`}
-            </CodeBlock>
-          </li>
-          <li>
-            <p>
-              <IJS>title</IJS> - This can be used with{" "}
-              <IJS>@curi/side-effect-title</IJS> to update the page's{" "}
-              <IJS>document.title</IJS>.
-            </p>
-
-            <CodeBlock>
-              {`{
-  response({ params }) {
-    return { title: \`User \${params.id}\` };
-  }
-}
-// when visting /user/2
-// response = { title: "User 2", ... }`}
-            </CodeBlock>
-          </li>
-          <li>
-            <p>
-              <IJS>redirectTo</IJS> - An object with the <IJS>name</IJS> of the
-              route to redirect to, <IJS>params</IJS> (if required), and
-              optional <IJS>hash</IJS>, <IJS>query</IJS>, and <IJS>state</IJS>{" "}
-              properties.
-            </p>
-            <p>
-              The other values are copied directly, but <IJS>redirectTo</IJS>{" "}
-              will be turned into a location object using the object's{" "}
-              <IJS>name</IJS> (and <IJS>params</IJS> if required).
-            </p>
-
-            <CodeBlock>
-              {`[
-  {
-    name: "Old Photo",
-    path: "photo/:id",
-    response({ params }) {
-      return {
-        redirectTo: { name: "Photo", params }
-      };
-    }
-  },
-  {
-    name: "New Photo",
-    path: "p/:id"
-  }
-]
-// when the user navigates to /photo/1:
-// response = { redirectTo: { pathname: "/p/1", ... } }`}
-            </CodeBlock>
-          </li>
-        </ol>
-
-        <p>
-          This function is passed an object with a number of properties that can
-          be useful for modifying the response.
-        </p>
-
-        <CodeBlock>
-          {`{
   response: ({ match, resolved, error }) => {
     // ...
   }
 }`}
-        </CodeBlock>
+            </CodeBlock>
 
-        <HashSection meta={{ title: "match", hash: "response-match" }} tag="h3">
-          <p>An object with the matched route properties of a response.</p>
-          <ScrollableTable>
-            <thead>
-              <tr>
-                <th>property</th>
-                <th>description</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>name</td>
-                <td>the name of the matched route</td>
-              </tr>
-              <tr>
-                <td>params</td>
-                <td>route parameters parsed from the location</td>
-              </tr>
-              <tr>
-                <td>partials</td>
-                <td>the names of any ancestor routes of the matched route</td>
-              </tr>
-              <tr>
-                <td>location</td>
-                <td>the location that was used to match the route</td>
-              </tr>
-              <tr>
-                <td>key</td>
-                <td>
-                  a two number tuple. The first number is the location's place
+            <HashSection
+              tag="h5"
+              meta={{ title: "match", hash: "response-options-match" }}
+            >
+              <p>
+                An object with the intrinsic route properties of a response.
+              </p>
+
+              <HashSection
+                tag="h6"
+                meta={{ title: "name", hash: "response-options-match-name" }}
+              >
+                <p>The name of the matched route.</p>
+              </HashSection>
+
+              <HashSection
+                tag="h6"
+                meta={{
+                  title: "params",
+                  hash: "response-options-match-params"
+                }}
+              >
+                <p>Route parameters parsed from the location.</p>
+              </HashSection>
+
+              <HashSection
+                tag="h6"
+                meta={{
+                  title: "partials",
+                  hash: "response-options-match-partials"
+                }}
+              >
+                <p>The names of any ancestor routes of the matched route.</p>
+              </HashSection>
+
+              <HashSection
+                tag="h6"
+                meta={{
+                  title: "location",
+                  hash: "response-options-match-location"
+                }}
+              >
+                <p>The location that was used to match the route.</p>
+              </HashSection>
+
+              <HashSection
+                tag="h6"
+                meta={{ title: "key", hash: "response-options-match-key" }}
+              >
+                <p>
+                  A two number tuple. The first number is the location's place
                   in the session array. The second number starts and zero and is
                   incremented by <IJS>replace</IJS> navigation (<IJS>[1,0]</IJS>{" "}
                   would be replaced by <IJS>[1,1]</IJS>).
-                </td>
-              </tr>
-            </tbody>
-          </ScrollableTable>
-        </HashSection>
+                </p>
+              </HashSection>
+            </HashSection>
 
-        <HashSection
-          meta={{ title: "resolved", hash: "response-resolved" }}
-          tag="h3"
-        >
-          <p>
-            <IJS>resolved</IJS> is an object with the values resolved by the{" "}
-            <IJS>resolve</IJS> functions.
-          </p>
-          <p>
-            If a route isn't async, <IJS>resolved</IJS> will be <IJS>null</IJS>.
-          </p>
+            <HashSection
+              tag="h5"
+              meta={{ title: "resolved", hash: "response-resolved" }}
+            >
+              <p>
+                An object with the value returned by the route's{" "}
+                <IJS>resolve</IJS> function.
+              </p>
 
-          <CodeBlock>
-            {`// attach resolved data to the response
+              <p>
+                If a route isn't async, <IJS>resolved</IJS> will be{" "}
+                <IJS>null</IJS>.
+              </p>
+
+              <CodeBlock>
+                {`// attach resolved data to the response
 const user = {
   name: 'User',
   path: ':id',
@@ -361,17 +288,26 @@ const user = {
     };
   }
 }`}
-          </CodeBlock>
-        </HashSection>
+              </CodeBlock>
+            </HashSection>
 
-        <HashSection meta={{ title: "error", hash: "response-error" }} tag="h3">
-          <p>
-            <IJS>error</IJS> is an uncaught error thrown by the route's{" "}
-            <IJS>resolve</IJS> function.
-          </p>
+            <HashSection
+              tag="h5"
+              meta={{ title: "error", hash: "response-error" }}
+            >
+              <p>
+                If the route has a <IJS>resolve</IJS> function that throws an
+                uncaught error, the <IJS>error</IJS> property will be that
+                error. Otherwise, the property will be <IJS>null</IJS>.
+              </p>
 
-          <CodeBlock>
-            {`// check if any of a route's resolve functions threw
+              <p>
+                Ideally, the <IJS>resolve</IJS> function will always catch its
+                errors, but <IJS>error</IJS> serves as a safety check.
+              </p>
+
+              <CodeBlock>
+                {`// check if any of a route's resolve functions threw
 const user = {
   name: 'User',
   path: ':id',
@@ -388,18 +324,164 @@ const user = {
     };
   }
 }`}
-          </CodeBlock>
+              </CodeBlock>
+            </HashSection>
+          </HashSection>
+        </HashSection>
+
+        <HashSection
+          tag="h3"
+          meta={{ title: "Return Value", hash: "response-return" }}
+        >
+          <HashSection tag="h4" meta={{ title: "body", hash: "response-body" }}>
+            <p>
+              Typically, the <IJS>body</IJS> is a component (or components) that
+              will be rendered.
+            </p>
+
+            <CodeBlock>
+              {`import Home from "./components/Home";
+const routes = prepareRoutes([
+  {
+    name: "Home",
+    path: "",
+    response() {
+      return { body: Home };
+    }
+  },
+  // ...
+]);
+// response = { body: Home, ... }`}
+            </CodeBlock>
+          </HashSection>
+
+          <HashSection
+            tag="h4"
+            meta={{ title: "status", hash: "response-status" }}
+          >
+            <p>
+              A number. This is useful for redirects or locations caught by your
+              catch-all route while using server-side rendering. The default
+              status value is <IJS>200</IJS>.
+            </p>
+
+            <CodeBlock>
+              {`{
+  response(){
+    return {
+      status: 301,
+      redirect: {...}
+    };
+  }
+}
+// response = { status: 301, ... }`}
+            </CodeBlock>
+          </HashSection>
+
+          <HashSection
+            tag="h4"
+            meta={{ title: "error", hash: "response-error" }}
+          >
+            <p>
+              If an error occurs with the route's <IJS>resolve</IJS> function,
+              you might want to attach an error message to the response.
+            </p>
+
+            <CodeBlock>
+              {`{
+  resolve() {
+    return Promise.reject("woops!");
+  },
+  response({ error }) {
+    return { error };
+  }
+}
+// response = { error: "woops!", ... }`}
+            </CodeBlock>
+          </HashSection>
+
+          <HashSection tag="h4" meta={{ title: "data", hash: "response-data" }}>
+            <p>Anything you want it to be.</p>
+
+            <CodeBlock>
+              {`{
+  response() {
+    return { data: Math.random() };
+  }
+}
+// response = { data: 0.8651606708109429, ... }`}
+            </CodeBlock>
+          </HashSection>
+
+          <HashSection
+            tag="h4"
+            meta={{ title: "title", hash: "response-title" }}
+          >
+            <p>
+              This can be used with <IJS>@curi/side-effect-title</IJS> to update
+              the page's <IJS>document.title</IJS>.
+            </p>
+
+            <CodeBlock>
+              {`{
+  response({ params }) {
+    return { title: \`User \${params.id}\` };
+  }
+}
+// when visting /user/2
+// response = { title: "User 2", ... }`}
+            </CodeBlock>
+          </HashSection>
+
+          <HashSection
+            tag="h4"
+            meta={{ title: "redirect", hash: "response-redirect" }}
+          >
+            <p>
+              <IJS>redirect</IJS> - An object with the <IJS>name</IJS> of the
+              route to redirect to, <IJS>params</IJS> (if required), and
+              optional <IJS>hash</IJS>, <IJS>query</IJS>, and <IJS>state</IJS>{" "}
+              properties.
+            </p>
+
+            <p>
+              The other values are copied directly, but <IJS>redirect</IJS> will
+              be turned into a location object using the object's{" "}
+              <IJS>name</IJS> (and <IJS>params</IJS> if required).
+            </p>
+
+            <CodeBlock>
+              {`[
+  {
+    name: "Old Photo",
+    path: "photo/:id",
+    response({ params }) {
+      return {
+        redirect: { name: "Photo", params }
+      };
+    }
+  },
+  {
+    name: "New Photo",
+    path: "p/:id"
+  }
+]
+// when the user navigates to /photo/1:
+// response = { redirect: { pathname: "/p/1", ... } }`}
+            </CodeBlock>
+          </HashSection>
         </HashSection>
       </HashSection>
 
       <HashSection meta={{ title: "children", hash: "children" }} tag="h3">
+        <p>An optional array of route objects for creating nested routes.</p>
+
         <p>
-          An optional array of route objects for creating nested routes. Any
-          child routes will be matched relative to their parent route's{" "}
+          Any child routes will be matched relative to their parent route's{" "}
           <IJS>path</IJS>. This means that if a parent route's <IJS>path</IJS>{" "}
-          string is <IJS>'one'</IJS> and a child route's <IJS>path</IJS> string
-          is <IJS>'two'</IJS>, the child will match when the pathname is{" "}
-          <IJS>'one/two'</IJS>.
+          string is <IJS>"one"</IJS> and a child route's <IJS>path</IJS> string
+          is <IJS>"two"</IJS>, the child will match a location whose pathname is{" "}
+          <IJS>/one/two</IJS>.
         </p>
 
         <CodeBlock>
@@ -421,16 +503,22 @@ const user = {
 
       <HashSection meta={{ title: "params", hash: "params" }} tag="h3">
         <p>
-          When <IJS>path-to-regexp</IJS> matches your paths, all parameters are
-          extracted as strings. If you prefer for some route params to be other
-          types, you can provide functions to transform params using the{" "}
-          <IJS>route.params</IJS> object.
+          When <IJS>path-to-regexp</IJS> matches paths, all parameters are
+          extracted as strings. The <IJS>params</IJS> object is used to specify
+          functions to transform the extracted value.
         </p>
+
         <p>
           Properties of the <IJS>route.params</IJS> object are the names of
           params to be parsed. The paired value should be a function that takes
           a string (the value from the <IJS>pathname</IJS>) and returns a new
           value (transformed using the function you provide).
+        </p>
+
+        <p>
+          By default, each param is decoded using <IJS>decodeURIComponent</IJS>.
+          A param function can be used to leave the param in its encoded form or
+          to parse an integer param into a number.
         </p>
 
         <CodeBlock>
@@ -448,6 +536,23 @@ const user = {
 // response.params will be { num: 1 }
 // instead of { num: "1" }`}
         </CodeBlock>
+
+        <p>
+          Unnamed params are referred to by their index in the <IJS>path</IJS>.
+        </p>
+
+        <CodeBlock>
+          {`const routes = prepareRoutes([
+  {
+    name: 'Not Found',
+    path: '(.*)',
+    params: {
+      // skip decoding the unmatched value
+      0: value => value
+    }
+  }
+]);`}
+        </CodeBlock>
       </HashSection>
 
       <HashSection
@@ -455,38 +560,11 @@ const user = {
         tag="h3"
       >
         <p>
-          Curi uses{" "}
+          An object for configuring how the{" "}
           <a href="https://github.com/pillarjs/path-to-regexp">
             <IJS>path-to-regexp</IJS>
           </a>{" "}
-          to handle route matching and pathname generation. Each route can
-          configure both its route matching and pathname generation through its{" "}
-          <IJS>pathOptions</IJS> property.
-        </p>
-
-        <Note>
-          <p>
-            If a route has a children array property, it will{" "}
-            <strong>always</strong> have the <IJS>end</IJS> path option set to{" "}
-            <IJS>false</IJS>.
-          </p>
-        </Note>
-
-        <p>
-          For route matching, the options are passed through a <IJS>match</IJS>{" "}
-          object. You can see the options and their default values in the{" "}
-          <a href="https://github.com/pillarjs/path-to-regexp#usage">
-            <IJS>path-to-regexp</IJS> documentation
-          </a>
-          .
-        </p>
-
-        <p>
-          For pathname generation, the options are passed through a{" "}
-          <IJS>compile</IJS> object. There is only one possible option, which is
-          an <IJS>encode</IJS> function for encoding params. The default{" "}
-          <IJS>encode</IJS> function encodes params using{" "}
-          <IJS>encodeURIComponent</IJS>.
+          handles the <IJS>path</IJS>.
         </p>
 
         <CodeBlock>
@@ -503,6 +581,45 @@ const user = {
   }
 }`}
         </CodeBlock>
+
+        <HashSection
+          tag="h4"
+          meta={{ title: "match", hash: "pathOptions-match" }}
+        >
+          <p>
+            Properties for parsing the <IJS>path</IJS> into a regular
+            expression.
+          </p>
+
+          <p>
+            You can see the options and their default values in the{" "}
+            <a href="https://github.com/pillarjs/path-to-regexp#usage">
+              <IJS>path-to-regexp</IJS> documentation
+            </a>
+            .
+          </p>
+
+          <Note>
+            <p>
+              If a route has a children array property, it will{" "}
+              <strong>always</strong> have the <IJS>end</IJS> path option set to{" "}
+              <IJS>false</IJS>.
+            </p>
+          </Note>
+        </HashSection>
+
+        <HashSection
+          tag="h4"
+          meta={{ title: "compile", hash: "pathOptions-compile" }}
+        >
+          <p>
+            For pathname generation, the options are passed through a{" "}
+            <IJS>compile</IJS> object. There is only one possible option, which
+            is an <IJS>encode</IJS> function for encoding params. The default{" "}
+            <IJS>encode</IJS> function encodes params using{" "}
+            <IJS>encodeURIComponent</IJS>.
+          </p>
+        </HashSection>
       </HashSection>
 
       <HashSection meta={{ title: "extra", hash: "extra" }} tag="h3">

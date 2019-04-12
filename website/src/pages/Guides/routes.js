@@ -419,10 +419,10 @@ const routes = prepareRoutes([
 
       <HashSection meta={prepareMeta}>
         <p>
-          The routes array should be wrapped in a <IJS>prepareRoutes()</IJS>{" "}
-          call. This will pre-build the routes for the router, which is
-          especially useful for server rendering, where a new router is created
-          for every request.
+          The routes array should be wrapped in a <IJS>prepareRoutes</IJS> call.
+          This will pre-build the routes for the router, which is especially
+          useful for server rendering, where a new router is created for every
+          request.
         </p>
 
         <CodeBlock>

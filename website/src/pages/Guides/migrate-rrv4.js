@@ -377,11 +377,10 @@ const Inbox = ({ match }) => (
           <p>
             With Curi, we also need to re-render our application every time that
             the location changes. We will do this by creating a root Curi
-            component by calling the <IJS>createRouterComponent()</IJS>{" "}
-            function, which comes from the <IJS>@curi/react-dom</IJS> package,
-            and passing it our Curi router. While the name of this component is
-            entirely up to you, we will refer to it as the <IJS>Router</IJS>{" "}
-            here.
+            component by calling the <IJS>createRouterComponent</IJS> function,
+            which comes from the <IJS>@curi/react-dom</IJS> package, and passing
+            it our Curi router. While the name of this component is entirely up
+            to you, we will refer to it as the <IJS>Router</IJS> here.
           </p>
           <p>
             The <IJS>Router</IJS> will setup an observer on the provided router
@@ -391,8 +390,8 @@ const Inbox = ({ match }) => (
             renders the application using the <IJS>response</IJS>.
           </p>
           <p>
-            When the <IJS>Router</IJS>'s <IJS>children()</IJS> function is
-            called, it will receive an object with three properties:
+            When the <IJS>Router</IJS>'s <IJS>children</IJS> function is called,
+            it will receive an object with three properties:
           </p>
           <ol>
             <li>
@@ -477,12 +476,12 @@ ReactDOM.render((
             It was mentioned above that there is no need for the <IJS>App</IJS>{" "}
             component with Curi. If you want to have an <IJS>App</IJS>{" "}
             component, you can render it either inside of the{" "}
-            <IJS>children()</IJS> function or as a parent of your{" "}
+            <IJS>children</IJS> function or as a parent of your{" "}
             <IJS>Router</IJS>. This can be useful for rendering content that is
             unrelated to specific routes, like a page header or menu.
           </p>
           <p>
-            Rendering the <IJS>App</IJS> inside of the <IJS>children()</IJS>{" "}
+            Rendering the <IJS>App</IJS> inside of the <IJS>children</IJS>{" "}
             function is necessary if any of the components rendered by the{" "}
             <IJS>App</IJS> are location aware components, since they need to
             access the Curi router (through React’s context, which the{" "}

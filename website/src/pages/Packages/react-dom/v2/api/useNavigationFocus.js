@@ -22,7 +22,8 @@ export function UseNavigationFocusAPI() {
   return (
     <HashSection meta={meta}>
       <p>
-        The <IJS>useNavigationFocus</IJS> hook is used to focus a DOM element.
+        The <IJS>useNavigationFocus</IJS> hook is used to focus a DOM element
+        after a navigation.
       </p>
 
       <Note>
@@ -53,7 +54,9 @@ function App() {
       <p>
         The focused element will have an outline (the exact style varies by
         browser). You can remove this with CSS by setting <IJS>outline</IJS> to{" "}
-        <IJS>"none"</IJS>.
+        <IJS>"none"</IJS>. This should only be done for non-focusable elements.
+        Setting <IJS>outline</IJS> to <IJS>"none"</IJS> globally is bad for
+        accessibility.
       </p>
 
       <CodeBlock lang="jsx">

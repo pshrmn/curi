@@ -22,8 +22,8 @@ export function StaticFilesAPI() {
   return (
     <HashSection meta={meta}>
       <p>
-        The <IJS>staticFiles()</IJS> function is used to generate HTML files for
-        a static website and save them to the disk. An HTML file will be created
+        The <IJS>staticFiles</IJS> function is used to generate HTML files for a
+        static website and save them to the disk. An HTML file will be created
         for each page that you provide.
       </p>
       <p>
@@ -48,7 +48,7 @@ staticFiles({
       </CodeBlock>
 
       <p>
-        <IJS>staticFiles()</IJS> returns a Promise that resolve with an array of
+        <IJS>staticFiles</IJS> returns a Promise that resolve with an array of
         results. Each entry in the results array contains the{" "}
         <IJS>pathname</IJS> of the result, a <IJS>success</IJS> boolean, and, if{" "}
         <IJS>success</IJS> is false, the <IJS>error</IJS> that occurred.
@@ -151,16 +151,16 @@ staticFiles({
             }}
           >
             <p>
-              The <IJS>getRouterOptions()</IJS> function returns the options for
-              a router. This is only necessary if you need to use route
+              The <IJS>getRouterOptions</IJS> function returns the options for a
+              router. This is only necessary if you need to use route
               interactions, side effects, or other route options.
             </p>
             <p>
-              When you call <IJS>staticFiles()</IJS>, a router is created for
-              each page. <IJS>staticFiles()</IJS> creates its own{" "}
-              <IJS>history</IJS> instances, and gets its routes from the{" "}
-              <IJS>routes</IJS> options, but the router may also need to be
-              provided with other options, like route interactions.
+              When you call <IJS>staticFiles</IJS>, a router is created for each
+              page. <IJS>staticFiles</IJS> creates its own <IJS>history</IJS>{" "}
+              instances, and gets its routes from the <IJS>routes</IJS> options,
+              but the router may also need to be provided with other options,
+              like route interactions.
             </p>
             <Note>
               <p>
@@ -229,15 +229,15 @@ staticFiles({
               returns the content that should be inserted into the page's HTML.
             </p>
             <p>
-              <IJS>render()</IJS>s behavior will depend on what type of
+              <IJS>render</IJS>s behavior will depend on what type of
               application is being built. For a React application, this would
-              call the <IJS>renderToString()</IJS> method from{" "}
+              call the <IJS>renderToString</IJS> method from{" "}
               <IJS>react-dom/server</IJS>. A Vue application would use{" "}
               <IJS>vue-server-renderer</IJS>.
             </p>
             <p>
-              <IJS>render()</IJS> can return anything you want it to. This may
-              be a string for simple rendering, or an object with multiple
+              <IJS>render</IJS> can return anything you want it to. This may be
+              a string for simple rendering, or an object with multiple
               properties for more complex rendering (e.g. title/style properties
               for the <Cmp>head</Cmp> and rendered markup to insert in the{" "}
               <Cmp>body</Cmp>).
@@ -246,11 +246,11 @@ staticFiles({
             <CodeBlock lang="jsx">
               {`// for a React application
 import { renderToString } from "react-dom";
-import { create_router_component } from "@curi/react-dom";
+import { createRouterComponent } from "@curi/react-dom";
 
 function render(emitted) {
   const { router } = emitted;
-  const Router = create_router_component(router);
+  const Router = createRouterComponent(router);
   return renderToString(
     <Router>
       <App />
@@ -272,9 +272,8 @@ staticFiles({
             meta={{ title: "insert()", hash: "staticFiles-insert" }}
           >
             <p>
-              A function that takes the value returned by the{" "}
-              <IJS>render()</IJS> function and inserts it into the full HTML for
-              a page.
+              A function that takes the value returned by the <IJS>render</IJS>{" "}
+              function and inserts it into the full HTML for a page.
             </p>
 
             <CodeBlock>

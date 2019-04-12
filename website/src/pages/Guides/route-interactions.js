@@ -167,7 +167,7 @@ function confirmInteraction() {
               <td>reset</td>
               <td>
                 a function that will reset the interaction's internal state
-                (this is used if you call <IJS>router.replaceRoutes()</IJS>)
+                (this is used if you call <IJS>router.replaceRoutes</IJS>)
               </td>
             </tr>
           </tbody>
@@ -225,9 +225,9 @@ router.route.confirm('Elsewhere'); // false`}
 
           <p>
             The second argument passed to a router interaction's{" "}
-            <IJS>register()</IJS> function is a parent data object. For root
+            <IJS>register</IJS> function is a parent data object. For root
             routes, this will be <IJS>undefined</IJS>. For nested routes, this
-            is the value returned by the parent route's <IJS>register()</IJS>{" "}
+            is the value returned by the parent route's <IJS>register</IJS>{" "}
             function.
           </p>
 

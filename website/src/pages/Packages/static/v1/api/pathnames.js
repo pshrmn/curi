@@ -20,9 +20,9 @@ export function PathnamesAPI() {
   return (
     <HashSection meta={meta}>
       <p>
-        The <IJS>pathnames()</IJS> function is used to generate pathnames from
-        an array of provided page descriptors. This can be useful for generating
-        a sitemap.
+        The <IJS>pathnames</IJS> function is used to generate pathnames from an
+        array of provided page descriptors. This can be useful for generating a
+        sitemap.
       </p>
 
       <HashSection tag="h4" meta={argumentsMeta}>

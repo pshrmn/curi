@@ -33,8 +33,8 @@ function SideEffectExample() {
         <p>
           Side effects are observer functions that are run when a new response
           is created. They are called after other response handlers (observers
-          that were set using <IJS>router.observe()</IJS> and one time functions
-          that were set using <IJS>router.once()</IJS>). They receive the new
+          that were set using <IJS>router.observe</IJS> and one time functions
+          that were set using <IJS>router.once</IJS>). They receive the new
           response and an object with information about the navigation.
         </p>
 

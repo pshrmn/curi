@@ -3,7 +3,6 @@ import React from "react";
 import {
   HashSection,
   CodeBlock,
-  Note,
   IJS
 } from "../../../../../components/package/common";
 
@@ -25,14 +24,21 @@ export function UseLocationAPI() {
       </p>
 
       <CodeBlock lang="jsx">
-        {`import { useLocation } from '@curi/react-dom';
-        
-useLocation({
+        {`import { useLocation } from '@curi/react-native';
+
+const location = useLocation({
   name: "Video",
   params: { id: "jaifeo9" } },
   hash: "comments",
   query: "t=15"
-});`}
+});
+/*
+location = {
+  pathname: "/video/jaifeo9",
+  hash: "comments",
+  query: "t=15"
+}
+*/`}
       </CodeBlock>
 
       <HashSection tag="h3" meta={optsMeta}>

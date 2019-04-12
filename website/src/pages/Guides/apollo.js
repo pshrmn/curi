@@ -182,11 +182,11 @@ const Noun = ({ response }) => (
         <p>
           You can use your Apollo client instance to call queries in a route's{" "}
           <IJS>resolve</IJS> function. <IJS>resolve</IJS> is expected to return
-          a Promise, which is exactly what <IJS>client.query()</IJS> returns.
+          a Promise, which is exactly what <IJS>client.query</IJS> returns.
           Tightly pairing Curi and Apollo is mostly center around using{" "}
-          <IJS>resolve</IJS> to return a <IJS>client.query()</IJS> call. This
-          will delay navigation until after a route's GraphQL data has been
-          loaded by Apollo.
+          <IJS>resolve</IJS> to return a <IJS>client.query</IJS> call. This will
+          delay navigation until after a route's GraphQL data has been loaded by
+          Apollo.
         </p>
 
         <p>

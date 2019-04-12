@@ -173,7 +173,7 @@ npm run start`}
               params={{ package: "helpers", version: "v1" }}
               hash="once"
             >
-              <IJS>once()</IJS>
+              <IJS>once</IJS>
             </Link>{" "}
             function for simple caching, but leaves more advanced caching
             solutions to the user.
@@ -182,7 +182,7 @@ npm run start`}
 
         <p>
           Curi uses Promises to manage async code, so async functions should
-          return Promises. <IJS>Promise.resolve()</IJS> can be used to wrap a
+          return Promises. <IJS>Promise.resolve</IJS> can be used to wrap a
           return value in a Promise.
         </p>
 
@@ -226,7 +226,7 @@ const routes = prepareRoutes([
           <p>
             If you attempt to render immediately after creating a router and the
             initial response is still being created, the <IJS>response</IJS>{" "}
-            that will be passed to the <IJS>Router</IJS>'s <IJS>children()</IJS>{" "}
+            that will be passed to the <IJS>Router</IJS>'s <IJS>children</IJS>{" "}
             will be <IJS>null</IJS>.
           </p>
 
@@ -234,9 +234,9 @@ const routes = prepareRoutes([
 
           <p>
             The first is to delay rendering by placing your{" "}
-            <IJS>ReactDOM.render()</IJS> call inside of a{" "}
-            <IJS>router.once()</IJS> callback. This will guarantee that the
-            render isn't called until the first response is ready.
+            <IJS>ReactDOM.render</IJS> call inside of a <IJS>router.once</IJS>{" "}
+            callback. This will guarantee that the render isn't called until the
+            first response is ready.
           </p>
 
           <CodeBlock>
@@ -298,8 +298,8 @@ function App() {
         <HashSection meta={splittingMeta} className="aside" tag="h3">
           <p>
             Code splitting works by "dynamically" importing modules using the{" "}
-            <IJS>import()</IJS> function. When bundlers like Webpack see{" "}
-            <IJS>import()</IJS> functions, they know to create a separate bundle
+            <IJS>import</IJS> function. When bundlers like Webpack see{" "}
+            <IJS>import</IJS> functions, they know to create a separate bundle
             for that module (and that module's imports, etc.).
           </p>
 
@@ -308,7 +308,7 @@ function App() {
             <a href="https://webpack.js.org/api/module-methods/#magic-comments">
               <IJS>webpackChunkName</IJS>
             </a>{" "}
-            magic comment with an <IJS>import()</IJS> call.
+            magic comment with an <IJS>import</IJS> call.
           </p>
 
           <p>
@@ -327,9 +327,9 @@ import(/* webpackChunkName: "Test" */ "./components/Test.js")`}
           </CodeBlock>
 
           <p>
-            <IJS>import()</IJS> returns a module object, so if you want to
-            access a module's default export, you can use a <IJS>then</IJS>{" "}
-            function to get that value.
+            <IJS>import</IJS> returns a module object, so if you want to access
+            a module's default export, you can use a <IJS>then</IJS> function to
+            get that value.
           </p>
 
           <CodeBlock>
@@ -399,9 +399,9 @@ const routes = prepareRoutes([
 
         <p>
           We can now update the <IJS>routes.js</IJS> module to remove the
-          imports at the top of the file and use <IJS>import()</IJS> to import
-          the route components. We will use <IJS>preferDefault</IJS> to only
-          resolve the component instead of the entire module object.
+          imports at the top of the file and use <IJS>import</IJS> to import the
+          route components. We will use <IJS>preferDefault</IJS> to only resolve
+          the component instead of the entire module object.
         </p>
         <p>
           The <IJS>response</IJS> functions should also be updated to set the
@@ -463,7 +463,7 @@ export default prepareRoutes([
         </CodeBlock>
 
         <p>
-          For this tutorial, we will use <IJS>router.once()</IJS> to delay the
+          For this tutorial, we will use <IJS>router.once</IJS> to delay the
           initial render while we wait for the initial response. We should
           update the <IJS>index.js</IJS> module to do this.
         </p>
@@ -549,7 +549,7 @@ registerServiceWorker();`}
           <p>
             We need to write two functions. The first returns a list of all
             books and the second returns the data for a specific book. For both,
-            we can use <IJS>Promise.resolve()</IJS> to return a Promise, even
+            we can use <IJS>Promise.resolve</IJS> to return a Promise, even
             though we don't really have any asynchronous code being run.
           </p>
 
@@ -625,13 +625,13 @@ registerServiceWorker();`}
           response.
         </p>
         <p>
-          The <IJS>book()</IJS> API call expects to be given the <IJS>id</IJS>{" "}
+          The <IJS>book</IJS> API call expects to be given the <IJS>id</IJS>{" "}
           number of the book it should return data for. We can grab the correct
           param (<IJS>id</IJS>) from the <IJS>params</IJS> property. However,
           when params are parsed, they are stored as strings. To convert it to a
           number, we can use the route's <IJS>params</IJS> property to tell Curi
           how to parse the <IJS>id</IJS>. By giving it a function that calls{" "}
-          <IJS>parseInt()</IJS> on the provided value, <IJS>params.id</IJS> will
+          <IJS>parseInt</IJS> on the provided value, <IJS>params.id</IJS> will
           be a number instead of a string.
         </p>
 
@@ -784,9 +784,9 @@ export default function Book({ response, router }) {
           look at some of the <IJS>@curi/react-dom</IJS> components that are
           navigation-aware. The implementation here isn't important, so you can
           just copy+paste the code. The only thing to know is that the{" "}
-          <IJS>BOOKS()</IJS> function has a one second delay and the{" "}
-          <IJS>BOOK()</IJS> function has a 2.5 second delay the first time a
-          book is requested (and responds instantly on subsequent calls).
+          <IJS>BOOKS</IJS> function has a one second delay and the{" "}
+          <IJS>BOOK</IJS> function has a 2.5 second delay the first time a book
+          is requested (and responds instantly on subsequent calls).
         </p>
 
         <CodeBlock>
@@ -819,7 +819,7 @@ export const BOOK = id => new Promise(resolve => {
         <HashSection meta={navigatingMeta} tag="h3">
           <p>
             The <IJS>Link</IJS> component can be called with a render-invoked{" "}
-            <IJS>children()</IJS> function. If you do this, the function will be
+            <IJS>children</IJS> function. If you do this, the function will be
             called with a <IJS>navigating</IJS> boolean that indicates whether
             the router is currently navigating to that link. This is useful for
             when you know that there is a long (multiple seconds) delay between

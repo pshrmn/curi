@@ -95,18 +95,17 @@ function NewResponsesGuide() {
       <HashSection meta={registeringMeta} tag="h3">
         <p>
           There are three ways to attach response handlers to the router:{" "}
-          <IJS>router.once()</IJS> and <IJS>router.observe()</IJS> or as a side
+          <IJS>router.once</IJS> and <IJS>router.observe</IJS> or as a side
           effect.
         </p>
         <p>
-          Response handlers registered with <IJS>router.once()</IJS> will only
-          be called one time, while those registered with{" "}
-          <IJS>router.observe()</IJS> and side effects will be called for every
-          new response.
+          Response handlers registered with <IJS>router.once</IJS> will only be
+          called one time, while those registered with <IJS>router.observe</IJS>{" "}
+          and side effects will be called for every new response.
         </p>
         <p>
-          When you register a response handler using <IJS>router.observe()</IJS>
-          , it will return a function that you can use to stop calling the
+          When you register a response handler using <IJS>router.observe</IJS>,
+          it will return a function that you can use to stop calling the
           response handler for new responses. You should rarely need to do this,
           but it can be useful for memory management if you are adding and
           removing lots of observers.
@@ -134,7 +133,7 @@ const stop = router.observe(fn);`}
           </p>
           <p>
             A setup function only needs to be called one time, so you can
-            register it with <IJS>router.once()</IJS>.
+            register it with <IJS>router.once</IJS>.
           </p>
           <Note>
             <p>
@@ -192,7 +191,7 @@ router.once(setup);`}
           <p>
             If you are using vanilla JavaScript to render your application or
             you are writing your own framework implementation, you would use{" "}
-            <IJS>router.observe()</IJS> to re-render new responses.
+            <IJS>router.observe</IJS> to re-render new responses.
           </p>
 
           <CodeBlock>
@@ -207,9 +206,9 @@ router.observe(observer);`}
         <HashSection meta={sideEffectsMeta} tag="h4">
           <p>
             Side effects are observers that are provided to the router at
-            creation instead of by calling <IJS>router.observe()</IJS>. These
-            can be useful for tasks that are not rendering related as well as
-            for tasks that need to be performed after a render has completed.
+            creation instead of by calling <IJS>router.observe</IJS>. These can
+            be useful for tasks that are not rendering related as well as for
+            tasks that need to be performed after a render has completed.
           </p>
           <p>
             The{" "}
@@ -240,7 +239,7 @@ router.observe(observer);`}
             If you need to add logging to your application, you could write your
             own observer to do this. Your observer can either be added as a side
             effect when the router is constructed or later using{" "}
-            <IJS>router.observe()</IJS>.
+            <IJS>router.observe</IJS>.
           </p>
 
           <CodeBlock>

@@ -402,7 +402,7 @@ export default [
           should import the <IJS>createRouter</IJS> function from{" "}
           <IJS>@curi/router</IJS> as well as our routes from{" "}
           <IJS>src/routes.js</IJS>. Creating the router is done by calling the{" "}
-          <IJS>createRouter()</IJS> function and passing it the history function
+          <IJS>createRouter</IJS> function and passing it the history function
           and the <IJS>routes</IJS> array.
         </p>
 
@@ -955,7 +955,7 @@ export default {
         <p>
           As stated above, we can access our <IJS>router</IJS> in the{" "}
           <IJS>Book</IJS> component using <IJS>this.$router</IJS>. The router's{" "}
-          <IJS>navigate()</IJS> function can be used to navigate to a new
+          <IJS>navigate</IJS> function can be used to navigate to a new
           location. This means that when the user clicks a button to add a book
           to their shopping cart, we can automatically navigate to the checkout
           page.
@@ -963,7 +963,7 @@ export default {
 
         <HashSection meta={navigateMeta} className="aside" tag="h3">
           <p>
-            <IJS>router.navigate()</IJS> is used to navigate to new locations.
+            <IJS>router.navigate</IJS> is used to navigate to new locations.
             There are three methods of navigation: <IJS>push</IJS>,{" "}
             <IJS>replace</IJS>, and <IJS>anchor</IJS>.
           </p>
@@ -997,7 +997,7 @@ router.navigate({ name: "Replace", method: "replace" });
           </p>
 
           <p>
-            If <IJS>method.navigate()</IJS> is called without a navigation{" "}
+            If <IJS>method.navigate</IJS> is called without a navigation{" "}
             <IJS>method</IJS>, it will default to <IJS>anchor</IJS>.
           </p>
 

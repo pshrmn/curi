@@ -16,7 +16,7 @@ export function PrepareRoutesAPI() {
   return (
     <HashSection meta={meta}>
       <p>
-        The <IJS>prepareRoutes()</IJS> export is used to build the routes for
+        The <IJS>prepareRoutes</IJS> export is used to build the routes for
         Curi. This will pre-compile paths for location matching and pathname
         building, which is particularly useful for server rendering.
       </p>
@@ -33,7 +33,7 @@ const routes = prepareRoutes([
 
       <Warning>
         <p>
-          Passing a non-prepared routes array to <IJS>curi()</IJS> is still
+          Passing a non-prepared routes array to <IJS>curi</IJS> is still
           supported, but deprecated and will be removed in the next major
           version.
         </p>

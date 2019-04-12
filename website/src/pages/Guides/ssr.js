@@ -234,7 +234,7 @@ app.get("*", renderHandler);`}
             Page requests aren't the only requests that the framework will
             handle. Requests for static resources, like scripts, stylesheet, and
             images shouldn't be handled by Curi. Express provides a{" "}
-            <IJS>static()</IJS> method to map request locations "real" (files
+            <IJS>static</IJS> method to map request locations "real" (files
             exist on the server) locations.
           </p>
 
@@ -291,9 +291,8 @@ app.get("*", renderHandler)`}
         <Note>
           <p>
             If you are setting up a server without server-side rendering, the{" "}
-            <IJS>renderHandler</IJS> function could use{" "}
-            <IJS>res.sendFile()</IJS> to return a universal HTML file for every
-            route.
+            <IJS>renderHandler</IJS> function could use <IJS>res.sendFile</IJS>{" "}
+            to return a universal HTML file for every route.
           </p>
         </Note>
 
@@ -430,8 +429,8 @@ import routes from "../client/routes";`}
             <a href="https://github.com/matthew-andrews/isomorphic-fetch">
               <IJS>isomorphic-fetch</IJS>
             </a>{" "}
-            package could be used to support <IJS>fetch()</IJS> in the browser
-            and Node.
+            package could be used to support <IJS>fetch</IJS> in the browser and
+            Node.
           </p>
 
           <CodeBlock>

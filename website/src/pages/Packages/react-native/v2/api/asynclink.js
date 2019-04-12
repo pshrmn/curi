@@ -26,10 +26,7 @@ export function AsyncLinkAPI() {
           <IJS>Link</IJS>
         </Link>
         , but uses a render-invoked function as its <IJS>children</IJS>{" "}
-        component. The function will be called with one argument, a boolean
-        indicating whether or not the link is actively navigating (i.e. when{" "}
-        <IJS>true</IJS>, the user has clicked the link and Curi is currently
-        running async code for the navigation).
+        component.
       </p>
 
       <CodeBlock lang="jsx">
@@ -86,7 +83,7 @@ export function AsyncLinkAPI() {
           meta={{ title: "children", hash: "Link-children" }}
         >
           <p>
-            A render-invoked <IJS>children</IJS> function will be called with
+            A render-invoked <IJS>children</IJS> function that is called with
             the <IJS>AsyncLink</IJS>'s navigation state. The navigation state is{" "}
             <IJS>false</IJS> to start, <IJS>true</IJS> when the{" "}
             <IJS>AsyncLink</IJS> is clicked, and <IJS>false</IJS> when the the

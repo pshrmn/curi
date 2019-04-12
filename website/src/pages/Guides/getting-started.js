@@ -75,7 +75,7 @@ const router = createRouter(browser, routes);`}
         </p>
 
         <p>
-          A Curi router object has a <IJS>navigate()</IJS> method to let you
+          A Curi router object has a <IJS>navigate</IJS> method to let you
           navigate with code. Instead of being given a URL, the function takes
           the <IJS>name</IJS> of the route you want to navigate to and any route{" "}
           <IJS>params</IJS>. There are also a number of{" "}
@@ -84,7 +84,7 @@ const router = createRouter(browser, routes);`}
             params={{ package: "router", version: "v1" }}
             hash="navigate"
           >
-            other optional arguments to <IJS>navigate()</IJS>
+            other optional arguments to <IJS>navigate</IJS>
           </Link>
           .
         </p>
@@ -107,8 +107,8 @@ const router = createRouter(browser, routes);`}
             >
               <IJS>@curi/react-dom</IJS>
             </Link>
-            , will call <IJS>router.nagivate()</IJS> for you when the user
-            clicks a link.
+            , will call <IJS>router.nagivate</IJS> for you when the user clicks
+            a link.
           </p>
         </Note>
       </HashSection>
@@ -143,9 +143,9 @@ const router = createRouter(browser, routes);`}
         </CodeBlock>
 
         <p>
-          Response handlers registered with <IJS>router.once()</IJS> will only
-          be called one time. This is primarily useful for waiting for
-          asynchronous actions to finish before the initial render.
+          Response handlers registered with <IJS>router.once</IJS> will only be
+          called one time. This is primarily useful for waiting for asynchronous
+          actions to finish before the initial render.
         </p>
 
         <CodeBlock>
@@ -157,15 +157,15 @@ router.once(() => {
         </CodeBlock>
 
         <p>
-          Observers are passed to the router using <IJS>router.observe()</IJS>.
+          Observers are passed to the router using <IJS>router.observe</IJS>.
           Unlike one time functions, these will be called every time there is a
           new response.
         </p>
 
         <p>
           Render packages, like <IJS>@curi/react-dom</IJS>, use{" "}
-          <IJS>router.observe()</IJS> internally in order to re-render when
-          there is a new response.
+          <IJS>router.observe</IJS> internally in order to re-render when there
+          is a new response.
         </p>
 
         <CodeBlock>
@@ -176,8 +176,8 @@ router.once(() => {
 
         <p>
           If you have any asynchronous routes (a route with a <IJS>resolve</IJS>{" "}
-          function), <IJS>router.once()</IJS> should be used to delay the
-          initial render until after the initial response is ready.
+          function), <IJS>router.once</IJS> should be used to delay the initial
+          render until after the initial response is ready.
         </p>
 
         <CodeBlock>

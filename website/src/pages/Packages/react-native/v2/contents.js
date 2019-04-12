@@ -8,6 +8,7 @@ import { meta as useNavigatingMeta } from "./api/useNavigating";
 import { meta as useLocationMeta } from "./api/useLocation";
 import { meta as useHrefMeta } from "./api/useHref";
 import { meta as ResponseConsumerMeta } from "./api/responseconsumer";
+import { meta as RouterConsumerMeta } from "./api/routerconsumer";
 
 export default [
   {
@@ -31,7 +32,8 @@ export default [
       useNavigatingMeta,
       useLocationMeta,
       useHrefMeta,
-      ResponseConsumerMeta
+      ResponseConsumerMeta,
+      RouterConsumerMeta
     ]
   }
 ];

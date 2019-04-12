@@ -16,15 +16,15 @@ export function OnceAPI() {
   return (
     <HashSection meta={meta}>
       <p>
-        <IJS>once()</IJS> takes a function as its argument and returns a new
+        <IJS>once</IJS> takes a function as its argument and returns a new
         function. The first time the returned function is called, it will call
         the function passed to it and return its result. Every call after that
         will re-use the result from the first call.
       </p>
 
       <p>
-        The <IJS>once()</IJS> function is useful for any async functions that
-        only need to be called once.
+        The <IJS>once</IJS> function is useful for any async functions that only
+        need to be called once.
       </p>
 
       <Note>

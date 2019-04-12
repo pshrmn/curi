@@ -30,7 +30,7 @@ function RoutePrefetchPkg() {
             Prefetching <IJS>resolve</IJS> function calls is only beneficial if
             you cache the results because the function will be re-called when
             the user navigates to that route. Functions wrapped by the{" "}
-            <IJS>once()</IJS> wrapper (from <IJS>@curi/helpers</IJS>) will
+            <IJS>once</IJS> wrapper (from <IJS>@curi/helpers</IJS>) will
             automatically re-use the results from their first call.
           </p>
         </Note>

@@ -23,8 +23,8 @@ export function AncestorsAPI() {
       <p>
         A function to create the ancestors route interaction. When you create
         your router, the result is passed to the router using the `route`
-        option, which will add an <IJS>ancestors()</IJS> function to the
-        router's route interactions.
+        option, which will add an <IJS>ancestors</IJS> function to the router's
+        route interactions.
       </p>
       <p>
         The interaction returns the name of an ancestor route a given level "up"

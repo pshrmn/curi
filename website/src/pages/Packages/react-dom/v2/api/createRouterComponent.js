@@ -12,14 +12,14 @@ const argumentsMeta = {
   title: "Arguments",
   hash: "createRouterComponent-arguments"
 };
-const propsMeta = {
-  title: "Router",
-  hash: "createRouterComponent-Router"
+const returnMeta = {
+  title: "Return Value",
+  hash: "createRouterComponent-return"
 };
 export const meta = {
   title: "createRouterComponent",
   hash: "createRouterComponent",
-  children: [argumentsMeta, propsMeta]
+  children: [argumentsMeta, returnMeta]
 };
 
 export function CreateRouterComponentAPI() {
@@ -70,18 +70,15 @@ ReactDOM.render((
         </HashSection>
       </HashSection>
 
-      <HashSection
-        tag="h3"
-        meta={{ title: "Router", hash: "createRouterComponent-Router" }}
-      >
+      <HashSection tag="h3" meta={returnMeta}>
         <p>
-          The <IJS>Router</IJS> sets routing context data. Any component that
-          relies on routing data must be a descendant of the <IJS>Router</IJS>.
+          A component that sets routing context data. Any component that relies
+          on routing data must be a descendant of the <IJS>Router</IJS>.
         </p>
 
         <HashSection
           tag="h4"
-          meta={{ title: "children", hash: "createRouterComponent-render" }}
+          meta={{ title: "children", hash: "createRouterComponent-children" }}
         >
           <p>
             The <IJS>Router</IJS> takes any valid React node (elements, strings,

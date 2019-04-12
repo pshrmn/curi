@@ -105,7 +105,7 @@ export function FocusAPI() {
 
           <p>
             This only works in browsers that support the{" "}
-            <IJS>preventScroll</IJS> option for <IJS>focus()</IJS>.
+            <IJS>preventScroll</IJS> option for <IJS>focus</IJS>.
           </p>
 
           <CodeBlock lang="html">

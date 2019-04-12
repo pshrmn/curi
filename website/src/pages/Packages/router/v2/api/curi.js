@@ -18,11 +18,11 @@ const argumentsMeta = {
   children: [historyArgMeta, routesArgMeta, optionsArgMeta]
 };
 
-const navigateMeta = { title: "navigate(details)", hash: "navigate" };
-const onceMeta = { title: "once(fn, options)", hash: "once" };
-const observeMeta = { title: "observe(fn, options)", hash: "observe" };
-const cancelMeta = { title: "cancel(fn)", hash: "cancel-property" };
-const currentMeta = { title: "current()", hash: "current-property" };
+const navigateMeta = { title: "navigate", hash: "navigate" };
+const onceMeta = { title: "once", hash: "once" };
+const observeMeta = { title: "observe", hash: "observe" };
+const cancelMeta = { title: "cancel", hash: "cancel-property" };
+const currentMeta = { title: "current", hash: "current-property" };
 const routeMeta = { title: "route", hash: "router-route" };
 const historyMeta = { title: "history", hash: "history-property" };
 const externalMeta = { title: "external", hash: "router-external" };
@@ -42,8 +42,8 @@ const propertiesMeta = {
 };
 
 export const meta = {
-  title: "createRouter()",
-  hash: "curi",
+  title: "createRouter",
+  hash: "createRouter",
   children: [argumentsMeta, propertiesMeta]
 };
 
@@ -51,10 +51,7 @@ export function CuriAPI() {
   return (
     <HashSection meta={meta}>
       <p>
-        The <IJS>createRouter</IJS> function is used to create a router. It has
-        two required arguments: a <IJS>history</IJS> object and a{" "}
-        <IJS>routes</IJS> array, and an optional third argument: an{" "}
-        <IJS>options</IJS> object.
+        The <IJS>createRouter</IJS> function is used to create a router.
       </p>
 
       <CodeBlock>
@@ -119,10 +116,6 @@ const router = createRouter(browser, routes);`}
               . These are functions for interacting with routes based on their{" "}
               <IJS>name</IJS>.
             </p>
-            <p>
-              The <IJS>pathname</IJS> interaction is included by default; any
-              other interactions are provided through this array.
-            </p>
 
             <CodeBlock>
               {`import active from "@curi/route-active";
@@ -142,9 +135,16 @@ const router = createRouter(browser, routes, {
 
             <CodeBlock>
               {`router.route.active("Home");
-// returns true when location.pathname = "/"
+// returns true when location.pathname = "/"`}
+            </CodeBlock>
 
-router.route.pathname("Home");
+            <p>
+              A <IJS>pathname</IJS> interaction is automatically included in the
+              router.
+            </p>
+
+            <CodeBlock>
+              {`router.route.pathname("Home");
 // returns "/"`}
             </CodeBlock>
           </HashSection>
@@ -163,30 +163,6 @@ router.route.pathname("Home");
               </Link>{" "}
               objects.
             </p>
-            <ScrollableTable>
-              <thead>
-                <tr>
-                  <th>property</th>
-                  <th>description</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>effect</td>
-                  <td>
-                    An observer that will be called whenever a response is
-                    generated.
-                  </td>
-                </tr>
-                <tr>
-                  <td>after</td>
-                  <td>
-                    (default <IJS>false</IJS>) controls whether the side effect
-                    is called before or after non-side effect observers.
-                  </td>
-                </tr>
-              </tbody>
-            </ScrollableTable>
 
             <CodeBlock>
               {`import scroll from "@curi/side-effect-scroll";
@@ -207,8 +183,8 @@ const router = createRouter(browser, routes, {
             </p>
             <p>
               Using <IJS>external</IJS> allows you to access APIs, data, etc.
-              without having to be able to import it in the module where the
-              routes are defined.
+              without having to import it in the module where the routes are
+              defined.
             </p>
 
             <CodeBlock>
@@ -239,11 +215,27 @@ const router = createRouter(browser, routes, {
             }}
           >
             <p>
-              When <IJS>false</IJS> (default is <IJS>true</IJS>), response
-              objects with the <IJS>redirectTo</IJS> property{" "}
-              <strong>will not be emitted</strong> to observers. This can be
-              useful for avoiding an extra render, but should not be used on the
-              server.
+              When a response object has a <IJS>redirect</IJS> property, Curi
+              will automatically navigate to the location specified by the
+              property.
+            </p>
+
+            <p>
+              If the <IJS>emitRedirects</IJS> property is <IJS>true</IJS> (the
+              default), Curi will emit the redirect response (any observers will
+              be called with the response).
+            </p>
+
+            <p>
+              If <IJS>emitRedirects</IJS> is set to <IJS>false</IJS>, Curi will
+              skip emitting the redirect; this effectively makes the redirect
+              invisible to the application.
+            </p>
+
+            <p>
+              <IJS>emitRedirects</IJS> should always be <IJS>true</IJS> for
+              server-side rendering, otherwise the application will render
+              content for the incorrect location.
             </p>
 
             <CodeBlock>
@@ -254,7 +246,7 @@ const router = createRouter(browser, routes, {
     response({ params }) {
       // setup a redirect to the "New" route
       return {
-        redirectTo: {
+        redirect: {
           name: "New",
           params
         }
@@ -271,7 +263,7 @@ const router = createRouter(browser, routes, {
   emitRedirects: false
 });
 // navigating to "/old/2" will automatically redirect
-// to "/new/2" without emitting a response`}
+// to "/new/2" without emitting a response for the Old route`}
             </CodeBlock>
           </HashSection>
         </HashSection>
@@ -285,67 +277,96 @@ const router = createRouter(browser, routes, {
 
         <HashSection tag="h5" meta={navigateMeta}>
           <p>
-            The <IJS>navigate()</IJS> method is used to navigate
-            programmatically. It takes a <IJS>details</IJS> object with the
-            details of where you want to navigate to as well as the{" "}
-            <IJS>method</IJS> of navigation.
+            The <IJS>navigate</IJS> method is used to navigate programmatically.
+            It takes a <IJS>details</IJS> object with the details of where you
+            want to navigate to as well as the <IJS>method</IJS> of navigation.
           </p>
-          <ScrollableTable>
-            <thead>
-              <tr>
-                <th>property</th>
-                <th>description</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>name</td>
-                <td>The name of the route to navigate to</td>
-              </tr>
-              <tr>
-                <td>params</td>
-                <td>
-                  An object of any route params for the named route (and any of
-                  its ancestors that require params).
-                </td>
-              </tr>
-              <tr>
-                <td>hash</td>
-                <td>The hash string of the location to navigate to.</td>
-              </tr>
-              <tr>
-                <td>query</td>
-                <td>The query value of the location to navigate to.</td>
-              </tr>
-              <tr>
-                <td>state</td>
-                <td>Any serializable state to attach to the location.</td>
-              </tr>
-              <tr>
-                <td>method</td>
-                <td>
-                  How to navigate. <IJS>"push"</IJS> appends the new location
-                  after the current one. <IJS>"replace"</IJS> replaces the
-                  current location. <IJS>"anchor"</IJS> is the default method
-                  and acts like clicking a link. This behavior is a mix of{" "}
-                  <IJS>"push"</IJS> and <IJS>"replace"</IJS> where the current
-                  location is replaced if the new location has the exact same
-                  URL.
-                </td>
-              </tr>
-              <tr>
-                <td>finished</td>
-                <td>A function to call once the navigation has finished.</td>
-              </tr>
-              <tr>
-                <td>cancelled</td>
-                <td>
-                  A function to call if the navigation is superseded by another
-                  navigation.
-                </td>
-              </tr>
-            </tbody>
-          </ScrollableTable>
+
+          <HashSection
+            tag="h6"
+            meta={{ title: "Arguments", hash: "navigate-args" }}
+          >
+            <p>
+              <IJS>navigate</IJS> takes a single argument, an object with
+              details about the location to navigate to and how to navigate.
+            </p>
+
+            <HashSection
+              tag="h6"
+              meta={{ title: "name", hash: "navigate-name" }}
+            >
+              <p>The name of the route to navigate to.</p>
+            </HashSection>
+
+            <HashSection
+              tag="h6"
+              meta={{ title: "params", hash: "navigate-params" }}
+            >
+              <p>
+                An object of any route params for the named route (and any of
+                its ancestors that require params).
+              </p>
+            </HashSection>
+
+            <HashSection
+              tag="h6"
+              meta={{ title: "hash", hash: "navigate-hash" }}
+            >
+              <p>The hash string of the location to navigate to.</p>
+            </HashSection>
+
+            <HashSection
+              tag="h6"
+              meta={{ title: "query", hash: "navigate-query" }}
+            >
+              <p>The query value of the location to navigate to</p>
+            </HashSection>
+
+            <HashSection
+              tag="h6"
+              meta={{ title: "state", hash: "navigate-state" }}
+            >
+              <p>Any serializable state to attach to the location.</p>
+            </HashSection>
+
+            <HashSection
+              tag="h6"
+              meta={{ title: "method", hash: "navigate-method" }}
+            >
+              <p>
+                How to navigate. <IJS>"push"</IJS> appends the new location
+                after the current one. <IJS>"replace"</IJS> replaces the current
+                location. <IJS>"anchor"</IJS> is the default method and acts
+                like clicking a link. This behavior is a mix of{" "}
+                <IJS>"push"</IJS> and <IJS>"replace"</IJS> where the current
+                location is replaced if the new location has the exact same URL.
+              </p>
+            </HashSection>
+
+            <HashSection
+              tag="h6"
+              meta={{
+                title: "finished & cancelled",
+                hash: "navigate-finished-cancelled"
+              }}
+            >
+              <p>
+                <IJS>finished</IJS> is a function to call once the navigation
+                has finished.
+              </p>
+
+              <p>
+                <IJS>cancelled</IJS> is a function to call if the navigation is
+                superseded by another navigation.
+              </p>
+
+              <p>
+                These properties should only be provided when navigating to
+                asynchronous routes. Synchronous routes navigate immediately, so
+                there is no waiting time for the navigation.
+              </p>
+            </HashSection>
+          </HashSection>
 
           <CodeBlock>
             {`const routes = prepareRoutes([
@@ -370,44 +391,13 @@ router.navigate({
         </HashSection>
 
         <HashSection tag="h5" meta={onceMeta}>
-          <p>
-            The <IJS>once()</IJS> method takes a response handler function. If a
-            response already exists, the function will be called immediately.
-            Otherwise, the function will be called once a new response is
-            created. The <IJS>{`\{ initial: false \}`}</IJS> option can be used
-            to prevent an immediate call even if a response already exists.
-          </p>
-          <ScrollableTable>
-            <thead>
-              <tr>
-                <th>property</th>
-                <th>description</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>response</td>
-                <td>The generated response object.</td>
-              </tr>
-              <tr>
-                <td>navigation</td>
-                <td>
-                  The navigation's <IJS>action</IJS> (<IJS>push</IJS>,{" "}
-                  <IJS>replace</IJS>, or <IJS>pop</IJS>) and the{" "}
-                  <IJS>previous</IJS> response object.
-                </td>
-              </tr>
-              <tr>
-                <td>router</td>
-                <td>The Curi router</td>
-              </tr>
-            </tbody>
-          </ScrollableTable>
+          <p>Register a response handler that will only be called one time.</p>
 
           <p>
             When a matched route is async (it has a <IJS>resolve</IJS>{" "}
             function), a response will not be created until the function has
-            resolved.
+            resolved. <IJS>once</IJS> is useful for delaying an application's
+            initial render.
           </p>
 
           <CodeBlock>
@@ -418,74 +408,60 @@ router.navigate({
 
           <HashSection
             tag="h6"
-            meta={{ title: "options", hash: "once-options" }}
+            meta={{ title: "Arguments", hash: "once-args" }}
           >
-            <div style={{ overflowX: "scroll" }}>
-              <ScrollableTable>
-                <thead>
-                  <tr>
-                    <th>option</th>
-                    <th>default</th>
-                    <th>description</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>initial</td>
-                    <td>true</td>
-                    <td>
-                      When true, the function will be called immediately if a
-                      response exists. When false, the response function will
-                      not be called until the next response is emitted.
-                    </td>
-                  </tr>
-                </tbody>
-              </ScrollableTable>
-            </div>
+            <HashSection
+              tag="h6"
+              meta={{
+                title: "Response Handler",
+                hash: "once-response-handler"
+              }}
+            >
+              <p>
+                A function that will be called once the router has generated a
+                response. If the router has already generated a response, the
+                function will be called immediately with the existing response.
+                Otherwise, the function will be called once a new response is
+                generated.
+              </p>
 
-            <CodeBlock>
-              {`router.once(responseHandler, {
+              <p>
+                The function will be passed an object with three properties: the{" "}
+                <IJS>response</IJS>, a <IJS>navigation</IJS> object, and the{" "}
+                <IJS>router</IJS>.
+              </p>
+            </HashSection>
+
+            <HashSection
+              tag="h6"
+              meta={{ title: "Options", hash: "once-options" }}
+            >
+              <HashSection
+                tag="h6"
+                meta={{ title: "initial", hash: "once-options-initial" }}
+              >
+                <p>
+                  When <IJS>true</IJS> (the default), the response handler will
+                  be called immediately if there is an existing response. When{" "}
+                  <IJS>false</IJS>, the response handler will not be called
+                  until a new response is generated.
+                </p>
+
+                <CodeBlock>
+                  {`router.once(responseHandler, {
   initial: false
 });`}
-            </CodeBlock>
+                </CodeBlock>
+              </HashSection>
+            </HashSection>
           </HashSection>
         </HashSection>
 
         <HashSection tag="h5" meta={observeMeta}>
           <p>
-            The <IJS>observe()</IJS> method takes a response handler function.
-            The response handler will be called every time a new response is
-            emitted (and it a response already exists, the function will be
-            called immediately). The <IJS>{`\{ initial: false \}`}</IJS> option
-            can be used to prevent an immediate call even if a response already
-            exists.
+            Register a response handler that will be called every time a
+            response is generated.
           </p>
-          <ScrollableTable>
-            <thead>
-              <tr>
-                <th>property</th>
-                <th>description</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>response</td>
-                <td>The generated response object.</td>
-              </tr>
-              <tr>
-                <td>navigation</td>
-                <td>
-                  The navigation's <IJS>action</IJS> (<IJS>push</IJS>,{" "}
-                  <IJS>replace</IJS>, or <IJS>pop</IJS>) and the{" "}
-                  <IJS>previous</IJS> response object.
-                </td>
-              </tr>
-              <tr>
-                <td>router</td>
-                <td>The Curi router</td>
-              </tr>
-            </tbody>
-          </ScrollableTable>
 
           <p>
             When a matched route is async (it has a <IJS>resolve</IJS>{" "}
@@ -499,97 +475,150 @@ router.navigate({
 });`}
           </CodeBlock>
 
-          <HashSection
-            tag="h6"
-            meta={{ title: "options", hash: "observe-options" }}
-          >
-            <div style={{ overflowX: "scroll" }}>
-              <ScrollableTable>
-                <thead>
-                  <tr>
-                    <th>option</th>
-                    <th>default</th>
-                    <th>description</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>initial</td>
-                    <td>true</td>
-                    <td>
-                      When true, the function will be called immediately if a
-                      response exists. When false, the response function will
-                      not be called until the next response is emitted.
-                    </td>
-                  </tr>
-                </tbody>
-              </ScrollableTable>
-            </div>
+          <p>
+            <IJS>observe</IJS> returns a function, which can be called to stop
+            observing.
+          </p>
 
-            <CodeBlock>
-              {`router.observe(responseHandler, {
-  initial: false
-});`}
-            </CodeBlock>
-
-            <p>
-              <IJS>observe()</IJS> returns a function to stop calling the
-              response handler function for new responses.
-            </p>
-
-            <CodeBlock>
-              {`const stopObserving = router.observe(
-  () => {...}
-);
-// the router will now call the observer for all responses
+          <CodeBlock>
+            {`const stopObserving = router.observe(fn);
+// the router will call the response handler for all responses
 
 stopObserving();
-// the router no longer calls the observer`}
-            </CodeBlock>
+// the router no longer calls the response handler`}
+          </CodeBlock>
+
+          <HashSection
+            tag="h6"
+            meta={{ title: "Arguments", hash: "observe-args" }}
+          >
+            <HashSection
+              tag="h6"
+              meta={{
+                title: "Response Handler",
+                hash: "observe-response-handler"
+              }}
+            >
+              <p>
+                A function that will be called whenever a new response is
+                generated. If a response already exists when the function is
+                called, the response handler will be called immediately with the
+                existing response.
+              </p>
+            </HashSection>
+
+            <HashSection
+              tag="h6"
+              meta={{ title: "Options", hash: "observe-options" }}
+            >
+              <HashSection
+                tag="h6"
+                meta={{ title: "initial", hash: "observe-options-initial" }}
+              >
+                <p>
+                  When <IJS>true</IJS> (the default), the response handler will
+                  be called immediately if there is an existing response. When{" "}
+                  <IJS>false</IJS>, the response handler will not be called
+                  until a new response is generated.
+                </p>
+
+                <CodeBlock>
+                  {`router.observe(responseHandler, {
+  initial: false
+});`}
+                </CodeBlock>
+              </HashSection>
+            </HashSection>
           </HashSection>
         </HashSection>
 
         <HashSection tag="h5" meta={cancelMeta}>
           <p>
-            With asynchronous routes, after a user begins navigation, but before
-            the route's asynchronous actions have finished, the user does not
-            have a good way to cancel the navigation. They can either refresh
-            the page (causing a full reload) or click a link with the same URL
-            as the current location, but neither of these are intuitive or
-            ideal.
+            With navigating to an asynchronous route, there is a time between
+            when a navigation begins and when the route's asynchronous actions
+            have finished, during which a user may decide to cancel the
+            navigation.
           </p>
+
           <p>
-            <IJS>cancel()</IJS> takes an observer function that will be called
+            In a multi-page application, the browser updates the refresh button
+            to a stop button. There is no equivalent functionality for
+            single-page applications, so Curi provides a <IJS>cancel</IJS>{" "}
+            function to roughly imitate the behavior.
+          </p>
+
+          <p>
+            <IJS>cancel</IJS> takes an observer function that will be called
             when navigation starts and when the navigation is finished. When the
-            navigation starts, the observer function will be given a function to
-            cancel the navigation. When the navigation finishes, the function
-            will be called with <IJS>undefined</IJS>.
+            navigation starts, the observer function will be called with a
+            function to cancel the navigation. When the navigation finishes, the
+            function will be called with <IJS>undefined</IJS>.
           </p>
+
           <p>
-            Calling <IJS>cancel()</IJS> returns a function to stop observing.
+            Calling <IJS>cancel</IJS> returns a function to stop observing.
           </p>
 
           <CodeBlock>
-            {`const stopCancelling = router.cancel(fn => {
+            {`const stopCancelling = router.cancel(fn);
+// fn will be called for async navigation
+
+stopCancelling();
+// fn will no longer be called`}
+          </CodeBlock>
+
+          <HashSection
+            tag="h6"
+            meta={{ title: "Arguments", hash: "cancel-args" }}
+          >
+            <HashSection
+              tag="h6"
+              meta={{ title: "Cancel Handler", hash: "cancel-handler" }}
+            >
+              <p>
+                A function that will be called when an asynchronous navigation
+                begins and ends.
+              </p>
+
+              <p>
+                When the navigation begins, the function will be passed a
+                function that can be called to cancel the navigation.
+              </p>
+
+              <p>
+                When the navigation ends, the function will be passed{" "}
+                <IJS>undefined</IJS>.
+              </p>
+
+              <CodeBlock>
+                {`router.cancel(fn => {
   if (fn === undefined) {
     // the navigation has finished/been cancelled
   } else {
     // calling fn will cancel the navigation
   }
 });`}
-          </CodeBlock>
+              </CodeBlock>
+
+              <p>
+                Calling the cancel handler after the navigation has ended does
+                nothing.
+              </p>
+            </HashSection>
+          </HashSection>
         </HashSection>
 
         <HashSection tag="h5" meta={currentMeta}>
           <p>
-            The <IJS>router.current()</IJS> method returns the current{" "}
+            The <IJS>current</IJS> method returns the current{" "}
             <IJS>response</IJS> and <IJS>navigation</IJS> objects.
           </p>
+
           <Note>
             <p>
-              If you call <IJS>router.current()</IJS> before the initial
-              response has been emitted, the <IJS>response</IJS> and{" "}
-              <IJS>navigation</IJS> properties will be <IJS>null</IJS>.
+              If you call <IJS>current</IJS> before the initial response has
+              been generated, the <IJS>response</IJS> and <IJS>navigation</IJS>{" "}
+              properties will be <IJS>null</IJS>.
             </p>
           </Note>
 
@@ -642,10 +671,7 @@ const userPathname = router.route.pathname(
         </HashSection>
 
         <HashSection tag="h5" meta={historyMeta}>
-          <p>
-            The route's history object, in case you need to interact directly
-            with that.
-          </p>
+          <p>The route's history object.</p>
         </HashSection>
 
         <HashSection tag="h5" meta={externalMeta}>

@@ -26,17 +26,17 @@ export function NavigatingAPI() {
         function to cancel the navigation.
       </p>
       <p>
-        When navigation starts, <IJS>children()</IJS> will be called with a
+        When navigation starts, <IJS>children</IJS> will be called with a
         function that will cancel navigation when it is called.
       </p>
       <p>
-        When navigation finishes, <IJS>children()</IJS> will be called with no
+        When navigation finishes, <IJS>children</IJS> will be called with no
         arguments.
       </p>
 
       <CodeBlock lang="jsx">
         {`import { Navigating } from "@curi/react-dom";
-              
+
 <Navigating>
   {cancel => {
     if (cancel === undefined) {

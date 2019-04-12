@@ -29,7 +29,7 @@ export function CuriProviderAPI() {
         The application needs a component at its root to re-render the
         application when new responses are emitted and to make routing related
         available through React's context. This component is created by passing
-        the Curi <IJS>router</IJS> to the <IJS>curiProvider()</IJS> function.
+        the Curi <IJS>router</IJS> to the <IJS>curiProvider</IJS> function.
       </p>
 
       <Note>
@@ -46,7 +46,7 @@ export function CuriProviderAPI() {
         <p>
           All of the other components provided by <IJS>@curi/react-dom</IJS>{" "}
           must be descendants of the component created by{" "}
-          <IJS>curiProvider()</IJS>.
+          <IJS>curiProvider</IJS>.
         </p>
       </Note>
 

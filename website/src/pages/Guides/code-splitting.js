@@ -98,21 +98,21 @@ const routes = prepareRoutes([
 
       <HashSection meta={importMeta}>
         <p>
-          Instead of having static imports, we will use the <IJS>import()</IJS>{" "}
-          function to import our modules. We will import our components using a
-          route's <IJS>resolve</IJS> object.
+          Instead of having static imports, we will use the dynamic{" "}
+          <IJS>import</IJS> function to import our modules. We will import our
+          components using a route's <IJS>resolve</IJS> object.
         </p>
 
         <p>
           A route's <IJS>resolve</IJS> function is called every time it matches.
-          However, <IJS>import()</IJS> calls automatically re-use the results of
-          a previous call, so we do not have to worry about extra network
+          However, <IJS>import</IJS> calls automatically re-use the results of a
+          previous call, so we do not have to worry about extra network
           requests.
         </p>
 
         <p>
           A route's <IJS>resolve</IJS> function should return a Promise;{" "}
-          <IJS>import()</IJS>, conveniently, returns a Promise. In our{" "}
+          <IJS>import</IJS>, conveniently, returns a Promise. In our{" "}
           <IJS>response</IJS> function, instead of referencing values imported
           at the top of the file, we can reference the result of the{" "}
           <IJS>resolve</IJS> function using the <IJS>resolved</IJS> property
@@ -120,10 +120,10 @@ const routes = prepareRoutes([
         </p>
 
         <p>
-          <IJS>import()</IJS> resolves with a module object. If the component is
-          a default export (<IJS>export default MyComponent</IJS>), we can
-          access the component through the imported module object's{" "}
-          <IJS>default</IJS> property.
+          <IJS>import</IJS> resolves with a module object. If the component is a
+          default export (<IJS>export default MyComponent</IJS>), we can access
+          the component through the imported module object's <IJS>default</IJS>{" "}
+          property.
         </p>
 
         <CodeBlock>
@@ -179,7 +179,7 @@ const routes = prepareRoutes([
           Another approach is to skip the <IJS>resolve</IJS> method and do code
           splitting at other points in your application (e.g.
           <a href="https://reactjs.org/docs/react-api.html#reactlazy">
-            <IJS>React.lazy()</IJS>
+            <IJS>React.lazy</IJS>
           </a>
           ).
         </p>
@@ -187,7 +187,7 @@ const routes = prepareRoutes([
           Whatever path you decide to go, hopefully this has shown you that
           setting up code splitting with a <IJS>resolve</IJS> function is fairly
           simple to do. If you are using Webpack and want to reduce your initial
-          bundle size, using dynamic <IJS>import()</IJS> calls in a{" "}
+          bundle size, using dynamic <IJS>import</IJS> calls in a{" "}
           <IJS>resolve</IJS> functions is a good way to accomplish this.
         </p>
       </HashSection>

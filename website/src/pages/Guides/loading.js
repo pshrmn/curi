@@ -30,9 +30,9 @@ function LoadingGuide() {
         <h1>{meta.title}</h1>
 
         <p>
-          In the code splitting guide, we added a function that calls{" "}
-          <IJS>import()</IJS> to a route's <IJS>resolve</IJS> function in order
-          to dynamically load modules. We can do the same thing for other data.
+          In the code splitting guide, we added a function that uses dynamic{" "}
+          <IJS>import</IJS> in a route's <IJS>resolve</IJS> function to
+          dynamically load modules. We can do the same thing for other data.
         </p>
       </PlainSection>
 
@@ -83,17 +83,17 @@ function LoadingGuide() {
 
       <HashSection meta={responseMeta}>
         <p>
-          While <IJS>resolve.data()</IJS> starts our data loading, it doesn't
-          actually do anything. Instead, we should handle any loaded data with
-          the <IJS>response</IJS> function.
+          While <IJS>resolve</IJS> starts our data loading, it doesn't actually
+          do anything. Instead, we should handle any loaded data with the{" "}
+          <IJS>response</IJS> function.
         </p>
 
         <p>
-          The <IJS>response</IJS> and <IJS>resolve.data()</IJS> are separate
-          because while a route is resolving, the user may navigate again, which
+          The <IJS>response</IJS> and <IJS>resolve</IJS> are separate because
+          while a route is resolving, the user may navigate again, which
           overrides the current navigation. We cannot cancel the{" "}
-          <IJS>resolve.data()</IJS> function for the current navigation, so if
-          it performs any side effects, our application is stuck with them. To
+          <IJS>resolve</IJS> function for the current navigation, so if it
+          performs any side effects, our application is stuck with them. To
           avoid this, the <IJS>response</IJS> function is not called until we
           know that the current navigation will complete.
         </p>

@@ -17,8 +17,8 @@ export function UseNavigatingAPI() {
     <HashSection meta={meta}>
       <p>
         The <IJS>useNavigating</IJS> hook is used to determine if the
-        application is currently navigating. When the application is navigating,
-        it returns a function to cancel the navigation.
+        application is currently navigating. It pairs up with{" "}
+        <IJS>router.cancel</IJS> to enable cancelling asynchronous navigation.
       </p>
 
       <p>
@@ -27,7 +27,7 @@ export function UseNavigatingAPI() {
       </p>
 
       <CodeBlock lang="jsx">
-        {`import { useNavigating } from "@curi/react-dom";
+        {`import { useNavigating } from "@curi/react-native";
 
 function CancelNavigation() {
   const cancel = useNavigating();

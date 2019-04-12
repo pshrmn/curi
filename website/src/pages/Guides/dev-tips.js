@@ -50,8 +50,8 @@ function DevTipsGuide() {
         </p>
 
         <p>
-          <IJS>module.hot.accept()</IJS> is used for watching a file and calling
-          a callback when that files or any files in its dependency chain are
+          <IJS>module.hot.accept</IJS> is used for watching a file and calling a
+          callback when that files or any files in its dependency chain are
           updated. In the callback, we can re-import the router and use that to
           re-render the application.
         </p>

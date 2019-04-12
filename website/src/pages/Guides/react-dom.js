@@ -44,7 +44,7 @@ function ReactDOMGuide() {
 
       <HashSection meta={renderingMeta}>
         <p>
-          The <IJS>createRouterComponent()</IJS> function is used to create the
+          The <IJS>createRouterComponent</IJS> function is used to create the
           component at the root of a Curi + React application. You can call this
           component anything that you want, but here it will be referred to as
           the <IJS>Router</IJS>.
@@ -62,7 +62,7 @@ function ReactDOMGuide() {
         </Note>
 
         <p>
-          <IJS>createRouterComponent()</IJS> is passed the application's Curi
+          <IJS>createRouterComponent</IJS> is passed the application's Curi
           router to create a <IJS>Router</IJS> component. The <IJS>Router</IJS>{" "}
           will automatically add an{" "}
           <Link
@@ -163,7 +163,7 @@ ReactDOM.render((
 
           <p>
             If your routes use an object to attach multiple components to a
-            response, the <IJS>children()</IJS> function also provides a good
+            response, the <IJS>children</IJS> function also provides a good
             place to split these apart.
           </p>
 
@@ -172,7 +172,7 @@ ReactDOM.render((
               If you do take this approach, please remember that you want every
               route to set the same <IJS>body</IJS> shape. Otherwise, you'll
               have to determine the shape and change how you render in the{" "}
-              <IJS>children()</IJS> function, which can quickly become messy.
+              <IJS>children</IJS> function, which can quickly become messy.
             </p>
           </Note>
 

@@ -22,7 +22,7 @@ export function ActiveAPI() {
       <p>
         A function to create the active route interaction. When you create your
         router, the result is passed to the router using the `route` option,
-        which will add an <IJS>active()</IJS> function to the router's route
+        which will add an <IJS>active</IJS> function to the router's route
         interactions.
       </p>
 

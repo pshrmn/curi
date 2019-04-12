@@ -24,7 +24,7 @@ export function PrefetchAPI() {
       <p>
         A function to create the prefetch route interaction. When you create
         your router, the result is passed to the router using the `route`
-        option, which will add a <IJS>prefetch()</IJS> function to the router's
+        option, which will add a <IJS>prefetch</IJS> function to the router's
         route interactions.
       </p>
 
@@ -105,7 +105,7 @@ router.route.prefetch(
           <p>
             This route interaction will only register routes that have a{" "}
             <IJS>resolve</IJS> function. If you try calling this for any routes
-            without a <IJS>resolve</IJS> function, <IJS>prefetch()</IJS> will
+            without a <IJS>resolve</IJS> function, <IJS>prefetch</IJS> will
             resolve an object with an <IJS>error</IJS> property and a{" "}
             <IJS>null</IJS> <IJS>resolved</IJS> property.
           </p>

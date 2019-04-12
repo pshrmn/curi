@@ -26,13 +26,20 @@ export function UseLocationAPI() {
 
       <CodeBlock lang="jsx">
         {`import { useLocation } from '@curi/react-dom';
-        
-useLocation({
+
+const location = useLocation({
   name: "Video",
   params: { id: "jaifeo9" } },
   hash: "comments",
   query: "t=15"
-});`}
+});
+/*
+location = {
+  pathname: "/video/jaifeo9",
+  hash: "comments",
+  query: "t=15"
+}
+*/`}
       </CodeBlock>
 
       <HashSection tag="h3" meta={optsMeta}>

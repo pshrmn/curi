@@ -23,10 +23,8 @@ export function LinkAPI() {
     <HashSection meta={meta}>
       <p>
         A <IJS>Link</IJS> is used for navigating within your application. By
-        default, this will render a <IJS>TouchableHighlight</IJS>, but you can
-        also provide another component. When the rendered element is touched, it
-        will use the router's <IJS>history</IJS> object to change locations,
-        which will trigger a re-render.
+        default, this will render a <IJS>TouchableHighlight</IJS>. When the
+        rendered element is pressed, it will use the router to navigate.
       </p>
 
       <p>
@@ -38,7 +36,7 @@ export function LinkAPI() {
 
       <CodeBlock lang="jsx">
         {`import { Link } from '@curi/react-native';
-  
+
 <Link name='User' params={{ id: 16 }}>
   <Text>User 16</Text>
 </Link>
@@ -49,11 +47,15 @@ export function LinkAPI() {
 
       <HashSection tag="h3" meta={propsMeta}>
         <HashSection tag="h4" meta={{ title: "name", hash: "Link-to" }}>
-          <p>The name of the route that you want to navigate to.</p>
           <p>
-            If <IJS>name</IJS> is not provided, the <IJS>Link</IJS> will re-use
-            the current location's <IJS>pathname</IJS>. This is useful for
-            linking to hashes within the current page.
+            The name of the route that the <IJS>Link</IJS> should navigate to
+            when it is pressed.
+          </p>
+
+          <p>
+            To navigate within the same location, the <IJS>name</IJS> can be
+            skipped. This is useful for linking to hashes within the current
+            page.
           </p>
 
           <CodeBlock lang="jsx">
@@ -64,8 +66,8 @@ export function LinkAPI() {
 
         <HashSection tag="h4" meta={{ title: "params", hash: "Link-params" }}>
           <p>
-            If the route that you want to navigate to (or any of its parents)
-            include path parameters, you can specify them using the params prop.
+            If the named route (or any of its parents) include path parameters,
+            they must be provided using the <IJS>params</IJS> prop.
           </p>
 
           <CodeBlock lang="jsx">
@@ -82,10 +84,8 @@ export function LinkAPI() {
           }}
         >
           <p>
-            While the pathname of the location to navigate to will be generated
-            for you, this does not cover over location properties (query, hash,
-            and state). The <IJS>query</IJS>, <IJS>hash</IJS>, and{" "}
-            <IJS>state</IJS> props are used to pass these values.
+            The <IJS>query</IJS>, <IJS>hash</IJS>, and <IJS>state</IJS> values
+            for the location to navigate to.
           </p>
 
           <CodeBlock lang="jsx">
@@ -120,10 +120,9 @@ export function LinkAPI() {
 
         <HashSection tag="h4" meta={{ title: "anchor", hash: "Link-anchor" }}>
           <p>
-            By default, when you render a <IJS>Link</IJS>, a{" "}
-            <IJS>TouchableHighlight</IJS> element will be rendered.{" "}
-            <IJS>anchor</IJS> lets you provide your own component to be rendered
-            instead.
+            A <IJS>Link</IJS> renders a <IJS>TouchableHighlight</IJS> element by
+            default, but this can be changed using the <IJS>anchor</IJS> prop.
+            This can be useful for using styled components.
           </p>
 
           <CodeBlock lang="jsx">

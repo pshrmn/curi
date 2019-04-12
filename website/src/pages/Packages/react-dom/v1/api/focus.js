@@ -60,13 +60,13 @@ export function FocusAPI() {
           meta={{ title: "children()", hash: "Focus-children" }}
         >
           <p>
-            The <IJS>children()</IJS> function is a render-invoked prop that
-            will be passed a <IJS>ref</IJS>. The <IJS>ref</IJS> should be
-            attached to the element that you want focused.
+            The <IJS>children</IJS> function is a render-invoked prop that will
+            be passed a <IJS>ref</IJS>. The <IJS>ref</IJS> should be attached to
+            the element that you want focused.
           </p>
           <p>
             If you need to pass this through class/functional components, you
-            should use either <IJS>React.forwardRef()</IJS> or pass it as a prop
+            should use either <IJS>React.forwardRef</IJS> or pass it as a prop
             with a name other than <IJS>ref</IJS> (like <IJS>innerRef</IJS>).
           </p>
 

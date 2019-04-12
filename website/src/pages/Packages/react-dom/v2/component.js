@@ -13,6 +13,7 @@ import { UseNavigatingAPI } from "./api/useNavigating";
 import { UseLocationAPI } from "./api/useLocation";
 import { UseHrefAPI } from "./api/useHref";
 import { ResponseConsumerAPI } from "./api/responseconsumer";
+import { RouterConsumerAPI } from "./api/routerconsumer";
 
 function ReactDOMPkg() {
   return (
@@ -43,6 +44,7 @@ function ReactDOMPkg() {
         <UseLocationAPI />
         <UseHrefAPI />
         <ResponseConsumerAPI />
+        <RouterConsumerAPI />
       </APIBlock>
     </React.Fragment>
   );

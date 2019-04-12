@@ -250,7 +250,7 @@ const router = curi(history, routes, {
 ]);
 
 const router = curi(history, routes, {
-  emitRedirects: false                 
+  emitRedirects: false
 });
 // navigating to "/old/2" will automatically redirect
 // to "/new/2" without emitting a response`}
@@ -267,13 +267,12 @@ const router = curi(history, routes, {
             <p>
               When the initially matched route is synchronous and redirects, the
               router's automatic redirect will occur before any response
-              handlers (registered with <IJS>once()</IJS> or{" "}
-              <IJS>observe()</IJS>) are called. This means that they will be
-              called with the response for the location that was redirected to
-              instead of the initial location. This is fine on the client side,
-              but causes issues with server side rendering. When{" "}
-              <IJS>automaticRedirects</IJS> is <IJS>false</IJS>, the automatic
-              redirect will not happen.{" "}
+              handlers (registered with <IJS>once</IJS> or <IJS>observe</IJS>)
+              are called. This means that they will be called with the response
+              for the location that was redirected to instead of the initial
+              location. This is fine on the client side, but causes issues with
+              server side rendering. When <IJS>automaticRedirects</IJS> is{" "}
+              <IJS>false</IJS>, the automatic redirect will not happen.{" "}
               <strong>
                 Setting <IJS>automaticRedirects</IJS> to <IJS>false</IJS> is
                 recommend for server side rendering.
@@ -302,7 +301,7 @@ const router = curi(history, routes, {
 ]);
 const history = InMemory({ locations: ["/old/1" ]});
 const router = curi(history, routes, {
-  automaticRedirects: false                 
+  automaticRedirects: false
 });
 router.once(({ response }) => {
   // response = { name: "Old", ... }
@@ -353,10 +352,9 @@ router.once(({ response }) => {
           meta={{ title: "navigate(details)", hash: "navigate" }}
         >
           <p>
-            The <IJS>navigate()</IJS> method is used to navigate
-            programmatically. It takes a <IJS>details</IJS> object with the
-            details of where you want to navigate to as well as the{" "}
-            <IJS>method</IJS> of navigation.
+            The <IJS>navigate</IJS> method is used to navigate programmatically.
+            It takes a <IJS>details</IJS> object with the details of where you
+            want to navigate to as well as the <IJS>method</IJS> of navigation.
           </p>
           <ScrollableTable>
             <thead>
@@ -442,7 +440,7 @@ router.navigate({
           meta={{ title: "once(fn, options)", hash: "once" }}
         >
           <p>
-            The <IJS>once()</IJS> method takes a response handler function. If a
+            The <IJS>once</IJS> method takes a response handler function. If a
             response already exists, the function will be called immediately.
             Otherwise, the function will be called once a new response is
             created. The <IJS>{`\{ initial: false \}`}</IJS> option can be used
@@ -527,12 +525,11 @@ router.navigate({
           meta={{ title: "observe(fn, options)", hash: "observe" }}
         >
           <p>
-            The <IJS>observe()</IJS> method takes a response handler function.
-            The response handler will be called every time a new response is
-            emitted (and it a response already exists, the function will be
-            called immediately). The <IJS>{`\{ initial: false \}`}</IJS> option
-            can be used to prevent an immediate call even if a response already
-            exists.
+            The <IJS>observe</IJS> method takes a response handler function. The
+            response handler will be called every time a new response is emitted
+            (and it a response already exists, the function will be called
+            immediately). The <IJS>{`\{ initial: false \}`}</IJS> option can be
+            used to prevent an immediate call even if a response already exists.
           </p>
           <ScrollableTable>
             <thead>
@@ -607,8 +604,8 @@ router.navigate({
             </CodeBlock>
 
             <p>
-              <IJS>observe()</IJS> returns a function to stop calling the
-              response handler function for new responses.
+              <IJS>observe</IJS> returns a function to stop calling the response
+              handler function for new responses.
             </p>
 
             <CodeBlock>
@@ -636,14 +633,14 @@ stopObserving();
             ideal.
           </p>
           <p>
-            <IJS>cancel()</IJS> takes an observer function that will be called
+            <IJS>cancel</IJS> takes an observer function that will be called
             when navigation starts and when the navigation is finished. When the
             navigation starts, the observer function will be given a function to
             cancel the navigation. When the navigation finishes, the function
             will be called with <IJS>undefined</IJS>.
           </p>
           <p>
-            Calling <IJS>cancel()</IJS> returns a function to stop observing.
+            Calling <IJS>cancel</IJS> returns a function to stop observing.
           </p>
 
           <CodeBlock>
@@ -662,13 +659,13 @@ stopObserving();
           meta={{ title: "current()", hash: "current-property" }}
         >
           <p>
-            The <IJS>router.current()</IJS> method returns the current{" "}
+            The <IJS>router.current</IJS> method returns the current{" "}
             <IJS>response</IJS> and <IJS>navigation</IJS> objects.
           </p>
           <Note>
             <p>
-              If you call <IJS>router.current()</IJS> before the initial
-              response has been emitted, the <IJS>response</IJS> and{" "}
+              If you call <IJS>router.current</IJS> before the initial response
+              has been emitted, the <IJS>response</IJS> and{" "}
               <IJS>navigation</IJS> properties will be <IJS>null</IJS>.
             </p>
           </Note>
@@ -726,8 +723,8 @@ const userPathname = router.route.pathname(
           meta={{ title: "refresh()", hash: "refresh-property" }}
         >
           <p>
-            The <IJS>refresh()</IJS> function takes an array of new routes,
-            which will replace the existing routes. The router will emit a new
+            The <IJS>refresh</IJS> function takes an array of new routes, which
+            will replace the existing routes. The router will emit a new
             response based on the current location.
           </p>
           <p>
