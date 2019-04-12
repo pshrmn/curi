@@ -18,7 +18,7 @@ const announce = ariaLiveSideEffect(
 const router = createRouter(browser, routes, {
   route: [active(), prefetch()],
   sideEffects: [setTitle, scrollTo, announce],
-  emitRedirects: false
+  invisibleRedirects: true
 });
 
 export default router;

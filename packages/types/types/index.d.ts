@@ -19,7 +19,7 @@ export interface PathOptions {
 export interface RouterOptions<O = HistoryOptions> {
     route?: Array<Interaction>;
     sideEffects?: Array<Observer>;
-    emitRedirects?: boolean;
+    invisibleRedirects?: boolean;
     external?: any;
     history?: O;
 }

@@ -1,3 +1,7 @@
+## Next
+
+* Change `emitRedirects` (default `true`) to `invisibleRedirects` (default `false`).
+
 ## 2.0.0-beta.7
 
 * `route.path_options` is an object with `match` (for matching location) and `compile` (for generating pathnames) properties.

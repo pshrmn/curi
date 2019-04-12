@@ -222,7 +222,7 @@ const router = curi(history, routes, {
           >
             <p>
               When <IJS>false</IJS> (default is <IJS>true</IJS>), response
-              objects with the <IJS>redirectTo</IJS> property{" "}
+              objects with the <IJS>redirect</IJS> property{" "}
               <strong>will not be emitted</strong> to observers. This can be
               useful for avoiding an extra render, but should not be used on the
               server.
@@ -236,7 +236,7 @@ const router = curi(history, routes, {
     response({ params }) {
       // setup a redirect to the "New" route
       return {
-        redirectTo: {
+        redirect: {
           name: "New",
           params
         }

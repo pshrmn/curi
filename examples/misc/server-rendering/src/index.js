@@ -8,7 +8,7 @@ import routes from "./routes";
 import App from "./components/App";
 
 const router = createRouter(browser, routes, {
-  emitRedirects: false
+  invisibleRedirects: true
 });
 const Router = createRouterComponent(router);
 

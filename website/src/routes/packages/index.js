@@ -34,7 +34,7 @@ export default {
           return Promise.reject({
             type: UNKNOWN_VERSION,
             returns: {
-              redirectTo: {
+              redirect: {
                 name: "Package",
                 params: {
                   package: params.package,

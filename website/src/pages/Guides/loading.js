@@ -135,7 +135,7 @@ function LoadingGuide() {
         </p>
 
         <p>
-          You can specify the route to redirect to with <IJS>redirectTo</IJS>.
+          You can specify the route to redirect to with <IJS>redirect</IJS>.
           This takes the <IJS>name</IJS> of the route to redirect to,{" "}
           <IJS>params</IJS> if the route (or ancestor routes) have route params.{" "}
           <IJS>hash</IJS>, <IJS>query</IJS>, and <IJS>state</IJS> can also be
@@ -154,7 +154,7 @@ function LoadingGuide() {
     // destructure the current location to preserve
     // query/hash values
     return {
-      redirectTo: {
+      redirect: {
         name: 'Recipe',
         params: params,
         hash: location.hash
