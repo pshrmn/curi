@@ -590,9 +590,9 @@ function renderHandler(req, res) {
           <p>
             If a route matches and it redirects, you can handle it without
             rendering the application. A <IJS>response</IJS> is a redirect if it
-            has a <IJS>redirectTo</IJS> property. <IJS>redirectTo.url</IJS> is
-            that full URL (<IJS>pathname</IJS>, <IJS>query</IJS>, and{" "}
-            <IJS>hash</IJS>).
+            has a <IJS>redirect</IJS> property. <IJS>redirect.url</IJS> is that
+            full URL (<IJS>pathname</IJS>, <IJS>query</IJS>, and <IJS>hash</IJS>
+            ).
           </p>
 
           <CodeBlock data-line="9-12">
@@ -604,7 +604,7 @@ function renderHandler(req, res) {
     history: { location: req.url }
   });
   router.once(({ response }) => {
-    if (response.redirectTo) {
+    if (response.redirect) {
       res.redirect(301);
       return;
     }

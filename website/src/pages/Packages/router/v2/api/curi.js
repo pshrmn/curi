@@ -210,8 +210,8 @@ const router = createRouter(browser, routes, {
           <HashSection
             tag="h6"
             meta={{
-              title: <IJS>emitRedirects</IJS>,
-              hash: "options-emitRedirects"
+              title: <IJS>invisibleRedirects</IJS>,
+              hash: "options-invisibleRedirects"
             }}
           >
             <p>
@@ -221,20 +221,20 @@ const router = createRouter(browser, routes, {
             </p>
 
             <p>
-              If the <IJS>emitRedirects</IJS> property is <IJS>true</IJS> (the
-              default), Curi will emit the redirect response (any observers will
-              be called with the response).
+              If the <IJS>invisibleRedirects</IJS> property is <IJS>false</IJS>{" "}
+              (the default), Curi will emit the redirect response (any observers
+              will be called with the response).
             </p>
 
             <p>
-              If <IJS>emitRedirects</IJS> is set to <IJS>false</IJS>, Curi will
-              skip emitting the redirect; this effectively makes the redirect
-              invisible to the application.
+              If <IJS>invisibleRedirects</IJS> is set to <IJS>true</IJS>, Curi
+              will skip emitting the redirect; this effectively makes the
+              redirect invisible to the application.
             </p>
 
             <p>
-              <IJS>emitRedirects</IJS> should always be <IJS>true</IJS> for
-              server-side rendering, otherwise the application will render
+              <IJS>invisibleRedirects</IJS> should always be <IJS>false</IJS>{" "}
+              for server-side rendering, otherwise the application will render
               content for the incorrect location.
             </p>
 
@@ -260,7 +260,7 @@ const router = createRouter(browser, routes, {
 ]);
 
 const router = createRouter(browser, routes, {
-  emitRedirects: false
+  invisibleRedirects: false
 });
 // navigating to "/old/2" will automatically redirect
 // to "/new/2" without emitting a response for the Old route`}

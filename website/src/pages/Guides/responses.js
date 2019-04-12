@@ -120,7 +120,7 @@ function ResponsesGuide() {
               <td>A convenient place to attach any errors to the response.</td>
             </tr>
             <tr>
-              <td>redirectTo</td>
+              <td>redirect</td>
               <td>
                 An object describing a route that Curi should automatically
                 redirect to.
@@ -149,7 +149,7 @@ function ResponsesGuide() {
 
   error: undefined,
 
-  redirectTo: {...}
+  redirect: {...}
 }`}
         </CodeBlock>
       </HashSection>
@@ -207,10 +207,10 @@ const routes = prepareRoutes([
           When a route's <IJS>response</IJS> function returns an object with a{" "}
           <Link
             name="Package"
-            params={{ package: "router", version: "v1" }}
+            params={{ package: "router", version: "v2" }}
             hash="response"
           >
-            <IJS>redirectTo</IJS> property
+            <IJS>redirect</IJS> property
           </Link>
           , the router will use it to generate a location object that Curi will
           automatically redirect to.
@@ -218,22 +218,22 @@ const routes = prepareRoutes([
 
         <CodeBlock>
           {`{
-  // The redirectTo property provides information on
+  // The redirect property provides information on
   // where you should redirect to
-  redirectTo: { name: "Login" }
+  redirect: { name: "Login" }
 }`}
         </CodeBlock>
 
         <p>
-          When creating a router, you can set the <IJS>emitRedirects</IJS>{" "}
-          option to <IJS>false</IJS> and the response will not be sent to
+          When creating a router, you can set the <IJS>invisibleRedirects</IJS>{" "}
+          option to <IJS>true</IJS> and the response will not be sent to
           observers and one time functions. Redirect responses don't usually
           have anything to render, so setting this option is usually ideal.
         </p>
 
         <CodeBlock>
           {`const router = createRouter(browser, routes, {
-  emitRedirects: false
+  invisibleRedirects: false
 });`}
         </CodeBlock>
       </HashSection>

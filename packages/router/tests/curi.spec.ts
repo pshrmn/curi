@@ -201,7 +201,7 @@ describe("curi", () => {
         });
       });
 
-      describe("emitRedirects", () => {
+      describe("invisibleRedirects", () => {
         it("emits redirects by default", () => {
           const routes = prepareRoutes([
             {
@@ -232,7 +232,7 @@ describe("curi", () => {
           });
         });
 
-        it("does not emit redirects when emitRedirects = false", done => {
+        it("does not emit redirects when invisibleRedirects = true", done => {
           const routes = prepareRoutes([
             {
               name: "Start",
@@ -252,7 +252,7 @@ describe("curi", () => {
           ]);
 
           const router = createRouter(inMemory, routes, {
-            emitRedirects: false
+            invisibleRedirects: true
           });
           // the first emitted response is the location that was redirected to
           router.once(({ response }) => {

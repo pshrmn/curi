@@ -54,7 +54,7 @@ export default async function staticFiles(
           const router = createRouter<LocationOptions>(reusable, routes, {
             ...routerOptions(),
             // need to emit redirects or will get stuck waiting forever
-            emitRedirects: true,
+            invisibleRedirects: false,
             history: {
               location: pathname
             }

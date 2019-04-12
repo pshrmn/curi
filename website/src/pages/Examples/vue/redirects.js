@@ -38,7 +38,7 @@ function AuthenticationExample() {
 
         <p>
           A <IJS>response</IJS> function can modify the response by setting a{" "}
-          <IJS>redirectTo</IJS> property on its return object. Curi will
+          <IJS>redirect</IJS> property on its return object. Curi will
           automatically (unless configured not to) redirect to that location.
         </p>
 
