@@ -8,7 +8,7 @@ import {
 } from "../../../../../components/package/common";
 
 export const meta = {
-  title: "titleEffect()",
+  title: "titleEffect",
   hash: "titleEffect"
 };
 
@@ -56,7 +56,7 @@ const router = curi(history, routes, {
       body: Home,
       title: "About"
     }
-  }              
+  }
 }
 // when the About route matches, document.title = "About | My Site"`}
       </CodeBlock>

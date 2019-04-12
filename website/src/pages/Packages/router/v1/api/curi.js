@@ -18,7 +18,7 @@ const propertiesMeta = {
   hash: "router"
 };
 export const meta = {
-  title: "curi()",
+  title: "curi",
   hash: "curi",
   children: [argumentsMeta, propertiesMeta]
 };
@@ -656,7 +656,7 @@ stopObserving();
 
         <HashSection
           tag="h5"
-          meta={{ title: "current()", hash: "current-property" }}
+          meta={{ title: "current", hash: "current-property" }}
         >
           <p>
             The <IJS>router.current</IJS> method returns the current{" "}
@@ -720,7 +720,7 @@ const userPathname = router.route.pathname(
 
         <HashSection
           tag="h5"
-          meta={{ title: "refresh()", hash: "refresh-property" }}
+          meta={{ title: "refresh", hash: "refresh-property" }}
         >
           <p>
             The <IJS>refresh</IJS> function takes an array of new routes, which

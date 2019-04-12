@@ -119,7 +119,7 @@ export function RoutePropertiesAPI() {
 };`}
         </CodeBlock>
       </HashSection>
-      <HashSection meta={{ title: "route.response()", hash: "response" }}>
+      <HashSection meta={{ title: "route.response", hash: "response" }}>
         <p>
           A function for modifying the response object. This returns an object
           whose properties will be merged with the matched route properties to

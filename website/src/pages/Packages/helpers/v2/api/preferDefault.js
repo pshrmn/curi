@@ -7,7 +7,7 @@ import {
 } from "../../../../../components/package/common";
 
 export const meta = {
-  title: "preferDefault()",
+  title: "preferDefault",
   hash: "preferDefault"
 };
 

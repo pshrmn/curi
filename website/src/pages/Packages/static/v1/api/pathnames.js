@@ -11,7 +11,7 @@ const argumentsMeta = {
   hash: "pathnames-arguments"
 };
 export const meta = {
-  title: "pathnames()",
+  title: "pathnames",
   hash: "pathnames",
   children: [argumentsMeta]
 };

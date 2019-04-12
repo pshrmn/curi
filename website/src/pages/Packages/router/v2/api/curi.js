@@ -5,8 +5,7 @@ import {
   HashSection,
   CodeBlock,
   IJS,
-  Note,
-  ScrollableTable
+  Note
 } from "../../../../../components/package/common";
 
 const historyArgMeta = { title: "history", hash: "history" };

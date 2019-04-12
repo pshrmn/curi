@@ -6,8 +6,7 @@ import {
   HashSection,
   CodeBlock,
   Note,
-  IJS,
-  ScrollableTable
+  IJS
 } from "../../components/guide/common";
 
 const meta = {
@@ -79,55 +78,47 @@ function ResponsesGuide() {
         </p>
         <p>The "settable" properties are:</p>
 
-        <ScrollableTable>
-          <thead>
-            <tr>
-              <th>property</th>
-              <th>description</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>body</td>
-              <td>The component(s) that should be rendered for a route.</td>
-            </tr>
-            <tr>
-              <td>status</td>
-              <td>An http status, mostly useful for server side rendering.</td>
-            </tr>
-            <tr>
-              <td>data</td>
-              <td>
-                A place to attach any data you want to the response, such as
-                data loaded in the route's <IJS>resolve</IJS> function.
-              </td>
-            </tr>
-            <tr>
-              <td>title</td>
-              <td>
-                The response's title, which can be used with{" "}
-                <Link
-                  name="Package"
-                  params={{ package: "side-effect-title", version: "v2" }}
-                >
-                  <IJS>@curi/side-effect-title</IJS>
-                </Link>{" "}
-                to set the browsers tab's title.
-              </td>
-            </tr>
-            <tr>
-              <td>error</td>
-              <td>A convenient place to attach any errors to the response.</td>
-            </tr>
-            <tr>
-              <td>redirect</td>
-              <td>
-                An object describing a route that Curi should automatically
-                redirect to.
-              </td>
-            </tr>
-          </tbody>
-        </ScrollableTable>
+        <HashSection tag="h3" meta={{ title: "body", hash: "settable-body" }}>
+          <p>The component(s) that should be rendered for a route.</p>
+        </HashSection>
+
+        <HashSection
+          tag="h3"
+          meta={{ title: "status", hash: "settable-status" }}
+        >
+          <p>An http status, mostly useful for server side rendering.</p>
+        </HashSection>
+
+        <HashSection tag="h3" meta={{ title: "data", hash: "settable-data" }}>
+          <p>
+            A place to attach any data you want to the response, such as data
+            loaded in the route's <IJS>resolve</IJS> function.
+          </p>
+        </HashSection>
+
+        <HashSection tag="h3" meta={{ title: "title", hash: "settable-title" }}>
+          <p>
+            The response's title, which can be used with{" "}
+            <Link
+              name="Package"
+              params={{ package: "side-effect-title", version: "v2" }}
+            >
+              <IJS>@curi/side-effect-title</IJS>
+            </Link>{" "}
+            to set the browsers tab's title.
+          </p>
+        </HashSection>
+
+        <HashSection tag="h3" meta={{ title: "", hash: "settable-" }}>
+          <p>A convenient place to attach any errors to the response.</p>
+        </HashSection>
+
+        <HashSection tag="h3" meta={{ title: "", hash: "settable-" }}>
+          <p>
+            An object describing a route that Curi should automatically redirect
+            to.
+          </p>
+        </HashSection>
 
         <CodeBlock>
           {`// settable properties (optional)

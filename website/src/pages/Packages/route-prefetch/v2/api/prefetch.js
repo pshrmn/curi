@@ -13,7 +13,7 @@ const argumentsMeta = {
   hash: "arguments"
 };
 export const meta = {
-  title: "prefetch()",
+  title: "prefetch",
   hash: "prefetch",
   children: [argumentsMeta]
 };
@@ -23,9 +23,9 @@ export function PrefetchAPI() {
     <HashSection meta={meta}>
       <p>
         A function to create the prefetch route interaction. When you create
-        your router, the result is passed to the router using the `route`
-        option, which will add a <IJS>prefetch</IJS> function to the router's
-        route interactions.
+        your router, the result is passed to the router using the{" "}
+        <IJS>route</IJS> option, which will add a <IJS>prefetch</IJS> function
+        to the router's route interactions.
       </p>
 
       <CodeBlock>

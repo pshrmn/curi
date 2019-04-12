@@ -14,7 +14,7 @@ const optsMeta = {
   hash: "useActive-opts"
 };
 export const meta = {
-  title: "useActive()",
+  title: "useActive",
   hash: "useActive",
   children: [optsMeta]
 };

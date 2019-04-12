@@ -11,7 +11,7 @@ const argumentsMeta = {
   hash: "arguments"
 };
 export const meta = {
-  title: "active()",
+  title: "active",
   hash: "active",
   children: [argumentsMeta]
 };
@@ -20,10 +20,9 @@ export function ActiveAPI() {
   return (
     <HashSection meta={meta}>
       <p>
-        A function to create the active route interaction. When you create your
-        router, the result is passed to the router using the `route` option,
-        which will add an <IJS>active</IJS> function to the router's route
-        interactions.
+        A function to create the active route interaction. The interaction is
+        passed as part of the <IJS>options.route</IJS> array passed to a{" "}
+        <IJS>createRouter</IJS> call.
       </p>
 
       <p>
@@ -50,14 +49,14 @@ const isActive = router.route.active(
 
       <HashSection meta={argumentsMeta} tag="h3">
         <HashSection meta={{ title: "name", hash: "name" }} tag="h4">
-          <p>The name of the route to check if it is active.</p>
+          <p>The name of the route to check.</p>
         </HashSection>
 
         <HashSection meta={{ title: "response", hash: "response" }} tag="h4">
           <p>The response to check the route against.</p>
         </HashSection>
 
-        <HashSection meta={{ title: "optional", hash: "optional" }} tag="h4">
+        <HashSection meta={{ title: "config", hash: "config" }} tag="h4">
           <p>
             An optional argument with additional properties can be passed as the
             third argument.

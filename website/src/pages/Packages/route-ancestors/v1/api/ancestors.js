@@ -12,7 +12,7 @@ const argumentsMeta = {
   hash: "arguments"
 };
 export const meta = {
-  title: "ancestors()",
+  title: "ancestors",
   hash: "ancestors",
   children: [argumentsMeta]
 };
@@ -22,9 +22,9 @@ export function AncestorsAPI() {
     <HashSection meta={meta}>
       <p>
         A function to create the ancestors route interaction. When you create
-        your router, the result is passed to the router using the `route`
-        option, which will add an <IJS>ancestors</IJS> function to the router's
-        route interactions.
+        your router, the result is passed to the router using the{" "}
+        <IJS>route</IJS> option, which will add an <IJS>ancestors</IJS> function
+        to the router's route interactions.
       </p>
       <p>
         The interaction returns the name of an ancestor route a given level "up"

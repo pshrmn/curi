@@ -6,7 +6,7 @@ import {
 } from "../../../../../components/package/common";
 
 export const meta = {
-  title: "scrollEffect()",
+  title: "scrollEffect",
   hash: "scrollEffect"
 };
 
@@ -15,10 +15,10 @@ export function ScrollAPI() {
     <HashSection meta={meta}>
       <CodeBlock>
         {`import { createRouter } from "@curi/router";
-import scroll from '@curi/side-effect-scroll';
+import scrollEffect from '@curi/side-effect-scroll';
 
 const router = createRouter(browser, routes, {
-  sideEffects: [scroll()]
+  sideEffects: [scrollEffect()]
 });`}
       </CodeBlock>
     </HashSection>

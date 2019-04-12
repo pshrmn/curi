@@ -12,7 +12,7 @@ const argumentsMeta = {
   hash: "arguments"
 };
 export const meta = {
-  title: "active()",
+  title: "active",
   hash: "active",
   children: [argumentsMeta]
 };
@@ -22,9 +22,9 @@ export function ActiveAPI() {
     <HashSection meta={meta}>
       <p>
         A function to create the active route interaction. When you create your
-        router, the result is passed to the router using the `route` option,
-        which will add an <IJS>active</IJS> function to the router's route
-        interactions.
+        router, the result is passed to the router using the <IJS>route</IJS>{" "}
+        option, which will add an <IJS>active</IJS> function to the router's
+        route interactions.
       </p>
 
       <p>

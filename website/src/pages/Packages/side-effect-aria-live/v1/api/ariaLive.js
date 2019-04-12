@@ -8,7 +8,7 @@ import {
 } from "../../../../../components/package/common";
 
 export const meta = {
-  title: "ariaLiveEffect()",
+  title: "ariaLiveEffect",
   hash: "ariaLiveEffect"
 };
 
@@ -38,7 +38,7 @@ export function AriaLiveAPI() {
         The DOM element's <IJS>aria-live</IJS> attribute will be{" "}
         <IJS>"assertive"</IJS> by default, but you can use the side-effect
         factory's second argument to pass an alternative (i.e.{" "}
-        <IJS>>"polite"</IJS>).
+        <IJS>"polite"</IJS>).
       </p>
 
       <CodeBlock>

@@ -13,7 +13,7 @@ const argumentsMeta = {
   hash: "staticFiles-arguments"
 };
 export const meta = {
-  title: "staticFiles()",
+  title: "staticFiles",
   hash: "staticFiles",
   children: [argumentsMeta]
 };
@@ -146,7 +146,7 @@ staticFiles({
           <HashSection
             tag="h6"
             meta={{
-              title: "getRouterOptions()",
+              title: "getRouterOptions",
               hash: "staticFiles-getRouterOptions"
             }}
           >
@@ -221,7 +221,7 @@ staticFiles({
 
           <HashSection
             tag="h6"
-            meta={{ title: "render()", hash: "staticFiles-render" }}
+            meta={{ title: "render", hash: "staticFiles-render" }}
           >
             <p>
               A function that takes the emitted <IJS>response</IJS>,{" "}
@@ -269,7 +269,7 @@ staticFiles({
 
           <HashSection
             tag="h6"
-            meta={{ title: "insert()", hash: "staticFiles-insert" }}
+            meta={{ title: "insert", hash: "staticFiles-insert" }}
           >
             <p>
               A function that takes the value returned by the <IJS>render</IJS>{" "}

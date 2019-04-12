@@ -57,7 +57,7 @@ export function FocusAPI() {
       <HashSection tag="h3" meta={propsMeta}>
         <HashSection
           tag="h4"
-          meta={{ title: "children()", hash: "Focus-children" }}
+          meta={{ title: "children", hash: "Focus-children" }}
         >
           <p>
             The <IJS>children</IJS> function is a render-invoked prop that will

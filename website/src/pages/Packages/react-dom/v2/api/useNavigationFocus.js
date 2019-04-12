@@ -13,7 +13,7 @@ const optsMeta = {
   hash: "useNavigationFocus-opts"
 };
 export const meta = {
-  title: "useNavigationFocus()",
+  title: "useNavigationFocus",
   hash: "useNavigationFocus",
   children: [optsMeta]
 };

@@ -39,7 +39,7 @@ const responseMeta = {
   hash: "responses"
 };
 const responseFnMeta = {
-  title: "route.response()",
+  title: "route.response",
   hash: "route-response"
 };
 const renderingMeta = {

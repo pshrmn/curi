@@ -12,7 +12,7 @@ const optsMeta = {
   hash: "useLocation-opts"
 };
 export const meta = {
-  title: "useLocation()",
+  title: "useLocation",
   hash: "useLocation",
   children: [optsMeta]
 };

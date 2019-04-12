@@ -6,7 +6,7 @@ import {
 } from "../../../../../components/package/common";
 
 export const meta = {
-  title: "scrollEffect()",
+  title: "scrollEffect",
   hash: "scrollEffect"
 };
 

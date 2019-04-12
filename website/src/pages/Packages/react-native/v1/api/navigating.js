@@ -53,7 +53,7 @@ export function NavigatingAPI() {
       <HashSection tag="h3" meta={propsMeta}>
         <HashSection
           tag="h4"
-          meta={{ title: "children()", hash: "Navigating-children" }}
+          meta={{ title: "children", hash: "Navigating-children" }}
         >
           <p>
             A function that returns a React node. The function will be called

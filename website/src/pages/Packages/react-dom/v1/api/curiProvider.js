@@ -17,7 +17,7 @@ const propsMeta = {
   hash: "curiProvider-props"
 };
 export const meta = {
-  title: "curiProvider()",
+  title: "curiProvider",
   hash: "curiProvider",
   children: [argumentsMeta, propsMeta]
 };

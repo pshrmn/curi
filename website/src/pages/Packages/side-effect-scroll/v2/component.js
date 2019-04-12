@@ -12,10 +12,10 @@ function SideEffectScrollPkg() {
           <a href="https://developer.mozilla.org/en-US/docs/Web/API/History_API">
             History API
           </a>{" "}
-          to change locations, but this does not trigger scrolling to the top of
-          the page when you navigate. This package provides a side effect
-          function that will scroll to the top of the page whenever those
-          functions are used for navigation.
+          to change locations. Navigating using the History API does not trigger
+          scrolling to the top of the page after navigation. This package
+          provides a side effect function that will scroll to the top of the
+          page whenever those functions are used for navigation.
         </p>
 
         <p>

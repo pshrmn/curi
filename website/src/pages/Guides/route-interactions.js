@@ -4,8 +4,7 @@ import {
   PlainSection,
   HashSection,
   CodeBlock,
-  IJS,
-  ScrollableTable
+  IJS
 } from "../../components/guide/common";
 
 const meta = {
@@ -48,8 +47,8 @@ function RouterInteractionsGuide() {
         </p>
 
         <p>
-          Route interactions are defined using objects with four properties:
-          name, register, get, and reset.
+          Route interactions are defined using objects with three properties:
+          name, register, and get.
         </p>
 
         <CodeBlock>
@@ -65,8 +64,7 @@ function RouterInteractionsGuide() {
   // This is the function that you will call. For example,
   // with this interaction, the get function will be
   // called when you call router.route.my('...')
-  get: function(route) {...},
-  reset: function() {...}
+  get: function(route) {...}
 }`}
         </CodeBlock>
 
@@ -82,8 +80,7 @@ function createMyInteraction() {
   return {
     name: "my",
     register() {...},
-    get() {...},
-    reset() {...}
+    get() {...}
   };
 }
 
@@ -135,43 +132,27 @@ function confirmInteraction() {
         </CodeBlock>
 
         <p>
-          The function should return an object with four properties:{" "}
-          <IJS>name</IJS>, <IJS>register</IJS>, <IJS>get</IJS>, and{" "}
-          <IJS>reset</IJS>.
+          The function should return an object with three properties:{" "}
+          <IJS>name</IJS>, <IJS>register</IJS>, and <IJS>get</IJS>.
         </p>
 
-        <ScrollableTable>
-          <thead>
-            <tr>
-              <th>property</th>
-              <th>description</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>name</td>
-              <td>a unique identifier for the route interaction</td>
-            </tr>
-            <tr>
-              <td>register</td>
-              <td>a function to internally store information about routes</td>
-            </tr>
-            <tr>
-              <td>get</td>
-              <td>
-                a function that will receive a route's name (and possibly other
-                arguments) and perform some task using the related route
-              </td>
-            </tr>
-            <tr>
-              <td>reset</td>
-              <td>
-                a function that will reset the interaction's internal state
-                (this is used if you call <IJS>router.replaceRoutes</IJS>)
-              </td>
-            </tr>
-          </tbody>
-        </ScrollableTable>
+        <HashSection tag="h3" meta={{ title: "name", hash: "property-name" }}>
+          <p>A unique identifier for the route interaction.</p>
+        </HashSection>
+
+        <HashSection
+          tag="h3"
+          meta={{ title: "register", hash: "property-register" }}
+        >
+          <p>A function to internally store information about routes.</p>
+        </HashSection>
+
+        <HashSection tag="h3" meta={{ title: "get", hash: "property-get" }}>
+          <p>
+            A function that will receive a route's name (and possibly other
+            arguments) and perform some task using the related route.
+          </p>
+        </HashSection>
 
         <CodeBlock>
           {`function confirmInteraction() {
@@ -188,10 +169,6 @@ function confirmInteraction() {
     // with the requested name
     get: (name) => {
       return knownRoutes[name] != null
-    },
-    // reset the known routes
-    reset: () => {
-      knownRoutes = {};
     }
   };
 }`}
@@ -244,9 +221,6 @@ router.route.confirm('Elsewhere'); // false`}
     },
     get: (name) => {
       return routeTree[name];
-    },
-    reset: () => {
-      routeTree = {};
     }
   }
 }`}

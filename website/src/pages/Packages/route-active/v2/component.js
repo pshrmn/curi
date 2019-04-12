@@ -11,8 +11,7 @@ function RouteActivePkg() {
           The <IJS>@curi/route-active</IJS> package determines whether a route
           is "active" by comparing it to the current response. This can be
           restricted to complete matches or allow partial matches so that
-          locations that represent an ancestor of the current location are also
-          considered "active".
+          ancestor routes of the current location can also considered "active".
         </p>
       </About>
 

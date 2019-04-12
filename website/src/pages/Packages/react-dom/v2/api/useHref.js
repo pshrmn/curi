@@ -12,7 +12,7 @@ const optsMeta = {
   hash: "useHref-opts"
 };
 export const meta = {
-  title: "useHref()",
+  title: "useHref",
   hash: "useHref",
   children: [optsMeta]
 };
@@ -26,7 +26,7 @@ export function UseHrefAPI() {
 
       <CodeBlock lang="jsx">
         {`import { useHref } from '@curi/react-dom';
-        
+
 const href = useHref({
   name: "Video",
   params: { id: "jaifeo9" } },
