@@ -30,7 +30,7 @@ curiStore(router, store);</code></pre></div><div class="section css-1kr8jn0" id=
     components: { NavLinks }
   };
 &lt;/script&gt;</code></pre></div><p>If your routes use an object to attach multiple components to a response, splitting them apart in computed properties may give your templates a cleaner look.</p><p>If you do attach multiple components to a response, please remember that you want every route to set the same <code class="inline-code css-jo5c25 eutm4hs0">body</code> shape. Otherwise, you&#x27;ll have to determine the shape and change how you render, which can quickly become messy.</p><div class="css-xg7t84 e12etsbl0"><pre><code class="language-html">&lt;script&gt;
-const routes = prepare_routes([
+const routes = prepareRoutes([
   {
     name: &quot;Home&quot;,
     path: &quot;&quot;,

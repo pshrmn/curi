@@ -19,8 +19,8 @@
 router.once(fn);
 
 // obs will be called for every new response
-const stop = router.observe(fn);</code></pre></div></div><div class="section css-1kr8jn0" id="use-cases"><h3><a href="#use-cases" class="header-link">Use Cases</a></h3><p>What should you use response handlers for?</p><div class="section css-1kr8jn0" id="setup"><h4><a href="#setup" class="header-link">Setup</a></h4><p>If any of the routes in an application have <code class="inline-code css-jo5c25 eutm4hs0">resolve</code> <!-- -->functions, when they match their responses are created asynchronously. When the application first renders, if the router matches an async route, the response isn&#x27;t immediately ready to use. To deal with this, you can use an observer to render once the initial response is ready.</p><p>A setup function only needs to be called one time, so you can register it with <code class="inline-code css-jo5c25 eutm4hs0">router.once()</code>.</p><style data-emotion-css="o0tph9">.css-o0tph9{padding:10px 5px;margin:5px 0;border:1px solid #c7c7c7;background:#eeeeee;}.css-o0tph9 p:last-child{margin-bottom:0;}.aside .css-o0tph9{background:#fff;}.css-o0tph9 .inline-code{background:#fff !important;}</style><div class="css-o0tph9 e1bjkffy0"><strong>Note:</strong> <p>In most applications, waiting for the initial response is the only time you may need to write response handlers yourself.</p></div><div class="css-xg7t84 e12etsbl0"><pre><code class="language-jsx">const Router = create_router_component(router);
-              
+const stop = router.observe(fn);</code></pre></div></div><div class="section css-1kr8jn0" id="use-cases"><h3><a href="#use-cases" class="header-link">Use Cases</a></h3><p>What should you use response handlers for?</p><div class="section css-1kr8jn0" id="setup"><h4><a href="#setup" class="header-link">Setup</a></h4><p>If any of the routes in an application have <code class="inline-code css-jo5c25 eutm4hs0">resolve</code> <!-- -->functions, when they match their responses are created asynchronously. When the application first renders, if the router matches an async route, the response isn&#x27;t immediately ready to use. To deal with this, you can use an observer to render once the initial response is ready.</p><p>A setup function only needs to be called one time, so you can register it with <code class="inline-code css-jo5c25 eutm4hs0">router.once()</code>.</p><style data-emotion-css="o0tph9">.css-o0tph9{padding:10px 5px;margin:5px 0;border:1px solid #c7c7c7;background:#eeeeee;}.css-o0tph9 p:last-child{margin-bottom:0;}.aside .css-o0tph9{background:#fff;}.css-o0tph9 .inline-code{background:#fff !important;}</style><div class="css-o0tph9 e1bjkffy0"><strong>Note:</strong> <p>In most applications, waiting for the initial response is the only time you may need to write response handlers yourself.</p></div><div class="css-xg7t84 e12etsbl0"><pre><code class="language-jsx">const Router = createRouterComponent(router);
+
 function setup() {
   ReactDOM.render((
     &lt;Router&gt;
@@ -38,8 +38,8 @@ router.observe(observer);</code></pre></div></div><div class="section css-1kr8jn
 }
 
 // as a side-effect
-const router = create_router(browser, routes, {
-  side_effects: [{ fn: logger }]
+const router = createRouter(browser, routes, {
+  sideEffects: [{ fn: logger }]
 });
 
 // as an observer

@@ -66,9 +66,9 @@ export default [
     name: &quot;Catch All&quot;,
     path: &quot;(.*)&quot;
   }
-];</code></pre></div></div><div class="section css-1kr8jn0" id="router"><h2><a href="#router" class="header-link">The Router</a></h2><p>With the history object created and the routes defined, we are ready to create the router. Back in the <code class="inline-code css-jo5c25 eutm4hs0">src/index.js</code> file, we should import the <code class="inline-code css-jo5c25 eutm4hs0">create_router</code> function from<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">@curi/router</code> as well as our routes from<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">src/routes.js</code>. Creating the router is done by calling the<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">create_router()</code> function and passing it the history function and the <code class="inline-code css-jo5c25 eutm4hs0">routes</code> array.</p><div class="css-xg7t84 e12etsbl0"><pre data-line="3,6,11"><code class="language-javascript">// src/main.js
+];</code></pre></div></div><div class="section css-1kr8jn0" id="router"><h2><a href="#router" class="header-link">The Router</a></h2><p>With the history object created and the routes defined, we are ready to create the router. Back in the <code class="inline-code css-jo5c25 eutm4hs0">src/index.js</code> file, we should import the <code class="inline-code css-jo5c25 eutm4hs0">createRouter</code> function from<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">@curi/router</code> as well as our routes from<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">src/routes.js</code>. Creating the router is done by calling the<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">createRouter()</code> function and passing it the history function and the <code class="inline-code css-jo5c25 eutm4hs0">routes</code> array.</p><div class="css-xg7t84 e12etsbl0"><pre data-line="3,6,11"><code class="language-javascript">// src/main.js
 import Vue from &#x27;vue&#x27;
-import { create_router } from &quot;@curi/router&quot;;
+import { createRouter } from &quot;@curi/router&quot;;
 import { browser } from &#x27;@hickory/browser&#x27;
 
 import routes from &#x27;./routes&#x27;;
@@ -76,13 +76,13 @@ import App from &#x27;./App.vue&#x27;
 
 Vue.config.productionTip = false
 
-const router = create_router(browser, routes)
+const router = createRouter(browser, routes)
 
 new Vue({
   render: h =&gt; h(App)
 }).$mount(&#x27;#app&#x27;)</code></pre></div><div class="css-o0tph9 e1bjkffy0"><strong>Note:</strong> <p>The Eslint warning has now moved to the <code class="inline-code css-jo5c25 eutm4hs0">router</code>, but this is still nothing to worry about.</p></div><p>We will add router support to the Vue application using a plugin. This plugin does a couple of things. First, it makes some Curi components available within the application. The only one of these components that we will be using is the <code class="inline-code css-jo5c25 eutm4hs0">curi-link</code>. Second, it makes router related values accessible to the components in the application. The router is available as <code class="inline-code css-jo5c25 eutm4hs0">this.$router</code> and the<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">response</code> and <code class="inline-code css-jo5c25 eutm4hs0">navigation</code> (we will cover these next) are grouped under <code class="inline-code css-jo5c25 eutm4hs0">this.$curi</code>. When the<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">CuriPlugin</code> is installed, the <code class="inline-code css-jo5c25 eutm4hs0">router</code> as passed in the options object.</p><div class="css-xg7t84 e12etsbl0"><pre data-line="5,13"><code class="language-javascript">// src/main.js
 import Vue from &#x27;vue&#x27;
-import { create_router } from &quot;@curi/router&quot;;
+import { createRouter } from &quot;@curi/router&quot;;
 import { browser } from &#x27;@hickory/browser&#x27;
 import { CuriPlugin } from &#x27;@curi/vue&#x27;
 
@@ -91,7 +91,7 @@ import App from &#x27;./App.vue&#x27;
 
 Vue.config.productionTip = false
 
-const router = create_router(browser, routes)
+const router = createRouter(browser, routes)
 Vue.use(CuriPlugin, { router })
 
 new Vue({

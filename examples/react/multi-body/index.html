@@ -26,7 +26,7 @@
   };
 }</code></pre></div><style data-emotion-css="o0tph9">.css-o0tph9{padding:10px 5px;margin:5px 0;border:1px solid #c7c7c7;background:#eeeeee;}.css-o0tph9 p:last-child{margin-bottom:0;}.aside .css-o0tph9{background:#fff;}.css-o0tph9 .inline-code{background:#fff !important;}</style><div class="css-o0tph9 e1bjkffy0"><strong>Note:</strong> <p>One thing to remember when attaching multiple components to a route is that all of your routes should have the same structure. Otherwise, when you render you will have to adapt your code to deal with different <code class="inline-code css-jo5c25 eutm4hs0">response.body</code> layouts.</p></div><div class="css-xg7t84 e12etsbl0"><pre><code class="language-javascript">// be consistent, don&#x27;t use
 // different body types
-const routes = prepare_routes([
+const routes = prepareRoutes([
   {
     ...,
     response() {
