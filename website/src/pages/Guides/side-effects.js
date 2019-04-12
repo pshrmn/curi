@@ -98,7 +98,7 @@ router.observe(render);
             <li>
               <Link
                 name="Package"
-                params={{ package: "side-effect-title", version: "v1" }}
+                params={{ package: "side-effect-title", version: "v2" }}
               >
                 @curi/side-effect-title
               </Link>
@@ -106,7 +106,7 @@ router.observe(render);
             <li>
               <Link
                 name="Package"
-                params={{ package: "side-effect-scroll", version: "v1" }}
+                params={{ package: "side-effect-scroll", version: "v2" }}
               >
                 @curi/side-effect-scroll
               </Link>

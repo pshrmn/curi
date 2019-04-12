@@ -64,7 +64,7 @@ function NewResponsesGuide() {
           three properties:{" "}
           <Link
             name="Package"
-            params={{ package: "router", version: "v1" }}
+            params={{ package: "router", version: "v2" }}
             hash="properties"
           >
             <IJS>router</IJS>
@@ -166,14 +166,14 @@ router.once(setup);`}
             The Curi rendering packages (
             <Link
               name="Package"
-              params={{ package: "react-dom", version: "v1" }}
+              params={{ package: "react-dom", version: "v2" }}
             >
               <IJS>@curi/react-dom</IJS>
             </Link>
             ,{" "}
             <Link
               name="Package"
-              params={{ package: "react-native", version: "v1" }}
+              params={{ package: "react-native", version: "v2" }}
             >
               <IJS>@curi/react-native</IJS>
             </Link>
@@ -214,7 +214,7 @@ router.observe(observer);`}
             The{" "}
             <Link
               name="Package"
-              params={{ package: "side-effect-title", version: "v1" }}
+              params={{ package: "side-effect-title", version: "v2" }}
             >
               <IJS>@curi/side-effect-title</IJS>
             </Link>{" "}
@@ -227,7 +227,7 @@ router.observe(observer);`}
             always scroll to the matching element in the page. The{" "}
             <Link
               name="Package"
-              params={{ package: "side-effect-scroll", version: "v1" }}
+              params={{ package: "side-effect-scroll", version: "v2" }}
             >
               <IJS>@curi/side-effect-scroll</IJS>
             </Link>{" "}

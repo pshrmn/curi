@@ -67,7 +67,7 @@ function AccessibilityGuide() {
           change, the new content will be announced to screen reader users. The{" "}
           <Link
             name="Package"
-            params={{ package: "side-effect-aria-live", version: "v1" }}
+            params={{ package: "side-effect-aria-live", version: "v2" }}
           >
             <IJS>@curi/side-effect-aria-live</IJS>
           </Link>{" "}

@@ -108,7 +108,7 @@ function ResponsesGuide() {
                 The response's title, which can be used with{" "}
                 <Link
                   name="Package"
-                  params={{ package: "side-effect-title", version: "v1" }}
+                  params={{ package: "side-effect-title", version: "v2" }}
                 >
                   <IJS>@curi/side-effect-title</IJS>
                 </Link>{" "}

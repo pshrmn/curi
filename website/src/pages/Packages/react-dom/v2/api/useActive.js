@@ -57,7 +57,7 @@ function ActiveLink({
           <IJS>useActive</IJS> relies on the active route interaction from{" "}
           <Link
             name="Package"
-            params={{ package: "route-active", version: "v1" }}
+            params={{ package: "route-active", version: "v2" }}
           >
             @curi/route-active
           </Link>{" "}

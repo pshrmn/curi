@@ -67,7 +67,7 @@ function ReactDOMGuide() {
           will automatically add an{" "}
           <Link
             name="Package"
-            params={{ package: "router", version: "v1" }}
+            params={{ package: "router", version: "v2" }}
             hash="observe"
           >
             observer
@@ -311,7 +311,7 @@ const NavLinks = () => (
           Please check out the full{" "}
           <Link
             name="Package"
-            params={{ package: "react-dom", version: "v1" }}
+            params={{ package: "react-dom", version: "v2" }}
             hash="API"
           >
             <IJS>@curi/react-dom</IJS>

@@ -170,7 +170,7 @@ npm run start`}
             you will probably want to implement some caching. Curi provides a{" "}
             <Link
               name="Package"
-              params={{ package: "helpers", version: "v1" }}
+              params={{ package: "helpers", version: "v2" }}
               hash="once"
             >
               <IJS>once</IJS>

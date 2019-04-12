@@ -36,13 +36,13 @@ export default function HomePage() {
       <PlainSection className="centered">
         <p>
           Curi officially supports{" "}
-          <Link name="Package" params={{ package: "react-dom", version: "v1" }}>
+          <Link name="Package" params={{ package: "react-dom", version: "v2" }}>
             React DOM
           </Link>
           {" and "}
           <Link
             name="Package"
-            params={{ package: "react-native", version: "v1" }}
+            params={{ package: "react-native", version: "v2" }}
           >
             React Native
           </Link>

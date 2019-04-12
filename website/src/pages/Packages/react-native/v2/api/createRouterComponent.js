@@ -54,7 +54,7 @@ const Router = createRouterComponent(router);`}
             A Curi{" "}
             <Link
               name="Package"
-              params={{ package: "router", version: "v1" }}
+              params={{ package: "router", version: "v2" }}
               hash="curi"
             >
               router

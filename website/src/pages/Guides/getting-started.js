@@ -81,7 +81,7 @@ const router = createRouter(browser, routes);`}
           <IJS>params</IJS>. There are also a number of{" "}
           <Link
             name="Package"
-            params={{ package: "router", version: "v1" }}
+            params={{ package: "router", version: "v2" }}
             hash="navigate"
           >
             other optional arguments to <IJS>navigate</IJS>
@@ -103,7 +103,7 @@ const router = createRouter(browser, routes);`}
             Render packages, like{" "}
             <Link
               name="Package"
-              params={{ package: "react-dom", version: "v1" }}
+              params={{ package: "react-dom", version: "v2" }}
             >
               <IJS>@curi/react-dom</IJS>
             </Link>
