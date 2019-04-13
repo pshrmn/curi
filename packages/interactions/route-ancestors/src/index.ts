@@ -1,12 +1,12 @@
 import { Route, Interaction } from "@curi/types";
 
 export default function ancestors(): Interaction {
-  let routeAncestors: { [key: string]: Array<string> } = {};
+  let scoped: { [key: string]: Array<string> } = {};
 
   function get(name: string, level: number): string;
   function get(name: string): Array<string>;
   function get(name: string, level?: number) {
-    const ancestors = routeAncestors[name];
+    const ancestors = scoped[name];
     if (!ancestors) {
       return;
     }
@@ -26,7 +26,7 @@ export default function ancestors(): Interaction {
       parentRoutes: Array<string> = []
     ): Array<string> => {
       let { name } = route;
-      routeAncestors[name] = parentRoutes;
+      scoped[name] = parentRoutes;
       return [name].concat(parentRoutes);
     },
     get

@@ -1,6 +1,6 @@
 {
   "dist/curi-route-prefetch.es.js": {
-    "bundled": 996,
+    "bundled": 992,
     "minified": 452,
     "gzipped": 276,
     "treeshaked": {
@@ -14,17 +14,17 @@
     }
   },
   "dist/curi-route-prefetch.js": {
-    "bundled": 1013,
+    "bundled": 1009,
     "minified": 465,
     "gzipped": 283
   },
   "dist/curi-route-prefetch.umd.js": {
-    "bundled": 1339,
+    "bundled": 1335,
     "minified": 618,
     "gzipped": 357
   },
   "dist/curi-route-prefetch.min.js": {
-    "bundled": 1339,
+    "bundled": 1335,
     "minified": 618,
     "gzipped": 357
   }

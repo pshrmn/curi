@@ -13,7 +13,7 @@ export interface PrefetchCallOptions {
 }
 
 export default function prefetchRoute(): Interaction {
-  let loaders: { [key: string]: AsyncMatchFn } = {};
+  let scoped: { [key: string]: AsyncMatchFn } = {};
 
   return {
     name: "prefetch",
@@ -23,20 +23,20 @@ export default function prefetchRoute(): Interaction {
       }
       const { name, resolve } = <AsyncRoute>route;
       if (resolve) {
-        loaders[name] = resolve;
+        scoped[name] = resolve;
       }
     },
     get: (
       name: string,
       options: PrefetchCallOptions = {}
     ): Promise<ResolveResults> => {
-      if (loaders[name] == null) {
+      if (scoped[name] == null) {
         return Promise.resolve({
           error: `Could not prefetch data for ${name} because it is not registered.`,
           resolved: null
         });
       }
-      return loaders[name](options.match, options.external).then(
+      return scoped[name](options.match, options.external).then(
         resolved => ({ resolved, error: null }),
         error => ({ error, resolved: null })
       );

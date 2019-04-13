@@ -21,11 +21,14 @@ export interface ActiveCheckOptions {
 }
 
 export default function active(): Interaction {
-  let routeParams: { [key: string]: Array<string> } = {};
+  let scoped: { [key: string]: Array<string | number> } = {};
 
   return {
     name: "active",
-    register: (route: Route, parentKeys: object): object => {
+    register: (
+      route: Route,
+      parentKeys: Array<string | number>
+    ): Array<string | number> => {
       let { name, keys } = route;
       if (keys == null) {
         keys = [];
@@ -33,7 +36,7 @@ export default function active(): Interaction {
       const fullKeys = Array.isArray(parentKeys)
         ? [...parentKeys, ...keys]
         : keys;
-      routeParams[name] = fullKeys;
+      scoped[name] = fullKeys;
       return fullKeys;
     },
     get: (
@@ -41,13 +44,10 @@ export default function active(): Interaction {
       response: Response,
       options: ActiveCheckOptions = {}
     ): boolean => {
-      if (
-        routeParams[name] == null ||
-        !possible(name, response, options.partial)
-      ) {
+      if (scoped[name] == null || !possible(name, response, options.partial)) {
         return false;
       }
-      const keys = routeParams[name];
+      const keys = scoped[name];
       for (let r = 0, length = keys.length; r < length; r++) {
         const key = keys[r];
         const param = options.params[key];
