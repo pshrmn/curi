@@ -3,6 +3,7 @@ import pathnameInteraction from "./interactions/pathname";
 import finishResponse from "./finishResponse";
 import { matchLocation, isRealMatch } from "./matchLocation";
 import { resolveRoute, isAsyncRoute } from "./resolveMatchedRoute";
+import { isExternalRedirect } from "./redirect";
 
 import {
   HistoryConstructor,
@@ -115,7 +116,11 @@ export default function createRouter<O = HistoryOptions>(
   const { invisibleRedirects = false } = options;
 
   function emitImmediate(response: Response, navigation: Navigation) {
-    if (!response.redirect || !invisibleRedirects) {
+    if (
+      !response.redirect ||
+      !invisibleRedirects ||
+      isExternalRedirect(response.redirect)
+    ) {
       mostRecent.response = response;
       mostRecent.navigation = navigation;
 
@@ -123,7 +128,10 @@ export default function createRouter<O = HistoryOptions>(
       callOneTimersAndSideEffects({ response, navigation, router });
     }
 
-    if (response.redirect !== undefined) {
+    if (
+      response.redirect !== undefined &&
+      !isExternalRedirect(response.redirect)
+    ) {
       history.navigate(response.redirect, "replace");
     }
   }

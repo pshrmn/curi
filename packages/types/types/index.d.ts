@@ -85,13 +85,16 @@ export interface RedirectLocation extends PartialLocation {
     params?: Params;
     url: string;
 }
+export interface ExternalRedirect {
+    externalURL: string;
+}
 export interface Response extends IntrinsicResponse {
     status?: number;
     error?: any;
     body?: any;
     data?: any;
     title?: string;
-    redirect?: RedirectLocation;
+    redirect?: RedirectLocation | ExternalRedirect;
 }
 export interface Route<R = unknown> {
     name: string;
@@ -137,7 +140,7 @@ export interface SettableResponseProperties {
     body?: any;
     data?: any;
     title?: string;
-    redirect?: RedirectProps;
+    redirect?: RedirectProps | ExternalRedirect;
 }
 export interface ResolveResults {
     resolved: any;

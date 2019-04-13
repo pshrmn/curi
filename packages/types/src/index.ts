@@ -124,6 +124,10 @@ export interface RedirectLocation extends PartialLocation {
   url: string;
 }
 
+export interface ExternalRedirect {
+  externalURL: string;
+}
+
 // full interface of response properties
 export interface Response extends IntrinsicResponse {
   status?: number;
@@ -131,7 +135,7 @@ export interface Response extends IntrinsicResponse {
   body?: any;
   data?: any;
   title?: string;
-  redirect?: RedirectLocation;
+  redirect?: RedirectLocation | ExternalRedirect;
 }
 
 // the public prepared route interface
@@ -192,7 +196,7 @@ export interface SettableResponseProperties {
   body?: any;
   data?: any;
   title?: string;
-  redirect?: RedirectProps;
+  redirect?: RedirectProps | ExternalRedirect;
 }
 
 export interface ResolveResults {

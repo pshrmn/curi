@@ -1,3 +1,5 @@
+import { isExternalRedirect } from "./redirect";
+
 import { History } from "@hickory/root";
 import {
   Interactions,
@@ -6,14 +8,19 @@ import {
   SettableResponseProperties,
   ResolveResults,
   IntrinsicResponse,
-  ResponseFn
+  ResponseFn,
+  RedirectProps,
+  ExternalRedirect
 } from "@curi/types";
 
 function createRedirect(
-  redirect: any,
+  redirect: RedirectProps | ExternalRedirect,
   interactions: Interactions,
   history: History
-): RedirectLocation {
+): RedirectLocation | ExternalRedirect {
+  if (isExternalRedirect(redirect)) {
+    return redirect;
+  }
   const { name, params, query, hash, state } = redirect;
   const pathname = interactions.pathname(name, params);
   return {
@@ -76,13 +83,13 @@ export default function finishResponse(
   return Object.keys(responseModifiers).reduce(
     (acc, key) => {
       if (validResponseProperty(key)) {
+        const value = responseModifiers[key];
+        if (value === undefined) {
+          return acc;
+        }
         if (key === "redirect") {
           // special case
-          acc[key] = createRedirect(
-            responseModifiers[key],
-            interactions,
-            history
-          );
+          acc[key] = createRedirect(value, interactions, history);
         } else {
           acc[key] = responseModifiers[key];
         }

@@ -438,10 +438,9 @@ const routes = prepareRoutes([
             meta={{ title: "redirect", hash: "response-redirect" }}
           >
             <p>
-              <IJS>redirect</IJS> - An object with the <IJS>name</IJS> of the
-              route to redirect to, <IJS>params</IJS> (if required), and
-              optional <IJS>hash</IJS>, <IJS>query</IJS>, and <IJS>state</IJS>{" "}
-              properties.
+              An object with the <IJS>name</IJS> of the route to redirect to,{" "}
+              <IJS>params</IJS> (if required), and optional <IJS>hash</IJS>,{" "}
+              <IJS>query</IJS>, and <IJS>state</IJS> properties.
             </p>
 
             <p>
@@ -469,6 +468,32 @@ const routes = prepareRoutes([
 // when the user navigates to /photo/1:
 // response = { redirect: { pathname: "/p/1", ... } }`}
             </CodeBlock>
+
+            <p>
+              The <IJS>redirect</IJS> property can also be used to specify a
+              redirect to an external location. An external redirect object has
+              only one property: <IJS>exernalURL</IJS>.
+            </p>
+
+            <CodeBlock>
+              {`{
+  name: "Redirects",
+  path: "redirects",
+  response() {
+    return {
+      redirect: {
+        externalURL: "https://example.com"
+      }
+    }
+  }
+}`}
+            </CodeBlock>
+
+            <p>
+              Responses with an external redirect are always emitted, even when{" "}
+              <IJS>invisibleRedirects</IJS> is <IJS>true</IJS>. The actual
+              location changing is left to the application.
+            </p>
           </HashSection>
         </HashSection>
       </HashSection>

@@ -43,6 +43,10 @@ describe("route matching/response generation", () => {
 
     describe("no matching routes", () => {
       it("no response is emitted", () => {
+        // suppress the warning
+        const realWarn = console.warn;
+        console.warn = () => {};
+
         const routes = prepareRoutes([]);
         const router = createRouter(inMemory, routes, {
           history: {
@@ -53,6 +57,8 @@ describe("route matching/response generation", () => {
         const observer = jest.fn();
         router.once(observer);
         expect(observer.mock.calls.length).toBe(0);
+
+        console.warn = realWarn;
       });
 
       it("warns that no route matched", () => {
@@ -679,6 +685,31 @@ describe("route matching/response generation", () => {
             }
           });
         });
+
+        it("works with external redirects", () => {
+          const routes = prepareRoutes([
+            {
+              name: "A Route",
+              path: "",
+              response: () => {
+                return {
+                  redirect: {
+                    externalURL: "https://example.com"
+                  }
+                };
+              }
+            }
+          ]);
+          const router = createRouter(inMemory, routes, {
+            history: {
+              locations: ["/"]
+            }
+          });
+          const { response } = router.current();
+          expect(response.redirect).toMatchObject({
+            externalURL: "https://example.com"
+          });
+        });
       });
 
       describe("[invalid properties]", () => {
@@ -709,6 +740,28 @@ describe("route matching/response generation", () => {
           expect(response.bad).toBeUndefined();
 
           console.warn = realWarn;
+        });
+      });
+
+      describe("[undefined properties]", () => {
+        it("doesn't merge properties whose values is undefined", () => {
+          const routes = prepareRoutes([
+            {
+              name: "A Route",
+              path: "",
+              response: () => {
+                return {
+                  body: "body",
+                  status: undefined
+                };
+              }
+            }
+          ]);
+          const router = createRouter(inMemory, routes);
+          const { response } = router.current();
+          expect(response.name).toBe("A Route");
+          expect(response.hasOwnProperty("body")).toBe(true);
+          expect(response.hasOwnProperty("status")).toBe(false);
         });
       });
     });
@@ -953,6 +1006,88 @@ describe("route matching/response generation", () => {
           });
         });
       });
+    });
+  });
+
+  describe("redirect responses", () => {
+    // these tests mock history.navigate to track how many times
+    // it is called.
+    it("automatically redirects for internal redirects", () => {
+      const routes = prepareRoutes([
+        {
+          name: "Home",
+          path: ""
+        },
+        {
+          name: "Redirects",
+          path: "redirects",
+          response: () => {
+            return {
+              redirect: {
+                name: "Other"
+              }
+            };
+          }
+        },
+        {
+          name: "Other",
+          path: "other"
+        }
+      ]);
+      const router = createRouter(inMemory, routes);
+      const history = router.history;
+
+      const realNavigate = history.navigate;
+      history.navigate = jest.fn((...args) => {
+        realNavigate(...args);
+      });
+
+      expect((history.navigate as jest.Mock).mock.calls.length).toBe(0);
+
+      router.navigate({ name: "Redirects" });
+
+      expect((history.navigate as jest.Mock).mock.calls.length).toBe(2);
+    });
+
+    it("does not try to redirect to external redirects", () => {
+      const routes = prepareRoutes([
+        {
+          name: "Home",
+          path: ""
+        },
+        {
+          name: "Redirects",
+          path: "redirects",
+          response: () => {
+            return {
+              redirect: {
+                externalURL: "https://example.com"
+              }
+            };
+          }
+        },
+        {
+          name: "Other",
+          path: "other"
+        }
+      ]);
+      const router = createRouter(inMemory, routes);
+      const history = router.history;
+
+      const realNavigate = history.navigate;
+      history.navigate = jest.fn((...args) => {
+        realNavigate(...args);
+      });
+
+      expect((history.navigate as jest.Mock).mock.calls.length).toBe(0);
+
+      router.navigate({ name: "Redirects" });
+
+      expect((history.navigate as jest.Mock).mock.calls.length).toBe(1);
+
+      router.navigate({ name: "Other" });
+
+      expect((history.navigate as jest.Mock).mock.calls.length).toBe(2);
     });
   });
 });

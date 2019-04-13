@@ -220,11 +220,12 @@ describe("curi", () => {
               path: "other"
             }
           ]);
-          let firstCall = true;
+          let call = 0;
           const logger = ({ response }) => {
-            if (firstCall) {
-              expect(response.name).toBe("Start");
-              firstCall = false;
+            switch (call++) {
+              case 0:
+                expect(response.name).toBe("Start");
+                break;
             }
           };
           const router = createRouter(inMemory, routes, {
@@ -258,6 +259,37 @@ describe("curi", () => {
           router.once(({ response }) => {
             expect(response.name).toBe("Other");
             done();
+          });
+        });
+
+        it("emits external redirects when invisibleRedirect = true", () => {
+          const routes = prepareRoutes([
+            {
+              name: "Start",
+              path: "",
+              response: () => {
+                return {
+                  redirect: {
+                    externalURL: "https://example.com"
+                  }
+                };
+              }
+            },
+            {
+              name: "Other",
+              path: "other"
+            }
+          ]);
+
+          const router = createRouter(inMemory, routes, {
+            invisibleRedirects: true
+          });
+          const { response } = router.current();
+          expect(response).toMatchObject({
+            name: "Start",
+            redirect: {
+              externalURL: "https://example.com"
+            }
           });
         });
       });
@@ -447,129 +479,6 @@ describe("curi", () => {
           router.navigate({ name: "About" });
         }
       });
-    });
-  });
-
-  describe.skip("refresh", () => {
-    const err = console.error;
-
-    beforeEach(() => {
-      console.error = jest.fn();
-    });
-
-    afterEach(() => {
-      console.error = err;
-    });
-
-    it("resets and replaces registered routes", () => {
-      const englishRoutes = prepareRoutes([
-        { name: "Home", path: "" },
-        { name: "About", path: "about" },
-        { name: "Contact", path: "contact" }
-      ]);
-      const spanishRoutes = prepareRoutes([
-        { name: "Casa", path: "" },
-        { name: "Acerca De", path: "acerca-de" },
-        { name: "Contacto", path: "contacto" }
-      ]);
-
-      const router = createRouter(inMemory, englishRoutes);
-
-      router.refresh(spanishRoutes);
-
-      const englishNames = ["Home", "About", "Contact"];
-      englishNames.forEach(n => {
-        expect(router.route.pathname(n)).toBeUndefined();
-      });
-
-      const spanishNames = ["Casa", "Acerca De", "Contacto"];
-      spanishNames.forEach(n => {
-        expect(router.route.pathname(n)).toBeDefined();
-      });
-    });
-
-    it("emits a new response handler for new routes", () => {
-      const nonAuthRoutes = prepareRoutes([
-        { name: "Home", path: "" },
-        { name: "Not Found", path: "(.*)" }
-      ]);
-      const authRoutes = prepareRoutes([
-        { name: "Home", path: "" },
-        { name: "Admin", path: "admin" },
-        { name: "Not Found", path: "(.*)" }
-      ]);
-
-      const router = createRouter(inMemory, nonAuthRoutes, {
-        history: {
-          locations: ["/admin"]
-        }
-      });
-
-      const { response: initialResponse } = router.current();
-      expect(initialResponse.name).toBe("Not Found");
-
-      router.refresh(authRoutes);
-
-      const { response: replacedResponse, navigation } = router.current();
-      expect(replacedResponse.name).toBe("Admin");
-    });
-
-    it("emits a response when called with no argument", done => {
-      const englishRoutes = prepareRoutes([
-        { name: "Home", path: "" },
-        { name: "About", path: "about" },
-        { name: "Contact", path: "contact" }
-      ]);
-      const router = createRouter(inMemory, englishRoutes, {
-        history: {
-          locations: ["/about"]
-        }
-      });
-
-      const { response: initialResponse } = router.current();
-
-      expect(initialResponse.name).toBe("About");
-
-      // setup a response handler, but ensure it doesn't get called
-      // with existing response.
-      router.once(
-        ({ response, navigation }) => {
-          expect(response.name).toBe("About");
-          done();
-        },
-        { initial: false }
-      );
-      // then refresh the router. the response handler should be called
-      // with a response for the current location.
-      router.refresh();
-    });
-
-    it("re-uses previously emitted navigation.previous", done => {
-      const englishRoutes = prepareRoutes([
-        { name: "Home", path: "" },
-        { name: "About", path: "about" },
-        { name: "Contact", path: "contact" }
-      ]);
-      const router = createRouter(inMemory, englishRoutes, {
-        history: {
-          locations: ["/about"]
-        }
-      });
-
-      const { navigation: initialNavigation } = router.current();
-
-      // setup a response handler, but ensure it doesn't get called
-      // with existing response.
-      router.once(
-        ({ response, navigation }) => {
-          expect(navigation).toMatchObject(initialNavigation);
-          done();
-        },
-        { initial: false }
-      );
-      // then refresh the router. the response handler should be called
-      // with a response for the current location.
-      router.refresh();
     });
   });
 
