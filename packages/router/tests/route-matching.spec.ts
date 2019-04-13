@@ -694,8 +694,7 @@ describe("route matching/response generation", () => {
               response: () => {
                 return {
                   redirect: {
-                    external: true,
-                    url: "https://example.com"
+                    externalURL: "https://example.com"
                   }
                 };
               }
@@ -708,8 +707,7 @@ describe("route matching/response generation", () => {
           });
           const { response } = router.current();
           expect(response.redirect).toMatchObject({
-            external: true,
-            url: "https://example.com"
+            externalURL: "https://example.com"
           });
         });
       });
@@ -1063,8 +1061,7 @@ describe("route matching/response generation", () => {
           response: () => {
             return {
               redirect: {
-                external: true,
-                url: "https://example.com"
+                externalURL: "https://example.com"
               }
             };
           }

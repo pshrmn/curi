@@ -86,8 +86,7 @@ export interface RedirectLocation extends PartialLocation {
     url: string;
 }
 export interface ExternalRedirect {
-    external: boolean;
-    url: string;
+    externalURL: string;
 }
 export interface Response extends IntrinsicResponse {
     status?: number;

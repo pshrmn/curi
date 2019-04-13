@@ -125,8 +125,7 @@ export interface RedirectLocation extends PartialLocation {
 }
 
 export interface ExternalRedirect {
-  external: boolean;
-  url: string;
+  externalURL: string;
 }
 
 // full interface of response properties
