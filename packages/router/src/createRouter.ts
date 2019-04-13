@@ -116,7 +116,11 @@ export default function createRouter<O = HistoryOptions>(
   const { invisibleRedirects = false } = options;
 
   function emitImmediate(response: Response, navigation: Navigation) {
-    if (!response.redirect || !invisibleRedirects) {
+    if (
+      !response.redirect ||
+      !invisibleRedirects ||
+      isExternalRedirect(response.redirect)
+    ) {
       mostRecent.response = response;
       mostRecent.navigation = navigation;
 

@@ -261,6 +261,37 @@ describe("curi", () => {
             done();
           });
         });
+
+        it("emits external redirects when invisibleRedirect = true", () => {
+          const routes = prepareRoutes([
+            {
+              name: "Start",
+              path: "",
+              response: () => {
+                return {
+                  redirect: {
+                    externalURL: "https://example.com"
+                  }
+                };
+              }
+            },
+            {
+              name: "Other",
+              path: "other"
+            }
+          ]);
+
+          const router = createRouter(inMemory, routes, {
+            invisibleRedirects: true
+          });
+          const { response } = router.current();
+          expect(response).toMatchObject({
+            name: "Start",
+            redirect: {
+              externalURL: "https://example.com"
+            }
+          });
+        });
       });
 
       describe("external", () => {
