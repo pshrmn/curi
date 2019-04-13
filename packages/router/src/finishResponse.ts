@@ -76,6 +76,13 @@ export default function finishResponse(
   });
 
   if (!responseModifiers) {
+    if (process.env.NODE_ENV !== "production") {
+      console.warn(
+        `"${
+          match.name
+        }"'s response function did not return anything. Did you forget to include a return statement?`
+      );
+    }
     return match;
   }
 

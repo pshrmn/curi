@@ -764,6 +764,30 @@ describe("route matching/response generation", () => {
           expect(response.hasOwnProperty("status")).toBe(false);
         });
       });
+
+      describe("route.response doesn't return anything", () => {
+        it("warns", () => {
+          const realWarn = console.warn;
+          console.warn = jest.fn();
+
+          const routes = prepareRoutes([
+            {
+              name: "A Route",
+              path: "",
+              // @ts-ignore
+              response: () => {}
+            }
+          ]);
+
+          const router = createRouter(inMemory, routes);
+
+          expect((console.warn as jest.Mock).mock.calls[0][0]).toBe(
+            `"A Route"'s response function did not return anything. Did you forget to include a return statement?`
+          );
+
+          console.warn = realWarn;
+        });
+      });
     });
   });
 
