@@ -1,3 +1,7 @@
+## Next
+
+* Spread `forward` props to link elements before "native" props.
+
 ## 1.0.0-beta.20
 
 * Revert snake case. `curi_store` is now `curiStore`.

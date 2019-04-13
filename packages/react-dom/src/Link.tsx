@@ -34,7 +34,7 @@ export const Link = React.forwardRef(
     const { anchor: Anchor = "a", forward, children } = props;
 
     return (
-      <Anchor onClick={eventHandler} href={href} ref={ref} {...forward}>
+      <Anchor {...forward} onClick={eventHandler} href={href} ref={ref}>
         {children}
       </Anchor>
     );
@@ -52,7 +52,7 @@ export const AsyncLink = React.forwardRef(
     const { anchor: Anchor = "a", forward, children } = props;
 
     return (
-      <Anchor onClick={eventHandler} href={href} ref={ref} {...forward}>
+      <Anchor {...forward} onClick={eventHandler} href={href} ref={ref}>
         {children(navigating)}
       </Anchor>
     );

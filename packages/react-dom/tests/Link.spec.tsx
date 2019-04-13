@@ -177,6 +177,20 @@ describe("<Link>", () => {
       const a = node.querySelector("a");
       expect(a.classList.contains("hi")).toBe(true);
     });
+
+    it('does not overwrite "native" props set on the rendered element', () => {
+      ReactDOM.render(
+        <Router>
+          <Link name="Test" forward={{ href: "/oh-no" }}>
+            Test
+          </Link>
+        </Router>,
+        node
+      );
+
+      const a = node.querySelector("a");
+      expect(a.getAttribute("href")).toBe("/");
+    });
   });
 
   describe("ref", () => {

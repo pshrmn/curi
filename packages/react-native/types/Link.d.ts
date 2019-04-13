@@ -6,7 +6,7 @@ import { NavType } from "@hickory/root";
 export interface BaseLinkProps extends RouteLocation {
     onNav?: (e: GestureResponderEvent) => void;
     anchor?: React.ReactType;
-    forward?: React.AnchorHTMLAttributes<HTMLAnchorElement>;
+    forward?: object;
     method?: NavType;
 }
 export interface LinkProps extends BaseLinkProps {

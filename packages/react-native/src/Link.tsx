@@ -1,5 +1,5 @@
 import React from "react";
-import { TouchableHighlight } from "react-native";
+import { TouchableHighlight, TouchableHighlightProps } from "react-native";
 import {
   useNavigationHandler,
   useStatefulNavigationHandler
@@ -13,7 +13,7 @@ import { NavType } from "@hickory/root";
 export interface BaseLinkProps extends RouteLocation {
   onNav?: (e: GestureResponderEvent) => void;
   anchor?: React.ReactType;
-  forward?: React.AnchorHTMLAttributes<HTMLAnchorElement>;
+  forward?: object;
   method?: NavType;
 }
 
@@ -39,7 +39,7 @@ export const Link = React.forwardRef(
     const { anchor: Anchor = TouchableHighlight, forward, children } = props;
 
     return (
-      <Anchor onPress={eventHandler} ref={ref} {...forward}>
+      <Anchor {...forward} onPress={eventHandler} ref={ref}>
         {children}
       </Anchor>
     );
@@ -55,7 +55,7 @@ export const AsyncLink = React.forwardRef(
     const { anchor: Anchor = TouchableHighlight, forward, children } = props;
 
     return (
-      <Anchor onPress={eventHandler} ref={ref} {...forward}>
+      <Anchor {...forward} onPress={eventHandler} ref={ref}>
         {children(navigating)}
       </Anchor>
     );

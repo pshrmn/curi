@@ -179,6 +179,20 @@ describe("<AsyncLink>", () => {
       const a = node.querySelector("a");
       expect(a.classList.contains("hi")).toBe(true);
     });
+
+    it('does not overwrite "native" props set on the rendered element', () => {
+      ReactDOM.render(
+        <Router>
+          <AsyncLink name="Test" forward={{ href: "/oh-no" }}>
+            {() => <p>Test</p>}
+          </AsyncLink>
+        </Router>,
+        node
+      );
+
+      const a = node.querySelector("a");
+      expect(a.getAttribute("href")).toBe("/");
+    });
   });
 
   describe("ref", () => {
