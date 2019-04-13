@@ -1,4 +1,4 @@
-<a href="{href}" on:click="handleClick(event)" {...forward}>
+<a {...forward} href="{href}" on:click="handleClick(event)">
   {#if wrapper}
   <svelte:component this="{wrapper}" navigating="{navigating}">
     <slot></slot>

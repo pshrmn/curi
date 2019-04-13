@@ -205,6 +205,32 @@ describe("<Link>", () => {
       const anchor = tree.root.findByType(TouchableHighlight);
       expect(anchor.props.style).toMatchObject(style);
     });
+
+    it('does not overwrite "native" props set on the rendered element', () => {
+      const onPress = jest.fn();
+
+      const routes = prepareRoutes([
+        { name: "Test", path: "" },
+        { name: "Catch All", path: "(.*)" }
+      ]);
+      const router = createRouter(inMemory, routes, {
+        history: {
+          locations: ["/the-initial-location"]
+        }
+      });
+      const Router = createRouterComponent(router);
+
+      const tree = renderer.create(
+        <Router>
+          <Link name="Test" forward={{ onPress }}>
+            <Text>Test</Text>
+          </Link>
+        </Router>
+      );
+
+      const anchor = tree.root.findByType(TouchableHighlight);
+      expect(anchor.props.onPress).not.toBe(onPress);
+    });
   });
 
   describe("ref", () => {
