@@ -52,27 +52,6 @@ function ActiveLink({
 <ActiveLink name="Home">Home</ActiveLink>`}
       </CodeBlock>
 
-      <Note>
-        <p>
-          <IJS>useActive</IJS> relies on the active route interaction from{" "}
-          <Link
-            name="Package"
-            params={{ package: "route-active", version: "v2" }}
-          >
-            @curi/route-active
-          </Link>{" "}
-          being added to your router.
-        </p>
-
-        <CodeBlock>
-          {`import active from '@curi/route-active';
-
-const router = createRouter(browser, routes, {
-  route: [active()]
-});`}
-        </CodeBlock>
-      </Note>
-
       <HashSection tag="h3" meta={optsMeta}>
         <p>
           <IJS>useActive</IJS> takes a single argument, an options object.

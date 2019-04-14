@@ -48,11 +48,16 @@ export default function active(): Interaction {
         return false;
       }
       const keys = scoped[name];
-      for (let r = 0, length = keys.length; r < length; r++) {
-        const key = keys[r];
-        const param = options.params[key];
-        if (!param || param !== response.params[key]) {
+      if (keys.length) {
+        if (!options.params) {
           return false;
+        }
+        for (let r = 0, length = keys.length; r < length; r++) {
+          const key = keys[r];
+          const param = options.params[key];
+          if (!param || param !== response.params[key]) {
+            return false;
+          }
         }
       }
       if (options.components) {

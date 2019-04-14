@@ -117,15 +117,21 @@ const router = createRouter(browser, routes);`}
             </p>
 
             <CodeBlock>
-              {`import active from "@curi/route-active";
-import ancestors from "@curi/route-ancestors";
+              {`import ancestors from "@curi/route-ancestors";
 
 const routes = prepareRoutes([{ name: "Home", path: "" }]);
 
 const router = createRouter(browser, routes, {
-  route: [active(), ancestors()]
+  route: [ancestors()]
 });`}
             </CodeBlock>
+
+            <p>
+              Two interactions are automatically included with a router. These
+              are a <IJS>pathname</IJS> interaction for generating pathname
+              strings and an <IJS>active</IJS> interaction for determining if a
+              route is active.
+            </p>
 
             <p>
               Route interactions are called via the router's <IJS>route</IJS>{" "}
@@ -133,18 +139,11 @@ const router = createRouter(browser, routes, {
             </p>
 
             <CodeBlock>
-              {`router.route.active("Home");
-// returns true when location.pathname = "/"`}
-            </CodeBlock>
-
-            <p>
-              A <IJS>pathname</IJS> interaction is automatically included in the
-              router.
-            </p>
-
-            <CodeBlock>
               {`router.route.pathname("Home");
-// returns "/"`}
+// returns "/"
+
+router.route.active("Home", response);
+// returns true when response.location.pathname = "/"`}
             </CodeBlock>
           </HashSection>
 

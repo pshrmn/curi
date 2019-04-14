@@ -1,6 +1,11 @@
 import React from "react";
 
-import { About, APIBlock, IJS } from "../../../../components/package/common";
+import {
+  About,
+  APIBlock,
+  IJS,
+  Note
+} from "../../../../components/package/common";
 import { ActiveAPI } from "./api/active";
 
 function RouteActivePkg() {
@@ -14,6 +19,13 @@ function RouteActivePkg() {
           locations that represent an ancestor of the current location are also
           considered "active".
         </p>
+
+        <Note>
+          <p>
+            <IJS>@curi/router</IJS> v2 automatically includes the active
+            interaction, making this package unnecessary.
+          </p>
+        </Note>
       </About>
 
       <APIBlock>

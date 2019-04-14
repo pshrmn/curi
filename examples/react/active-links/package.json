@@ -13,7 +13,6 @@
   "license": "MIT",
   "dependencies": {
     "@curi/react-dom": "2.0.0-beta.6",
-    "@curi/route-active": "2.0.0-beta.6",
     "@curi/router": "2.0.0-beta.8",
     "@hickory/browser": "^2.0.0-beta.11",
     "react": "^16.9.0-alpha.0",

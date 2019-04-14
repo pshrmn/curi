@@ -594,16 +594,9 @@ function render({ response }) {
 </Link>
 
 // Curi
-// You need to add @curi/route-active
-// to your router object
-import active from '@curi/route-active';
-const router = createRouter(browser, routes, {
-  route: [active()]
-});
 
-// The <Active> component determines if a route is active
-// and passes true/false to the render-invoked children
-// function
+// The useActive hook returns a boolean indicating
+// if a route is active
 const active = useActive("Home");
 const className = active ? "active" : "";
 <Link name='Home' forward={{ className }}>
