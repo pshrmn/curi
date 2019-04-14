@@ -2,20 +2,16 @@ import "jest";
 import { inMemory } from "@hickory/in-memory";
 import { createRouter, prepareRoutes } from "@curi/router";
 
-import createActive from "@curi/route-active";
-
 import { InMemoryOptions } from "@hickory/in-memory";
 
 describe("active route interaction", () => {
-  it("is called using router.route.active()", () => {
+  it("is included in the router's interactions", () => {
     const routes = prepareRoutes([{ name: "Catch All", path: "(.*)" }]);
-    const router = createRouter(inMemory, routes, {
-      route: [createActive()]
-    });
+    const router = createRouter(inMemory, routes);
     expect(router.route.active).toBeDefined();
   });
 
-  describe("get", () => {
+  describe("checking if a route is active", () => {
     it("returns false if the route is not registered", () => {
       const routes = prepareRoutes([
         {
@@ -24,12 +20,7 @@ describe("active route interaction", () => {
         },
         { name: "Catch All", path: "(.*)" }
       ]);
-      const router = createRouter<InMemoryOptions>(inMemory, routes, {
-        route: [createActive()],
-        history: {
-          locations: ["/"]
-        }
-      });
+      const router = createRouter<InMemoryOptions>(inMemory, routes);
 
       const { response } = router.current();
       const playerIsActive = router.route.active("Does Not Exist", response, {
@@ -46,12 +37,7 @@ describe("active route interaction", () => {
         },
         { name: "Catch All", path: "(.*)" }
       ]);
-      const router = createRouter<InMemoryOptions>(inMemory, routes, {
-        route: [createActive()],
-        history: {
-          locations: ["/"]
-        }
-      });
+      const router = createRouter<InMemoryOptions>(inMemory, routes);
 
       const { response } = router.current();
       const playerIsActive = router.route.active("Player", response, {
@@ -69,12 +55,7 @@ describe("active route interaction", () => {
           },
           { name: "Catch All", path: "(.*)" }
         ]);
-        const router = createRouter<InMemoryOptions>(inMemory, routes, {
-          route: [createActive()],
-          history: {
-            locations: ["/"]
-          }
-        });
+        const router = createRouter<InMemoryOptions>(inMemory, routes);
 
         const { response } = router.current();
         const homeIsActive = router.route.active("Home", response);
@@ -91,7 +72,6 @@ describe("active route interaction", () => {
             { name: "Catch All", path: "(.*)" }
           ]);
           const router = createRouter<InMemoryOptions>(inMemory, routes, {
-            route: [createActive()],
             history: {
               locations: ["/player/7"]
             }
@@ -113,7 +93,6 @@ describe("active route interaction", () => {
             { name: "Catch All", path: "(.*)" }
           ]);
           const router = createRouter<InMemoryOptions>(inMemory, routes, {
-            route: [createActive()],
             history: {
               locations: ["/player/7"]
             }
@@ -143,7 +122,6 @@ describe("active route interaction", () => {
             { name: "Catch All", path: "(.*)" }
           ]);
           const router = createRouter<InMemoryOptions>(inMemory, routes, {
-            route: [createActive()],
             history: {
               locations: ["/player/6/coach"]
             }
@@ -171,7 +149,6 @@ describe("active route interaction", () => {
             { name: "Catch All", path: "(.*)" }
           ]);
           const router = createRouter<InMemoryOptions>(inMemory, routes, {
-            route: [createActive()],
             history: {
               locations: ["/player/6/coach"]
             }
@@ -200,7 +177,6 @@ describe("active route interaction", () => {
             { name: "Catch All", path: "(.*)" }
           ]);
           const router = createRouter<InMemoryOptions>(inMemory, routes, {
-            route: [createActive()],
             history: {
               locations: ["/player/6/coach"]
             }
@@ -225,7 +201,6 @@ describe("active route interaction", () => {
             { name: "Catch All", path: "(.*)" }
           ]);
           const router = createRouter<InMemoryOptions>(inMemory, routes, {
-            route: [createActive()],
             history: {
               locations: ["/#test"]
             }
@@ -247,7 +222,6 @@ describe("active route interaction", () => {
             { name: "Catch All", path: "(.*)" }
           ]);
           const router = createRouter<InMemoryOptions>(inMemory, routes, {
-            route: [createActive()],
             history: {
               locations: ["/#test"]
             }
@@ -269,7 +243,6 @@ describe("active route interaction", () => {
             { name: "Catch All", path: "(.*)" }
           ]);
           const router = createRouter<InMemoryOptions>(inMemory, routes, {
-            route: [createActive()],
             history: {
               locations: ["/not-a#test"]
             }

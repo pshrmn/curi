@@ -1,5 +1,6 @@
 import registerRoutes from "./utils/registerRoutes";
 import pathnameInteraction from "./interactions/pathname";
+import activeInteraction from "./interactions/active";
 import finishResponse from "./finishResponse";
 import { matchLocation, isRealMatch } from "./matchLocation";
 import { resolveRoute, isAsyncRoute } from "./resolveMatchedRoute";
@@ -40,8 +41,7 @@ export default function createRouter<O = HistoryOptions>(
 ): CuriRouter {
   const routeInteractions: Interactions = {};
   (options.route || [])
-    // add the pathname interaction to the provided interactions
-    .concat(pathnameInteraction())
+    .concat(pathnameInteraction(), activeInteraction())
     .forEach(interaction => {
       routeInteractions[interaction.name] = interaction.get;
       registerRoutes(routes, interaction);
