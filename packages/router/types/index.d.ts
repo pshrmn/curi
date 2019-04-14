@@ -1,3 +1,3 @@
-import createRouter from "./createRouter";
-import prepareRoutes from "./prepareRoutes";
+import createRouter from "./router/createRouter";
+import prepareRoutes from "./prepare/prepareRoutes";
 export { createRouter, prepareRoutes };

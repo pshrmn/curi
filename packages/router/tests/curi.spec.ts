@@ -44,126 +44,21 @@ describe("curi", () => {
     });
 
     it("makes interactions available through router.route", () => {
-      const routes = prepareRoutes([{ name: "Home", path: "" }]);
       const createfakeInteraction = () => ({
         name: "fake",
         register: () => {},
         reset: () => {},
         get: () => {}
       });
-      const router = createRouter(inMemory, routes, {
-        route: [createfakeInteraction()]
-      });
+      const routes = prepareRoutes(
+        [{ name: "Home", path: "" }],
+        [createfakeInteraction()]
+      );
+      const router = createRouter(inMemory, routes);
       expect(router.route.fake).toBeDefined();
     });
 
     describe("options", () => {
-      describe("interactions", () => {
-        it("includes pathname interaction by default", () => {
-          const routes = prepareRoutes([{ name: "Home", path: "" }]);
-          const router = createRouter(inMemory, routes);
-          expect(router.route.pathname).toBeDefined();
-        });
-
-        it("includes pathname interaction even when other interactions are provided", () => {
-          const firstInteractionCache = {};
-          const createfirstInteraction = () => {
-            return {
-              name: "first",
-              register: (route, extra) => {
-                firstInteractionCache[route.name] = route.path;
-              },
-              get(route) {},
-              reset() {}
-            };
-          };
-
-          const routes = prepareRoutes([{ name: "Home", path: "" }]);
-          const router = createRouter(inMemory, routes, {
-            route: [createfirstInteraction()]
-          });
-          expect(router.route.pathname).toBeDefined();
-        });
-
-        it("registers all of the routes with all of the interactions", () => {
-          // this might be a bit convoluted, but it ensures that the interactions
-          // are registered as expected
-          const firstInteractionCache = {};
-          const secondInteractionCache = {};
-          const createfirstInteraction = () => {
-            return {
-              name: "first",
-              register: (route, extra) => {
-                firstInteractionCache[route.name] = route.path;
-              },
-              get(route) {},
-              reset() {}
-            };
-          };
-
-          const createsecondInteraction = () => {
-            return {
-              name: "second",
-              register: (route, extra) => {
-                secondInteractionCache[route.name] = `${
-                  extra ? extra : "None"
-                } + ${route.name}`;
-                return route.name;
-              },
-              get(route) {},
-              reset() {}
-            };
-          };
-
-          const routes = prepareRoutes([
-            {
-              name: "Grandparent",
-              path: "grandparent",
-              children: [
-                {
-                  name: "Parent",
-                  path: "parent",
-                  children: [{ name: "Child", path: "child" }]
-                }
-              ]
-            },
-            {
-              name: "Cousin",
-              path: "cousin"
-            }
-          ]);
-          const router = createRouter(inMemory, routes, {
-            route: [createfirstInteraction(), createsecondInteraction()],
-            history: {
-              locations: ["/grandparent"]
-            }
-          });
-          const expected = {
-            Grandparent: {
-              first: "grandparent",
-              second: "None + Grandparent"
-            },
-            Parent: {
-              first: "parent",
-              second: "Grandparent + Parent"
-            },
-            Child: {
-              first: "child",
-              second: "Parent + Child"
-            },
-            Cousin: {
-              first: "cousin",
-              second: "None + Cousin"
-            }
-          };
-          const keys = ["Grandparent", "Parent", "Child", "Cousin"];
-          keys.forEach(key => {
-            expect(firstInteractionCache[key]).toBe(expected[key].first);
-            expect(secondInteractionCache[key]).toBe(expected[key].second);
-          });
-        });
-      });
-
       describe("sideEffects", () => {
         it("calls side effect methods AFTER a response is generated, passing response, navigation, and router", done => {
           const routes = prepareRoutes([{ name: "All", path: "(.*)" }]);
@@ -414,6 +309,115 @@ describe("curi", () => {
           expect(after.mock.calls.length).toBe(0);
           done();
         });
+      });
+    });
+  });
+
+  describe("interactions", () => {
+    it("includes pathname interaction by default", () => {
+      const routes = prepareRoutes([{ name: "Home", path: "" }]);
+      const router = createRouter(inMemory, routes);
+      expect(router.route.pathname).toBeDefined();
+    });
+
+    it("includes pathname interaction even when other interactions are provided", () => {
+      const firstInteractionCache = {};
+      const createfirstInteraction = () => {
+        return {
+          name: "first",
+          register: (route, extra) => {
+            firstInteractionCache[route.name] = route.path;
+          },
+          get(route) {},
+          reset() {}
+        };
+      };
+
+      const routes = prepareRoutes(
+        [{ name: "Home", path: "" }],
+        [createfirstInteraction()]
+      );
+      const router = createRouter(inMemory, routes);
+      expect(router.route.pathname).toBeDefined();
+    });
+
+    it("registers all of the routes with all of the interactions", () => {
+      // this might be a bit convoluted, but it ensures that the interactions
+      // are registered as expected
+      const firstInteractionCache = {};
+      const secondInteractionCache = {};
+      const createfirstInteraction = () => {
+        return {
+          name: "first",
+          register: (route, extra) => {
+            firstInteractionCache[route.name] = route.path;
+          },
+          get(route) {},
+          reset() {}
+        };
+      };
+
+      const createsecondInteraction = () => {
+        return {
+          name: "second",
+          register: (route, extra) => {
+            secondInteractionCache[route.name] = `${extra ? extra : "None"} + ${
+              route.name
+            }`;
+            return route.name;
+          },
+          get(route) {},
+          reset() {}
+        };
+      };
+
+      const routes = prepareRoutes(
+        [
+          {
+            name: "Grandparent",
+            path: "grandparent",
+            children: [
+              {
+                name: "Parent",
+                path: "parent",
+                children: [{ name: "Child", path: "child" }]
+              }
+            ]
+          },
+          {
+            name: "Cousin",
+            path: "cousin"
+          }
+        ],
+        [createfirstInteraction(), createsecondInteraction()]
+      );
+      const router = createRouter(inMemory, routes, {
+        history: {
+          locations: ["/grandparent"]
+        }
+      });
+      const expected = {
+        Grandparent: {
+          first: "grandparent",
+          second: "None + Grandparent"
+        },
+        Parent: {
+          first: "parent",
+          second: "Grandparent + Parent"
+        },
+        Child: {
+          first: "child",
+          second: "Parent + Child"
+        },
+        Cousin: {
+          first: "cousin",
+          second: "None + Cousin"
+        }
+      };
+      const keys = ["Grandparent", "Parent", "Child", "Cousin"];
+      keys.forEach(key => {
+        expect(firstInteractionCache[key]).toBe(expected[key].first);
+        expect(secondInteractionCache[key]).toBe(expected[key].second);
       });
     });
   });

@@ -5,7 +5,7 @@ import { createRouter, prepareRoutes } from "@curi/router";
 
 import { Route, Interaction } from "@curi/types";
 
-function PropertyReporter(): Interaction {
+function propertyReporter(): Interaction {
   let knownRoutes = {};
   return {
     name: "properties",
@@ -21,9 +21,6 @@ function PropertyReporter(): Interaction {
         return;
       }
       return knownRoutes[name];
-    },
-    reset: () => {
-      knownRoutes = {};
     }
   };
 }
@@ -31,18 +28,20 @@ function PropertyReporter(): Interaction {
 describe("public route properties", () => {
   describe("name", () => {
     it("is the provided value", () => {
-      const routes = prepareRoutes([
-        {
-          name: "Test",
-          path: "test"
-        },
-        {
-          name: "Not Found",
-          path: "(.*)"
-        }
-      ]);
+      const routes = prepareRoutes(
+        [
+          {
+            name: "Test",
+            path: "test"
+          },
+          {
+            name: "Not Found",
+            path: "(.*)"
+          }
+        ],
+        [propertyReporter()]
+      );
       const router = createRouter(inMemory, routes, {
-        route: [PropertyReporter()],
         history: {
           locations: ["/test"]
         }
@@ -54,20 +53,20 @@ describe("public route properties", () => {
 
   describe("path", () => {
     it("is the provided value", () => {
-      const routes = prepareRoutes([
-        {
-          name: "Test",
-          path: "test"
-        },
-        {
-          name: "Not Found",
-          path: "(.*)"
-        }
-      ]);
-      const router = createRouter(inMemory, routes, {
-        route: [PropertyReporter()],
-        history: {}
-      });
+      const routes = prepareRoutes(
+        [
+          {
+            name: "Test",
+            path: "test"
+          },
+          {
+            name: "Not Found",
+            path: "(.*)"
+          }
+        ],
+        [propertyReporter()]
+      );
+      const router = createRouter(inMemory, routes);
       const routeProperties = router.route.properties("Test");
       expect(routeProperties.path).toBe("test");
     });
@@ -75,18 +74,20 @@ describe("public route properties", () => {
 
   describe("keys", () => {
     it("is the array of param names parsed from the path", () => {
-      const routes = prepareRoutes([
-        {
-          name: "Test",
-          path: ":one/:two/:three"
-        },
-        {
-          name: "Not Found",
-          path: "(.*)"
-        }
-      ]);
+      const routes = prepareRoutes(
+        [
+          {
+            name: "Test",
+            path: ":one/:two/:three"
+          },
+          {
+            name: "Not Found",
+            path: "(.*)"
+          }
+        ],
+        [propertyReporter()]
+      );
       const router = createRouter(inMemory, routes, {
-        route: [PropertyReporter()],
         history: {
           locations: ["/four/five/six"]
         }
@@ -96,18 +97,20 @@ describe("public route properties", () => {
     });
 
     it("is an empty array when the path has no params", () => {
-      const routes = prepareRoutes([
-        {
-          name: "Test",
-          path: "one/two/three"
-        },
-        {
-          name: "Not Found",
-          path: "(.*)"
-        }
-      ]);
+      const routes = prepareRoutes(
+        [
+          {
+            name: "Test",
+            path: "one/two/three"
+          },
+          {
+            name: "Not Found",
+            path: "(.*)"
+          }
+        ],
+        [propertyReporter()]
+      );
       const router = createRouter(inMemory, routes, {
-        route: [PropertyReporter()],
         history: {
           locations: ["/one/two/three"]
         }
@@ -119,20 +122,22 @@ describe("public route properties", () => {
 
   describe("resolve", () => {
     it("is the resolve function", done => {
-      const routes = prepareRoutes([
-        {
-          name: "Test",
-          path: "test",
-          resolve() {
-            return Promise.all([
-              Promise.resolve("iTest"),
-              Promise.resolve("eTest")
-            ]);
+      const routes = prepareRoutes(
+        [
+          {
+            name: "Test",
+            path: "test",
+            resolve() {
+              return Promise.all([
+                Promise.resolve("iTest"),
+                Promise.resolve("eTest")
+              ]);
+            }
           }
-        }
-      ]);
+        ],
+        [propertyReporter()]
+      );
       const router = createRouter(inMemory, routes, {
-        route: [PropertyReporter()],
         history: {
           locations: ["/test"]
         }
@@ -147,18 +152,20 @@ describe("public route properties", () => {
     });
 
     it("is undefined when route.resolve isn't provided", done => {
-      const routes = prepareRoutes([
-        {
-          name: "Test",
-          path: "test"
-        },
-        {
-          name: "Not Found",
-          path: "(.*)"
-        }
-      ]);
+      const routes = prepareRoutes(
+        [
+          {
+            name: "Test",
+            path: "test"
+          },
+          {
+            name: "Not Found",
+            path: "(.*)"
+          }
+        ],
+        [propertyReporter()]
+      );
       const router = createRouter(inMemory, routes, {
-        route: [PropertyReporter()],
         history: {
           locations: ["/test"]
         }
@@ -175,19 +182,21 @@ describe("public route properties", () => {
         unofficial: true,
         another: 1
       };
-      const routes = prepareRoutes([
-        {
-          name: "Test",
-          path: "test",
-          extra
-        },
-        {
-          name: "Not Found",
-          path: "(.*)"
-        }
-      ]);
+      const routes = prepareRoutes(
+        [
+          {
+            name: "Test",
+            path: "test",
+            extra
+          },
+          {
+            name: "Not Found",
+            path: "(.*)"
+          }
+        ],
+        [propertyReporter()]
+      );
       const router = createRouter(inMemory, routes, {
-        route: [PropertyReporter()],
         history: {
           locations: ["/test"]
         }
