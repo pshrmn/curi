@@ -3,7 +3,6 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { inMemory } from "@hickory/in-memory";
 import { createRouter, prepareRoutes } from "@curi/router";
-import activeInteraction from "@curi/route-active";
 
 import {
   createRouterComponent,
@@ -25,49 +24,12 @@ describe("useActive", () => {
 
   beforeEach(() => {
     node = document.createElement("div");
-    router = createRouter(inMemory, routes, {
-      route: [activeInteraction()]
-    });
+    router = createRouter(inMemory, routes);
     Router = createRouterComponent(router);
   });
 
   afterEach(() => {
     ReactDOM.unmountComponentAtNode(node);
-  });
-
-  describe("no route.active()", () => {
-    it('throws if attempting to use in a Curi router without the "active" route interaction', () => {
-      const router = createRouter(inMemory, routes);
-
-      const realError = console.error;
-      console.error = jest.fn();
-
-      const Router = createRouterComponent(router);
-
-      function App() {
-        const active = useActive({ name: "Home" });
-        return null;
-      }
-
-      expect(() => {
-        ReactDOM.render(
-          <Router>
-            <App />
-          </Router>,
-          node
-        );
-      }).toThrow(
-        `You are attempting to use the "active" route interaction, but have not included it in your Curi router.
-
-import { createRouter } from "@curi/router";
-import active from "@curi/route-active";
-
-const router = createRouter(history, routes, {
-  route: [active()]
-});`
-      );
-      console.error = realError;
-    });
   });
 
   describe("name", () => {
@@ -89,7 +51,6 @@ const router = createRouter(history, routes, {
   describe("params", () => {
     it('uses the "params" to determine if it is active', () => {
       const router = createRouter(inMemory, routes, {
-        route: [activeInteraction()],
         history: {
           locations: ["/contact/email"]
         }
@@ -115,7 +76,6 @@ const router = createRouter(history, routes, {
   describe("partial", () => {
     it("returns true for partial matches when partial=true", () => {
       const router = createRouter(inMemory, routes, {
-        route: [activeInteraction()],
         history: {
           locations: ["/contact/email"]
         }
@@ -138,7 +98,6 @@ const router = createRouter(history, routes, {
   describe("components", () => {
     it("is called with location if route is active", () => {
       const router = createRouter(inMemory, routes, {
-        route: [activeInteraction()],
         history: {
           locations: ["/contact"]
         }
@@ -163,12 +122,7 @@ const router = createRouter(history, routes, {
     });
 
     it("is not called if route is not active", () => {
-      const router = createRouter(inMemory, routes, {
-        route: [activeInteraction()],
-        history: {
-          locations: ["/"]
-        }
-      });
+      const router = createRouter(inMemory, routes);
       const components = jest.fn();
       let theResponse;
       const Router = createRouterComponent(router);
@@ -189,7 +143,6 @@ const router = createRouter(history, routes, {
 
     it("returns true if route matches and response check returns true", () => {
       const router = createRouter(inMemory, routes, {
-        route: [activeInteraction()],
         history: {
           locations: ["/contact/email"]
         }
@@ -214,7 +167,6 @@ const router = createRouter(history, routes, {
 
     it("returns false if route matches, but location check returns false", () => {
       const router = createRouter(inMemory, routes, {
-        route: [activeInteraction()],
         history: {
           locations: ["/contact/email"]
         }
