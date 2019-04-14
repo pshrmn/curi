@@ -3,7 +3,6 @@ import { createRouter } from "@curi/router";
 import titleSideEffect from "@curi/side-effect-title";
 import scrollSideEffect from "@curi/side-effect-scroll";
 import ariaLiveSideEffect from "@curi/side-effect-aria-live";
-import active from "@curi/route-active";
 import prefetch from "@curi/route-prefetch";
 import routes from "./routes";
 
@@ -16,7 +15,7 @@ const announce = ariaLiveSideEffect(
 );
 
 const router = createRouter(browser, routes, {
-  route: [active(), prefetch()],
+  route: [prefetch()],
   sideEffects: [setTitle, scrollTo, announce],
   invisibleRedirects: true
 });
