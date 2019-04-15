@@ -337,24 +337,26 @@ cd curi-react-bookstore # enter the new app directory`}
           {`// src/routes.js
 import { prepareRoutes } from "@curi/router";
 
-export default prepareRoutes([
-  {
-    name: "Home",
-    path: ""
-  },
-  {
-    name: "Book",
-    path: "book/:id"
-  },
-  {
-    name: "Checkout",
-    path: "checkout"
-  },
-  {
-    name: "Catch All",
-    path: "(.*)"
-  }
-]);`}
+export default prepareRoutes({
+  routes: [
+    {
+      name: "Home",
+      path: ""
+    },
+    {
+      name: "Book",
+      path: "book/:id"
+    },
+    {
+      name: "Checkout",
+      path: "checkout"
+    },
+    {
+      name: "Catch All",
+      path: "(.*)"
+    }
+  ]
+});`}
         </CodeBlock>
 
         <p>
@@ -741,36 +743,38 @@ import Book from './components/Book';
 import Checkout from './components/Checkout';
 import NotFound from './components/NotFound';
 
-export default prepareRoutes([
-  {
-    name: "Home",
-    path: "",
-    response() {
-      return { body: Home };
+export default prepareRoutes({
+  routes: [
+    {
+      name: "Home",
+      path: "",
+      response() {
+        return { body: Home };
+      }
+    },
+    {
+      name: "Book",
+      path: "book/:id",
+      response() {
+        return { body: Book };
+      }
+    },
+    {
+      name: "Checkout",
+      path: "checkout",
+      response() {
+        return { body: Checkout };
+      }
+    },
+    {
+      name: "Catch All",
+      path: "(.*)",
+      response() {
+        return { body: NotFound };
+      }
     }
-  },
-  {
-    name: "Book",
-    path: "book/:id",
-    response() {
-      return { body: Book };
-    }
-  },
-  {
-    name: "Checkout",
-    path: "checkout",
-    response() {
-      return { body: Checkout };
-    }
-  },
-  {
-    name: "Catch All",
-    path: "(.*)",
-    response() {
-      return { body: NotFound };
-    }
-  }
-]);`}
+  ]
+});`}
         </CodeBlock>
 
         <p>

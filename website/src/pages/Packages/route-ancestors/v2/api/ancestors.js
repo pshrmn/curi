@@ -30,8 +30,8 @@ export function AncestorsAPI() {
         {`import { prepareRoutes, createRouter } from "@curi/router";
 import ancestors from '@curi/route-ancestors';
 
-const routes = prepareRoutes(
-  [
+const routes = prepareRoutes({
+  routes: [
     {
       name: 'Grandparent', path: 'g',
       children: [
@@ -44,8 +44,8 @@ const routes = prepareRoutes(
       ]
     }
   ],
-  [ancestors()]
-);
+  interactions: [ancestors()]
+});
 
 const router = createRouter(history,routes);`}
       </CodeBlock>

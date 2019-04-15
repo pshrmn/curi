@@ -90,17 +90,19 @@ const announcer = ariaLive(
   ({ response }) => \`Navigated to \${response.title}\`
 );
 
-const routes = prepareRoutes([
-  {
-    name: "Home",
-    path: "",
-    response() {
-      return {
-        title: "Home"
-      };
+const routes = prepareRoutes({
+  routes: [
+    {
+      name: "Home",
+      path: "",
+      response() {
+        return {
+          title: "Home"
+        };
+      }
     }
-  }
-]);
+  ]
+});
 
 const router = createRouter(browser, routes, {
   sideEffects: [announcer]

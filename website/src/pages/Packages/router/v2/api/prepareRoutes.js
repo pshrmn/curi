@@ -34,20 +34,27 @@ export function PrepareRoutesAPI() {
       <CodeBlock>
         {`import { prepareRoutes } from '@curi/router';
 
-const routes = prepareRoutes([
-  { name: "Home", path: "" },
-  // ...
-  { name: "Not Found", path: "(.*)" }
-]);`}
+const routes = prepareRoutes({
+  routes: [
+    { name: "Home", path: "" },
+    // ...
+    { name: "Not Found", path: "(.*)" }
+  ]
+});`}
       </CodeBlock>
 
       <p>
-        <IJS>prepareRoutes</IJS> creates a stateless, reusable routing object,
-        which means that it can be reused on the server instead of recompiling
-        it for every request.
+        <IJS>prepareRoutes</IJS> creates a reusable routing object, which means
+        that it can be reused on the server instead of recompiling it for every
+        request.
       </p>
 
       <HashSection tag="h4" meta={argumentsMeta}>
+        <p>
+          <IJS>prepareRoutes</IJS> takes a single argument, which is an object.
+          The object has one required property: <IJS>routes</IJS>.
+        </p>
+
         <HashSection tag="h5" meta={routesArgMeta}>
           An array of <Link hash="route-objects">route objects</Link>.
         </HashSection>
@@ -64,10 +71,10 @@ const routes = prepareRoutes([
           <CodeBlock>
             {`import ancestors from "@curi/route-ancestors";
 
-const routes = prepareRoutes(
-  [{ name: "Home", path: "" }],
-  [ancestors()]
-);`}
+const routes = prepareRoutes({
+  routes: [{ name: "Home", path: "" }],
+  interactions: [ancestors()]
+});`}
           </CodeBlock>
         </HashSection>
       </HashSection>

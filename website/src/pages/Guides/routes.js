@@ -99,15 +99,17 @@ function RoutesGuide() {
           </p>
 
           <CodeBlock>
-            {`const routes = prepareRoutes([
-  {
-    path: "" // matches the root "/"
-  },
-  {
-    // the "id" segment can be any value
-    path: "a/:id"
-  }
-]);`}
+            {`const routes = prepareRoutes({
+  routes: [
+    {
+      path: "" // matches the root "/"
+    },
+    {
+      // the "id" segment can be any value
+      path: "a/:id"
+    }
+  ]
+});`}
           </CodeBlock>
         </HashSection>
 
@@ -117,17 +119,19 @@ function RoutesGuide() {
           </p>
 
           <CodeBlock>
-            {`const routes = prepareRoutes([
-  {
-    name: "Home",
-    path: ""
-  },
-  {
-    name: "Album",
-    // the "id" segment can be any value
-    path: "a/:id"
-  }
-]);`}
+            {`const routes = prepareRoutes({
+  routes: [
+    {
+      name: "Home",
+      path: ""
+    },
+    {
+      name: "Album",
+      // the "id" segment can be any value
+      path: "a/:id"
+    }
+  ]
+});`}
           </CodeBlock>
 
           <p>
@@ -233,25 +237,27 @@ function RoutesGuide() {
           <CodeBlock>
             {`import User from "./components/User";
 
-const routes = prepareRoutes([
-  {
-    name: "User",
-    path: "u/:id",
-    resolve({ params }) {
-      return UserAPI.get(params.id);
-    },
-    response({ match, resolved, error }) {
-      if (error) {
-        // ...
+const routes = prepareRoutes({
+  routes: [
+    {
+      name: "User",
+      path: "u/:id",
+      resolve({ params }) {
+        return UserAPI.get(params.id);
+      },
+      response({ match, resolved, error }) {
+        if (error) {
+          // ...
+        }
+        return {
+          body: User,
+          data: resolved.data,
+          title: \`User \${match.params.id}\`
+        };
       }
-      return {
-        body: User,
-        data: resolved.data,
-        title: \`User \${match.params.id}\`
-      };
     }
-  }
-]);`}
+  ]
+});`}
           </CodeBlock>
         </HashSection>
       </HashSection>
@@ -273,14 +279,16 @@ const routes = prepareRoutes([
         </p>
 
         <CodeBlock lang="js">
-          {`const routes = prepareRoutes([
-  { name: "One", path: "one" },
-  { name: "Two", path: "two", children: [
-    { name: "And a half", path: "point-five" },
-    // matches /two/point-five
-  ]},
-  { name: "Three", path: "three" },
-]);
+          {`const routes = prepareRoutes({
+  routes: [
+    { name: "One", path: "one" },
+    { name: "Two", path: "two", children: [
+      { name: "And a half", path: "point-five" },
+      // matches /two/point-five
+    ]},
+    { name: "Three", path: "three" },
+  ]
+});
 
 // route match order:
 // 1. One
@@ -315,20 +323,22 @@ const routes = prepareRoutes([
 
         <HashSection meta={walkthroughMeta} tag="h3">
           <CodeBlock>
-            {`const routes = prepareRoutes([
-  {
-    name: 'Home',
-    path: '',
-  },
-  {
-    name: 'Album',
-    path: 'a/:album'
-  },
-  {
-    name: 'Not Found',
-    path: '(.*)'
-  }
-]);`}
+            {`const routes = prepareRoutes({
+  routes: [
+    {
+      name: 'Home',
+      path: '',
+    },
+    {
+      name: 'Album',
+      path: 'a/:album'
+    },
+    {
+      name: 'Not Found',
+      path: '(.*)'
+    }
+  ]
+});`}
           </CodeBlock>
 
           <Note>
@@ -356,26 +366,28 @@ const routes = prepareRoutes([
           </p>
 
           <CodeBlock>
-            {`const routes = prepareRoutes([
-  {
-    name: 'Home',
-    path: '',
-  },
-  {
-    name: 'Album',
-    path: 'a/:album',
-    children: [
-      {
-        name: 'Song',
-        path: ':title'
-      }
-    ]
-  },
-  {
-    name: 'Not Found',
-    path: '(.*)'
-  }
-]);`}
+            {`const routes = prepareRoutes({
+  routes: [
+    {
+      name: 'Home',
+      path: '',
+    },
+    {
+      name: 'Album',
+      path: 'a/:album',
+      children: [
+        {
+          name: 'Song',
+          path: ':title'
+        }
+      ]
+    },
+    {
+      name: 'Not Found',
+      path: '(.*)'
+    }
+  ]
+});`}
           </CodeBlock>
 
           <p>
@@ -432,7 +444,7 @@ const routes = prepareRoutes([
 const routes = [...]
 
 // prepared routes
-export default prepareRoutes(routes);`}
+export default prepareRoutes({ routes });`}
         </CodeBlock>
       </HashSection>
     </React.Fragment>

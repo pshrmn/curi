@@ -88,10 +88,12 @@ const router = createRouter(browser, routes);`}
           </p>
 
           <CodeBlock lang="jsx">
-            {`const routes = prepareRoutes([
-  { name: "Home", path: "" },
-  { name: "About", path: "about" }
-]);
+            {`const routes = prepareRoutes({
+  routes: [
+    { name: "Home", path: "" },
+    { name: "About", path: "about" }
+  ]
+});
 
 const router = createRouter(browser, routes);`}
           </CodeBlock>
@@ -148,16 +150,18 @@ const router = createRouter(browser, routes, {
 });`}
             </CodeBlock>
             <CodeBlock>
-              {`const routes = prepareRoutes([
-  {
-    name: "User",
-    path: "user/:id",
-    resolve(match, external) {
-      // use the external object to make a query
-      return external.client.query();
+              {`const routes = prepareRoutes({
+  routes: [
+    {
+      name: "User",
+      path: "user/:id",
+      resolve(match, external) {
+        // use the external object to make a query
+        return external.client.query();
+      }
     }
-  }
-]);`}
+  ]
+});`}
             </CodeBlock>
           </HashSection>
 
@@ -193,25 +197,27 @@ const router = createRouter(browser, routes, {
             </p>
 
             <CodeBlock>
-              {`const routes = prepareRoutes([
-  {
-    name: "Old",
-    path: "old/:id",
-    response({ params }) {
-      // setup a redirect to the "New" route
-      return {
-        redirect: {
-          name: "New",
-          params
-        }
-      };
+              {`const routes = prepareRoutes({
+  routes: [
+    {
+      name: "Old",
+      path: "old/:id",
+      response({ params }) {
+        // setup a redirect to the "New" route
+        return {
+          redirect: {
+            name: "New",
+            params
+          }
+        };
+      }
+    },
+    {
+      name: "New",
+      path: "new/:id"
     }
-  },
-  {
-    name: "New",
-    path: "new/:id"
-  }
-]);
+  ]
+});
 
 const router = createRouter(browser, routes, {
   invisibleRedirects: false
@@ -323,16 +329,18 @@ const router = createRouter(browser, routes, {
           </HashSection>
 
           <CodeBlock>
-            {`const routes = prepareRoutes([
-  {
-    name: "Album",
-    path: "photos/:albumID",
-    children: [
-      { name: "Photo", path: ":photoID" }
-    ]
-  },
-  // ...
-]);
+            {`const routes = prepareRoutes({
+  routes: [
+    {
+      name: "Album",
+      path: "photos/:albumID",
+      children: [
+        { name: "Photo", path: ":photoID" }
+      ]
+    },
+    // ...
+  ]
+});
 const router = createRouter(browser, routes);
 
 router.navigate({
@@ -611,9 +619,11 @@ router.once(({ response, navigation }) => {
             </p>
 
             <CodeBlock>
-              {`const routes = prepareRoutes([
-  { name: 'User', path: 'user/:id' }
-]);
+              {`const routes = prepareRoutes({
+  routes: [
+    { name: 'User', path: 'user/:id' }
+  ]
+});
 const router = createRouter(browser, routes);
 const userPathname = router.route.pathname(
   'User',

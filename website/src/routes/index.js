@@ -8,7 +8,7 @@ import packages from "./packages";
 import examples from "./examples";
 import notFound from "./not-found";
 
-export default prepareRoutes(
-  [home, tutorials, guides, packages, examples, notFound],
-  [prefetch()]
-);
+export default prepareRoutes({
+  routes: [home, tutorials, guides, packages, examples, notFound],
+  interactions: [prefetch()]
+});

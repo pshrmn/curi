@@ -27,19 +27,21 @@ export function PreferDefaultAPI() {
       <CodeBlock>
         {`import { preferDefault } from "@curi/helpers";
 
-const routes = prepareRoutes([
-  {
-    name: "Menu",
-    path: "menu",
-    resolve() {
-      return import("./components/Menu")
-        .then(preferDefault);
-    },
-    response({ resolved }) {
-      return { body: resolved }
+const routes = prepareRoutes({
+  routes: [
+    {
+      name: "Menu",
+      path: "menu",
+      resolve() {
+        return import("./components/Menu")
+          .then(preferDefault);
+      },
+      response({ resolved }) {
+        return { body: resolved }
+      }
     }
-  }
-]);`}
+  ]
+});`}
       </CodeBlock>
     </HashSection>
   );

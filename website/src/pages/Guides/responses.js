@@ -173,23 +173,25 @@ function ResponsesGuide() {
         <CodeBlock>
           {`// do NOT do this
 // mixing body shapes complicates rendering
-const routes = prepareRoutes([
-  {
-    response() {
-      return { body: One }
-    }
-  },
-  {
-    response() {
-      return {
-        body: {
-          main: Main,
-          menu: Menu
+const routes = prepareRoutes({
+  routes: [
+    {
+      response() {
+        return { body: One }
+      }
+    },
+    {
+      response() {
+        return {
+          body: {
+            main: Main,
+            menu: Menu
+          }
         }
       }
     }
-  }
-]);`}
+  ]
+});`}
         </CodeBlock>
       </HashSection>
 

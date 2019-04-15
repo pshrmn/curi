@@ -138,22 +138,24 @@ const Inbox = ({ match }) => (
           </p>
 
           <CodeBlock>
-            {`const routes = prepareRoutes([
-  {
-    name: 'Home',
-    path: ''
-  },
-  {
-    name: 'Inbox',
-    path: 'inbox',
-    children: [
-      {
-        name: 'Message',
-        path: ':message'
-      }
-    ]
-  }
-]);`}
+            {`const routes = prepareRoutes({
+  routes: [
+    {
+      name: 'Home',
+      path: ''
+    },
+    {
+      name: 'Inbox',
+      path: 'inbox',
+      children: [
+        {
+          name: 'Message',
+          path: ':message'
+        }
+      ]
+    }
+  ]
+});`}
           </CodeBlock>
 
           <p>Next, we should add our components to each route.</p>
@@ -172,37 +174,39 @@ import Home from './pages/Home';
 import Inbox from './pages/Inbox';
 import Mesage from './pages/Message';
 
-const routes = prepareRoutes([
-  {
-    name: 'Home',
-    path: '',
-    response: () => {
-      return {
-        body: Home
-      };
-    }
-  },
-  {
-    name: 'Inbox',
-    path: 'inbox',
-    response: () => {
-      return {
-        body: Inbox
-      };
-    },
-    children: [
-      {
-        name: 'Message',
-        path: ':message',
-        response: () => {
-          return {
-            body: Message
-          };
-        }
+const routes = prepareRoutes({
+  routes: [
+    {
+      name: 'Home',
+      path: '',
+      response: () => {
+        return {
+          body: Home
+        };
       }
-    ]
-  }
-]);`}
+    },
+    {
+      name: 'Inbox',
+      path: 'inbox',
+      response: () => {
+        return {
+          body: Inbox
+        };
+      },
+      children: [
+        {
+          name: 'Message',
+          path: ':message',
+          response: () => {
+            return {
+              body: Message
+            };
+          }
+        }
+      ]
+    }
+  ]
+});`}
           </CodeBlock>
 
           <p>
@@ -224,35 +228,37 @@ const routes = prepareRoutes([
           </p>
 
           <CodeBlock>
-            {`const routes = prepareRoutes([
-  {
-    path: '',
-    response: () => {
-      return {
-        body: Home
-      };
-    }
-  },
-  {
-    path: 'inbox',
-    response: () => {
-      return {
-        body: Inbox
-      };
-    },
-    children: [
-      {
-        path: ':message',
-        response: () => {
-          return {
-            body: Message
-          };
-        },
-        resolve(match) { return ... },
+            {`const routes = prepareRoutes({
+  routes: [
+    {
+      path: '',
+      response: () => {
+        return {
+          body: Home
+        };
       }
-    ]
-  }
-]);`}
+    },
+    {
+      path: 'inbox',
+      response: () => {
+        return {
+          body: Inbox
+        };
+      },
+      children: [
+        {
+          path: ':message',
+          response: () => {
+            return {
+              body: Message
+            };
+          },
+          resolve(match) { return ... },
+        }
+      ]
+    }
+  ]
+});`}
           </CodeBlock>
         </HashSection>
         <p>
@@ -292,7 +298,7 @@ ReactDOM.render((
         <CodeBlock>
           {`import { curi, prepareRoutes } from '@curi/router';
 import { browser } from '@hickory/browser';
-const routes = prepareRoutes([...]);
+const routes = prepareRoutes({ routes: [...] });
 const router = createRouter(browser, routes);`}
         </CodeBlock>
       </HashSection>
@@ -460,16 +466,18 @@ ReactDOM.render((
           </Note>
 
           <CodeBlock>
-            {`const routes = prepareRoutes([
-  // ...,
-  {
-    name: "Not Found",
-    path: "(.*)",
-    response() {
-      return { body: NotFound };
+            {`const routes = prepareRoutes({
+  routes: [
+    // ...,
+    {
+      name: "Not Found",
+      path: "(.*)",
+      response() {
+        return { body: NotFound };
+      }
     }
-  }
-]);`}
+  ]
+});`}
           </CodeBlock>
 
           <p>

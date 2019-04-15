@@ -34,7 +34,7 @@ import prefetch from '@curi/route-prefetch';
 
 const routes = prepareRoutes(
   routes,
-  [prefetch()]
+  interactions: [prefetch()]
 )
 
 const router = createRouter(browser, routes);

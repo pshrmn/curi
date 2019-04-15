@@ -61,7 +61,9 @@ function GettingStartedGuide() {
           {`import { curi, prepareRoutes } from '@curi/router';
 import { browser } from "@hickory/browser";
 
-const routes = prepareRoutes([...]);
+const routes = prepareRoutes({
+  routes: [...]
+});
 const router = createRouter(browser, routes);`}
         </CodeBlock>
       </HashSection>

@@ -112,21 +112,23 @@ Vue.use(CuriPlugin, { router });`}
 
           <CodeBlock lang="html">
             {`<script>
-const routes = prepareRoutes([
-  {
-    name: "Home",
-    path: "",
-    response() {
-      return {
-        body: {
-          main: HomeMain,
-          menu: HomeMenu
+const routes = prepareRoutes({
+  routes: [
+    {
+      name: "Home",
+      path: "",
+      response() {
+        return {
+          body: {
+            main: HomeMain,
+            menu: HomeMenu
+          }
         }
       }
-    }
-  },
-  // ...
-]);
+    },
+    // ...
+  ]
+});
 </script>
 
 <template>
