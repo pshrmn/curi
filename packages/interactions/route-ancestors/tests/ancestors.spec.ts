@@ -5,16 +5,16 @@ import ancestors from "@curi/route-ancestors";
 
 describe("ancestors route interaction", () => {
   it("is called using name", () => {
-    const routes = prepareRoutes(
-      [{ name: "Catch All", path: "(.*)" }],
-      [ancestors()]
-    );
+    const routes = prepareRoutes({
+      routes: [{ name: "Catch All", path: "(.*)" }],
+      interactions: [ancestors()]
+    });
     expect(routes.interactions.ancestors).toBeDefined();
   });
 
   describe("routes", () => {
-    const routes = prepareRoutes(
-      [
+    const routes = prepareRoutes({
+      routes: [
         {
           name: "League",
           path: "league/:lID",
@@ -33,8 +33,8 @@ describe("ancestors route interaction", () => {
         },
         { name: "Catch All", path: "(.*)" }
       ],
-      [ancestors()]
-    );
+      interactions: [ancestors()]
+    });
 
     it("returns all ancestors when level is undefined (or null)", () => {
       expect(routes.interactions.ancestors("Player")).toEqual([

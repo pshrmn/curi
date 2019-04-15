@@ -14,21 +14,23 @@ import cleanText from "../../../utils/cleanText";
  * to determine if it is called the expected number of times.
  */
 
-const routes = prepareRoutes([
-  { name: "Home", path: "" },
-  {
-    name: "Test",
-    path: "test",
-    resolve() {
-      return new Promise(resolve => {
-        setTimeout(() => {
-          resolve("done");
-        }, 100);
-      });
-    }
-  },
-  { name: "Not Found", path: "(.*)" }
-]);
+const routes = prepareRoutes({
+  routes: [
+    { name: "Home", path: "" },
+    {
+      name: "Test",
+      path: "test",
+      resolve() {
+        return new Promise(resolve => {
+          setTimeout(() => {
+            resolve("done");
+          }, 100);
+        });
+      }
+    },
+    { name: "Not Found", path: "(.*)" }
+  ]
+});
 
 const router = createRouter(inMemory, routes);
 const store = curiStore(router);

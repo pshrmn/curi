@@ -5,26 +5,28 @@ import { pathnames } from "@curi/static";
 
 describe("pathnames()", () => {
   it("returns an array of pathname strings from the given routes/page descriptors", () => {
-    const routes = prepareRoutes([
-      {
-        name: "Home",
-        path: ""
-      },
-      {
-        name: "About",
-        path: "about"
-      },
-      {
-        name: "Album",
-        path: "album/:albumID",
-        children: [
-          {
-            name: "Song",
-            path: ":songID"
-          }
-        ]
-      }
-    ]);
+    const routes = prepareRoutes({
+      routes: [
+        {
+          name: "Home",
+          path: ""
+        },
+        {
+          name: "About",
+          path: "about"
+        },
+        {
+          name: "Album",
+          path: "album/:albumID",
+          children: [
+            {
+              name: "Song",
+              path: ":songID"
+            }
+          ]
+        }
+      ]
+    });
     const pages = [
       { name: "Home" },
       { name: "About" },

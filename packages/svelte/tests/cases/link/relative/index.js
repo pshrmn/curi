@@ -4,11 +4,13 @@ import { curiStore } from "@curi/svelte";
 
 import app from "./app.html";
 
-const routes = prepareRoutes([
-  { name: "Home", path: "" },
-  { name: "User", path: "u/:id" },
-  { name: "Not Found", path: "(.*)" }
-]);
+const routes = prepareRoutes({
+  routes: [
+    { name: "Home", path: "" },
+    { name: "User", path: "u/:id" },
+    { name: "Not Found", path: "(.*)" }
+  ]
+});
 
 const router = createRouter(inMemory, routes, {
   history: {

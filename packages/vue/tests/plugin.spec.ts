@@ -6,7 +6,9 @@ import { createRouter, prepareRoutes } from "@curi/router";
 import { CuriPlugin } from "@curi/vue";
 
 describe("CuriPlugin", () => {
-  const routes = prepareRoutes([{ name: "Catch All", path: "(.*)" }]);
+  const routes = prepareRoutes({
+    routes: [{ name: "Catch All", path: "(.*)" }]
+  });
   const router = createRouter(inMemory, routes);
 
   describe("$router", () => {
@@ -56,11 +58,13 @@ describe("CuriPlugin", () => {
         };
       }
 
-      let history, router;
-      const routes = prepareRoutes([
-        { name: "Contact", path: "contact" },
-        { name: "Catch All", path: "(.*)" }
-      ]);
+      let router;
+      const routes = prepareRoutes({
+        routes: [
+          { name: "Contact", path: "contact" },
+          { name: "Catch All", path: "(.*)" }
+        ]
+      });
 
       beforeEach(() => {
         router = createRouter(inMemory, routes);

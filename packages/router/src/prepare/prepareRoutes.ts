@@ -26,14 +26,19 @@ export interface PreparedRoute {
   };
 }
 
+export interface PrepareRoutesOptions {
+  routes: Array<RouteDescriptor>;
+  interactions?: Array<Interaction>;
+}
+
 export default function prepareRoutes(
-  routes: Array<RouteDescriptor>,
-  interactionTypes: Array<Interaction> = []
+  options: PrepareRoutesOptions
 ): RouteMatcher {
+  const { routes, interactions = [] } = options;
   const usedNames = new Set<string>();
   const prepared = routes.map(route => createRoute(route, usedNames));
   const interactionGetters: Interactions = {};
-  [pathname(), active(), ...interactionTypes].map(interaction => {
+  [pathname(), active(), ...interactions].map(interaction => {
     interactionGetters[interaction.name] = interaction.get;
     registerRoutes(prepared, interaction);
   });

@@ -1,7 +1,7 @@
 ## Next
 
 * `prepareRoutes` returns an object with `match` and `interactions` properties.
-* `prepareRoutes` takes a second argument, which is an array of interactions.
+* `prepareRoutes` takes an options argument with a required `routes` array and an optional `interactions` array.
 * Remove `route` option from `createRoutes`.
 * The `active` interaction is now automatically included in a router.
 * A redirect can point to an external URL; the actual redirecting for external redirects is left to the user.

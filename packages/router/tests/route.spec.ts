@@ -28,8 +28,8 @@ function propertyReporter(): Interaction {
 describe("public route properties", () => {
   describe("name", () => {
     it("is the provided value", () => {
-      const routes = prepareRoutes(
-        [
+      const routes = prepareRoutes({
+        routes: [
           {
             name: "Test",
             path: "test"
@@ -39,8 +39,8 @@ describe("public route properties", () => {
             path: "(.*)"
           }
         ],
-        [propertyReporter()]
-      );
+        interactions: [propertyReporter()]
+      });
       const router = createRouter(inMemory, routes, {
         history: {
           locations: ["/test"]
@@ -53,8 +53,8 @@ describe("public route properties", () => {
 
   describe("path", () => {
     it("is the provided value", () => {
-      const routes = prepareRoutes(
-        [
+      const routes = prepareRoutes({
+        routes: [
           {
             name: "Test",
             path: "test"
@@ -64,8 +64,8 @@ describe("public route properties", () => {
             path: "(.*)"
           }
         ],
-        [propertyReporter()]
-      );
+        interactions: [propertyReporter()]
+      });
       const router = createRouter(inMemory, routes);
       const routeProperties = router.route.properties("Test");
       expect(routeProperties.path).toBe("test");
@@ -74,8 +74,8 @@ describe("public route properties", () => {
 
   describe("keys", () => {
     it("is the array of param names parsed from the path", () => {
-      const routes = prepareRoutes(
-        [
+      const routes = prepareRoutes({
+        routes: [
           {
             name: "Test",
             path: ":one/:two/:three"
@@ -85,8 +85,8 @@ describe("public route properties", () => {
             path: "(.*)"
           }
         ],
-        [propertyReporter()]
-      );
+        interactions: [propertyReporter()]
+      });
       const router = createRouter(inMemory, routes, {
         history: {
           locations: ["/four/five/six"]
@@ -97,8 +97,8 @@ describe("public route properties", () => {
     });
 
     it("is an empty array when the path has no params", () => {
-      const routes = prepareRoutes(
-        [
+      const routes = prepareRoutes({
+        routes: [
           {
             name: "Test",
             path: "one/two/three"
@@ -108,8 +108,8 @@ describe("public route properties", () => {
             path: "(.*)"
           }
         ],
-        [propertyReporter()]
-      );
+        interactions: [propertyReporter()]
+      });
       const router = createRouter(inMemory, routes, {
         history: {
           locations: ["/one/two/three"]
@@ -122,8 +122,8 @@ describe("public route properties", () => {
 
   describe("resolve", () => {
     it("is the resolve function", done => {
-      const routes = prepareRoutes(
-        [
+      const routes = prepareRoutes({
+        routes: [
           {
             name: "Test",
             path: "test",
@@ -135,8 +135,8 @@ describe("public route properties", () => {
             }
           }
         ],
-        [propertyReporter()]
-      );
+        interactions: [propertyReporter()]
+      });
       const router = createRouter(inMemory, routes, {
         history: {
           locations: ["/test"]
@@ -152,8 +152,8 @@ describe("public route properties", () => {
     });
 
     it("is undefined when route.resolve isn't provided", done => {
-      const routes = prepareRoutes(
-        [
+      const routes = prepareRoutes({
+        routes: [
           {
             name: "Test",
             path: "test"
@@ -163,8 +163,8 @@ describe("public route properties", () => {
             path: "(.*)"
           }
         ],
-        [propertyReporter()]
-      );
+        interactions: [propertyReporter()]
+      });
       const router = createRouter(inMemory, routes, {
         history: {
           locations: ["/test"]
@@ -182,8 +182,8 @@ describe("public route properties", () => {
         unofficial: true,
         another: 1
       };
-      const routes = prepareRoutes(
-        [
+      const routes = prepareRoutes({
+        routes: [
           {
             name: "Test",
             path: "test",
@@ -194,8 +194,8 @@ describe("public route properties", () => {
             path: "(.*)"
           }
         ],
-        [propertyReporter()]
-      );
+        interactions: [propertyReporter()]
+      });
       const router = createRouter(inMemory, routes, {
         history: {
           locations: ["/test"]

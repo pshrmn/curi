@@ -1,8 +1,7 @@
 import {
   PathFunction,
   PathFunctionOptions,
-  RegExpOptions,
-  Key
+  RegExpOptions
 } from "path-to-regexp";
 import {
   History,
