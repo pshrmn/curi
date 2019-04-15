@@ -8,13 +8,13 @@ import {
   SettableResponseProperties,
   ResolveResults,
   IntrinsicResponse,
-  ResponseFn,
+  Route,
   RedirectProps,
   ExternalRedirect
 } from "@curi/types";
 
 export default function finishResponse(
-  createResponse: ResponseFn,
+  route: Route,
   match: IntrinsicResponse,
   routes: RouteMatcher,
   resolvedResults: ResolveResults | null,
@@ -23,17 +23,21 @@ export default function finishResponse(
 ): Response {
   const { resolved = null, error = null } = resolvedResults || {};
 
-  const responseModifiers = createResponse({
+  const response: Response = {} as Response;
+  for (let key in match) {
+    response[key as keyof Response] = match[key as keyof IntrinsicResponse];
+  }
+
+  if (!route.response) {
+    return response;
+  }
+
+  const responseModifiers = route.response({
     resolved,
     error,
     match,
     external
   });
-
-  const response: Response = {} as Response;
-  for (let key in match) {
-    response[key as keyof Response] = match[key as keyof IntrinsicResponse];
-  }
 
   if (!responseModifiers) {
     if (process.env.NODE_ENV !== "production") {

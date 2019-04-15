@@ -85,16 +85,14 @@ export default function createRouter<O = HistoryOptions>(
   ) {
     asyncNavComplete();
     pending.finish();
-    const response = route.response
-      ? finishResponse(
-          route.response,
-          match,
-          routes,
-          resolved,
-          history,
-          options.external
-        )
-      : match;
+    const response = finishResponse(
+      route,
+      match,
+      routes,
+      resolved,
+      history,
+      options.external
+    );
     finishAndResetNavCallbacks();
     emitImmediate(response, navigation);
   }

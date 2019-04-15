@@ -141,7 +141,6 @@ export interface Route<R = unknown> {
   path: string;
   keys: Array<string | number>;
   pathname: PathFunction;
-  sync: boolean;
   resolve: R;
   response?: ResponseFn;
   extra?: {

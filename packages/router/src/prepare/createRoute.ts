@@ -27,7 +27,6 @@ export function createRoute(
   // set this resolve setting pathOptions.end for children
   const exact = matchOptions.end == null || matchOptions.end;
 
-  let children: Array<PreparedRoute> = [];
   // when we have child routes, we need to perform non-end matching and
   if (props.children && props.children.length) {
     matchOptions.end = false;
@@ -41,6 +40,7 @@ export function createRoute(
 
   const compiled = PathToRegexp.compile(fullPath);
 
+  let children: Array<PreparedRoute> = [];
   if (props.children && props.children.length) {
     children = props.children.map((child: RouteDescriptor) => {
       return createRoute(child, fullPath);
@@ -57,7 +57,6 @@ export function createRoute(
       pathname(params?: Params) {
         return compiled(params, compileOptions);
       },
-      sync: props.resolve === undefined,
       response: props.response
     },
     pathMatching: {
