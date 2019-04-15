@@ -1,6 +1,5 @@
 import React from "react";
 import useRouter from "./useRouter";
-import { stringifyFlatObject } from "../utils";
 
 import { ReactNode } from "react";
 import { RouteLocation } from "@curi/types";
@@ -57,7 +56,7 @@ export function useNavigationHandler<T extends React.BaseSyntheticEvent>(
     [
       props.method,
       props.name,
-      stringifyFlatObject(props.params),
+      JSON.stringify(props.params),
       props.query,
       props.hash,
       props.state,
@@ -119,7 +118,7 @@ export function useStatefulNavigationHandler<
     [
       props.method,
       props.name,
-      stringifyFlatObject(props.params),
+      JSON.stringify(props.params),
       props.query,
       props.hash,
       props.state,
