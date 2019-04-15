@@ -8,7 +8,12 @@ export default function createAriaLiveSideEffect(
 ): Observer {
   const announcer = document.createElement("div");
   announcer.setAttribute("aria-live", mode);
-  announcer.setAttribute("style", "position: absolute; left: -999em");
+  // https://snook.ca/archives/html_and_css/hiding-content-for-accessibility
+  announcer.setAttribute(
+    "style",
+    "position: absolute !important; height: 1px; " +
+      "width: 1px; overflow: hidden; clip: rect(1px, 1px, 1px, 1px);"
+  );
   document.body.appendChild(announcer);
 
   return function(emitted: Emitted): void {
