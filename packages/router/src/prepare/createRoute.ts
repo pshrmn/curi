@@ -24,7 +24,7 @@ export function createRoute(
   const { match: matchOptions = {}, compile: compileOptions = {} } =
     props.pathOptions || {};
   // end defaults to true, so end has to be hardcoded for it to be false
-  // set this resolve setting pathOptions.end for children
+  // set this before setting pathOptions.end for children
   const exact = matchOptions.end == null || matchOptions.end;
 
   // when we have child routes, we need to perform non-end matching and
