@@ -46,4 +46,4 @@ const routes = [
   }
 ];
 
-export default prepareRoutes(routes);
+export default prepareRoutes({ routes });
