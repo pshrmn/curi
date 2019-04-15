@@ -26,32 +26,44 @@ function defaultCanNavigate() {
   return true;
 }
 
-export type CanNavigate<T> = (e: T, forward?: object) => boolean;
+export type CanNavigate<T> = (e: T, target?: string) => boolean;
 
 export function useNavigationHandler<T extends React.BaseSyntheticEvent>(
   props: NavigationHookProps<T>,
-  canNavigate: CanNavigate<T> = defaultCanNavigate
+  canNavigate: CanNavigate<T> = defaultCanNavigate,
+  target?: string
 ) {
   const router = useRouter();
+  const eventHandler = React.useCallback(
+    function eventHandler(event: T) {
+      if (props.onNav) {
+        props.onNav(event);
+      }
 
-  function eventHandler(event: T) {
-    if (props.onNav) {
-      props.onNav(event);
-    }
+      if (canNavigate(event, target)) {
+        event.preventDefault();
 
-    if (canNavigate(event, props.forward)) {
-      event.preventDefault();
-
-      router.navigate({
-        method: props.method,
-        name: props.name,
-        params: props.params,
-        query: props.query,
-        state: props.state,
-        hash: props.hash
-      });
-    }
-  }
+        router.navigate({
+          method: props.method,
+          name: props.name,
+          params: props.params,
+          query: props.query,
+          state: props.state,
+          hash: props.hash
+        });
+      }
+    },
+    [
+      props.method,
+      props.name,
+      JSON.stringify(props.params),
+      props.query,
+      props.hash,
+      props.state,
+      props.onNav,
+      target
+    ]
+  );
   return {
     eventHandler
   };
@@ -61,47 +73,59 @@ export function useStatefulNavigationHandler<
   T extends React.BaseSyntheticEvent
 >(
   props: StatefulNavigationHookProps<T>,
-  canNavigate: CanNavigate<T> = defaultCanNavigate
+  canNavigate: CanNavigate<T> = defaultCanNavigate,
+  target?: string
 ) {
   const router = useRouter();
-  const cancel = React.useRef(undefined);
+  const removeCallbacks = React.useRef(undefined);
   const [navigating, setNavigating] = React.useState(false);
 
   React.useEffect(() => {
     return () => {
-      if (cancel.current) {
-        cancel.current();
+      if (removeCallbacks.current) {
+        removeCallbacks.current();
       }
     };
   }, []);
 
-  function eventHandler(event: T) {
-    if (props.onNav) {
-      props.onNav(event);
-    }
+  const eventHandler = React.useCallback(
+    function eventHandler(event: T) {
+      if (props.onNav) {
+        props.onNav(event);
+      }
 
-    if (canNavigate(event, props.forward)) {
-      event.preventDefault();
+      if (canNavigate(event, target)) {
+        event.preventDefault();
 
-      // only trigger re-renders when children uses state
-      const done = () => {
-        cancel.current = undefined;
-        setNavigating(false);
-      };
-      setNavigating(true);
+        const done = () => {
+          removeCallbacks.current = undefined;
+          setNavigating(false);
+        };
+        setNavigating(true);
 
-      cancel.current = router.navigate({
-        method: props.method,
-        name: props.name,
-        params: props.params,
-        query: props.query,
-        state: props.state,
-        hash: props.hash,
-        cancelled: done,
-        finished: done
-      });
-    }
-  }
+        removeCallbacks.current = router.navigate({
+          method: props.method,
+          name: props.name,
+          params: props.params,
+          query: props.query,
+          state: props.state,
+          hash: props.hash,
+          cancelled: done,
+          finished: done
+        });
+      }
+    },
+    [
+      props.method,
+      props.name,
+      JSON.stringify(props.params),
+      props.query,
+      props.hash,
+      props.state,
+      props.onNav,
+      target
+    ]
+  );
 
   return {
     eventHandler,

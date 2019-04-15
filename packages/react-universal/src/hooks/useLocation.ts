@@ -7,10 +7,7 @@ export default function useLocation(props: RouteLocation) {
   const router = useRouter();
   const pathname = React.useMemo(() => {
     return props.name ? router.route.pathname(props.name, props.params) : "";
-  }, [
-    props.name,
-    ...Object.keys(props.params || {}).map(key => props.params[key])
-  ]);
+  }, [props.name, JSON.stringify(props.params)]);
 
   return {
     pathname,

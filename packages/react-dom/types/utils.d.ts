@@ -1,2 +1,2 @@
-import { MouseEvent, AnchorHTMLAttributes } from "react";
-export declare function canNavigate(event: MouseEvent<HTMLElement>, forward: AnchorHTMLAttributes<HTMLAnchorElement>): boolean;
+import { MouseEvent } from "react";
+export declare function canNavigate(event: MouseEvent<HTMLElement>, target?: string): boolean;

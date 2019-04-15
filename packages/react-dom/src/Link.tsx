@@ -29,7 +29,7 @@ export const Link = React.forwardRef(
 
     const { eventHandler } = useNavigationHandler<
       React.MouseEvent<HTMLElement>
-    >(props, canNavigate);
+    >(props, canNavigate, props.forward && props.forward.target);
 
     const { anchor: Anchor = "a", forward, children } = props;
 
@@ -47,7 +47,7 @@ export const AsyncLink = React.forwardRef(
 
     const { eventHandler, navigating } = useStatefulNavigationHandler<
       React.MouseEvent<HTMLElement>
-    >(props, canNavigate);
+    >(props, canNavigate, props.forward && props.forward.target);
 
     const { anchor: Anchor = "a", forward, children } = props;
 
