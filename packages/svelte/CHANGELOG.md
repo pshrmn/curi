@@ -1,5 +1,6 @@
 ## Next
 
+* Update `@curi/router` peer dependency to v2.
 * Spread `forward` props to link elements before "native" props.
 
 ## 1.0.0-beta.20
