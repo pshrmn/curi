@@ -29,12 +29,15 @@ export function PrefetchAPI() {
       </p>
 
       <CodeBlock>
-        {`import { createRouter } from "@curi/router";
+        {`import { prepareRoutes, createRouter } from "@curi/router";
 import prefetch from '@curi/route-prefetch';
 
-const router = createRouter(browser, routes, {
-  route: [prefetch()]
-});
+const routes = prepareRoutes(
+  routes,
+  [prefetch()]
+)
+
+const router = createRouter(browser, routes);
 
 router.route.prefetch("Some Route");`}
       </CodeBlock>

@@ -359,22 +359,23 @@ const Verb = ({ response }) => (
             {`// index.js
 import prefetch from "@curi/route-prefetch";
 
-const routes = prepareRoutes([
-  {
-    name: "Example",
-    path: "example/:id",
-    resolve({ params }, external) {
-      return external.client.query({
-        query: GET_EXAMPLES,
-        variables: { id: params.id }
-      });
+const routes = prepareRoutes(
+  [
+    {
+      name: "Example",
+      path: "example/:id",
+      resolve({ params }, external) {
+        return external.client.query({
+          query: GET_EXAMPLES,
+          variables: { id: params.id }
+        });
+      }
     }
-  }
-]);
+  ],
+  [prefetch()]
+);
 
-const router = createRouter(browser, routes, {
-  route: [prefetch()]
-});
+const router = createRouter(browser, routes);
 
 // this will call the GET_EXAMPLES query
 // and Apollo will cache the results

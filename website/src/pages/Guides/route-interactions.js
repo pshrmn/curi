@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "@curi/react-dom";
 
 import {
   PlainSection,
@@ -9,6 +10,16 @@ import {
 
 const meta = {
   title: "Route Interactions"
+};
+
+const callingMeta = {
+  title: "Calling Intearctions",
+  hash: "calling"
+};
+
+const builtinMeta = {
+  title: "Built-in Interactions",
+  hash: "built-in"
 };
 
 const addingMeta = {
@@ -26,7 +37,7 @@ const creatingMeta = {
   children: [advancedMeta]
 };
 
-const contents = [addingMeta, creatingMeta];
+const contents = [callingMeta, builtinMeta, addingMeta, creatingMeta];
 
 function RouterInteractionsGuide() {
   return (
@@ -38,95 +49,95 @@ function RouterInteractionsGuide() {
           Route interactions let you interact with a registered route using its
           name.
         </p>
+
         <p>
           A registered route is generally any route that is in the array of
           routes that you used to create your router. However, some interactions
           only register routes that meet some criteria. For example, the{" "}
-          <IJS>prefetch</IJS> interaction only registers routes with
-          asynchronous methods.
+          <Link name="Package" params={{ package: "route-prefetch" }}>
+            <IJS>prefetch</IJS>
+          </Link>{" "}
+          interaction only registers routes with a <IJS>resolve</IJS> property.
         </p>
-
-        <p>
-          Route interactions are defined using objects with three properties:
-          name, register, and get.
-        </p>
-
-        <CodeBlock>
-          {`{
-  // The string you will use to call the interaction.
-  name: 'my',
-
-  // A function used internally to register routes
-  // with the interaction. You only need to use this when
-  // writing your own interactions.
-  register: function(route, parentData) {...},
-
-  // This is the function that you will call. For example,
-  // with this interaction, the get function will be
-  // called when you call router.route.my('...')
-  get: function(route) {...}
-}`}
-        </CodeBlock>
-
-        <p>
-          Instead of importing the actual route interaction object, you
-          typically import a factory function to create the object. This isn't
-          absolutely necessary, but is useful for server-side rendering.
-        </p>
-
-        <CodeBlock>
-          {`// interactions/my.js
-function createMyInteraction() {
-  return {
-    name: "my",
-    register() {...},
-    get() {...}
-  };
-}
-
-// index.js
-import createMyInteraction from "./interactions/my";
-
-const interaction = createMyInteraction();`}
-        </CodeBlock>
       </PlainSection>
+
+      <HashSection meta={callingMeta}>
+        <p>
+          Every interaction has a unique <IJS>name</IJS>. The interaction can be
+          called as a property of a route's <IJS>route</IJS> object. The first
+          argument to the call is always the name of the route to interact with.
+          Some interactions may also take additional arguments.
+        </p>
+
+        <CodeBlock>
+          {`router.route.myInteraction("Home");
+router.route.otherInteraction("User", false);`}
+        </CodeBlock>
+      </HashSection>
+
+      <HashSection meta={builtinMeta}>
+        <p>
+          Curi comes with two built-in interactions: <IJS>pathname</IJS> and{" "}
+          <IJS>active</IJS>.
+        </p>
+
+        <p>
+          The <IJS>pathname</IJS> interaction is used to generate a pathname
+          string for a route. This is done using the route's name and an object
+          of route params (if they are necessary).
+        </p>
+
+        <CodeBlock>{`router.route.pathname("User", { id: 1 });`}</CodeBlock>
+
+        <p>
+          The <IJS>active</IJS> interaction determines if a route is active by
+          comparing it to a <IJS>response</IJS> object.
+        </p>
+
+        <CodeBlock>{`router.route.active("Home", response);`}</CodeBlock>
+      </HashSection>
 
       <HashSection meta={addingMeta}>
         <p>
-          Route interactions are provided to the router call as an array using
-          the <IJS>route</IJS> property of the options object (the third
-          argument).
+          Route interactions are attached to routes using the second argument to{" "}
+          <IJS>prepareRoutes</IJS>, which is an array of route interactions.
         </p>
-
-        <CodeBlock>
-          {`const router = createRouter(browser, routes, {
-  route: [createMyInteraction()]
-});`}
-        </CodeBlock>
 
         <p>
-          The route interaction will be added to the router's <IJS>route</IJS>{" "}
-          property. When you call an interaction, you pass the name of the route
-          that you want to interact with.
+          The router will make the interactions that it receives from its{" "}
+          <IJS>routes</IJS> available through its <IJS>route</IJS> property.
         </p>
 
         <CodeBlock>
-          {`const myValue = router.route.my('Some Route', ...);`}
+          {`const routes = prepareRoutes(
+  routes,
+  [createMyInteraction()] // name = myInteraction
+);
+const router = createRouter(browser, routes);
+router.route // all interactions`}
         </CodeBlock>
       </HashSection>
 
       <HashSection meta={creatingMeta}>
-        <p>There are a few steps to creating your own route interactions.</p>
+        <p>
+          Curi provides some interactions for common use cases, but you may have
+          need to create a custom interaction. There are a few steps to creating
+          your own route interactions.
+        </p>
 
         <p>
-          Remember to export a function that will create the interaction object,
-          not the actual interaction object.
+          While not strictly require, interactions are commonly created from a
+          function so that multiple instances of the interaction can be safely
+          created.
+        </p>
+
+        <p>
+          For this example, we'll create an interaction that confirms that a
+          route is registered.
         </p>
 
         <CodeBlock>
-          {`// we'll create an interaction that confirms
-// a route is registered
-function confirmInteraction() {
+          {`function confirmInteraction() {
   ...
 }`}
         </CodeBlock>
@@ -144,31 +155,53 @@ function confirmInteraction() {
           tag="h3"
           meta={{ title: "register", hash: "property-register" }}
         >
-          <p>A function to internally store information about routes.</p>
+          <p>
+            A function to internally store data about routes. The stored data
+            will be accessible from the interaction's <IJS>get</IJS> method.
+          </p>
+
+          <p>
+            The first argument to <IJS>register</IJS> is the "public" data for a
+            route, such as its <IJS>name</IJS> and route param <IJS>keys</IJS>.
+            Data should be stored using the route's <IJS>name</IJS>.
+          </p>
+
+          <p>
+            The second argument, which is optional, is data from the route's
+            parent. If a <IJS>register</IJS> method returns a value, the
+            returned value will be passed as the second value when registering
+            the route's children routes.
+          </p>
         </HashSection>
 
         <HashSection tag="h3" meta={{ title: "get", hash: "property-get" }}>
           <p>
             A function that will receive a route's name (and possibly other
-            arguments) and perform some task using the related route.
+            arguments) and perform some task using the related route. If the
+            interaction's <IJS>register</IJS> method stored data about the
+            route, it can be read here.
           </p>
         </HashSection>
 
+        <p>
+          With these properties, we can create our confirmation interaction.
+        </p>
+
         <CodeBlock>
           {`function confirmInteraction() {
-  // maintain an object of known routes
-  let knownRoutes = {};
+  // maintain a set of known routes
+  const knownRoutes = new Set();
   return {
     name: 'confirm',
     // when a route is registered,
     // we store it using its name
     register: route => {
-      knownRoutes[route.name] = true;
+      knownRoutes.add(route.name);
     },
     // get checks the known routes to see if one exists
     // with the requested name
     get: (name) => {
-      return knownRoutes[name] != null
+      return knownRoutes.has(name);
     }
   };
 }`}
@@ -181,13 +214,14 @@ function confirmInteraction() {
 
         <CodeBlock>
           {`import { curi, prepareRoutes } from '@curi/router';
-import confirmFactory from './interactions/confirm'
+import createConfirmation from './interactions/confirm'
 
-const routes = prepareRoutes([{ name: 'Home', path: '' }]);
+const routes = prepareRoutes(
+  [{ name: 'Home', path: '' }],
+  [createConfirmation()]
+);
 
-const router = createRouter(browser, routes, {
-  route: [confirmFactory()]
-});
+const router = createRouter(browser, routes);
 
 router.route.confirm('Home'); // true
 router.route.confirm('Elsewhere'); // false`}
@@ -195,22 +229,19 @@ router.route.confirm('Elsewhere'); // false`}
 
         <HashSection meta={advancedMeta} tag="h3">
           <p>
-            You might want to write an interaction that uses data from parent
-            routes when registering a route. For example, the built-in pathname
-            interaction joins a route's path with it parent path(s).
+            For a more advanced example, we can take advantage of the second
+            argument to <IJS>register</IJS>.
           </p>
 
           <p>
-            The second argument passed to a router interaction's{" "}
-            <IJS>register</IJS> function is a parent data object. For root
-            routes, this will be <IJS>undefined</IJS>. For nested routes, this
-            is the value returned by the parent route's <IJS>register</IJS>{" "}
-            function.
+            For root routes (no parent route), the second argument will be{" "}
+            <IJS>undefined</IJS>. For nested routes, this is the value returned
+            by the parent route's <IJS>register</IJS> function.
           </p>
 
           <CodeBlock>
-            {`function ParentFactory() {
-  let routeTree = {};
+            {`function parentInteraction() {
+  const routeTree = {};
   return {
     name: 'routeParent',
     register: (route, parent) => {
@@ -225,6 +256,11 @@ router.route.confirm('Elsewhere'); // false`}
   }
 }`}
           </CodeBlock>
+
+          <p>
+            Curi handles passing the return value of <IJS>register</IJS> to the
+            route's children automatically.
+          </p>
         </HashSection>
       </HashSection>
     </React.Fragment>

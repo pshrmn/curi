@@ -105,50 +105,6 @@ const router = createRouter(browser, routes);`}
 
           <HashSection
             tag="h6"
-            meta={{ title: <IJS>route</IJS>, hash: "options-route" }}
-          >
-            <p>
-              An array of{" "}
-              <Link name="Guide" params={{ slug: "route-interactions" }}>
-                route interactions
-              </Link>
-              . These are functions for interacting with routes based on their{" "}
-              <IJS>name</IJS>.
-            </p>
-
-            <CodeBlock>
-              {`import ancestors from "@curi/route-ancestors";
-
-const routes = prepareRoutes([{ name: "Home", path: "" }]);
-
-const router = createRouter(browser, routes, {
-  route: [ancestors()]
-});`}
-            </CodeBlock>
-
-            <p>
-              Two interactions are automatically included with a router. These
-              are a <IJS>pathname</IJS> interaction for generating pathname
-              strings and an <IJS>active</IJS> interaction for determining if a
-              route is active.
-            </p>
-
-            <p>
-              Route interactions are called via the router's <IJS>route</IJS>{" "}
-              object.
-            </p>
-
-            <CodeBlock>
-              {`router.route.pathname("Home");
-// returns "/"
-
-router.route.active("Home", response);
-// returns true when response.location.pathname = "/"`}
-            </CodeBlock>
-          </HashSection>
-
-          <HashSection
-            tag="h6"
             meta={{
               title: <IJS>sideEffects</IJS>,
               hash: "options-sideEffects"
