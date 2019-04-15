@@ -122,6 +122,23 @@ export default function createRouter<O = HistoryOptions>(
     }
   }
 
+  function callObservers(emitted: Emitted) {
+    observers.forEach(fn => {
+      fn(emitted);
+    });
+  }
+
+  function callOneTimersAndSideEffects(emitted: Emitted) {
+    oneTimers.splice(0).forEach(fn => {
+      fn(emitted);
+    });
+    if (options.sideEffects) {
+      options.sideEffects.forEach(fn => {
+        fn(emitted);
+      });
+    }
+  }
+
   /* router.observer & router.once */
 
   let observers: Array<Observer> = [];
@@ -159,23 +176,6 @@ export default function createRouter<O = HistoryOptions>(
       });
     } else {
       oneTimers.push(fn);
-    }
-  }
-
-  function callObservers(emitted: Emitted) {
-    observers.forEach(fn => {
-      fn(emitted);
-    });
-  }
-
-  function callOneTimersAndSideEffects(emitted: Emitted) {
-    oneTimers.splice(0).forEach(fn => {
-      fn(emitted);
-    });
-    if (options.sideEffects) {
-      options.sideEffects.forEach(fn => {
-        fn(emitted);
-      });
     }
   }
 
