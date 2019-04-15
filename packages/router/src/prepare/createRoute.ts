@@ -9,8 +9,20 @@ import { PreparedRoute } from "./prepareRoutes";
 
 export function createRoute(
   props: RouteDescriptor,
+  usedNames: Set<string>,
   parentPath?: string
 ): PreparedRoute {
+  if (process.env.NODE_ENV !== "production") {
+    if (usedNames.has(props.name)) {
+      throw new Error(
+        `Multiple routes have the name "${
+          props.name
+        }". Route names must be unique.`
+      );
+    }
+    usedNames.add(props.name);
+  }
+
   const path = props.path;
   if (process.env.NODE_ENV !== "production") {
     if (path.charAt(0) === "/") {
@@ -43,7 +55,7 @@ export function createRoute(
   let children: Array<PreparedRoute> = [];
   if (props.children && props.children.length) {
     children = props.children.map((child: RouteDescriptor) => {
-      return createRoute(child, fullPath);
+      return createRoute(child, usedNames, fullPath);
     });
   }
 

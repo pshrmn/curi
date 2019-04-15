@@ -26,14 +26,12 @@ export interface PreparedRoute {
   };
 }
 
-type RouteMap = { [key: string]: Route };
-
 export default function prepareRoutes(
   routes: Array<RouteDescriptor>,
   interactionTypes: Array<Interaction> = []
 ): RouteMatcher {
-  const prepared = routes.map(route => createRoute(route));
-  const hash: RouteMap = prepared.reduce(mapRoutes, {});
+  const usedNames = new Set<string>();
+  const prepared = routes.map(route => createRoute(route, usedNames));
   const interactionGetters: Interactions = {};
   [pathname(), active(), ...interactionTypes].map(interaction => {
     interactionGetters[interaction.name] = interaction.get;
@@ -46,24 +44,4 @@ export default function prepareRoutes(
     },
     interactions: interactionGetters
   };
-}
-
-function mapRoutes(acc: RouteMap, curr: PreparedRoute): RouteMap {
-  const route = curr.public;
-  if (process.env.NODE_ENV !== "production") {
-    if (route.name in acc) {
-      throw new Error(
-        `Multiple routes have the name "${
-          route.name
-        }". Route names must be unique.`
-      );
-    }
-  }
-  acc[route.name] = route;
-
-  if (curr.children) {
-    acc = curr.children.reduce(mapRoutes, acc);
-  }
-
-  return acc;
 }
