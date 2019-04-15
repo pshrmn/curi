@@ -1,3 +1,7 @@
+## Next
+
+* Update CSS for hiding element to be RTL-friendly.
+
 ## 2.0.0-alpha.2
 
 * Import common Curi types from `@curi/types`.
