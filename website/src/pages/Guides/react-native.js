@@ -168,22 +168,24 @@ function MyReactNativeApp() {
             </p>
           </Note>
 
-          <CodeBlock lang="jsx" data-line="20,24,27">
-            {`const routes = prepareRoutes([
-  {
-    name: "Home",
-    path: "",
-    response() {
-      return {
-        body: {
-          Main: HomeMain,
-          Menu: HomeMenu
+          <CodeBlock lang="jsx" data-line="22,26,29">
+            {`const routes = prepareRoutes({
+  routes: [
+    {
+      name: "Home",
+      path: "",
+      response() {
+        return {
+          body: {
+            Main: HomeMain,
+            Menu: HomeMenu
+          }
         }
       }
-    }
-  },
-  // ...
-]);
+    },
+    // ...
+  ]
+});
 
 function App() {
   const { response } = useResponse();

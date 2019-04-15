@@ -177,21 +177,23 @@ ReactDOM.render((
           </Note>
 
           <CodeBlock lang="jsx" data-line="20,24,27">
-            {`const routes = prepareRoutes([
-  {
-    name: "Home",
-    path: "",
-    response() {
-      return {
-        body: {
-          Main: HomeMain,
-          Menu: HomeMenu
+            {`const routes = prepareRoutes({
+  routes: [
+    {
+      name: "Home",
+      path: "",
+      response() {
+        return {
+          body: {
+            Main: HomeMain,
+            Menu: HomeMenu
+          }
         }
       }
-    }
-  },
-  // ...
-]);
+    },
+    // ...
+  ]
+});
 
 function App() {
   const { response } = useResponse();

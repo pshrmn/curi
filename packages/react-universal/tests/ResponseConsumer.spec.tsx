@@ -9,11 +9,13 @@ import { createRouterComponent, ResponseConsumer } from "@curi/react-universal";
 
 describe("ResponseConsumer", () => {
   let node;
-  const routes = prepareRoutes([
-    { name: "Home", path: "" },
-    { name: "About", path: "about" },
-    { name: "Catch All", path: "(.*)" }
-  ]);
+  const routes = prepareRoutes({
+    routes: [
+      { name: "Home", path: "" },
+      { name: "About", path: "about" },
+      { name: "Catch All", path: "(.*)" }
+    ]
+  });
 
   beforeEach(() => {
     node = document.createElement("div");

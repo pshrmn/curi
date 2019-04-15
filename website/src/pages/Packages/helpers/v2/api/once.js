@@ -41,21 +41,23 @@ export function OnceAPI() {
 
 const cachedGetItems = once(() => api.getItems());
 
-const routes = prepareRoutes([
-  {
-  name: "Menu",
-  path: "menu",
-  resolve() {
-    // this function will be called every time the user
-    // navigates to the "Menu" route
-    const nonCached = api.getItems();
+const routes = prepareRoutes({
+  routes: [
+    {
+    name: "Menu",
+    path: "menu",
+    resolve() {
+      // this function will be called every time the user
+      // navigates to the "Menu" route
+      const nonCached = api.getItems();
 
-    // this function is only called the first time the
-    // user navigates to the "Menu" route
-    const cached = cachedGetItems();
-    return Promise.all([nonCached, cached]);
-  }
-]);`}
+      // this function is only called the first time the
+      // user navigates to the "Menu" route
+      const cached = cachedGetItems();
+      return Promise.all([nonCached, cached]);
+    }
+  ]
+});`}
       </CodeBlock>
     </HashSection>
   );

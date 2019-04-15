@@ -27,26 +27,27 @@ export function AncestorsAPI() {
       </p>
 
       <CodeBlock>
-        {`import { createRouter } from "@curi/router";
+        {`import { prepareRoutes, createRouter } from "@curi/router";
 import ancestors from '@curi/route-ancestors';
 
-const routes = prepareRoutes([
-  {
-    name: 'Grandparent', path: 'g',
-    children: [
-      {
-        name: 'Parent', path: 'p',
-        children: [
-          { name: 'Child', path: 'c' }
-        ]
-      }
-    ]
-  }
-]);
+const routes = prepareRoutes({
+  routes: [
+    {
+      name: 'Grandparent', path: 'g',
+      children: [
+        {
+          name: 'Parent', path: 'p',
+          children: [
+            { name: 'Child', path: 'c' }
+          ]
+        }
+      ]
+    }
+  ],
+  interactions: [ancestors()]
+});
 
-const router = createRouter(history,routes, {
-  route: [ancestors()]
-});`}
+const router = createRouter(history,routes);`}
       </CodeBlock>
 
       <HashSection meta={argumentsMeta} tag="h3">

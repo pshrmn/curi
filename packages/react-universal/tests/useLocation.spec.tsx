@@ -9,11 +9,13 @@ import { createRouterComponent, useLocation } from "@curi/react-universal";
 describe("useLocation", () => {
   let node;
   let router, Router;
-  const routes = prepareRoutes([
-    { name: "Home", path: "" },
-    { name: "User", path: "u/:id" },
-    { name: "Catch All", path: "(.*)" }
-  ]);
+  const routes = prepareRoutes({
+    routes: [
+      { name: "Home", path: "" },
+      { name: "User", path: "u/:id" },
+      { name: "Catch All", path: "(.*)" }
+    ]
+  });
 
   beforeEach(() => {
     node = document.createElement("div");

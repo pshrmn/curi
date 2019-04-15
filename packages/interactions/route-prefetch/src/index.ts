@@ -4,7 +4,7 @@ import {
   IntrinsicResponse,
   ResolveResults,
   AsyncRoute,
-  AsyncMatchFn
+  Resolver
 } from "@curi/types";
 
 export interface PrefetchCallOptions {
@@ -13,7 +13,7 @@ export interface PrefetchCallOptions {
 }
 
 export default function prefetchRoute(): Interaction {
-  let scoped: { [key: string]: AsyncMatchFn } = {};
+  let scoped: { [key: string]: Resolver } = {};
 
   return {
     name: "prefetch",

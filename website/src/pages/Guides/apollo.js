@@ -103,17 +103,19 @@ ReactDOM.render((
 import Noun from "./pages/Noun";
 
 // nothing Apollo related in here
-const routes = prepareRoutes([
-  {
-    name: 'Noun',
-    path: 'noun/:word',
-    response: () => {
-      return {
-        body: Noun
-      };
+const routes = prepareRoutes({
+  routes: [
+    {
+      name: 'Noun',
+      path: 'noun/:word',
+      response: () => {
+        return {
+          body: Noun
+        };
+      }
     }
-  }
-]);`}
+  ]
+});`}
         </CodeBlock>
 
         <p>
@@ -204,18 +206,20 @@ const router = createRouter(browser, routes, {
         <CodeBlock>
           {`import { EXAMPLE_QUERY } from "./queries";
 
-const routes = prepareRoutes([
-  {
-    name: "Example",
-    path: "example/:id",
-    resolve({ params }, external) {
-      return external.client.query({
-        query: EXAMPLE_QUERY,
-        variables: { id: params.id }
-      });
+const routes = prepareRoutes({
+  routes: [
+    {
+      name: "Example",
+      path: "example/:id",
+      resolve({ params }, external) {
+        return external.client.query({
+          query: EXAMPLE_QUERY,
+          variables: { id: params.id }
+        });
+      }
     }
-  }
-]);`}
+  ]
+});`}
         </CodeBlock>
 
         <p>There are two strategies for doing this.</p>
@@ -359,22 +363,23 @@ const Verb = ({ response }) => (
             {`// index.js
 import prefetch from "@curi/route-prefetch";
 
-const routes = prepareRoutes([
-  {
-    name: "Example",
-    path: "example/:id",
-    resolve({ params }, external) {
-      return external.client.query({
-        query: GET_EXAMPLES,
-        variables: { id: params.id }
-      });
+const routes = prepareRoutes({
+  routes: [
+    {
+      name: "Example",
+      path: "example/:id",
+      resolve({ params }, external) {
+        return external.client.query({
+          query: GET_EXAMPLES,
+          variables: { id: params.id }
+        });
+      }
     }
-  }
-]);
-
-const router = createRouter(browser, routes, {
-  route: [prefetch()]
+  ],
+  interactions: [prefetch()]
 });
+
+const router = createRouter(browser, routes);
 
 // this will call the GET_EXAMPLES query
 // and Apollo will cache the results

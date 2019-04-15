@@ -22,10 +22,12 @@ function fakeEvent(props = {}) {
 describe("<Link>", () => {
   describe("anchor", () => {
     it("renders a <TouchableHighlight> by default", () => {
-      const routes = prepareRoutes([
-        { name: "Test", path: "" },
-        { name: "Catch All", path: "(.*)" }
-      ]);
+      const routes = prepareRoutes({
+        routes: [
+          { name: "Test", path: "" },
+          { name: "Catch All", path: "(.*)" }
+        ]
+      });
       const router = createRouter(inMemory, routes);
       const Router = createRouterComponent(router);
       const tree = renderer.create(
@@ -40,10 +42,12 @@ describe("<Link>", () => {
     });
 
     it("when provided, it renders the component instead of an anchor", () => {
-      const routes = prepareRoutes([
-        { name: "Test", path: "" },
-        { name: "Catch All", path: "(.*)" }
-      ]);
+      const routes = prepareRoutes({
+        routes: [
+          { name: "Test", path: "" },
+          { name: "Catch All", path: "(.*)" }
+        ]
+      });
       const router = createRouter(inMemory, routes);
       const Router = createRouterComponent(router);
 
@@ -67,7 +71,9 @@ describe("<Link>", () => {
     describe("name", () => {
       it("uses the pathname from current response's location if 'name' is not provided", () => {
         const mockNavigate = jest.fn();
-        const routes = prepareRoutes([{ name: "Catch All", path: "(.*)" }]);
+        const routes = prepareRoutes({
+          routes: [{ name: "Catch All", path: "(.*)" }]
+        });
         const router = createRouter(inMemory, routes, {
           history: {
             locations: ["/the-initial-location"]
@@ -92,10 +98,12 @@ describe("<Link>", () => {
     });
 
     describe("params", () => {
-      const routes = prepareRoutes([
-        { name: "Park", path: "park/:name" },
-        { name: "Catch All", path: "(.*)" }
-      ]);
+      const routes = prepareRoutes({
+        routes: [
+          { name: "Park", path: "park/:name" },
+          { name: "Catch All", path: "(.*)" }
+        ]
+      });
 
       it("uses params to generate the location to navigate to", () => {
         const mockNavigate = jest.fn();
@@ -152,10 +160,12 @@ describe("<Link>", () => {
     describe("hash & query", () => {
       it("merges hash & query props with the pathname when creating href", () => {
         const mockNavigate = jest.fn();
-        const routes = prepareRoutes([
-          { name: "Test", path: "test" },
-          { name: "Catch All", path: "(.*)" }
-        ]);
+        const routes = prepareRoutes({
+          routes: [
+            { name: "Test", path: "test" },
+            { name: "Catch All", path: "(.*)" }
+          ]
+        });
         const router = createRouter(inMemory, routes);
         router.history.navigate = mockNavigate;
         const Router = createRouterComponent(router);
@@ -182,10 +192,12 @@ describe("<Link>", () => {
   describe("forward", () => {
     it("passes forward to the rendered anchor", () => {
       const mockNavigate = jest.fn();
-      const routes = prepareRoutes([
-        { name: "Test", path: "" },
-        { name: "Catch All", path: "(.*)" }
-      ]);
+      const routes = prepareRoutes({
+        routes: [
+          { name: "Test", path: "" },
+          { name: "Catch All", path: "(.*)" }
+        ]
+      });
       const router = createRouter(inMemory, routes, {
         history: {
           locations: ["/the-initial-location"]
@@ -209,10 +221,12 @@ describe("<Link>", () => {
     it('does not overwrite "native" props set on the rendered element', () => {
       const onPress = jest.fn();
 
-      const routes = prepareRoutes([
-        { name: "Test", path: "" },
-        { name: "Catch All", path: "(.*)" }
-      ]);
+      const routes = prepareRoutes({
+        routes: [
+          { name: "Test", path: "" },
+          { name: "Catch All", path: "(.*)" }
+        ]
+      });
       const router = createRouter(inMemory, routes, {
         history: {
           locations: ["/the-initial-location"]
@@ -236,10 +250,12 @@ describe("<Link>", () => {
   describe("ref", () => {
     it("returns the anchor's ref, not the link's", () => {
       const mockNavigate = jest.fn();
-      const routes = prepareRoutes([
-        { name: "Parks", path: "parks" },
-        { name: "Catch All", path: "(.*)" }
-      ]);
+      const routes = prepareRoutes({
+        routes: [
+          { name: "Parks", path: "parks" },
+          { name: "Catch All", path: "(.*)" }
+        ]
+      });
       const router = createRouter(inMemory, routes, {
         history: {
           locations: ["/the-initial-location"]
@@ -263,10 +279,12 @@ describe("<Link>", () => {
 
   describe("children", () => {
     it("renders the provided children value(s)", () => {
-      const routes = prepareRoutes([
-        { name: "Test", path: "" },
-        { name: "Catch All", path: "(.*)" }
-      ]);
+      const routes = prepareRoutes({
+        routes: [
+          { name: "Test", path: "" },
+          { name: "Catch All", path: "(.*)" }
+        ]
+      });
       const router = createRouter(inMemory, routes);
       const Router = createRouterComponent(router);
 
@@ -288,10 +306,12 @@ describe("<Link>", () => {
   describe("pressing a link", () => {
     describe("navigation method", () => {
       it('method="anchor"', () => {
-        const routes = prepareRoutes([
-          { name: "Test", path: "" },
-          { name: "Catch All", path: "(.*)" }
-        ]);
+        const routes = prepareRoutes({
+          routes: [
+            { name: "Test", path: "" },
+            { name: "Catch All", path: "(.*)" }
+          ]
+        });
         const router = createRouter(inMemory, routes);
         const mockNavigate = jest.fn();
         router.history.navigate = mockNavigate;
@@ -311,10 +331,12 @@ describe("<Link>", () => {
 
       it('method="push"', () => {
         const mockNavigate = jest.fn();
-        const routes = prepareRoutes([
-          { name: "Test", path: "" },
-          { name: "Catch All", path: "(.*)" }
-        ]);
+        const routes = prepareRoutes({
+          routes: [
+            { name: "Test", path: "" },
+            { name: "Catch All", path: "(.*)" }
+          ]
+        });
         const router = createRouter(inMemory, routes);
         router.history.navigate = mockNavigate;
         const Router = createRouterComponent(router);
@@ -333,10 +355,12 @@ describe("<Link>", () => {
 
       it('method="replace"', () => {
         const mockNavigate = jest.fn();
-        const routes = prepareRoutes([
-          { name: "Test", path: "" },
-          { name: "Catch All", path: "(.*)" }
-        ]);
+        const routes = prepareRoutes({
+          routes: [
+            { name: "Test", path: "" },
+            { name: "Catch All", path: "(.*)" }
+          ]
+        });
         const router = createRouter(inMemory, routes);
         router.history.navigate = mockNavigate;
         const Router = createRouterComponent(router);
@@ -358,10 +382,12 @@ describe("<Link>", () => {
       it("calls onNav prop func if provided", () => {
         const mockNavigate = jest.fn();
         const onNav = jest.fn();
-        const routes = prepareRoutes([
-          { name: "Test", path: "" },
-          { name: "Catch All", path: "(.*)" }
-        ]);
+        const routes = prepareRoutes({
+          routes: [
+            { name: "Test", path: "" },
+            { name: "Catch All", path: "(.*)" }
+          ]
+        });
         const router = createRouter(inMemory, routes);
         router.history.navigate = mockNavigate;
         const Router = createRouterComponent(router);
@@ -385,10 +411,12 @@ describe("<Link>", () => {
         const onNav = jest.fn(event => {
           event.preventDefault();
         });
-        const routes = prepareRoutes([
-          { name: "Test", path: "" },
-          { name: "Catch All", path: "(.*)" }
-        ]);
+        const routes = prepareRoutes({
+          routes: [
+            { name: "Test", path: "" },
+            { name: "Catch All", path: "(.*)" }
+          ]
+        });
         const router = createRouter(inMemory, routes);
         router.history.navigate = mockNavigate;
         const Router = createRouterComponent(router);
@@ -409,10 +437,12 @@ describe("<Link>", () => {
 
     it("doesn't call history.navigate if event.preventDefault has been called", () => {
       const mockNavigate = jest.fn();
-      const routes = prepareRoutes([
-        { name: "Test", path: "" },
-        { name: "Catch All", path: "(.*)" }
-      ]);
+      const routes = prepareRoutes({
+        routes: [
+          { name: "Test", path: "" },
+          { name: "Catch All", path: "(.*)" }
+        ]
+      });
       const router = createRouter(inMemory, routes);
       router.history.navigate = mockNavigate;
       const Router = createRouterComponent(router);

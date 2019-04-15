@@ -5,43 +5,45 @@ import Product from "./components/Product";
 import Detail from "./components/Detail";
 import NotFound from "./components/NotFound";
 
-export default prepareRoutes([
-  {
-    name: "Home",
-    path: "",
-    response: () => {
-      return {
-        body: Home
-      };
-    }
-  },
-  {
-    name: "Product",
-    path: "paint/:color",
-    response: () => {
-      return {
-        body: Product
-      };
-    },
-    children: [
-      {
-        name: "Product Detail",
-        path: "detail",
-        response: () => {
-          return {
-            body: Detail
-          };
-        }
+export default prepareRoutes({
+  routes: [
+    {
+      name: "Home",
+      path: "",
+      response: () => {
+        return {
+          body: Home
+        };
       }
-    ]
-  },
-  {
-    name: "Not Found",
-    path: "(.*)",
-    response() {
-      return {
-        body: NotFound
-      };
+    },
+    {
+      name: "Product",
+      path: "paint/:color",
+      response: () => {
+        return {
+          body: Product
+        };
+      },
+      children: [
+        {
+          name: "Product Detail",
+          path: "detail",
+          response: () => {
+            return {
+              body: Detail
+            };
+          }
+        }
+      ]
+    },
+    {
+      name: "Not Found",
+      path: "(.*)",
+      response() {
+        return {
+          body: NotFound
+        };
+      }
     }
-  }
-]);
+  ]
+});

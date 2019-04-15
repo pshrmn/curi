@@ -13,14 +13,16 @@ import {
 describe("useActive", () => {
   let node;
   let router, Router;
-  const routes = prepareRoutes([
-    { name: "Home", path: "" },
-    {
-      name: "Contact",
-      path: "contact",
-      children: [{ name: "Method", path: ":method" }]
-    }
-  ]);
+  const routes = prepareRoutes({
+    routes: [
+      { name: "Home", path: "" },
+      {
+        name: "Contact",
+        path: "contact",
+        children: [{ name: "Method", path: ":method" }]
+      }
+    ]
+  });
 
   beforeEach(() => {
     node = document.createElement("div");

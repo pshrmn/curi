@@ -1,8 +1,7 @@
 import {
   PathFunction,
   PathFunctionOptions,
-  RegExpOptions,
-  Key
+  RegExpOptions
 } from "path-to-regexp";
 import {
   History,
@@ -17,22 +16,19 @@ import {
 export interface RouteDescriptor {
   name: string;
   path: string;
-  pathOptions?: PathOptions;
+  pathOptions?: {
+    match?: RegExpOptions;
+    compile?: PathFunctionOptions;
+  };
   params?: ParamParsers;
   children?: Array<RouteDescriptor>;
   response?: ResponseFn;
-  resolve?: AsyncMatchFn;
+  resolve?: Resolver;
   extra?: { [key: string]: any };
-}
-
-export interface PathOptions {
-  match?: RegExpOptions;
-  compile?: PathFunctionOptions;
 }
 
 // third argument to createRouter
 export interface RouterOptions<O = HistoryOptions> {
-  route?: Array<Interaction>;
   sideEffects?: Array<Observer>;
   invisibleRedirects?: boolean;
   external?: any;
@@ -143,33 +139,30 @@ export interface Route<R = unknown> {
   name: string;
   path: string;
   keys: Array<string | number>;
+  pathname: PathFunction;
+  resolve: R;
+  response?: ResponseFn;
   extra?: {
     [key: string]: any;
   };
-  pathname: PathFunction;
-  resolve: R;
 }
 export interface SyncRoute extends Route<undefined> {}
-export interface AsyncRoute extends Route<AsyncMatchFn> {}
+export interface AsyncRoute extends Route<Resolver> {}
 
-export type AsyncMatchFn = (
+export type Resolver = (
   matched?: Readonly<IntrinsicResponse>,
   external?: any
 ) => Promise<any>;
 
 // the array returned by prepareRoutes
-export type PreparedRoutes = Array<PreparedRoute>;
-export interface PreparedRoute {
-  public: Route;
-  sync: boolean;
-  children: Array<PreparedRoute>;
-  response?: ResponseFn;
-  pathMatching: {
-    exact: boolean;
-    re: RegExp;
-    keys: Array<Key>;
-  };
-  paramParsers?: ParamParsers;
+export interface Match {
+  route: Route;
+  match: IntrinsicResponse;
+}
+
+export interface RouteMatcher {
+  match(l: SessionLocation): Match | undefined;
+  interactions: Interactions;
 }
 
 // a route's response function is used to return properties to add

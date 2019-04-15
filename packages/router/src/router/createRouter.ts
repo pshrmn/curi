@@ -1,8 +1,4 @@
-import registerRoutes from "./utils/registerRoutes";
-import pathnameInteraction from "./interactions/pathname";
-import activeInteraction from "./interactions/active";
 import finishResponse from "./finishResponse";
-import { matchLocation, isRealMatch } from "./matchLocation";
 import { resolveRoute, isAsyncRoute } from "./resolveMatchedRoute";
 import { isExternalRedirect } from "./redirect";
 
@@ -13,9 +9,8 @@ import {
 } from "@hickory/root";
 
 import {
-  PreparedRoutes,
+  RouteMatcher,
   Response,
-  Interactions,
   CuriRouter,
   Observer,
   Emitted,
@@ -30,22 +25,20 @@ import {
   CancelNavigateCallbacks,
   ResolveResults,
   RouterOptions,
-  PreparedRoute,
+  Route,
   IntrinsicResponse
 } from "@curi/types";
 
 export default function createRouter<O = HistoryOptions>(
   historyConstructor: HistoryConstructor<O>,
-  routes: PreparedRoutes,
+  routes: RouteMatcher,
   options: RouterOptions<O> = {}
 ): CuriRouter {
-  const routeInteractions: Interactions = {};
-  (options.route || [])
-    .concat(pathnameInteraction(), activeInteraction())
-    .forEach(interaction => {
-      routeInteractions[interaction.name] = interaction.get;
-      registerRoutes(routes, interaction);
-    });
+  // the last finished response & navigation
+  const mostRecent: CurrentResponse = {
+    response: null,
+    navigation: null
+  };
 
   const history = historyConstructor((pendingNav: PendingNavigation) => {
     const navigation: Navigation = {
@@ -53,9 +46,9 @@ export default function createRouter<O = HistoryOptions>(
       previous: mostRecent.response
     };
 
-    const matched = matchLocation(pendingNav.location, routes);
+    const matched = routes.match(pendingNav.location);
     // if no routes match, do nothing
-    if (!isRealMatch(matched)) {
+    if (!matched) {
       if (process.env.NODE_ENV !== "production") {
         console.warn(
           `The current location (${
@@ -70,12 +63,11 @@ export default function createRouter<O = HistoryOptions>(
       return;
     }
     const { route, match } = matched;
-    const publicRoute = route.public;
-    if (!isAsyncRoute(publicRoute)) {
+    if (!isAsyncRoute(route)) {
       finalizeResponseAndEmit(route, match, pendingNav, navigation, null);
     } else {
       announceAsyncNav();
-      resolveRoute(publicRoute, match, options.external).then(resolved => {
+      resolveRoute(route, match, options.external).then(resolved => {
         if (pendingNav.cancelled) {
           return;
         }
@@ -84,14 +76,8 @@ export default function createRouter<O = HistoryOptions>(
     }
   }, options.history || <O>{});
 
-  // the last finished response & navigation
-  const mostRecent: CurrentResponse = {
-    response: null,
-    navigation: null
-  };
-
   function finalizeResponseAndEmit(
-    route: PreparedRoute,
+    route: Route,
     match: IntrinsicResponse,
     pending: PendingNavigation,
     navigation: Navigation,
@@ -99,16 +85,14 @@ export default function createRouter<O = HistoryOptions>(
   ) {
     asyncNavComplete();
     pending.finish();
-    const response = route.response
-      ? finishResponse(
-          route.response,
-          match,
-          routeInteractions,
-          resolved,
-          history,
-          options.external
-        )
-      : match;
+    const response = finishResponse(
+      route,
+      match,
+      routes,
+      resolved,
+      history,
+      options.external
+    );
     finishAndResetNavCallbacks();
     emitImmediate(response, navigation);
   }
@@ -133,6 +117,23 @@ export default function createRouter<O = HistoryOptions>(
       !isExternalRedirect(response.redirect)
     ) {
       history.navigate(response.redirect, "replace");
+    }
+  }
+
+  function callObservers(emitted: Emitted) {
+    observers.forEach(fn => {
+      fn(emitted);
+    });
+  }
+
+  function callOneTimersAndSideEffects(emitted: Emitted) {
+    oneTimers.splice(0).forEach(fn => {
+      fn(emitted);
+    });
+    if (options.sideEffects) {
+      options.sideEffects.forEach(fn => {
+        fn(emitted);
+      });
     }
   }
 
@@ -176,23 +177,6 @@ export default function createRouter<O = HistoryOptions>(
     }
   }
 
-  function callObservers(emitted: Emitted) {
-    observers.forEach(fn => {
-      fn(emitted);
-    });
-  }
-
-  function callOneTimersAndSideEffects(emitted: Emitted) {
-    oneTimers.splice(0).forEach(fn => {
-      fn(emitted);
-    });
-    if (options.sideEffects) {
-      options.sideEffects.forEach(fn => {
-        fn(emitted);
-      });
-    }
-  }
-
   /* router.navigate */
 
   let cancelCallback: (() => void) | undefined;
@@ -204,7 +188,7 @@ export default function createRouter<O = HistoryOptions>(
     let { name, params, hash, query, state, method } = details;
     const pathname =
       name != null
-        ? routeInteractions.pathname(name, params)
+        ? routes.interactions.pathname(name, params)
         : history.location.pathname;
 
     cancelCallback = details.cancelled;
@@ -281,7 +265,7 @@ export default function createRouter<O = HistoryOptions>(
   }
 
   const router: CuriRouter = {
-    route: routeInteractions,
+    route: routes.interactions,
     history,
     external: options.external,
     observe,

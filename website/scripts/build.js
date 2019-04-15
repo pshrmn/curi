@@ -2,7 +2,6 @@ require("@babel/register");
 const start = new Date();
 const path = require("path");
 const { staticFiles } = require("@curi/static");
-const active = require("@curi/route-active");
 
 const render = require("./render");
 const pages = require("./pages");
@@ -11,12 +10,6 @@ const insert = require("./insert");
 const routes = require("../src/routes").default;
 
 const OUTPUT_DIR = path.join(__dirname, "..", "gh-pages");
-
-function options() {
-  return {
-    route: [active()]
-  };
-}
 
 function stringifyResult(result) {
   return result.success
@@ -59,8 +52,7 @@ staticFiles({
     pathname: "/404"
   },
   router: {
-    routes,
-    options
+    routes
   },
   output: {
     dir: OUTPUT_DIR,

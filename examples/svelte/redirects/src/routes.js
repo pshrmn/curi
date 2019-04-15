@@ -8,7 +8,8 @@ import NotFound from "./components/NotFound.html";
 
 import fakeAuth from "./fakeAuth";
 
-export default prepareRoutes([
+export default prepareRoutes({
+    routes: [
   {
     name: "Home",
     path: "",
@@ -78,4 +79,5 @@ export default prepareRoutes([
       };
     }
   }
-]);
+]
+});

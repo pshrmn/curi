@@ -6,16 +6,18 @@ import { createRouter, prepareRoutes } from "@curi/router";
 describe("route.pathOptions.match", () => {
   describe("default options", () => {
     it("sensitive = false", () => {
-      const routes = prepareRoutes([
-        {
-          name: "Test",
-          path: "here"
-        },
-        {
-          name: "Not Found",
-          path: "(.*)"
-        }
-      ]);
+      const routes = prepareRoutes({
+        routes: [
+          {
+            name: "Test",
+            path: "here"
+          },
+          {
+            name: "Not Found",
+            path: "(.*)"
+          }
+        ]
+      });
       const router = createRouter(inMemory, routes, {
         history: {
           locations: ["/Here"]
@@ -26,16 +28,18 @@ describe("route.pathOptions.match", () => {
     });
 
     it("strict = false", () => {
-      const routes = prepareRoutes([
-        {
-          name: "Test",
-          path: "here"
-        },
-        {
-          name: "Not Found",
-          path: "(.*)"
-        }
-      ]);
+      const routes = prepareRoutes({
+        routes: [
+          {
+            name: "Test",
+            path: "here"
+          },
+          {
+            name: "Not Found",
+            path: "(.*)"
+          }
+        ]
+      });
       const router = createRouter(inMemory, routes, {
         history: {
           locations: ["/here/"]
@@ -46,16 +50,18 @@ describe("route.pathOptions.match", () => {
     });
 
     it("end = true", () => {
-      const routes = prepareRoutes([
-        {
-          name: "Test",
-          path: "here"
-        },
-        {
-          name: "Not Found",
-          path: "(.*)"
-        }
-      ]);
+      const routes = prepareRoutes({
+        routes: [
+          {
+            name: "Test",
+            path: "here"
+          },
+          {
+            name: "Not Found",
+            path: "(.*)"
+          }
+        ]
+      });
       const router = createRouter(inMemory, routes, {
         history: {
           locations: ["/here/again"]
@@ -68,17 +74,19 @@ describe("route.pathOptions.match", () => {
 
   describe("user provided options", () => {
     it("sensitive = true", () => {
-      const routes = prepareRoutes([
-        {
-          name: "Test",
-          path: "here",
-          pathOptions: { match: { sensitive: true } }
-        },
-        {
-          name: "Not Found",
-          path: "(.*)"
-        }
-      ]);
+      const routes = prepareRoutes({
+        routes: [
+          {
+            name: "Test",
+            path: "here",
+            pathOptions: { match: { sensitive: true } }
+          },
+          {
+            name: "Not Found",
+            path: "(.*)"
+          }
+        ]
+      });
       const router = createRouter(inMemory, routes, {
         history: {
           locations: ["/Here"]
@@ -89,17 +97,19 @@ describe("route.pathOptions.match", () => {
     });
 
     it("strict = true", () => {
-      const routes = prepareRoutes([
-        {
-          name: "Test",
-          path: "here",
-          pathOptions: { match: { strict: true } }
-        },
-        {
-          name: "Not Found",
-          path: "(.*)"
-        }
-      ]);
+      const routes = prepareRoutes({
+        routes: [
+          {
+            name: "Test",
+            path: "here",
+            pathOptions: { match: { strict: true } }
+          },
+          {
+            name: "Not Found",
+            path: "(.*)"
+          }
+        ]
+      });
       const router = createRouter(inMemory, routes, {
         history: {
           locations: ["/here/"]
@@ -110,17 +120,19 @@ describe("route.pathOptions.match", () => {
     });
 
     it("end = false", () => {
-      const routes = prepareRoutes([
-        {
-          name: "Test",
-          path: "here",
-          pathOptions: { match: { end: false } }
-        },
-        {
-          name: "Not Found",
-          path: "(.*)"
-        }
-      ]);
+      const routes = prepareRoutes({
+        routes: [
+          {
+            name: "Test",
+            path: "here",
+            pathOptions: { match: { end: false } }
+          },
+          {
+            name: "Not Found",
+            path: "(.*)"
+          }
+        ]
+      });
       const router = createRouter(inMemory, routes, {
         history: {
           locations: ["/here/again"]

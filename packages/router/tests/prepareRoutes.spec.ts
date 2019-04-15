@@ -6,10 +6,12 @@ describe("prepareRoutes()", () => {
   describe("paths beginning with forward slash", () => {
     it("throws", () => {
       expect(() => {
-        const routes = prepareRoutes([
-          { name: "Home", path: "/" },
-          { name: "Catch All", path: "(.*)" }
-        ]);
+        const routes = prepareRoutes({
+          routes: [
+            { name: "Home", path: "/" },
+            { name: "Catch All", path: "(.*)" }
+          ]
+        });
       }).toThrow(
         `Route paths cannot start with a forward slash (/). (Received "/")`
       );
@@ -24,7 +26,7 @@ describe("prepareRoutes()", () => {
         { name: "Catch All", path: "(.*)" }
       ];
       expect(() => {
-        prepareRoutes(routes);
+        prepareRoutes({ routes });
       }).toThrow(
         `Multiple routes have the name "Home". Route names must be unique.`
       );
@@ -45,7 +47,7 @@ describe("prepareRoutes()", () => {
         { name: "Catch All", path: "(.*)" }
       ];
       expect(() => {
-        prepareRoutes(routes);
+        prepareRoutes({ routes });
       }).toThrow(
         `Multiple routes have the name "Child". Route names must be unique.`
       );

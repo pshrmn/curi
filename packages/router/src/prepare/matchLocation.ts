@@ -1,31 +1,30 @@
-import { withLeadingSlash } from "./utils/path";
+import { withLeadingSlash } from "../utils/path";
 
 import { SessionLocation } from "@hickory/root";
-import {
-  PreparedRoute,
-  ParamParsers,
-  Params,
-  IntrinsicResponse
-} from "@curi/types";
+import { Match, ParamParsers, Params } from "@curi/types";
+
+import { PreparedRoute } from "./prepareRoutes";
 
 interface MatchingRoute {
   route: PreparedRoute;
   params: Params;
 }
 
-interface MissMatch {
-  route: undefined;
-  match: undefined;
-}
-
 type RawParams = { [key: string]: string };
 
-export interface RealMatch {
-  route: PreparedRoute;
-  match: IntrinsicResponse;
+export function matchLocation(
+  location: SessionLocation,
+  routes: Array<PreparedRoute>
+): Match | undefined {
+  // determine which route(s) match, then use the exact match
+  // as the matched route and the rest as partial routes
+  for (let i = 0, routeLength = routes.length; i < routeLength; i++) {
+    const routeMatches = matchRoute(routes[i], location.pathname);
+    if (routeMatches.length) {
+      return createMatch(routeMatches, location);
+    }
+  }
 }
-
-type PossibleMatch = RealMatch | MissMatch;
 
 function matchRoute(
   route: PreparedRoute,
@@ -78,7 +77,7 @@ function matchRoute(
 function createMatch(
   routeMatches: Array<MatchingRoute>,
   location: SessionLocation
-): RealMatch {
+): Match {
   let partials: Array<string> = [];
   let params: Params = {};
 
@@ -86,13 +85,19 @@ function createMatch(
   // handle ancestor routes
   routeMatches.forEach(match => {
     partials.push(match.route.public.name);
-    Object.assign(params, parseParams(match.params, match.route.paramParsers));
+    Object.assign(
+      params,
+      parseParams(match.params, match.route.pathMatching.paramParsers)
+    );
   });
   // handle best match
-  Object.assign(params, parseParams(best.params, best.route.paramParsers));
+  Object.assign(
+    params,
+    parseParams(best.params, best.route.pathMatching.paramParsers)
+  );
 
   return {
-    route: best.route,
+    route: best.route.public,
     match: {
       location,
       name: best.route.public.name,
@@ -109,29 +114,4 @@ function parseParams(params: RawParams, fns: ParamParsers = {}): Params {
     output[key] = fn(params[key]);
   }
   return output;
-}
-
-export function matchLocation(
-  location: SessionLocation,
-  routes: Array<PreparedRoute>
-): PossibleMatch {
-  // determine which route(s) match, then use the exact match
-  // as the matched route and the rest as partial routes
-  const routeLength = routes.length;
-  for (let i = 0; i < routeLength; i++) {
-    const routeMatches = matchRoute(routes[i], location.pathname);
-    if (routeMatches.length) {
-      return createMatch(routeMatches, location);
-    }
-  }
-
-  // no matching route
-  return {
-    route: undefined,
-    match: undefined
-  };
-}
-
-export function isRealMatch(match: PossibleMatch): match is RealMatch {
-  return match.route !== undefined;
 }

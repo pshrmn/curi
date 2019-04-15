@@ -1,4 +1,4 @@
-import { meta as curiMeta } from "./api/curi";
+import { meta as createRouterMeta } from "./api/createRouter";
 import { meta as prepareRoutesMeta } from "./api/prepareRoutes";
 import { meta as RoutePropertiesMeta } from "./api/route-objects";
 
@@ -14,6 +14,6 @@ export default [
   {
     title: "API",
     hash: "API",
-    children: [curiMeta, prepareRoutesMeta, RoutePropertiesMeta]
+    children: [prepareRoutesMeta, createRouterMeta, RoutePropertiesMeta]
   }
 ];

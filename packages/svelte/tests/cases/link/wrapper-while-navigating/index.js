@@ -5,21 +5,23 @@ import { curiStore } from "@curi/svelte";
 import app from "./app.html";
 import cleanText from "../../../utils/cleanText";
 
-const routes = prepareRoutes([
-  { name: "Home", path: "" },
-  {
-    name: "Test",
-    path: "test",
-    resolve() {
-      return new Promise(resolve => {
-        setTimeout(() => {
-          resolve("done");
-        }, 100);
-      });
-    }
-  },
-  { name: "Not Found", path: "(.*)" }
-]);
+const routes = prepareRoutes({
+  routes: [
+    { name: "Home", path: "" },
+    {
+      name: "Test",
+      path: "test",
+      resolve() {
+        return new Promise(resolve => {
+          setTimeout(() => {
+            resolve("done");
+          }, 100);
+        });
+      }
+    },
+    { name: "Not Found", path: "(.*)" }
+  ]
+});
 
 const router = createRouter(inMemory, routes);
 const store = curiStore(router);

@@ -189,24 +189,26 @@ npm run start`}
         <CodeBlock>
           {`import { preferDefault } from "@curi/helpers";
 
-const routes = prepareRoutes([
-  {
-    name: "A Route",
-    path: "route/:id",
-    resolve({ params }) {
-      const body = import("./components/SomeComponent").then(preferDefault);
-      const data = fetch(\`/api/data/$\{params.id\}\`);
-      return Promise.all([ component, data ]);
-    },
-    response({ resolved, error }) {
-      if (error) {
-        // handle an uncaught error
+const routes = prepareRoutes({
+  routes: [
+    {
+      name: "A Route",
+      path: "route/:id",
+      resolve({ params }) {
+        const body = import("./components/SomeComponent").then(preferDefault);
+        const data = fetch(\`/api/data/$\{params.id\}\`);
+        return Promise.all([ component, data ]);
+      },
+      response({ resolved, error }) {
+        if (error) {
+          // handle an uncaught error
+        }
+        const [body, data] = resolved;
+        return { body, data };
       }
-      const [body, data] = resolved;
-      return { body, data };
     }
-  }
-]);`}
+  ]
+});`}
         </CodeBlock>
 
         <HashSection meta={initialMeta} className="aside" tag="h3">
@@ -355,16 +357,18 @@ import(/* webpackChunkName: "Test" */ "./components/Test.js")`}
         <CodeBlock>
           {`import { preferDefault } from "@curi/helpers";
 
-const routes = prepareRoutes([
-  {
-    name: "Test",
-    path: "test",
-    resolve() {
-      return import(/* webpackChunkName: "Test" */ "./components/Test.js")
-        .then(preferDefault);
+const routes = prepareRoutes({
+  routes: [
+    {
+      name: "Test",
+      path: "test",
+      resolve() {
+        return import(/* webpackChunkName: "Test" */ "./components/Test.js")
+          .then(preferDefault);
+      }
     }
-  }
-]);`}
+  ]
+});`}
         </CodeBlock>
 
         <p>
@@ -379,22 +383,24 @@ const routes = prepareRoutes([
         <CodeBlock>
           {`import displayLoadError from "./components/LoadError";
 
-const routes = prepareRoutes([
-  {
-    name: "One",
-    path: "one",
-    resolve() {
-      return import("./components/One.js")
-        .then(preferDefault)
-        .catch(err => displayLoadError(err);
-    },
-    response({ resolved }) {
-      return {
-        body: resolved
-      };
+const routes = prepareRoutes({
+  routes: [
+    {
+      name: "One",
+      path: "one",
+      resolve() {
+        return import("./components/One.js")
+          .then(preferDefault)
+          .catch(err => displayLoadError(err);
+      },
+      response({ resolved }) {
+        return {
+          body: resolved
+        };
+      }
     }
-  }
-]);`}
+  ]
+});`}
         </CodeBlock>
 
         <p>
@@ -414,52 +420,54 @@ const routes = prepareRoutes([
 import { prepareRoutes } from "@curi/router";
 import { preferDefault } from "@curi/helpers";
 
-export default prepareRoutes([
-  {
-    name: "Home",
-    path: "",
-    resolve() {
-      return import("./components/Home")
-        .then(preferDefault);
+export default prepareRoutes({
+  routes: [
+    {
+      name: "Home",
+      path: "",
+      resolve() {
+        return import("./components/Home")
+          .then(preferDefault);
+      },
+      response({ resolved }) {
+        return { body: resolved };
+      }
     },
-    response({ resolved }) {
-      return { body: resolved };
-    }
-  },
-  {
-    name: "Book",
-    path: "book/:id",
-    resolve() {
-      return import("./components/Book")
-        .then(preferDefault);
+    {
+      name: "Book",
+      path: "book/:id",
+      resolve() {
+        return import("./components/Book")
+          .then(preferDefault);
+      },
+      response({ resolved }) {
+        return { body: resolved };
+      }
     },
-    response({ resolved }) {
-      return { body: resolved };
-    }
-  },
-  {
-    name: "Checkout",
-    path: "checkout",
-    resolve() {
-      return import("./components/Checkout")
-        .then(preferDefault);
+    {
+      name: "Checkout",
+      path: "checkout",
+      resolve() {
+        return import("./components/Checkout")
+          .then(preferDefault);
+      },
+      response({ resolved }) {
+        return { body: resolved };
+      }
     },
-    response({ resolved }) {
-      return { body: resolved };
+    {
+      name: "Catch All",
+      path: "(.*)",
+      resolve() {
+        return import("./components/NotFound")
+          .then(preferDefault);
+      },
+      response({ resolved }) {
+        return { body: resolved };
+      }
     }
-  },
-  {
-    name: "Catch All",
-    path: "(.*)",
-    resolve() {
-      return import("./components/NotFound")
-        .then(preferDefault);
-    },
-    response({ resolved }) {
-      return { body: resolved };
-    }
-  }
-]);`}
+  ]
+});`}
         </CodeBlock>
 
         <p>
@@ -640,64 +648,66 @@ registerServiceWorker();`}
 import { prepareRoutes } from "@curi/router";
 import { preferDefault } from "@curi/helpers";
 
-export default prepareRoutes([
-  {
-    name: "Home",
-    path: "",
-    resolve(_, external) {
-      const body = import("./components/Home")
-        .then(preferDefault);
-      const books = external.bookAPI.BOOKS();
-      return Promise.all([body, books]);
+export default prepareRoutes({
+  routes: [
+    {
+      name: "Home",
+      path: "",
+      resolve(_, external) {
+        const body = import("./components/Home")
+          .then(preferDefault);
+        const books = external.bookAPI.BOOKS();
+        return Promise.all([body, books]);
+      },
+      response({ resolved }) {
+        const [body, books] = resolved;
+        return {
+          body,
+          data: { books }
+        };
+      }
     },
-    response({ resolved }) {
-      const [body, books] = resolved;
-      return {
-        body,
-        data: { books }
-      };
-    }
-  },
-  {
-    name: "Book",
-    path: "book/:id",
-    resolve({ params }, external) {
-      const body = import("./components/Book")
-        .then(preferDefault);
-      const book = external.bookAPI.BOOK(params.id);
-      return Promise.all([body, books]);
+    {
+      name: "Book",
+      path: "book/:id",
+      resolve({ params }, external) {
+        const body = import("./components/Book")
+          .then(preferDefault);
+        const book = external.bookAPI.BOOK(params.id);
+        return Promise.all([body, books]);
+      },
+      response({ resolved }) {
+        const [body, book] = resolved;
+        return {
+          body,
+          data: { book }
+        };
+      }
     },
-    response({ resolved }) {
-      const [body, book] = resolved;
-      return {
-        body,
-        data: { book }
-      };
-    }
-  },
-  {
-    name: "Checkout",
-    path: "checkout",
-    resolve() {
-      return import("./components/Checkout")
-        .then(preferDefault);
+    {
+      name: "Checkout",
+      path: "checkout",
+      resolve() {
+        return import("./components/Checkout")
+          .then(preferDefault);
+      },
+      response({ resolved }) {
+        return { body: resolved };
+      }
     },
-    response({ resolved }) {
-      return { body: resolved };
+    {
+      name: "Catch All",
+      path: "(.*)",
+      resolve() {
+        return import("./components/NotFound")
+          .then(preferDefault);
+      },
+      response({ resolved }) {
+        return { body: resolved };
+      }
     }
-  },
-  {
-    name: "Catch All",
-    path: "(.*)",
-    resolve() {
-      return import("./components/NotFound")
-        .then(preferDefault);
-    },
-    response({ resolved }) {
-      return { body: resolved };
-    }
-  }
-]);`}
+  ]
+});`}
         </CodeBlock>
 
         <p>

@@ -6,11 +6,13 @@ import { curiStore } from "@curi/svelte";
 
 describe("curiStore", () => {
   let router;
-  const routes = prepareRoutes([
-    { name: "Home", path: "" },
-    { name: "About", path: "about" },
-    { name: "Not Found", path: "(.*)" }
-  ]);
+  const routes = prepareRoutes({
+    routes: [
+      { name: "Home", path: "" },
+      { name: "About", path: "about" },
+      { name: "Not Found", path: "(.*)" }
+    ]
+  });
 
   beforeEach(() => {
     router = createRouter(inMemory, routes);
