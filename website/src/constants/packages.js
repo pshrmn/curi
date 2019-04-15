@@ -93,7 +93,7 @@ const packages = [
     import: () =>
       import(
         /* webpackChunkName: 'package--svelte' */
-        `../pages/Packages/svelte/v1/index.js`
+        `../pages/Packages/svelte/v2/index.js`
       )
   },
   {
@@ -109,7 +109,7 @@ const packages = [
     import: () =>
       import(
         /* webpackChunkName: 'package--vue' */
-        `../pages/Packages/vue/v1/index.js`
+        `../pages/Packages/vue/v2/index.js`
       )
   },
   {
@@ -281,7 +281,7 @@ const packages = [
     import: () =>
       import(
         /* webpackChunkName: 'package--static' */
-        `../pages/Packages/static/v1/index.js`
+        `../pages/Packages/static/v2/index.js`
       )
   },
   {
