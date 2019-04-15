@@ -86,9 +86,9 @@ const packages = [
     globalName: "CuriSvelte",
     type: "render",
     script: false,
-    latest: "v1",
+    latest: "v2",
     versions: {
-      v1: versions["svelte"]
+      v2: versions["svelte"]
     },
     import: () =>
       import(
@@ -102,9 +102,9 @@ const packages = [
     globalName: "CuriVue",
     type: "render",
     script: true,
-    latest: "v1",
+    latest: "v2",
     versions: {
-      v1: versions["vue"]
+      v2: versions["vue"]
     },
     import: () =>
       import(
@@ -274,7 +274,7 @@ const packages = [
     globalName: "CuriStatic",
     type: "other",
     script: false,
-    latest: "v1",
+    latest: "v2",
     versions: {
       v1: versions["static"]
     },

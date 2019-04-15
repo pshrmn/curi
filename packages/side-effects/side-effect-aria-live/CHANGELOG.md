@@ -1,4 +1,4 @@
-## Next
+## 2.0.0-beta.0
 
 * Update CSS for hiding element to be RTL-friendly.
 

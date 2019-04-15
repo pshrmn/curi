@@ -1,4 +1,4 @@
-## Next
+## 2.0.0-beta.9
 
 * `prepareRoutes` returns an object with `match` and `interactions` properties.
 * `prepareRoutes` takes an options argument with a required `routes` array and an optional `interactions` array.

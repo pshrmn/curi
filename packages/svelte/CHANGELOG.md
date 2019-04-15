@@ -1,5 +1,6 @@
-## Next
+## 2.0.0-alpha.0
 
+* Bump to `v2` alpha since it uses `@curi/router` v2.
 * Update `@curi/router` peer dependency to v2.
 * Spread `forward` props to link elements before "native" props.
 

@@ -1,3 +1,7 @@
+## 2.0.0-alpha.0
+
+* Bump to `v2` alpha since it uses `@curi/router` v2.
+
 ## 1.0.0-beta.7
 
 * Revert snake case. `static_files` is now `staticFiles`.

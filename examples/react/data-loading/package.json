@@ -12,9 +12,9 @@
   "author": "Paul Sherman",
   "license": "MIT",
   "dependencies": {
-    "@curi/react-dom": "2.0.0-beta.6",
-    "@curi/route-prefetch": "2.0.0-beta.6",
-    "@curi/router": "2.0.0-beta.8",
+    "@curi/react-dom": "2.0.0-beta.7",
+    "@curi/route-prefetch": "2.0.0-beta.7",
+    "@curi/router": "2.0.0-beta.9",
     "@hickory/browser": "^2.0.0-beta.11",
     "react": "^16.9.0-alpha.0",
     "react-dom": "^16.9.0-alpha.0"
