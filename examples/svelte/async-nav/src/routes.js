@@ -3,7 +3,8 @@ import { preferDefault } from "@curi/helpers";
 
 import { movies as MOVIES, movie as MOVIE } from "./api";
 
-export default prepareRoutes([
+export default prepareRoutes({
+    routes: [
   {
     name: "Home",
     path: "",
@@ -52,4 +53,5 @@ export default prepareRoutes([
       };
     }
   }
-]);
+]
+});

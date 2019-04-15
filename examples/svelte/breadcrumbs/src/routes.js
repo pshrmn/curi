@@ -10,8 +10,8 @@ import Category from "./components/Category.html";
 import Product from "./components/Product.html";
 import NotFound from "./components/NotFound.html";
 
-export default prepareRoutes(
-  [
+export default prepareRoutes({
+  routes: [
     {
       name: "Home",
       path: "",
@@ -89,5 +89,5 @@ export default prepareRoutes(
       }
     }
   ],
-  [ancestors(), title()]
-);
+  interactions: [ancestors(), title()]
+});

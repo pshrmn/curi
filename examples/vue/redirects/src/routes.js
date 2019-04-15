@@ -8,76 +8,78 @@ import NotFound from "./components/NotFound";
 
 import store from "./store";
 
-export default prepareRoutes([
-  {
-    name: "Home",
-    path: "",
-    response() {
-      return {
-        body: Home
-      };
-    }
-  },
-  {
-    name: "Protected",
-    path: "protected",
-    response() {
-      if (!store.state.user) {
+export default prepareRoutes({
+  routes: [
+    {
+      name: "Home",
+      path: "",
+      response() {
         return {
-          redirect: {
-            name: "Login",
-            query: { next: "/protected" }
-          },
-          status: 302
+          body: Home
         };
-      } else {
+      }
+    },
+    {
+      name: "Protected",
+      path: "protected",
+      response() {
+        if (!store.state.user) {
+          return {
+            redirect: {
+              name: "Login",
+              query: { next: "/protected" }
+            },
+            status: 302
+          };
+        } else {
+          return {
+            body: Protected
+          };
+        }
+      }
+    },
+    {
+      name: "Login",
+      path: "login",
+      response() {
+        if (store.state.user) {
+          return {
+            redirect: {
+              name: "Home"
+            }
+          };
+        } else {
+          return {
+            body: Login
+          };
+        }
+      }
+    },
+    {
+      name: "Logout",
+      path: "logout",
+      response() {
+        if (!store.state.user) {
+          return {
+            redirect: {
+              name: "Home"
+            }
+          };
+        } else {
+          return {
+            body: Logout
+          };
+        }
+      }
+    },
+    {
+      name: "Not Found",
+      path: "(.*)",
+      response() {
         return {
-          body: Protected
+          body: NotFound
         };
       }
     }
-  },
-  {
-    name: "Login",
-    path: "login",
-    response() {
-      if (store.state.user) {
-        return {
-          redirect: {
-            name: "Home"
-          }
-        };
-      } else {
-        return {
-          body: Login
-        };
-      }
-    }
-  },
-  {
-    name: "Logout",
-    path: "logout",
-    response() {
-      if (!store.state.user) {
-        return {
-          redirect: {
-            name: "Home"
-          }
-        };
-      } else {
-        return {
-          body: Logout
-        };
-      }
-    }
-  },
-  {
-    name: "Not Found",
-    path: "(.*)",
-    response() {
-      return {
-        body: NotFound
-      };
-    }
-  }
-]);
+  ]
+});

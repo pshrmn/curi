@@ -7,8 +7,8 @@ import Home from "./components/Home";
 import Album from "./components/Album";
 import NotFound from "./components/NotFound";
 
-export default prepareRoutes(
-  [
+export default prepareRoutes({
+  routes: [
     {
       name: "Home",
       path: "",
@@ -47,5 +47,5 @@ export default prepareRoutes(
       }
     }
   ],
-  [prefetch()]
-);
+  interactions: [prefetch()]
+});
