@@ -10,9 +10,8 @@ import { Emitted } from "@curi/types";
 
 const FIXTURES_ROOT = join(__dirname, "fixtures");
 
-const DEFAULT_RENDER = (emitted: Emitted) => emitted.response.body;
-const DEFAULT_INSERT = (markup: string, emitted: Emitted) => {
-  return `<html><body>${markup}</body</html>`;
+const DEFAULT_RENDER = (emitted: Emitted) => {
+  return `<html><body>${emitted.response.body}</body</html>`;
 };
 
 describe("staticFiles()", () => {
@@ -48,7 +47,6 @@ describe("staticFiles()", () => {
         },
         output: {
           render: DEFAULT_RENDER,
-          insert: DEFAULT_INSERT,
           dir: fixtures
         }
       });
@@ -104,7 +102,6 @@ describe("staticFiles()", () => {
           },
           output: {
             render: DEFAULT_RENDER,
-            insert: DEFAULT_INSERT,
             dir: fixtures
           }
         });
@@ -121,10 +118,17 @@ describe("staticFiles()", () => {
   });
 
   describe("redirects", () => {
-    it("when false, does not create a files if the route redirects ", async () => {
-      const fixtures = join(FIXTURES_ROOT, "redirects-false");
+    it("handles render functions that throw ", async () => {
+      const fixtures = join(FIXTURES_ROOT, "redirect-throws");
       await remove(fixtures);
       await ensureDir(fixtures);
+
+      function render(emitted: Emitted) {
+        if (emitted.response.redirect) {
+          throw new Error("Do not render redirects.");
+        }
+        return `<html><body>${emitted.response.body}</body</html>`;
+      }
 
       const routes = prepareRoutes({
         routes: [
@@ -145,18 +149,27 @@ describe("staticFiles()", () => {
         ]
       });
       const pages = [{ name: "Home" }, { name: "About" }];
-      await staticFiles({
+      const results = await staticFiles({
         pages,
         router: {
           routes
         },
         output: {
-          render: DEFAULT_RENDER,
-          insert: DEFAULT_INSERT,
-          dir: fixtures,
-          redirects: false
+          render,
+          dir: fixtures
         }
       });
+
+      const [homeResult, aboutResult] = results;
+      expect(homeResult).toMatchObject({
+        pathname: "/",
+        success: false
+      });
+      expect(aboutResult).toMatchObject({
+        pathname: "/about",
+        success: true
+      });
+
       const expectedPaths = [
         { path: join(fixtures, "index.html"), exists: false },
         { path: join(fixtures, "about", "index.html"), exists: true }
@@ -166,8 +179,8 @@ describe("staticFiles()", () => {
       });
     });
 
-    it("when true, does not create a files if the route redirects ", async () => {
-      const fixtures = join(FIXTURES_ROOT, "redirects-true");
+    it("treats the redirect like any other response ", async () => {
+      const fixtures = join(FIXTURES_ROOT, "redirect-render");
       await remove(fixtures);
       await ensureDir(fixtures);
 
@@ -200,9 +213,7 @@ describe("staticFiles()", () => {
         },
         output: {
           render: DEFAULT_RENDER,
-          insert: DEFAULT_INSERT,
-          dir: fixtures,
-          redirects: true
+          dir: fixtures
         }
       });
       const expectedPaths = [
@@ -241,7 +252,6 @@ describe("staticFiles()", () => {
         },
         output: {
           render,
-          insert: DEFAULT_INSERT,
           dir: fixtures
         }
       });
@@ -254,41 +264,6 @@ describe("staticFiles()", () => {
           action: "push"
         }
       });
-    });
-  });
-
-  describe("insert()", () => {
-    it("calls insert() with the results of render()", async () => {
-      const fixtures = join(FIXTURES_ROOT, "insert");
-      await remove(fixtures);
-      await ensureDir(fixtures);
-
-      const routes = prepareRoutes({
-        routes: [
-          {
-            name: "Home",
-            path: "",
-            response() {
-              return { body: "Home" };
-            }
-          }
-        ]
-      });
-      const pages = [{ name: "Home" }];
-      const render = DEFAULT_RENDER;
-      const insert = jest.fn(html => html);
-      await staticFiles({
-        pages,
-        router: {
-          routes
-        },
-        output: {
-          render,
-          insert,
-          dir: fixtures
-        }
-      });
-      expect(insert.mock.calls[0][0]).toBe("Home");
     });
   });
 
@@ -319,7 +294,6 @@ describe("staticFiles()", () => {
         },
         output: {
           render: DEFAULT_RENDER,
-          insert: DEFAULT_INSERT,
           dir: fixtures
         }
       });
@@ -366,7 +340,6 @@ describe("staticFiles()", () => {
             done();
             return emitted.response.body;
           },
-          insert: DEFAULT_INSERT,
           dir: fixtures
         }
       });
@@ -406,7 +379,6 @@ describe("staticFiles()", () => {
             render: () => {
               throw new Error("uh oh");
             },
-            insert: DEFAULT_INSERT,
             dir: fixtures
           }
         });
