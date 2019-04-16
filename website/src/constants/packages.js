@@ -276,7 +276,7 @@ const packages = [
     script: false,
     latest: "v2",
     versions: {
-      v1: versions["static"]
+      v2: versions["static"]
     },
     import: () =>
       import(

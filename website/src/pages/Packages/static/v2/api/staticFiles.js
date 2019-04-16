@@ -41,9 +41,10 @@ import routes from "../src/routes";
 staticFiles({
   routes,
   pages: [{ name: "Home" }, { name: "About" }],
-  dir: join(process.cwd(), "public"),
-  render: () => {...},
-  insert: () => {...}
+  output: {
+    dir: join(process.cwd(), "public"),
+    render: () => {...}
+  }
 });`}
       </CodeBlock>
 
@@ -226,21 +227,25 @@ staticFiles({
             <p>
               A function that takes the emitted <IJS>response</IJS>,{" "}
               <IJS>navigation</IJS>, and <IJS>router</IJS> for a location and
-              returns the content that should be inserted into the page's HTML.
+              returns the page's HTML.
             </p>
+
             <p>
-              <IJS>render</IJS>s behavior will depend on what type of
+              How the content is generated will depend on what type of
               application is being built. For a React application, this would
               call the <IJS>renderToString</IJS> method from{" "}
               <IJS>react-dom/server</IJS>. A Vue application would use{" "}
               <IJS>vue-server-renderer</IJS>.
             </p>
+
             <p>
-              <IJS>render</IJS> can return anything you want it to. This may be
-              a string for simple rendering, or an object with multiple
-              properties for more complex rendering (e.g. title/style properties
-              for the <Cmp>head</Cmp> and rendered markup to insert in the{" "}
-              <Cmp>body</Cmp>).
+              <IJS>render</IJS> is expected to return the complete HTML for a
+              page
+            </p>
+
+            <p>
+              If the <IJS>response</IJS> should not be rendered, the{" "}
+              <IJS>render</IJS> function should throw an error.
             </p>
 
             <CodeBlock lang="jsx">
@@ -249,56 +254,36 @@ import { renderToString } from "react-dom";
 import { createRouterComponent } from "@curi/react-dom";
 
 function render(emitted) {
-  const { router } = emitted;
+  const { router, response } = emitted;
+  // if the route shouldn't be rendered, throw
+  if (response.redirect) {
+    throw new Error(\`\${response.location.pathname} redirects\`);
+  }
+
   const Router = createRouterComponent(router);
-  return renderToString(
+  // generate markup
+  const markup = renderToString(
     <Router>
       <App />
     </Router>
-  )
+  );
+
+  // return full HTML for the page
+  return \`<!doctype html>
+<html>
+  <head>...</head>
+  <body>
+    <div id="root">
+      \${markup}
+    </div>
+  </body>
+</html>\`;
 }
 
 staticFiles({
   // ...
   output: {
     render
-  }
-});`}
-            </CodeBlock>
-          </HashSection>
-
-          <HashSection
-            tag="h6"
-            meta={{ title: "insert", hash: "staticFiles-insert" }}
-          >
-            <p>
-              A function that takes the value returned by the <IJS>render</IJS>{" "}
-              function and inserts it into the full HTML for a page.
-            </p>
-
-            <CodeBlock>
-              {`function insert(markup) {
-  return \`<!doctype html>
-<html>
-  <head>
-    <title>\${markup.title}</title>
-  </head>
-  <body>
-    <div, hash: "root">\${markup.html}</div>
-    <script src="/static/js/bundle.js"></script>
-  </body>
-</html>\`;
-}
-
-// where the markup comes from the render() function:
-function render() {
-  return { title: "Yo!", html: "<div>Hey!</div>" };
-}
-
-staticFiles({
-  // ...
-  output: {
-    insert
   }
 });`}
             </CodeBlock>
@@ -318,31 +303,6 @@ staticFiles({
   }
 })`}
             </CodeBlock>
-          </HashSection>
-
-          <HashSection
-            tag="h6"
-            meta={{ title: "redirects", hash: "staticFiles-redirects" }}
-          >
-            <p>
-              If a route automatically redirects, you probably do not need to
-              create an HTML file for it. If you set <IJS>redirects</IJS> to{" "}
-              <IJS>true</IJS>, HTML files will be generated for redirect pages.
-            </p>
-            <p>
-              Your server should be configured to return a fallback page when
-              there is no content for a route, so you should not need to create
-              HTML files for redirected pages.
-            </p>
-            <Note>
-              <p>
-                If you do create HTML files for redirects, be sure that your
-                application knows how to render redirect responses. If you are
-                using setting <IJS>invisibleRedirects</IJS> to <IJS>true</IJS>{" "}
-                in your client side code, your application probably doesn't know
-                how to render redirects.
-              </p>
-            </Note>
           </HashSection>
         </HashSection>
       </HashSection>
