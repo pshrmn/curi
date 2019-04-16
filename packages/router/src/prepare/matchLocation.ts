@@ -7,7 +7,7 @@ import { PreparedRoute } from "./prepareRoutes";
 
 interface MatchingRoute {
   route: PreparedRoute;
-  params: Params;
+  params: RawParams;
 }
 
 type RawParams = { [key: string]: string };
@@ -18,7 +18,7 @@ export function matchLocation(
 ): Match | undefined {
   // determine which route(s) match, then use the exact match
   // as the matched route and the rest as partial routes
-  for (let i = 0, routeLength = routes.length; i < routeLength; i++) {
+  for (let i = 0, len = routes.length; i < len; i++) {
     const routeMatches = matchRoute(routes[i], location.pathname);
     if (routeMatches.length) {
       return createMatch(routeMatches, location);
@@ -37,6 +37,26 @@ function matchRoute(
   }
 
   const [matchedSegment, ...parsed] = regExpMatch;
+
+  let matches: Array<MatchingRoute> = [];
+  const remainder = pathname.slice(matchedSegment.length);
+  if (route.children.length && remainder !== "") {
+    // a parent that ends with a slash will have stripped the leading
+    // slash from remaining segments, so re-add it
+    const fullSegments = withLeadingSlash(remainder);
+    for (let i = 0, length = route.children.length; i < length; i++) {
+      const matched = matchRoute(route.children[i], fullSegments);
+      if (matched.length) {
+        matches = matched;
+        break;
+      }
+    }
+    // bail when no children match and route must be exact
+    if (!matches.length && route.pathMatching.exact) {
+      return [];
+    }
+  }
+
   const params = route.pathMatching.keys.reduce(
     (acc, key, index) => {
       acc[key.name] = parsed[index];
@@ -45,33 +65,7 @@ function matchRoute(
     {} as RawParams
   );
 
-  let matches: Array<MatchingRoute> = [{ route, params }];
-
-  // if there are no children routes, immediately accept the match
-  if (!route.children.length) {
-    return matches;
-  }
-
-  // children only need to match against unmatched segments
-  const remainder = pathname.slice(matchedSegment.length);
-  if (remainder !== "") {
-    // a parent that ends with a slash will have stripped the leading
-    // slash from remaining segments, so re-add it
-    const fullSegments = withLeadingSlash(remainder);
-    for (let i = 0, length = route.children.length; i < length; i++) {
-      const matched = matchRoute(route.children[i], fullSegments);
-      if (matched.length) {
-        matches = matches.concat(matched);
-        break;
-      }
-    }
-  }
-
-  // return matches if a child route matches or this route matches exactly
-  return matches.length > 1 ||
-    (route.pathMatching.exact && remainder.length === 0)
-    ? matches
-    : [];
+  return [{ route, params }].concat(matches);
 }
 
 function createMatch(
@@ -85,16 +79,15 @@ function createMatch(
   // handle ancestor routes
   routeMatches.forEach(match => {
     partials.push(match.route.public.name);
-    Object.assign(
+    mergeParsedParams(
       params,
-      parseParams(match.params, match.route.pathMatching.paramParsers)
+      match.params,
+      match.route.pathMatching.paramParsers
     );
   });
+
   // handle best match
-  Object.assign(
-    params,
-    parseParams(best.params, best.route.pathMatching.paramParsers)
-  );
+  mergeParsedParams(params, best.params, best.route.pathMatching.paramParsers);
 
   return {
     route: best.route.public,
@@ -107,11 +100,13 @@ function createMatch(
   };
 }
 
-function parseParams(params: RawParams, fns: ParamParsers = {}): Params {
-  const output: Params = {};
-  for (let key in params) {
+function mergeParsedParams(
+  params: Params,
+  raw: RawParams,
+  fns: ParamParsers = {}
+) {
+  for (let key in raw) {
     let fn = fns[key] || decodeURIComponent;
-    output[key] = fn(params[key]);
+    params[key] = fn(raw[key]);
   }
-  return output;
 }

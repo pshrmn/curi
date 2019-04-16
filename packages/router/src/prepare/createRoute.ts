@@ -39,9 +39,14 @@ export function createRoute(
   // set this before setting pathOptions.end for children
   const exact = matchOptions.end == null || matchOptions.end;
 
-  // when we have child routes, we need to perform non-end matching and
+  let children: Array<PreparedRoute> = [];
   if (props.children && props.children.length) {
+    // when we have child routes, we need to perform non-end matching
     matchOptions.end = false;
+
+    children = props.children.map((child: RouteDescriptor) => {
+      return createRoute(child, usedNames, fullPath);
+    });
   }
 
   // keys is populated by PathToRegexp
@@ -51,13 +56,6 @@ export function createRoute(
   const re = PathToRegexp(withLeadingSlash(path), keys, matchOptions);
 
   const compiled = PathToRegexp.compile(fullPath);
-
-  let children: Array<PreparedRoute> = [];
-  if (props.children && props.children.length) {
-    children = props.children.map((child: RouteDescriptor) => {
-      return createRoute(child, usedNames, fullPath);
-    });
-  }
 
   return {
     public: {
