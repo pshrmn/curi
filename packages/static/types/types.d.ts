@@ -12,7 +12,6 @@ export declare type GetRouterOptions = () => RouterOptions;
 export interface StaticOutput {
     render: (emitted: Emitted) => string;
     dir: string;
-    redirects?: boolean;
 }
 export interface StaticRouter {
     routes: RouteMatcher;

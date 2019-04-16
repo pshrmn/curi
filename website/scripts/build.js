@@ -55,7 +55,6 @@ staticFiles({
   },
   output: {
     dir: OUTPUT_DIR,
-    redirects: false,
     render
   }
 }).then(logResults);

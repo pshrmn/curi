@@ -14,11 +14,15 @@ const REACT_DOM_BUILD = dev
   : "react-dom.production.min.js";
 
 module.exports = function render(emitted) {
-  const Router = createRouterComponent(emitted.router);
+  const { response, router } = emitted;
+  if (response.redirect) {
+    throw new Error(`Skipping rendering ${response.location.pathname}`);
+  }
+  const Router = createRouterComponent(router);
   const html = renderToString(
     React.createElement(Router, null, React.createElement(App))
   );
-  const title = emitted.response.title;
+  const title = response.title;
   return insert(html, title);
 };
 

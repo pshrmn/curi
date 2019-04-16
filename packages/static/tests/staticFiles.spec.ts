@@ -118,10 +118,17 @@ describe("staticFiles()", () => {
   });
 
   describe("redirects", () => {
-    it("when false, does not create a files if the route redirects ", async () => {
-      const fixtures = join(FIXTURES_ROOT, "redirects-false");
+    it("handles render functions that throw ", async () => {
+      const fixtures = join(FIXTURES_ROOT, "redirect-throws");
       await remove(fixtures);
       await ensureDir(fixtures);
+
+      function render(emitted: Emitted) {
+        if (emitted.response.redirect) {
+          throw new Error("Do not render redirects.");
+        }
+        return `<html><body>${emitted.response.body}</body</html>`;
+      }
 
       const routes = prepareRoutes({
         routes: [
@@ -142,17 +149,27 @@ describe("staticFiles()", () => {
         ]
       });
       const pages = [{ name: "Home" }, { name: "About" }];
-      await staticFiles({
+      const results = await staticFiles({
         pages,
         router: {
           routes
         },
         output: {
-          render: DEFAULT_RENDER,
-          dir: fixtures,
-          redirects: false
+          render,
+          dir: fixtures
         }
       });
+
+      const [homeResult, aboutResult] = results;
+      expect(homeResult).toMatchObject({
+        pathname: "/",
+        success: false
+      });
+      expect(aboutResult).toMatchObject({
+        pathname: "/about",
+        success: true
+      });
+
       const expectedPaths = [
         { path: join(fixtures, "index.html"), exists: false },
         { path: join(fixtures, "about", "index.html"), exists: true }
@@ -162,8 +179,8 @@ describe("staticFiles()", () => {
       });
     });
 
-    it("when true, does not create a files if the route redirects ", async () => {
-      const fixtures = join(FIXTURES_ROOT, "redirects-true");
+    it("treats the redirect like any other response ", async () => {
+      const fixtures = join(FIXTURES_ROOT, "redirect-render");
       await remove(fixtures);
       await ensureDir(fixtures);
 
@@ -196,8 +213,7 @@ describe("staticFiles()", () => {
         },
         output: {
           render: DEFAULT_RENDER,
-          dir: fixtures,
-          redirects: true
+          dir: fixtures
         }
       });
       const expectedPaths = [
