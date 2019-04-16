@@ -43,5 +43,4 @@ export interface Result {
 export interface PathnamesConfiguration {
   routes: RouteMatcher;
   pages: Array<PageDescriptor>;
-  options?: RouterOptions;
 }

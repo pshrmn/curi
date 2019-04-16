@@ -23,8 +23,7 @@ export default async function staticFiles(
   // for the provided pages
   const io = pathnames({
     routes,
-    pages,
-    options: routerOptions()
+    pages
   }).map(pathname => {
     return {
       pathname,
