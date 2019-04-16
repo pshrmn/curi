@@ -1,3 +1,7 @@
+## Next
+
+* Remove `insert` option to `staticFiles`. `render` should return an HTML string.
+
 ## 2.0.0-alpha.0
 
 * Bump to `v2` alpha since it uses `@curi/router` v2.

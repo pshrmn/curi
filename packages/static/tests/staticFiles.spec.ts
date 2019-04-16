@@ -10,9 +10,8 @@ import { Emitted } from "@curi/types";
 
 const FIXTURES_ROOT = join(__dirname, "fixtures");
 
-const DEFAULT_RENDER = (emitted: Emitted) => emitted.response.body;
-const DEFAULT_INSERT = (markup: string, emitted: Emitted) => {
-  return `<html><body>${markup}</body</html>`;
+const DEFAULT_RENDER = (emitted: Emitted) => {
+  return `<html><body>${emitted.response.body}</body</html>`;
 };
 
 describe("staticFiles()", () => {
@@ -48,7 +47,6 @@ describe("staticFiles()", () => {
         },
         output: {
           render: DEFAULT_RENDER,
-          insert: DEFAULT_INSERT,
           dir: fixtures
         }
       });
@@ -104,7 +102,6 @@ describe("staticFiles()", () => {
           },
           output: {
             render: DEFAULT_RENDER,
-            insert: DEFAULT_INSERT,
             dir: fixtures
           }
         });
@@ -152,7 +149,6 @@ describe("staticFiles()", () => {
         },
         output: {
           render: DEFAULT_RENDER,
-          insert: DEFAULT_INSERT,
           dir: fixtures,
           redirects: false
         }
@@ -200,7 +196,6 @@ describe("staticFiles()", () => {
         },
         output: {
           render: DEFAULT_RENDER,
-          insert: DEFAULT_INSERT,
           dir: fixtures,
           redirects: true
         }
@@ -241,7 +236,6 @@ describe("staticFiles()", () => {
         },
         output: {
           render,
-          insert: DEFAULT_INSERT,
           dir: fixtures
         }
       });
@@ -254,41 +248,6 @@ describe("staticFiles()", () => {
           action: "push"
         }
       });
-    });
-  });
-
-  describe("insert()", () => {
-    it("calls insert() with the results of render()", async () => {
-      const fixtures = join(FIXTURES_ROOT, "insert");
-      await remove(fixtures);
-      await ensureDir(fixtures);
-
-      const routes = prepareRoutes({
-        routes: [
-          {
-            name: "Home",
-            path: "",
-            response() {
-              return { body: "Home" };
-            }
-          }
-        ]
-      });
-      const pages = [{ name: "Home" }];
-      const render = DEFAULT_RENDER;
-      const insert = jest.fn(html => html);
-      await staticFiles({
-        pages,
-        router: {
-          routes
-        },
-        output: {
-          render,
-          insert,
-          dir: fixtures
-        }
-      });
-      expect(insert.mock.calls[0][0]).toBe("Home");
     });
   });
 
@@ -319,7 +278,6 @@ describe("staticFiles()", () => {
         },
         output: {
           render: DEFAULT_RENDER,
-          insert: DEFAULT_INSERT,
           dir: fixtures
         }
       });
@@ -366,7 +324,6 @@ describe("staticFiles()", () => {
             done();
             return emitted.response.body;
           },
-          insert: DEFAULT_INSERT,
           dir: fixtures
         }
       });
@@ -406,7 +363,6 @@ describe("staticFiles()", () => {
             render: () => {
               throw new Error("uh oh");
             },
-            insert: DEFAULT_INSERT,
             dir: fixtures
           }
         });

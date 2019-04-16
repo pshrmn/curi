@@ -15,7 +15,7 @@ export default async function staticFiles(
   const {
     pages,
     router: { routes, options: routerOptions = () => ({}) },
-    output: { render, insert, dir, redirects = false },
+    output: { render, dir, redirects = false },
     history: historyOptions
   } = config;
 
@@ -71,8 +71,7 @@ export default async function staticFiles(
                   });
                   return;
                 }
-                const markup = render(emitted);
-                const html = insert(markup);
+                const html = render(emitted);
                 fs.outputFile(outputPath, html).then(() => {
                   resolve({ pathname, success: true });
                 });

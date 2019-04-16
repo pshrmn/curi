@@ -10,8 +10,7 @@ export interface FallbackDescriptor {
 }
 export declare type GetRouterOptions = () => RouterOptions;
 export interface StaticOutput {
-    render: (emitted: Emitted) => any;
-    insert: (markup: any, emitted?: Emitted) => string;
+    render: (emitted: Emitted) => string;
     dir: string;
     redirects?: boolean;
 }
