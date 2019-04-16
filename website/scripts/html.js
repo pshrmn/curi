@@ -18,7 +18,6 @@ module.exports = function insert(html, title) {
   </head>
   <body>
     <div id="root">${html}</div>
-    <script src="https://cdn.polyfill.io/v2/polyfill.js?features=Object.assign"></script>
     <script src="https://unpkg.com/react@${VERSION}/umd/${REACT_BUILD}"></script>
     <script src="https://unpkg.com/react-dom@${VERSION}/umd/${REACT_DOM_BUILD}"></script>
     <script src="/static/js/prism.js"></script>
