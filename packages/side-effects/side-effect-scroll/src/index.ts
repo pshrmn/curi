@@ -1,13 +1,12 @@
-import { Observer, Emitted } from "@curi/types";
+import { Observer } from "@curi/types";
 
 export default function createScrollSideEffect(): Observer {
-  return function({ response, navigation }: Emitted): void {
+  return function({ response, navigation }) {
     if (navigation.action === "pop") {
       return;
     }
 
-    // we want to wait to scroll until after the re-render,
-    // so we use setTimeout to push this onto the event loop
+    // wait until after the re-render to scroll
     setTimeout(() => {
       const { hash } = response.location;
       if (hash !== "") {

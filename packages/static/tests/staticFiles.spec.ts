@@ -323,8 +323,7 @@ describe("staticFiles()", () => {
           dir: fixtures
         }
       });
-      // once to static pathnames and again for the Home markup
-      expect(options.mock.calls.length).toBe(2);
+      expect(options.mock.calls.length).toBe(1);
     });
   });
 

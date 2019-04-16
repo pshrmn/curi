@@ -3,11 +3,11 @@ import { RouteMatcher, RouteDescriptor, Interaction, Route, ParamParsers } from 
 export interface PreparedRoute {
     public: Route;
     children: Array<PreparedRoute>;
-    pathMatching: {
+    matcher: {
         exact: boolean;
         re: RegExp;
         keys: Array<Key>;
-        paramParsers?: ParamParsers;
+        parsers?: ParamParsers;
     };
 }
 export interface PrepareRoutesOptions {

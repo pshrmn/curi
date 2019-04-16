@@ -5,7 +5,7 @@ export type TitleBuilder = (emitted: Emitted) => string;
 export default function createTitleSideEffect(
   callback: TitleBuilder
 ): Observer {
-  return function(emitted: Emitted) {
+  return function(emitted) {
     document.title = callback(emitted);
   };
 }

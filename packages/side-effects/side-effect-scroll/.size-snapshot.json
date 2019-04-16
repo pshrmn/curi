@@ -1,6 +1,6 @@
 {
   "dist/curi-side-effect-scroll.es.js": {
-    "bundled": 956,
+    "bundled": 878,
     "minified": 305,
     "gzipped": 212,
     "treeshaked": {
@@ -14,17 +14,17 @@
     }
   },
   "dist/curi-side-effect-scroll.js": {
-    "bundled": 973,
+    "bundled": 895,
     "minified": 318,
     "gzipped": 220
   },
   "dist/curi-side-effect-scroll.umd.js": {
-    "bundled": 1300,
+    "bundled": 1220,
     "minified": 456,
     "gzipped": 287
   },
   "dist/curi-side-effect-scroll.min.js": {
-    "bundled": 1300,
+    "bundled": 1220,
     "minified": 456,
     "gzipped": 287
   }

@@ -26,7 +26,7 @@ export default function createAriaLiveSideEffect(
   );
   document.body.appendChild(announcer);
 
-  return function(emitted: Emitted): void {
+  return function(emitted) {
     announcer.textContent = fmt(emitted);
   };
 }

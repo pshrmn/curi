@@ -21,17 +21,17 @@ export function createRoute(
       );
     }
     usedNames.add(props.name);
-  }
 
-  const path = props.path;
-  if (process.env.NODE_ENV !== "production") {
-    if (path.charAt(0) === "/") {
+    if (props.path.charAt(0) === "/") {
       throw new Error(
-        `Route paths cannot start with a forward slash (/). (Received "${path}")`
+        `Route paths cannot start with a forward slash (/). (Received "${
+          props.path
+        }")`
       );
     }
   }
-  let fullPath = withLeadingSlash(join(parentPath || "", path));
+
+  let fullPath = withLeadingSlash(join(parentPath || "", props.path));
 
   const { match: matchOptions = {}, compile: compileOptions = {} } =
     props.pathOptions || {};
@@ -53,27 +53,27 @@ export function createRoute(
   const keys: Array<Key> = [];
   // path is compiled with a leading slash
   // for optional initial params
-  const re = PathToRegexp(withLeadingSlash(path), keys, matchOptions);
+  const re = PathToRegexp(withLeadingSlash(props.path), keys, matchOptions);
 
   const compiled = PathToRegexp.compile(fullPath);
 
   return {
     public: {
       name: props.name,
-      path: path,
+      path: props.path,
       keys: keys.map(key => key.name),
       resolve: props.resolve,
+      response: props.response,
       extra: props.extra,
       pathname(params?: Params) {
         return compiled(params, compileOptions);
-      },
-      response: props.response
+      }
     },
-    pathMatching: {
+    matcher: {
       re,
       keys,
       exact,
-      paramParsers: props.params
+      parsers: props.params
     },
     children
   };

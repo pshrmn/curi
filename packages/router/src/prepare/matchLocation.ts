@@ -30,7 +30,7 @@ function matchRoute(
   route: PreparedRoute,
   pathname: string
 ): Array<MatchingRoute> {
-  const regExpMatch = route.pathMatching.re.exec(pathname);
+  const regExpMatch = route.matcher.re.exec(pathname);
 
   if (!regExpMatch) {
     return [];
@@ -52,12 +52,12 @@ function matchRoute(
       }
     }
     // bail when no children match and route must be exact
-    if (!matches.length && route.pathMatching.exact) {
+    if (!matches.length && route.matcher.exact) {
       return [];
     }
   }
 
-  const params = route.pathMatching.keys.reduce(
+  const params = route.matcher.keys.reduce(
     (acc, key, index) => {
       acc[key.name] = parsed[index];
       return acc;
@@ -79,15 +79,11 @@ function createMatch(
   // handle ancestor routes
   routeMatches.forEach(match => {
     partials.push(match.route.public.name);
-    mergeParsedParams(
-      params,
-      match.params,
-      match.route.pathMatching.paramParsers
-    );
+    mergeParsedParams(params, match.params, match.route.matcher.parsers);
   });
 
   // handle best match
-  mergeParsedParams(params, best.params, best.route.pathMatching.paramParsers);
+  mergeParsedParams(params, best.params, best.route.matcher.parsers);
 
   return {
     route: best.route.public,

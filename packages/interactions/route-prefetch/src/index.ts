@@ -22,9 +22,7 @@ export default function prefetchRoute(): Interaction {
         return;
       }
       const { name, resolve } = <AsyncRoute>route;
-      if (resolve) {
-        scoped[name] = resolve;
-      }
+      scoped[name] = resolve;
     },
     get: (
       name: string,
