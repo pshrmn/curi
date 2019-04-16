@@ -20,12 +20,6 @@ const globalCSS = css`
     }
   }
 
-  @media only screen and (min-width: ${screen.large}) {
-    body {
-      font-size: 20px;
-    }
-  }
-
   *,
   *:before,
   *:after {
