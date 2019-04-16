@@ -4,12 +4,43 @@ const { createRouterComponent } = require("@curi/react-dom");
 
 const App = require("../src/components/App").default;
 
+const dev = process.env.NODE_ENV !== "production";
+
+const VERSION = "16.8.6";
+
+const REACT_BUILD = dev ? "react.development.js" : "react.production.min.js";
+const REACT_DOM_BUILD = dev
+  ? "react-dom.development.js"
+  : "react-dom.production.min.js";
+
 module.exports = function render(emitted) {
   const Router = createRouterComponent(emitted.router);
-  return {
-    html: renderToString(
-      React.createElement(Router, null, React.createElement(App))
-    ),
-    title: emitted.response.title
-  };
+  const html = renderToString(
+    React.createElement(Router, null, React.createElement(App))
+  );
+  const title = emitted.response.title;
+  return insert(html, title);
 };
+
+function insert(html, title) {
+  return `<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>${title} | Curi Documentation</title>
+    <link href="https://fonts.googleapis.com/css?family=Zilla+Slab:300,400" rel="stylesheet">
+    <link href="/static/css/prism.css" rel="stylesheet">
+  </head>
+  <body>
+    <div id="root">${html}</div>
+    <script src="https://cdn.polyfill.io/v2/polyfill.js?features=Object.assign"></script>
+    <script src="https://unpkg.com/react@${VERSION}/umd/${REACT_BUILD}"></script>
+    <script src="https://unpkg.com/react-dom@${VERSION}/umd/${REACT_DOM_BUILD}"></script>
+    <script src="/static/js/prism.js"></script>
+    <script src="/static/js/bundle.js"></script>
+  </body>
+</html>
+`;
+}

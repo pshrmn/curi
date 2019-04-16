@@ -5,7 +5,6 @@ const { staticFiles } = require("@curi/static");
 
 const render = require("./render");
 const pages = require("./pages");
-const insert = require("./insert");
 
 const routes = require("../src/routes").default;
 
@@ -57,7 +56,6 @@ staticFiles({
   output: {
     dir: OUTPUT_DIR,
     redirects: false,
-    render,
-    insert
+    render
   }
 }).then(logResults);
