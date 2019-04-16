@@ -1,3 +1,7 @@
+## Next
+
+* Remove `useMemo` from `useLocation`.
+
 ## 2.0.0-beta.7
 
 * `useNavigationHandler` & `useStatefulNavigationHandler` re-use event handler callback when possible. They also take a `target` string instead of the full `forward` props object.
