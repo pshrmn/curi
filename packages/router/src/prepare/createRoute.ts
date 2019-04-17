@@ -35,24 +35,18 @@ export function createRoute(
 
   const { match: matchOptions = {}, compile: compileOptions = {} } =
     props.pathOptions || {};
-  // end defaults to true, so end has to be hardcoded for it to be false
-  // set this before setting pathOptions.end for children
+  // end must be false for routes with children, but we want to track its original value
   const exact = matchOptions.end == null || matchOptions.end;
 
   let children: Array<PreparedRoute> = [];
   if (props.children && props.children.length) {
-    // when we have child routes, we need to perform non-end matching
     matchOptions.end = false;
-
     children = props.children.map((child: RouteDescriptor) => {
       return createRoute(child, usedNames, fullPath);
     });
   }
 
-  // keys is populated by PathToRegexp
   const keys: Array<Key> = [];
-  // path is compiled with a leading slash
-  // for optional initial params
   const re = PathToRegexp(withLeadingSlash(props.path), keys, matchOptions);
 
   const compiled = PathToRegexp.compile(fullPath);

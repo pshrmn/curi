@@ -1,16 +1,14 @@
 import { withLeadingSlash } from "../utils/path";
 
 import { SessionLocation } from "@hickory/root";
-import { Match, ParamParsers, Params } from "@curi/types";
+import { Match, Params } from "@curi/types";
 
 import { PreparedRoute } from "./prepareRoutes";
 
 interface MatchingRoute {
   route: PreparedRoute;
-  params: RawParams;
+  parsed: Array<string>;
 }
-
-type RawParams = { [key: string]: string };
 
 export function matchLocation(
   location: SessionLocation,
@@ -37,53 +35,42 @@ function matchRoute(
   }
 
   const [matchedSegment, ...parsed] = regExpMatch;
+  let matches: Array<MatchingRoute> = [{ route, parsed }];
 
-  let matches: Array<MatchingRoute> = [];
   const remainder = pathname.slice(matchedSegment.length);
-  if (route.children.length && remainder !== "") {
-    // a parent that ends with a slash will have stripped the leading
-    // slash from remaining segments, so re-add it
-    const fullSegments = withLeadingSlash(remainder);
-    for (let i = 0, length = route.children.length; i < length; i++) {
-      const matched = matchRoute(route.children[i], fullSegments);
-      if (matched.length) {
-        matches = matched;
-        break;
-      }
-    }
-    // bail when no children match and route must be exact
-    if (!matches.length && route.matcher.exact) {
-      return [];
+  if (!route.children.length || remainder === "") {
+    return matches;
+  }
+
+  // a parent that ends with a slash will have stripped the leading
+  // slash from remaining segments, so re-add it
+  const fullSegments = withLeadingSlash(remainder);
+  for (let i = 0, length = route.children.length; i < length; i++) {
+    const matched = matchRoute(route.children[i], fullSegments);
+    if (matched.length) {
+      return matches.concat(matched);
     }
   }
 
-  const params = route.matcher.keys.reduce(
-    (acc, key, index) => {
-      acc[key.name] = parsed[index];
-      return acc;
-    },
-    {} as RawParams
-  );
-
-  return [{ route, params }].concat(matches);
+  return route.matcher.exact ? [] : matches;
 }
 
 function createMatch(
   routeMatches: Array<MatchingRoute>,
   location: SessionLocation
 ): Match {
-  let partials: Array<string> = [];
-  let params: Params = {};
+  const partials: Array<string> = [];
+  const params: Params = {};
 
   const best: MatchingRoute = routeMatches.pop() as MatchingRoute;
   // handle ancestor routes
   routeMatches.forEach(match => {
     partials.push(match.route.public.name);
-    mergeParsedParams(params, match.params, match.route.matcher.parsers);
+    mergeParsedParams(match.route, params, match.parsed);
   });
 
   // handle best match
-  mergeParsedParams(params, best.params, best.route.matcher.parsers);
+  mergeParsedParams(best.route, params, best.parsed);
 
   return {
     route: best.route.public,
@@ -97,12 +84,14 @@ function createMatch(
 }
 
 function mergeParsedParams(
+  route: PreparedRoute,
   params: Params,
-  raw: RawParams,
-  fns: ParamParsers = {}
+  parsed: Array<string>
 ) {
-  for (let key in raw) {
-    let fn = fns[key] || decodeURIComponent;
-    params[key] = fn(raw[key]);
+  const fns = route.matcher.parsers || {};
+  for (let i = 0, len = parsed.length; i < len; i++) {
+    const name = route.matcher.keys[i].name;
+    const fn = fns[name] || decodeURIComponent;
+    params[name] = fn(parsed[i]);
   }
 }

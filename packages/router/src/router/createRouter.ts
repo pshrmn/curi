@@ -34,7 +34,6 @@ export default function createRouter<O = HistoryOptions>(
   routes: RouteMatcher,
   options: RouterOptions<O> = {}
 ): CuriRouter {
-  // the last finished response & navigation
   const mostRecent: CurrentResponse = {
     response: null,
     navigation: null
@@ -47,7 +46,6 @@ export default function createRouter<O = HistoryOptions>(
     };
 
     const matched = routes.match(pendingNav.location);
-    // if no routes match, do nothing
     if (!matched) {
       if (process.env.NODE_ENV !== "production") {
         console.warn(
