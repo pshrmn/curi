@@ -1,6 +1,7 @@
 const glob = require("glob");
 const path = require("path");
 const fs = require("fs-extra");
+const git = require("simple-git")(process.cwd());
 
 const root = process.cwd();
 
@@ -20,7 +21,7 @@ const pkgs = glob
   }, {});
 
 glob
-  .sync(`${examplesDir}/**/package.json`)
+  .sync(`${examplesDir}/+(react|vue|svelte|misc)/*/package.json`)
   .map(pkgPath => ({
     path: pkgPath,
     module: require(pkgPath)
@@ -32,7 +33,10 @@ glob
       }
     });
 
-    fs.outputFile(pkg.path, `${JSON.stringify(pkg.module, null, 2)}\n`).catch(
+    fs.outputFile(pkg.path, `${JSON.stringify(pkg.module, null, 2)}\n`).then(
+      () => {
+        git.add(pkg.path);
+      },
       e => {
         console.error(`Failed to write ${pkg.path}`);
         console.error(e);

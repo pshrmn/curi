@@ -1,5 +1,6 @@
 const join = require("path").join;
 const fs = require("fs");
+const git = require("simple-git")(process.cwd());
 
 const BASE_PATH = join(__dirname, "..", "..", "packages");
 const OUTPUT_FILE = join(__dirname, "..", "src", "constants", "versions.js");
@@ -37,6 +38,8 @@ export default ${JSON.stringify(mappedVersions, null, 2)};\n`,
     function(err) {
       if (err) {
         console.error(err);
+      } else {
+        git.add(OUTPUT_FILE);
       }
     }
   );

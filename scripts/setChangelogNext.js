@@ -1,6 +1,7 @@
 const glob = require("glob");
 const path = require("path");
 const fs = require("fs-extra");
+const git = require("simple-git")(process.cwd());
 
 const root = process.cwd();
 
@@ -20,5 +21,6 @@ glob.sync(`${packagesDir}/**/CHANGELOG.md`).forEach(readme => {
   const versionBuffer = Buffer.from(`## ${pkg.version}`);
   const output = Buffer.concat([versionBuffer, buffer.slice(7)]);
 
-  fs.outputFile(readme, output);
+  fs.outputFileSync(readme, output);
+  git.add(readme);
 });
