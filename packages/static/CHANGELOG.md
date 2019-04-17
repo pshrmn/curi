@@ -1,4 +1,4 @@
-## Next
+## 2.0.0-alpha.1
 
 * Remove `insert` option to `staticFiles`. `render` should return an HTML string.
 * Remove `redirects` option. `render` should throw for routes that shouldn't be rendered.
