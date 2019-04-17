@@ -1,3 +1,7 @@
+## Next
+
+* Improve internal route matching.
+
 ## 2.0.0-beta.9
 
 * `prepareRoutes` returns an object with `match` and `interactions` properties.
