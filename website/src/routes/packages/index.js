@@ -13,7 +13,8 @@ export default {
     return {
       body: PackageList,
       meta: {
-        title: "Curi Packages"
+        title: "Curi Packages",
+        description: "A list of official Curi package"
       }
     };
   },
@@ -62,7 +63,10 @@ export default {
         return {
           body: Package,
           meta: {
-            title: pkg ? `@curi/${pkg.name}` : "Package not found"
+            title: pkg ? `@curi/${pkg.name}` : "Package not found",
+            description: pkg
+              ? `API documentation for @curi/${pkg.name}`
+              : "Package not found"
           },
           data: {
             ...pkg,

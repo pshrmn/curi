@@ -11,7 +11,8 @@ export default {
     return {
       body: GuideList,
       meta: {
-        title: "Guides"
+        title: "Guides",
+        description: "A list of Curi guides"
       }
     };
   },
@@ -34,7 +35,8 @@ export default {
             content: content
           },
           meta: {
-            title: guide ? `${guide.name} Guide` : "Guide Not Found"
+            title: guide ? `${guide.name} Guide` : "Guide Not Found",
+            description: guide ? guide.description : "Guide Not Found"
           }
         };
       }

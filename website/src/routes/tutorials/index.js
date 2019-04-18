@@ -11,7 +11,8 @@ export default {
     return {
       body: TutorialList,
       meta: {
-        title: "Tutorials"
+        title: "Tutorials",
+        description: "A list of Curi tutorials"
       }
     };
   },
@@ -38,8 +39,9 @@ export default {
           },
           meta: {
             title: tutorial
-              ? `Tutorial ${tutorial.title}`
-              : "Tutorial Not Found"
+              ? `${tutorial.title} Tutorial`
+              : "Tutorial Not Found",
+            desription: tutorial ? tutorial.description : "Tutorial Not Found"
           }
         };
       }

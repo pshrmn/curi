@@ -14,6 +14,5 @@ module.exports = function render(emitted) {
   const html = renderToString(
     React.createElement(Router, null, React.createElement(App))
   );
-  const title = response.title;
-  return insert(html, title);
+  return insert(html, response.meta.title, response.meta.description);
 };

@@ -13,7 +13,8 @@ export default {
     return {
       body: ExampleList,
       meta: {
-        title: "Examples"
+        title: "Examples",
+        description: "A list of Curi example projects"
       }
     };
   },
@@ -42,7 +43,10 @@ export default {
             content
           },
           meta: {
-            title: example ? `${example.name} Example` : "Example Not Found"
+            title: example ? `${example.name} Example` : "Example Not Found",
+            description: example
+              ? `${example.name} Example`
+              : "Example Not Found"
           }
         };
       }

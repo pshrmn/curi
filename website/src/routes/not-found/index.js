@@ -5,7 +5,11 @@ export default {
   path: "(.*)",
   respond: () => {
     return {
-      body: NotFound
+      body: NotFound,
+      meta: {
+        title: "404",
+        description: "Requested content not found"
+      }
     };
   }
 };

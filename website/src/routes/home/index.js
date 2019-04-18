@@ -7,7 +7,8 @@ export default {
     return {
       body: Home,
       meta: {
-        title: "Curi"
+        title: "Curi",
+        description: "A JavaScript router for single-page applications"
       }
     };
   }
