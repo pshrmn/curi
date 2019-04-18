@@ -79,15 +79,15 @@ function AccessibilityGuide() {
           The side effect takes a function which returns a string that should be
           read by screen readers. This can be whatever you want it to be, but
           screen readers normally read a page's title, so if you are setting{" "}
-          <IJS>title</IJS>s for your responses, it is probably a good idea to
-          have those announced.
+          <IJS>meta.title</IJS>s for your responses, it is probably a good idea
+          to have those announced.
         </p>
 
         <CodeBlock>
           {`import ariaLive from "@curi/side-effect-aria-live";
 
 const announcer = ariaLive(
-  ({ response }) => \`Navigated to \${response.title}\`
+  ({ response }) => \`Navigated to \${response.meta.title}\`
 );
 
 const routes = prepareRoutes({
@@ -95,7 +95,7 @@ const routes = prepareRoutes({
     {
       name: "Home",
       path: "",
-      response() {
+      respond() {
         return {
           title: "Home"
         };
@@ -206,8 +206,8 @@ function App() {
           <p>
             The <IJS>@curi/vue</IJS> package provides a directive for focusing
             an element. The directive needs to be passed something that changes
-            when the user navigates, so you can just pass it the current{" "}
-            <IJS>response</IJS>
+            when the user navigates, so you can pass it the current{" "}
+            <IJS>response</IJS>.
           </p>
 
           <CodeBlock lang="html">

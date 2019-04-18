@@ -7,10 +7,12 @@ import catchImportError from "../catchImportError";
 export default {
   name: "Guides",
   path: "guides/",
-  response: () => {
+  respond: () => {
     return {
       body: GuideList,
-      title: "Guides"
+      meta: {
+        title: "Guides"
+      }
     };
   },
   children: [
@@ -24,14 +26,16 @@ export default {
           : Guide404;
         return Promise.all([guide, content]);
       },
-      response: ({ resolved }) => {
+      respond: ({ resolved }) => {
         const [guide, content] = resolved;
         return {
           body: Guide,
           data: {
             content: content
           },
-          title: guide ? `${guide.name} Guide` : "Guide Not Found"
+          meta: {
+            title: guide ? `${guide.name} Guide` : "Guide Not Found"
+          }
         };
       }
     }

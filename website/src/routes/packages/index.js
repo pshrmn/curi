@@ -4,16 +4,17 @@ import Package from "./Package";
 import * as Package404 from "./404";
 import catchImportError from "../catchImportError";
 
-const DOES_NOT_EXIST = "does not exist";
 const UNKNOWN_VERSION = "unknown version";
 
 export default {
   name: "Packages",
   path: "packages/",
-  response: () => {
+  respond: () => {
     return {
       body: PackageList,
-      title: "Curi Packages"
+      meta: {
+        title: "Curi Packages"
+      }
     };
   },
   children: [
@@ -52,7 +53,7 @@ export default {
           : Package404;
         return Promise.all([pkg, content]);
       },
-      response: ({ match, error, resolved }) => {
+      respond: ({ match, error, resolved }) => {
         if (error) {
           return error.returns;
         }
@@ -60,7 +61,9 @@ export default {
         const [pkg, content] = resolved;
         return {
           body: Package,
-          title: pkg ? `@curi/${pkg.name}` : "Package not found",
+          meta: {
+            title: pkg ? `@curi/${pkg.name}` : "Package not found"
+          },
           data: {
             ...pkg,
             content

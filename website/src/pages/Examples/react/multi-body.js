@@ -43,7 +43,7 @@ function MultiBodyExample() {
         </p>
 
         <CodeBlock lang="javascript">
-          {`response() {
+          {`respond() {
   return {
     body: {
       main: MainComponent,
@@ -62,7 +62,7 @@ function MultiBodyExample() {
         </p>
 
         <CodeBlock lang="javascript">
-          {`response() {
+          {`respond() {
   return {
     body: {
       // multiple routes may use this root
@@ -89,7 +89,7 @@ const routes = prepareRoutes({
   routes: [
     {
       ...,
-      response() {
+      respond() {
         return {
           body: OneLayout
         };
@@ -97,7 +97,7 @@ const routes = prepareRoutes({
     },
     {
       ...,
-      response() {
+      respond() {
         return {
           body: { another: Layout }
         };

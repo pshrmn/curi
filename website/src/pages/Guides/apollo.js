@@ -108,7 +108,7 @@ const routes = prepareRoutes({
     {
       name: 'Noun',
       path: 'noun/:word',
-      response: () => {
+      respond: () => {
         return {
           body: Noun
         };
@@ -232,7 +232,7 @@ const routes = prepareRoutes({
         </p>
         <p>
           While we know at this point that the query has executed, we should
-          also check <IJS>error</IJS> in the <IJS>response</IJS> function to
+          also check <IJS>error</IJS> in the <IJS>respond</IJS> function to
           ensure that the query was executed successfully.
         </p>
 
@@ -252,7 +252,7 @@ export default [
         variables: { word: params.word }
       });
     },
-    response({ error, resolved }) {
+    respond({ error, resolved }) {
       if (error) {
         // handle failed queries
       }

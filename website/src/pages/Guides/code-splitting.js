@@ -67,7 +67,7 @@ const routes = prepareRoutes({
     {
       name: 'Home',
       path: '',
-      response: () => {
+      respond: () => {
         return {
           body: Home
         };
@@ -76,7 +76,7 @@ const routes = prepareRoutes({
     {
       name: 'Contact',
       path: 'contact',
-      response: () => {
+      respond: () => {
         return {
           body: Contact
         };
@@ -85,7 +85,7 @@ const routes = prepareRoutes({
         {
           name: 'Contact Method',
           path: ':method',
-          response: () => {
+          respond: () => {
             return {
               body: ContactMethod
             };
@@ -115,10 +115,10 @@ const routes = prepareRoutes({
         <p>
           A route's <IJS>resolve</IJS> function should return a Promise;{" "}
           <IJS>import</IJS>, conveniently, returns a Promise. In our{" "}
-          <IJS>response</IJS> function, instead of referencing values imported
-          at the top of the file, we can reference the result of the{" "}
+          <IJS>respond</IJS> function, instead of referencing values imported at
+          the top of the file, we can reference the result of the{" "}
           <IJS>resolve</IJS> function using the <IJS>resolved</IJS> property
-          passed to the <IJS>response</IJS> function.
+          passed to the <IJS>respond</IJS> function.
         </p>
 
         <p>
@@ -138,7 +138,7 @@ const routes = prepareRoutes({
         return import('./components/Home')
           .then(module => module.default);
       },
-      response: ({ resolved }) => {
+      respond: ({ resolved }) => {
         return {
           body: resolved
         };
@@ -151,7 +151,7 @@ const routes = prepareRoutes({
         return import('./components/Contact')
           .then(module => module.default);
       },
-      response: ({ resolved }) => {
+      respond: ({ resolved }) => {
         return {
           body: resolved
         };
@@ -164,7 +164,7 @@ const routes = prepareRoutes({
             return import('./components/ContactMethod')
               .then(module => module.default);
           },
-          response: ({ resolved }) => {
+          respond: ({ resolved }) => {
             return {
               body: resolved
             };

@@ -117,7 +117,7 @@ function MyReactNativeApp = () => (
           </p>
 
           <p>
-            If you use <IJS>route.response</IJS> to set React components as the{" "}
+            If you use <IJS>route.respond</IJS> to set React components as the{" "}
             <IJS>body</IJS> properties on your responses, you can create a React
             element for the <IJS>body</IJS> component.
           </p>
@@ -174,7 +174,7 @@ function MyReactNativeApp() {
     {
       name: "Home",
       path: "",
-      response() {
+      respond() {
         return {
           body: {
             Main: HomeMain,

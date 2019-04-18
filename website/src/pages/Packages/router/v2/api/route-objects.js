@@ -138,13 +138,13 @@ export function RoutePropertiesAPI() {
             a Redux store) in <IJS>resolve</IJS> because it is possible that
             navigating to the route might be cancelled. If you must perform side
             effects for a route, you should do so in the route's{" "}
-            <IJS>response</IJS> function, but even that should be avoided.
+            <IJS>respond</IJS> function, but even that should be avoided.
           </p>
         </Note>
 
         <p>
           The value returned by the <IJS>resolve</IJS> function will be passed
-          to the route's <IJS>response</IJS> function through its{" "}
+          to the route's <IJS>respond</IJS> function through its{" "}
           <IJS>resolved</IJS> property. If there is an uncaught error,{" "}
           <IJS>resolved</IJS> will be <IJS>null</IJS> and the <IJS>error</IJS>{" "}
           will be passed.
@@ -157,7 +157,7 @@ export function RoutePropertiesAPI() {
   resolve({ name, params, partials, location }) {
     return Promise.resolve("hurray!");
   },
-  response({ resolved, error }) {
+  respond({ resolved, error }) {
     if (error) {
       // there was an uncaught error in the resolve function
     }
@@ -166,11 +166,11 @@ export function RoutePropertiesAPI() {
         </CodeBlock>
       </HashSection>
 
-      <HashSection meta={{ title: "route.response", hash: "response" }}>
+      <HashSection meta={{ title: "route.respond", hash: "respond" }}>
         <p>A function for modifying the response object.</p>
 
         <p>
-          The object returned by a route's <IJS>response</IJS> function will be
+          The object returned by a route's <IJS>respond</IJS> function will be
           merged with the route's intrinsic match properties to create the
           response object.
         </p>
@@ -189,13 +189,13 @@ export function RoutePropertiesAPI() {
             meta={{ title: "options", hash: "response-options" }}
           >
             <p>
-              A <IJS>response</IJS> function is passed an object with a number
-              of properties that can be useful for modifying the response.
+              A <IJS>respond</IJS> function is passed an object with a number of
+              properties that can be useful for modifying the response.
             </p>
 
             <CodeBlock>
               {`{
-  response: ({ match, resolved, error }) => {
+  respond: ({ match, resolved, error }) => {
     // ...
   }
 }`}
@@ -282,7 +282,7 @@ const user = {
     return fetch(\`/api/users/$\{params.id\}\`)
       .then(resp => JSON.parse(resp));
   },
-  response: ({ resolved }) => {
+  respond: ({ resolved }) => {
     return {
       data: resolved
     };
@@ -315,9 +315,13 @@ const user = {
     return fetch(\`/api/users/$\{params.id\}\`)
       .then(resp => JSON.parse(resp));
   },
-  response: ({ error, resolved }) => {
+  respond: ({ error, resolved }) => {
     if (error) {
-      return { error };
+      return {
+        meta: {
+          error
+        }
+      };
     }
     return {
       data: resolved.data
@@ -346,7 +350,7 @@ const routes = prepareRoutes({
     {
       name: "Home",
       path: "",
-      response() {
+      respond() {
         return { body: Home };
       }
     },
@@ -359,46 +363,27 @@ const routes = prepareRoutes({
 
           <HashSection
             tag="h4"
-            meta={{ title: "status", hash: "response-return-status" }}
+            meta={{ title: "meta", hash: "response-return-meta" }}
           >
             <p>
-              A number. This is useful for redirects or locations caught by your
-              catch-all route while using server-side rendering. The default
-              status value is <IJS>200</IJS>.
+              An object whose properties are metadata about the response. This
+              may include the status of the response (200, 301, etc.), a title
+              string for the document, or a description to be set as a page's{" "}
+              <IJS>{`<meta name="Description">`}</IJS>.
             </p>
 
             <CodeBlock>
               {`{
-  response(){
+  respond(){
     return {
-      status: 301,
-      redirect: {...}
+      meta: {
+        title: "Some Page",
+        description: "This is some page",
+        status: 200
+      }
     };
   }
-}
-// response = { status: 301, ... }`}
-            </CodeBlock>
-          </HashSection>
-
-          <HashSection
-            tag="h4"
-            meta={{ title: "error", hash: "response-return-error" }}
-          >
-            <p>
-              If an error occurs with the route's <IJS>resolve</IJS> function,
-              you might want to attach an error message to the response.
-            </p>
-
-            <CodeBlock>
-              {`{
-  resolve() {
-    return Promise.reject("woops!");
-  },
-  response({ error }) {
-    return { error };
-  }
-}
-// response = { error: "woops!", ... }`}
+}`}
             </CodeBlock>
           </HashSection>
 
@@ -410,31 +395,11 @@ const routes = prepareRoutes({
 
             <CodeBlock>
               {`{
-  response() {
+  respond() {
     return { data: Math.random() };
   }
 }
 // response = { data: 0.8651606708109429, ... }`}
-            </CodeBlock>
-          </HashSection>
-
-          <HashSection
-            tag="h4"
-            meta={{ title: "title", hash: "response-title" }}
-          >
-            <p>
-              This can be used with <IJS>@curi/side-effect-title</IJS> to update
-              the page's <IJS>document.title</IJS>.
-            </p>
-
-            <CodeBlock>
-              {`{
-  response({ params }) {
-    return { title: \`User \${params.id}\` };
-  }
-}
-// when visting /user/2
-// response = { title: "User 2", ... }`}
             </CodeBlock>
           </HashSection>
 
@@ -459,7 +424,7 @@ const routes = prepareRoutes({
   {
     name: "Old Photo",
     path: "photo/:id",
-    response({ params }) {
+    respond({ params }) {
       return {
         redirect: { name: "Photo", params }
       };
@@ -484,7 +449,7 @@ const routes = prepareRoutes({
               {`{
   name: "Redirects",
   path: "redirects",
-  response() {
+  respond() {
     return {
       redirect: {
         externalURL: "https://example.com"

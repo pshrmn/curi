@@ -477,12 +477,13 @@ new Vue({
 {
   body: undefined,
   data: undefined,
-  error: undefined,
   location: { pathname: '/', ... },
   name: 'Home',
   params: {},
   partials: [],
-  status: 200
+  meta: {
+    status: 200
+  }
 }`}
           </CodeBlock>
 
@@ -516,8 +517,8 @@ new Vue({
 
         <p>
           Earlier it was mentioned that response objects can be modified. This
-          is done by returning an object from a route's <IJS>response</IJS>{" "}
-          function. <IJS>response</IJS> receives an object with a whole bunch of
+          is done by returning an object from a route's <IJS>respond</IJS>{" "}
+          function. <IJS>respond</IJS> receives an object with a whole bunch of
           properties that we can use to help determine how to modify the
           response, but for the time being, we don't care about any of those.
           All we need to know is that if we return an object with a{" "}
@@ -529,7 +530,7 @@ new Vue({
           {`{
   name: "Home",
   path: "",
-  response() {
+  respond() {
     return {
       body: "Home, sweet home."
     };
@@ -605,7 +606,7 @@ export default prepareRoutes({
     {
       name: "Home",
       path: "",
-      response() {
+      respond() {
         return {
           body: Home
         };
@@ -614,7 +615,7 @@ export default prepareRoutes({
     {
       name: "Book",
       path: "book/:id",
-      response() {
+      respond() {
         return {
           body: Book
         };
@@ -623,7 +624,7 @@ export default prepareRoutes({
     {
       name: "Checkout",
       path: "checkout",
-      response() {
+      respond() {
         return {
           body: Checkout
         };
@@ -632,7 +633,7 @@ export default prepareRoutes({
     {
       name: "Catch All",
       path: "(.*)",
-      response() {
+      respond() {
         return {
           body: NotFound
         };

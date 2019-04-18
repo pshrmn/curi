@@ -200,9 +200,9 @@ function RoutesGuide() {
 
         <HashSection meta={responseMeta} tag="h3">
           <p>
-            Each route can have a <IJS>response</IJS> function. When a route
+            Each route can have a <IJS>respond</IJS> function. When a route
             matches, a response object with "match" properties is generated. An
-            object returned by the <IJS>response</IJS> function gets merged with
+            object returned by the <IJS>respond</IJS> function gets merged with
             the match response object*. The{" "}
             <Link name="Guide" params={{ slug: "responses" }}>
               responses guide
@@ -215,7 +215,7 @@ function RoutesGuide() {
           </p>
 
           <p>
-            The <IJS>response</IJS> function receives an object with a number of
+            The <IJS>respond</IJS> function receives an object with a number of
             properties.
           </p>
 
@@ -245,7 +245,7 @@ const routes = prepareRoutes({
       resolve({ params }) {
         return UserAPI.get(params.id);
       },
-      response({ match, resolved, error }) {
+      respond({ match, resolved, error }) {
         if (error) {
           // ...
         }

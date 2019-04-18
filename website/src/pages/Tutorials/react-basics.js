@@ -38,14 +38,14 @@ const responseMeta = {
   title: "Responses and Navigation",
   hash: "responses"
 };
-const responseFnMeta = {
-  title: "route.response",
-  hash: "route-response"
+const respondFnMeta = {
+  title: "route.respond",
+  hash: "route-respond"
 };
 const renderingMeta = {
   title: "Rendering with React",
   hash: "rendering",
-  children: [responseMeta, responseFnMeta]
+  children: [responseMeta, respondFnMeta]
 };
 
 const linkMeta = {
@@ -568,12 +568,13 @@ export default function App() {
 {
   body: undefined,
   data: undefined,
-  error: undefined,
   location: { pathname: '/', ... },
   name: 'Home',
   params: {},
   partials: [],
-  status: 200
+  meta: {
+    status: 200
+  }
 }`}
           </CodeBlock>
 
@@ -614,17 +615,17 @@ export default function App() {
           best way is to use a <IJS>response</IJS>'s <IJS>body</IJS> property.
         </p>
 
-        <HashSection meta={responseFnMeta} className="aside" tag="h3">
+        <HashSection meta={respondFnMeta} className="aside" tag="h3">
           <p>
-            Route's can have a <IJS>response</IJS> property, which is a function
+            Route's can have a <IJS>respond</IJS> property, which is a function
             that returns an object. The (valid) properties of the object will be
             merged onto the response object.
           </p>
 
           <p>
             One of these valid properties is <IJS>body</IJS>, so if the{" "}
-            <IJS>response</IJS> function returns an object with a{" "}
-            <IJS>body</IJS> property, we can access it from the response as{" "}
+            <IJS>respond</IJS> function returns an object with a <IJS>body</IJS>{" "}
+            property, we can access it from the response as{" "}
             <IJS>response.body</IJS>.
           </p>
 
@@ -632,7 +633,7 @@ export default function App() {
             {`{
   name: "Home",
   path: "",
-  response() {
+  respond() {
     return {
       body: "Home, sweet home."
     };
@@ -722,7 +723,7 @@ export default function NotFound() {
 
         <p>
           These components can be imported in <IJS>src/routes.js</IJS>. Each
-          route can be given a <IJS>response</IJS> function which returns an
+          route can be given a <IJS>respond</IJS> function which returns an
           object with their respective component as its <IJS>body</IJS>.
         </p>
 
@@ -740,28 +741,28 @@ export default prepareRoutes({
     {
       name: "Home",
       path: "",
-      response() {
+      respond() {
         return { body: Home };
       }
     },
     {
       name: "Book",
       path: "book/:id",
-      response() {
+      respond() {
         return { body: Book };
       }
     },
     {
       name: "Checkout",
       path: "checkout",
-      response() {
+      respond() {
         return { body: Checkout };
       }
     },
     {
       name: "Catch All",
       path: "(.*)",
-      response() {
+      respond() {
         return { body: NotFound };
       }
     }

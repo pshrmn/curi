@@ -40,7 +40,7 @@ function LoadingGuide() {
         <p>
           An async function (with any name you want it to have) can be added to
           the <IJS>resolve</IJS> function and the value it resolves will be
-          available in the route's <IJS>response</IJS> function.
+          available in the route's <IJS>respond</IJS> function.
         </p>
 
         <p>
@@ -87,21 +87,21 @@ function LoadingGuide() {
         <p>
           While <IJS>resolve</IJS> starts our data loading, it doesn't actually
           do anything. Instead, we should handle any loaded data with the{" "}
-          <IJS>response</IJS> function.
+          <IJS>respond</IJS> function.
         </p>
 
         <p>
-          The <IJS>response</IJS> and <IJS>resolve</IJS> are separate because
-          while a route is resolving, the user may navigate again, which
+          The <IJS>respond</IJS> and <IJS>resolve</IJS> functions are separate
+          because while a route is resolving, the user may navigate again, which
           overrides the current navigation. We cannot cancel the{" "}
           <IJS>resolve</IJS> function for the current navigation, so if it
           performs any side effects, our application is stuck with them. To
-          avoid this, the <IJS>response</IJS> function is not called until we
+          avoid this, the <IJS>respond</IJS> function is not called until we
           know that the current navigation will complete.
         </p>
 
         <p>
-          The <IJS>response</IJS> function will receive an object with a number
+          The <IJS>respond</IJS> function will receive an object with a number
           of properties. These are covered in in the{" "}
           <Link
             name="Guide"
@@ -121,7 +121,7 @@ function LoadingGuide() {
   resolve({ params }) {
     return fakeAPI.getRecipe(params.id);
   },
-  response({ resolved }) {
+  respond({ resolved }) {
     return {
       body: Recipe,
       data: resolved.data
@@ -132,8 +132,8 @@ function LoadingGuide() {
 
         <p>
           If at some point in time we decide that we want to change our URI
-          pathname structure, we can also use the <IJS>response</IJS> function
-          to redirect.
+          pathname structure, we can also use the <IJS>respond</IJS> function to
+          redirect.
         </p>
 
         <p>
@@ -152,7 +152,7 @@ function LoadingGuide() {
           {`{
   name: 'Old Recipe',
   path: 'r/:id',
-  response: ({ params }) => {
+  respond: ({ params }) => {
     // destructure the current location to preserve
     // query/hash values
     return {
@@ -169,7 +169,7 @@ function LoadingGuide() {
 
       <PlainSection>
         <p>
-          A route's <IJS>resolve</IJS> and <IJS>response</IJS> functions offer a
+          A route's <IJS>resolve</IJS> and <IJS>respond</IJS> functions offer a
           convenient way to do data loading prior to actually rendering the
           route, but please remember that your application will not be
           re-rendering until <em>after</em> the fetching has resolved. If you

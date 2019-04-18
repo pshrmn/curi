@@ -7,10 +7,12 @@ import catchImportError from "../catchImportError";
 export default {
   name: "Tutorials",
   path: "tutorial/",
-  response: () => {
+  respond: () => {
     return {
       body: TutorialList,
-      title: "Tutorials"
+      meta: {
+        title: "Tutorials"
+      }
     };
   },
   children: [
@@ -27,14 +29,18 @@ export default {
 
         return Promise.all([tutorial, content]);
       },
-      response: ({ resolved }) => {
+      respond: ({ resolved }) => {
         const [tutorial, content] = resolved;
         return {
           body: Tutorial,
           data: {
             content: content
           },
-          title: tutorial ? `Tutorial ${tutorial.title}` : "Tutorial Not Found"
+          meta: {
+            title: tutorial
+              ? `Tutorial ${tutorial.title}`
+              : "Tutorial Not Found"
+          }
         };
       }
     }

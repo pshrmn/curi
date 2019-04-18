@@ -3,10 +3,12 @@ import Home from "./Home";
 export default {
   name: "Home",
   path: "",
-  response: () => {
+  respond: () => {
     return {
       body: Home,
-      title: "Curi"
+      meta: {
+        title: "Curi"
+      }
     };
   }
 };

@@ -73,8 +73,8 @@ function ResponsesGuide() {
 
         <p>
           The "settable" properties are ones that are added by a matched route's{" "}
-          <IJS>response</IJS> function. These only exist on the response when
-          they are returned by a route's <IJS>response</IJS> function.
+          <IJS>respond</IJS> function. These only exist on the response when
+          they are returned by a route's <IJS>respond</IJS> function.
         </p>
         <p>The "settable" properties are:</p>
 
@@ -82,11 +82,8 @@ function ResponsesGuide() {
           <p>The component(s) that should be rendered for a route.</p>
         </HashSection>
 
-        <HashSection
-          tag="h3"
-          meta={{ title: "status", hash: "settable-status" }}
-        >
-          <p>An http status, mostly useful for server side rendering.</p>
+        <HashSection tag="h3" meta={{ title: "meta", hash: "settable-meta" }}>
+          <p>An object with metadata for a response.</p>
         </HashSection>
 
         <HashSection tag="h3" meta={{ title: "data", hash: "settable-data" }}>
@@ -96,24 +93,10 @@ function ResponsesGuide() {
           </p>
         </HashSection>
 
-        <HashSection tag="h3" meta={{ title: "title", hash: "settable-title" }}>
-          <p>
-            The response's title, which can be used with{" "}
-            <Link
-              name="Package"
-              params={{ package: "side-effect-title", version: "v2" }}
-            >
-              <IJS>@curi/side-effect-title</IJS>
-            </Link>{" "}
-            to set the browsers tab's title.
-          </p>
-        </HashSection>
-
-        <HashSection tag="h3" meta={{ title: "", hash: "settable-" }}>
-          <p>A convenient place to attach any errors to the response.</p>
-        </HashSection>
-
-        <HashSection tag="h3" meta={{ title: "", hash: "settable-" }}>
+        <HashSection
+          tag="h3"
+          meta={{ title: "redirect", hash: "settable-redirect" }}
+        >
           <p>
             An object describing a route that Curi should automatically redirect
             to.
@@ -132,13 +115,12 @@ function ResponsesGuide() {
   // Please see below for more information
   // about this property
 
-  status: 200,
+  meta: {
+    status: 200,
+    title: 'Photo 12345'
+  },
 
   data: {...},
-
-  title: 'Photo 12345',
-
-  error: undefined,
 
   redirect: {...}
 }`}
@@ -148,7 +130,7 @@ function ResponsesGuide() {
       <HashSection meta={bodyMeta}>
         <p>
           Curi isn't strict about how you use responses, but you will most
-          likely always want to use a route's <IJS>response</IJS> function to
+          likely always want to use a route's <IJS>respond</IJS> function to
           attach a <IJS>body</IJS> property to a response. The usual pattern is
           to use a route's <IJS>body</IJS> property to describe which
           component(s) to render when a route matches. This can either be a
@@ -176,12 +158,12 @@ function ResponsesGuide() {
 const routes = prepareRoutes({
   routes: [
     {
-      response() {
+      respond() {
         return { body: One }
       }
     },
     {
-      response() {
+      respond() {
         return {
           body: {
             main: Main,
@@ -197,7 +179,7 @@ const routes = prepareRoutes({
 
       <HashSection meta={redirectMeta}>
         <p>
-          When a route's <IJS>response</IJS> function returns an object with a{" "}
+          When a route's <IJS>respond</IJS> function returns an object with a{" "}
           <Link
             name="Package"
             params={{ package: "router", version: "v2" }}
@@ -220,14 +202,45 @@ const routes = prepareRoutes({
         <p>
           When creating a router, you can set the <IJS>invisibleRedirects</IJS>{" "}
           option to <IJS>true</IJS> and the response will not be sent to
-          observers and one time functions. Redirect responses don't usually
-          have anything to render, so setting this option is usually ideal.
+          observers and one time functions. Instead, the response for the
+          location that is redirected to will be the next emitted response. In
+          either case, the router will automatically redirect to the route
+          specified by <IJS>response.redirect</IJS>.
         </p>
 
         <CodeBlock>
           {`const router = createRouter(browser, routes, {
-  invisibleRedirects: false
+  invisibleRedirects: true
 });`}
+        </CodeBlock>
+
+        <p>
+          This property can also be used to specify an external redirect (a
+          redirect to a location that is not within the application). This is
+          done by setting an <IJS>externalURL</IJS> property on the{" "}
+          <IJS>redirect</IJS> object. It is up to the application to redirect to
+          the external location. Responses with an external redirect will be
+          emitted when <IJS>invisibleRedirects</IJS> is <IJS>true</IJS>.
+        </p>
+
+        <CodeBlock>
+          {`// a route with an external redirect
+{
+  respond() {
+    return {
+      redirect: {
+        externalURL: "https://example.com"
+      }
+    };
+  }
+}
+
+// a route observe can detect and automatically redirect
+router.observe(({ response }) => {
+  if (response.redirect && response.redirect.externalURL) {
+    window.location.replace(response.redirect.externalURL);
+  }
+})`}
         </CodeBlock>
       </HashSection>
     </React.Fragment>

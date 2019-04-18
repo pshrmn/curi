@@ -33,7 +33,7 @@ export function TitleAPI() {
 import titleEffect from '@curi/side-effect-title';
 
 const setTitle = titleEffect(({ response }) => {
-  return \`\${response.title} | My Site\`;
+  return \`\${response.meta.title} | My Site\`;
 });
 
 const router = curi(history, routes, {
@@ -42,19 +42,20 @@ const router = curi(history, routes, {
       </CodeBlock>
 
       <p>
-        While you can use any properties of the <IJS>response</IJS> to generate
-        the string, the <IJS>response.title</IJS> property is intended to be
-        used with this side effect.
+        The preferred method for setting a response's title is with the{" "}
+        <IJS>meta</IJS> property.
       </p>
 
       <CodeBlock>
         {`{
   name: "About",
   path: "about",
-  response() {
+  respond() {
     return {
-      body: Home,
-      title: "About"
+      body: About,
+      meta: {
+        title: "About"
+      }
     }
   }
 }

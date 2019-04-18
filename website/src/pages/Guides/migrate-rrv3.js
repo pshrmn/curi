@@ -217,7 +217,7 @@ function MigrateReactRouterv3Guide() {
             With Curi, the router creates a "response" object when it matches
             locations. Some of the properties of the response are automatically
             set based on the location and the matching route. Others can be set
-            by a route. This is done using the <IJS>response</IJS> property,
+            by a route. This is done using the <IJS>respond</IJS> property,
             which is a function that returns an object whose properties will be
             added to the response. For this React application, we want a
             response's <IJS>body</IJS> property to be the React component
@@ -240,7 +240,7 @@ const routes = prepareRoutes({
     {
       name: 'Home',
       path: '',
-      response: () => {
+      respond: () => {
         return {
           body: Home
         };
@@ -249,7 +249,7 @@ const routes = prepareRoutes({
     {
       name: 'Inbox',
       path: 'inbox',
-      response: () => {
+      respond: () => {
         return {
           body: Inbox
         };
@@ -258,7 +258,7 @@ const routes = prepareRoutes({
         {
           name: 'Message',
           path: ':message',
-          response: () => {
+          respond: () => {
             return {
               body: Message
             };
@@ -314,7 +314,7 @@ const routes = prepareRoutes({
     {
       name: 'Home',
       path: '',
-      response: () => {
+      respond: () => {
         return {
           body: Home
         };
@@ -323,7 +323,7 @@ const routes = prepareRoutes({
     {
       name: 'Inbox',
       path: 'inbox',
-      response: () => {
+      respond: () => {
         return {
           body: Inbox
         };
@@ -332,7 +332,7 @@ const routes = prepareRoutes({
         {
           name: 'Message',
           path: ':message',
-          response: () => {
+          respond: () => {
             return {
               body: Message
             };
@@ -441,13 +441,13 @@ const router = createRouter(browser, routes);`}
           <p>
             The <IJS>Router</IJS> will setup an observer on the provided router
             so that it can re-render your application whenever there is a new{" "}
-            <IJS>response</IJS>. The <IJS>Router</IJS> expects a function as its{" "}
-            <IJS>children</IJS> prop (a render-invoked function). This function
-            renders the application using the <IJS>response</IJS>.
+            <IJS>response</IJS>. The <IJS>Router</IJS> uses a context provider
+            that makes a response available to other components in the
+            application using the <IJS>useResponse</IJS> hook.
           </p>
           <p>
-            When the <IJS>Router</IJS>'s <IJS>children</IJS> function is called,
-            it will receive an object with three properties:
+            The <IJS>useResponse</IJS> hook returns an object with three
+            properties:
           </p>
           <ol>
             <li>
@@ -463,7 +463,7 @@ const router = createRouter(browser, routes);`}
             </li>
           </ol>
           <p>
-            Above, we added <IJS>response</IJS> functions to each route. The
+            Above, we added <IJS>respond</IJS> functions to each route. The
             functions set React components as the <IJS>body</IJS> property of
             responses. We can now use <IJS>response.body</IJS> to render those
             components.
@@ -522,7 +522,7 @@ ReactDOM.render((
     {
       name: "Not Found",
       path: "(.*)",
-      response() {
+      respond() {
         return { body: NotFound };
       }
     }

@@ -133,13 +133,13 @@ npm run start`}
         </p>
         <p>
           The results of the async functions will be available in a route's{" "}
-          <IJS>response</IJS> function through the <IJS>resolved</IJS> object.
+          <IJS>respond</IJS> function through the <IJS>resolved</IJS> object.
           Each result will be stored in the object using the async function's
           name.
         </p>
         <p>
           If any of the async functions throws an uncaught error, that error
-          will be available in the <IJS>response</IJS> function through the{" "}
+          will be available in the <IJS>respond</IJS> function through the{" "}
           <IJS>error</IJS> property. That said, it is preferable for you to
           catch and handle the errors yourself.
         </p>
@@ -154,7 +154,7 @@ npm run start`}
     const data = fetch(\`/api/data/$\{params.id\}\`);
     return Promise.all([ component, data ]);
   },
-  response({ resolved, error }) {
+  respond({ resolved, error }) {
     if (error) {
       // handle an uncaught error
     }
@@ -201,7 +201,7 @@ const routes = prepareRoutes({
         const data = fetch(\`/api/data/$\{params.id\}\`);
         return Promise.all([ component, data ]);
       },
-      response({ resolved, error }) {
+      respond({ resolved, error }) {
         if (error) {
           // handle an uncaught error
         }
@@ -343,10 +343,10 @@ import(/* webpackChunkName: "Test" */ "./components/Test.js")`}
         </HashSection>
 
         <p>
-          Currently <IJS>response</IJS> returns an object whose <IJS>body</IJS>{" "}
-          property is a module imported at the top of the file. In order to add
-          code splitting to routes, we can add a <IJS>resolve</IJS> function
-          that imports the module.
+          Currently <IJS>respond</IJS> function returns an object whose{" "}
+          <IJS>body</IJS> property is a module imported at the top of the file.
+          In order to add code splitting to routes, we can add a{" "}
+          <IJS>resolve</IJS> function that imports the module.
         </p>
 
         <p>
@@ -376,7 +376,7 @@ const routes = prepareRoutes({
 
         <p>
           When a module fails to load, the error will be passed to the{" "}
-          <IJS>response</IJS> function through the <IJS>error</IJS> property. We
+          <IJS>respond</IJS> function through the <IJS>error</IJS> property. We
           won't be incorporating this into the application here, but in a real
           application you probably want to have a fallback component to display
           an error message (especially if you have an offline mode with service
@@ -396,7 +396,7 @@ const routes = prepareRoutes({
           .then(preferDefault)
           .catch(err => displayLoadError(err);
       },
-      response({ resolved }) {
+      respond({ resolved }) {
         return {
           body: resolved
         };
@@ -413,7 +413,7 @@ const routes = prepareRoutes({
           the component instead of the entire module object.
         </p>
         <p>
-          The <IJS>response</IJS> functions should also be updated to set the
+          The <IJS>respond</IJS> functions should also be updated to set the
           return object's <IJS>body</IJS> property to <IJS>resolved.body</IJS>{" "}
           instead of the import at the top of the file.
         </p>
@@ -432,7 +432,7 @@ export default prepareRoutes({
         return import("./components/Home")
           .then(preferDefault);
       },
-      response({ resolved }) {
+      respond({ resolved }) {
         return { body: resolved };
       }
     },
@@ -443,7 +443,7 @@ export default prepareRoutes({
         return import("./components/Book")
           .then(preferDefault);
       },
-      response({ resolved }) {
+      respond({ resolved }) {
         return { body: resolved };
       }
     },
@@ -454,7 +454,7 @@ export default prepareRoutes({
         return import("./components/Checkout")
           .then(preferDefault);
       },
-      response({ resolved }) {
+      respond({ resolved }) {
         return { body: resolved };
       }
     },
@@ -465,7 +465,7 @@ export default prepareRoutes({
         return import("./components/NotFound")
           .then(preferDefault);
       },
-      response({ resolved }) {
+      respond({ resolved }) {
         return { body: resolved };
       }
     }
@@ -582,7 +582,7 @@ export const BOOK = id => Promise.resolve(
           options object. One of the properties of this object is{" "}
           <IJS>external</IJS>, which is used to pass in external values that
           will be accessible in a route's <IJS>resolve</IJS> and{" "}
-          <IJS>response</IJS> functions. This is particularly useful for data
+          <IJS>respond</IJS> functions. This is particularly useful for data
           that is initialized at runtime, like an Apollo store, but we will also
           use it here.
         </p>
@@ -621,7 +621,7 @@ registerServiceWorker();`}
         <p>
           What do we want to do with the data loaded from the API calls? Along
           with the <IJS>body</IJS> property, another valid return property for{" "}
-          <IJS>response</IJS> functions is <IJS>data</IJS>. This is a convenient
+          <IJS>respond</IJS> functions is <IJS>data</IJS>. This is a convenient
           way to attach any data to a response, which we can read from while
           rendering.
         </p>
@@ -631,8 +631,8 @@ registerServiceWorker();`}
           to load the books data <IJS>"books"</IJS>.
         </p>
         <p>
-          The <IJS>Book</IJS> route's <IJS>response</IJS> also needs to be
-          updated to attach the books data (<IJS>resolved.books</IJS>) to the
+          The <IJS>Book</IJS> route's <IJS>respond</IJS> function also needs to
+          be updated to attach the books data (<IJS>resolved.books</IJS>) to the
           response.
         </p>
         <p>
@@ -662,7 +662,7 @@ export default prepareRoutes({
         const books = external.bookAPI.BOOKS();
         return Promise.all([body, books]);
       },
-      response({ resolved }) {
+      respond({ resolved }) {
         const [body, books] = resolved;
         return {
           body,
@@ -679,7 +679,7 @@ export default prepareRoutes({
         const book = external.bookAPI.BOOK(params.id);
         return Promise.all([body, books]);
       },
-      response({ resolved }) {
+      respond({ resolved }) {
         const [body, book] = resolved;
         return {
           body,
@@ -694,7 +694,7 @@ export default prepareRoutes({
         return import("./components/Checkout")
           .then(preferDefault);
       },
-      response({ resolved }) {
+      respond({ resolved }) {
         return { body: resolved };
       }
     },
@@ -705,7 +705,7 @@ export default prepareRoutes({
         return import("./components/NotFound")
           .then(preferDefault);
       },
-      response({ resolved }) {
+      respond({ resolved }) {
         return { body: resolved };
       }
     }

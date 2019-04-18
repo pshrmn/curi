@@ -541,9 +541,10 @@ function renderHandler(req, res) {
         </p>
 
         <p>
-          If your routes set <IJS>title</IJS> strings on the <IJS>response</IJS>
-          , you can also pass that value to the markup insertion function and
-          set the title in the HTML string.
+          The <IJS>meta</IJS> property of a <IJS>response</IJS> is useful for
+          server-side rendering. For example, routes can set{" "}
+          <IJS>meta.title</IJS> to be the page's title, which can be inserted
+          into the generated HTML.
         </p>
 
         <CodeBlock data-line="4-15,28-29">
@@ -574,7 +575,7 @@ function renderHandler(req, res) {
         <App />
       </Router>
     );
-    const html = insertMarkup(markup, response.title);
+    const html = insertMarkup(markup, response.meta.title);
     res.send(html);
   });
 }`}

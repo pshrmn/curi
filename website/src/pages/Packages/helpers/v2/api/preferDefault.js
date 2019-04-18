@@ -36,7 +36,7 @@ const routes = prepareRoutes({
         return import("./components/Menu")
           .then(preferDefault);
       },
-      response({ resolved }) {
+      respond({ resolved }) {
         return { body: resolved }
       }
     }

@@ -37,7 +37,7 @@ function AuthenticationExample() {
         </p>
 
         <p>
-          A <IJS>response</IJS> function can modify the response by setting a{" "}
+          A <IJS>respond</IJS> function can modify the response by setting a{" "}
           <IJS>redirect</IJS> property on its return object. Curi will
           automatically (unless configured not to) redirect to that location.
         </p>
@@ -49,11 +49,13 @@ function AuthenticationExample() {
     {
       name: 'Protected',
       path: 'super-secret',
-      response: () => {
+      respond: () => {
         if (!store.userIsAuthenticated) {
           return {
             redirect: { name: "Login" },
-            status: 302
+            meta: {
+              status: 302
+            }
           };
         }
       }

@@ -117,7 +117,7 @@ const routes = prepareRoutes({
     {
       name: "Home",
       path: "",
-      response() {
+      respond() {
         return {
           body: {
             main: HomeMain,

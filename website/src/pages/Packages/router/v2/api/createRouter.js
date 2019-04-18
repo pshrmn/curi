@@ -135,7 +135,7 @@ const router = createRouter(browser, routes, {
           >
             <p>
               Values that should be accessible to a route's <IJS>resolve</IJS>{" "}
-              function <IJS>response</IJS> functions.
+              function <IJS>respond</IJS> functions.
             </p>
             <p>
               Using <IJS>external</IJS> allows you to access APIs, data, etc.
@@ -202,7 +202,7 @@ const router = createRouter(browser, routes, {
     {
       name: "Old",
       path: "old/:id",
-      response({ params }) {
+      respond({ params }) {
         // setup a redirect to the "New" route
         return {
           redirect: {

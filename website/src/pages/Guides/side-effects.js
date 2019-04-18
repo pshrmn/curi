@@ -44,7 +44,7 @@ function UsingSideEffectsGuide() {
         <p>
           Whenever a new response is generated, all of the side effect functions
           will be called. They will be given an object with the new{" "}
-          <IJS>response</IJS>, object, a <IJS>navigation</IJS> object with some
+          <IJS>response</IJS> object, a <IJS>navigation</IJS> object with some
           extra routing data (the navigation action the previous response), and
           the <IJS>router</IJS> object.
         </p>

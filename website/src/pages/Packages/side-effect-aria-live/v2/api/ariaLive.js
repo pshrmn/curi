@@ -46,11 +46,11 @@ export function AriaLiveAPI() {
 import ariaLiveEffect from '@curi/side-effect-aria-live';
 
 const announcer = ariaLiveEffect(
-  ({ response }) => \`Navigated to \${response.title}\`
+  ({ response }) => \`Navigated to \${response.meta.title}\`
 );
 
 const politeAnnouncer = ariaLiveEffect(
-  ({ response }) => \`Navigated to \${response.title}\`,
+  ({ response }) => \`Navigated to \${response.meta.title}\`,
   "polite"
 );
 

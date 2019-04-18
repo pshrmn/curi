@@ -219,7 +219,7 @@ router.observe(observer);`}
               <IJS>@curi/side-effect-title</IJS>
             </Link>{" "}
             package provides a side effect that will use{" "}
-            <IJS>response.title</IJS> to set the page's{" "}
+            <IJS>response.meta.title</IJS> to set the page's{" "}
             <IJS>document.title</IJS>.
           </p>
           <p>

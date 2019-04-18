@@ -7,11 +7,11 @@ import ariaLiveSideEffect from "@curi/side-effect-aria-live";
 import routes from "./routes";
 
 const setTitle = titleSideEffect(
-  ({ response }) => `${response.title} | Curi Documentation`
+  ({ response }) => `${response.meta.title} | Curi Documentation`
 );
 const scrollTo = scrollSideEffect();
 const announce = ariaLiveSideEffect(
-  ({ response }) => `Navigated to ${response.title}`
+  ({ response }) => `Navigated to ${response.meta.title}`
 );
 
 const router = createRouter(browser, routes, {

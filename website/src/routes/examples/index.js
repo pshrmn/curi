@@ -9,10 +9,12 @@ import catchImportError from "../catchImportError";
 export default {
   name: "Examples",
   path: "examples/",
-  response: () => {
+  respond: () => {
     return {
       body: ExampleList,
-      title: "Examples"
+      meta: {
+        title: "Examples"
+      }
     };
   },
   children: [
@@ -32,14 +34,16 @@ export default {
           : Example404;
         return Promise.all([example, content]);
       },
-      response: ({ resolved }) => {
+      respond: ({ resolved }) => {
         const [example, content] = resolved;
         return {
           body: Example,
           data: {
             content
           },
-          title: example ? `${example.name} Example` : "Example Not Found"
+          meta: {
+            title: example ? `${example.name} Example` : "Example Not Found"
+          }
         };
       }
     }
