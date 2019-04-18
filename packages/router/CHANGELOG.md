@@ -1,4 +1,4 @@
-## Next
+## 2.0.0-beta.11
 
 * Improve internal route matching.
 
