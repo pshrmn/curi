@@ -116,6 +116,27 @@ describe("active route interaction", () => {
           });
           expect(playerIsActive).toBe(false);
         });
+
+        it("returns false if route expects params but none are provided", () => {
+          const routes = prepareRoutes({
+            routes: [
+              {
+                name: "Player",
+                path: "player/:id"
+              },
+              { name: "Catch All", path: "(.*)" }
+            ]
+          });
+          const router = createRouter<InMemoryOptions>(inMemory, routes, {
+            history: {
+              locations: ["/player/7"]
+            }
+          });
+
+          const { response } = router.current();
+          const playerIsActive = router.route.active("Player", response);
+          expect(playerIsActive).toBe(false);
+        });
       });
 
       describe("partial", () => {

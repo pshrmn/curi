@@ -402,5 +402,119 @@ describe("<Link>", () => {
       });
       expect(mockNavigate.mock.calls.length).toBe(0);
     });
+
+    describe("forward.target", () => {
+      it("calls history.navigate if forward.target is _self", () => {
+        const mockNavigate = jest.fn();
+        const routes = prepareRoutes({
+          routes: [
+            { name: "Test", path: "test" },
+            { name: "Catch All", path: "(.*)" }
+          ]
+        });
+        const router = createRouter(inMemory, routes);
+        router.history.navigate = mockNavigate;
+        const Router = createRouterComponent(router);
+
+        ReactDOM.render(
+          <Router>
+            <Link name="Test" forward={{ target: "_self" }}>
+              Test
+            </Link>
+          </Router>,
+          node
+        );
+        const a = node.querySelector("a");
+        const event = {
+          defaultPrevented: false,
+          preventDefault() {
+            this.defaultPrevented = true;
+          },
+          metaKey: null,
+          altKey: null,
+          ctrlKey: null,
+          shiftKey: null,
+          button: 0
+        };
+        act(() => {
+          Simulate.click(a, event);
+        });
+        expect(mockNavigate.mock.calls.length).toBe(1);
+      });
+
+      it("calls history.navigate if forward.target is not defined", () => {
+        const mockNavigate = jest.fn();
+        const routes = prepareRoutes({
+          routes: [
+            { name: "Test", path: "test" },
+            { name: "Catch All", path: "(.*)" }
+          ]
+        });
+        const router = createRouter(inMemory, routes);
+        router.history.navigate = mockNavigate;
+        const Router = createRouterComponent(router);
+
+        ReactDOM.render(
+          <Router>
+            <Link name="Test">Test</Link>
+          </Router>,
+          node
+        );
+        const a = node.querySelector("a");
+        const event = {
+          defaultPrevented: false,
+          preventDefault() {
+            this.defaultPrevented = true;
+          },
+          metaKey: null,
+          altKey: null,
+          ctrlKey: null,
+          shiftKey: null,
+          button: 0
+        };
+        act(() => {
+          Simulate.click(a, event);
+        });
+        expect(mockNavigate.mock.calls.length).toBe(1);
+      });
+
+      it("doesn't call history.navigate if forward.target is defined and not _self", () => {
+        const mockNavigate = jest.fn();
+        const routes = prepareRoutes({
+          routes: [
+            { name: "Test", path: "test" },
+            { name: "Catch All", path: "(.*)" }
+          ]
+        });
+        const router = createRouter(inMemory, routes);
+        router.history.navigate = mockNavigate;
+        const Router = createRouterComponent(router);
+
+        ReactDOM.render(
+          <Router>
+            <Link name="Test" forward={{ target: "_blank" }}>
+              Test
+            </Link>
+          </Router>,
+          node
+        );
+        const a = node.querySelector("a");
+        const event = {
+          defaultPrevented: false,
+          preventDefault() {
+            this.defaultPrevented = true;
+          },
+          metaKey: null,
+          altKey: null,
+          ctrlKey: null,
+          shiftKey: null,
+          button: 0
+        };
+        act(() => {
+          Simulate.click(a, event);
+        });
+        expect(mockNavigate.mock.calls.length).toBe(0);
+      });
+    });
   });
 });

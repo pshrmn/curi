@@ -30,9 +30,6 @@ export default function active(): Interaction {
       parentKeys: Array<string | number>
     ): Array<string | number> => {
       let { name, keys } = route;
-      if (keys == null) {
-        keys = [];
-      }
       const fullKeys = Array.isArray(parentKeys)
         ? [...parentKeys, ...keys]
         : keys;
