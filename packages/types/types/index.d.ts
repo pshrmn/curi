@@ -76,7 +76,7 @@ export interface RouteDescriptor {
     };
     params?: ParamParsers;
     children?: Array<RouteDescriptor>;
-    response?: ResponseFn;
+    respond?: RespondFn;
     resolve?: Resolver;
     extra?: {
         [key: string]: any;
@@ -88,7 +88,7 @@ export interface Route<R = unknown> {
     keys: Array<string | number>;
     pathname: PathFunction;
     resolve: R;
-    response?: ResponseFn;
+    respond?: RespondFn;
     extra?: {
         [key: string]: any;
     };
@@ -106,7 +106,7 @@ export interface RouteMatcher {
     match(l: SessionLocation): Match | undefined;
     interactions: Interactions;
 }
-export declare type ResponseFn = (props: Readonly<ResponseBuilder>) => SettableResponseProperties;
+export declare type RespondFn = (props: Readonly<ResponseBuilder>) => SettableResponseProperties;
 export interface ResponseBuilder {
     resolved: any;
     error: any;

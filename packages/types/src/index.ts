@@ -112,7 +112,7 @@ export interface RouteDescriptor {
   };
   params?: ParamParsers;
   children?: Array<RouteDescriptor>;
-  response?: ResponseFn;
+  respond?: RespondFn;
   resolve?: Resolver;
   extra?: { [key: string]: any };
 }
@@ -124,7 +124,7 @@ export interface Route<R = unknown> {
   keys: Array<string | number>;
   pathname: PathFunction;
   resolve: R;
-  response?: ResponseFn;
+  respond?: RespondFn;
   extra?: {
     [key: string]: any;
   };
@@ -148,13 +148,13 @@ export interface RouteMatcher {
   interactions: Interactions;
 }
 
-// a route's response function is used to return properties to add
+// a route's respond function is used to return properties to add
 // to the intrinsic response properites
-export type ResponseFn = (
+export type RespondFn = (
   props: Readonly<ResponseBuilder>
 ) => SettableResponseProperties;
 
-// the properties that will be passed to a route's response function
+// the properties that will be passed to a route's respond function
 export interface ResponseBuilder {
   resolved: any;
   error: any;

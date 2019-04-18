@@ -111,7 +111,7 @@ describe("curi", () => {
               {
                 name: "Start",
                 path: "",
-                response: () => {
+                respond: () => {
                   return {
                     redirect: {
                       name: "Other"
@@ -144,7 +144,7 @@ describe("curi", () => {
               {
                 name: "Start",
                 path: "",
-                response: () => {
+                respond: () => {
                   return {
                     redirect: {
                       name: "Other"
@@ -175,7 +175,7 @@ describe("curi", () => {
               {
                 name: "Start",
                 path: "",
-                response: () => {
+                respond: () => {
                   return {
                     redirect: {
                       externalURL: "https://example.com"
@@ -237,7 +237,7 @@ describe("curi", () => {
               {
                 name: "Start",
                 path: "",
-                response({ external: e }) {
+                respond({ external: e }) {
                   expect(e).toBe(external);
                   return {};
                 }
@@ -1676,7 +1676,7 @@ describe("curi", () => {
           {
             name: "A Route",
             path: "",
-            response: () => {
+            respond: () => {
               return {
                 redirect: {
                   name: "B Route"

@@ -196,14 +196,14 @@ describe("useNavigationFocus", () => {
             {
               name: "Home",
               path: "",
-              response() {
+              respond() {
                 return { body: Home };
               }
             },
             {
               name: "About",
               path: "about",
-              response() {
+              respond() {
                 return { body: About };
               }
             }
@@ -262,14 +262,14 @@ describe("useNavigationFocus", () => {
             {
               name: "Home",
               path: "",
-              response() {
+              respond() {
                 return { body: Home };
               }
             },
             {
               name: "About",
               path: "about",
-              response() {
+              respond() {
                 return { body: About };
               }
             }

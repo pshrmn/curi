@@ -26,14 +26,14 @@ describe("staticFiles()", () => {
           {
             name: "Home",
             path: "",
-            response() {
+            respond() {
               return { body: "Home" };
             }
           },
           {
             name: "About",
             path: "about",
-            response() {
+            respond() {
               return { body: "About" };
             }
           }
@@ -70,21 +70,21 @@ describe("staticFiles()", () => {
             {
               name: "Home",
               path: "",
-              response() {
+              respond() {
                 return { body: "Home" };
               }
             },
             {
               name: "About",
               path: "about",
-              response() {
+              respond() {
                 return { body: "About" };
               }
             },
             {
               name: "Catch All",
               path: "(.*)",
-              response() {
+              respond() {
                 return { body: "404" };
               }
             }
@@ -135,14 +135,14 @@ describe("staticFiles()", () => {
           {
             name: "Home",
             path: "",
-            response() {
+            respond() {
               return { redirect: { name: "About" } };
             }
           },
           {
             name: "About",
             path: "about",
-            response() {
+            respond() {
               return { body: "About" };
             }
           }
@@ -189,7 +189,7 @@ describe("staticFiles()", () => {
           {
             name: "Home",
             path: "",
-            response() {
+            respond() {
               return {
                 body: "Home",
                 redirect: { name: "About" }
@@ -199,7 +199,7 @@ describe("staticFiles()", () => {
           {
             name: "About",
             path: "about",
-            response() {
+            respond() {
               return { body: "About" };
             }
           }
@@ -237,7 +237,7 @@ describe("staticFiles()", () => {
           {
             name: "Home",
             path: "",
-            response() {
+            respond() {
               return { body: "Home" };
             }
           }
@@ -278,7 +278,7 @@ describe("staticFiles()", () => {
           {
             name: "Home",
             path: "",
-            response({ external }) {
+            respond({ external }) {
               expect(external).toBe(providedExternal);
               return { body: "Home" };
             }
@@ -316,7 +316,7 @@ describe("staticFiles()", () => {
           {
             name: "Home",
             path: "",
-            response() {
+            respond() {
               return { body: "Home" };
             }
           }
@@ -365,7 +365,7 @@ describe("staticFiles()", () => {
               resolve() {
                 return Promise.resolve(true);
               },
-              response() {
+              respond() {
                 return { body: "Home" };
               }
             }
