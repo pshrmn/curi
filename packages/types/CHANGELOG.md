@@ -1,5 +1,6 @@
 ## Next
 
+* Rename `route.response` to `route.respond`.
 * Add `meta` property to response/settable response properties.
 * Remove `title`, `status`, and `error` types from response/settable response properties.
 * Remove `() => void` wrapper types.

@@ -57,7 +57,7 @@ export function createRoute(
       path: props.path,
       keys: keys.map(key => key.name),
       resolve: props.resolve,
-      response: props.response,
+      respond: props.respond,
       extra: props.extra,
       pathname(params?: Params) {
         return compiled(params, compileOptions);

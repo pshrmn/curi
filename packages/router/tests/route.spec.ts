@@ -799,7 +799,7 @@ describe("routes", () => {
         });
 
         describe("body", () => {
-          it("exists on response as undefined if not set by route.response()", () => {
+          it("exists on response as undefined if not set by route.respond()", () => {
             const routes = prepareRoutes({
               routes: [
                 {
@@ -818,14 +818,14 @@ describe("routes", () => {
             expect(response.body).toBeUndefined();
           });
 
-          it("is the body value of the object returned by route.response()", () => {
+          it("is the body value of the object returned by route.respond()", () => {
             const body = () => "anybody out there?";
             const routes = prepareRoutes({
               routes: [
                 {
                   name: "Test",
                   path: "test",
-                  response: () => {
+                  respond: () => {
                     return {
                       body: body
                     };
@@ -844,7 +844,7 @@ describe("routes", () => {
         });
 
         describe("meta", () => {
-          it("exists on the response as undefined if not set by route.response()", () => {
+          it("exists on the response as undefined if not set by route.respond()", () => {
             const routes = prepareRoutes({
               routes: [
                 {
@@ -867,13 +867,13 @@ describe("routes", () => {
             expect(response.meta).toBeUndefined();
           });
 
-          it("is the meta value of object returned by route.response()", () => {
+          it("is the meta value of object returned by route.respond()", () => {
             const routes = prepareRoutes({
               routes: [
                 {
                   name: "A Route",
                   path: "",
-                  response: () => {
+                  respond: () => {
                     return {
                       meta: {
                         title: "A Route",
@@ -898,7 +898,7 @@ describe("routes", () => {
         });
 
         describe("data", () => {
-          it("exists on response as undefined if not set by route.response()", () => {
+          it("exists on response as undefined if not set by route.respond()", () => {
             const routes = prepareRoutes({
               routes: [
                 {
@@ -917,13 +917,13 @@ describe("routes", () => {
             expect(response.data).toBeUndefined();
           });
 
-          it("is the data value of the object returned by route.response()", () => {
+          it("is the data value of the object returned by route.respond()", () => {
             const routes = prepareRoutes({
               routes: [
                 {
                   name: "A Route",
                   path: "",
-                  response: () => {
+                  respond: () => {
                     return {
                       data: {
                         test: "value"
@@ -1142,7 +1142,7 @@ describe("routes", () => {
                 {
                   name: "A Route",
                   path: "",
-                  response: () => {
+                  respond: () => {
                     return {
                       redirect: {
                         name: "B Route",
@@ -1190,7 +1190,7 @@ describe("routes", () => {
                 {
                   name: "A Route",
                   path: "",
-                  response: () => {
+                  respond: () => {
                     return {
                       redirect: {
                         externalURL: "https://example.com"
@@ -1222,7 +1222,7 @@ describe("routes", () => {
                   name: "Contact",
                   path: "contact",
                   // @ts-ignore
-                  response() {
+                  respond() {
                     return {
                       bad: "property"
                     };
@@ -1252,7 +1252,7 @@ describe("routes", () => {
                 {
                   name: "A Route",
                   path: "",
-                  response: () => {
+                  respond: () => {
                     return {
                       body: "body",
                       meta: undefined
@@ -1281,7 +1281,7 @@ describe("routes", () => {
                   name: "A Route",
                   path: "",
                   // @ts-ignore
-                  response: () => {}
+                  respond: () => {}
                 }
               ]
             });
@@ -1357,7 +1357,7 @@ describe("routes", () => {
         });
       });
 
-      describe("response", () => {
+      describe("respond", () => {
         it("is not called if the navigation has been cancelled", done => {
           const responseSpy = jest.fn();
           let firstHasResolved = false;
@@ -1376,12 +1376,12 @@ describe("routes", () => {
                 name: "First",
                 path: "first",
                 resolve: spy,
-                response: responseSpy
+                respond: responseSpy
               },
               {
                 name: "Second",
                 path: "second",
-                response: () => {
+                respond: () => {
                   expect(firstHasResolved).toBe(true);
                   expect(spy.mock.calls.length).toBe(2);
                   expect(responseSpy.mock.calls.length).toBe(0);
@@ -1410,7 +1410,7 @@ describe("routes", () => {
                 {
                   name: "Catch All",
                   path: ":anything",
-                  response: ({ resolved }) => {
+                  respond: ({ resolved }) => {
                     expect(resolved).toBe(null);
                     return {};
                   }
@@ -1433,7 +1433,7 @@ describe("routes", () => {
                   resolve() {
                     return Promise.reject("woops!");
                   },
-                  response: ({ resolved }) => {
+                  respond: ({ resolved }) => {
                     expect(resolved).toBe(null);
                     return {};
                   }
@@ -1453,7 +1453,7 @@ describe("routes", () => {
                 {
                   name: "Catch All",
                   path: ":anything",
-                  response: ({ resolved }) => {
+                  respond: ({ resolved }) => {
                     expect(resolved.test).toBe(1);
                     expect(resolved.yo).toBe("yo!");
                     return {};
@@ -1485,7 +1485,7 @@ describe("routes", () => {
                 {
                   name: "Catch All",
                   path: ":anything",
-                  response: spy,
+                  respond: spy,
                   resolve() {
                     return Promise.reject("rejected");
                   }
@@ -1511,7 +1511,7 @@ describe("routes", () => {
                 {
                   name: "Catch All",
                   path: ":anything",
-                  response: spy,
+                  respond: spy,
                   resolve() {
                     return Promise.resolve("hurray!");
                   }
@@ -1533,7 +1533,7 @@ describe("routes", () => {
                 {
                   name: "Catch All",
                   path: ":anything",
-                  response: props => {
+                  respond: props => {
                     expect(props.match).toMatchObject({
                       name: "Catch All",
                       params: { anything: "hello" },
@@ -1571,7 +1571,7 @@ describe("routes", () => {
             {
               name: "Redirects",
               path: "redirects",
-              response: () => {
+              respond: () => {
                 return {
                   redirect: {
                     name: "Other"
@@ -1610,7 +1610,7 @@ describe("routes", () => {
             {
               name: "Redirects",
               path: "redirects",
-              response: () => {
+              respond: () => {
                 return {
                   redirect: {
                     externalURL: "https://example.com"
