@@ -5,7 +5,7 @@
     <meta name="Description" content="undefined">
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Responses Guide | Curi Documentation</title>
+    <title>undefined | Curi Documentation</title>
     <link href="https://fonts.googleapis.com/css?family=Zilla+Slab:300,400" rel="stylesheet">
     <link href="/static/css/prism.css" rel="stylesheet">
   </head>
@@ -26,7 +26,7 @@
   // from the pathname by path-to-regexp.
   // This includes params from ancestor routes.
   params: { photoID: 12345, albumID: 6789 },
-}</code></pre></div><p>The &quot;settable&quot; properties are ones that are added by a matched route&#x27;s<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">response</code> function. These only exist on the response when they are returned by a route&#x27;s <code class="inline-code css-jo5c25 eutm4hs0">response</code> function.</p><p>The &quot;settable&quot; properties are:</p><div class="section css-1kr8jn0" id="settable-body"><h3><a class="header-link" href="#settable-body">body</a></h3><p>The component(s) that should be rendered for a route.</p></div><div class="section css-1kr8jn0" id="settable-status"><h3><a class="header-link" href="#settable-status">status</a></h3><p>An http status, mostly useful for server side rendering.</p></div><div class="section css-1kr8jn0" id="settable-data"><h3><a class="header-link" href="#settable-data">data</a></h3><p>A place to attach any data you want to the response, such as data loaded in the route&#x27;s <code class="inline-code css-jo5c25 eutm4hs0">resolve</code> function.</p></div><div class="section css-1kr8jn0" id="settable-title"><h3><a class="header-link" href="#settable-title">title</a></h3><p>The response&#x27;s title, which can be used with<!-- --> <a href="/packages/@curi/side-effect-title/v2/"><code class="inline-code css-jo5c25 eutm4hs0">@curi/side-effect-title</code></a> <!-- -->to set the browsers tab&#x27;s title.</p></div><div class="section css-1kr8jn0" id="settable-"><h3><a class="header-link" href="#settable-"></a></h3><p>A convenient place to attach any errors to the response.</p></div><div class="section css-1kr8jn0" id="settable-"><h3><a class="header-link" href="#settable-"></a></h3><p>An object describing a route that Curi should automatically redirect to.</p></div><div class="css-xg7t84 e12etsbl0"><pre><code class="language-javascript">// settable properties (optional)
+}</code></pre></div><p>The &quot;settable&quot; properties are ones that are added by a matched route&#x27;s<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">respond</code> function. These only exist on the response when they are returned by a route&#x27;s <code class="inline-code css-jo5c25 eutm4hs0">respond</code> function.</p><p>The &quot;settable&quot; properties are:</p><div class="section css-1kr8jn0" id="settable-body"><h3><a class="header-link" href="#settable-body">body</a></h3><p>The component(s) that should be rendered for a route.</p></div><div class="section css-1kr8jn0" id="settable-meta"><h3><a class="header-link" href="#settable-meta">meta</a></h3><p>An object with metadata for a response.</p></div><div class="section css-1kr8jn0" id="settable-data"><h3><a class="header-link" href="#settable-data">data</a></h3><p>A place to attach any data you want to the response, such as data loaded in the route&#x27;s <code class="inline-code css-jo5c25 eutm4hs0">resolve</code> function.</p></div><div class="section css-1kr8jn0" id="settable-redirect"><h3><a class="header-link" href="#settable-redirect">redirect</a></h3><p>An object describing a route that Curi should automatically redirect to.</p></div><div class="css-xg7t84 e12etsbl0"><pre><code class="language-javascript">// settable properties (optional)
 {
   body: Photo,
   // or maybe
@@ -37,26 +37,25 @@
   // Please see below for more information
   // about this property
 
-  status: 200,
+  meta: {
+    status: 200,
+    title: &#x27;Photo 12345&#x27;
+  },
 
   data: {...},
 
-  title: &#x27;Photo 12345&#x27;,
-
-  error: undefined,
-
   redirect: {...}
-}</code></pre></div></div><div class="section css-1kr8jn0" id="response-body"><h2><a class="header-link" href="#response-body">Response Body</a></h2><p>Curi isn&#x27;t strict about how you use responses, but you will most likely always want to use a route&#x27;s <code class="inline-code css-jo5c25 eutm4hs0">response</code> function to attach a <code class="inline-code css-jo5c25 eutm4hs0">body</code> property to a response. The usual pattern is to use a route&#x27;s <code class="inline-code css-jo5c25 eutm4hs0">body</code> property to describe which component(s) to render when a route matches. This can either be a single component for basic layouts or an object with a number of components for<!-- --> <a href="/examples/react/multi-body/">advanced layouts</a>.</p><style data-emotion-css="o0tph9">.css-o0tph9{padding:10px 5px;margin:5px 0;border:1px solid #c7c7c7;background:#eeeeee;}.css-o0tph9 p:last-child{margin-bottom:0;}.aside .css-o0tph9{background:#fff;}.css-o0tph9 .inline-code{background:#fff !important;}</style><div class="css-o0tph9 e1bjkffy0"><strong>Note:</strong> <p>Each route should use the same <code class="inline-code css-jo5c25 eutm4hs0">body</code> &quot;shape&quot;. If one route returns a single component while another route return an object, you will be making rendering more complicated for yourself.</p></div><div class="css-xg7t84 e12etsbl0"><pre><code class="language-javascript">// do NOT do this
+}</code></pre></div></div><div class="section css-1kr8jn0" id="response-body"><h2><a class="header-link" href="#response-body">Response Body</a></h2><p>Curi isn&#x27;t strict about how you use responses, but you will most likely always want to use a route&#x27;s <code class="inline-code css-jo5c25 eutm4hs0">respond</code> function to attach a <code class="inline-code css-jo5c25 eutm4hs0">body</code> property to a response. The usual pattern is to use a route&#x27;s <code class="inline-code css-jo5c25 eutm4hs0">body</code> property to describe which component(s) to render when a route matches. This can either be a single component for basic layouts or an object with a number of components for<!-- --> <a href="/examples/react/multi-body/">advanced layouts</a>.</p><style data-emotion-css="o0tph9">.css-o0tph9{padding:10px 5px;margin:5px 0;border:1px solid #c7c7c7;background:#eeeeee;}.css-o0tph9 p:last-child{margin-bottom:0;}.aside .css-o0tph9{background:#fff;}.css-o0tph9 .inline-code{background:#fff !important;}</style><div class="css-o0tph9 e1bjkffy0"><strong>Note:</strong> <p>Each route should use the same <code class="inline-code css-jo5c25 eutm4hs0">body</code> &quot;shape&quot;. If one route returns a single component while another route return an object, you will be making rendering more complicated for yourself.</p></div><div class="css-xg7t84 e12etsbl0"><pre><code class="language-javascript">// do NOT do this
 // mixing body shapes complicates rendering
 const routes = prepareRoutes({
   routes: [
     {
-      response() {
+      respond() {
         return { body: One }
       }
     },
     {
-      response() {
+      respond() {
         return {
           body: {
             main: Main,
@@ -66,13 +65,29 @@ const routes = prepareRoutes({
       }
     }
   ]
-});</code></pre></div></div><div class="section css-1kr8jn0" id="redirect-properties"><h2><a class="header-link" href="#redirect-properties">Redirect Response</a></h2><p>When a route&#x27;s <code class="inline-code css-jo5c25 eutm4hs0">response</code> function returns an object with a<!-- --> <a href="/packages/@curi/router/v2/#response"><code class="inline-code css-jo5c25 eutm4hs0">redirect</code> property</a>, the router will use it to generate a location object that Curi will automatically redirect to.</p><div class="css-xg7t84 e12etsbl0"><pre><code class="language-javascript">{
+});</code></pre></div></div><div class="section css-1kr8jn0" id="redirect-properties"><h2><a class="header-link" href="#redirect-properties">Redirect Response</a></h2><p>When a route&#x27;s <code class="inline-code css-jo5c25 eutm4hs0">respond</code> function returns an object with a<!-- --> <a href="/packages/@curi/router/v2/#response"><code class="inline-code css-jo5c25 eutm4hs0">redirect</code> property</a>, the router will use it to generate a location object that Curi will automatically redirect to.</p><div class="css-xg7t84 e12etsbl0"><pre><code class="language-javascript">{
   // The redirect property provides information on
   // where you should redirect to
   redirect: { name: &quot;Login&quot; }
-}</code></pre></div><p>When creating a router, you can set the <code class="inline-code css-jo5c25 eutm4hs0">invisibleRedirects</code> <!-- -->option to <code class="inline-code css-jo5c25 eutm4hs0">true</code> and the response will not be sent to observers and one time functions. Redirect responses don&#x27;t usually have anything to render, so setting this option is usually ideal.</p><div class="css-xg7t84 e12etsbl0"><pre><code class="language-javascript">const router = createRouter(browser, routes, {
-  invisibleRedirects: false
-});</code></pre></div></div></div><style data-emotion-css="64fwtw">.css-64fwtw{display:none;}@media only screen and (min-width:751px){.css-64fwtw{background:#efefef;display:block;position:fixed;top:50px;bottom:0px;overflow:auto;-webkit-flex:0 0;-ms-flex:0 0;flex:0 0;-webkit-order:-1;-ms-flex-order:-1;order:-1;padding:25px;margin-right:25px;}}</style><div class="css-64fwtw e1hcridg2"><style data-emotion-css="1eimyfs">.css-1eimyfs{width:200px;}.css-1eimyfs p{margin:0;}.css-1eimyfs a{-webkit-text-decoration:none;text-decoration:none;display:block;}.css-1eimyfs ol{padding-left:0;margin-top:0;list-style-type:none;}.css-1eimyfs ol ol{padding-left:15px;font-size:0.9em;}</style><div class="css-1eimyfs e1evhjzy0"><ol><li><a href="#response-properties">The Properties of a Response Object</a></li><li><a href="#response-body">Response Body</a></li><li><a href="#redirect-properties">Redirect Response</a></li></ol></div></div></div></main></div>
+}</code></pre></div><p>When creating a router, you can set the <code class="inline-code css-jo5c25 eutm4hs0">invisibleRedirects</code> <!-- -->option to <code class="inline-code css-jo5c25 eutm4hs0">true</code> and the response will not be sent to observers and one time functions. Instead, the response for the location that is redirected to will be the next emitted response. In either case, the router will automatically redirect to the route specified by <code class="inline-code css-jo5c25 eutm4hs0">response.redirect</code>.</p><div class="css-xg7t84 e12etsbl0"><pre><code class="language-javascript">const router = createRouter(browser, routes, {
+  invisibleRedirects: true
+});</code></pre></div><p>This property can also be used to specify an external redirect (a redirect to a location that is not within the application). This is done by setting an <code class="inline-code css-jo5c25 eutm4hs0">externalURL</code> property on the<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">redirect</code> object. It is up to the application to redirect to the external location. Responses with an external redirect will be emitted when <code class="inline-code css-jo5c25 eutm4hs0">invisibleRedirects</code> is <code class="inline-code css-jo5c25 eutm4hs0">true</code>.</p><div class="css-xg7t84 e12etsbl0"><pre><code class="language-javascript">// a route with an external redirect
+{
+  respond() {
+    return {
+      redirect: {
+        externalURL: &quot;https://example.com&quot;
+      }
+    };
+  }
+}
+
+// a route observe can detect and automatically redirect
+router.observe(({ response }) =&gt; {
+  if (response.redirect &amp;&amp; response.redirect.externalURL) {
+    window.location.replace(response.redirect.externalURL);
+  }
+})</code></pre></div></div></div><style data-emotion-css="64fwtw">.css-64fwtw{display:none;}@media only screen and (min-width:751px){.css-64fwtw{background:#efefef;display:block;position:fixed;top:50px;bottom:0px;overflow:auto;-webkit-flex:0 0;-ms-flex:0 0;flex:0 0;-webkit-order:-1;-ms-flex-order:-1;order:-1;padding:25px;margin-right:25px;}}</style><div class="css-64fwtw e1hcridg2"><style data-emotion-css="1eimyfs">.css-1eimyfs{width:200px;}.css-1eimyfs p{margin:0;}.css-1eimyfs a{-webkit-text-decoration:none;text-decoration:none;display:block;}.css-1eimyfs ol{padding-left:0;margin-top:0;list-style-type:none;}.css-1eimyfs ol ol{padding-left:15px;font-size:0.9em;}</style><div class="css-1eimyfs e1evhjzy0"><ol><li><a href="#response-properties">The Properties of a Response Object</a></li><li><a href="#response-body">Response Body</a></li><li><a href="#redirect-properties">Redirect Response</a></li></ol></div></div></div></main></div>
     <script src="https://unpkg.com/react@16.8.6/umd/react.production.min.js"></script>
     <script src="https://unpkg.com/react-dom@16.8.6/umd/react-dom.production.min.js"></script>
     <script src="/static/js/prism.js"></script>

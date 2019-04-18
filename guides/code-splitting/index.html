@@ -5,7 +5,7 @@
     <meta name="Description" content="undefined">
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Code Splitting Guide | Curi Documentation</title>
+    <title>undefined | Curi Documentation</title>
     <link href="https://fonts.googleapis.com/css?family=Zilla+Slab:300,400" rel="stylesheet">
     <link href="/static/css/prism.css" rel="stylesheet">
   </head>
@@ -19,7 +19,7 @@ const routes = prepareRoutes({
     {
       name: &#x27;Home&#x27;,
       path: &#x27;&#x27;,
-      response: () =&gt; {
+      respond: () =&gt; {
         return {
           body: Home
         };
@@ -28,7 +28,7 @@ const routes = prepareRoutes({
     {
       name: &#x27;Contact&#x27;,
       path: &#x27;contact&#x27;,
-      response: () =&gt; {
+      respond: () =&gt; {
         return {
           body: Contact
         };
@@ -37,7 +37,7 @@ const routes = prepareRoutes({
         {
           name: &#x27;Contact Method&#x27;,
           path: &#x27;:method&#x27;,
-          response: () =&gt; {
+          respond: () =&gt; {
             return {
               body: ContactMethod
             };
@@ -46,7 +46,7 @@ const routes = prepareRoutes({
       ]
     }
   ]
-});</code></pre></div></div><div class="section css-1kr8jn0" id="import"><h2><a class="header-link" href="#import">import() in resolve</a></h2><p>Instead of having static imports, we will use the dynamic<!-- --> <style data-emotion-css="jo5c25">.css-jo5c25{padding:0.1em;border-radius:0.3em;white-space:normal;background:#fff;color:#222233;text-shadow:none;white-space:wrap;}.css-jo5c25 .token{color:#222233;}</style><code class="inline-code css-jo5c25 eutm4hs0">import</code> function to import our modules. We will import our components using a route&#x27;s <code class="inline-code css-jo5c25 eutm4hs0">resolve</code> object.</p><p>A route&#x27;s <code class="inline-code css-jo5c25 eutm4hs0">resolve</code> function is called every time it matches. However, <code class="inline-code css-jo5c25 eutm4hs0">import</code> calls automatically re-use the results of a previous call, so we do not have to worry about extra network requests.</p><p>A route&#x27;s <code class="inline-code css-jo5c25 eutm4hs0">resolve</code> function should return a Promise;<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">import</code>, conveniently, returns a Promise. In our<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">response</code> function, instead of referencing values imported at the top of the file, we can reference the result of the<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">resolve</code> function using the <code class="inline-code css-jo5c25 eutm4hs0">resolved</code> property passed to the <code class="inline-code css-jo5c25 eutm4hs0">response</code> function.</p><p><code class="inline-code css-jo5c25 eutm4hs0">import</code> resolves with a module object. If the component is a default export (<code class="inline-code css-jo5c25 eutm4hs0">export default MyComponent</code>), we can access the component through the imported module object&#x27;s <code class="inline-code css-jo5c25 eutm4hs0">default</code> <!-- -->property.</p><div class="css-xg7t84 e12etsbl0"><pre><code class="language-javascript">const routes = prepareRoutes({
+});</code></pre></div></div><div class="section css-1kr8jn0" id="import"><h2><a class="header-link" href="#import">import() in resolve</a></h2><p>Instead of having static imports, we will use the dynamic<!-- --> <style data-emotion-css="jo5c25">.css-jo5c25{padding:0.1em;border-radius:0.3em;white-space:normal;background:#fff;color:#222233;text-shadow:none;white-space:wrap;}.css-jo5c25 .token{color:#222233;}</style><code class="inline-code css-jo5c25 eutm4hs0">import</code> function to import our modules. We will import our components using a route&#x27;s <code class="inline-code css-jo5c25 eutm4hs0">resolve</code> object.</p><p>A route&#x27;s <code class="inline-code css-jo5c25 eutm4hs0">resolve</code> function is called every time it matches. However, <code class="inline-code css-jo5c25 eutm4hs0">import</code> calls automatically re-use the results of a previous call, so we do not have to worry about extra network requests.</p><p>A route&#x27;s <code class="inline-code css-jo5c25 eutm4hs0">resolve</code> function should return a Promise;<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">import</code>, conveniently, returns a Promise. In our<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">respond</code> function, instead of referencing values imported at the top of the file, we can reference the result of the<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">resolve</code> function using the <code class="inline-code css-jo5c25 eutm4hs0">resolved</code> property passed to the <code class="inline-code css-jo5c25 eutm4hs0">respond</code> function.</p><p><code class="inline-code css-jo5c25 eutm4hs0">import</code> resolves with a module object. If the component is a default export (<code class="inline-code css-jo5c25 eutm4hs0">export default MyComponent</code>), we can access the component through the imported module object&#x27;s <code class="inline-code css-jo5c25 eutm4hs0">default</code> <!-- -->property.</p><div class="css-xg7t84 e12etsbl0"><pre><code class="language-javascript">const routes = prepareRoutes({
   routes: [
     {
       name: &#x27;Home&#x27;,
@@ -55,7 +55,7 @@ const routes = prepareRoutes({
         return import(&#x27;./components/Home&#x27;)
           .then(module =&gt; module.default);
       },
-      response: ({ resolved }) =&gt; {
+      respond: ({ resolved }) =&gt; {
         return {
           body: resolved
         };
@@ -68,7 +68,7 @@ const routes = prepareRoutes({
         return import(&#x27;./components/Contact&#x27;)
           .then(module =&gt; module.default);
       },
-      response: ({ resolved }) =&gt; {
+      respond: ({ resolved }) =&gt; {
         return {
           body: resolved
         };
@@ -81,7 +81,7 @@ const routes = prepareRoutes({
             return import(&#x27;./components/ContactMethod&#x27;)
               .then(module =&gt; module.default);
           },
-          response: ({ resolved }) =&gt; {
+          respond: ({ resolved }) =&gt; {
             return {
               body: resolved
             };

@@ -5,7 +5,7 @@
     <meta name="Description" content="undefined">
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>React Native Guide | Curi Documentation</title>
+    <title>undefined | Curi Documentation</title>
     <link href="https://fonts.googleapis.com/css?family=Zilla+Slab:300,400" rel="stylesheet">
     <link href="/static/css/prism.css" rel="stylesheet">
   </head>
@@ -19,7 +19,7 @@ function MyReactNativeApp = () =&gt; (
   &lt;Router&gt;
     &lt;App /&gt;
   &lt;/Router&gt;
-);</code></pre></div><div class="section css-1kr8jn0" id="render-response"><h3><a class="header-link" href="#render-response">What to render</a></h3><p>The <code class="inline-code css-jo5c25 eutm4hs0">Router</code> component sets up the application&#x27;s routing, while its children render the application&#x27;s content. The Curi router generates <code class="inline-code css-jo5c25 eutm4hs0">response</code> objects from matched locations; those are core for figuring out what to render.</p><p>If you use <code class="inline-code css-jo5c25 eutm4hs0">route.response</code> to set React components as the<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">body</code> properties on your responses, you can create a React element for the <code class="inline-code css-jo5c25 eutm4hs0">body</code> component.</p><p>The <code class="inline-code css-jo5c25 eutm4hs0">Body</code> element (it is useful to rename the<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">response</code>&#x27;s <code class="inline-code css-jo5c25 eutm4hs0">body</code> to <code class="inline-code css-jo5c25 eutm4hs0">Body</code> for JSX transformation) is a placeholder for the &quot;real&quot; component that you render for a route. This means that the &quot;real&quot; component will be different for every route.</p><p>While not a strict requirement, it is useful to pass the<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">response</code> object as a prop to the rendered <code class="inline-code css-jo5c25 eutm4hs0">Body</code> <!-- -->component.</p><div class="css-xg7t84 e12etsbl0"><pre><code class="language-jsx">function App() {
+);</code></pre></div><div class="section css-1kr8jn0" id="render-response"><h3><a class="header-link" href="#render-response">What to render</a></h3><p>The <code class="inline-code css-jo5c25 eutm4hs0">Router</code> component sets up the application&#x27;s routing, while its children render the application&#x27;s content. The Curi router generates <code class="inline-code css-jo5c25 eutm4hs0">response</code> objects from matched locations; those are core for figuring out what to render.</p><p>If you use <code class="inline-code css-jo5c25 eutm4hs0">route.respond</code> to set React components as the<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">body</code> properties on your responses, you can create a React element for the <code class="inline-code css-jo5c25 eutm4hs0">body</code> component.</p><p>The <code class="inline-code css-jo5c25 eutm4hs0">Body</code> element (it is useful to rename the<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">response</code>&#x27;s <code class="inline-code css-jo5c25 eutm4hs0">body</code> to <code class="inline-code css-jo5c25 eutm4hs0">Body</code> for JSX transformation) is a placeholder for the &quot;real&quot; component that you render for a route. This means that the &quot;real&quot; component will be different for every route.</p><p>While not a strict requirement, it is useful to pass the<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">response</code> object as a prop to the rendered <code class="inline-code css-jo5c25 eutm4hs0">Body</code> <!-- -->component.</p><div class="css-xg7t84 e12etsbl0"><pre><code class="language-jsx">function App() {
   const { response } = useResponse();
   const { body:Body } = response;
   return &lt;Body response={response} /&gt;
@@ -37,7 +37,7 @@ function MyReactNativeApp() {
     {
       name: &quot;Home&quot;,
       path: &quot;&quot;,
-      response() {
+      respond() {
         return {
           body: {
             Main: HomeMain,

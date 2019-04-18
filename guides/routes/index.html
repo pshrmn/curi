@@ -5,7 +5,7 @@
     <meta name="Description" content="undefined">
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Routes Guide | Curi Documentation</title>
+    <title>undefined | Curi Documentation</title>
     <link href="https://fonts.googleapis.com/css?family=Zilla+Slab:300,400" rel="stylesheet">
     <link href="/static/css/prism.css" rel="stylesheet">
   </head>
@@ -49,7 +49,7 @@
     const data = UserAPI.get(params.id);
     return Promise.all([ authorized, body, data ]);
   }
-}</code></pre></div><p>A route with <code class="inline-code css-jo5c25 eutm4hs0">resolve</code> properties is asynchronous, which has some effects to be aware of. You can read about these in the<!-- --> <a href="/guides/sync-or-async/">Sync or Async</a> <!-- -->guide.</p></div><div class="section css-1kr8jn0" id="route-response"><h3><a class="header-link" href="#route-response">The Response Function</a></h3><p>Each route can have a <code class="inline-code css-jo5c25 eutm4hs0">response</code> function. When a route matches, a response object with &quot;match&quot; properties is generated. An object returned by the <code class="inline-code css-jo5c25 eutm4hs0">response</code> function gets merged with the match response object*. The<!-- --> <a href="/guides/responses/">responses guide</a> <!-- -->covers all of the response properties.</p><p><em>* Only valid properties are merged.</em></p><p>The <code class="inline-code css-jo5c25 eutm4hs0">response</code> function receives an object with a number of properties.</p><ol><li><code class="inline-code css-jo5c25 eutm4hs0">match</code> is an object of properties based on the matched route.</li><li><code class="inline-code css-jo5c25 eutm4hs0">resolved</code> is an object with the results of the route&#x27;s<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">resolve</code> functions.</li><li><code class="inline-code css-jo5c25 eutm4hs0">error</code> is only defined when the <code class="inline-code css-jo5c25 eutm4hs0">resolve</code> <!-- -->function has an uncaught error.</li></ol><div class="css-xg7t84 e12etsbl0"><pre><code class="language-javascript">import User from &quot;./components/User&quot;;
+}</code></pre></div><p>A route with <code class="inline-code css-jo5c25 eutm4hs0">resolve</code> properties is asynchronous, which has some effects to be aware of. You can read about these in the<!-- --> <a href="/guides/sync-or-async/">Sync or Async</a> <!-- -->guide.</p></div><div class="section css-1kr8jn0" id="route-response"><h3><a class="header-link" href="#route-response">The Response Function</a></h3><p>Each route can have a <code class="inline-code css-jo5c25 eutm4hs0">respond</code> function. When a route matches, a response object with &quot;match&quot; properties is generated. An object returned by the <code class="inline-code css-jo5c25 eutm4hs0">respond</code> function gets merged with the match response object*. The<!-- --> <a href="/guides/responses/">responses guide</a> <!-- -->covers all of the response properties.</p><p><em>* Only valid properties are merged.</em></p><p>The <code class="inline-code css-jo5c25 eutm4hs0">respond</code> function receives an object with a number of properties.</p><ol><li><code class="inline-code css-jo5c25 eutm4hs0">match</code> is an object of properties based on the matched route.</li><li><code class="inline-code css-jo5c25 eutm4hs0">resolved</code> is an object with the results of the route&#x27;s<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">resolve</code> functions.</li><li><code class="inline-code css-jo5c25 eutm4hs0">error</code> is only defined when the <code class="inline-code css-jo5c25 eutm4hs0">resolve</code> <!-- -->function has an uncaught error.</li></ol><div class="css-xg7t84 e12etsbl0"><pre><code class="language-javascript">import User from &quot;./components/User&quot;;
 
 const routes = prepareRoutes({
   routes: [
@@ -59,7 +59,7 @@ const routes = prepareRoutes({
       resolve({ params }) {
         return UserAPI.get(params.id);
       },
-      response({ match, resolved, error }) {
+      respond({ match, resolved, error }) {
         if (error) {
           // ...
         }

@@ -5,7 +5,7 @@
     <meta name="Description" content="undefined">
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>React Router v4 Guide | Curi Documentation</title>
+    <title>undefined | Curi Documentation</title>
     <link href="https://fonts.googleapis.com/css?family=Zilla+Slab:300,400" rel="stylesheet">
     <link href="/static/css/prism.css" rel="stylesheet">
   </head>
@@ -51,7 +51,7 @@ const Inbox = ({ match }) =&gt; (
       ]
     }
   ]
-});</code></pre></div><p>Next, we should add our components to each route.</p><p>Curi routes can have a <code class="inline-code css-jo5c25 eutm4hs0">response</code> property, which is a function that returns an object of properties to merge onto the response that we will be using to render. For this React application, we want a response&#x27;s <code class="inline-code css-jo5c25 eutm4hs0">body</code> property to be the React component associated with each route.</p><div class="css-xg7t84 e12etsbl0"><pre><code class="language-javascript">import { prepareRoutes } from &quot;@curi/router&quot;;
+});</code></pre></div><p>Next, we should add our components to each route.</p><p>Curi routes can have a <code class="inline-code css-jo5c25 eutm4hs0">respond</code> property, which is a function that returns an object of properties to merge onto the response that we will be using to render. For this React application, we want a response&#x27;s <code class="inline-code css-jo5c25 eutm4hs0">body</code> property to be the React component associated with each route.</p><div class="css-xg7t84 e12etsbl0"><pre><code class="language-javascript">import { prepareRoutes } from &quot;@curi/router&quot;;
 
 import Home from &#x27;./pages/Home&#x27;;
 import Inbox from &#x27;./pages/Inbox&#x27;;
@@ -62,7 +62,7 @@ const routes = prepareRoutes({
     {
       name: &#x27;Home&#x27;,
       path: &#x27;&#x27;,
-      response: () =&gt; {
+      respond: () =&gt; {
         return {
           body: Home
         };
@@ -71,7 +71,7 @@ const routes = prepareRoutes({
     {
       name: &#x27;Inbox&#x27;,
       path: &#x27;inbox&#x27;,
-      response: () =&gt; {
+      respond: () =&gt; {
         return {
           body: Inbox
         };
@@ -80,7 +80,7 @@ const routes = prepareRoutes({
         {
           name: &#x27;Message&#x27;,
           path: &#x27;:message&#x27;,
-          response: () =&gt; {
+          respond: () =&gt; {
             return {
               body: Message
             };
@@ -93,7 +93,7 @@ const routes = prepareRoutes({
   routes: [
     {
       path: &#x27;&#x27;,
-      response: () =&gt; {
+      respond: () =&gt; {
         return {
           body: Home
         };
@@ -101,7 +101,7 @@ const routes = prepareRoutes({
     },
     {
       path: &#x27;inbox&#x27;,
-      response: () =&gt; {
+      respond: () =&gt; {
         return {
           body: Inbox
         };
@@ -109,7 +109,7 @@ const routes = prepareRoutes({
       children: [
         {
           path: &#x27;:message&#x27;,
-          response: () =&gt; {
+          respond: () =&gt; {
             return {
               body: Message
             };
@@ -164,7 +164,7 @@ const Inbox = ({ match }) =&gt; (
     &lt;/Inbox&gt;
   &lt;/App&gt;
 &lt;/BrowserRouter&gt;
-*/</code></pre></div></div><div class="section css-1kr8jn0" id="rendering-with-curi"><h3><a class="header-link" href="#rendering-with-curi">Curi</a></h3><p>With Curi, we also need to re-render our application every time that the location changes. We will do this by creating a root Curi component by calling the <code class="inline-code css-jo5c25 eutm4hs0">createRouterComponent</code> function, which comes from the <code class="inline-code css-jo5c25 eutm4hs0">@curi/react-dom</code> package, and passing it our Curi router. While the name of this component is entirely up to you, we will refer to it as the <code class="inline-code css-jo5c25 eutm4hs0">Router</code> here.</p><p>The <code class="inline-code css-jo5c25 eutm4hs0">Router</code> will setup an observer on the provided router so that it can re-render your application whenever there is a new<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">response</code>. The <code class="inline-code css-jo5c25 eutm4hs0">Router</code> expects a function as its<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">children</code> prop (a render-invoked function). This function renders the application using the <code class="inline-code css-jo5c25 eutm4hs0">response</code>.</p><p>When the <code class="inline-code css-jo5c25 eutm4hs0">Router</code>&#x27;s <code class="inline-code css-jo5c25 eutm4hs0">children</code> function is called, it will receive an object with three properties:</p><ol><li><code class="inline-code css-jo5c25 eutm4hs0">response</code> is the new response object</li><li><code class="inline-code css-jo5c25 eutm4hs0">navigation</code> is an object with additional information about the navigation</li><li><code class="inline-code css-jo5c25 eutm4hs0">router</code> is your Curi router (mostly useful if the function is defined in a separate file)</li></ol><p>Above, we added <code class="inline-code css-jo5c25 eutm4hs0">response</code> functions to each route. The functions set React components as the <code class="inline-code css-jo5c25 eutm4hs0">body</code> property of responses. We can now use <code class="inline-code css-jo5c25 eutm4hs0">response.body</code> to render those components.</p><p>In the React Router section, we had three components that were rendered: <code class="inline-code css-jo5c25 eutm4hs0">App</code>,<code class="inline-code css-jo5c25 eutm4hs0">Inbox</code>, and <code class="inline-code css-jo5c25 eutm4hs0">Message</code>. With Curi, only the most accurately matched route actually matches. That means that for the URL <code class="inline-code css-jo5c25 eutm4hs0">/inbox/test</code>, the<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">&quot;Message&quot;</code> route will match, but its parent route,<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">&quot;Inbox&quot;</code> will not, so <code class="inline-code css-jo5c25 eutm4hs0">response.body</code> will be the<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">Message</code> component. Unlike React Router, we don’t render<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">Inbox</code> because we did not match the <code class="inline-code css-jo5c25 eutm4hs0">inbox</code> <!-- -->route.</p><div class="css-xg7t84 e12etsbl0"><pre><code class="language-jsx">import { createRouterComponent, useResponse } from &quot;@curi/react-dom&quot;;
+*/</code></pre></div></div><div class="section css-1kr8jn0" id="rendering-with-curi"><h3><a class="header-link" href="#rendering-with-curi">Curi</a></h3><p>With Curi, we also need to re-render our application every time that the location changes. We will do this by creating a root Curi component by calling the <code class="inline-code css-jo5c25 eutm4hs0">createRouterComponent</code> function, which comes from the <code class="inline-code css-jo5c25 eutm4hs0">@curi/react-dom</code> package, and passing it our Curi router. While the name of this component is entirely up to you, we will refer to it as the <code class="inline-code css-jo5c25 eutm4hs0">Router</code> here.</p><p>The <code class="inline-code css-jo5c25 eutm4hs0">Router</code> will setup an observer on the provided router so that it can re-render your application whenever there is a new<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">response</code>. The <code class="inline-code css-jo5c25 eutm4hs0">Router</code> uses a context provider that makes a response available to other components in the application using the <code class="inline-code css-jo5c25 eutm4hs0">useResponse</code> hook.</p><p>The <code class="inline-code css-jo5c25 eutm4hs0">useResponse</code> hook returns an object with three properties:</p><ol><li><code class="inline-code css-jo5c25 eutm4hs0">response</code> is the new response object</li><li><code class="inline-code css-jo5c25 eutm4hs0">navigation</code> is an object with additional information about the navigation</li><li><code class="inline-code css-jo5c25 eutm4hs0">router</code> is your Curi router (mostly useful if the function is defined in a separate file)</li></ol><p>Above, we added <code class="inline-code css-jo5c25 eutm4hs0">respond</code> functions to each route. The functions set React components as the <code class="inline-code css-jo5c25 eutm4hs0">body</code> property of responses. We can now use <code class="inline-code css-jo5c25 eutm4hs0">response.body</code> to render those components.</p><p>In the React Router section, we had three components that were rendered: <code class="inline-code css-jo5c25 eutm4hs0">App</code>,<code class="inline-code css-jo5c25 eutm4hs0">Inbox</code>, and <code class="inline-code css-jo5c25 eutm4hs0">Message</code>. With Curi, only the most accurately matched route actually matches. That means that for the URL <code class="inline-code css-jo5c25 eutm4hs0">/inbox/test</code>, the<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">&quot;Message&quot;</code> route will match, but its parent route,<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">&quot;Inbox&quot;</code> will not, so <code class="inline-code css-jo5c25 eutm4hs0">response.body</code> will be the<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">Message</code> component. Unlike React Router, we don’t render<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">Inbox</code> because we did not match the <code class="inline-code css-jo5c25 eutm4hs0">inbox</code> <!-- -->route.</p><div class="css-xg7t84 e12etsbl0"><pre><code class="language-jsx">import { createRouterComponent, useResponse } from &quot;@curi/react-dom&quot;;
 
 const router = createRouter(browser, routes);
 const Router = createRouterComponent(router);
@@ -193,7 +193,7 @@ ReactDOM.render((
     {
       name: &quot;Not Found&quot;,
       path: &quot;(.*)&quot;,
-      response() {
+      respond() {
         return { body: NotFound };
       }
     }

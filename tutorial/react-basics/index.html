@@ -5,7 +5,7 @@
     <meta name="Description" content="undefined">
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Tutorial React Basics | Curi Documentation</title>
+    <title>undefined | Curi Documentation</title>
     <link href="https://fonts.googleapis.com/css?family=Zilla+Slab:300,400" rel="stylesheet">
     <link href="/static/css/prism.css" rel="stylesheet">
   </head>
@@ -130,20 +130,21 @@ export default function App() {
 {
   body: undefined,
   data: undefined,
-  error: undefined,
   location: { pathname: &#x27;/&#x27;, ... },
   name: &#x27;Home&#x27;,
   params: {},
   partials: [],
-  status: 200
+  meta: {
+    status: 200
+  }
 }</code></pre></div><p>The router uses the<!-- --> <a href="https://en.wikipedia.org/wiki/Observer_pattern">observer pattern</a> <!-- -->to register functions that will be called when a new response is created. The <code class="inline-code css-jo5c25 eutm4hs0">Router</code> automatically observes the router so that it can re-render the application whenever there is a new response.</p><p>The <code class="inline-code css-jo5c25 eutm4hs0">navigation</code> object contains additional information about a navigation that doesn&#x27;t make sense to include in the response object. This includes the navigation&#x27;s &quot;action&quot; (<code class="inline-code css-jo5c25 eutm4hs0">push</code>, <code class="inline-code css-jo5c25 eutm4hs0">pop</code>, or <code class="inline-code css-jo5c25 eutm4hs0">replace</code>) and the previous response object.</p><div class="css-xg7t84 e12etsbl0"><pre><code class="language-javascript">// a sample navigation object
 {
   action: &quot;push&quot;,
   previous: { name: ..., location: ..., ... }
-}</code></pre></div></div><p>The response is the most useful of these three properties, but the other two may can be handy. For example, the <code class="inline-code css-jo5c25 eutm4hs0">navigation</code> can be useful for animating route transitions.</p><p>How do we render using the <code class="inline-code css-jo5c25 eutm4hs0">response</code>? Any way you want! The best way is to use a <code class="inline-code css-jo5c25 eutm4hs0">response</code>&#x27;s <code class="inline-code css-jo5c25 eutm4hs0">body</code> property.</p><div class="aside css-1kr8jn0" id="route-response"><h3><a class="header-link" href="#route-response">route.response</a></h3><p>Route&#x27;s can have a <code class="inline-code css-jo5c25 eutm4hs0">response</code> property, which is a function that returns an object. The (valid) properties of the object will be merged onto the response object.</p><p>One of these valid properties is <code class="inline-code css-jo5c25 eutm4hs0">body</code>, so if the<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">response</code> function returns an object with a<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">body</code> property, we can access it from the response as<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">response.body</code>.</p><div class="css-xg7t84 e12etsbl0"><pre><code class="language-javascript">{
+}</code></pre></div></div><p>The response is the most useful of these three properties, but the other two may can be handy. For example, the <code class="inline-code css-jo5c25 eutm4hs0">navigation</code> can be useful for animating route transitions.</p><p>How do we render using the <code class="inline-code css-jo5c25 eutm4hs0">response</code>? Any way you want! The best way is to use a <code class="inline-code css-jo5c25 eutm4hs0">response</code>&#x27;s <code class="inline-code css-jo5c25 eutm4hs0">body</code> property.</p><div class="aside css-1kr8jn0" id="route-respond"><h3><a class="header-link" href="#route-respond">route.respond</a></h3><p>Route&#x27;s can have a <code class="inline-code css-jo5c25 eutm4hs0">respond</code> property, which is a function that returns an object. The (valid) properties of the object will be merged onto the response object.</p><p>One of these valid properties is <code class="inline-code css-jo5c25 eutm4hs0">body</code>, so if the<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">respond</code> function returns an object with a <code class="inline-code css-jo5c25 eutm4hs0">body</code> <!-- -->property, we can access it from the response as<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">response.body</code>.</p><div class="css-xg7t84 e12etsbl0"><pre><code class="language-javascript">{
   name: &quot;Home&quot;,
   path: &quot;&quot;,
-  response() {
+  respond() {
     return {
       body: &quot;Home, sweet home.&quot;
     };
@@ -192,7 +193,7 @@ export default function NotFound() {
   return (
     &lt;div&gt;Not Found&lt;/div&gt;
   );
-}</code></pre></div><p>These components can be imported in <code class="inline-code css-jo5c25 eutm4hs0">src/routes.js</code>. Each route can be given a <code class="inline-code css-jo5c25 eutm4hs0">response</code> function which returns an object with their respective component as its <code class="inline-code css-jo5c25 eutm4hs0">body</code>.</p><div class="css-xg7t84 e12etsbl0"><pre data-line="4-7,13-15,20-22,27-29,34-36"><code class="language-javascript">// src/routes.js
+}</code></pre></div><p>These components can be imported in <code class="inline-code css-jo5c25 eutm4hs0">src/routes.js</code>. Each route can be given a <code class="inline-code css-jo5c25 eutm4hs0">respond</code> function which returns an object with their respective component as its <code class="inline-code css-jo5c25 eutm4hs0">body</code>.</p><div class="css-xg7t84 e12etsbl0"><pre data-line="4-7,13-15,20-22,27-29,34-36"><code class="language-javascript">// src/routes.js
 import { prepareRoutes } from &quot;@curi/router&quot;;
 
 import Home from &#x27;./components/Home&#x27;;
@@ -205,28 +206,28 @@ export default prepareRoutes({
     {
       name: &quot;Home&quot;,
       path: &quot;&quot;,
-      response() {
+      respond() {
         return { body: Home };
       }
     },
     {
       name: &quot;Book&quot;,
       path: &quot;book/:id&quot;,
-      response() {
+      respond() {
         return { body: Book };
       }
     },
     {
       name: &quot;Checkout&quot;,
       path: &quot;checkout&quot;,
-      response() {
+      respond() {
         return { body: Checkout };
       }
     },
     {
       name: &quot;Catch All&quot;,
       path: &quot;(.*)&quot;,
-      response() {
+      respond() {
         return { body: NotFound };
       }
     }
@@ -484,7 +485,7 @@ export default function Checkout({ router, response }) {
       &lt;/button&gt;
     &lt;/div&gt;
   );
-};</code></pre></div></div><div class="section css-1kr8jn0" id="next"><h2><a class="header-link" href="#next">What&#x27;s next?</a></h2><p>We now have a functional website built with React and Curi. What should you do next? Build another site! You can also check out the<!-- --> <a href="/guides/">guides</a> for information on advanced techniques.</p></div></div><style data-emotion-css="64fwtw">.css-64fwtw{display:none;}@media only screen and (min-width:751px){.css-64fwtw{background:#efefef;display:block;position:fixed;top:50px;bottom:0px;overflow:auto;-webkit-flex:0 0;-ms-flex:0 0;flex:0 0;-webkit-order:-1;-ms-flex-order:-1;order:-1;padding:25px;margin-right:25px;}}</style><div class="css-64fwtw e1hcridg2"><style data-emotion-css="1eimyfs">.css-1eimyfs{width:200px;}.css-1eimyfs p{margin:0;}.css-1eimyfs a{-webkit-text-decoration:none;text-decoration:none;display:block;}.css-1eimyfs ol{padding-left:0;margin-top:0;list-style-type:none;}.css-1eimyfs ol ol{padding-left:15px;font-size:0.9em;}</style><div class="css-1eimyfs e1evhjzy0"><ol><li><a href="#demo">Demo</a></li><li><a href="#setup">Setup</a></li><li><a href="#routes">Routes</a><ol><li><a href="#path-basics">Path basics</a></li></ol></li><li><a href="#history">History</a></li><li><a href="#router">The Router</a></li><li><a href="#rendering">Rendering with React</a><ol><li><a href="#responses">Responses and Navigation</a></li><li><a href="#route-response">route.response</a></li></ol></li><li><a href="#navigating">Navigating between locations</a><ol><li><a href="#link-component">The &lt;Link&gt; Component</a></li><li><a href="#nav-menu">A Navigation Menu</a></li><li><a href="#book-links">Linking to Books</a></li></ol></li><li><a href="#shopping">Let&#x27;s go shopping</a><ol><li><a href="#nav-method">The Router&#x27;s Navigate Method</a></li></ol></li><li><a href="#next">What&#x27;s next?</a></li></ol></div></div></div></main></div>
+};</code></pre></div></div><div class="section css-1kr8jn0" id="next"><h2><a class="header-link" href="#next">What&#x27;s next?</a></h2><p>We now have a functional website built with React and Curi. What should you do next? Build another site! You can also check out the<!-- --> <a href="/guides/">guides</a> for information on advanced techniques.</p></div></div><style data-emotion-css="64fwtw">.css-64fwtw{display:none;}@media only screen and (min-width:751px){.css-64fwtw{background:#efefef;display:block;position:fixed;top:50px;bottom:0px;overflow:auto;-webkit-flex:0 0;-ms-flex:0 0;flex:0 0;-webkit-order:-1;-ms-flex-order:-1;order:-1;padding:25px;margin-right:25px;}}</style><div class="css-64fwtw e1hcridg2"><style data-emotion-css="1eimyfs">.css-1eimyfs{width:200px;}.css-1eimyfs p{margin:0;}.css-1eimyfs a{-webkit-text-decoration:none;text-decoration:none;display:block;}.css-1eimyfs ol{padding-left:0;margin-top:0;list-style-type:none;}.css-1eimyfs ol ol{padding-left:15px;font-size:0.9em;}</style><div class="css-1eimyfs e1evhjzy0"><ol><li><a href="#demo">Demo</a></li><li><a href="#setup">Setup</a></li><li><a href="#routes">Routes</a><ol><li><a href="#path-basics">Path basics</a></li></ol></li><li><a href="#history">History</a></li><li><a href="#router">The Router</a></li><li><a href="#rendering">Rendering with React</a><ol><li><a href="#responses">Responses and Navigation</a></li><li><a href="#route-respond">route.respond</a></li></ol></li><li><a href="#navigating">Navigating between locations</a><ol><li><a href="#link-component">The &lt;Link&gt; Component</a></li><li><a href="#nav-menu">A Navigation Menu</a></li><li><a href="#book-links">Linking to Books</a></li></ol></li><li><a href="#shopping">Let&#x27;s go shopping</a><ol><li><a href="#nav-method">The Router&#x27;s Navigate Method</a></li></ol></li><li><a href="#next">What&#x27;s next?</a></li></ol></div></div></div></main></div>
     <script src="https://unpkg.com/react@16.8.6/umd/react.production.min.js"></script>
     <script src="https://unpkg.com/react-dom@16.8.6/umd/react-dom.production.min.js"></script>
     <script src="/static/js/prism.js"></script>

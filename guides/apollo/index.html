@@ -5,7 +5,7 @@
     <meta name="Description" content="undefined">
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Apollo Integration Guide | Curi Documentation</title>
+    <title>undefined | Curi Documentation</title>
     <link href="https://fonts.googleapis.com/css?family=Zilla+Slab:300,400" rel="stylesheet">
     <link href="/static/css/prism.css" rel="stylesheet">
   </head>
@@ -30,7 +30,7 @@ const routes = prepareRoutes({
     {
       name: &#x27;Noun&#x27;,
       path: &#x27;noun/:word&#x27;,
-      response: () =&gt; {
+      respond: () =&gt; {
         return {
           body: Noun
         };
@@ -96,7 +96,7 @@ const routes = prepareRoutes({
       }
     }
   ]
-});</code></pre></div><p>There are two strategies for doing this.</p><p>The first approach is to avoid the <code class="inline-code css-jo5c25 eutm4hs0">Query</code> altogether. Instead, you can use a route&#x27;s <code class="inline-code css-jo5c25 eutm4hs0">response</code> property to attach the data fetched by Apollo directly to a response through its<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">data</code> property.</p><p>While we know at this point that the query has executed, we should also check <code class="inline-code css-jo5c25 eutm4hs0">error</code> in the <code class="inline-code css-jo5c25 eutm4hs0">response</code> function to ensure that the query was executed successfully.</p><div class="css-xg7t84 e12etsbl0"><pre><code class="language-javascript">// routes.js
+});</code></pre></div><p>There are two strategies for doing this.</p><p>The first approach is to avoid the <code class="inline-code css-jo5c25 eutm4hs0">Query</code> altogether. Instead, you can use a route&#x27;s <code class="inline-code css-jo5c25 eutm4hs0">response</code> property to attach the data fetched by Apollo directly to a response through its<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">data</code> property.</p><p>While we know at this point that the query has executed, we should also check <code class="inline-code css-jo5c25 eutm4hs0">error</code> in the <code class="inline-code css-jo5c25 eutm4hs0">respond</code> function to ensure that the query was executed successfully.</p><div class="css-xg7t84 e12etsbl0"><pre><code class="language-javascript">// routes.js
 import GET_VERB from &quot;./queries&quot;;
 
 import Verb from &quot;./pages/Verb&quot;;
@@ -111,7 +111,7 @@ export default [
         variables: { word: params.word }
       });
     },
-    response({ error, resolved }) {
+    respond({ error, resolved }) {
       if (error) {
         // handle failed queries
       }
