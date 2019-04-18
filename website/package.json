@@ -10,8 +10,7 @@
     "build": "cross-env BABEL_ENV=node NODE_ENV=production node ./scripts/build",
     "predev": "node ./scripts/generateDevIndexHtml",
     "dev": "cross-env BABEL_ENV=dev webpack-dev-server --config webpack.config.dev.js",
-    "prettier": "prettier --single-quote --write \"src/**/*.js\"",
-    "versions": "node ./scripts/updatePackageVersions"
+    "prettier": "prettier --single-quote --write \"src/**/*.js\""
   },
   "repository": {
     "type": "git",
