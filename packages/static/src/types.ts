@@ -12,8 +12,6 @@ export interface FallbackDescriptor {
   pathname: string;
 }
 
-export type GetRouterOptions = () => RouterOptions;
-
 export interface StaticOutput {
   render: (emitted: Emitted) => string;
   dir: string;
@@ -21,7 +19,7 @@ export interface StaticOutput {
 
 export interface StaticRouter {
   routes: RouteMatcher;
-  options?: GetRouterOptions;
+  options?: RouterOptions;
 }
 
 export interface StaticConfiguration {

@@ -9,14 +9,13 @@ export interface FallbackDescriptor {
     filename: string;
     pathname: string;
 }
-export declare type GetRouterOptions = () => RouterOptions;
 export interface StaticOutput {
     render: (emitted: Emitted) => string;
     dir: string;
 }
 export interface StaticRouter {
     routes: RouteMatcher;
-    options?: GetRouterOptions;
+    options?: RouterOptions;
 }
 export interface StaticConfiguration {
     pages: Array<PageDescriptor>;

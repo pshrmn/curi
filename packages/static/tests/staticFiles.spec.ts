@@ -267,8 +267,8 @@ describe("staticFiles()", () => {
     });
   });
 
-  describe("router.options()", () => {
-    it("calls options function to get options for a router", async () => {
+  describe("router.options", () => {
+    it("passes provided options to router", async () => {
       const fixtures = join(FIXTURES_ROOT, "routerOptions");
       await remove(fixtures);
       await ensureDir(fixtures);
@@ -278,14 +278,19 @@ describe("staticFiles()", () => {
           {
             name: "Home",
             path: "",
-            response() {
+            response({ external }) {
+              expect(external).toBe(providedExternal);
               return { body: "Home" };
             }
           }
         ]
       });
       const pages = [{ name: "Home" }];
-      const options = jest.fn();
+
+      // verify that provided options are used by checking that the
+      // provided external is available to routes
+      const providedExternal = {};
+      const options = { external: providedExternal };
       await staticFiles({
         pages,
         router: {
@@ -297,7 +302,6 @@ describe("staticFiles()", () => {
           dir: fixtures
         }
       });
-      expect(options.mock.calls.length).toBe(1);
     });
   });
 
@@ -368,12 +372,10 @@ describe("staticFiles()", () => {
           ]
         });
         const pages = [{ name: "Home" }];
-        const options = jest.fn();
         const results = await staticFiles({
           pages,
           router: {
-            routes,
-            options
+            routes
           },
           output: {
             render: () => {

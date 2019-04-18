@@ -14,7 +14,7 @@ export default async function staticFiles(
 ): Promise<Array<Result>> {
   const {
     pages,
-    router: { routes, options: routerOptions = () => ({}) },
+    router: { routes, options: routerOptions = {} },
     output: { render, dir },
     history: historyOptions
   } = config;
@@ -51,7 +51,7 @@ export default async function staticFiles(
           // with overlapping requests
 
           const router = createRouter<LocationOptions>(reusable, routes, {
-            ...routerOptions(),
+            ...routerOptions,
             // need to emit redirects or will get stuck waiting forever
             invisibleRedirects: false,
             history: {
