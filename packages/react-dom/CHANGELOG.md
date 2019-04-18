@@ -1,3 +1,7 @@
+## Next
+
+* Fix UMD builds.
+
 ## 2.0.0-beta.7
 
 * Spread `forward` props to link elements before "native" props.
