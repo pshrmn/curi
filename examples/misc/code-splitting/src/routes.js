@@ -9,7 +9,7 @@ export default prepareRoutes({
       resolve() {
         return import("./components/Home.js").then(module => module.default);
       },
-      response: ({ resolved }) => {
+      respond: ({ resolved }) => {
         return {
           body: resolved
         };
@@ -21,7 +21,7 @@ export default prepareRoutes({
       resolve() {
         return import("./components/Contact.js").then(module => module.default);
       },
-      response: ({ resolved }) => {
+      respond: ({ resolved }) => {
         return {
           body: resolved
         };
@@ -30,7 +30,7 @@ export default prepareRoutes({
     {
       name: "Not Found",
       path: "(.*)",
-      response: () => {
+      respond: () => {
         return {
           body: NotFound
         };

@@ -10,7 +10,7 @@ export default prepareRoutes({
     {
       name: "Home",
       path: "",
-      response() {
+      respond() {
         return {
           body: Home
         };
@@ -19,7 +19,7 @@ export default prepareRoutes({
     {
       name: "Contact",
       path: "contact",
-      response() {
+      respond() {
         return {
           body: Contact
         };
@@ -28,7 +28,7 @@ export default prepareRoutes({
         {
           name: "Method",
           path: ":method",
-          response() {
+          respond() {
             return {
               body: Method
             };
@@ -39,7 +39,7 @@ export default prepareRoutes({
     {
       name: "Not Found",
       path: "(.*)",
-      response() {
+      respond() {
         return {
           body: NotFound
         };

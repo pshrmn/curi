@@ -9,7 +9,7 @@ import routes from "./routes";
 import App from "./components/App";
 
 const setTitle = createTitleSideEffect(
-  ({ response }) => `${response.title} | Side Effect Example`
+  ({ response }) => `${response.meta.title} | Side Effect Example`
 );
 const router = createRouter(browser, routes, {
   sideEffects: [setTitle]

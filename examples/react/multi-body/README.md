@@ -10,7 +10,7 @@ import { HomeMenu, Home } from './components/Home';
 {
   name: 'Home',
   match: {
-    response() {
+    respond() {
       return {
         body: {
           main: Home,

@@ -15,7 +15,7 @@ export default prepareRoutes({
     {
       name: "Home",
       path: "",
-      response() {
+      respond() {
         return {
           redirect: {
             name: "Products"
@@ -27,7 +27,7 @@ export default prepareRoutes({
     {
       name: "Products",
       path: "products",
-      response() {
+      respond() {
         return {
           body: Products,
           data: api.categories()
@@ -37,7 +37,7 @@ export default prepareRoutes({
         {
           name: "Category",
           path: ":category",
-          response({ match }) {
+          respond({ match }) {
             const { params } = match;
             const modifiers = {
               body: Category
@@ -57,7 +57,7 @@ export default prepareRoutes({
             {
               name: "Product",
               path: ":productID",
-              response: ({ match }) => {
+              respond: ({ match }) => {
                 const { params } = match;
                 const modifiers = {
                   body: Product
@@ -81,7 +81,7 @@ export default prepareRoutes({
     {
       name: "Not Found",
       path: "(.*)",
-      response() {
+      respond() {
         return {
           body: NotFound
         };

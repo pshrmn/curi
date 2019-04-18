@@ -12,7 +12,7 @@ export default prepareRoutes({
     {
       name: "Home",
       path: "",
-      response() {
+      respond() {
         return {
           body: Home
         };
@@ -25,7 +25,7 @@ export default prepareRoutes({
         // the fakeAPI caches results based on id
         return fakeAPI(params.id);
       },
-      response({ error, resolved }) {
+      respond({ error, resolved }) {
         const resp = {
           body: Album
         };
@@ -40,7 +40,7 @@ export default prepareRoutes({
     {
       name: "Not Found",
       path: "(.*)",
-      response() {
+      respond() {
         return {
           body: NotFound
         };

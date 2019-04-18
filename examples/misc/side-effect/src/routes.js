@@ -10,30 +10,36 @@ export default prepareRoutes({
     {
       name: "Home",
       path: "",
-      response: () => {
+      respond: () => {
         return {
           body: Home,
-          title: "Home"
+          meta: {
+            title: "Home"
+          }
         };
       }
     },
     {
       name: "Contact",
       path: "contact",
-      response: () => {
+      respond: () => {
         return {
           body: Contact,
-          title: "Contact"
+          meta: {
+            title: "Contact"
+          }
         };
       },
       children: [
         {
           name: "Method",
           path: ":method",
-          response: ({ match }) => {
+          respond: ({ match }) => {
             return {
               body: Method,
-              title: `Contact via ${match.params.method}`
+              meta: {
+                title: `Contact via ${match.params.method}`
+              }
             };
           }
         }
@@ -42,10 +48,12 @@ export default prepareRoutes({
     {
       name: "Not Found",
       path: "(.*)",
-      response: () => {
+      respond: () => {
         return {
           body: NotFound,
-          title: "Not Found"
+          meta: {
+            title: "Not Found"
+          }
         };
       }
     }

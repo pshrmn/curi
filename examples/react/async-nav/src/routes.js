@@ -14,7 +14,7 @@ export default prepareRoutes({
         const movies = MOVIES();
         return Promise.all([body, movies]);
       },
-      response({ resolved }) {
+      respond({ resolved }) {
         const [body, data] = resolved;
         return {
           body,
@@ -35,7 +35,7 @@ export default prepareRoutes({
         );
         return Promise.all([body, movie]);
       },
-      response({ resolved }) {
+      respond({ resolved }) {
         const [body, data] = resolved;
         return {
           body,
@@ -51,7 +51,7 @@ export default prepareRoutes({
           /* webpackChunkName: "NotFound" */ "./pages/NotFound"
         ).then(module => module.default);
       },
-      response({ resolved }) {
+      respond({ resolved }) {
         return {
           body: resolved
         };

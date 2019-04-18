@@ -13,7 +13,7 @@ export default prepareRoutes({
     {
       name: "Home",
       path: "",
-      response() {
+      respond() {
         return {
           body: Home
         };
@@ -22,14 +22,16 @@ export default prepareRoutes({
     {
       name: "Protected",
       path: "protected",
-      response() {
+      respond() {
         if (!store.state.user) {
           return {
             redirect: {
               name: "Login",
               query: { next: "/protected" }
             },
-            status: 302
+            meta: {
+              status: 302
+            }
           };
         } else {
           return {
@@ -41,7 +43,7 @@ export default prepareRoutes({
     {
       name: "Login",
       path: "login",
-      response() {
+      respond() {
         if (store.state.user) {
           return {
             redirect: {
@@ -58,7 +60,7 @@ export default prepareRoutes({
     {
       name: "Logout",
       path: "logout",
-      response() {
+      respond() {
         if (!store.state.user) {
           return {
             redirect: {
@@ -75,7 +77,7 @@ export default prepareRoutes({
     {
       name: "Not Found",
       path: "(.*)",
-      response() {
+      respond() {
         return {
           body: NotFound
         };

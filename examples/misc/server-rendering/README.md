@@ -15,7 +15,7 @@ function catchAll(req, res) {
   const Router = createRouterComponent(router);
 
   // 2. Wait for the initial location's response to finish
-  router.response((response, navigation) => {
+  router.once(({ response, navigation }) => {
     // 3. Generate the HTML markup by rendering the <Router> and
     // passing it the render function
     const markup = renderToString(

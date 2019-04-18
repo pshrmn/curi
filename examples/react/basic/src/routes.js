@@ -9,7 +9,7 @@ const routes = [
   {
     name: "Home",
     path: "",
-    response: () => {
+    respond: () => {
       return {
         body: Home
       };
@@ -18,7 +18,7 @@ const routes = [
   {
     name: "Contact",
     path: "contact",
-    response: () => {
+    respond: () => {
       return {
         body: Contact
       };
@@ -27,7 +27,7 @@ const routes = [
       {
         name: "Method",
         path: ":method",
-        response: () => {
+        respond: () => {
           return {
             body: Method
           };
@@ -38,7 +38,7 @@ const routes = [
   {
     name: "NotFound",
     path: "(.*)",
-    response: () => {
+    respond: () => {
       return {
         body: NotFound
       };

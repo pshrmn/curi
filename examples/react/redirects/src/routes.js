@@ -13,7 +13,7 @@ export default prepareRoutes({
     {
       name: "Home",
       path: "",
-      response: () => {
+      respond: () => {
         return {
           body: Home
         };
@@ -22,7 +22,7 @@ export default prepareRoutes({
     {
       name: "Protected",
       path: "protected",
-      response: ({ match }) => {
+      respond: ({ match }) => {
         if (!fakeAuth.authenticated()) {
           return {
             redirect: {
@@ -34,7 +34,9 @@ export default prepareRoutes({
                 }
               }
             },
-            status: 302
+            meta: {
+              status: 302
+            }
           };
         } else {
           return {
@@ -46,7 +48,7 @@ export default prepareRoutes({
     {
       name: "Login",
       path: "login",
-      response: () => {
+      respond: () => {
         if (fakeAuth.authenticated()) {
           return {
             redirect: {
@@ -62,7 +64,7 @@ export default prepareRoutes({
     {
       name: "Logout",
       path: "logout",
-      response: () => {
+      respond: () => {
         if (!fakeAuth.authenticated()) {
           return {
             redirect: {
@@ -78,7 +80,7 @@ export default prepareRoutes({
     {
       name: "Not Found",
       path: "(.*)",
-      response: () => {
+      respond: () => {
         return {
           body: NotFound
         };
