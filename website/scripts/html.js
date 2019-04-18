@@ -5,11 +5,12 @@ const REACT_DOM_BUILD = dev
   ? "react-dom.development.js"
   : "react-dom.production.min.js";
 
-module.exports = function insert(html, title) {
+module.exports = function insert(html, title, description) {
   return `<!doctype html>
 <html lang="en">
   <head>
     <meta charset="utf-8">
+    <meta name="Description" content="${description}">
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>${title} | Curi Documentation</title>

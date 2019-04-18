@@ -16,23 +16,26 @@ export default function Version({ versions, major, params }) {
   // only render dropdown for packages with multiple versions
   if (Object.keys(versions).length > 1) {
     return (
-      <StyledSelect
-        value={major}
-        onChange={e => {
-          router.navigate({
-            name: "Package",
-            params: { ...params, version: e.target.value }
-          });
-        }}
-      >
-        {Object.keys(versions).map(m => {
-          return (
-            <option key={m} value={m}>
-              v{versions[m]}
-            </option>
-          );
-        })}
-      </StyledSelect>
+      <label>
+        Version:{" "}
+        <StyledSelect
+          value={major}
+          onChange={e => {
+            router.navigate({
+              name: "Package",
+              params: { ...params, version: e.target.value }
+            });
+          }}
+        >
+          {Object.keys(versions).map(m => {
+            return (
+              <option key={m} value={m}>
+                {versions[m]}
+              </option>
+            );
+          })}
+        </StyledSelect>
+      </label>
     );
   }
 

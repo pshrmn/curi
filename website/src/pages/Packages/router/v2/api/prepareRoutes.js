@@ -7,12 +7,15 @@ import {
   IJS
 } from "../../../../../components/package/common";
 
-const routesArgMeta = { title: "routes", hash: "routes" };
-const interactionsArgMeta = { title: "interactions", hash: "interactions" };
+const routesArgMeta = { title: "routes", hash: "options-routes" };
+const interactionsArgMeta = {
+  title: "interactions",
+  hash: "options-interactions"
+};
 
 const argumentsMeta = {
   title: "Arguments",
-  hash: "arguments",
+  hash: "prepareRoutes-arguments",
   children: [routesArgMeta, interactionsArgMeta]
 };
 

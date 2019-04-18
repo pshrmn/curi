@@ -186,44 +186,24 @@ yarn serve`}
         </CodeBlock>
 
         <p>
-          The router will match its routes against a location's{" "}
-          <IJS>pathname</IJS> to figure out which route matches. The{" "}
-          <IJS>query</IJS> and <IJS>hash</IJS> values are not used for matching
-          routes.
+          The routes define what the application renders for a particular
+          location, but we also need to define how the application navigates.
+          When we create the router, we will pass it a history function that
+          will be used to enable navigation.
         </p>
 
         <p>
           Curi uses the <a href="https://github.com/pshrmn/hickory">Hickory</a>{" "}
-          library to create a history object that will enable us to navigate
-          within our application. Hickory provides a few different packages to
-          create history objects for different environments, but the only one we
-          care about right now is the browser history, which comes from the{" "}
-          <IJS>@hickory/browser</IJS> package. A browser history object will
-          interact with the browser's native{" "}
-          <a href="https://developer.mozilla.org/en-US/docs/Web/API/History_API">
-            History API
-          </a>{" "}
-          so that our application can change locations (and the URI in the
-          address bar) without making a request to a server and reloading the
-          page.
+          library for its history. There are a few Hickory packages to choose
+          from for different environments. For most websites, the{" "}
+          <IJS>@hickory/browser</IJS> is the right choice for the front end.
         </p>
 
         <p>
-          We can import the <IJS>Browser</IJS> function from{" "}
-          <IJS>@hickory/browser</IJS> in our main file (<IJS>src/main.js</IJS>,
-          which <IJS>@vue/cli</IJS> created for us). To create a history object,
-          we call that function.
+          We can import the <IJS>browser</IJS> function from{" "}
+          <IJS>@hickory/browser</IJS> in our index file (<IJS>src/index.js</IJS>
+          , which <IJS>create-react-app</IJS> created for us).
         </p>
-
-        <Note>
-          <p>
-            The history object can be configured with{" "}
-            <a href="https://github.com/pshrmn/hickory/blob/master/docs/api/browser.md#options">
-              an options object
-            </a>
-            , but we will stick with the defaults.
-          </p>
-        </Note>
 
         <CodeBlock lang="javascript" data-line="3">
           {`// src/main.js
@@ -372,26 +352,38 @@ new Vue({
 
         <CodeBlock lang="bash">{`touch src/routes.js`}</CodeBlock>
 
+        <p>We can create an array of routes using the above names and paths.</p>
+        <p>
+          <IJS>@curi/router</IJS> provides a <IJS>prepareRoutes</IJS> function,
+          which is used to setup routes for the router. We will pass the routes
+          array to <IJS>prepareRoutes</IJS> and export the result of that
+          function call.
+        </p>
+
         <CodeBlock lang="javascript">
           {`// src/routes.js
-export default [
-  {
-    name: "Home",
-    path: ""
-  },
-  {
-    name: "Book",
-    path: "book/:id"
-  },
-  {
-    name: "Checkout",
-    path: "checkout"
-  },
-  {
-    name: "Catch All",
-    path: "(.*)"
-  }
-];`}
+import { prepareRoutes } from "@curi/router";
+
+export default prepareRoutes({
+  routes: [
+    {
+      name: "Home",
+      path: ""
+    },
+    {
+      name: "Book",
+      path: "book/:id"
+    },
+    {
+      name: "Checkout",
+      path: "checkout"
+    },
+    {
+      name: "Catch All",
+      path: "(.*)"
+    }
+  ]
+});`}
         </CodeBlock>
       </HashSection>
 
@@ -599,51 +591,55 @@ new Vue({
           attached to their respective routes.
         </p>
 
-        <CodeBlock lang="javascript" data-line="2-5,11-15,20-24,29-33,38-42">
+        <CodeBlock lang="javascript" data-line="4-7,14-18,23-27,32-36,41-45">
           {`// src/routes.js
+import { prepareRoutes } from "@curi/router";
+
 import Home from './components/Home';
 import Book from './components/Book';
 import Checkout from './components/Checkout';
 import NotFound from './components/NotFound';
 
-export default [
-  {
-    name: "Home",
-    path: "",
-    response() {
-      return {
-        body: Home
-      };
+export default prepareRoutes({
+  routes: [
+    {
+      name: "Home",
+      path: "",
+      response() {
+        return {
+          body: Home
+        };
+      }
+    },
+    {
+      name: "Book",
+      path: "book/:id",
+      response() {
+        return {
+          body: Book
+        };
+      }
+    },
+    {
+      name: "Checkout",
+      path: "checkout",
+      response() {
+        return {
+          body: Checkout
+        };
+      }
+    },
+    {
+      name: "Catch All",
+      path: "(.*)",
+      response() {
+        return {
+          body: NotFound
+        };
+      }
     }
-  },
-  {
-    name: "Book",
-    path: "book/:id",
-    response() {
-      return {
-        body: Book
-      };
-    }
-  },
-  {
-    name: "Checkout",
-    path: "checkout",
-    response() {
-      return {
-        body: Checkout
-      };
-    }
-  },
-  {
-    name: "Catch All",
-    path: "(.*)",
-    response() {
-      return {
-        body: NotFound
-      };
-    }
-  }
-];`}
+  ]
+});`}
         </CodeBlock>
 
         <p>

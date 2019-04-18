@@ -4,7 +4,7 @@
   "version": "0.2.9",
   "description": "The documentation website for the Curi router",
   "scripts": {
-    "prebuild": "npm run build:setup && npm run versions && npm run build:bundle",
+    "prebuild": "npm run build:setup && npm run build:bundle",
     "build:bundle": "webpack-cli --config webpack.config.prod.js",
     "build:setup": "node ./scripts/buildSetup",
     "build": "cross-env BABEL_ENV=node NODE_ENV=production node ./scripts/build",

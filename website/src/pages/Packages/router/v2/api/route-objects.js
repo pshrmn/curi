@@ -261,7 +261,7 @@ export function RoutePropertiesAPI() {
 
             <HashSection
               tag="h5"
-              meta={{ title: "resolved", hash: "response-resolved" }}
+              meta={{ title: "resolved", hash: "response-options-resolved" }}
             >
               <p>
                 An object with the value returned by the route's{" "}
@@ -293,7 +293,7 @@ const user = {
 
             <HashSection
               tag="h5"
-              meta={{ title: "error", hash: "response-error" }}
+              meta={{ title: "error", hash: "response-options-error" }}
             >
               <p>
                 If the route has a <IJS>resolve</IJS> function that throws an
@@ -359,7 +359,7 @@ const routes = prepareRoutes({
 
           <HashSection
             tag="h4"
-            meta={{ title: "status", hash: "response-status" }}
+            meta={{ title: "status", hash: "response-return-status" }}
           >
             <p>
               A number. This is useful for redirects or locations caught by your
@@ -382,7 +382,7 @@ const routes = prepareRoutes({
 
           <HashSection
             tag="h4"
-            meta={{ title: "error", hash: "response-error" }}
+            meta={{ title: "error", hash: "response-return-error" }}
           >
             <p>
               If an error occurs with the route's <IJS>resolve</IJS> function,
@@ -402,7 +402,10 @@ const routes = prepareRoutes({
             </CodeBlock>
           </HashSection>
 
-          <HashSection tag="h4" meta={{ title: "data", hash: "response-data" }}>
+          <HashSection
+            tag="h4"
+            meta={{ title: "data", hash: "response-return-data" }}
+          >
             <p>Anything you want it to be.</p>
 
             <CodeBlock>
@@ -437,7 +440,7 @@ const routes = prepareRoutes({
 
           <HashSection
             tag="h4"
-            meta={{ title: "redirect", hash: "response-redirect" }}
+            meta={{ title: "redirect", hash: "response-return-redirect" }}
           >
             <p>
               An object with the <IJS>name</IJS> of the route to redirect to,{" "}

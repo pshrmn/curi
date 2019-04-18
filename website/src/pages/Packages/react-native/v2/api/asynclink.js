@@ -80,7 +80,7 @@ export function AsyncLinkAPI() {
 
         <HashSection
           tag="h4"
-          meta={{ title: "children", hash: "Link-children" }}
+          meta={{ title: "children", hash: "AsyncLink-children" }}
         >
           <p>
             A render-invoked <IJS>children</IJS> function that is called with

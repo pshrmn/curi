@@ -13,7 +13,7 @@ const routesArgMeta = { title: "routes", hash: "routes" };
 const optionsArgMeta = { title: "options", hash: "options" };
 const argumentsMeta = {
   title: "Arguments",
-  hash: "arguments",
+  hash: "createRouter-arguments",
   children: [historyArgMeta, routesArgMeta, optionsArgMeta]
 };
 

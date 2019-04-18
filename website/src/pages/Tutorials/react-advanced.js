@@ -149,7 +149,8 @@ npm run start`}
   name: "A Route",
   path: "route/:id",
   resolve({ params }) {
-    const body = import("./components/SomeComponent").then(preferDefault);
+    const body = import("./components/SomeComponent")
+      .then(preferDefault);
     const data = fetch(\`/api/data/$\{params.id\}\`);
     return Promise.all([ component, data ]);
   },
@@ -195,7 +196,8 @@ const routes = prepareRoutes({
       name: "A Route",
       path: "route/:id",
       resolve({ params }) {
-        const body = import("./components/SomeComponent").then(preferDefault);
+        const body = import("./components/SomeComponent")
+          .then(preferDefault);
         const data = fetch(\`/api/data/$\{params.id\}\`);
         return Promise.all([ component, data ]);
       },
@@ -363,8 +365,9 @@ const routes = prepareRoutes({
       name: "Test",
       path: "test",
       resolve() {
-        return import(/* webpackChunkName: "Test" */ "./components/Test.js")
-          .then(preferDefault);
+        return import(
+          /* webpackChunkName: "Test" */ "./components/Test.js"
+        ).then(preferDefault);
       }
     }
   ]
@@ -415,7 +418,7 @@ const routes = prepareRoutes({
           instead of the import at the top of the file.
         </p>
 
-        <CodeBlock data-line="3,9-15,20-26,31-37,42-48">
+        <CodeBlock data-line="3,10-16,21-27,32-38,43-49">
           {`// src/routes.js
 import { prepareRoutes } from "@curi/router";
 import { preferDefault } from "@curi/helpers";
@@ -476,7 +479,7 @@ export default prepareRoutes({
           update the <IJS>index.js</IJS> module to do this.
         </p>
 
-        <CodeBlock data-line="17-23">
+        <CodeBlock data-line="16-22">
           {`// src/index.js
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -584,7 +587,7 @@ export const BOOK = id => Promise.resolve(
           use it here.
         </p>
 
-        <CodeBlock data-line="11,15-19">
+        <CodeBlock data-line="11,14-18">
           {`// src/index.js
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -643,7 +646,7 @@ registerServiceWorker();`}
           be a number instead of a string.
         </p>
 
-        <CodeBlock data-line="12,15-18,27,30-33">
+        <CodeBlock data-line="10,13,17-21,27,30,34-38">
           {`// src/routes.js
 import { prepareRoutes } from "@curi/router";
 import { preferDefault } from "@curi/helpers";
@@ -828,37 +831,40 @@ export const BOOK = id => new Promise(resolve => {
 
         <HashSection meta={navigatingMeta} tag="h3">
           <p>
-            The <IJS>Link</IJS> component can be called with a render-invoked{" "}
-            <IJS>children</IJS> function. If you do this, the function will be
-            called with a <IJS>navigating</IJS> boolean that indicates whether
-            the router is currently navigating to that link. This is useful for
-            when you know that there is a long (multiple seconds) delay between
-            when the user clicks the link and when the navigation will occur.
+            The <IJS>Link</IJS> component has a sibling component called{" "}
+            <IJS>AsyncLink</IJS>, can takes a render-invoked function as its{" "}
+            <IJS>children</IJS> prop. The function is called with a{" "}
+            <IJS>navigating</IJS> boolean that indicates whether the router is
+            currently navigating to that link. This is useful for when you know
+            that there is a long (multiple seconds) delay between when the user
+            clicks the link and when the navigation will occur.
           </p>
+
           <p>
-            We can update the <IJS>Link</IJS>s in the <IJS>Home</IJS> component
-            to using render-invoked functions and display a loading spinner
-            while we wait for the book data to load.
+            We can replace the <IJS>Link</IJS>s in the <IJS>Home</IJS> component
+            with <IJS>AsyncLink</IJS>s and use render-invoked functions to
+            display a loading spinner while we wait for the book data to load.
           </p>
 
           <CodeBlock lang="jsx">
-            {`import { Link } from "@curi/react-dom";
+            {`import { AsyncLink } from "@curi/react-dom";
 
-<Link name="Book" params={{ id: 1 }}>
+<AsyncLink name="Book" params={{ id: 1 }}>
   {navigating => (
     <React.Fragment>
       Book 1
       {navigating ? <Spinner /> : null}
     </React.Fragment>
   )}
-</Link>`}
+</AsyncLink>`}
           </CodeBlock>
 
           <p>
+            We will use the{" "}
             <a href="https://github.com/KyleAMathews/react-spinkit">
               <IJS>react-spinkit</IJS>
             </a>{" "}
-            provides some pretty loading spinners, so we will use that.
+            package, which provides a variety of spinner components.
           </p>
 
           <CodeBlock lang="bash">{`npm install react-spinkit`}</CodeBlock>
@@ -880,10 +886,10 @@ export const BOOK = id => new Promise(resolve => {
             </p>
           </Note>
 
-          <CodeBlock lang="jsx" data-line="4,13-18">
+          <CodeBlock lang="jsx" data-line="3-4,12-19">
             {`// src/components/Home.js
 import React from 'react';
-import { Link } from '@curi/react-dom';
+import { AsyncLink } from '@curi/react-dom';
 import Spinner from "react-spinkit";
 
 export default function Home({ response }) {
@@ -892,14 +898,14 @@ export default function Home({ response }) {
       <ul>
         {response.data.books.map(book => (
           <li key={book.id}>
-            <Link name="Book" params={{ id: book.id }} >
+            <AsyncLink name="Book" params={{ id: book.id }} >
               {navigating => (
                 <React.Fragment>
                   {book.title} by {book.author}
                   {navigating ? <Spinner /> : null}
                 </React.Fragment>
               )}
-            </Link>
+            </AsyncLink>
           </li>
         ))}
       </ul>

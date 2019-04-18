@@ -381,32 +381,24 @@ registerServiceWorker();`}
 
       <HashSection meta={historyMeta}>
         <p>
-          Along with the routes, we also need to create a history object for the
-          router. The history object is responsible for creating locations and
-          navigation within the application.
+          The routes define what the application renders for a particular
+          location, but we also need to define how the application navigates.
+          When we create the router, we will pass it a history function that
+          will be used to enable navigation.
         </p>
+
         <p>
           Curi uses the <a href="https://github.com/pshrmn/hickory">Hickory</a>{" "}
-          library for its history implementations. There are a few Hickory
-          packages to choose from for different environments. For most websites,
-          the <IJS>@hickory/browser</IJS> is the right choice for the front end,
-          which is what we will be using
+          library for its history. There are a few Hickory packages to choose
+          from for different environments. For most websites, the{" "}
+          <IJS>@hickory/browser</IJS> is the right choice for the front end.
         </p>
+
         <p>
-          We can import the <IJS>Browser</IJS> function from{" "}
+          We can import the <IJS>browser</IJS> function from{" "}
           <IJS>@hickory/browser</IJS> in our index file (<IJS>src/index.js</IJS>
-          , which <IJS>create-react-app</IJS> created for us) and call the
-          function to create a history object.
+          , which <IJS>create-react-app</IJS> created for us).
         </p>
-        <Note>
-          <p>
-            The history object can be configured with{" "}
-            <a href="https://github.com/pshrmn/hickory/blob/master/docs/api/browser.md#options">
-              an options object
-            </a>
-            , but we will stick with the defaults.
-          </p>
-        </Note>
 
         <CodeBlock lang="jsx" data-line="4">
           {`// src/index.js
@@ -662,7 +654,7 @@ export default function App() {
           <IJS>useResponse</IJS>.
         </p>
 
-        <CodeBlock lang="jsx">
+        <CodeBlock lang="jsx" data-line="6">
           {`// src/App.js
 import React from "react";
 import { useResponse } from "@curi/react-dom";
