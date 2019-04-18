@@ -69,11 +69,9 @@ export default function finishResponse(
 const validProperties: {
   [key in keyof SettableResponseProperties]: boolean
 } = {
-  status: true,
-  error: true,
+  meta: true,
   body: true,
   data: true,
-  title: true,
   redirect: true
 };
 

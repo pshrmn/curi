@@ -1,5 +1,7 @@
 ## Next
 
+* Add `meta` property to response/settable response properties.
+* Remove `title`, `status`, and `error` types from response/settable response properties.
 * Add and export `RouterOptions` type.
 
 ## 2.0.0-beta.11

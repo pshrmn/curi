@@ -1678,7 +1678,6 @@ describe("curi", () => {
             path: "",
             response: () => {
               return {
-                status: 301,
                 redirect: {
                   name: "B Route"
                 }
