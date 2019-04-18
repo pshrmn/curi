@@ -41,6 +41,7 @@ module.exports = [
     plugins: [
       plugins.typescript,
       plugins.replacePure,
+      plugins.replaceWithDevelopment,
       plugins.resolveNode,
       plugins.commonjs,
       plugins.sizeSnapshot

@@ -12,7 +12,10 @@ exports.replacePure = replace({
   delimiters: ["", ""]
 });
 exports.replaceWithProduction = replace({
-  "process.env.NODE_ENV": "production"
+  "process.env.NODE_ENV": `"production"`
+});
+exports.replaceWithDevelopment = replace({
+  "process.env.NODE_ENV": `"development"`
 });
 
 exports.resolveNode = resolve();
