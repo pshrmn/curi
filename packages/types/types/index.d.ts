@@ -62,11 +62,9 @@ export interface ExternalRedirect {
     externalURL: string;
 }
 export interface Response extends IntrinsicResponse {
-    status?: number;
-    error?: any;
+    meta?: any;
     body?: any;
     data?: any;
-    title?: string;
     redirect?: RedirectLocation | ExternalRedirect;
 }
 export interface RouteDescriptor {
@@ -119,11 +117,9 @@ export interface RedirectProps extends RouteLocation {
     name: string;
 }
 export interface SettableResponseProperties {
-    status?: number;
-    error?: any;
+    meta?: any;
     body?: any;
     data?: any;
-    title?: string;
     redirect?: RedirectProps | ExternalRedirect;
 }
 export interface ResolveResults {

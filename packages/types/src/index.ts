@@ -96,11 +96,9 @@ export interface ExternalRedirect {
 
 // full interface of response properties
 export interface Response extends IntrinsicResponse {
-  status?: number;
-  error?: any;
+  meta?: any;
   body?: any;
   data?: any;
-  title?: string;
   redirect?: RedirectLocation | ExternalRedirect;
 }
 
@@ -169,11 +167,9 @@ export interface RedirectProps extends RouteLocation {
 }
 
 export interface SettableResponseProperties {
-  status?: number;
-  error?: any;
+  meta?: any;
   body?: any;
   data?: any;
-  title?: string;
   redirect?: RedirectProps | ExternalRedirect;
 }
 

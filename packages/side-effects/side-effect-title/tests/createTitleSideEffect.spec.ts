@@ -5,12 +5,12 @@ import createTitleSideEffect from "@curi/side-effect-title";
 
 describe("createTitleSideEffect", () => {
   const fakeResponse = {
-    response: { title: "Test Title; Please Ignore" }
+    response: { meta: { title: "Test Title; Please Ignore" } }
   } as Emitted;
 
   it("sets document.title to value returned by provided callback", () => {
     const sideEffect = createTitleSideEffect(({ response }) => {
-      return `My Site | ${response.title}`;
+      return `My Site | ${response.meta.title}`;
     });
     sideEffect(fakeResponse);
     expect(document.title).toBe("My Site | Test Title; Please Ignore");
