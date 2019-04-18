@@ -799,7 +799,7 @@ describe("routes", () => {
         });
 
         describe("body", () => {
-          it("is undefined if not set by route.response()", () => {
+          it("exists on response as undefined if not set by route.response()", () => {
             const routes = prepareRoutes({
               routes: [
                 {
@@ -814,6 +814,7 @@ describe("routes", () => {
               }
             });
             const { response } = router.current();
+            expect(response.hasOwnProperty("body")).toBe(true);
             expect(response.body).toBeUndefined();
           });
 
@@ -843,7 +844,7 @@ describe("routes", () => {
         });
 
         describe("meta", () => {
-          it("is undefined if not set by route.response()", () => {
+          it("exists on the response as undefined if not set by route.response()", () => {
             const routes = prepareRoutes({
               routes: [
                 {
@@ -862,6 +863,7 @@ describe("routes", () => {
               }
             });
             const { response } = router.current();
+            expect(response.hasOwnProperty("meta")).toBe(true);
             expect(response.meta).toBeUndefined();
           });
 
@@ -896,7 +898,7 @@ describe("routes", () => {
         });
 
         describe("data", () => {
-          it("is undefined if not set by route.response()", () => {
+          it("exists on response as undefined if not set by route.response()", () => {
             const routes = prepareRoutes({
               routes: [
                 {
@@ -911,6 +913,7 @@ describe("routes", () => {
               }
             });
             const { response } = router.current();
+            expect(response.hasOwnProperty("data")).toBe(true);
             expect(response.data).toBeUndefined();
           });
 
@@ -1243,7 +1246,7 @@ describe("routes", () => {
         });
 
         describe("[undefined properties]", () => {
-          it("doesn't merge properties whose values is undefined", () => {
+          it("are set to undefined on the response", () => {
             const routes = prepareRoutes({
               routes: [
                 {
@@ -1262,7 +1265,8 @@ describe("routes", () => {
             const { response } = router.current();
             expect(response.name).toBe("A Route");
             expect(response.hasOwnProperty("body")).toBe(true);
-            expect(response.hasOwnProperty("meta")).toBe(false);
+            expect(response.hasOwnProperty("meta")).toBe(true);
+            expect(response.meta).toBeUndefined();
           });
         });
 

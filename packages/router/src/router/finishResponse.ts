@@ -23,7 +23,11 @@ export default function finishResponse(
 ): Response {
   const { resolved = null, error = null } = resolvedResults || {};
 
-  const response: Response = {} as Response;
+  const response: Response = {
+    data: undefined,
+    body: undefined,
+    meta: undefined
+  } as Response;
   for (let key in match) {
     response[key as keyof Response] = match[key as keyof IntrinsicResponse];
   }
@@ -50,42 +54,36 @@ export default function finishResponse(
     return response;
   }
 
-  for (let key in responseModifiers) {
-    if (validResponseProperty(key)) {
-      const value = responseModifiers[key];
-      if (value === undefined) {
-        continue;
+  if (process.env.NODE_ENV !== "production") {
+    const validProperties: {
+      [key in keyof SettableResponseProperties]: boolean
+    } = {
+      meta: true,
+      body: true,
+      data: true,
+      redirect: true
+    };
+    Object.keys(responseModifiers).forEach(property => {
+      if (!validProperties.hasOwnProperty(property)) {
+        console.warn(`"${property}" is not a valid response property. The valid properties are:
+
+  ${Object.keys(validProperties).join(", ")}`);
       }
-      response[key] =
-        key === "redirect"
-          ? createRedirect(value, routes, history)
-          : responseModifiers[key];
-    }
+    });
+  }
+
+  response["meta"] = responseModifiers["meta"];
+  response["body"] = responseModifiers["body"];
+  response["data"] = responseModifiers["data"];
+  if (responseModifiers["redirect"]) {
+    response["redirect"] = createRedirect(
+      responseModifiers["redirect"],
+      routes,
+      history
+    );
   }
 
   return response;
-}
-
-const validProperties: {
-  [key in keyof SettableResponseProperties]: boolean
-} = {
-  meta: true,
-  body: true,
-  data: true,
-  redirect: true
-};
-
-function validResponseProperty(
-  property: string
-): property is keyof SettableResponseProperties {
-  if (process.env.NODE_ENV !== "production") {
-    if (!validProperties.hasOwnProperty(property)) {
-      console.warn(`"${property}" is not a valid response property. The valid properties are:
-
-${Object.keys(validProperties).join(", ")}`);
-    }
-  }
-  return validProperties.hasOwnProperty(property);
 }
 
 function createRedirect(
