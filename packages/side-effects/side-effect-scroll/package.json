@@ -1,6 +1,6 @@
 {
   "name": "@curi/side-effect-scroll",
-  "version": "2.0.0-beta.8",
+  "version": "2.0.0-beta.9",
   "description": "Curi side effect to scroll when navigating to new locations",
   "main": "dist/curi-side-effect-scroll.js",
   "module": "dist/curi-side-effect-scroll.es.js",

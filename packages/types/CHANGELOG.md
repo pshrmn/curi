@@ -1,4 +1,4 @@
-## Next
+## 2.0.0-beta.4
 
 * Rename `route.response` to `route.respond`.
 * Add `meta` property to response/settable response properties.

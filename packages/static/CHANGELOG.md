@@ -1,4 +1,4 @@
-## Next
+## 2.0.0-alpha.3
 
 * `router.options` is an object, not a function.
 * Import `RouterOptions` from `@curi/router`.

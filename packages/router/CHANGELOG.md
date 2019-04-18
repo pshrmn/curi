@@ -1,4 +1,4 @@
-## Next
+## 2.0.0-beta.12
 
 * Fix UMD builds.
 * Rename `route.response` to `route.respond`.
