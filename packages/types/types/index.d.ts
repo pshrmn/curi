@@ -1,32 +1,11 @@
 import { PathFunction, PathFunctionOptions, RegExpOptions } from "path-to-regexp";
-import { History, HistoryOptions, SessionLocation, PartialLocation, Action, NavType } from "@hickory/root";
-export interface RouteDescriptor {
-    name: string;
-    path: string;
-    pathOptions?: {
-        match?: RegExpOptions;
-        compile?: PathFunctionOptions;
-    };
-    params?: ParamParsers;
-    children?: Array<RouteDescriptor>;
-    response?: ResponseFn;
-    resolve?: Resolver;
-    extra?: {
-        [key: string]: any;
-    };
-}
-export interface RouterOptions<O = HistoryOptions> {
-    sideEffects?: Array<Observer>;
-    invisibleRedirects?: boolean;
-    external?: any;
-    history?: O;
-}
+import { History, SessionLocation, PartialLocation, Action, NavType } from "@hickory/root";
 export interface CuriRouter {
-    observe: (fn: Observer, options?: ResponseHandlerOptions) => RemoveObserver;
-    once: (fn: Observer, options?: ResponseHandlerOptions) => void;
-    cancel: (fn: Cancellable) => RemoveCancellable;
+    observe(fn: Observer, options?: ResponseHandlerOptions): () => void;
+    once(fn: Observer, options?: ResponseHandlerOptions): void;
+    cancel(fn: Cancellable): () => void;
     current(): CurrentResponse;
-    navigate(options: NavigationDetails): CancelNavigateCallbacks;
+    navigate(options: NavigationDetails): () => void;
     route: Interactions;
     history: History;
     external: any;
@@ -36,7 +15,6 @@ export interface NavigationDetails extends RouteLocation {
     cancelled?: () => void;
     finished?: () => void;
 }
-export declare type CancelNavigateCallbacks = () => void;
 export interface CurrentResponse {
     response: Response | null;
     navigation: Navigation | null;
@@ -49,15 +27,12 @@ export interface ResponseHandlerOptions {
     initial?: boolean;
 }
 export declare type Observer = (props?: Emitted) => void;
-export declare type RemoveObserver = () => void;
 export interface Emitted {
     response: Response;
     navigation: Navigation;
     router: CuriRouter;
 }
-export declare type Cancellable = (cancel?: CancelActiveNavigation) => void;
-export declare type CancelActiveNavigation = () => void;
-export declare type RemoveCancellable = () => void;
+export declare type Cancellable = (cancel?: () => void) => void;
 export declare type Params = {
     [key: string]: any;
 };
@@ -93,6 +68,21 @@ export interface Response extends IntrinsicResponse {
     data?: any;
     title?: string;
     redirect?: RedirectLocation | ExternalRedirect;
+}
+export interface RouteDescriptor {
+    name: string;
+    path: string;
+    pathOptions?: {
+        match?: RegExpOptions;
+        compile?: PathFunctionOptions;
+    };
+    params?: ParamParsers;
+    children?: Array<RouteDescriptor>;
+    response?: ResponseFn;
+    resolve?: Resolver;
+    extra?: {
+        [key: string]: any;
+    };
 }
 export interface Route<R = unknown> {
     name: string;

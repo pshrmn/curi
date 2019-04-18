@@ -1,3 +1,8 @@
+## Next
+
+* Remove `() => void` wrapper types.
+* Remove `RouterOptions` type.
+
 ## 2.0.0-alpha.1
 
 * `redirect`, not `redirect_to`.

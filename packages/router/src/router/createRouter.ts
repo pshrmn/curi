@@ -15,19 +15,21 @@ import {
   Observer,
   Emitted,
   ResponseHandlerOptions,
-  RemoveObserver,
   CurrentResponse,
   Navigation,
   NavigationDetails,
   Cancellable,
-  CancelActiveNavigation,
-  RemoveCancellable,
-  CancelNavigateCallbacks,
   ResolveResults,
-  RouterOptions,
   Route,
   IntrinsicResponse
 } from "@curi/types";
+
+export interface RouterOptions<O = HistoryOptions> {
+  sideEffects?: Array<Observer>;
+  invisibleRedirects?: boolean;
+  external?: any;
+  history?: O;
+}
 
 export default function createRouter<O = HistoryOptions>(
   historyConstructor: HistoryConstructor<O>,
@@ -140,10 +142,7 @@ export default function createRouter<O = HistoryOptions>(
   let observers: Array<Observer> = [];
   const oneTimers: Array<Observer> = [];
 
-  function observe(
-    fn: Observer,
-    options?: ResponseHandlerOptions
-  ): RemoveObserver {
+  function observe(fn: Observer, options?: ResponseHandlerOptions) {
     const { initial = true } = options || {};
 
     observers.push(fn);
@@ -180,7 +179,7 @@ export default function createRouter<O = HistoryOptions>(
   let cancelCallback: (() => void) | undefined;
   let finishCallback: (() => void) | undefined;
 
-  function navigate(details: NavigationDetails): CancelNavigateCallbacks {
+  function navigate(details: NavigationDetails) {
     cancelAndResetNavCallbacks();
 
     let { name, params, hash, query, state, method } = details;
@@ -226,10 +225,10 @@ export default function createRouter<O = HistoryOptions>(
 
   /* router.cancel */
 
-  let cancelWith: CancelActiveNavigation | undefined;
+  let cancelWith: (() => void) | undefined;
   let asyncNavNotifiers: Array<Cancellable> = [];
 
-  function cancel(fn: Cancellable): RemoveCancellable {
+  function cancel(fn: Cancellable) {
     asyncNavNotifiers.push(fn);
     return () => {
       asyncNavNotifiers = asyncNavNotifiers.filter(can => {

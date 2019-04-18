@@ -5,43 +5,19 @@ import {
 } from "path-to-regexp";
 import {
   History,
-  HistoryOptions,
   SessionLocation,
   PartialLocation,
   Action,
   NavType
 } from "@hickory/root";
 
-// a route descriptor comes from the user
-export interface RouteDescriptor {
-  name: string;
-  path: string;
-  pathOptions?: {
-    match?: RegExpOptions;
-    compile?: PathFunctionOptions;
-  };
-  params?: ParamParsers;
-  children?: Array<RouteDescriptor>;
-  response?: ResponseFn;
-  resolve?: Resolver;
-  extra?: { [key: string]: any };
-}
-
-// third argument to createRouter
-export interface RouterOptions<O = HistoryOptions> {
-  sideEffects?: Array<Observer>;
-  invisibleRedirects?: boolean;
-  external?: any;
-  history?: O;
-}
-
 // object returned by createRouter
 export interface CuriRouter {
-  observe: (fn: Observer, options?: ResponseHandlerOptions) => RemoveObserver;
-  once: (fn: Observer, options?: ResponseHandlerOptions) => void;
-  cancel: (fn: Cancellable) => RemoveCancellable;
+  observe(fn: Observer, options?: ResponseHandlerOptions): () => void;
+  once(fn: Observer, options?: ResponseHandlerOptions): void;
+  cancel(fn: Cancellable): () => void;
   current(): CurrentResponse;
-  navigate(options: NavigationDetails): CancelNavigateCallbacks;
+  navigate(options: NavigationDetails): () => void;
   route: Interactions;
   history: History;
   external: any;
@@ -53,8 +29,6 @@ export interface NavigationDetails extends RouteLocation {
   cancelled?: () => void;
   finished?: () => void;
 }
-// callback function to call when cancelling an async navigation
-export type CancelNavigateCallbacks = () => void;
 
 // the current response and navigation
 export interface CurrentResponse {
@@ -73,8 +47,6 @@ export interface ResponseHandlerOptions {
 }
 // an observer function that will be called when there is a new navigation
 export type Observer = (props?: Emitted) => void;
-// observers registered with router.observe can be removed
-export type RemoveObserver = () => void;
 
 // the object emitted to observers
 export interface Emitted {
@@ -84,9 +56,7 @@ export interface Emitted {
 }
 
 // a function to be called when there is an asynchronous navigation
-export type Cancellable = (cancel?: CancelActiveNavigation) => void;
-export type CancelActiveNavigation = () => void;
-export type RemoveCancellable = () => void;
+export type Cancellable = (cancel?: () => void) => void;
 
 // a route's parsed parameters
 export type Params = { [key: string]: any };
@@ -132,6 +102,21 @@ export interface Response extends IntrinsicResponse {
   data?: any;
   title?: string;
   redirect?: RedirectLocation | ExternalRedirect;
+}
+
+// a route descriptor comes from the user
+export interface RouteDescriptor {
+  name: string;
+  path: string;
+  pathOptions?: {
+    match?: RegExpOptions;
+    compile?: PathFunctionOptions;
+  };
+  params?: ParamParsers;
+  children?: Array<RouteDescriptor>;
+  response?: ResponseFn;
+  resolve?: Resolver;
+  extra?: { [key: string]: any };
 }
 
 // the public prepared route interface

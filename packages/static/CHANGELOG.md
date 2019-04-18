@@ -1,3 +1,7 @@
+## Next
+
+* Import `RouterOptions` from `@curi/router`.
+
 ## 2.0.0-alpha.1
 
 * Remove `insert` option to `staticFiles`. `render` should return an HTML string.

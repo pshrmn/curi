@@ -1,5 +1,5 @@
-import { RouteMatcher, Params, Emitted, RouterOptions } from "@curi/types";
-
+import { RouteMatcher, Params, Emitted } from "@curi/types";
+import { RouterOptions } from "@curi/router";
 import { HistoryOptions } from "@hickory/in-memory";
 
 export interface PageDescriptor {
