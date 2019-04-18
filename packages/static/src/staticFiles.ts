@@ -62,7 +62,6 @@ export default async function staticFiles(
           router.once(
             (emitted: Emitted) => {
               try {
-                const { response } = emitted;
                 const html = render(emitted);
                 fs.outputFile(outputPath, html).then(() => {
                   resolve({ pathname, success: true });
