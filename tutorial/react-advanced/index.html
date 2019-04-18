@@ -2,6 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
+    <meta name="Description" content="undefined">
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Tutorial React Advanced | Curi Documentation</title>
@@ -16,7 +17,8 @@ npm run start</code></pre></div></div><div class="section css-1kr8jn0" id="async
   name: &quot;A Route&quot;,
   path: &quot;route/:id&quot;,
   resolve({ params }) {
-    const body = import(&quot;./components/SomeComponent&quot;).then(preferDefault);
+    const body = import(&quot;./components/SomeComponent&quot;)
+      .then(preferDefault);
     const data = fetch(`/api/data/${params.id}`);
     return Promise.all([ component, data ]);
   },
@@ -35,7 +37,8 @@ const routes = prepareRoutes({
       name: &quot;A Route&quot;,
       path: &quot;route/:id&quot;,
       resolve({ params }) {
-        const body = import(&quot;./components/SomeComponent&quot;).then(preferDefault);
+        const body = import(&quot;./components/SomeComponent&quot;)
+          .then(preferDefault);
         const data = fetch(`/api/data/${params.id}`);
         return Promise.all([ component, data ]);
       },
@@ -74,8 +77,9 @@ const routes = prepareRoutes({
       name: &quot;Test&quot;,
       path: &quot;test&quot;,
       resolve() {
-        return import(/* webpackChunkName: &quot;Test&quot; */ &quot;./components/Test.js&quot;)
-          .then(preferDefault);
+        return import(
+          /* webpackChunkName: &quot;Test&quot; */ &quot;./components/Test.js&quot;
+        ).then(preferDefault);
       }
     }
   ]
@@ -98,7 +102,7 @@ const routes = prepareRoutes({
       }
     }
   ]
-});</code></pre></div><p>We can now update the <code class="inline-code css-jo5c25 eutm4hs0">routes.js</code> module to remove the imports at the top of the file and use <code class="inline-code css-jo5c25 eutm4hs0">import</code> to import the route components. We will use <code class="inline-code css-jo5c25 eutm4hs0">preferDefault</code> to only resolve the component instead of the entire module object.</p><p>The <code class="inline-code css-jo5c25 eutm4hs0">response</code> functions should also be updated to set the return object&#x27;s <code class="inline-code css-jo5c25 eutm4hs0">body</code> property to <code class="inline-code css-jo5c25 eutm4hs0">resolved.body</code> <!-- -->instead of the import at the top of the file.</p><div class="css-xg7t84 e12etsbl0"><pre data-line="3,9-15,20-26,31-37,42-48"><code class="language-javascript">// src/routes.js
+});</code></pre></div><p>We can now update the <code class="inline-code css-jo5c25 eutm4hs0">routes.js</code> module to remove the imports at the top of the file and use <code class="inline-code css-jo5c25 eutm4hs0">import</code> to import the route components. We will use <code class="inline-code css-jo5c25 eutm4hs0">preferDefault</code> to only resolve the component instead of the entire module object.</p><p>The <code class="inline-code css-jo5c25 eutm4hs0">response</code> functions should also be updated to set the return object&#x27;s <code class="inline-code css-jo5c25 eutm4hs0">body</code> property to <code class="inline-code css-jo5c25 eutm4hs0">resolved.body</code> <!-- -->instead of the import at the top of the file.</p><div class="css-xg7t84 e12etsbl0"><pre data-line="3,10-16,21-27,32-38,43-49"><code class="language-javascript">// src/routes.js
 import { prepareRoutes } from &quot;@curi/router&quot;;
 import { preferDefault } from &quot;@curi/helpers&quot;;
 
@@ -149,7 +153,7 @@ export default prepareRoutes({
       }
     }
   ]
-});</code></pre></div><p>For this tutorial, we will use <code class="inline-code css-jo5c25 eutm4hs0">router.once</code> to delay the initial render while we wait for the initial response. We should update the <code class="inline-code css-jo5c25 eutm4hs0">index.js</code> module to do this.</p><div class="css-xg7t84 e12etsbl0"><pre data-line="17-23"><code class="language-javascript">// src/index.js
+});</code></pre></div><p>For this tutorial, we will use <code class="inline-code css-jo5c25 eutm4hs0">router.once</code> to delay the initial render while we wait for the initial response. We should update the <code class="inline-code css-jo5c25 eutm4hs0">index.js</code> module to do this.</p><div class="css-xg7t84 e12etsbl0"><pre data-line="16-22"><code class="language-javascript">// src/index.js
 import React from &#x27;react&#x27;;
 import ReactDOM from &#x27;react-dom&#x27;;
 import { createRouter } from &quot;@curi/router&quot;;
@@ -179,7 +183,7 @@ export const BOOKS = () =&gt; Promise.resolve(books);
 export const BOOK = id =&gt; Promise.resolve(
   const intID = parseInt(id, 10);
   books.find(b =&gt; b.id === intID)
-);</code></pre></div></div><p>When the router is created, it can take a third argument, which is an options object. One of the properties of this object is<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">external</code>, which is used to pass in external values that will be accessible in a route&#x27;s <code class="inline-code css-jo5c25 eutm4hs0">resolve</code> and<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">response</code> functions. This is particularly useful for data that is initialized at runtime, like an Apollo store, but we will also use it here.</p><div class="css-xg7t84 e12etsbl0"><pre data-line="11,15-19"><code class="language-javascript">// src/index.js
+);</code></pre></div></div><p>When the router is created, it can take a third argument, which is an options object. One of the properties of this object is<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">external</code>, which is used to pass in external values that will be accessible in a route&#x27;s <code class="inline-code css-jo5c25 eutm4hs0">resolve</code> and<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">response</code> functions. This is particularly useful for data that is initialized at runtime, like an Apollo store, but we will also use it here.</p><div class="css-xg7t84 e12etsbl0"><pre data-line="11,14-18"><code class="language-javascript">// src/index.js
 import React from &#x27;react&#x27;;
 import ReactDOM from &#x27;react-dom&#x27;;
 import { createRouter } from &quot;@curi/router&quot;;
@@ -206,7 +210,7 @@ router.once(() =&gt; {
     &lt;/Router&gt;
   ), document.getElementById(&#x27;root&#x27;));
 });
-registerServiceWorker();</code></pre></div><p>What do we want to do with the data loaded from the API calls? Along with the <code class="inline-code css-jo5c25 eutm4hs0">body</code> property, another valid return property for<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">response</code> functions is <code class="inline-code css-jo5c25 eutm4hs0">data</code>. This is a convenient way to attach any data to a response, which we can read from while rendering.</p><p>The <code class="inline-code css-jo5c25 eutm4hs0">Home</code> route already has an asynchronous action: importing the <code class="inline-code css-jo5c25 eutm4hs0">body</code> component. We will name the async call to load the books data <code class="inline-code css-jo5c25 eutm4hs0">&quot;books&quot;</code>.</p><p>The <code class="inline-code css-jo5c25 eutm4hs0">Book</code> route&#x27;s <code class="inline-code css-jo5c25 eutm4hs0">response</code> also needs to be updated to attach the books data (<code class="inline-code css-jo5c25 eutm4hs0">resolved.books</code>) to the response.</p><p>The <code class="inline-code css-jo5c25 eutm4hs0">book</code> API call expects to be given the <code class="inline-code css-jo5c25 eutm4hs0">id</code> <!-- -->number of the book it should return data for. We can grab the correct param (<code class="inline-code css-jo5c25 eutm4hs0">id</code>) from the <code class="inline-code css-jo5c25 eutm4hs0">params</code> property. However, when params are parsed, they are stored as strings. To convert it to a number, we can use the route&#x27;s <code class="inline-code css-jo5c25 eutm4hs0">params</code> property to tell Curi how to parse the <code class="inline-code css-jo5c25 eutm4hs0">id</code>. By giving it a function that calls<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">parseInt</code> on the provided value, <code class="inline-code css-jo5c25 eutm4hs0">params.id</code> will be a number instead of a string.</p><div class="css-xg7t84 e12etsbl0"><pre data-line="12,15-18,27,30-33"><code class="language-javascript">// src/routes.js
+registerServiceWorker();</code></pre></div><p>What do we want to do with the data loaded from the API calls? Along with the <code class="inline-code css-jo5c25 eutm4hs0">body</code> property, another valid return property for<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">response</code> functions is <code class="inline-code css-jo5c25 eutm4hs0">data</code>. This is a convenient way to attach any data to a response, which we can read from while rendering.</p><p>The <code class="inline-code css-jo5c25 eutm4hs0">Home</code> route already has an asynchronous action: importing the <code class="inline-code css-jo5c25 eutm4hs0">body</code> component. We will name the async call to load the books data <code class="inline-code css-jo5c25 eutm4hs0">&quot;books&quot;</code>.</p><p>The <code class="inline-code css-jo5c25 eutm4hs0">Book</code> route&#x27;s <code class="inline-code css-jo5c25 eutm4hs0">response</code> also needs to be updated to attach the books data (<code class="inline-code css-jo5c25 eutm4hs0">resolved.books</code>) to the response.</p><p>The <code class="inline-code css-jo5c25 eutm4hs0">book</code> API call expects to be given the <code class="inline-code css-jo5c25 eutm4hs0">id</code> <!-- -->number of the book it should return data for. We can grab the correct param (<code class="inline-code css-jo5c25 eutm4hs0">id</code>) from the <code class="inline-code css-jo5c25 eutm4hs0">params</code> property. However, when params are parsed, they are stored as strings. To convert it to a number, we can use the route&#x27;s <code class="inline-code css-jo5c25 eutm4hs0">params</code> property to tell Curi how to parse the <code class="inline-code css-jo5c25 eutm4hs0">id</code>. By giving it a function that calls<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">parseInt</code> on the provided value, <code class="inline-code css-jo5c25 eutm4hs0">params.id</code> will be a number instead of a string.</p><div class="css-xg7t84 e12etsbl0"><pre data-line="10,13,17-21,27,30,34-38"><code class="language-javascript">// src/routes.js
 import { prepareRoutes } from &quot;@curi/router&quot;;
 import { preferDefault } from &quot;@curi/helpers&quot;;
 
@@ -337,18 +341,18 @@ export const BOOK = id =&gt; new Promise(resolve =&gt; {
     BOOK_CACHE[id] = book;
     resolve(book);
   }, 2500);
-});</code></pre></div><div class="section css-1kr8jn0" id="link-navigating"><h3><a class="header-link" href="#link-navigating">&lt;Link&gt; is navigating?</a></h3><p>The <code class="inline-code css-jo5c25 eutm4hs0">Link</code> component can be called with a render-invoked<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">children</code> function. If you do this, the function will be called with a <code class="inline-code css-jo5c25 eutm4hs0">navigating</code> boolean that indicates whether the router is currently navigating to that link. This is useful for when you know that there is a long (multiple seconds) delay between when the user clicks the link and when the navigation will occur.</p><p>We can update the <code class="inline-code css-jo5c25 eutm4hs0">Link</code>s in the <code class="inline-code css-jo5c25 eutm4hs0">Home</code> component to using render-invoked functions and display a loading spinner while we wait for the book data to load.</p><div class="css-xg7t84 e12etsbl0"><pre><code class="language-jsx">import { Link } from &quot;@curi/react-dom&quot;;
+});</code></pre></div><div class="section css-1kr8jn0" id="link-navigating"><h3><a class="header-link" href="#link-navigating">&lt;Link&gt; is navigating?</a></h3><p>The <code class="inline-code css-jo5c25 eutm4hs0">Link</code> component has a sibling component called<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">AsyncLink</code>, can takes a render-invoked function as its<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">children</code> prop. The function is called with a<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">navigating</code> boolean that indicates whether the router is currently navigating to that link. This is useful for when you know that there is a long (multiple seconds) delay between when the user clicks the link and when the navigation will occur.</p><p>We can replace the <code class="inline-code css-jo5c25 eutm4hs0">Link</code>s in the <code class="inline-code css-jo5c25 eutm4hs0">Home</code> component with <code class="inline-code css-jo5c25 eutm4hs0">AsyncLink</code>s and use render-invoked functions to display a loading spinner while we wait for the book data to load.</p><div class="css-xg7t84 e12etsbl0"><pre><code class="language-jsx">import { AsyncLink } from &quot;@curi/react-dom&quot;;
 
-&lt;Link name=&quot;Book&quot; params={{ id: 1 }}&gt;
+&lt;AsyncLink name=&quot;Book&quot; params={{ id: 1 }}&gt;
   {navigating =&gt; (
     &lt;React.Fragment&gt;
       Book 1
       {navigating ? &lt;Spinner /&gt; : null}
     &lt;/React.Fragment&gt;
   )}
-&lt;/Link&gt;</code></pre></div><p><a href="https://github.com/KyleAMathews/react-spinkit"><code class="inline-code css-jo5c25 eutm4hs0">react-spinkit</code></a> <!-- -->provides some pretty loading spinners, so we will use that.</p><div class="css-xg7t84 e12etsbl0"><pre><code class="language-bash">npm install react-spinkit</code></pre></div><p>In the <code class="inline-code css-jo5c25 eutm4hs0">Home</code> component&#x27;s module, we need to import the<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">Spinner</code> component. The <code class="inline-code css-jo5c25 eutm4hs0">Link</code> needs to be swapped from a React element to a render-invoked function. We wrap the contents in a <code class="inline-code css-jo5c25 eutm4hs0">React.Fragment</code> to avoid unnecessary DOM elements. In the function, we render a <code class="inline-code css-jo5c25 eutm4hs0">Spinner</code> when the<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">Link</code> is navigating and <code class="inline-code css-jo5c25 eutm4hs0">null</code> when it is not.</p><div class="css-o0tph9 e1bjkffy0"><strong>Note:</strong> <p><code class="inline-code css-jo5c25 eutm4hs0">react-spinkit</code> is highly customizable, but we are sticking with the defaults here. <code class="inline-code css-jo5c25 eutm4hs0">react-spinkit</code> has a default one second render delay, which is why the spinner does not display immediately.</p></div><div class="css-xg7t84 e12etsbl0"><pre data-line="4,13-18"><code class="language-jsx">// src/components/Home.js
+&lt;/AsyncLink&gt;</code></pre></div><p>We will use the<!-- --> <a href="https://github.com/KyleAMathews/react-spinkit"><code class="inline-code css-jo5c25 eutm4hs0">react-spinkit</code></a> <!-- -->package, which provides a variety of spinner components.</p><div class="css-xg7t84 e12etsbl0"><pre><code class="language-bash">npm install react-spinkit</code></pre></div><p>In the <code class="inline-code css-jo5c25 eutm4hs0">Home</code> component&#x27;s module, we need to import the<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">Spinner</code> component. The <code class="inline-code css-jo5c25 eutm4hs0">Link</code> needs to be swapped from a React element to a render-invoked function. We wrap the contents in a <code class="inline-code css-jo5c25 eutm4hs0">React.Fragment</code> to avoid unnecessary DOM elements. In the function, we render a <code class="inline-code css-jo5c25 eutm4hs0">Spinner</code> when the<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">Link</code> is navigating and <code class="inline-code css-jo5c25 eutm4hs0">null</code> when it is not.</p><div class="css-o0tph9 e1bjkffy0"><strong>Note:</strong> <p><code class="inline-code css-jo5c25 eutm4hs0">react-spinkit</code> is highly customizable, but we are sticking with the defaults here. <code class="inline-code css-jo5c25 eutm4hs0">react-spinkit</code> has a default one second render delay, which is why the spinner does not display immediately.</p></div><div class="css-xg7t84 e12etsbl0"><pre data-line="3-4,12-19"><code class="language-jsx">// src/components/Home.js
 import React from &#x27;react&#x27;;
-import { Link } from &#x27;@curi/react-dom&#x27;;
+import { AsyncLink } from &#x27;@curi/react-dom&#x27;;
 import Spinner from &quot;react-spinkit&quot;;
 
 export default function Home({ response }) {
@@ -357,14 +361,14 @@ export default function Home({ response }) {
       &lt;ul&gt;
         {response.data.books.map(book =&gt; (
           &lt;li key={book.id}&gt;
-            &lt;Link name=&quot;Book&quot; params={{ id: book.id }} &gt;
+            &lt;AsyncLink name=&quot;Book&quot; params={{ id: book.id }} &gt;
               {navigating =&gt; (
                 &lt;React.Fragment&gt;
                   {book.title} by {book.author}
                   {navigating ? &lt;Spinner /&gt; : null}
                 &lt;/React.Fragment&gt;
               )}
-            &lt;/Link&gt;
+            &lt;/AsyncLink&gt;
           &lt;/li&gt;
         ))}
       &lt;/ul&gt;

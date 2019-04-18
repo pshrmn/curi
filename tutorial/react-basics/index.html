@@ -2,6 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
+    <meta name="Description" content="undefined">
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Tutorial React Basics | Curi Documentation</title>
@@ -58,7 +59,7 @@ import App from &#x27;./App&#x27;;
 import registerServiceWorker from &#x27;./registerServiceWorker&#x27;;
 
 ReactDOM.render(&lt;App /&gt;, document.getElementById(&#x27;root&#x27;));
-registerServiceWorker();</code></pre></div></div><div class="section css-1kr8jn0" id="history"><h2><a class="header-link" href="#history">History</a></h2><p>Along with the routes, we also need to create a history object for the router. The history object is responsible for creating locations and navigation within the application.</p><p>Curi uses the <a href="https://github.com/pshrmn/hickory">Hickory</a> <!-- -->library for its history implementations. There are a few Hickory packages to choose from for different environments. For most websites, the <code class="inline-code css-jo5c25 eutm4hs0">@hickory/browser</code> is the right choice for the front end, which is what we will be using</p><p>We can import the <code class="inline-code css-jo5c25 eutm4hs0">Browser</code> function from<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">@hickory/browser</code> in our index file (<code class="inline-code css-jo5c25 eutm4hs0">src/index.js</code>, which <code class="inline-code css-jo5c25 eutm4hs0">create-react-app</code> created for us) and call the function to create a history object.</p><div class="css-o0tph9 e1bjkffy0"><strong>Note:</strong> <p>The history object can be configured with<!-- --> <a href="https://github.com/pshrmn/hickory/blob/master/docs/api/browser.md#options">an options object</a>, but we will stick with the defaults.</p></div><div class="css-xg7t84 e12etsbl0"><pre data-line="4"><code class="language-jsx">// src/index.js
+registerServiceWorker();</code></pre></div></div><div class="section css-1kr8jn0" id="history"><h2><a class="header-link" href="#history">History</a></h2><p>The routes define what the application renders for a particular location, but we also need to define how the application navigates. When we create the router, we will pass it a history function that will be used to enable navigation.</p><p>Curi uses the <a href="https://github.com/pshrmn/hickory">Hickory</a> <!-- -->library for its history. There are a few Hickory packages to choose from for different environments. For most websites, the<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">@hickory/browser</code> is the right choice for the front end.</p><p>We can import the <code class="inline-code css-jo5c25 eutm4hs0">browser</code> function from<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">@hickory/browser</code> in our index file (<code class="inline-code css-jo5c25 eutm4hs0">src/index.js</code>, which <code class="inline-code css-jo5c25 eutm4hs0">create-react-app</code> created for us).</p><div class="css-xg7t84 e12etsbl0"><pre data-line="4"><code class="language-jsx">// src/index.js
 import React from &#x27;react&#x27;;
 import ReactDOM from &#x27;react-dom&#x27;;
 import { browser } from &#x27;@hickory/browser&#x27;;
@@ -155,7 +156,7 @@ export default function App() {
       * }
       */
   }
-}</code></pre></div></div><p>We can update the <code class="inline-code css-jo5c25 eutm4hs0">App</code> to get the response using<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">useResponse</code>.</p><div class="css-xg7t84 e12etsbl0"><pre><code class="language-jsx">// src/App.js
+}</code></pre></div></div><p>We can update the <code class="inline-code css-jo5c25 eutm4hs0">App</code> to get the response using<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">useResponse</code>.</p><div class="css-xg7t84 e12etsbl0"><pre data-line="6"><code class="language-jsx">// src/App.js
 import React from &quot;react&quot;;
 import { useResponse } from &quot;@curi/react-dom&quot;;
 
