@@ -291,12 +291,14 @@ export default function Home({ response }) {
       &lt;/ul&gt;
     &lt;/div&gt;
   );
-}</code></pre></div><p>Likewise, we can remove the <code class="inline-code css-jo5c25 eutm4hs0">books.js</code> import from the<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">Book</code> component&#x27;s module and grab the book data from<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">response.data</code> instead of searching for it in the books array.</p><div class="css-xg7t84 e12etsbl0"><pre data-line="7"><code class="language-jsx">// src/components/Book.js
+}</code></pre></div><p>Likewise, we can remove the <code class="inline-code css-jo5c25 eutm4hs0">books.js</code> import from the<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">Book</code> component&#x27;s module and grab the book data from<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">response.data</code> instead of searching for it in the books array.</p><div class="css-xg7t84 e12etsbl0"><pre data-line="9"><code class="language-jsx">// src/components/Book.js
 import React from &#x27;react&#x27;;
+import { useRouter } from &#x27;@curi/react-dom&#x27;;
 
 import cart from &#x27;../cart&#x27;;
 
-export default function Book({ response, router }) {
+export default function Book({ response }) {
+  const router = useRouter();
   const { book } = response.data;
   if (!book) {
     return &lt;div&gt;The requested book could not be found&lt;/div&gt;;

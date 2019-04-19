@@ -362,7 +362,7 @@ export default function Book({ response }) {
       &lt;p&gt;{book.pages} pages&lt;/p&gt;
     &lt;/div&gt;
   );
-}</code></pre></div></div></div><div class="section css-1kr8jn0" id="shopping"><h2><a class="header-link" href="#shopping">Let&#x27;s go shopping</a></h2><p>Users of the website should be able to add books to their shopping cart. For brevity, we will store the cart data in memory (i.e. it will be lost when refreshing the page).</p><div class="css-xg7t84 e12etsbl0"><pre><code class="language-bash">touch src/cart.js</code></pre></div><p>The shopping cart implementation will be a JavaScript <code class="inline-code css-jo5c25 eutm4hs0">Map</code>. We can call its <code class="inline-code css-jo5c25 eutm4hs0">set</code> method to add books, its<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">clear</code> method to reset the cart, and iterate over its<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">entries</code> with a <code class="inline-code css-jo5c25 eutm4hs0">for...of</code> loop.</p><div class="css-o0tph9 e1bjkffy0"><strong>Note:</strong> <p>The <code class="inline-code css-jo5c25 eutm4hs0">Map</code> or some of its features may not work in older browsers.</p></div><div class="css-xg7t84 e12etsbl0"><pre><code class="language-javascript">// src/cart.js
+}</code></pre></div></div></div><div class="section css-1kr8jn0" id="shopping"><h2><a class="header-link" href="#shopping">A Shopping API</a></h2><p>Users of the website should be able to add books to their shopping cart. For brevity, we will store the cart data in memory (i.e. it will be lost when refreshing the page).</p><div class="css-xg7t84 e12etsbl0"><pre><code class="language-bash">touch src/cart.js</code></pre></div><p>The shopping cart implementation will be a JavaScript <code class="inline-code css-jo5c25 eutm4hs0">Map</code>. We can call its <code class="inline-code css-jo5c25 eutm4hs0">set</code> method to add books, its<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">clear</code> method to reset the cart, and iterate over its<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">entries</code> with a <code class="inline-code css-jo5c25 eutm4hs0">for...of</code> loop.</p><div class="css-o0tph9 e1bjkffy0"><strong>Note:</strong> <p>The <code class="inline-code css-jo5c25 eutm4hs0">Map</code> or some of its features may not work in older browsers.</p></div><div class="css-xg7t84 e12etsbl0"><pre><code class="language-javascript">// src/cart.js
 const cart = new Map();
 
 export default {
@@ -382,40 +382,37 @@ export default {
   reset() {
     cart.clear();
   }
-};</code></pre></div><p>Before we edit the <code class="inline-code css-jo5c25 eutm4hs0">Book</code> component, we should quickly revisit the <code class="inline-code css-jo5c25 eutm4hs0">App</code> component. In addition to passing the<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">response</code> to the <code class="inline-code css-jo5c25 eutm4hs0">Body</code>, we should also pass it our<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">router</code>, which will allow us to do programmatic navigation.</p><div class="css-xg7t84 e12etsbl0"><pre data-line="8,16"><code class="language-jsx">// src/App.js
-import React from &quot;react&quot;;
-import { useResponse } from &quot;@curi/react-dom&quot;;
-
-import NavMenu from &#x27;./components/NavMenu&#x27;;
-
-export default function App() {
-  const { response, router } = useResponse();
-  const { body:Body } = response;
-  return (
-    &lt;React.Fragment&gt;
-      &lt;header&gt;
-        &lt;NavMenu /&gt;
-      &lt;/header&gt;
-      &lt;main&gt;
-        &lt;Body response={response} router={router} /&gt;
-      &lt;/main&gt;
-    &lt;/React.Fragment&gt;
-  );
-}</code></pre></div><p>We can now access our <code class="inline-code css-jo5c25 eutm4hs0">router</code> in the <code class="inline-code css-jo5c25 eutm4hs0">Book</code> <!-- -->component. The router&#x27;s <code class="inline-code css-jo5c25 eutm4hs0">navigate</code> function can be used to navigate to a new location. This means that when the user clicks a button to add a book to their shopping cart, we can automatically navigate to the checkout page.</p><div class="aside css-1kr8jn0" id="nav-method"><h3><a class="header-link" href="#nav-method">The Router&#x27;s Navigate Method</a></h3><p><code class="inline-code css-jo5c25 eutm4hs0">router.navigate</code> is used to navigate to new locations. There are three methods of navigation: <code class="inline-code css-jo5c25 eutm4hs0">push</code>,<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">replace</code>, and <code class="inline-code css-jo5c25 eutm4hs0">anchor</code>.</p><p><code class="inline-code css-jo5c25 eutm4hs0">push</code> pushes a new location after the current index, removing any locations after the current location.</p><div class="css-xg7t84 e12etsbl0"><pre><code class="language-javascript">// session = [&#x27;/one&#x27;, &#x27;/two&#x27;, &#x27;/three&#x27;], index = 1
+};</code></pre></div></div><div class="section css-1kr8jn0" id="useRouter"><h4><a class="header-link" href="#useRouter">Using useRouter</a></h4><p>The <code class="inline-code css-jo5c25 eutm4hs0">useRouter</code> hook allows us to access our router from anywhere in our component tree (that is a descendant of the<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">&lt;<!-- -->Router<!-- -->&gt;</code>).</p><p>While links are generally the best way to navigate, sometimes an application should navigate as the result of another action. For instance, after a user login is authenticated, the application may redirect to another page.</p><p>We will implement something similar in the <code class="inline-code css-jo5c25 eutm4hs0">Book</code> component by having the application navigate to their shopping cart after they add a book to it.</p><div class="aside css-1kr8jn0" id="nav-method"><h3><a class="header-link" href="#nav-method">The Router&#x27;s Navigate Method</a></h3><p><code class="inline-code css-jo5c25 eutm4hs0">router.navigate</code> is used to navigate to new locations. There are three methods of navigation: <code class="inline-code css-jo5c25 eutm4hs0">push</code>,<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">replace</code>, and <code class="inline-code css-jo5c25 eutm4hs0">anchor</code>.</p><p><code class="inline-code css-jo5c25 eutm4hs0">push</code> pushes a new location after the current index, removing any locations after the current location.</p><div class="css-xg7t84 e12etsbl0"><pre><code class="language-javascript">// session = [&#x27;/one&#x27;, &#x27;/two&#x27;, &#x27;/three&#x27;]
+// index = 1
+// current = &#x27;/two&#x27;
 router.navigate({ name: &quot;New&quot;, method: &quot;push&quot; });
-// session = [&#x27;/one&#x27;, &#x27;/two&#x27;, &#x27;/new&#x27;], index = 2</code></pre></div><p><code class="inline-code css-jo5c25 eutm4hs0">replace</code> replaces the location at the current index.</p><div class="css-xg7t84 e12etsbl0"><pre><code class="language-javascript">// session = [&#x27;/one&#x27;, &#x27;/two&#x27;, &#x27;/three&#x27;], index = 1
+// session = [&#x27;/one&#x27;, &#x27;/two&#x27;, &#x27;/new&#x27;]
+// index = 2
+// current = &#x27;/new&#x27;</code></pre></div><p><code class="inline-code css-jo5c25 eutm4hs0">replace</code> replaces the location at the current index.</p><div class="css-xg7t84 e12etsbl0"><pre><code class="language-javascript">// session = [&#x27;/one&#x27;, &#x27;/two&#x27;, &#x27;/three&#x27;]
+// index = 1
+// current = &#x27;/two&#x27;
 router.navigate({ name: &quot;Replace&quot;, method: &quot;replace&quot; });
-// session = [&#x27;/one&#x27;, &#x27;/replacement&#x27;, &#x27;/three&#x27;], index = 1</code></pre></div><p><code class="inline-code css-jo5c25 eutm4hs0">anchor</code> is a mix between <code class="inline-code css-jo5c25 eutm4hs0">push</code> and<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">replace</code>. It mimics the behavior of clicking on links, so if you navigate to the same location as the current one it will replace, and if you navigate to a new location it will push.</p><p>If <code class="inline-code css-jo5c25 eutm4hs0">method.navigate</code> is called without a navigation<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">method</code>, it will default to <code class="inline-code css-jo5c25 eutm4hs0">anchor</code>.</p><div class="css-xg7t84 e12etsbl0"><pre><code class="language-javascript">// session = [&#x27;/one&#x27;, &#x27;/two&#x27;, &#x27;/three&#x27;], index = 1
+// session = [&#x27;/one&#x27;, &#x27;/replacement&#x27;, &#x27;/three&#x27;]
+// index = 1
+// current = &#x27;/replacement&#x27;</code></pre></div><p><code class="inline-code css-jo5c25 eutm4hs0">anchor</code> is a mix between <code class="inline-code css-jo5c25 eutm4hs0">push</code> and<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">replace</code>. It mimics the behavior of clicking on links, so if you navigate to the same location as the current one it will replace, and if you navigate to a new location it will push.</p><p>If <code class="inline-code css-jo5c25 eutm4hs0">method.navigate</code> is called without a navigation<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">method</code>, it will default to <code class="inline-code css-jo5c25 eutm4hs0">anchor</code>.</p><div class="css-xg7t84 e12etsbl0"><pre><code class="language-javascript">// session = [&#x27;/one&#x27;, &#x27;/two&#x27;, &#x27;/three&#x27;]
+// index = 1
+// current = &#x27;/two&#x27;
 router.navigate({ name: &quot;Two&quot;, method: &quot;anchor&quot; });
-// session = [&#x27;/one&#x27;, &#x27;/two&#x27;, &#x27;/three&#x27;], index = 1
+// session = [&#x27;/one&#x27;, &#x27;/two&#x27;, &#x27;/three&#x27;]
+// index = 1
+// current = &#x27;/two&#x27;
 router.navigate({ name: &quot;New&quot;, method: &quot;anchor&quot; });
-// session = [&#x27;/one&#x27;, &#x27;/two&#x27;, &#x27;/new&#x27;], index = 2<!-- -->`}</code></pre></div></div><p>We also want to import our shopping cart API so that we can add a book to the cart.</p><div class="css-xg7t84 e12etsbl0"><pre data-line="5,19-27"><code class="language-jsx">// src/components/Book.js
+// session = [&#x27;/one&#x27;, &#x27;/two&#x27;, &#x27;/new&#x27;]
+// index = 2
+// current = &#x27;/new&#x27;<!-- -->`}</code></pre></div></div><p>In the <code class="inline-code css-jo5c25 eutm4hs0">Book</code> components module, we should import the<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">useRouter</code> hook from <code class="inline-code css-jo5c25 eutm4hs0">@curi/react-dom</code> as well as our shopping cart API.</p><div class="css-xg7t84 e12etsbl0"><pre data-line="3,6,21-29"><code class="language-jsx">// src/components/Book.js
 import React from &#x27;react&#x27;;
+import { useRouter } from &#x27;@curi/react-dom&#x27;;
 
 import books from &#x27;../books&#x27;;
 import cart from &#x27;../cart&#x27;;
 
-export default function Book({ response, router }) {
+export default function Book({ response }) {
+  const router = useRouter();
   const id = parseInt(response.params.id, 10);
   const book = books.find(b =&gt; b.id === id);
   if (!book) {
@@ -438,12 +435,14 @@ export default function Book({ response, router }) {
       &lt;/button&gt;
     &lt;/div&gt;
   );
-}</code></pre></div><p>Finally, we can update our <code class="inline-code css-jo5c25 eutm4hs0">Checkout</code> component to display the books in the shopping cart. To do this, we will import our cart and books. Our cart only stores book <code class="inline-code css-jo5c25 eutm4hs0">id</code>s, so we will need to merge the book data with the cart data.</p><p>When a user &quot;buys&quot; the books in their shopping cart, we need to clear out the cart. We will also replace the current location with one whose<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">location.hash</code> is the string &quot;thanks&quot;. When that is present in the location, we can render a &quot;Thanks for your purchase&quot; message.</p><div class="css-xg7t84 e12etsbl0"><pre><code class="language-jsx">// src/components/Checkout.js
+}</code></pre></div><p>Finally, we can update our <code class="inline-code css-jo5c25 eutm4hs0">Checkout</code> component to display the books in the shopping cart. To do this, we will import our cart and books. Our cart only stores book <code class="inline-code css-jo5c25 eutm4hs0">id</code>s, so we will need to merge the book data with the cart data.</p><p>When a user &quot;buys&quot; the books in their shopping cart, we need to clear out the cart. We will also replace the current location with one whose<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">location.hash</code> is the string &quot;thanks&quot;. When that is present in the location, we can render a &quot;Thanks for your purchase&quot; message instead of the cart&#x27;s contents. Once again, we will use the<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">useRouter</code> hook to access the router in order to change locations.</p><div class="css-xg7t84 e12etsbl0"><pre><code class="language-jsx">// src/components/Checkout.js
 import React from &#x27;react&#x27;;
+import { useRouter } from &#x27;@curi/react-dom&#x27;;
 
 import cart from &#x27;../cart&#x27;;
 
-export default function Checkout({ router, response }) {
+export default function Checkout({ response }) {
+  const router = useRouter();
   const books = cart.items();
   if (!books.length) {
     return response.location.hash === &#x27;thanks&#x27;
@@ -485,7 +484,7 @@ export default function Checkout({ router, response }) {
       &lt;/button&gt;
     &lt;/div&gt;
   );
-};</code></pre></div></div><div class="section css-1kr8jn0" id="next"><h2><a class="header-link" href="#next">What&#x27;s next?</a></h2><p>We now have a functional website built with React and Curi. What should you do next? Build another site! You can also check out the<!-- --> <a href="/guides/">guides</a> for information on advanced techniques.</p></div></div><style data-emotion-css="64fwtw">.css-64fwtw{display:none;}@media only screen and (min-width:751px){.css-64fwtw{background:#efefef;display:block;position:fixed;top:50px;bottom:0px;overflow:auto;-webkit-flex:0 0;-ms-flex:0 0;flex:0 0;-webkit-order:-1;-ms-flex-order:-1;order:-1;padding:25px;margin-right:25px;}}</style><div class="css-64fwtw e1hcridg2"><style data-emotion-css="1eimyfs">.css-1eimyfs{width:200px;}.css-1eimyfs p{margin:0;}.css-1eimyfs a{-webkit-text-decoration:none;text-decoration:none;display:block;}.css-1eimyfs ol{padding-left:0;margin-top:0;list-style-type:none;}.css-1eimyfs ol ol{padding-left:15px;font-size:0.9em;}</style><div class="css-1eimyfs e1evhjzy0"><ol><li><a href="#demo">Demo</a></li><li><a href="#setup">Setup</a></li><li><a href="#routes">Routes</a><ol><li><a href="#path-basics">Path basics</a></li></ol></li><li><a href="#history">History</a></li><li><a href="#router">The Router</a></li><li><a href="#rendering">Rendering with React</a><ol><li><a href="#responses">Responses and Navigation</a></li><li><a href="#route-respond">route.respond</a></li></ol></li><li><a href="#navigating">Navigating between locations</a><ol><li><a href="#link-component">The &lt;Link&gt; Component</a></li><li><a href="#nav-menu">A Navigation Menu</a></li><li><a href="#book-links">Linking to Books</a></li></ol></li><li><a href="#shopping">Let&#x27;s go shopping</a><ol><li><a href="#nav-method">The Router&#x27;s Navigate Method</a></li></ol></li><li><a href="#next">What&#x27;s next?</a></li></ol></div></div></div></main></div>
+};</code></pre></div></div><div class="section css-1kr8jn0" id="next"><h2><a class="header-link" href="#next">What&#x27;s next?</a></h2><p>We now have a functional website built with React and Curi. What should you do next? Build another site!</p><p>There is an<!-- --> <a href="/tutorial/react-advanced/">advanced React tutorial</a> <!-- -->that continues where this tutorial leaves off. The advanced tutorial implements code splitting and data prefetching.</p><p>You can also check out the <a href="/guides/">guides</a> for information on other advanced techniques.</p></div></div><style data-emotion-css="64fwtw">.css-64fwtw{display:none;}@media only screen and (min-width:751px){.css-64fwtw{background:#efefef;display:block;position:fixed;top:50px;bottom:0px;overflow:auto;-webkit-flex:0 0;-ms-flex:0 0;flex:0 0;-webkit-order:-1;-ms-flex-order:-1;order:-1;padding:25px;margin-right:25px;}}</style><div class="css-64fwtw e1hcridg2"><style data-emotion-css="1eimyfs">.css-1eimyfs{width:200px;}.css-1eimyfs p{margin:0;}.css-1eimyfs a{-webkit-text-decoration:none;text-decoration:none;display:block;}.css-1eimyfs ol{padding-left:0;margin-top:0;list-style-type:none;}.css-1eimyfs ol ol{padding-left:15px;font-size:0.9em;}</style><div class="css-1eimyfs e1evhjzy0"><ol><li><a href="#demo">Demo</a></li><li><a href="#setup">Setup</a></li><li><a href="#routes">Routes</a><ol><li><a href="#path-basics">Path basics</a></li></ol></li><li><a href="#history">History</a></li><li><a href="#router">The Router</a></li><li><a href="#rendering">Rendering with React</a><ol><li><a href="#responses">Responses and Navigation</a></li><li><a href="#route-respond">route.respond</a></li></ol></li><li><a href="#navigating">Navigating between locations</a><ol><li><a href="#link-component">The &lt;Link&gt; Component</a></li><li><a href="#nav-menu">A Navigation Menu</a></li><li><a href="#book-links">Linking to Books</a></li></ol></li><li><a href="#shopping">A Shopping API</a></li><li><a href="#useRouter">Using useRouter</a><ol><li><a href="#nav-method">The Router&#x27;s Navigate Method</a></li></ol></li><li><a href="#next">What&#x27;s next?</a></li></ol></div></div></div></main></div>
     <script src="https://unpkg.com/react@16.8.6/umd/react.production.min.js"></script>
     <script src="https://unpkg.com/react-dom@16.8.6/umd/react-dom.production.min.js"></script>
     <script src="/static/js/prism.js"></script>
