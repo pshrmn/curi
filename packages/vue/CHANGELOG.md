@@ -1,3 +1,7 @@
+## Next
+
+* Rename `<curi-link>`'s `to` prop to `name`.
+
 ## 2.0.0-alpha.2
 
 * Fix UMD builds.

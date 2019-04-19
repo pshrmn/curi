@@ -35,7 +35,7 @@ describe("<curi-link>", () => {
         el: node,
         template: `
           <div>
-            <curi-link to="Place" :params="{ name: 'Aruba' }">
+            <curi-link name="Place" :params="{ name: 'Aruba' }">
               Aruba
             </curi-link>
           </div>
@@ -51,7 +51,7 @@ describe("<curi-link>", () => {
         template: `
           <div>
             <curi-link
-              to="Place"
+              name="Place"
               :params="{ name: 'Jamaica' }"
               hash="island-life"
               query="two=2"
@@ -65,7 +65,7 @@ describe("<curi-link>", () => {
       expect(a.getAttribute("href")).toBe("/place/Jamaica?two=2#island-life");
     });
 
-    it('re-uses current pathname if "to" prop is not provided', () => {
+    it("if name is not provided, pathname is empty string", () => {
       const Vue = createLocalVue();
       const router = createRouter(inMemory, routes, {
         history: {
@@ -83,7 +83,7 @@ describe("<curi-link>", () => {
         `
       });
       const a = document.querySelector("a");
-      expect(a.getAttribute("href")).toBe("/place/somewhere");
+      expect(a.getAttribute("href")).toBe("");
     });
 
     it("sets the slots as the link's children", () => {
@@ -91,7 +91,7 @@ describe("<curi-link>", () => {
         el: node,
         template: `
           <div>
-            <curi-link to="Place" :params="{ name: 'Kokomo' }">
+            <curi-link name="Place" :params="{ name: 'Kokomo' }">
               <span>Kokomo</span>
             </curi-link>
           </div>
@@ -119,10 +119,10 @@ describe("<curi-link>", () => {
         template: `
           <div>
             <curi-link
-              to="Place"
+              name="Place"
               :params="{ name: 'Bermuda' }"
               hash="beach-boys"
-              query="to=Bermuda"
+              query="name=Bermuda"
             >
               Bermuda
             </curi-link>
@@ -140,7 +140,7 @@ describe("<curi-link>", () => {
       expect(mockNavigate.mock.calls.length).toBe(1);
       expect(mockNavigate.mock.calls[0][0]).toEqual({
         pathname: "/place/Bermuda",
-        query: "to=Bermuda",
+        query: "name=Bermuda",
         hash: "beach-boys"
       });
     });
@@ -185,7 +185,7 @@ describe("<curi-link>", () => {
           el: node,
           template: `
             <div>
-              <curi-link to="Test" id="after-click">
+              <curi-link name="Test" id="after-click">
                 <template slot-scope="{ navigating }">
                   <LoadChecker :navigating="navigating" />
                 </template>
@@ -217,7 +217,7 @@ describe("<curi-link>", () => {
           el: node,
           template: `
             <div>
-              <curi-link to="Test" id="nav-complete">
+              <curi-link name="Test" id="nav-complete">
                 <template slot-scope="{ navigating }">
                   {{navigating}}
                 </template>
@@ -279,12 +279,12 @@ describe("<curi-link>", () => {
           el: node,
           template: `
             <div>
-              <curi-link to="Slow" id="slow">
+              <curi-link name="Slow" id="slow">
                 <template slot-scope="{ navigating }">
                   {{navigating}}
                 </template>
               </curi-link>
-              <curi-link to="Fast" id="fast">
+              <curi-link name="Fast" id="fast">
                 <template slot-scope="{ navigating }">
                   {{navigating}}
                 </template>
@@ -328,7 +328,7 @@ describe("<curi-link>", () => {
         el: node,
         template: `
           <div>
-            <curi-link to="Place" :params="{ name: 'Bahamas' }" :click="click">
+            <curi-link name="Place" :params="{ name: 'Bahamas' }" :click="click">
               Bahamas
             </curi-link>
           </div>
@@ -354,7 +354,7 @@ describe("<curi-link>", () => {
         el: node,
         template: `
           <div>
-            <curi-link to="Place" :params="{ name: 'Key Largo' }">
+            <curi-link name="Place" :params="{ name: 'Key Largo' }">
               Key Largo
             </curi-link>
           </div>
@@ -378,7 +378,7 @@ describe("<curi-link>", () => {
         el: node,
         template: `
           <div>
-            <curi-link to="Place" :params="{ name: 'Montego' }">
+            <curi-link name="Place" :params="{ name: 'Montego' }">
               Montego
             </curi-link>
           </div>
@@ -399,7 +399,7 @@ describe("<curi-link>", () => {
           el: node,
           template: `
             <div>
-              <curi-link to="Place" :params="{ name: 'Montego' }" :click="click">
+              <curi-link name="Place" :params="{ name: 'Montego' }" :click="click">
                 Montego
               </curi-link>
             </div>
@@ -423,7 +423,7 @@ describe("<curi-link>", () => {
           el: node,
           template: `
             <div>
-              <curi-link to="Place" :params="{ name: 'Montego' }" :click="click">
+              <curi-link name="Place" :params="{ name: 'Montego' }" :click="click">
                 Montego
               </curi-link>
             </div>

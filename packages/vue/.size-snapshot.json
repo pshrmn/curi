@@ -1,8 +1,8 @@
 {
   "dist/curi-vue.es.js": {
-    "bundled": 4239,
-    "minified": 2070,
-    "gzipped": 983,
+    "bundled": 4212,
+    "minified": 2043,
+    "gzipped": 974,
     "treeshaked": {
       "rollup": {
         "code": 12,
@@ -14,18 +14,18 @@
     }
   },
   "dist/curi-vue.js": {
-    "bundled": 4464,
-    "minified": 2248,
-    "gzipped": 1049
+    "bundled": 4437,
+    "minified": 2221,
+    "gzipped": 1043
   },
   "dist/curi-vue.umd.js": {
-    "bundled": 4901,
-    "minified": 2245,
-    "gzipped": 1058
+    "bundled": 4874,
+    "minified": 2218,
+    "gzipped": 1052
   },
   "dist/curi-vue.min.js": {
-    "bundled": 4500,
-    "minified": 1990,
-    "gzipped": 915
+    "bundled": 4473,
+    "minified": 1963,
+    "gzipped": 910
   }
 }

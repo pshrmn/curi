@@ -2,7 +2,7 @@ import Vue, { CreateElement, ComponentOptions } from "vue";
 import { SessionLocation } from "@hickory/root";
 
 export interface LinkComponent extends Vue {
-  to: string;
+  name: string;
   params?: object;
   hash?: string;
   query?: any;
@@ -24,13 +24,13 @@ const canNavigate = (event: MouseEvent) => {
 const Link: ComponentOptions<LinkComponent> = {
   name: "curi-link",
 
-  props: ["to", "params", "hash", "query", "state", "click"],
+  props: ["name", "params", "hash", "query", "state", "click"],
 
   computed: {
     location: function() {
-      const pathname = this.to
-        ? this.$router.route.pathname(this.to, this.params)
-        : this.$curi.response.location.pathname;
+      const pathname = this.name
+        ? this.$router.route.pathname(this.name, this.params)
+        : "";
       return {
         hash: this.hash,
         query: this.query,
@@ -64,7 +64,7 @@ const Link: ComponentOptions<LinkComponent> = {
           this.navigating = true;
         }
         this.$router.navigate({
-          name: this.to,
+          name: this.name,
           params: this.params,
           hash: this.hash,
           query: this.query,
