@@ -28,5 +28,5 @@ module.exports = {
     "^React$": "<rootDir>/node_modules/react",
     "@curi/react-native": mappedModule
   },
-  collectCoverageFrom: ["src/**/*"]
+  collectCoverageFrom: ["packages/react-native/src/**/*"]
 };
