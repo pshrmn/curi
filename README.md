@@ -1,11 +1,11 @@
-# Curi [![Travis][build-badge]][build]
+# Curi [![CircleCI][circleci-badge]][build]
 
 Curi is a JavaScript router for single-page applications.
 
 ### [Documentation website](https://curi.js.org/)
 
-[build-badge]: https://img.shields.io/travis/pshrmn/curi/master.svg
-[build]: https://travis-ci.org/pshrmn/curi
+[circleci-badge]: https://circleci.com/gh/pshrmn/curi.svg?style=svg
+[build]: https://circleci.com/gh/pshrmn/curi
 
 ### Contributing
 
