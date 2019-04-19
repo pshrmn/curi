@@ -83,23 +83,45 @@ function ReactNativeGuide() {
 
         <p>
           Along with setting up an observer to react to new responses, the{" "}
-          <IJS>Router</IJS> sets up a context for routing values. These values—
-          <IJS>response</IJS>, <IJS>router</IJS>, and <IJS>navigation</IJS>—can
-          be read using the{" "}
+          <IJS>Router</IJS> sets up contexts for routing values. The
+          <IJS>response</IJS> and <IJS>navigation</IJS> can be read using the{" "}
           <Link
             name="Package"
             params={{ package: "react-native", version: "v2" }}
+            hash="useResponse"
           >
             <IJS>useResponse</IJS> hook
+          </Link>
+          , while the <IJS>router</IJS> can be read using the{" "}
+          <Link
+            name="Package"
+            params={{ package: "react-native", version: "v2" }}
+            hash="useRouter"
+          >
+            <IJS>useRouter</IJS> hook
           </Link>
           .
         </p>
 
         <CodeBlock lang="jsx">
-          {`import { createRouterComponent } from '@curi/react-native';
+          {`import {
+  createRouterComponent,
+  useRouter,
+  useResponse
+} from '@curi/react-native';
 
 import router from "./router";
 const Router = createRouterComponent(router);
+
+function App() {
+  const router = userRouter();
+  const {
+    response,
+    navigation
+  } = useResponse();
+  const { body:Body } = response;
+  return <Body />
+}
 
 function MyReactNativeApp = () => (
   <Router>

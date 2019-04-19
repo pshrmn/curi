@@ -25,13 +25,12 @@ describe("useResponse", () => {
     ReactDOM.unmountComponentAtNode(node);
   });
 
-  it("returns router, response, and navigation objects", () => {
+  it("returns response, and navigation objects", () => {
     const router = createRouter(inMemory, routes);
     const Router = createRouterComponent(router);
     const { response, navigation } = router.current();
     function App() {
       const result = useResponse();
-      expect(result.router).toBe(router);
       expect(result.response).toBe(response);
       expect(result.navigation).toBe(navigation);
       return null;

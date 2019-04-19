@@ -446,7 +446,7 @@ const router = createRouter(browser, routes);`}
             application using the <IJS>useResponse</IJS> hook.
           </p>
           <p>
-            The <IJS>useResponse</IJS> hook returns an object with three
+            The <IJS>useResponse</IJS> hook returns an object with two
             properties:
           </p>
           <ol>
@@ -457,11 +457,11 @@ const router = createRouter(browser, routes);`}
               <IJS>navigation</IJS> is an object with additional information
               about the navigation
             </li>
-            <li>
-              <IJS>router</IJS> is your Curi router (mostly useful if the
-              function is defined in a separate file)
-            </li>
           </ol>
+          <p>
+            The router can also be accessed throughout the application using the{" "}
+            <IJS>useRouter</IJS> hook.
+          </p>
           <p>
             Above, we added <IJS>respond</IJS> functions to each route. The
             functions set React components as the <IJS>body</IJS> property of

@@ -27,16 +27,6 @@ function App() {
   // ...
 }`}
       </CodeBlock>
-
-      <Note>
-        <p>
-          The <IJS>router</IJS> can also be accessed using the{" "}
-          <IJS>useResponse</IJS> hook. The difference is that{" "}
-          <IJS>useResponse</IJS> is called every time there is a new response.
-          If a component only cares about the <IJS>router</IJS>, the component
-          should use <IJS>useRouter</IJS>, which will not cause extra renders.
-        </p>
-      </Note>
     </HashSection>
   );
 }

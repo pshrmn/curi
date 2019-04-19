@@ -1,3 +1,7 @@
+## Next
+
+* Add `ResponseAndNav` type, which is an object with response and navigation properties.
+
 ## 2.0.0-beta.4
 
 * Rename `route.response` to `route.respond`.

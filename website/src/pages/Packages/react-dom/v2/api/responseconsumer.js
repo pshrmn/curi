@@ -31,7 +31,7 @@ class MyComponent {
   render() {
     return (
       <ResponseConsumer>
-        {({ router, response, navigation }) => {
+        {({ response, navigation }) => {
           // pass these props to any components
           // that needs them
           return (
@@ -53,8 +53,8 @@ class MyComponent {
         >
           <p>
             A render-invoked function that returns a React element. This
-            function will receive an object with <IJS>router</IJS>,{" "}
-            <IJS>response</IJS> and <IJS>navigation</IJS> properties.
+            function will receive an object with <IJS>response</IJS> and{" "}
+            <IJS>navigation</IJS> properties.
           </p>
         </HashSection>
       </HashSection>

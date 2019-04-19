@@ -27,9 +27,11 @@ export interface ResponseHandlerOptions {
     initial?: boolean;
 }
 export declare type Observer = (props?: Emitted) => void;
-export interface Emitted {
+export interface ResponseAndNav {
     response: Response;
     navigation: Navigation;
+}
+export interface Emitted extends ResponseAndNav {
     router: CuriRouter;
 }
 export declare type Cancellable = (cancel?: () => void) => void;

@@ -1,3 +1,4 @@
+import useRouter from "./useRouter";
 import useResponse from "./useResponse";
 
 import { SessionLocation } from "@hickory/root";
@@ -13,7 +14,8 @@ export interface ActiveHookProps {
 }
 
 export default function useActive(props: ActiveHookProps) {
-  const { router, response } = useResponse();
+  const router = useRouter();
+  const { response } = useResponse();
   return router.route.active(props.name, response, {
     params: props.params,
     partial: props.partial,

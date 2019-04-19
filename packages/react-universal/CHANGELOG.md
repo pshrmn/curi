@@ -1,3 +1,7 @@
+## Next
+
+* `useResponse` only returns `response` and `navigation`.
+
 ## 2.0.0-beta.8
 
 * Remove `useMemo` from `useLocation`.

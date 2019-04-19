@@ -25,7 +25,7 @@ describe("ResponseConsumer", () => {
     ReactDOM.unmountComponentAtNode(node);
   });
 
-  it("returns router, response, and navigation objects", () => {
+  it("returns response and navigation objects", () => {
     const router = createRouter(inMemory, routes);
     const Router = createRouterComponent(router);
     const { response, navigation } = router.current();
@@ -33,7 +33,6 @@ describe("ResponseConsumer", () => {
       return (
         <ResponseConsumer>
           {result => {
-            expect(result.router).toBe(router);
             expect(result.response).toBe(response);
             expect(result.navigation).toBe(navigation);
             return null;

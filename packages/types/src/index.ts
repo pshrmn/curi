@@ -48,10 +48,13 @@ export interface ResponseHandlerOptions {
 // an observer function that will be called when there is a new navigation
 export type Observer = (props?: Emitted) => void;
 
-// the object emitted to observers
-export interface Emitted {
+export interface ResponseAndNav {
   response: Response;
   navigation: Navigation;
+}
+
+// the object emitted to observers
+export interface Emitted extends ResponseAndNav {
   router: CuriRouter;
 }
 
