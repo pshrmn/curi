@@ -1,4 +1,4 @@
-## Next
+## 2.0.0-beta.5
 
 * Add `ResponseAndNav` type, which is an object with response and navigation properties.
 

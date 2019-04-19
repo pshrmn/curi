@@ -1,4 +1,4 @@
-## Next
+## 2.0.0-beta.10
 
 * `useResponse` only returns `response` and `navigation`.
 
