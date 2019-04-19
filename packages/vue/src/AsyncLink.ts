@@ -4,7 +4,7 @@ import { canNavigate } from "./utils/canNavigate";
 import { CreateElement, ComponentOptions } from "vue";
 import { SessionLocation } from "@hickory/root";
 
-export interface LinkComponent extends Vue {
+export interface AsyncLinkComponent extends Vue {
   name: string;
   params?: object;
   hash?: string;
@@ -13,10 +13,11 @@ export interface LinkComponent extends Vue {
   location: SessionLocation;
   href: string;
   click(e: MouseEvent): void;
+  navigating: boolean;
 }
 
-const Link: ComponentOptions<LinkComponent> = {
-  name: "curi-link",
+const Link: ComponentOptions<AsyncLinkComponent> = {
+  name: "curi-async-link",
 
   props: ["name", "params", "hash", "query", "state", "click"],
 
@@ -37,6 +38,12 @@ const Link: ComponentOptions<LinkComponent> = {
     }
   },
 
+  data: function() {
+    return {
+      navigating: false
+    };
+  },
+
   methods: {
     clickHandler: function(event: MouseEvent) {
       if (this.click) {
@@ -44,12 +51,20 @@ const Link: ComponentOptions<LinkComponent> = {
       }
       if (canNavigate(event)) {
         event.preventDefault();
+        let cancelled, finished;
+        cancelled = finished = () => {
+          this.navigating = false;
+        };
+        this.navigating = true;
+
         this.$router.navigate({
           name: this.name,
           params: this.params,
           hash: this.hash,
           query: this.query,
-          state: this.state
+          state: this.state,
+          cancelled,
+          finished
         });
       }
     }
@@ -62,7 +77,9 @@ const Link: ComponentOptions<LinkComponent> = {
         attrs: { href: this.href },
         on: { click: this.clickHandler }
       },
-      this.$slots.default
+      this.$scopedSlots.default({
+        navigating: this.navigating
+      })
     );
   }
 };

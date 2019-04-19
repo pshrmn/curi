@@ -1,6 +1,7 @@
 ## Next
 
 * Rename `<curi-link>`'s `to` prop to `name`.
+* Split `<curi-link>` into two components. `<curi-link>` is static (regular slot) while `<curi-async-link>` tracks navigating state (scoped slot).
 
 ## 2.0.0-alpha.2
 

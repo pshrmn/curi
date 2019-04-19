@@ -1,7 +1,7 @@
 import Vue from "vue";
 import { ComponentOptions } from "vue";
 import { SessionLocation } from "@hickory/root";
-export interface LinkComponent extends Vue {
+export interface AsyncLinkComponent extends Vue {
     name: string;
     params?: object;
     hash?: string;
@@ -10,6 +10,7 @@ export interface LinkComponent extends Vue {
     location: SessionLocation;
     href: string;
     click(e: MouseEvent): void;
+    navigating: boolean;
 }
-declare const Link: ComponentOptions<LinkComponent>;
+declare const Link: ComponentOptions<AsyncLinkComponent>;
 export default Link;
