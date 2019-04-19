@@ -65,11 +65,14 @@ const navigateMeta = {
   hash: "nav-method"
 };
 const shoppingMeta = {
-  title: "Let's go shopping",
-  hash: "shopping",
+  title: "A Shopping API",
+  hash: "shopping"
+};
+const useRouterMeta = {
+  title: "Using useRouter",
+  hash: "useRouter",
   children: [navigateMeta]
 };
-
 const nextMeta = { title: "What's next?", hash: "next" };
 
 const contents = [
@@ -81,6 +84,7 @@ const contents = [
   renderingMeta,
   navigatingMeta,
   shoppingMeta,
+  useRouterMeta,
   nextMeta
 ];
 
@@ -1092,43 +1096,26 @@ export default {
   }
 };`}
         </CodeBlock>
+      </HashSection>
 
+      <HashSection meta={useRouterMeta} tag="h4">
         <p>
-          Before we edit the <IJS>Book</IJS> component, we should quickly
-          revisit the <IJS>App</IJS> component. In addition to passing the{" "}
-          <IJS>response</IJS> to the <IJS>Body</IJS>, we should also pass it our{" "}
-          <IJS>router</IJS>, which will allow us to do programmatic navigation.
+          The <IJS>useRouter</IJS> hook allows us to access our router from
+          anywhere in our component tree (that is a descendant of the{" "}
+          <Cmp>Router</Cmp>).
         </p>
 
-        <CodeBlock lang="jsx" data-line="8,16">
-          {`// src/App.js
-import React from "react";
-import { useResponse } from "@curi/react-dom";
-
-import NavMenu from './components/NavMenu';
-
-export default function App() {
-  const { response, router } = useResponse();
-  const { body:Body } = response;
-  return (
-    <React.Fragment>
-      <header>
-        <NavMenu />
-      </header>
-      <main>
-        <Body response={response} router={router} />
-      </main>
-    </React.Fragment>
-  );
-}`}
-        </CodeBlock>
+        <p>
+          While links are generally the best way to navigate, sometimes an
+          application should navigate as the result of another action. For
+          instance, after a user login is authenticated, the application may
+          redirect to another page.
+        </p>
 
         <p>
-          We can now access our <IJS>router</IJS> in the <IJS>Book</IJS>{" "}
-          component. The router's <IJS>navigate</IJS> function can be used to
-          navigate to a new location. This means that when the user clicks a
-          button to add a book to their shopping cart, we can automatically
-          navigate to the checkout page.
+          We will implement something similar in the <IJS>Book</IJS> component
+          by having the application navigate to their shopping cart after they
+          add a book to it.
         </p>
 
         <HashSection meta={navigateMeta} className="aside" tag="h3">
@@ -1143,9 +1130,13 @@ export default function App() {
           </p>
 
           <CodeBlock>
-            {`// session = ['/one', '/two', '/three'], index = 1
+            {`// session = ['/one', '/two', '/three']
+// index = 1
+// current = '/two'
 router.navigate({ name: "New", method: "push" });
-// session = ['/one', '/two', '/new'], index = 2`}
+// session = ['/one', '/two', '/new']
+// index = 2
+// current = '/new'`}
           </CodeBlock>
 
           <p>
@@ -1153,9 +1144,13 @@ router.navigate({ name: "New", method: "push" });
           </p>
 
           <CodeBlock>
-            {`// session = ['/one', '/two', '/three'], index = 1
+            {`// session = ['/one', '/two', '/three']
+// index = 1
+// current = '/two'
 router.navigate({ name: "Replace", method: "replace" });
-// session = ['/one', '/replacement', '/three'], index = 1`}
+// session = ['/one', '/replacement', '/three']
+// index = 1
+// current = '/replacement'`}
           </CodeBlock>
 
           <p>
@@ -1170,28 +1165,37 @@ router.navigate({ name: "Replace", method: "replace" });
           </p>
 
           <CodeBlock>
-            {`// session = ['/one', '/two', '/three'], index = 1
+            {`// session = ['/one', '/two', '/three']
+// index = 1
+// current = '/two'
 router.navigate({ name: "Two", method: "anchor" });
-// session = ['/one', '/two', '/three'], index = 1
+// session = ['/one', '/two', '/three']
+// index = 1
+// current = '/two'
 router.navigate({ name: "New", method: "anchor" });
-// session = ['/one', '/two', '/new'], index = 2`}
+// session = ['/one', '/two', '/new']
+// index = 2
+// current = '/new'`}
             `}
           </CodeBlock>
         </HashSection>
 
         <p>
-          We also want to import our shopping cart API so that we can add a book
-          to the cart.
+          In the <IJS>Book</IJS> components module, we should import the{" "}
+          <IJS>useRouter</IJS> hook from <IJS>@curi/react-dom</IJS> as well as
+          our shopping cart API.
         </p>
 
-        <CodeBlock lang="jsx" data-line="5,19-27">
+        <CodeBlock lang="jsx" data-line="3,6,21-29">
           {`// src/components/Book.js
 import React from 'react';
+import { useRouter } from '@curi/react-dom';
 
 import books from '../books';
 import cart from '../cart';
 
-export default function Book({ response, router }) {
+export default function Book({ response }) {
+  const router = useRouter();
   const id = parseInt(response.params.id, 10);
   const book = books.find(b => b.id === id);
   if (!book) {
@@ -1227,16 +1231,21 @@ export default function Book({ response, router }) {
           When a user "buys" the books in their shopping cart, we need to clear
           out the cart. We will also replace the current location with one whose{" "}
           <IJS>location.hash</IJS> is the string "thanks". When that is present
-          in the location, we can render a "Thanks for your purchase" message.
+          in the location, we can render a "Thanks for your purchase" message
+          instead of the cart's contents. Once again, we will use the{" "}
+          <IJS>useRouter</IJS> hook to access the router in order to change
+          locations.
         </p>
 
         <CodeBlock lang="jsx">
           {`// src/components/Checkout.js
 import React from 'react';
+import { useRouter } from '@curi/react-dom';
 
 import cart from '../cart';
 
-export default function Checkout({ router, response }) {
+export default function Checkout({ response }) {
+  const router = useRouter();
   const books = cart.items();
   if (!books.length) {
     return response.location.hash === 'thanks'
@@ -1285,9 +1294,21 @@ export default function Checkout({ router, response }) {
       <HashSection meta={nextMeta}>
         <p>
           We now have a functional website built with React and Curi. What
-          should you do next? Build another site! You can also check out the{" "}
-          <Link name="Guides">guides</Link> for information on advanced
-          techniques.
+          should you do next? Build another site!
+        </p>
+
+        <p>
+          There is an{" "}
+          <Link name="Tutorial" params={{ slug: "react-advanced" }}>
+            advanced React tutorial
+          </Link>{" "}
+          that continues where this tutorial leaves off. The advanced tutorial
+          implements code splitting and data prefetching.
+        </p>
+
+        <p>
+          You can also check out the <Link name="Guides">guides</Link> for
+          information on other advanced techniques.
         </p>
       </HashSection>
     </React.Fragment>

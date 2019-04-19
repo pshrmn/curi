@@ -5,7 +5,11 @@ import { act } from "react-dom/test-utils";
 import { createRouter, prepareRoutes } from "@curi/router";
 import { inMemory } from "@hickory/in-memory";
 
-import { createRouterComponent, useResponse } from "@curi/react-universal";
+import {
+  createRouterComponent,
+  useRouter,
+  useResponse
+} from "@curi/react-universal";
 
 describe("createRouterComponent()", () => {
   let node;
@@ -104,15 +108,15 @@ describe("createRouterComponent()", () => {
   });
 
   describe("context", () => {
-    it("makes response, navigation, and router available on content", () => {
+    it("makes response, navigation, and router available on context", () => {
       const router = createRouter(inMemory, routes);
 
       const ContextLogger: React.ComponentType = () => {
         const {
-          router: ctxRouter,
           response: ctxResponse,
           navigation: ctxNavigation
         } = useResponse();
+        const ctxRouter = useRouter();
         expect(ctxResponse).toBe(emittedResponse);
         expect(ctxRouter).toBe(router);
         expect(ctxNavigation).toBe(emittedNavigation);

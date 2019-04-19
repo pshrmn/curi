@@ -78,11 +78,22 @@ function ReactDOMGuide() {
 
         <p>
           Along with setting up an observer to react to new responses, the{" "}
-          <IJS>Router</IJS> sets up a context for routing values. These values—
-          <IJS>response</IJS>, <IJS>router</IJS>, and <IJS>navigation</IJS>—can
-          be read using the{" "}
-          <Link name="Package" params={{ package: "react-dom", version: "v2" }}>
+          <IJS>Router</IJS> sets up contexts for routing values. The
+          <IJS>response</IJS> and <IJS>navigation</IJS> can be read using the{" "}
+          <Link
+            name="Package"
+            params={{ package: "react-dom", version: "v2" }}
+            hash="useResponse"
+          >
             <IJS>useResponse</IJS> hook
+          </Link>
+          , while the <IJS>router</IJS> can be read using the{" "}
+          <Link
+            name="Package"
+            params={{ package: "react-dom", version: "v2" }}
+            hash="useRouter"
+          >
+            <IJS>useRouter</IJS> hook
           </Link>
           .
         </p>
@@ -96,8 +107,7 @@ const Router = createRouterComponent(router);
 function App() {
   const {
     response,
-    navigation,
-    router
+    navigation
   } = useResponse();
   const { body:Body } = response;
   return <Body />

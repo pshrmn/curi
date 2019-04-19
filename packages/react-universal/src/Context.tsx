@@ -1,13 +1,12 @@
 import React from "react";
-import { CuriRouter, Emitted } from "@curi/types";
+import { CuriRouter, ResponseAndNav } from "@curi/types";
 
-const key: Emitted = {
-  router: null,
+const key: ResponseAndNav = {
   response: null,
   navigation: null
 };
 
-const responseContext = React.createContext<Emitted>(key);
+const responseContext = React.createContext<ResponseAndNav>(key);
 const {
   Provider: ResponseProvider,
   Consumer: ResponseConsumer

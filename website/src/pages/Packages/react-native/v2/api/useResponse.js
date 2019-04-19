@@ -15,9 +15,9 @@ export function UseResponseAPI() {
   return (
     <HashSection meta={meta}>
       <p>
-        The <IJS>useResponse</IJS> hook reads the current <IJS>response</IJS>,{" "}
-        <IJS>navigation</IJS>, and <IJS>router</IJS> values from React's
-        context. This will be called every time a new response is emitted.
+        The <IJS>useResponse</IJS> hook reads the current <IJS>response</IJS>{" "}
+        and <IJS>navigation</IJS> values from React's context. This will be
+        called every time a new response is emitted.
       </p>
 
       <CodeBlock lang="jsx">
@@ -26,8 +26,7 @@ export function UseResponseAPI() {
 function App() {
   const {
     response,
-    navigation,
-    router
+    navigation
   } = useResponse();
   return (
     <ThingThatNeedsResponse
