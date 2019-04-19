@@ -35,7 +35,7 @@ describe("<curi-link>", () => {
         el: node,
         template: `
           <div>
-            <curi-link to="Place" :params="{ name: 'Aruba' }">
+            <curi-link name="Place" :params="{ name: 'Aruba' }">
               Aruba
             </curi-link>
           </div>
@@ -51,7 +51,7 @@ describe("<curi-link>", () => {
         template: `
           <div>
             <curi-link
-              to="Place"
+              name="Place"
               :params="{ name: 'Jamaica' }"
               hash="island-life"
               query="two=2"
@@ -65,7 +65,7 @@ describe("<curi-link>", () => {
       expect(a.getAttribute("href")).toBe("/place/Jamaica?two=2#island-life");
     });
 
-    it('re-uses current pathname if "to" prop is not provided', () => {
+    it("if name is not provided, pathname is empty string", () => {
       const Vue = createLocalVue();
       const router = createRouter(inMemory, routes, {
         history: {
@@ -83,7 +83,7 @@ describe("<curi-link>", () => {
         `
       });
       const a = document.querySelector("a");
-      expect(a.getAttribute("href")).toBe("/place/somewhere");
+      expect(a.getAttribute("href")).toBe("");
     });
 
     it("sets the slots as the link's children", () => {
@@ -91,7 +91,7 @@ describe("<curi-link>", () => {
         el: node,
         template: `
           <div>
-            <curi-link to="Place" :params="{ name: 'Kokomo' }">
+            <curi-link name="Place" :params="{ name: 'Kokomo' }">
               <span>Kokomo</span>
             </curi-link>
           </div>
@@ -99,6 +99,25 @@ describe("<curi-link>", () => {
       });
       const a = document.querySelector("a");
       expect(a.textContent).toBe("Kokomo");
+    });
+
+    it("spreads forward object onto anchor", () => {
+      wrapper = new Vue({
+        el: node,
+        template: `
+          <div>
+            <curi-link
+              name="Place"
+              :params="{ name: 'Aruba' }"
+              :forward="{ class: 'hooray' }"
+            >
+              Aruba
+            </curi-link>
+          </div>
+        `
+      });
+      const a = document.querySelector("a");
+      expect(a.classList.contains("hooray")).toBe(true);
     });
   });
 
@@ -119,10 +138,10 @@ describe("<curi-link>", () => {
         template: `
           <div>
             <curi-link
-              to="Place"
+              name="Place"
               :params="{ name: 'Bermuda' }"
               hash="beach-boys"
-              query="to=Bermuda"
+              query="name=Bermuda"
             >
               Bermuda
             </curi-link>
@@ -140,186 +159,8 @@ describe("<curi-link>", () => {
       expect(mockNavigate.mock.calls.length).toBe(1);
       expect(mockNavigate.mock.calls[0][0]).toEqual({
         pathname: "/place/Bermuda",
-        query: "to=Bermuda",
+        query: "name=Bermuda",
         hash: "beach-boys"
-      });
-    });
-
-    describe("scoped slot", () => {
-      const routes = prepareRoutes({
-        routes: [
-          {
-            name: "Test",
-            path: "test",
-            resolve() {
-              return new Promise(resolve => {
-                setTimeout(() => {
-                  resolve("done");
-                }, 100);
-              });
-            }
-          },
-          { name: "Catch All", path: "(.*)" }
-        ]
-      });
-
-      it("navigating = true after clicking", done => {
-        const router = createRouter(inMemory, routes);
-        const Vue = createLocalVue();
-        Vue.use(CuriPlugin, { router });
-
-        // if a link has no on methods, finished will be called almost
-        // immediately (although this style should only be used for routes
-        // with on methods)
-        const LoadChecker = {
-          props: ["navigating"],
-          render(h) {
-            return h("div", this.navigating);
-          },
-          updated() {
-            expect(this.navigating).toBe(true);
-            done();
-          }
-        };
-        wrapper = new Vue({
-          el: node,
-          template: `
-            <div>
-              <curi-link to="Test" id="after-click">
-                <template slot-scope="{ navigating }">
-                  <LoadChecker :navigating="navigating" />
-                </template>
-              </curi-link>
-            </div>
-          `,
-          components: {
-            LoadChecker
-          }
-        });
-        const a = document.querySelector("#after-click");
-
-        a.dispatchEvent(
-          new MouseEvent("click", {
-            button: 0
-          })
-        );
-      });
-
-      it("navigating = false after navigation completes", done => {
-        const router = createRouter(inMemory, routes);
-        const Vue = createLocalVue();
-        Vue.use(CuriPlugin, { router });
-
-        // if a link has no on methods, finished will be called almost
-        // immediately (although this style should only be used for routes
-        // with on methods)
-        wrapper = new Vue({
-          el: node,
-          template: `
-            <div>
-              <curi-link to="Test" id="nav-complete">
-                <template slot-scope="{ navigating }">
-                  {{navigating}}
-                </template>
-              </curi-link>
-            </div>
-          `
-        });
-        const a = document.querySelector("#nav-complete");
-        a.dispatchEvent(
-          new MouseEvent("click", {
-            button: 0
-          })
-        );
-
-        router.once(
-          ({ response }) => {
-            // navigation is complete, wait for Vue to re-render
-            Vue.nextTick(() => {
-              expect(a.textContent.trim()).toBe("false");
-              done();
-            });
-          },
-          { initial: false }
-        );
-      });
-
-      it("navigating = false after navigation is cancelled", done => {
-        const routes = prepareRoutes({
-          routes: [
-            {
-              name: "Slow",
-              path: "slow",
-              resolve() {
-                return new Promise(resolve => {
-                  setTimeout(() => {
-                    resolve("slow");
-                  }, 100);
-                });
-              }
-            },
-            {
-              name: "Fast",
-              path: "fast",
-              resolve() {
-                return Promise.resolve("fast");
-              }
-            },
-            { name: "Catch All", path: "(.*)" }
-          ]
-        });
-        const router = createRouter(inMemory, routes);
-        const Vue = createLocalVue();
-        Vue.use(CuriPlugin, { router });
-
-        // if a link has no on methods, finished will be called almost
-        // immediately (although this style should only be used for routes
-        // with on methods)
-        wrapper = new Vue({
-          el: node,
-          template: `
-            <div>
-              <curi-link to="Slow" id="slow">
-                <template slot-scope="{ navigating }">
-                  {{navigating}}
-                </template>
-              </curi-link>
-              <curi-link to="Fast" id="fast">
-                <template slot-scope="{ navigating }">
-                  {{navigating}}
-                </template>
-              </curi-link>
-            </div>
-          `
-        });
-        const slowLink = document.querySelector("#slow");
-        const fastLink = document.querySelector("#slow");
-
-        expect(slowLink.textContent.trim()).toBe("false");
-
-        slowLink.dispatchEvent(
-          new MouseEvent("click", {
-            button: 0
-          })
-        );
-        Vue.nextTick(() => {
-          expect(slowLink.textContent.trim()).toBe("true");
-          fastLink.dispatchEvent(
-            new MouseEvent("click", {
-              button: 0
-            })
-          );
-          router.once(
-            ({ response }) => {
-              // navigation is cancelled, wait for Vue to re-render
-              Vue.nextTick(() => {
-                expect(slowLink.textContent.trim()).toBe("false");
-                done();
-              });
-            },
-            { initial: false }
-          );
-        });
       });
     });
 
@@ -328,7 +169,7 @@ describe("<curi-link>", () => {
         el: node,
         template: `
           <div>
-            <curi-link to="Place" :params="{ name: 'Bahamas' }" :click="click">
+            <curi-link name="Place" :params="{ name: 'Bahamas' }" :click="click">
               Bahamas
             </curi-link>
           </div>
@@ -354,7 +195,7 @@ describe("<curi-link>", () => {
         el: node,
         template: `
           <div>
-            <curi-link to="Place" :params="{ name: 'Key Largo' }">
+            <curi-link name="Place" :params="{ name: 'Key Largo' }">
               Key Largo
             </curi-link>
           </div>
@@ -378,7 +219,7 @@ describe("<curi-link>", () => {
         el: node,
         template: `
           <div>
-            <curi-link to="Place" :params="{ name: 'Montego' }">
+            <curi-link name="Place" :params="{ name: 'Montego' }">
               Montego
             </curi-link>
           </div>
@@ -399,7 +240,7 @@ describe("<curi-link>", () => {
           el: node,
           template: `
             <div>
-              <curi-link to="Place" :params="{ name: 'Montego' }" :click="click">
+              <curi-link name="Place" :params="{ name: 'Montego' }" :click="click">
                 Montego
               </curi-link>
             </div>
@@ -423,7 +264,7 @@ describe("<curi-link>", () => {
           el: node,
           template: `
             <div>
-              <curi-link to="Place" :params="{ name: 'Montego' }" :click="click">
+              <curi-link name="Place" :params="{ name: 'Montego' }" :click="click">
                 Montego
               </curi-link>
             </div>
