@@ -100,6 +100,25 @@ describe("<curi-link>", () => {
       const a = document.querySelector("a");
       expect(a.textContent).toBe("Kokomo");
     });
+
+    it("spreads forward object onto anchor", () => {
+      wrapper = new Vue({
+        el: node,
+        template: `
+          <div>
+            <curi-link
+              name="Place"
+              :params="{ name: 'Aruba' }"
+              :forward="{ class: 'hooray' }"
+            >
+              Aruba
+            </curi-link>
+          </div>
+        `
+      });
+      const a = document.querySelector("a");
+      expect(a.classList.contains("hooray")).toBe(true);
+    });
   });
 
   describe("clicking a <curi-link>", () => {

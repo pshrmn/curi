@@ -13,12 +13,13 @@ export interface LinkComponent extends Vue {
   location: SessionLocation;
   href: string;
   click(e: MouseEvent): void;
+  forward?: object;
 }
 
 const Link: ComponentOptions<LinkComponent> = {
   name: "curi-link",
 
-  props: ["name", "params", "hash", "query", "state", "click"],
+  props: ["name", "params", "hash", "query", "state", "click", "forward"],
 
   computed: {
     location: function() {
@@ -59,7 +60,7 @@ const Link: ComponentOptions<LinkComponent> = {
     return h(
       "a",
       {
-        attrs: { href: this.href },
+        attrs: { href: this.href, ...this.forward },
         on: { click: this.clickHandler }
       },
       this.$slots.default

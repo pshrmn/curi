@@ -117,6 +117,25 @@ describe("<curi-async-link>", () => {
       const a = document.querySelector("a");
       expect(a.textContent).toBe("Kokomo");
     });
+
+    it("spreads forward object onto anchor", () => {
+      wrapper = new Vue({
+        el: node,
+        template: `
+          <div>
+            <curi-async-link
+              name="Place"
+              :params="{ name: 'Aruba' }"
+              :forward="{ class: 'hooray' }"
+            >
+              Aruba
+            </curi-async-link>
+          </div>
+        `
+      });
+      const a = document.querySelector("a");
+      expect(a.classList.contains("hooray")).toBe(true);
+    });
   });
 
   describe("clicking a <curi-async-link>", () => {

@@ -14,12 +14,13 @@ export interface AsyncLinkComponent extends Vue {
   href: string;
   click(e: MouseEvent): void;
   navigating: boolean;
+  forward?: object;
 }
 
 const Link: ComponentOptions<AsyncLinkComponent> = {
   name: "curi-async-link",
 
-  props: ["name", "params", "hash", "query", "state", "click"],
+  props: ["name", "params", "hash", "query", "state", "click", "forward"],
 
   computed: {
     location: function() {
@@ -74,7 +75,7 @@ const Link: ComponentOptions<AsyncLinkComponent> = {
     return h(
       "a",
       {
-        attrs: { href: this.href },
+        attrs: { href: this.href, ...this.forward },
         on: { click: this.clickHandler }
       },
       this.$scopedSlots.default({

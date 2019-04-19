@@ -2,6 +2,7 @@
 
 * Rename `<curi-link>`'s `to` prop to `name`.
 * Split `<curi-link>` into two components. `<curi-link>` is static (regular slot) while `<curi-async-link>` tracks navigating state (scoped slot).
+* `<curi-link>` and `<curi-async-link>` take a `forward` prop, which is an object whose properties will be spread onto the rendered anchor.
 
 ## 2.0.0-alpha.2
 

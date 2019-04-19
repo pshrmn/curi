@@ -10,6 +10,7 @@ export interface LinkComponent extends Vue {
     location: SessionLocation;
     href: string;
     click(e: MouseEvent): void;
+    forward?: object;
 }
 declare const Link: ComponentOptions<LinkComponent>;
 export default Link;
