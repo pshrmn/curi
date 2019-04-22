@@ -172,7 +172,8 @@ describe("useNavigationFocus", () => {
 
         act(() => {
           // navigate and verify wrapper is re-focused
-          router.navigate({ name: "About" });
+          const url = router.url({ name: "About" });
+          router.navigate({ url });
         });
 
         const postNavFocus = document.activeElement;
@@ -234,7 +235,8 @@ describe("useNavigationFocus", () => {
         expect(document.activeElement).toBe(homeDiv);
 
         act(() => {
-          router.navigate({ name: "About" });
+          const url = router.url({ name: "About" });
+          router.navigate({ url });
         });
 
         const aboutDiv = node.querySelector("#about");
@@ -301,7 +303,8 @@ describe("useNavigationFocus", () => {
         expect(fakeWarn.mock.calls.length).toBe(0);
 
         act(() => {
-          router.navigate({ name: "About" });
+          const url = router.url({ name: "About" });
+          router.navigate({ url });
         });
 
         expect(document.activeElement).toBe(document.body);
@@ -348,7 +351,8 @@ describe("useNavigationFocus", () => {
 
         act(() => {
           // navigate and verify wrapper is re-focused
-          router.navigate({ name: "About" });
+          const url = router.url({ name: "About" });
+          router.navigate({ url });
         });
 
         const postNavFocus = document.activeElement;
@@ -391,7 +395,8 @@ describe("useNavigationFocus", () => {
 
         act(() => {
           // navigate and verify wrapper is re-focused
-          router.navigate({ name: "About" });
+          const url = router.url({ name: "About" });
+          router.navigate({ url });
         });
 
         const postNavFocus = document.activeElement;

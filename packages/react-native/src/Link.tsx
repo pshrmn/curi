@@ -1,29 +1,28 @@
 import React from "react";
-import { TouchableHighlight, TouchableHighlightProps } from "react-native";
+import { TouchableHighlight } from "react-native";
 import {
   useNavigationHandler,
-  useStatefulNavigationHandler
+  useStatefulNavigationHandler,
+  useURL
 } from "@curi/react-universal";
 
 import { GestureResponderEvent } from "react-native";
 import { RouteLocation } from "@curi/types";
-import { NavigatingChildren } from "@curi/react-universal";
-import { NavType } from "@hickory/root";
+import { NavigatingChildren, NavigationHookProps } from "@curi/react-universal";
 
-export interface BaseLinkProps extends RouteLocation {
-  onNav?: (e: GestureResponderEvent) => void;
+interface BaseLinkProps extends RouteLocation {
   anchor?: React.ReactType;
-  forward?: object;
-  method?: NavType;
 }
 
-export interface LinkProps extends BaseLinkProps {
-  children: React.ReactNode;
-}
+export type LinkProps = BaseLinkProps &
+  NavigationHookProps<GestureResponderEvent> & {
+    children: React.ReactNode;
+  };
 
-export interface AsyncLinkProps extends BaseLinkProps {
-  children: NavigatingChildren;
-}
+export type AsyncLinkProps = BaseLinkProps &
+  NavigationHookProps<GestureResponderEvent> & {
+    children: NavigatingChildren;
+  };
 
 function canNavigate(event: GestureResponderEvent) {
   return !event.defaultPrevented;
@@ -31,7 +30,9 @@ function canNavigate(event: GestureResponderEvent) {
 
 export const Link = React.forwardRef(
   (props: LinkProps, ref: React.Ref<any>) => {
+    const url = useURL(props);
     const { eventHandler } = useNavigationHandler<GestureResponderEvent>(
+      url,
       props,
       canNavigate
     );
@@ -48,9 +49,10 @@ export const Link = React.forwardRef(
 
 export const AsyncLink = React.forwardRef(
   (props: AsyncLinkProps, ref: React.Ref<any>) => {
+    const url = useURL(props);
     const { eventHandler, navigating } = useStatefulNavigationHandler<
       GestureResponderEvent
-    >(props, canNavigate);
+    >(url, props, canNavigate);
 
     const { anchor: Anchor = TouchableHighlight, forward, children } = props;
 

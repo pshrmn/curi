@@ -13,7 +13,7 @@
     "@curi/react-dom": "2.0.0-beta.10",
     "@curi/router": "2.0.0-beta.13",
     "@curi/side-effect-title": "2.0.0-beta.3",
-    "@hickory/browser": "^2.0.0-beta.11",
+    "@hickory/browser": "^2.0.0-beta.12",
     "react": "^16.9.0-alpha.0",
     "react-dom": "^16.9.0-alpha.0"
   }

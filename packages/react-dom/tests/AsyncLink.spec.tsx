@@ -553,11 +553,9 @@ describe("<AsyncLink>", () => {
         button: 0
       };
       Simulate.click(a, leftClickEvent);
-      const mockLocation = mockNavigate.mock.calls[0][0];
-      expect(mockLocation).toMatchObject({
-        pathname: "/test",
-        hash: "thing",
-        query: "one=1",
+      const mockURL = mockNavigate.mock.calls[0][0];
+      expect(mockURL).toMatchObject({
+        url: "/test?one=1#thing",
         state: "yo"
       });
     });

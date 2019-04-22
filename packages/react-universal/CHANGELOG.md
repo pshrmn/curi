@@ -1,3 +1,9 @@
+## Next
+
+* Rename `useHref` to `useURL`.
+* Remove `useLocation` hook.
+* Pass `url` string to `useNavigationHandler` & `useStatefulNavigationHandler`.
+
 ## 2.0.0-beta.10
 
 * `useResponse` only returns `response` and `navigation`.

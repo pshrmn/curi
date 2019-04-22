@@ -1,4 +1,4 @@
-<a {...forward} href="{href}" on:click="handleClick(event)">
+<a {...forward} href="{url}" on:click="handleClick(event)">
   {#if wrapper}
   <svelte:component this="{wrapper}" navigating="{navigating}">
     <slot></slot>
@@ -20,7 +20,7 @@
   export default {
     data() {
       return {
-        name: "",
+        name: undefined,
         params: {},
         hash: "",
         query: "",
@@ -29,30 +29,14 @@
       };
     },
     computed: {
-      location: ({ name, params, hash, query, state, $router }) => {
-        return {
-          pathname: name ? $router.route.pathname(name, params) : "",
-          hash,
-          query,
-          state
-        };
-      },
-      href: ({ location, $router }) => {
-        return $router.history.href(location);
+      url: ({ name, params, hash, query, $router }) => {
+        return $router.url({ name, params, hash, query });
       }
     },
     methods: {
       handleClick(event) {
         if (canNavigate(event)) {
-          const {
-            $router,
-            name,
-            params,
-            hash,
-            query,
-            state,
-            wrapper
-          } = this.get();
+          const { $router, url, state, wrapper } = this.get();
           event.preventDefault();
           let cancelled, finished;
           if (wrapper) {
@@ -63,10 +47,7 @@
             this.set({ navigating: true });
           }
           this.cancelCallbacks = $router.navigate({
-            name,
-            params,
-            hash,
-            query,
+            url,
             state,
             cancelled,
             finished

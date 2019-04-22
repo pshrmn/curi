@@ -1,40 +1,39 @@
 import React from "react";
 import {
-  useHref,
   useNavigationHandler,
-  useStatefulNavigationHandler
+  useStatefulNavigationHandler,
+  useURL
 } from "@curi/react-universal";
 import { canNavigate } from "./utils";
 
 import { RouteLocation } from "@curi/types";
-import { NavigatingChildren } from "@curi/react-universal";
+import { NavigatingChildren, NavigationHookProps } from "@curi/react-universal";
 
-export interface BaseLinkProps extends RouteLocation {
-  onNav?: (e: React.MouseEvent<HTMLElement>) => void;
+interface BaseLinkProps extends RouteLocation {
   anchor?: React.ReactType;
-  forward?: React.AnchorHTMLAttributes<HTMLAnchorElement>;
 }
 
-export interface LinkProps extends BaseLinkProps {
-  children: React.ReactNode;
-}
+export type LinkProps = BaseLinkProps &
+  NavigationHookProps<React.MouseEvent<HTMLElement>> & {
+    children: React.ReactNode;
+  };
 
-export interface AsyncLinkProps extends BaseLinkProps {
-  children: NavigatingChildren;
-}
+export type AsyncLinkProps = BaseLinkProps &
+  NavigationHookProps<React.MouseEvent<HTMLElement>> & {
+    children: NavigatingChildren;
+  };
 
 export const Link = React.forwardRef(
   (props: LinkProps, ref: React.Ref<any>) => {
-    const href = useHref(props);
-
+    const url = useURL(props);
     const { eventHandler } = useNavigationHandler<
       React.MouseEvent<HTMLElement>
-    >(props, canNavigate, props.forward && props.forward.target);
+    >(url, props, canNavigate);
 
     const { anchor: Anchor = "a", forward, children } = props;
 
     return (
-      <Anchor {...forward} onClick={eventHandler} href={href} ref={ref}>
+      <Anchor {...forward} onClick={eventHandler} href={url} ref={ref}>
         {children}
       </Anchor>
     );
@@ -43,16 +42,15 @@ export const Link = React.forwardRef(
 
 export const AsyncLink = React.forwardRef(
   (props: AsyncLinkProps, ref: React.Ref<any>) => {
-    const href = useHref(props);
-
+    const url = useURL(props);
     const { eventHandler, navigating } = useStatefulNavigationHandler<
       React.MouseEvent<HTMLElement>
-    >(props, canNavigate, props.forward && props.forward.target);
+    >(url, props, canNavigate);
 
     const { anchor: Anchor = "a", forward, children } = props;
 
     return (
-      <Anchor {...forward} onClick={eventHandler} href={href} ref={ref}>
+      <Anchor {...forward} onClick={eventHandler} href={url} ref={ref}>
         {children(navigating)}
       </Anchor>
     );

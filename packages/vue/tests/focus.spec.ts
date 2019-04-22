@@ -119,7 +119,8 @@ describe("curi-focus directive", () => {
         expect(stolenFocus).toBe(input);
 
         // navigate and verify wrapper is re-focused
-        router.navigate({ name: "Place", params: { name: "Hawaii" } });
+        const url = router.url({ name: "Place", params: { name: "Hawaii" } });
+        router.navigate({ url });
         setTimeout(() => {
           const postNavFocus = document.activeElement;
           expect(postNavFocus).toBe(wrapper);
@@ -203,7 +204,8 @@ describe("curi-focus directive", () => {
           expect(input).toBe(stolenFocus);
 
           // navigate and verify wrapper is re-focused
-          router.navigate({ name: "Place", params: { name: "maybe" } });
+          const url = router.url({ name: "Place", params: { name: "maybe" } });
+          router.navigate({ url });
 
           setTimeout(() => {
             const postNavFocus = document.activeElement;
@@ -243,7 +245,8 @@ describe("curi-focus directive", () => {
           expect(input).toBe(stolenFocus);
 
           // navigate and verify wrapper is re-focused
-          router.navigate({ name: "Place", params: { name: "maybe" } });
+          const url = router.url({ name: "Place", params: { name: "maybe" } });
+          router.navigate({ url });
 
           setTimeout(() => {
             const postNavFocus = document.activeElement;

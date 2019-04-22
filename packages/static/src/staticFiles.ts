@@ -55,7 +55,7 @@ export default async function staticFiles(
             // need to emit redirects or will get stuck waiting forever
             invisibleRedirects: false,
             history: {
-              location: pathname
+              location: { url: pathname }
             }
           });
 

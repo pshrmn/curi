@@ -44,7 +44,8 @@ export default function render() {
 
   expect(button.textContent).toBe("No op");
 
-  router.navigate({ name: "Sync" });
+  const url = router.url({ name: "Sync" });
+  router.navigate({ url });
 
   expect(button.textContent).toBe("No op");
 

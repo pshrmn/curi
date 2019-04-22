@@ -5,9 +5,9 @@ import { inMemory } from "@hickory/in-memory";
 import { createRouter, prepareRoutes } from "@curi/router";
 import * as qs from "qs";
 
-import { createRouterComponent, useHref } from "@curi/react-universal";
+import { createRouterComponent, useURL } from "@curi/react-universal";
 
-describe("useHref", () => {
+describe("useURL", () => {
   let node;
   let router, Router;
   const routes = prepareRoutes({
@@ -31,7 +31,7 @@ describe("useHref", () => {
   describe("pathname", () => {
     it("returns route's pathname", () => {
       function App() {
-        const result = useHref({ name: "Home" });
+        const result = useURL({ name: "Home" });
         expect(result).toBe("/");
         return null;
       }
@@ -45,7 +45,7 @@ describe("useHref", () => {
 
     it("returns route's pathname using params", () => {
       function App() {
-        const result = useHref({ name: "User", params: { id: "1" } });
+        const result = useURL({ name: "User", params: { id: "1" } });
         expect(result).toBe("/u/1");
         return null;
       }
@@ -59,7 +59,7 @@ describe("useHref", () => {
 
     it("is relative if route name is not provided", () => {
       function App() {
-        const result = useHref({});
+        const result = useURL({});
         expect(result).toBe("");
         return null;
       }
@@ -75,7 +75,7 @@ describe("useHref", () => {
   describe("query", () => {
     it("returns provided query", () => {
       function App() {
-        const result = useHref({ name: "Home", query: "hi=yo" });
+        const result = useURL({ name: "Home", query: "hi=yo" });
         expect(result).toBe("/?hi=yo");
         return null;
       }
@@ -99,7 +99,7 @@ describe("useHref", () => {
       const Router = createRouterComponent(router);
 
       function App() {
-        const result = useHref({ name: "Home", query: { hi: "yo" } });
+        const result = useURL({ name: "Home", query: { hi: "yo" } });
         expect(result).toBe("/?hi=yo");
         return null;
       }
@@ -115,7 +115,7 @@ describe("useHref", () => {
   describe("hash", () => {
     it("returns provided hash", () => {
       function App() {
-        const result = useHref({ name: "Home", hash: "test" });
+        const result = useURL({ name: "Home", hash: "test" });
         expect(result).toBe("/#test");
         return null;
       }

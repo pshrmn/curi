@@ -43,7 +43,8 @@ export default function render(done) {
   expect(beforeResponse.name).toBe("Home");
   expect(button.textContent).toBe("No op");
 
-  router.navigate({ name: "Slow" });
+  const url = router.url({ name: "Slow" });
+  router.navigate({ url });
 
   expect(button.textContent).toBe("Cancel");
   button.click();

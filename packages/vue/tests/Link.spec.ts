@@ -69,7 +69,7 @@ describe("<curi-link>", () => {
       const Vue = createLocalVue();
       const router = createRouter(inMemory, routes, {
         history: {
-          locations: ["/place/somewhere"]
+          locations: [{ url: "/place/somewhere" }]
         }
       });
       Vue.use(CuriPlugin, { router });
@@ -157,10 +157,8 @@ describe("<curi-link>", () => {
         })
       );
       expect(mockNavigate.mock.calls.length).toBe(1);
-      expect(mockNavigate.mock.calls[0][0]).toEqual({
-        pathname: "/place/Bermuda",
-        query: "name=Bermuda",
-        hash: "beach-boys"
+      expect(mockNavigate.mock.calls[0][0]).toMatchObject({
+        url: "/place/Bermuda?name=Bermuda#beach-boys"
       });
     });
 

@@ -86,7 +86,8 @@ describe("useRouter", () => {
     expect(App.mock.calls.length).toBe(1);
 
     act(() => {
-      router.navigate({ name: "About" });
+      const url = router.url({ name: "About" });
+      router.navigate({ url });
     });
 
     expect(Test.mock.calls.length).toBe(1);

@@ -16,6 +16,7 @@ import {
   Emitted,
   ResponseHandlerOptions,
   CurrentResponse,
+  RouteLocation,
   Navigation,
   NavigationDetails,
   Cancellable,
@@ -88,9 +89,8 @@ export default function createRouter<O = HistoryOptions>(
     const response = finishResponse(
       route,
       match,
-      routes,
       resolved,
-      history,
+      router,
       options.external
     );
     finishAndResetNavCallbacks();
@@ -174,6 +174,14 @@ export default function createRouter<O = HistoryOptions>(
     }
   }
 
+  /* router.url */
+  function url(details: RouteLocation): string {
+    let { name, params, hash, query } = details;
+    const pathname =
+      name != null ? routes.interactions.pathname(name, params) : undefined;
+    return history.href({ pathname, hash, query });
+  }
+
   /* router.navigate */
 
   let cancelCallback: (() => void) | undefined;
@@ -182,24 +190,12 @@ export default function createRouter<O = HistoryOptions>(
   function navigate(details: NavigationDetails) {
     cancelAndResetNavCallbacks();
 
-    let { name, params, hash, query, state, method } = details;
-    const pathname =
-      name != null
-        ? routes.interactions.pathname(name, params)
-        : history.location.pathname;
+    let { url, state, method } = details;
 
     cancelCallback = details.cancelled;
     finishCallback = details.finished;
 
-    history.navigate(
-      {
-        pathname,
-        hash,
-        query,
-        state
-      },
-      method
-    );
+    history.navigate({ url, state }, method);
 
     return resetCallbacks;
   }
@@ -268,6 +264,7 @@ export default function createRouter<O = HistoryOptions>(
     observe,
     once,
     cancel,
+    url,
     navigate,
     current() {
       return mostRecent;

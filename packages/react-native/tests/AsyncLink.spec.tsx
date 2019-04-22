@@ -73,14 +73,14 @@ describe("<AsyncLink>", () => {
 
   describe("navigation location", () => {
     describe("name", () => {
-      it("uses the pathname from current response's location if 'name' is not provided", async () => {
+      it("has no pathname if 'name' is not provided", async () => {
         const mockNavigate = jest.fn();
         const routes = prepareRoutes({
           routes: [{ name: "Catch All", path: "(.*)" }]
         });
         const router = createRouter(inMemory, routes, {
           history: {
-            locations: ["/the-initial-location"]
+            locations: [{ url: "/the-initial-location" }]
           }
         });
         router.history.navigate = mockNavigate;
@@ -88,7 +88,7 @@ describe("<AsyncLink>", () => {
 
         const tree = renderer.create(
           <Router>
-            <AsyncLink name={null}>
+            <AsyncLink name={null} hash="test">
               {navigating => <Text>{navigating}</Text>}
             </AsyncLink>
           </Router>
@@ -97,9 +97,9 @@ describe("<AsyncLink>", () => {
         await act(async () => {
           anchor.props.onPress(fakeEvent());
         });
-        expect(mockNavigate.mock.calls[0][0].pathname).toBe(
-          "/the-initial-location"
-        );
+        expect(mockNavigate.mock.calls[0][0]).toMatchObject({
+          url: "#test"
+        });
       });
     });
 
@@ -129,7 +129,9 @@ describe("<AsyncLink>", () => {
         await act(async () => {
           anchor.props.onPress(fakeEvent());
         });
-        expect(mockNavigate.mock.calls[0][0].pathname).toBe("/park/Glacier");
+        expect(mockNavigate.mock.calls[0][0]).toMatchObject({
+          url: "/park/Glacier"
+        });
       });
 
       it("updates location to navigate to when props change", async () => {
@@ -150,7 +152,9 @@ describe("<AsyncLink>", () => {
         await act(async () => {
           anchor.props.onPress(fakeEvent());
         });
-        expect(mockNavigate.mock.calls[0][0].pathname).toBe("/park/Glacier");
+        expect(mockNavigate.mock.calls[0][0]).toMatchObject({
+          url: "/park/Glacier"
+        });
 
         const newParams = { name: "Yellowstone" };
         await act(async () => {
@@ -167,9 +171,9 @@ describe("<AsyncLink>", () => {
           anchor.props.onPress(fakeEvent());
         });
 
-        expect(mockNavigate.mock.calls[1][0].pathname).toBe(
-          "/park/Yellowstone"
-        );
+        expect(mockNavigate.mock.calls[1][0]).toMatchObject({
+          url: "/park/Yellowstone"
+        });
       });
     });
 
@@ -201,9 +205,7 @@ describe("<AsyncLink>", () => {
         });
 
         expect(mockNavigate.mock.calls[0][0]).toMatchObject({
-          pathname: "/test",
-          query: "one=two",
-          hash: "hashtag"
+          url: "/test?one=two#hashtag"
         });
       });
     });
@@ -220,7 +222,7 @@ describe("<AsyncLink>", () => {
       });
       const router = createRouter(inMemory, routes, {
         history: {
-          locations: ["/the-initial-location"]
+          locations: [{ url: "/the-initial-location" }]
         }
       });
       router.history.navigate = mockNavigate;
@@ -249,7 +251,7 @@ describe("<AsyncLink>", () => {
       });
       const router = createRouter(inMemory, routes, {
         history: {
-          locations: ["/the-initial-location"]
+          locations: [{ url: "/the-initial-location" }]
         }
       });
       const Router = createRouterComponent(router);
@@ -278,7 +280,7 @@ describe("<AsyncLink>", () => {
       });
       const router = createRouter(inMemory, routes, {
         history: {
-          locations: ["/the-initial-location"]
+          locations: [{ url: "/the-initial-location" }]
         }
       });
       router.history.navigate = mockNavigate;

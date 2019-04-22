@@ -1,16 +1,19 @@
 import { PathFunction, PathFunctionOptions, RegExpOptions } from "path-to-regexp";
-import { History, SessionLocation, PartialLocation, Action, NavType } from "@hickory/root";
+import { History, SessionLocation, Action, NavType } from "@hickory/root";
 export interface CuriRouter {
     observe(fn: Observer, options?: ResponseHandlerOptions): () => void;
     once(fn: Observer, options?: ResponseHandlerOptions): void;
     cancel(fn: Cancellable): () => void;
     current(): CurrentResponse;
+    url(details: RouteLocation): string;
     navigate(options: NavigationDetails): () => void;
     route: Interactions;
     history: History;
     external: any;
 }
-export interface NavigationDetails extends RouteLocation {
+export interface NavigationDetails {
+    url: string;
+    state?: any;
     method?: NavType;
     cancelled?: () => void;
     finished?: () => void;
@@ -55,9 +58,7 @@ export interface IntrinsicResponse {
     params: Params;
     partials: Array<string>;
 }
-export interface RedirectLocation extends PartialLocation {
-    name: string;
-    params?: Params;
+export interface RedirectLocation extends RouteLocation {
     url: string;
 }
 export interface ExternalRedirect {

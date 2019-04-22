@@ -44,7 +44,8 @@ export default function render(done) {
 
   expect(button.textContent).toBe("No op");
 
-  router.navigate({ name: "Fast" });
+  const url = router.url({ name: "Fast" });
+  router.navigate({ url });
 
   expect(button.textContent).toBe("Cancel");
 

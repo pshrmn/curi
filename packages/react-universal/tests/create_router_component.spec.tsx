@@ -100,7 +100,8 @@ describe("createRouterComponent()", () => {
       expect(currentResponse.name).toBe("Home");
 
       act(() => {
-        router.navigate({ name: "About" });
+        const url = router.url({ name: "About" });
+        router.navigate({ url });
       });
 
       expect(currentResponse.name).toBe("About");

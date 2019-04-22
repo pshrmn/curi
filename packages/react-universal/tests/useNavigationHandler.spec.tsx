@@ -6,6 +6,7 @@ import { inMemory } from "@hickory/in-memory";
 import { createRouter, prepareRoutes } from "@curi/router";
 
 import {
+  useURL,
   createRouterComponent,
   useNavigationHandler
 } from "@curi/react-universal";
@@ -50,7 +51,8 @@ describe("useNavigationHandler", () => {
       const Router = createRouterComponent(router);
 
       function Link(props) {
-        const { eventHandler } = useNavigationHandler(props);
+        const url = useURL(props);
+        const { eventHandler } = useNavigationHandler(url, props);
         return (
           <a href="#" onClick={eventHandler}>
             {props.children}
@@ -69,11 +71,9 @@ describe("useNavigationHandler", () => {
       const a = node.querySelector("a");
       const leftClickEvent = createClick();
       Simulate.click(a, leftClickEvent);
-      const mockLocation = mockNavigate.mock.calls[0][0];
-      expect(mockLocation).toMatchObject({
-        pathname: "/test",
-        hash: "thing",
-        query: "one=1",
+      const mockURL = mockNavigate.mock.calls[0][0];
+      expect(mockURL).toMatchObject({
+        url: "/test?one=1#thing",
         state: "yo"
       });
     });
@@ -92,7 +92,8 @@ describe("useNavigationHandler", () => {
       const Router = createRouterComponent(router);
 
       function Link(props) {
-        const { eventHandler } = useNavigationHandler(props);
+        const url = useURL(props);
+        const { eventHandler } = useNavigationHandler(url, props);
         return (
           <a href="#" onClick={eventHandler}>
             {props.children}
@@ -133,7 +134,12 @@ describe("useNavigationHandler", () => {
         const Router = createRouterComponent(router);
 
         function Link(props) {
-          const { eventHandler } = useNavigationHandler(props, canNavigate);
+          const url = useURL(props);
+          const { eventHandler } = useNavigationHandler(
+            url,
+            props,
+            canNavigate
+          );
           return (
             <a href="#" onClick={eventHandler}>
               {props.children}
