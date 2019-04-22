@@ -12,7 +12,7 @@ export default {
   methods: {
     onClick: function(e) {
       this.$store.commit("logout");
-      this.$router.history.navigate("/", "replace");
+      this.$router.navigate({ url: "/", method: "replace" });
     }
   }
 };

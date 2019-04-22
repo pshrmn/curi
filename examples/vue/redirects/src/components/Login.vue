@@ -13,7 +13,7 @@ export default {
     onClick: function(e) {
       this.$store.commit("login");
       const { query } = this.$curi.response.location;
-      this.$router.history.navigate(query.next || "/", "replace");
+      this.$router.navigate({ url: query.next || "/", method: "replace" });
     }
   }
 };

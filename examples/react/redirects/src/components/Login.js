@@ -12,9 +12,12 @@ const Login = ({ response }) => {
         onClick={e => {
           fakeAuth.login();
           const { state } = response.location;
-          const to = state && state.next ? state.next : { name: "Home" };
+          const url = router.url(
+            state && state.next ? state.next : { name: "Home" }
+          );
           router.navigate({
-            ...to,
+            url,
+            state,
             method: "replace"
           });
         }}
