@@ -69,7 +69,7 @@ describe("<Link>", () => {
 
   describe("navigation location", () => {
     describe("name", () => {
-      it("has no pathname if 'name' is not provided", () => {
+      it("inherits pathname from current location if 'name' is not provided", () => {
         const mockNavigate = jest.fn();
         const routes = prepareRoutes({
           routes: [{ name: "Catch All", path: "(.*)" }]
@@ -92,7 +92,7 @@ describe("<Link>", () => {
         const anchor = tree.root.findByType(TouchableHighlight);
         anchor.props.onPress(fakeEvent());
         expect(mockNavigate.mock.calls[0][0]).toMatchObject({
-          url: "#test"
+          url: "/the-initial-location#test"
         });
       });
     });

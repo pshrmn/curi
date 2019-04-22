@@ -73,24 +73,24 @@ describe("<AsyncLink>", () => {
         expect(a.getAttribute("href")).toBe("/");
       });
 
-      it("creates a relative link if 'to' is undefined", () => {
+      it("inherits pathname from current location is name is not provided", () => {
         const routes = prepareRoutes({
           routes: [{ name: "Catch All", path: "(.*)" }]
         });
         const router = createRouter(inMemory, routes, {
           history: {
-            locations: ["/the-initial-location"]
+            locations: [{ url: "/the-initial-location" }]
           }
         });
         const Router = createRouterComponent(router);
         ReactDOM.render(
           <Router>
-            <AsyncLink name={null}>{() => null}</AsyncLink>
+            <AsyncLink hash="test">{() => null}</AsyncLink>
           </Router>,
           node
         );
         const a = node.querySelector("a");
-        expect(a.getAttribute("href")).toBe("");
+        expect(a.getAttribute("href")).toBe("/the-initial-location#test");
       });
     });
 

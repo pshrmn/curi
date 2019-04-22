@@ -1132,10 +1132,14 @@ describe("curi", () => {
         expect(url).toEqual("/contact/fax");
       });
 
-      it("URL has no pathname if no name is provided", () => {
-        const router = createRouter(inMemory, routes);
+      it("inherits pathname from current response's location if no name is provided", () => {
+        const router = createRouter(inMemory, routes, {
+          history: {
+            locations: [{ url: "/test" }]
+          }
+        });
         const url = router.url({ hash: "test" });
-        expect(url).toEqual("#test");
+        expect(url).toEqual("/test#test");
       });
 
       it("includes the provided hash", () => {

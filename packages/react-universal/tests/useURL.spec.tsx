@@ -9,7 +9,6 @@ import { createRouterComponent, useURL } from "@curi/react-universal";
 
 describe("useURL", () => {
   let node;
-  let router, Router;
   const routes = prepareRoutes({
     routes: [
       { name: "Home", path: "" },
@@ -20,8 +19,6 @@ describe("useURL", () => {
 
   beforeEach(() => {
     node = document.createElement("div");
-    router = createRouter(inMemory, routes);
-    Router = createRouterComponent(router);
   });
 
   afterEach(() => {
@@ -30,6 +27,8 @@ describe("useURL", () => {
 
   describe("pathname", () => {
     it("returns route's pathname", () => {
+      const router = createRouter(inMemory, routes);
+      const Router = createRouterComponent(router);
       function App() {
         const result = useURL({ name: "Home" });
         expect(result).toBe("/");
@@ -44,6 +43,8 @@ describe("useURL", () => {
     });
 
     it("returns route's pathname using params", () => {
+      const router = createRouter(inMemory, routes);
+      const Router = createRouterComponent(router);
       function App() {
         const result = useURL({ name: "User", params: { id: "1" } });
         expect(result).toBe("/u/1");
@@ -57,10 +58,16 @@ describe("useURL", () => {
       );
     });
 
-    it("is relative if route name is not provided", () => {
+    it("inherits current location's pathname if route name is not provided", () => {
+      const router = createRouter(inMemory, routes, {
+        history: {
+          locations: [{ url: "/example" }]
+        }
+      });
+      const Router = createRouterComponent(router);
       function App() {
         const result = useURL({});
-        expect(result).toBe("");
+        expect(result).toBe("/example");
         return null;
       }
       ReactDOM.render(
@@ -74,6 +81,8 @@ describe("useURL", () => {
 
   describe("query", () => {
     it("returns provided query", () => {
+      const router = createRouter(inMemory, routes);
+      const Router = createRouterComponent(router);
       function App() {
         const result = useURL({ name: "Home", query: "hi=yo" });
         expect(result).toBe("/?hi=yo");
@@ -114,6 +123,8 @@ describe("useURL", () => {
 
   describe("hash", () => {
     it("returns provided hash", () => {
+      const router = createRouter(inMemory, routes);
+      const Router = createRouterComponent(router);
       function App() {
         const result = useURL({ name: "Home", hash: "test" });
         expect(result).toBe("/#test");

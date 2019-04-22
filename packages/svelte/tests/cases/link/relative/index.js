@@ -14,7 +14,7 @@ const routes = prepareRoutes({
 
 const router = createRouter(inMemory, routes, {
   history: {
-    locations: ["/u/2"]
+    locations: [{ url: "/u/2" }]
   }
 });
 const store = curiStore(router);
@@ -23,5 +23,5 @@ export default function render() {
   const target = document.createElement("div");
   new app({ target, store });
   const a = target.querySelector("a");
-  expect(a.getAttribute("href")).toBe("#is-a-band");
+  expect(a.getAttribute("href")).toBe("/u/2#is-a-band");
 }

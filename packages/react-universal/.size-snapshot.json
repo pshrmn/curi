@@ -1,6 +1,6 @@
 {
   "dist/curi-react-universal.es.js": {
-    "bundled": 4799,
+    "bundled": 4695,
     "minified": 2321,
     "gzipped": 777,
     "treeshaked": {
@@ -14,17 +14,17 @@
     }
   },
   "dist/curi-react-universal.js": {
-    "bundled": 5260,
+    "bundled": 5156,
     "minified": 2717,
     "gzipped": 888
   },
   "dist/curi-react-universal.umd.js": {
-    "bundled": 5833,
+    "bundled": 5705,
     "minified": 2182,
     "gzipped": 885
   },
   "dist/curi-react-universal.min.js": {
-    "bundled": 5833,
+    "bundled": 5705,
     "minified": 2182,
     "gzipped": 885
   }

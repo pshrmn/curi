@@ -178,7 +178,9 @@ export default function createRouter<O = HistoryOptions>(
   function url(details: RouteLocation): string {
     let { name, params, hash, query } = details;
     const pathname =
-      name != null ? routes.interactions.pathname(name, params) : undefined;
+      name != null
+        ? routes.interactions.pathname(name, params)
+        : history.location.pathname;
     return history.href({ pathname, hash, query });
   }
 

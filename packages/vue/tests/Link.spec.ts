@@ -65,7 +65,7 @@ describe("<curi-link>", () => {
       expect(a.getAttribute("href")).toBe("/place/Jamaica?two=2#island-life");
     });
 
-    it("if name is not provided, pathname is empty string", () => {
+    it("if name is not provided, pathname is inherited from current location", () => {
       const Vue = createLocalVue();
       const router = createRouter(inMemory, routes, {
         history: {
@@ -83,7 +83,7 @@ describe("<curi-link>", () => {
         `
       });
       const a = document.querySelector("a");
-      expect(a.getAttribute("href")).toBe("");
+      expect(a.getAttribute("href")).toBe("/place/somewhere");
     });
 
     it("sets the slots as the link's children", () => {
