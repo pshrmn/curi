@@ -17,6 +17,10 @@ const routerMeta = {
   title: "The Router",
   hash: "router-object"
 };
+const urlsMeta = {
+  title: "URLs",
+  hash: "urls"
+};
 const navigationMeta = {
   title: "Navigation",
   hash: "navigation"
@@ -68,6 +72,64 @@ const router = createRouter(browser, routes);`}
         </CodeBlock>
       </HashSection>
 
+      <HashSection meta={urlsMeta}>
+        <p>
+          Locations are represented using URLs. URLs are a combination of a{" "}
+          <IJS>pathname</IJS> string, a <IJS>query</IJS>, and a <IJS>hash</IJS>.
+        </p>
+
+        <p>
+          The router provides a <IJS>url</IJS> method for automatically
+          generating a URL. The method takes the name of the route and the
+          route's params to generate the URL's <IJS>pathname</IJS>.
+          Additionally, <IJS>query</IJS> and <IJS>hash</IJS> values can be
+          provided.
+        </p>
+
+        <CodeBlock>
+          {`const routes = prepareRoutes({
+  { name: "Home", path: "" },
+  { name: "Contact, path: "contact/:method" }
+});
+const router = createRouter(browser, routes);
+
+const homeURL = router.url({ name: "Home" });
+// "/"
+
+const phoneURL = router.url({
+  name: "Contact",
+  params: { method: "phone" }
+});
+// "/contact/phone"
+
+const queryURL = router.url({
+  name: "Home",
+  query: "value=7"
+});
+// "/?value=7"`}
+        </CodeBlock>
+
+        <p>
+          By default, a <IJS>query</IJS> is a string, but you can also configure
+          your history to use a query library.
+        </p>
+
+        <CodeBlock>
+          {`import { parse, stringify } from "qs";
+const router = createRouter(browser, routes, {
+  history: {
+    query: { parse, stringify }
+  }
+});
+
+const queryURL = router.url({
+  name: "Home",
+  query: { value: "6" }
+});
+// "/?value=6"`}
+        </CodeBlock>
+      </HashSection>
+
       <HashSection meta={navigationMeta}>
         <p>
           There are two types of navigation within a single-page application:
@@ -78,9 +140,9 @@ const router = createRouter(browser, routes);`}
 
         <p>
           A Curi router object has a <IJS>navigate</IJS> method to let you
-          navigate with code. Instead of being given a URL, the function takes
-          the <IJS>name</IJS> of the route you want to navigate to and any route{" "}
-          <IJS>params</IJS>. There are also a number of{" "}
+          navigate with code. The function takes an object with a <IJS>url</IJS>{" "}
+          property of the URL to navigate to; this pairs well with the router's{" "}
+          <IJS>url</IJS> method. There are also a number of{" "}
           <Link
             name="Package"
             params={{ package: "router", version: "v2" }}
@@ -93,11 +155,8 @@ const router = createRouter(browser, routes);`}
 
         <CodeBlock>
           {`router.navigate({
-  name: "Photo",
-  params: { albumID: 1357, photoID: 02468 },
-  hash: "comments"
-});
-// navigates to /photos/1357/02468#comments`}
+  url: "/photo/1357/02468#comments"
+});`}
         </CodeBlock>
 
         <Note>

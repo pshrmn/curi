@@ -17,6 +17,7 @@ const argumentsMeta = {
   children: [historyArgMeta, routesArgMeta, optionsArgMeta]
 };
 
+const urlMeta = { title: "url", hash: "url" };
 const navigateMeta = { title: "navigate", hash: "navigate" };
 const onceMeta = { title: "once", hash: "once" };
 const observeMeta = { title: "observe", hash: "observe" };
@@ -29,6 +30,7 @@ const propertiesMeta = {
   title: "Router",
   hash: "router",
   children: [
+    urlMeta,
     navigateMeta,
     onceMeta,
     observeMeta,
@@ -235,12 +237,60 @@ const router = createRouter(browser, routes, {
           your application.
         </p>
 
+        <HashSection tag="h5" meta={urlMeta}>
+          <p>
+            The <IJS>url</IJS> method is used to generate a URL string.
+          </p>
+
+          <CodeBlock>
+            {`router.url({
+  name: "User",
+  params: { id: 1 },
+  hash: "other"
+});`}
+          </CodeBlock>
+
+          <HashSection tag="h6" meta={{ title: "Arguments", hash: "url-args" }}>
+            <p>
+              <IJS>url</IJS> takes a single argument, an object with details
+              about the location to navigate to and how to navigate.
+            </p>
+
+            <HashSection tag="h6" meta={{ title: "name", hash: "url-name" }}>
+              <p>The name of a route.</p>
+            </HashSection>
+
+            <HashSection
+              tag="h6"
+              meta={{ title: "params", hash: "url-params" }}
+            >
+              <p>
+                An object of any route params for the named route (and any of
+                its ancestors that require params).
+              </p>
+            </HashSection>
+
+            <HashSection tag="h6" meta={{ title: "hash", hash: "url-hash" }}>
+              <p>The hash string of a location.</p>
+            </HashSection>
+
+            <HashSection tag="h6" meta={{ title: "query", hash: "url-query" }}>
+              <p>The query value of a location.</p>
+            </HashSection>
+          </HashSection>
+        </HashSection>
+
         <HashSection tag="h5" meta={navigateMeta}>
           <p>
             The <IJS>navigate</IJS> method is used to navigate programmatically.
-            It takes a <IJS>details</IJS> object with the details of where you
-            want to navigate to as well as the <IJS>method</IJS> of navigation.
+            It takes an object with the details of where and how to navigate.
           </p>
+
+          <CodeBlock>
+            {`router.navigate({ url: "/photos/123/456" });
+// navigates to "/photos/123/456"
+// using default "anchor" method`}
+          </CodeBlock>
 
           <HashSection
             tag="h6"
@@ -251,35 +301,8 @@ const router = createRouter(browser, routes, {
               details about the location to navigate to and how to navigate.
             </p>
 
-            <HashSection
-              tag="h6"
-              meta={{ title: "name", hash: "navigate-name" }}
-            >
-              <p>The name of the route to navigate to.</p>
-            </HashSection>
-
-            <HashSection
-              tag="h6"
-              meta={{ title: "params", hash: "navigate-params" }}
-            >
-              <p>
-                An object of any route params for the named route (and any of
-                its ancestors that require params).
-              </p>
-            </HashSection>
-
-            <HashSection
-              tag="h6"
-              meta={{ title: "hash", hash: "navigate-hash" }}
-            >
-              <p>The hash string of the location to navigate to.</p>
-            </HashSection>
-
-            <HashSection
-              tag="h6"
-              meta={{ title: "query", hash: "navigate-query" }}
-            >
-              <p>The query value of the location to navigate to</p>
+            <HashSection tag="h6" meta={{ title: "url", hash: "navigate-url" }}>
+              <p>The URL string of the location to navigate to.</p>
             </HashSection>
 
             <HashSection
@@ -327,29 +350,6 @@ const router = createRouter(browser, routes, {
               </p>
             </HashSection>
           </HashSection>
-
-          <CodeBlock>
-            {`const routes = prepareRoutes({
-  routes: [
-    {
-      name: "Album",
-      path: "photos/:albumID",
-      children: [
-        { name: "Photo", path: ":photoID" }
-      ]
-    },
-    // ...
-  ]
-});
-const router = createRouter(browser, routes);
-
-router.navigate({
-  name: "Photo",
-  params: { albumID: 123, photoID: 456 }
-});
-// navigates to "/photos/123/456"
-// using default "anchor" method`}
-          </CodeBlock>
         </HashSection>
 
         <HashSection tag="h5" meta={onceMeta}>

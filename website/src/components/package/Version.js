@@ -21,10 +21,11 @@ export default function Version({ versions, major, params }) {
         <StyledSelect
           value={major}
           onChange={e => {
-            router.navigate({
+            const url = router.url({
               name: "Package",
               params: { ...params, version: e.target.value }
             });
+            router.navigate({ url });
           }}
         >
           {Object.keys(versions).map(m => {

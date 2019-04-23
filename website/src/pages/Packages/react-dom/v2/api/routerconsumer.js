@@ -35,7 +35,8 @@ class MyComponent {
           return (
             <button onClick={e => {
               login();
-              router.navigate({ name: "Home" });
+              const url = router.url({ name: "Home" });
+              router.navigate({ url });
             }}>
               Submit
             </button>
