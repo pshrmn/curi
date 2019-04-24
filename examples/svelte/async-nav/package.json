@@ -13,7 +13,7 @@
     "@curi/route-prefetch": "2.0.0-beta.10",
     "@curi/router": "2.0.0-beta.13",
     "@curi/svelte": "2.0.0-alpha.1",
-    "@hickory/browser": "^2.0.0-beta.12",
+    "@hickory/browser": "^2.0.0-beta.13",
     "svelte-spinner": "^1.0.0"
   },
   "devDependencies": {

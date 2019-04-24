@@ -3,31 +3,30 @@ import React from "react";
 import {
   HashSection,
   CodeBlock,
-  Note,
   IJS
 } from "../../../../../components/package/common";
 
 const optsMeta = {
   title: "Options",
-  hash: "useHref-opts"
+  hash: "useURL-opts"
 };
 export const meta = {
-  title: "useHref",
-  hash: "useHref",
+  title: "useURL",
+  hash: "useURL",
   children: [optsMeta]
 };
 
-export function UseHrefAPI() {
+export function UseURLAPI() {
   return (
     <HashSection meta={meta}>
       <p>
-        The <IJS>useHref</IJS> hook creates a URL string.
+        The <IJS>useURL</IJS> hook creates a URL string.
       </p>
 
       <CodeBlock lang="jsx">
-        {`import { useHref } from '@curi/react-dom';
+        {`import { useURL } from '@curi/react-dom';
 
-const href = useHref({
+const href = useURL({
   name: "Video",
   params: { id: "jaifeo9" } },
   hash: "comments",
@@ -37,7 +36,7 @@ const href = useHref({
       </CodeBlock>
 
       <HashSection tag="h3" meta={optsMeta}>
-        <HashSection tag="h4" meta={{ title: "name", hash: "useHref-name" }}>
+        <HashSection tag="h4" meta={{ title: "name", hash: "useURL-name" }}>
           <p>
             The name of the route to generate the location's pathname from. If
             this is not provided, the generated location's pathname will be an
@@ -45,18 +44,15 @@ const href = useHref({
           </p>
         </HashSection>
 
-        <HashSection
-          tag="h4"
-          meta={{ title: "params", hash: "useHref-params" }}
-        >
+        <HashSection tag="h4" meta={{ title: "params", hash: "useURL-params" }}>
           <p>An object of params for the named route.</p>
         </HashSection>
 
-        <HashSection tag="h4" meta={{ title: "hash", hash: "useHref-hash" }}>
+        <HashSection tag="h4" meta={{ title: "hash", hash: "useURL-hash" }}>
           <p>A hash string for the location.</p>
         </HashSection>
 
-        <HashSection tag="h4" meta={{ title: "query", hash: "useHref-query" }}>
+        <HashSection tag="h4" meta={{ title: "query", hash: "useURL-query" }}>
           <p>The location's query value.</p>
 
           <p>

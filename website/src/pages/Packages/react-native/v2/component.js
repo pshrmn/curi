@@ -9,8 +9,7 @@ import { UseResponseAPI } from "./api/useResponse";
 import { UseRouterAPI } from "./api/useRouter";
 import { UseActiveAPI } from "./api/useActive";
 import { UseNavigatingAPI } from "./api/useNavigating";
-import { UseLocationAPI } from "./api/useLocation";
-import { UseHrefAPI } from "./api/useHref";
+import { UseURLAPI } from "./api/useURL";
 import { ResponseConsumerAPI } from "./api/responseconsumer";
 import { RouterConsumerAPI } from "./api/routerconsumer";
 
@@ -39,8 +38,7 @@ function ReactNativePkg() {
         <UseRouterAPI />
         <UseActiveAPI />
         <UseNavigatingAPI />
-        <UseLocationAPI />
-        <UseHrefAPI />
+        <UseURLAPI />
         <ResponseConsumerAPI />
         <RouterConsumerAPI />
       </APIBlock>

@@ -6,8 +6,7 @@ import { meta as useRouterMeta } from "./api/useRouter";
 import { meta as useActiveMeta } from "./api/useActive";
 import { meta as useNavigationFocusMeta } from "./api/useNavigationFocus";
 import { meta as useNavigatingMeta } from "./api/useNavigating";
-import { meta as useLocationMeta } from "./api/useLocation";
-import { meta as useHrefMeta } from "./api/useHref";
+import { meta as useURLMeta } from "./api/useURL";
 import { meta as ResponseConsumerMeta } from "./api/responseconsumer";
 import { meta as RouterConsumerMeta } from "./api/routerconsumer";
 
@@ -32,8 +31,7 @@ export default [
       useActiveMeta,
       useNavigationFocusMeta,
       useNavigatingMeta,
-      useLocationMeta,
-      useHrefMeta,
+      useURLMeta,
       ResponseConsumerMeta,
       RouterConsumerMeta
     ]

@@ -10,8 +10,7 @@ import { UseRouterAPI } from "./api/useRouter";
 import { UseActiveAPI } from "./api/useActive";
 import { UseNavigationFocusAPI } from "./api/useNavigationFocus";
 import { UseNavigatingAPI } from "./api/useNavigating";
-import { UseLocationAPI } from "./api/useLocation";
-import { UseHrefAPI } from "./api/useHref";
+import { UseURLAPI } from "./api/useURL";
 import { ResponseConsumerAPI } from "./api/responseconsumer";
 import { RouterConsumerAPI } from "./api/routerconsumer";
 
@@ -41,8 +40,7 @@ function ReactDOMPkg() {
         <UseActiveAPI />
         <UseNavigationFocusAPI />
         <UseNavigatingAPI />
-        <UseLocationAPI />
-        <UseHrefAPI />
+        <UseURLAPI />
         <ResponseConsumerAPI />
         <RouterConsumerAPI />
       </APIBlock>

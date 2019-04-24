@@ -181,7 +181,7 @@ export default function createRouter<O = HistoryOptions>(
       name != null
         ? routes.interactions.pathname(name, params)
         : history.location.pathname;
-    return history.href({ pathname, hash, query });
+    return history.url({ pathname, hash, query });
   }
 
   /* router.navigate */
