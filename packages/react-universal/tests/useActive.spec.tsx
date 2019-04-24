@@ -54,7 +54,7 @@ describe("useActive", () => {
     it('uses the "params" to determine if it is active', () => {
       const router = createRouter(inMemory, routes, {
         history: {
-          locations: ["/contact/email"]
+          locations: [{ url: "/contact/email" }]
         }
       });
       const Router = createRouterComponent(router);
@@ -79,7 +79,7 @@ describe("useActive", () => {
     it("returns true for partial matches when partial=true", () => {
       const router = createRouter(inMemory, routes, {
         history: {
-          locations: ["/contact/email"]
+          locations: [{ url: "/contact/email" }]
         }
       });
       const Router = createRouterComponent(router);
@@ -101,7 +101,7 @@ describe("useActive", () => {
     it("is called with location if route is active", () => {
       const router = createRouter(inMemory, routes, {
         history: {
-          locations: ["/contact"]
+          locations: [{ url: "/contact" }]
         }
       });
       const components = jest.fn();
@@ -146,7 +146,7 @@ describe("useActive", () => {
     it("returns true if route matches and response check returns true", () => {
       const router = createRouter(inMemory, routes, {
         history: {
-          locations: ["/contact/email"]
+          locations: [{ url: "/contact/email" }]
         }
       });
       const Router = createRouterComponent(router);
@@ -170,7 +170,7 @@ describe("useActive", () => {
     it("returns false if route matches, but location check returns false", () => {
       const router = createRouter(inMemory, routes, {
         history: {
-          locations: ["/contact/email"]
+          locations: [{ url: "/contact/email" }]
         }
       });
       const Router = createRouterComponent(router);

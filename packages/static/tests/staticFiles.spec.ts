@@ -336,11 +336,11 @@ describe("staticFiles()", () => {
         },
         output: {
           render: (emitted: Emitted) => {
-            const href = emitted.router.history.href({
+            const url = emitted.router.history.url({
               pathname: "/",
               query: { x: "y" }
             });
-            expect(href).toBe("/?x=y");
+            expect(url).toBe("/?x=y");
             done();
             return emitted.response.body;
           },

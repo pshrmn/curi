@@ -83,7 +83,7 @@ describe("active route interaction", () => {
           });
           const router = createRouter<InMemoryOptions>(inMemory, routes, {
             history: {
-              locations: ["/player/7"]
+              locations: [{ url: "/player/7" }]
             }
           });
 
@@ -106,7 +106,7 @@ describe("active route interaction", () => {
           });
           const router = createRouter<InMemoryOptions>(inMemory, routes, {
             history: {
-              locations: ["/player/7"]
+              locations: [{ url: "/player/7" }]
             }
           });
 
@@ -129,7 +129,7 @@ describe("active route interaction", () => {
           });
           const router = createRouter<InMemoryOptions>(inMemory, routes, {
             history: {
-              locations: ["/player/7"]
+              locations: [{ url: "/player/7" }]
             }
           });
 
@@ -158,7 +158,7 @@ describe("active route interaction", () => {
           });
           const router = createRouter<InMemoryOptions>(inMemory, routes, {
             history: {
-              locations: ["/player/6/coach"]
+              locations: [{ url: "/player/6/coach" }]
             }
           });
 
@@ -187,7 +187,7 @@ describe("active route interaction", () => {
           });
           const router = createRouter<InMemoryOptions>(inMemory, routes, {
             history: {
-              locations: ["/player/6/coach"]
+              locations: [{ url: "/player/6/coach" }]
             }
           });
 
@@ -217,7 +217,7 @@ describe("active route interaction", () => {
           });
           const router = createRouter<InMemoryOptions>(inMemory, routes, {
             history: {
-              locations: ["/player/6/coach"]
+              locations: [{ url: "/player/6/coach" }]
             }
           });
 
@@ -243,7 +243,7 @@ describe("active route interaction", () => {
           });
           const router = createRouter<InMemoryOptions>(inMemory, routes, {
             history: {
-              locations: ["/#test"]
+              locations: [{ url: "/#test" }]
             }
           });
 
@@ -266,7 +266,7 @@ describe("active route interaction", () => {
           });
           const router = createRouter<InMemoryOptions>(inMemory, routes, {
             history: {
-              locations: ["/#test"]
+              locations: [{ url: "/#test" }]
             }
           });
 
@@ -289,7 +289,7 @@ describe("active route interaction", () => {
           });
           const router = createRouter<InMemoryOptions>(inMemory, routes, {
             history: {
-              locations: ["/not-a#test"]
+              locations: [{ url: "/not-a#test" }]
             }
           });
           const components = jest.fn(() => true);

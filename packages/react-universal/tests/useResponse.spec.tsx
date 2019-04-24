@@ -68,7 +68,8 @@ describe("useResponse", () => {
     expect(fromContext.navigation).toBe(first.navigation);
 
     act(() => {
-      router.navigate({ name: "About" });
+      const url = router.url({ name: "About" });
+      router.navigate({ url });
     });
 
     const second = router.current();

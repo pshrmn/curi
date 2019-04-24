@@ -16,9 +16,10 @@ export const color = {
   lightBlue: "#deeffe",
   borderBlue: "#2196f3",
 
-  green: "#81c784",
+  green: "#b7dab9",
   lightGreen: "#e8f5e9",
-  borderGreen: "#4caf50"
+  borderGreen: "#4caf50",
+  buttonGreen: "#81c784"
 };
 
 export const screen = {

@@ -1,19 +1,20 @@
 import React from "react";
 import { GestureResponderEvent } from "react-native";
 import { RouteLocation } from "@curi/types";
-import { NavigatingChildren } from "@curi/react-universal";
-import { NavType } from "@hickory/root";
-export interface BaseLinkProps extends RouteLocation {
-    onNav?: (e: GestureResponderEvent) => void;
+import { NavigatingChildren, NavigationHookProps } from "@curi/react-universal";
+interface BaseLinkProps extends RouteLocation {
     anchor?: React.ReactType;
-    forward?: object;
-    method?: NavType;
 }
-export interface LinkProps extends BaseLinkProps {
+export declare type LinkProps = BaseLinkProps & NavigationHookProps<GestureResponderEvent> & {
     children: React.ReactNode;
-}
-export interface AsyncLinkProps extends BaseLinkProps {
+};
+export declare type AsyncLinkProps = BaseLinkProps & NavigationHookProps<GestureResponderEvent> & {
     children: NavigatingChildren;
-}
-export declare const Link: React.ForwardRefExoticComponent<LinkProps & React.RefAttributes<any>>;
-export declare const AsyncLink: React.ForwardRefExoticComponent<AsyncLinkProps & React.RefAttributes<any>>;
+};
+export declare const Link: React.ForwardRefExoticComponent<BaseLinkProps & NavigationHookProps<GestureResponderEvent> & {
+    children: React.ReactNode;
+} & React.RefAttributes<any>>;
+export declare const AsyncLink: React.ForwardRefExoticComponent<BaseLinkProps & NavigationHookProps<GestureResponderEvent> & {
+    children: NavigatingChildren;
+} & React.RefAttributes<any>>;
+export {};

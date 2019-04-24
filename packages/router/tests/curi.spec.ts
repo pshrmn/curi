@@ -320,7 +320,7 @@ describe("curi", () => {
         });
         const router = createRouter(inMemory, routes, {
           history: {
-            locations: ["/parent/child"]
+            locations: [{ url: "/parent/child" }]
           }
         });
         const after = jest.fn();
@@ -328,7 +328,8 @@ describe("curi", () => {
         router.observe(r => {
           if (!navigated) {
             navigated = true;
-            router.navigate({ name: "Parent" });
+            const url = router.url({ name: "Parent" });
+            router.navigate({ url });
             after();
             return;
           }
@@ -421,7 +422,7 @@ describe("curi", () => {
       });
       const router = createRouter(inMemory, routes, {
         history: {
-          locations: ["/grandparent"]
+          locations: [{ url: "/grandparent" }]
         }
       });
       const expected = {
@@ -513,7 +514,8 @@ describe("curi", () => {
         if (calls === 2) {
           done();
         } else {
-          router.navigate({ name: "About" });
+          const url = router.url({ name: "About" });
+          router.navigate({ url });
         }
       });
     });
@@ -541,7 +543,9 @@ describe("curi", () => {
       expect(sub1.mock.calls.length).toBe(0);
       expect(sub2.mock.calls.length).toBe(0);
       unsub1();
-      router.navigate({ name: "Next" });
+
+      const url = router.url({ name: "Next" });
+      router.navigate({ url });
 
       expect(sub1.mock.calls.length).toBe(0);
       expect(sub2.mock.calls.length).toBe(1);
@@ -596,7 +600,8 @@ describe("curi", () => {
         const router = createRouter(inMemory, routes);
         // register before navigation, but don't call with existing response
         router.observe(check, { initial: false });
-        router.navigate({ name: "How", params: { method: "mail" } });
+        const url = router.url({ name: "How", params: { method: "mail" } });
+        router.navigate({ url });
       });
 
       it("is re-called for new responses", done => {
@@ -618,7 +623,8 @@ describe("curi", () => {
             called = true;
             // trigger another navigation to verify that the observer
             // is called again
-            router.navigate({ name: "Contact" });
+            const url = router.url({ name: "Contact" });
+            router.navigate({ url });
           }
         });
         const router = createRouter(inMemory, routes);
@@ -682,7 +688,7 @@ describe("curi", () => {
           };
           const router = createRouter(inMemory, routes, {
             history: {
-              locations: ["/contact/phone"]
+              locations: [{ url: "/contact/phone" }]
             }
           });
           router.observe(check);
@@ -714,18 +720,20 @@ describe("curi", () => {
           };
           const router = createRouter(inMemory, routes, {
             history: {
-              locations: ["/contact/fax"]
+              locations: [{ url: "/contact/fax" }]
             }
           });
           router.observe(check);
-          router.navigate({
+          const phoneURL = router.url({
             name: "How",
             params: { method: "phone" }
           });
-          router.navigate({
+          const mailURL = router.url({
             name: "How",
             params: { method: "mail" }
           });
+          router.navigate({ url: phoneURL });
+          router.navigate({ url: mailURL });
         });
       });
     });
@@ -819,7 +827,8 @@ describe("curi", () => {
           router.once(() => {
             router.observe(everyTime, { initial: false });
             expect(everyTime.mock.calls.length).toBe(0);
-            router.navigate({ name: "About" });
+            const url = router.url({ name: "About" });
+            router.navigate({ url });
           });
         });
       });
@@ -879,7 +888,8 @@ describe("curi", () => {
         expect(firstOnce.mock.calls[0][0].response).toMatchObject({
           name: "Home"
         });
-        router.navigate({ name: "Contact" });
+        const url = router.url({ name: "Contact" });
+        router.navigate({ url });
         // register a second one time response handler
         // to verify that another response is emitted,
         // but first one timer isn't re-called
@@ -948,7 +958,7 @@ describe("curi", () => {
           };
           const router = createRouter(inMemory, routes, {
             history: {
-              locations: ["/contact/phone"]
+              locations: [{ url: "/contact/phone" }]
             }
           });
           router.once(check);
@@ -980,18 +990,20 @@ describe("curi", () => {
           };
           const router = createRouter(inMemory, routes, {
             history: {
-              locations: ["/contact/fax"]
+              locations: [{ url: "/contact/fax" }]
             }
           });
           router.once(check);
-          router.navigate({
+          const phoneURL = router.url({
             name: "How",
             params: { method: "phone" }
           });
-          router.navigate({
+          const mailURL = router.url({
             name: "How",
             params: { method: "mail" }
           });
+          router.navigate({ url: phoneURL });
+          router.navigate({ url: mailURL });
         });
       });
     });
@@ -1085,9 +1097,59 @@ describe("curi", () => {
           router.once(() => {
             router.once(oneTime, { initial: false });
             expect(oneTime.mock.calls.length).toBe(0);
-            router.navigate({ name: "About" });
+            const url = router.url({ name: "About" });
+            router.navigate({ url });
           });
         });
+      });
+    });
+  });
+
+  describe("url()", () => {
+    const routes = prepareRoutes({
+      routes: [
+        { name: "Home", path: "" },
+        {
+          name: "Contact",
+          path: "contact",
+          children: [{ name: "Method", path: ":method" }]
+        },
+        { name: "Catch All", path: "(.*)" }
+      ]
+    });
+    const router = createRouter(inMemory, routes);
+
+    describe("navigation location", () => {
+      it("generates the expected pathname", () => {
+        const url = router.url({ name: "Contact" });
+        router.navigate({ url });
+        expect(url).toEqual("/contact");
+      });
+
+      it("uses params to create pathname", () => {
+        const url = router.url({ name: "Method", params: { method: "fax" } });
+        router.navigate({ url });
+        expect(url).toEqual("/contact/fax");
+      });
+
+      it("inherits pathname from current response's location if no name is provided", () => {
+        const router = createRouter(inMemory, routes, {
+          history: {
+            locations: [{ url: "/test" }]
+          }
+        });
+        const url = router.url({ hash: "test" });
+        expect(url).toEqual("/test#test");
+      });
+
+      it("includes the provided hash", () => {
+        const url = router.url({ name: "Home", hash: "trending" });
+        expect(url).toEqual("/#trending");
+      });
+
+      it("includes the provided query", () => {
+        const url = router.url({ name: "Home", query: "key=value" });
+        expect(url).toEqual("/?key=value");
       });
     });
   });
@@ -1116,82 +1178,44 @@ describe("curi", () => {
       it("lets the history object decide if no method is provided", () => {
         const router = createRouter(inMemory, routes);
         expect(() => {
-          router.navigate({ name: "Contact" });
+          const url = router.url({ name: "Contact" });
+          router.navigate({ url });
         }).not.toThrow();
       });
 
       it("anchor", () => {
-        router.navigate({ name: "Contact", method: "anchor" });
+        const url = router.url({ name: "Contact" });
+        router.navigate({ url, method: "anchor" });
         expect(mockNavigate.mock.calls[0][1]).toBe("anchor");
       });
 
       it("push", () => {
-        router.navigate({ name: "Contact", method: "push" });
+        const url = router.url({ name: "Contact" });
+        router.navigate({ url, method: "push" });
         expect(mockNavigate.mock.calls[0][1]).toBe("push");
       });
 
       it("replace", () => {
-        router.navigate({ name: "Contact", method: "replace" });
+        const url = router.url({ name: "Contact" });
+        router.navigate({ url, method: "replace" });
         expect(mockNavigate.mock.calls[0][1]).toBe("replace");
       });
 
       it("throws if given a bad navigation type", () => {
         const router = createRouter(inMemory, routes);
         expect(() => {
-          router.navigate({ name: "Contact", method: "BAAAAAAD" as NavType });
+          const url = router.url({ name: "Contact" });
+          router.navigate({ url, method: "BAAAAAAD" as NavType });
         }).toThrow();
       });
     });
 
-    describe("navigation location", () => {
-      it("generates the expected pathname", () => {
-        router.navigate({ name: "Contact" });
-        expect(mockNavigate.mock.calls[0][0]).toMatchObject({
-          pathname: "/contact"
-        });
-      });
-
-      it("uses params to create pathname", () => {
-        router.navigate({ name: "Method", params: { method: "fax" } });
-        expect(mockNavigate.mock.calls[0][0]).toMatchObject({
-          pathname: "/contact/fax"
-        });
-      });
-
-      it("re-uses current pathname if no name is provided", () => {
-        const router = createRouter(inMemory, routes, {
-          history: {
-            locations: ["/reuse"]
-          }
-        });
-        const mockNavigate = jest.fn();
-        router.history.navigate = mockNavigate;
-        router.navigate({});
-        expect(mockNavigate.mock.calls[0][0]).toMatchObject({
-          pathname: "/reuse"
-        });
-      });
-
-      it("includes the provided hash", () => {
-        router.navigate({ name: "Home", hash: "trending" });
-        expect(mockNavigate.mock.calls[0][0]).toMatchObject({
-          hash: "trending"
-        });
-      });
-
-      it("includes the provided query", () => {
-        router.navigate({ name: "Home", query: "key=value" });
-        expect(mockNavigate.mock.calls[0][0]).toMatchObject({
-          query: "key=value"
-        });
-      });
-
-      it("includes the provided state", () => {
-        const state = { test: true };
-        router.navigate({ name: "Home", state });
-        expect(mockNavigate.mock.calls[0][0]).toMatchObject({
-          state
-        });
+    it("includes the provided state", () => {
+      const state = { test: true };
+      const url = router.url({ name: "Home" });
+      router.navigate({ url, state });
+      expect(mockNavigate.mock.calls[0][0]).toMatchObject({
+        state
       });
     });
 
@@ -1224,12 +1248,15 @@ describe("curi", () => {
         });
         const router = createRouter(inMemory, routes);
         const cancelled = jest.fn();
-        router.navigate({
-          name: "Slow",
-          cancelled
-        });
+
+        const slowURL = router.url({ name: "Slow" });
+        router.navigate({ url: slowURL, cancelled });
+
         expect(cancelled.mock.calls.length).toBe(0);
-        router.navigate({ name: "Fast" });
+
+        const fastURL = router.url({ name: "Fast" });
+        router.navigate({ url: fastURL });
+
         expect(cancelled.mock.calls.length).toBe(1);
       });
 
@@ -1249,9 +1276,12 @@ describe("curi", () => {
         });
         const router = createRouter(inMemory, routes);
         const cancelled = jest.fn();
-        router.navigate({
+        const oneURL = router.url({
           name: "Loader",
-          params: { id: 1 },
+          params: { id: 1 }
+        });
+        router.navigate({
+          url: oneURL,
           cancelled
         });
         router.once(
@@ -1260,10 +1290,12 @@ describe("curi", () => {
             expect(response.name).toBe("Loader");
 
             expect(cancelled.mock.calls.length).toBe(0);
-            router.navigate({
+
+            const twoURL = router.url({
               name: "Loader",
               params: { id: 2 }
             });
+            router.navigate({ url: twoURL });
             expect(cancelled.mock.calls.length).toBe(0);
             done();
           },
@@ -1301,11 +1333,15 @@ describe("curi", () => {
         });
         const router = createRouter(inMemory, routes);
         const finished = jest.fn();
-        router.navigate({
-          name: "Slow",
-          finished
+
+        const slowURL = router.url({
+          name: "Slow"
         });
-        router.navigate({ name: "Fast" });
+        router.navigate({ url: slowURL, finished });
+
+        const fastURL = router.url({ name: "Fast" });
+        router.navigate({ url: fastURL });
+
         expect(finished.mock.calls.length).toBe(0);
       });
 
@@ -1325,9 +1361,12 @@ describe("curi", () => {
         });
         const router = createRouter(inMemory, routes);
         const finished = jest.fn();
-        router.navigate({
+        const url = router.url({
           name: "Loader",
-          params: { id: 1 },
+          params: { id: 1 }
+        });
+        router.navigate({
+          url,
           finished
         });
         router.once(
@@ -1360,9 +1399,12 @@ describe("curi", () => {
         });
         const router = createRouter(inMemory, routes);
         const finished = jest.fn();
-        const cancelCallbacks = router.navigate({
+        const loaderURL = router.url({
           name: "Loader",
-          params: { id: 1 },
+          params: { id: 1 }
+        });
+        const cancelCallbacks = router.navigate({
+          url: loaderURL,
           finished
         });
         cancelCallbacks();
@@ -1407,12 +1449,14 @@ describe("curi", () => {
         });
         const router = createRouter(inMemory, routes);
         const cancelled = jest.fn();
+        const slowURL = router.url({ name: "Slow" });
         const cancelCallbacks = router.navigate({
-          name: "Slow",
+          url: slowURL,
           cancelled
         });
         cancelCallbacks();
-        router.navigate({ name: "Fast" });
+        const fastURL = router.url({ name: "Fast" });
+        router.navigate({ url: fastURL });
         expect(cancelled.mock.calls.length).toBe(0);
       });
     });
@@ -1431,7 +1475,8 @@ describe("curi", () => {
       const cancellable = jest.fn();
       router.cancel(cancellable);
 
-      router.navigate({ name: "About" });
+      const url = router.url({ name: "About" });
+      router.navigate({ url });
 
       const { response } = router.current();
       // just to verify that navigation did occur
@@ -1457,7 +1502,9 @@ describe("curi", () => {
       const cancellable = jest.fn();
       router.cancel(cancellable);
 
-      router.navigate({ name: "About" });
+      const url = router.url({ name: "About" });
+      router.navigate({ url });
+
       // called immediately after navigation
       expect(cancellable.mock.calls.length).toBe(1);
       expect(typeof cancellable.mock.calls[0][0]).toBe("function");
@@ -1497,9 +1544,14 @@ describe("curi", () => {
         const cancellable = jest.fn();
         router.cancel(cancellable);
 
-        router.navigate({ name: "About" });
+        const aboutURL = router.url({ name: "About" });
+        router.navigate({ url: aboutURL });
+
         expect(cancellable.mock.calls.length).toBe(1);
-        router.navigate({ name: "Contact" });
+
+        const contactURL = router.url({ name: "Contact" });
+        router.navigate({ url: contactURL });
+
         expect(cancellable.mock.calls.length).toBe(1);
       });
 
@@ -1529,10 +1581,15 @@ describe("curi", () => {
         const cancellable = jest.fn();
         router.cancel(cancellable);
 
-        router.navigate({ name: "About" });
+        const aboutURL = router.url({ name: "About" });
+        router.navigate({ url: aboutURL });
+
         expect(cancellable.mock.calls.length).toBe(1);
         expect(typeof cancellable.mock.calls[0][0]).toBe("function");
-        router.navigate({ name: "Contact" });
+
+        const contactURL = router.url({ name: "Contact" });
+        router.navigate({ url: contactURL });
+
         expect(cancellable.mock.calls.length).toBe(2);
         expect(cancellable.mock.calls[1][0]).toBeUndefined();
       });
@@ -1557,7 +1614,8 @@ describe("curi", () => {
         const cancellable = jest.fn();
         router.cancel(cancellable);
 
-        router.navigate({ name: "About" });
+        const aboutURL = router.url({ name: "About" });
+        router.navigate({ url: aboutURL });
 
         router.once(
           ({ response }) => {
@@ -1594,7 +1652,9 @@ describe("curi", () => {
         });
         router.cancel(cancellable);
 
-        router.navigate({ name: "About" });
+        const aboutURL = router.url({ name: "About" });
+        router.navigate({ url: aboutURL });
+
         // called immediately after navigation
         expect(cancellable.mock.calls.length).toBe(1);
         cancel();
@@ -1625,7 +1685,9 @@ describe("curi", () => {
         const { response: beforeResponse } = router.current();
         expect(beforeResponse.name).toBe("Home");
 
-        router.navigate({ name: "About" });
+        const aboutURL = router.url({ name: "About" });
+        router.navigate({ url: aboutURL });
+
         // called immediately after navigation
         expect(cancellable.mock.calls.length).toBe(1);
         cancel();
@@ -1659,12 +1721,16 @@ describe("curi", () => {
       const cancellable = jest.fn();
       const stopCancelling = router.cancel(cancellable);
 
-      router.navigate({ name: "About" });
+      const aboutURL = router.url({ name: "About" });
+      router.navigate({ url: aboutURL });
+
       expect(cancellable.mock.calls.length).toBe(1);
 
       stopCancelling();
 
-      router.navigate({ name: "Contact" });
+      const url = router.url({ name: "Contact" });
+      router.navigate({ url });
+
       expect(cancellable.mock.calls.length).toBe(1);
     });
   });

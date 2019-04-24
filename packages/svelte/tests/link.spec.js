@@ -12,7 +12,7 @@ describe("<Link>", () => {
       test("./cases/link/pathname-params");
     });
 
-    it('uses relative href if "name" isn\'t provided', () => {
+    it("inherits current location's pathname if \"name\" isn't provided", () => {
       test("./cases/link/relative");
     });
 

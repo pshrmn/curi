@@ -2,7 +2,6 @@ import Vue from "vue";
 import { canNavigate } from "./utils/canNavigate";
 
 import { CreateElement, ComponentOptions } from "vue";
-import { SessionLocation } from "@hickory/root";
 
 export interface AsyncLinkComponent extends Vue {
   name: string;
@@ -10,8 +9,7 @@ export interface AsyncLinkComponent extends Vue {
   hash?: string;
   query?: any;
   state?: any;
-  location: SessionLocation;
-  href: string;
+  url: string;
   click(e: MouseEvent): void;
   navigating: boolean;
   forward?: object;
@@ -23,19 +21,13 @@ const Link: ComponentOptions<AsyncLinkComponent> = {
   props: ["name", "params", "hash", "query", "state", "click", "forward"],
 
   computed: {
-    location: function() {
-      const pathname = this.name
-        ? this.$router.route.pathname(this.name, this.params)
-        : "";
-      return {
+    url: function() {
+      return this.$router.url({
+        name: this.name,
+        params: this.params,
         hash: this.hash,
-        query: this.query,
-        state: this.state,
-        pathname
-      };
-    },
-    href: function() {
-      return this.$router.history.href(this.location);
+        query: this.query
+      });
     }
   },
 
@@ -50,7 +42,8 @@ const Link: ComponentOptions<AsyncLinkComponent> = {
       if (this.click) {
         this.click(event);
       }
-      if (canNavigate(event)) {
+      // @ts-ignore
+      if (canNavigate(event, this.forward && this.forward.target)) {
         event.preventDefault();
         let cancelled, finished;
         cancelled = finished = () => {
@@ -59,10 +52,7 @@ const Link: ComponentOptions<AsyncLinkComponent> = {
         this.navigating = true;
 
         this.$router.navigate({
-          name: this.name,
-          params: this.params,
-          hash: this.hash,
-          query: this.query,
+          url: this.url,
           state: this.state,
           cancelled,
           finished
@@ -75,7 +65,7 @@ const Link: ComponentOptions<AsyncLinkComponent> = {
     return h(
       "a",
       {
-        attrs: { href: this.href, ...this.forward },
+        attrs: { href: this.url, ...this.forward },
         on: { click: this.clickHandler }
       },
       this.$scopedSlots.default({

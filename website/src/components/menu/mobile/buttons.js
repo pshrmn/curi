@@ -30,7 +30,7 @@ const StyledMiniButton = styled("button")`
   background: ${color.borderGray};
 
   &.active {
-    background: ${color.green};
+    background: ${color.buttonGreen};
   }
 `;
 

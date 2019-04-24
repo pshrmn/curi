@@ -40,7 +40,7 @@
   },
   "dependencies": {
     "@curi/types": "file:../types",
-    "@hickory/root": "^2.0.0-beta.11",
+    "@hickory/root": "^2.0.0-beta.13",
     "@types/react": "^16.7.18"
   }
 }

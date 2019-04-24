@@ -60,9 +60,9 @@ const navigatingMeta = {
   children: [linkMeta, menuMeta, bookLinkMeta]
 };
 
-const navigateMeta = {
-  title: "The Router's Navigate Method",
-  hash: "nav-method"
+const urlAndNavigateMeta = {
+  title: "The Router's URL & Navigate Methods",
+  hash: "url-nav-method"
 };
 const shoppingMeta = {
   title: "A Shopping API",
@@ -71,7 +71,7 @@ const shoppingMeta = {
 const useRouterMeta = {
   title: "Using useRouter",
   hash: "useRouter",
-  children: [navigateMeta]
+  children: [urlAndNavigateMeta]
 };
 const nextMeta = { title: "What's next?", hash: "next" };
 
@@ -1118,12 +1118,22 @@ export default {
           add a book to it.
         </p>
 
-        <HashSection meta={navigateMeta} className="aside" tag="h3">
+        <HashSection meta={urlAndNavigateMeta} className="aside" tag="h3">
           <p>
-            <IJS>router.navigate</IJS> is used to navigate to new locations.
-            There are three methods of navigation: <IJS>push</IJS>,{" "}
-            <IJS>replace</IJS>, and <IJS>anchor</IJS>.
+            The router has a <IJS>url</IJS> method that is used to generate a
+            URL string using the name of a route and an object of the route's
+            params.
           </p>
+
+          <CodeBlock>{`const url = router.url({ name: "New" });`}</CodeBlock>
+
+          <p>
+            The router's <IJS>navigate</IJS> method is used to navigate; it
+            takes a URL (such as one defined using <IJS>router.url</IJS>). The
+            function can also take a <IJS>method</IJS> type for the navigation:{" "}
+            <IJS>push</IJS>, <IJS>replace</IJS>, or <IJS>anchor</IJS>.
+          </p>
+
           <p>
             <IJS>push</IJS> pushes a new location after the current index,
             removing any locations after the current location.
@@ -1133,7 +1143,7 @@ export default {
             {`// session = ['/one', '/two', '/three']
 // index = 1
 // current = '/two'
-router.navigate({ name: "New", method: "push" });
+router.navigate({ url: "/new", method: "push" });
 // session = ['/one', '/two', '/new']
 // index = 2
 // current = '/new'`}
@@ -1147,7 +1157,7 @@ router.navigate({ name: "New", method: "push" });
             {`// session = ['/one', '/two', '/three']
 // index = 1
 // current = '/two'
-router.navigate({ name: "Replace", method: "replace" });
+router.navigate({ url: "/replacement", method: "replace" });
 // session = ['/one', '/replacement', '/three']
 // index = 1
 // current = '/replacement'`}
@@ -1168,11 +1178,11 @@ router.navigate({ name: "Replace", method: "replace" });
             {`// session = ['/one', '/two', '/three']
 // index = 1
 // current = '/two'
-router.navigate({ name: "Two", method: "anchor" });
+router.navigate({ url: "/two", method: "anchor" });
 // session = ['/one', '/two', '/three']
 // index = 1
 // current = '/two'
-router.navigate({ name: "New", method: "anchor" });
+router.navigate({ url: "/new", method: "anchor" });
 // session = ['/one', '/two', '/new']
 // index = 2
 // current = '/new'`}
@@ -1186,7 +1196,7 @@ router.navigate({ name: "New", method: "anchor" });
           our shopping cart API.
         </p>
 
-        <CodeBlock lang="jsx" data-line="3,6,21-29">
+        <CodeBlock lang="jsx" data-line="3,6,21-30">
           {`// src/components/Book.js
 import React from 'react';
 import { useRouter } from '@curi/react-dom';
@@ -1211,7 +1221,8 @@ export default function Book({ response }) {
         type="button"
         onClick={() => {
           cart.add(book, 1);
-          router.navigate({ name: "Checkout" });
+          const url = router.url({ name: "Checkout" });
+          router.navigate({ url });
         }}
       >
         Add to Cart
@@ -1275,12 +1286,11 @@ export default function Checkout({ response }) {
         type="button"
         onClick={() => {
           cart.reset();
-          const pathname = router.route.pathname('Checkout');
-          router.navigate({
+          const url = router.url({
             name: "Checkout",
-            hash: "thanks",
-            method: "replace"
+            hash: "thanks"
           });
+          router.navigate({ url, method: "replace" });
         }}
       >
         Buy

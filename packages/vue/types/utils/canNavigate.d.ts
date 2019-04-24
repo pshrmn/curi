@@ -1,1 +1,1 @@
-export declare function canNavigate(event: MouseEvent): boolean;
+export declare function canNavigate(event: MouseEvent, target?: string): boolean;

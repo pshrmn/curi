@@ -8,44 +8,35 @@ import {
 
 const optsMeta = {
   title: "Options",
-  hash: "useLocation-opts"
+  hash: "useURL-opts"
 };
 export const meta = {
-  title: "useLocation",
-  hash: "useLocation",
+  title: "useURL",
+  hash: "useURL",
   children: [optsMeta]
 };
 
-export function UseLocationAPI() {
+export function UseURLAPI() {
   return (
     <HashSection meta={meta}>
       <p>
-        The <IJS>useLocation</IJS> hook creates a location object.
+        The <IJS>useURL</IJS> hook creates a URL string.
       </p>
 
       <CodeBlock lang="jsx">
-        {`import { useLocation } from '@curi/react-native';
+        {`import { useURL } from '@curi/react-dom';
 
-const location = useLocation({
+const href = useURL({
   name: "Video",
   params: { id: "jaifeo9" } },
   hash: "comments",
   query: "t=15"
 });
-/*
-location = {
-  pathname: "/video/jaifeo9",
-  hash: "comments",
-  query: "t=15"
-}
-*/`}
+// href = "/video/jaifeo9?t=15#comments"`}
       </CodeBlock>
 
       <HashSection tag="h3" meta={optsMeta}>
-        <HashSection
-          tag="h4"
-          meta={{ title: "name", hash: "useLocation-name" }}
-        >
+        <HashSection tag="h4" meta={{ title: "name", hash: "useURL-name" }}>
           <p>
             The name of the route to generate the location's pathname from. If
             this is not provided, the generated location's pathname will be an
@@ -53,24 +44,15 @@ location = {
           </p>
         </HashSection>
 
-        <HashSection
-          tag="h4"
-          meta={{ title: "params", hash: "useLocation-params" }}
-        >
+        <HashSection tag="h4" meta={{ title: "params", hash: "useURL-params" }}>
           <p>An object of params for the named route.</p>
         </HashSection>
 
-        <HashSection
-          tag="h4"
-          meta={{ title: "hash", hash: "useLocation-hash" }}
-        >
+        <HashSection tag="h4" meta={{ title: "hash", hash: "useURL-hash" }}>
           <p>A hash string for the location.</p>
         </HashSection>
 
-        <HashSection
-          tag="h4"
-          meta={{ title: "query", hash: "useLocation-query" }}
-        >
+        <HashSection tag="h4" meta={{ title: "query", hash: "useURL-query" }}>
           <p>The location's query value.</p>
 
           <p>
@@ -80,16 +62,6 @@ location = {
               <IJS>query</IJS>
             </a>{" "}
             option, this may be something else.
-          </p>
-        </HashSection>
-
-        <HashSection
-          tag="h4"
-          meta={{ title: "state", hash: "useLocation-state" }}
-        >
-          <p>
-            State data to associate with the location. This must be
-            serializable.
           </p>
         </HashSection>
       </HashSection>

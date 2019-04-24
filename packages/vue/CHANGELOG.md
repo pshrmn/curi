@@ -1,3 +1,7 @@
+## Next
+
+* Use `router.url`.
+
 ## 2.0.0-alpha.3
 
 * Rename `<curi-link>`'s `to` prop to `name`.

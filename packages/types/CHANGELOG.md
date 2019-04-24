@@ -1,3 +1,8 @@
+## Next
+
+* Add `url` method to `CuriRouter` interface.
+* Modify `navigate` method argument to receive a URL string instead of route details.
+
 ## 2.0.0-beta.5
 
 * Add `ResponseAndNav` type, which is an object with response and navigation properties.

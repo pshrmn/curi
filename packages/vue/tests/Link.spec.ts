@@ -65,11 +65,11 @@ describe("<curi-link>", () => {
       expect(a.getAttribute("href")).toBe("/place/Jamaica?two=2#island-life");
     });
 
-    it("if name is not provided, pathname is empty string", () => {
+    it("if name is not provided, pathname is inherited from current location", () => {
       const Vue = createLocalVue();
       const router = createRouter(inMemory, routes, {
         history: {
-          locations: ["/place/somewhere"]
+          locations: [{ url: "/place/somewhere" }]
         }
       });
       Vue.use(CuriPlugin, { router });
@@ -83,7 +83,7 @@ describe("<curi-link>", () => {
         `
       });
       const a = document.querySelector("a");
-      expect(a.getAttribute("href")).toBe("");
+      expect(a.getAttribute("href")).toBe("/place/somewhere");
     });
 
     it("sets the slots as the link's children", () => {
@@ -157,10 +157,8 @@ describe("<curi-link>", () => {
         })
       );
       expect(mockNavigate.mock.calls.length).toBe(1);
-      expect(mockNavigate.mock.calls[0][0]).toEqual({
-        pathname: "/place/Bermuda",
-        query: "name=Bermuda",
-        hash: "beach-boys"
+      expect(mockNavigate.mock.calls[0][0]).toMatchObject({
+        url: "/place/Bermuda?name=Bermuda#beach-boys"
       });
     });
 

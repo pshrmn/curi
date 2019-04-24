@@ -2,38 +2,29 @@ import React from "react";
 import useRouter from "./useRouter";
 
 import { ReactNode } from "react";
-import { RouteLocation } from "@curi/types";
 import { NavType } from "@hickory/root";
 
-export type NavigatingChildren = (navigating: boolean) => ReactNode;
-
-export interface NavigationHookProps<T> extends BaseNavigationHookProps<T> {
-  children: React.ReactNode;
-}
-
-export interface StatefulNavigationHookProps<T>
-  extends BaseNavigationHookProps<T> {
-  children: NavigatingChildren;
-}
-
-export interface BaseNavigationHookProps<T> extends RouteLocation {
+export interface NavigationHookProps<T> {
   onNav?: (e: T) => void;
-  forward?: object;
   method?: NavType;
+  forward?: object;
+  state?: any;
 }
+export type NavigatingChildren = (navigating: boolean) => ReactNode;
+export type CanNavigate<T> = (e: T, target?: string) => boolean;
 
 function defaultCanNavigate() {
   return true;
 }
 
-export type CanNavigate<T> = (e: T, target?: string) => boolean;
-
 export function useNavigationHandler<T extends React.BaseSyntheticEvent>(
+  url: string,
   props: NavigationHookProps<T>,
-  canNavigate: CanNavigate<T> = defaultCanNavigate,
-  target?: string
+  canNavigate: CanNavigate<T> = defaultCanNavigate
 ) {
   const router = useRouter();
+  // @ts-ignore
+  const target = props.forward && props.forward.target;
   const eventHandler = React.useCallback(
     function eventHandler(event: T) {
       if (props.onNav) {
@@ -44,27 +35,16 @@ export function useNavigationHandler<T extends React.BaseSyntheticEvent>(
         event.preventDefault();
 
         router.navigate({
-          method: props.method,
-          name: props.name,
-          params: props.params,
-          query: props.query,
+          url,
           state: props.state,
-          hash: props.hash
+          method: props.method
         });
       }
     },
-    [
-      props.method,
-      props.name,
-      JSON.stringify(props.params),
-      props.query,
-      props.hash,
-      props.state,
-      props.onNav,
-      target
-    ]
+    [url, props.method, props.state, props.onNav, target]
   );
   return {
+    url,
     eventHandler
   };
 }
@@ -72,9 +52,9 @@ export function useNavigationHandler<T extends React.BaseSyntheticEvent>(
 export function useStatefulNavigationHandler<
   T extends React.BaseSyntheticEvent
 >(
-  props: StatefulNavigationHookProps<T>,
-  canNavigate: CanNavigate<T> = defaultCanNavigate,
-  target?: string
+  url: string,
+  props: NavigationHookProps<T>,
+  canNavigate: CanNavigate<T> = defaultCanNavigate
 ) {
   const router = useRouter();
   const removeCallbacks = React.useRef(undefined);
@@ -88,6 +68,8 @@ export function useStatefulNavigationHandler<
     };
   }, []);
 
+  // @ts-ignore
+  const target = props.forward && props.forward.target;
   const eventHandler = React.useCallback(
     function eventHandler(event: T) {
       if (props.onNav) {
@@ -104,30 +86,19 @@ export function useStatefulNavigationHandler<
         setNavigating(true);
 
         removeCallbacks.current = router.navigate({
-          method: props.method,
-          name: props.name,
-          params: props.params,
-          query: props.query,
+          url,
           state: props.state,
-          hash: props.hash,
+          method: props.method,
           cancelled: done,
           finished: done
         });
       }
     },
-    [
-      props.method,
-      props.name,
-      JSON.stringify(props.params),
-      props.query,
-      props.hash,
-      props.state,
-      props.onNav,
-      target
-    ]
+    [url, props.method, props.state, props.onNav, target]
   );
 
   return {
+    url,
     eventHandler,
     navigating
   };

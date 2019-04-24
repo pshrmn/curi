@@ -44,7 +44,7 @@ describe("routes", () => {
         });
         const router = createRouter(inMemory, routes, {
           history: {
-            locations: ["/test"]
+            locations: [{ url: "/test" }]
           }
         });
         const routeProperties = router.route.properties("Test");
@@ -90,7 +90,7 @@ describe("routes", () => {
         });
         const router = createRouter(inMemory, routes, {
           history: {
-            locations: ["/four/five/six"]
+            locations: [{ url: "/four/five/six" }]
           }
         });
         const routeProperties = router.route.properties("Test");
@@ -113,7 +113,7 @@ describe("routes", () => {
         });
         const router = createRouter(inMemory, routes, {
           history: {
-            locations: ["/one/two/three"]
+            locations: [{ url: "/one/two/three" }]
           }
         });
         const routeProperties = router.route.properties("Test");
@@ -140,7 +140,7 @@ describe("routes", () => {
         });
         const router = createRouter(inMemory, routes, {
           history: {
-            locations: ["/test"]
+            locations: [{ url: "/test" }]
           }
         });
         const routeProperties = router.route.properties("Test");
@@ -168,7 +168,7 @@ describe("routes", () => {
         });
         const router = createRouter(inMemory, routes, {
           history: {
-            locations: ["/test"]
+            locations: [{ url: "/test" }]
           }
         });
         const routeProperties = router.route.properties("Test");
@@ -199,7 +199,7 @@ describe("routes", () => {
         });
         const router = createRouter(inMemory, routes, {
           history: {
-            locations: ["/test"]
+            locations: [{ url: "/test" }]
           }
         });
         const routeProperties = router.route.properties("Test");
@@ -226,7 +226,7 @@ describe("routes", () => {
           });
           const router = createRouter(inMemory, routes, {
             history: {
-              locations: ["/Here"]
+              locations: [{ url: "/Here" }]
             }
           });
           const { response } = router.current();
@@ -249,7 +249,7 @@ describe("routes", () => {
           });
           const router = createRouter(inMemory, routes, {
             history: {
-              locations: ["/Here"]
+              locations: [{ url: "/Here" }]
             }
           });
           const { response } = router.current();
@@ -273,7 +273,7 @@ describe("routes", () => {
           });
           const router = createRouter(inMemory, routes, {
             history: {
-              locations: ["/here/"]
+              locations: [{ url: "/here/" }]
             }
           });
           const { response } = router.current();
@@ -296,7 +296,7 @@ describe("routes", () => {
           });
           const router = createRouter(inMemory, routes, {
             history: {
-              locations: ["/here/"]
+              locations: [{ url: "/here/" }]
             }
           });
           const { response } = router.current();
@@ -320,7 +320,7 @@ describe("routes", () => {
           });
           const router = createRouter(inMemory, routes, {
             history: {
-              locations: ["/here/again"]
+              locations: [{ url: "/here/again" }]
             }
           });
           const { response } = router.current();
@@ -343,7 +343,7 @@ describe("routes", () => {
           });
           const router = createRouter(inMemory, routes, {
             history: {
-              locations: ["/here/again"]
+              locations: [{ url: "/here/again" }]
             }
           });
           const { response } = router.current();
@@ -372,7 +372,7 @@ describe("routes", () => {
             });
             const router = createRouter(inMemory, routes, {
               history: {
-                locations: ["/test"]
+                locations: [{ url: "/test" }]
               }
             });
             const { response } = router.current();
@@ -400,7 +400,7 @@ describe("routes", () => {
             });
             const router = createRouter(inMemory, routes, {
               history: {
-                locations: ["/test/ing"]
+                locations: [{ url: "/test/ing" }]
               }
             });
             const { response } = router.current();
@@ -428,7 +428,7 @@ describe("routes", () => {
             });
             const router = createRouter(inMemory, routes, {
               history: {
-                locations: ["/test/ed"]
+                locations: [{ url: "/test/ed" }]
               }
             });
             const { response } = router.current();
@@ -461,7 +461,7 @@ describe("routes", () => {
             });
             const router = createRouter(inMemory, routes, {
               history: {
-                locations: ["/test/ed"]
+                locations: [{ url: "/test/ed" }]
               }
             });
             const { response } = router.current();
@@ -530,7 +530,7 @@ describe("routes", () => {
         });
         const router = createRouter(inMemory, routes, {
           history: {
-            locations: ["/test"]
+            locations: [{ url: "/test" }]
           }
         });
         const { response } = router.current();
@@ -552,7 +552,7 @@ describe("routes", () => {
         });
         const router = createRouter(inMemory, routes, {
           history: {
-            locations: ["/test/leftovers"]
+            locations: [{ url: "/test/leftovers" }]
           }
         });
         const { response } = router.current();
@@ -568,7 +568,7 @@ describe("routes", () => {
           const routes = prepareRoutes({ routes: [] });
           const router = createRouter(inMemory, routes, {
             history: {
-              locations: ["/test"]
+              locations: [{ url: "/test" }]
             }
           });
 
@@ -586,7 +586,7 @@ describe("routes", () => {
           const routes = prepareRoutes({ routes: [] });
           const router = createRouter(inMemory, routes, {
             history: {
-              locations: ["/test"]
+              locations: [{ url: "/test" }]
             }
           });
           const observer = jest.fn();
@@ -617,7 +617,7 @@ describe("routes", () => {
           });
           const router = createRouter(inMemory, routes, {
             history: {
-              locations: ["/ND/Fargo"]
+              locations: [{ url: "/ND/Fargo" }]
             }
           });
           const { response } = router.current();
@@ -646,7 +646,7 @@ describe("routes", () => {
           });
           const router = createRouter(inMemory, routes, {
             history: {
-              locations: ["/ND/Fargo/"]
+              locations: [{ url: "/ND/Fargo/" }]
             }
           });
           const { response } = router.current();
@@ -671,7 +671,7 @@ describe("routes", () => {
           });
           const router = createRouter(inMemory, routes, {
             history: {
-              locations: ["/ND/Fargo"]
+              locations: [{ url: "/ND/Fargo" }]
             }
           });
           const { response } = router.current();
@@ -700,7 +700,7 @@ describe("routes", () => {
           });
           const router = createRouter(inMemory, routes, {
             history: {
-              locations: ["/MT/Bozeman"]
+              locations: [{ url: "/MT/Bozeman" }]
             }
           });
           const { response } = router.current();
@@ -725,7 +725,7 @@ describe("routes", () => {
         });
         const router = createRouter(inMemory, routes, {
           history: {
-            locations: ["/SD/Sioux City"]
+            locations: [{ url: "/SD/Sioux City" }]
           }
         });
         const { response } = router.current();
@@ -749,7 +749,7 @@ describe("routes", () => {
           });
           const router = createRouter(inMemory, routes, {
             history: {
-              locations: ["/NY/about"]
+              locations: [{ url: "/NY/about" }]
             }
           });
           const { response } = router.current();
@@ -772,7 +772,7 @@ describe("routes", () => {
           });
           const router = createRouter(inMemory, routes, {
             history: {
-              locations: ["/about"]
+              locations: [{ url: "/about" }]
             }
           });
           const { response } = router.current();
@@ -790,7 +790,7 @@ describe("routes", () => {
             });
             const router = createRouter(inMemory, routes, {
               history: {
-                locations: ["/other-page"]
+                locations: [{ url: "/other-page" }]
               }
             });
             const { response } = router.current();
@@ -810,7 +810,7 @@ describe("routes", () => {
             });
             const router = createRouter(inMemory, routes, {
               history: {
-                locations: ["/test"]
+                locations: [{ url: "/test" }]
               }
             });
             const { response } = router.current();
@@ -835,7 +835,7 @@ describe("routes", () => {
             });
             const router = createRouter(inMemory, routes, {
               history: {
-                locations: ["/test"]
+                locations: [{ url: "/test" }]
               }
             });
             const { response } = router.current();
@@ -859,7 +859,7 @@ describe("routes", () => {
             });
             const router = createRouter(inMemory, routes, {
               history: {
-                locations: ["/contact"]
+                locations: [{ url: "/contact" }]
               }
             });
             const { response } = router.current();
@@ -886,7 +886,7 @@ describe("routes", () => {
             });
             const router = createRouter(inMemory, routes, {
               history: {
-                locations: ["/"]
+                locations: [{ url: "/" }]
               }
             });
             const { response } = router.current();
@@ -909,7 +909,7 @@ describe("routes", () => {
             });
             const router = createRouter(inMemory, routes, {
               history: {
-                locations: ["/"]
+                locations: [{ url: "/" }]
               }
             });
             const { response } = router.current();
@@ -935,7 +935,7 @@ describe("routes", () => {
             });
             const router = createRouter(inMemory, routes, {
               history: {
-                locations: ["/"]
+                locations: [{ url: "/" }]
               }
             });
             const { response } = router.current();
@@ -955,7 +955,7 @@ describe("routes", () => {
             });
             const router = createRouter(inMemory, routes, {
               history: {
-                locations: ["/a-route"]
+                locations: [{ url: "/a-route" }]
               }
             });
             const { response } = router.current();
@@ -981,7 +981,7 @@ describe("routes", () => {
             });
             const router = createRouter(inMemory, routes, {
               history: {
-                locations: ["/TX/Austin"]
+                locations: [{ url: "/TX/Austin" }]
               }
             });
             const { response } = router.current();
@@ -1007,7 +1007,7 @@ describe("routes", () => {
             });
             const router = createRouter(inMemory, routes, {
               history: {
-                locations: ["/MT/Bozeman"]
+                locations: [{ url: "/MT/Bozeman" }]
               }
             });
             const { response } = router.current();
@@ -1029,7 +1029,7 @@ describe("routes", () => {
             });
             const router = createRouter(inMemory, routes, {
               history: {
-                locations: ["/1/2"]
+                locations: [{ url: "/1/2" }]
               }
             });
             const { response } = router.current();
@@ -1051,7 +1051,7 @@ describe("routes", () => {
               });
               const router = createRouter(inMemory, routes, {
                 history: {
-                  locations: ["/123"]
+                  locations: [{ url: "/123" }]
                 }
               });
               const { response } = router.current();
@@ -1081,7 +1081,7 @@ describe("routes", () => {
               });
               const router = createRouter(inMemory, routes, {
                 history: {
-                  locations: ["/123/456"]
+                  locations: [{ url: "/123/456" }]
                 }
               });
               const { response } = router.current();
@@ -1105,7 +1105,7 @@ describe("routes", () => {
               });
               const router = createRouter(inMemory, routes, {
                 history: {
-                  locations: ["/123/test%20ing"]
+                  locations: [{ url: "/123/test%20ing" }]
                 }
               });
               const { response } = router.current();
@@ -1127,7 +1127,7 @@ describe("routes", () => {
               expect(() => {
                 const router = createRouter(inMemory, routes, {
                   history: {
-                    locations: ["/%"]
+                    locations: [{ url: "/%" }]
                   }
                 });
               }).toThrow();
@@ -1165,7 +1165,6 @@ describe("routes", () => {
             const logger = ({ response }) => {
               if (firstCall) {
                 expect(response.redirect).toMatchObject({
-                  pathname: "/b/bee",
                   hash: "bay",
                   query: "type=honey",
                   url: "/b/bee?type=honey#bay",
@@ -1179,7 +1178,7 @@ describe("routes", () => {
             const router = createRouter(inMemory, routes, {
               sideEffects: [logger],
               history: {
-                locations: ["/"]
+                locations: [{ url: "/" }]
               }
             });
           });
@@ -1202,7 +1201,7 @@ describe("routes", () => {
             });
             const router = createRouter(inMemory, routes, {
               history: {
-                locations: ["/"]
+                locations: [{ url: "/" }]
               }
             });
             const { response } = router.current();
@@ -1233,7 +1232,7 @@ describe("routes", () => {
             expect(fakeWarn.mock.calls.length).toBe(0);
             const router = createRouter(inMemory, routes, {
               history: {
-                locations: ["/contact"]
+                locations: [{ url: "/contact" }]
               }
             });
             const { response } = router.current();
@@ -1326,7 +1325,7 @@ describe("routes", () => {
 
           createRouter(inMemory, routes, {
             history: {
-              locations: ["/hello?one=two"]
+              locations: [{ url: "/hello?one=two" }]
             }
           });
         });
@@ -1351,7 +1350,7 @@ describe("routes", () => {
           createRouter(inMemory, routes, {
             external,
             history: {
-              locations: ["/hello?one=two"]
+              locations: [{ url: "/hello?one=two" }]
             }
           });
         });
@@ -1397,10 +1396,11 @@ describe("routes", () => {
           });
           const router = createRouter(inMemory, routes, {
             history: {
-              locations: ["/first"]
+              locations: [{ url: "/first" }]
             }
           });
-          router.navigate({ name: "Second" });
+          const url = router.url({ name: "Second" });
+          router.navigate({ url });
         });
 
         describe("resolved", () => {
@@ -1419,7 +1419,7 @@ describe("routes", () => {
             });
             const router = createRouter(inMemory, routes, {
               history: {
-                locations: ["/hello?one=two"]
+                locations: [{ url: "/hello?one=two" }]
               }
             });
           });
@@ -1442,7 +1442,7 @@ describe("routes", () => {
             });
             const router = createRouter(inMemory, routes, {
               history: {
-                locations: ["/hello?one=two"]
+                locations: [{ url: "/hello?one=two" }]
               }
             });
           });
@@ -1466,7 +1466,7 @@ describe("routes", () => {
             });
             const router = createRouter(inMemory, routes, {
               history: {
-                locations: ["/hello?one=two"]
+                locations: [{ url: "/hello?one=two" }]
               }
             });
           });
@@ -1494,7 +1494,7 @@ describe("routes", () => {
             });
             const router = createRouter(inMemory, routes, {
               history: {
-                locations: ["/hello?one=two"]
+                locations: [{ url: "/hello?one=two" }]
               }
             });
           });
@@ -1520,7 +1520,7 @@ describe("routes", () => {
             });
             const router = createRouter(inMemory, routes, {
               history: {
-                locations: ["/hello?one=two"]
+                locations: [{ url: "/hello?one=two" }]
               }
             });
           });
@@ -1550,7 +1550,7 @@ describe("routes", () => {
             });
             const router = createRouter(inMemory, routes, {
               history: {
-                locations: ["/hello?one=two"]
+                locations: [{ url: "/hello?one=two" }]
               }
             });
           });
@@ -1595,7 +1595,8 @@ describe("routes", () => {
 
         expect((history.navigate as jest.Mock).mock.calls.length).toBe(0);
 
-        router.navigate({ name: "Redirects" });
+        const url = router.url({ name: "Redirects" });
+        router.navigate({ url });
 
         expect((history.navigate as jest.Mock).mock.calls.length).toBe(2);
       });
@@ -1634,11 +1635,13 @@ describe("routes", () => {
 
         expect((history.navigate as jest.Mock).mock.calls.length).toBe(0);
 
-        router.navigate({ name: "Redirects" });
+        const redirectsURL = router.url({ name: "Redirects" });
+        router.navigate({ url: redirectsURL });
 
         expect((history.navigate as jest.Mock).mock.calls.length).toBe(1);
 
-        router.navigate({ name: "Other" });
+        const otherURL = router.url({ name: "Other" });
+        router.navigate({ url: otherURL });
 
         expect((history.navigate as jest.Mock).mock.calls.length).toBe(2);
       });

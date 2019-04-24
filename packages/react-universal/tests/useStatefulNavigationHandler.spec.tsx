@@ -9,6 +9,7 @@ import { sleep } from "../../../utils/tests";
 
 import {
   createRouterComponent,
+  useURL,
   useStatefulNavigationHandler
 } from "@curi/react-universal";
 
@@ -52,7 +53,9 @@ describe("useStatefulNavigationHandler", () => {
       const Router = createRouterComponent(router);
 
       function AsyncLink(props) {
+        const url = useURL(props);
         const { eventHandler, navigating } = useStatefulNavigationHandler(
+          url,
           props
         );
         return (
@@ -73,11 +76,9 @@ describe("useStatefulNavigationHandler", () => {
       const a = node.querySelector("a");
       const leftClickEvent = createClick();
       Simulate.click(a, leftClickEvent);
-      const mockLocation = mockNavigate.mock.calls[0][0];
-      expect(mockLocation).toMatchObject({
-        pathname: "/test",
-        hash: "thing",
-        query: "one=1",
+      const mockURL = mockNavigate.mock.calls[0][0];
+      expect(mockURL).toMatchObject({
+        url: "/test?one=1#thing",
         state: "yo"
       });
     });
@@ -96,7 +97,9 @@ describe("useStatefulNavigationHandler", () => {
       const Router = createRouterComponent(router);
 
       function AsyncLink(props) {
+        const url = useURL(props);
         const { eventHandler, navigating } = useStatefulNavigationHandler(
+          url,
           props
         );
         return (
@@ -139,7 +142,9 @@ describe("useStatefulNavigationHandler", () => {
         const Router = createRouterComponent(router);
 
         function AsyncLink(props) {
+          const url = useURL(props);
           const { eventHandler, navigating } = useStatefulNavigationHandler(
+            url,
             props,
             canNavigate
           );
@@ -178,7 +183,9 @@ describe("useStatefulNavigationHandler", () => {
       const Router = createRouterComponent(router);
 
       function AsyncLink(props) {
+        const url = useURL(props);
         const { eventHandler, navigating } = useStatefulNavigationHandler(
+          url,
           props
         );
         expect(navigating).toBe(false);
@@ -227,6 +234,7 @@ describe("useStatefulNavigationHandler", () => {
 
       function AsyncLink(props) {
         const { eventHandler, navigating } = useStatefulNavigationHandler(
+          "/slow",
           props
         );
         return <a onClick={eventHandler}>{props.children(navigating)}</a>;
@@ -279,6 +287,7 @@ describe("useStatefulNavigationHandler", () => {
 
       function AsyncLink(props) {
         const { eventHandler, navigating } = useStatefulNavigationHandler(
+          "/slow",
           props
         );
         return <a onClick={eventHandler}>{props.children(navigating)}</a>;

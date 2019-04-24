@@ -81,7 +81,8 @@ describe("CuriPlugin", () => {
             template: "<div><FakeComponent /></div>",
             components: { FakeComponent }
           }).$mount();
-          router.navigate({ name: "Contact" });
+          const url = router.url({ name: "Contact" });
+          router.navigate({ url });
         }
       });
 
@@ -97,7 +98,8 @@ describe("CuriPlugin", () => {
             template: "<div><FakeComponent /></div>",
             components: { FakeComponent }
           }).$mount();
-          router.navigate({ name: "Contact" });
+          const url = router.url({ name: "Contact" });
+          router.navigate({ url });
         }
       });
     });

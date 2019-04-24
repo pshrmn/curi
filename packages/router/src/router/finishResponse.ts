@@ -1,8 +1,7 @@
 import { isExternalRedirect } from "./redirect";
 
-import { History } from "@hickory/root";
 import {
-  RouteMatcher,
+  CuriRouter,
   Response,
   RedirectLocation,
   SettableResponseProperties,
@@ -16,9 +15,8 @@ import {
 export default function finishResponse(
   route: Route,
   match: IntrinsicResponse,
-  routes: RouteMatcher,
   resolvedResults: ResolveResults | null,
-  history: History,
+  router: CuriRouter,
   external: any
 ): Response {
   const { resolved = null, error = null } = resolvedResults || {};
@@ -78,8 +76,7 @@ export default function finishResponse(
   if (responseModifiers["redirect"]) {
     response["redirect"] = createRedirect(
       responseModifiers["redirect"],
-      routes,
-      history
+      router
     );
   }
 
@@ -88,21 +85,24 @@ export default function finishResponse(
 
 function createRedirect(
   redirect: RedirectProps | ExternalRedirect,
-  routes: RouteMatcher,
-  history: History
+  router: CuriRouter
 ): RedirectLocation | ExternalRedirect {
   if (isExternalRedirect(redirect)) {
     return redirect;
   }
   const { name, params, query, hash, state } = redirect;
-  const pathname = routes.interactions.pathname(name, params);
+  const url = router.url({
+    name,
+    params,
+    query,
+    hash
+  });
   return {
     name,
     params,
-    pathname,
     query,
     hash,
     state,
-    url: history.href({ pathname, query, hash, state })
+    url
   };
 }

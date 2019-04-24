@@ -1,6 +1,9 @@
 export { RouterProps } from "./createRouterComponent";
 export { ActiveHookProps, ValidateComponents } from "./hooks/useActive";
-export { NavigatingChildren } from "./hooks/useNavigationHandler";
+export {
+  NavigationHookProps,
+  NavigatingChildren
+} from "./hooks/useNavigationHandler";
 
 import createRouterComponent from "./createRouterComponent";
 import { ResponseConsumer, RouterConsumer } from "./Context";
@@ -8,8 +11,7 @@ import { ResponseConsumer, RouterConsumer } from "./Context";
 import useRouter from "./hooks/useRouter";
 import useResponse from "./hooks/useResponse";
 import useActive from "./hooks/useActive";
-import useLocation from "./hooks/useLocation";
-import useHref from "./hooks/useHref";
+import useURL from "./hooks/useURL";
 import useNavigating from "./hooks/useNavigating";
 import {
   useStatefulNavigationHandler,
@@ -23,8 +25,7 @@ export {
   useRouter,
   useResponse,
   useActive,
-  useLocation,
-  useHref,
+  useURL,
   useNavigating,
   useStatefulNavigationHandler,
   useNavigationHandler

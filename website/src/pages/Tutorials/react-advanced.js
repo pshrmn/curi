@@ -776,7 +776,8 @@ export default function Book({ response }) {
         type="button"
         onClick={() => {
           cart.add(book, 1);
-          router.navigate({ to: "Checkout" });
+          const url = router.url({ name: "Checkout" });
+          router.navigate({ url });
         }}
       >
         Add to Cart

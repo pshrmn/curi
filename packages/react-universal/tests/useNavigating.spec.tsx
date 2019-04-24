@@ -91,7 +91,8 @@ describe("useNavigating", () => {
         expect(children.mock.calls.length).toBe(1);
 
         act(() => {
-          router.navigate({ name: "Sync" });
+          const url = router.url({ name: "Sync" });
+          router.navigate({ url });
         });
 
         expect(children.mock.calls.length).toBe(1);
@@ -124,7 +125,8 @@ describe("useNavigating", () => {
         expect(beforeResponse.name).toBe("Home");
 
         act(() => {
-          router.navigate({ name: "Fast" });
+          const url = router.url({ name: "Fast" });
+          router.navigate({ url });
         });
 
         expect(typeof children.mock.calls[1][0]).toBe("function");
@@ -152,7 +154,8 @@ describe("useNavigating", () => {
         expect(beforeResponse.name).toBe("Home");
 
         await act(async () => {
-          router.navigate({ name: "Fast" });
+          const url = router.url({ name: "Fast" });
+          router.navigate({ url });
           await sleep(100);
         });
 
@@ -195,7 +198,8 @@ describe("useNavigating", () => {
       expect(children.mock.calls[0][0]).toBeUndefined();
 
       act(() => {
-        router.navigate({ name: "Slow" });
+        const url = router.url({ name: "Slow" });
+        router.navigate({ url });
       });
 
       expect(children.mock.calls[1][0]).toBeDefined();
@@ -236,7 +240,8 @@ describe("useNavigating", () => {
       expect(beforeResponse.name).toBe("Home");
 
       await act(async () => {
-        router.navigate({ name: "Fast" });
+        const url = router.url({ name: "Fast" });
+        router.navigate({ url });
         // sleep while we wait for the Fast route to render
         await sleep(100);
       });

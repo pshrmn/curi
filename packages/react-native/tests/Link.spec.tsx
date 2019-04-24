@@ -69,14 +69,14 @@ describe("<Link>", () => {
 
   describe("navigation location", () => {
     describe("name", () => {
-      it("uses the pathname from current response's location if 'name' is not provided", () => {
+      it("inherits pathname from current location if 'name' is not provided", () => {
         const mockNavigate = jest.fn();
         const routes = prepareRoutes({
           routes: [{ name: "Catch All", path: "(.*)" }]
         });
         const router = createRouter(inMemory, routes, {
           history: {
-            locations: ["/the-initial-location"]
+            locations: [{ url: "/the-initial-location" }]
           }
         });
         router.history.navigate = mockNavigate;
@@ -84,16 +84,16 @@ describe("<Link>", () => {
 
         const tree = renderer.create(
           <Router>
-            <Link name={null}>
+            <Link name={null} hash="test">
               <Text>Test</Text>
             </Link>
           </Router>
         );
         const anchor = tree.root.findByType(TouchableHighlight);
         anchor.props.onPress(fakeEvent());
-        expect(mockNavigate.mock.calls[0][0].pathname).toBe(
-          "/the-initial-location"
-        );
+        expect(mockNavigate.mock.calls[0][0]).toMatchObject({
+          url: "/the-initial-location#test"
+        });
       });
     });
 
@@ -121,7 +121,9 @@ describe("<Link>", () => {
         );
         const anchor = tree.root.findByType(TouchableHighlight);
         anchor.props.onPress(fakeEvent());
-        expect(mockNavigate.mock.calls[0][0].pathname).toBe("/park/Glacier");
+        expect(mockNavigate.mock.calls[0][0]).toMatchObject({
+          url: "/park/Glacier"
+        });
       });
 
       it("updates location to navigate to when props change", () => {
@@ -140,7 +142,9 @@ describe("<Link>", () => {
         );
         const anchor = tree.root.findByType(TouchableHighlight);
         anchor.props.onPress(fakeEvent());
-        expect(mockNavigate.mock.calls[0][0].pathname).toBe("/park/Glacier");
+        expect(mockNavigate.mock.calls[0][0]).toMatchObject({
+          url: "/park/Glacier"
+        });
 
         const newParams = { name: "Yellowstone" };
         tree.update(
@@ -151,9 +155,9 @@ describe("<Link>", () => {
           </Router>
         );
         anchor.props.onPress(fakeEvent());
-        expect(mockNavigate.mock.calls[1][0].pathname).toBe(
-          "/park/Yellowstone"
-        );
+        expect(mockNavigate.mock.calls[1][0]).toMatchObject({
+          url: "/park/Yellowstone"
+        });
       });
     });
 
@@ -181,9 +185,7 @@ describe("<Link>", () => {
         const anchor = tree.root.findByType(TouchableHighlight);
         anchor.props.onPress(fakeEvent());
         expect(mockNavigate.mock.calls[0][0]).toMatchObject({
-          pathname: "/test",
-          query: "one=two",
-          hash: "hashtag"
+          url: "/test?one=two#hashtag"
         });
       });
     });
@@ -200,7 +202,7 @@ describe("<Link>", () => {
       });
       const router = createRouter(inMemory, routes, {
         history: {
-          locations: ["/the-initial-location"]
+          locations: [{ url: "/the-initial-location" }]
         }
       });
       router.history.navigate = mockNavigate;
@@ -229,7 +231,7 @@ describe("<Link>", () => {
       });
       const router = createRouter(inMemory, routes, {
         history: {
-          locations: ["/the-initial-location"]
+          locations: [{ url: "/the-initial-location" }]
         }
       });
       const Router = createRouterComponent(router);
@@ -258,7 +260,7 @@ describe("<Link>", () => {
       });
       const router = createRouter(inMemory, routes, {
         history: {
-          locations: ["/the-initial-location"]
+          locations: [{ url: "/the-initial-location" }]
         }
       });
       router.history.navigate = mockNavigate;
