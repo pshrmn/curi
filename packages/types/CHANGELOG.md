@@ -1,4 +1,4 @@
-## Next
+## 2.0.0-beta.6
 
 * Add `url` method to `CuriRouter` interface.
 * Modify `navigate` method argument to receive a URL string instead of route details.

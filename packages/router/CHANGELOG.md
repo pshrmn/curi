@@ -1,4 +1,4 @@
-## Next
+## 2.0.0-beta.14
 
 * Add `router.url` method for generating a URL string.
 * `router.navigate` takes a `url` string property, not `name`/`params`/`query`/`hash`.

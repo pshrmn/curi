@@ -1,4 +1,4 @@
-## Next
+## 2.0.0-alpha.4
 
 * Use `router.url`.
 

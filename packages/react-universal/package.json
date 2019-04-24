@@ -1,6 +1,6 @@
 {
   "name": "@curi/react-universal",
-  "version": "2.0.0-beta.10",
+  "version": "2.0.0-beta.11",
   "description": "React components to use with Curi",
   "main": "dist/curi-react-universal.js",
   "module": "dist/curi-react-universal.es.js",
