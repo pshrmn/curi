@@ -82,7 +82,7 @@ describe("<curi-async-link>", () => {
       expect(a.getAttribute("href")).toBe("/place/Jamaica?two=2#island-life");
     });
 
-    it("if name is not provided, pathname is inherited from current location", () => {
+    it("has no pathname component if name is not provided", () => {
       const Vue = createLocalVue();
       const router = createRouter(inMemory, routes, {
         history: {
@@ -95,12 +95,12 @@ describe("<curi-async-link>", () => {
         el: node,
         template: `
           <div>
-            <curi-async-link>somewhere</curi-async-link>
+            <curi-async-link hash="test">somewhere</curi-async-link>
           </div>
         `
       });
       const a = document.querySelector("a");
-      expect(a.getAttribute("href")).toBe("/place/somewhere");
+      expect(a.getAttribute("href")).toBe("#test");
     });
 
     it("sets the slots as the link's children", () => {

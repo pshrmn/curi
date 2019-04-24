@@ -73,7 +73,7 @@ describe("<AsyncLink>", () => {
 
   describe("navigation location", () => {
     describe("name", () => {
-      it("inherits pathname from current location if 'name' is not provided", async () => {
+      it("has no pathname component if name is not provided", async () => {
         const mockNavigate = jest.fn();
         const routes = prepareRoutes({
           routes: [{ name: "Catch All", path: "(.*)" }]
@@ -98,7 +98,7 @@ describe("<AsyncLink>", () => {
           anchor.props.onPress(fakeEvent());
         });
         expect(mockNavigate.mock.calls[0][0]).toMatchObject({
-          url: "/the-initial-location#test"
+          url: "#test"
         });
       });
     });

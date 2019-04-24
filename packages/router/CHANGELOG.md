@@ -1,3 +1,7 @@
+## Next
+
+* `router.url` returns relative URL string when `name` is not provided.
+
 ## 2.0.0-beta.14
 
 * Add `router.url` method for generating a URL string.

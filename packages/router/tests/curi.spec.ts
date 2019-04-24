@@ -1119,38 +1119,36 @@ describe("curi", () => {
     });
     const router = createRouter(inMemory, routes);
 
-    describe("navigation location", () => {
-      it("generates the expected pathname", () => {
-        const url = router.url({ name: "Contact" });
-        router.navigate({ url });
-        expect(url).toEqual("/contact");
-      });
+    it("generates the expected pathname", () => {
+      const url = router.url({ name: "Contact" });
+      router.navigate({ url });
+      expect(url).toEqual("/contact");
+    });
 
-      it("uses params to create pathname", () => {
-        const url = router.url({ name: "Method", params: { method: "fax" } });
-        router.navigate({ url });
-        expect(url).toEqual("/contact/fax");
-      });
+    it("uses params to create pathname", () => {
+      const url = router.url({ name: "Method", params: { method: "fax" } });
+      router.navigate({ url });
+      expect(url).toEqual("/contact/fax");
+    });
 
-      it("inherits pathname from current response's location if no name is provided", () => {
-        const router = createRouter(inMemory, routes, {
-          history: {
-            locations: [{ url: "/test" }]
-          }
-        });
-        const url = router.url({ hash: "test" });
-        expect(url).toEqual("/test#test");
+    it("returns URL with no pathname if name is not provided", () => {
+      const router = createRouter(inMemory, routes, {
+        history: {
+          locations: [{ url: "/test" }]
+        }
       });
+      const url = router.url({ hash: "test" });
+      expect(url).toEqual("#test");
+    });
 
-      it("includes the provided hash", () => {
-        const url = router.url({ name: "Home", hash: "trending" });
-        expect(url).toEqual("/#trending");
-      });
+    it("includes the provided hash", () => {
+      const url = router.url({ name: "Home", hash: "trending" });
+      expect(url).toEqual("/#trending");
+    });
 
-      it("includes the provided query", () => {
-        const url = router.url({ name: "Home", query: "key=value" });
-        expect(url).toEqual("/?key=value");
-      });
+    it("includes the provided query", () => {
+      const url = router.url({ name: "Home", query: "key=value" });
+      expect(url).toEqual("/?key=value");
     });
   });
 
@@ -1216,6 +1214,31 @@ describe("curi", () => {
       router.navigate({ url, state });
       expect(mockNavigate.mock.calls[0][0]).toMatchObject({
         state
+      });
+    });
+
+    it("location inherits pathname when navigating to URL with no pathname", () => {
+      const routes = prepareRoutes({
+        routes: [
+          { name: "Home", path: "" },
+          {
+            name: "Contact",
+            path: "contact",
+            children: [{ name: "Method", path: ":method" }]
+          },
+          { name: "Catch All", path: "(.*)" }
+        ]
+      });
+      const router = createRouter(inMemory, routes, {
+        history: {
+          locations: [{ url: "/contact/phone" }]
+        }
+      });
+      const url = router.url({ hash: "test" });
+      router.navigate({ url });
+      const { response } = router.current();
+      expect(response.location).toMatchObject({
+        pathname: "/contact/phone"
       });
     });
 

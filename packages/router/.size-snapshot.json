@@ -1,8 +1,8 @@
 {
   "dist/curi-router.es.js": {
-    "bundled": 16824,
-    "minified": 6674,
-    "gzipped": 2571,
+    "bundled": 16808,
+    "minified": 6661,
+    "gzipped": 2570,
     "treeshaked": {
       "rollup": {
         "code": 23,
@@ -14,18 +14,18 @@
     }
   },
   "dist/curi-router.js": {
-    "bundled": 17075,
-    "minified": 6880,
-    "gzipped": 2649
+    "bundled": 17059,
+    "minified": 6867,
+    "gzipped": 2648
   },
   "dist/curi-router.umd.js": {
-    "bundled": 28313,
-    "minified": 9171,
-    "gzipped": 3774
+    "bundled": 28297,
+    "minified": 9158,
+    "gzipped": 3772
   },
   "dist/curi-router.min.js": {
-    "bundled": 26713,
-    "minified": 8276,
-    "gzipped": 3358
+    "bundled": 26697,
+    "minified": 8263,
+    "gzipped": 3350
   }
 }
