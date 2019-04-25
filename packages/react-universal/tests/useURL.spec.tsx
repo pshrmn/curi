@@ -58,7 +58,7 @@ describe("useURL", () => {
       );
     });
 
-    it("inherits current location's pathname if route name is not provided", () => {
+    it("has no pathname component if name is not provided", () => {
       const router = createRouter(inMemory, routes, {
         history: {
           locations: [{ url: "/example" }]
@@ -66,8 +66,8 @@ describe("useURL", () => {
       });
       const Router = createRouterComponent(router);
       function App() {
-        const result = useURL({});
-        expect(result).toBe("/example");
+        const result = useURL({ hash: "test" });
+        expect(result).toBe("#test");
         return null;
       }
       ReactDOM.render(

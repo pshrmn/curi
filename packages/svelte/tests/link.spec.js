@@ -12,7 +12,7 @@ describe("<Link>", () => {
       test("./cases/link/pathname-params");
     });
 
-    it("inherits current location's pathname if \"name\" isn't provided", () => {
+    it("has no pathname component if name is not provided", () => {
       test("./cases/link/relative");
     });
 
