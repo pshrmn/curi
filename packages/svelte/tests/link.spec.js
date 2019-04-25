@@ -31,24 +31,6 @@ describe("<Link>", () => {
     });
   });
 
-  describe("wrapper prop", () => {
-    it("renders the wrapper when provided", () => {
-      test("./cases/link/wrapper");
-    });
-
-    it("passes navigating=false to wrapper by default", () => {
-      test("./cases/link/wrapper-navigating");
-    });
-
-    it("passes navigating=true to wrapper while navigating", done => {
-      test("./cases/link/wrapper-while-navigating", done);
-    });
-
-    it("cancels finish/cancel callbacks when destroyed", done => {
-      test("./cases/link/wrapper-destroy-callbacks", done);
-    });
-  });
-
   describe("clicking a <Link>", () => {
     it("will navigate to the new location", () => {
       test("./cases/link/click");

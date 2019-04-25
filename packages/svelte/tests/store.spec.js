@@ -1,11 +1,10 @@
 import { inMemory } from "@hickory/in-memory";
 import { createRouter, prepareRoutes } from "@curi/router";
-import { Store } from "svelte/store";
 
-import { curiStore } from "@curi/svelte";
+import { curiStores } from "@curi/svelte";
 
-describe("curiStore", () => {
-  let router;
+describe("curi stores", () => {
+  let _router;
   const routes = prepareRoutes({
     routes: [
       { name: "Home", path: "" },
@@ -15,62 +14,59 @@ describe("curiStore", () => {
   });
 
   beforeEach(() => {
-    router = createRouter(inMemory, routes);
+    _router = createRouter(inMemory, routes);
   });
 
-  describe("existing store", () => {
-    it("adds Curi properties to store", () => {
-      const store = new Store({ foo: "oof" });
-      curiStore(router, store);
+  it("returns an object with router and curi stores", () => {
+    const stores = curiStores(_router);
 
-      expect(store.get().router).toBe(router);
-      expect(store.get().curi).toHaveProperty("response");
-      expect(store.get().curi).toHaveProperty("navigation");
-    });
+    expect(stores.hasOwnProperty("router")).toBe(true);
+    expect(stores.hasOwnProperty("response")).toBe(true);
+  });
 
-    it("initializes with current response/navigation", () => {
-      const { response, navigation } = router.current();
-      const store = new Store({ foo: "oof" });
-      curiStore(router, store);
-      const $curi = store.get().curi;
-      expect($curi.response).toBe(response);
-      expect($curi.navigation).toBe(navigation);
+  describe("router store", () => {
+    it("is the router", () => {
+      const { router } = curiStores(_router);
+      router.subscribe(value => {
+        expect(value).toBe(_router);
+      });
     });
   });
 
-  describe("new store", () => {
-    it("can create a new store", () => {
-      const store = curiStore(router);
-      expect(store.get().router).toBe(router);
+  describe("response store", () => {
+    it("initializes with the current response/navigation", () => {
+      const initial = _router.current();
+
+      const { response } = curiStores(_router);
+      response.subscribe(value => {
+        expect(value).toMatchObject(initial);
+      });
     });
 
-    it("initializes with current response/navigation", () => {
-      const { response, navigation } = router.current();
-      const store = curiStore(router, store);
-      const $curi = store.get().curi;
-      expect($curi.response).toBe(response);
-      expect($curi.navigation).toBe(navigation);
+    it("updates when new response/navigation are emitted", () => {
+      const emitted = [];
+      const { response } = curiStores(_router);
+
+      _router.observe(({ response, navigation }) => {
+        emitted.push({ response, navigation });
+      });
+
+      let calls = 0;
+      response.subscribe(value => {
+        switch (calls++) {
+          case 0:
+            expect(value).toMatchObject(emitted[0]);
+            break;
+          case 1:
+            expect(value).toMatchObject(emitted[1]);
+            break;
+          default:
+            throw new Error("Should not be reached");
+        }
+      });
+
+      const url = _router.url({ name: "About" });
+      _router.navigate({ url });
     });
-  });
-
-  it("updates store when new response/navigation are emitted", () => {
-    let firstCall = true;
-    const store = curiStore(router);
-    const {
-      response: initialResponse,
-      navigation: initialNavigation
-    } = router.current();
-    expect(store.get().curi).toMatchObject({
-      response: initialResponse,
-      navigation: initialNavigation
-    });
-
-    const url = router.url({ name: "About" });
-    router.navigate({ url });
-
-    const { response: currentResponse } = router.current();
-    const { response: aboutResponse } = store.get().curi;
-    expect(aboutResponse).toBe(currentResponse);
-    expect(aboutResponse.name).toBe("About");
   });
 });

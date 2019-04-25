@@ -1,3 +1,9 @@
-import curiStore from "./store.js";
+import {
+  curiStores,
+  setRouter,
+  getRouter,
+  setResponse,
+  getResponse
+} from "./stores.js";
 
-export { curiStore };
+export { curiStores, setRouter, getRouter, setResponse, getResponse };

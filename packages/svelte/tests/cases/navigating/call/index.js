@@ -1,8 +1,16 @@
 import { inMemory } from "@hickory/in-memory";
 import { createRouter, prepareRoutes } from "@curi/router";
-import { curiStore } from "@curi/svelte";
+import { curiStores } from "@curi/svelte";
 
-import app from "./app.html";
+import app from "./app.svelte";
+
+function sleep(ms) {
+  return new Promise(resolve => {
+    setTimeout(() => {
+      resolve();
+    }, ms);
+  });
+}
 
 const routes = prepareRoutes({
   routes: [
@@ -31,11 +39,11 @@ const routes = prepareRoutes({
 });
 
 const router = createRouter(inMemory, routes);
-const store = curiStore(router);
+const stores = curiStores(router);
 
 export default function render(done) {
   const target = document.createElement("div");
-  new app({ target, store });
+  new app.default({ target, props: { stores } });
 
   const button = target.querySelector("button");
 
@@ -46,13 +54,15 @@ export default function render(done) {
   const url = router.url({ name: "Slow" });
   router.navigate({ url });
 
-  expect(button.textContent).toBe("Cancel");
-  button.click();
+  sleep().then(() => {
+    expect(button.textContent).toBe("Cancel");
+    button.click();
+  });
 
-  setTimeout(() => {
+  sleep(25).then(() => {
     const { response: afterResponse } = router.current();
     expect(beforeResponse.name).toBe("Home");
     expect(button.textContent).toBe("No op");
     done();
-  }, 25);
+  });
 }

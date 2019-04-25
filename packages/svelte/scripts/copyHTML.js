@@ -8,7 +8,7 @@ const DIST = path.resolve(BASE, "components");
 
 function copyHTML() {
   fs.ensureDir(DIST).then(() => {
-    glob.glob(path.join(SRC, "*.html"), function(err, files) {
+    glob.glob(path.join(SRC, "*.svelte"), function(err, files) {
       files.forEach(input => {
         const name = path.basename(input);
         const output = path.join(DIST, name);
