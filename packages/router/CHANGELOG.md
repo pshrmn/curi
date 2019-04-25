@@ -1,4 +1,4 @@
-## Next
+## 2.0.0-beta.15
 
 * `router.url` returns relative URL string when `name` is not provided.
 
