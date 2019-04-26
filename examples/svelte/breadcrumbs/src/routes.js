@@ -30,7 +30,7 @@ export default prepareRoutes({
       respond: () => {
         return {
           body: Products,
-          data: api.categories()
+          data: { categories: api.categories() }
         };
       },
       children: [
@@ -47,7 +47,7 @@ export default prepareRoutes({
               modifiers.error = "Category does not exist";
             }
             {
-              modifiers.data = products;
+              modifiers.data = { products };
             }
             return modifiers;
           },
@@ -67,7 +67,7 @@ export default prepareRoutes({
                 if (!product) {
                   modifiers.error = "Product does not exist";
                 } else {
-                  modifiers.data = product;
+                  modifiers.data = { product };
                 }
                 return modifiers;
               },

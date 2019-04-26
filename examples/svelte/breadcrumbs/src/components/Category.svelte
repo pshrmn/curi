@@ -3,13 +3,15 @@
   <h1>{params.category}</h1>
   <p>List of products</p>
   <ul>
-    {#each products as product (product.id)}
-      <li>
-        <Link name="Product" params={{ ...params, productID: product.id }}>
-          {$router.route.title("Product", { name: product.name })}
-        </Link>
-      </li>
-    {/each}
+    {#if products}
+      {#each products as product (product.id)}
+        <li>
+          <Link name="Product" params={{ ...params, productID: product.id }}>
+            {$router.route.title("Product", { name: product.name })}
+          </Link>
+        </li>
+      {/each}
+    {/if}
   </ul>
 </div>
 
@@ -22,5 +24,5 @@
   const response = getResponse();
 
   $: params = $response.params;
-  $: products = $response.data;
+  $: products = $response.data.products;
 </script>

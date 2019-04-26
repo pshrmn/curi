@@ -22,5 +22,5 @@
   const router = getRouter();
   const response = getResponse();
 
-  $: categories = $response.data;
+  $: categories = $response.data.categories;
 </script>

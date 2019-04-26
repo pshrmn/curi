@@ -1,8 +1,8 @@
 <ul className="breadcrumbs">
-  {#each ancestors as ancestor (ancestor)}
+  {#each ancestors as name (name)}
     <li>
-      <Link name={ancestor} params={params}>
-        {$router.route.title(ancestor, params)}
+      <Link name={name} params={params}>
+        {$router.route.title(name, params)}
       </Link>
     </li>
   {/each}
