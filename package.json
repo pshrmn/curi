@@ -11,6 +11,7 @@
     "coverage": "lerna run coverage",
     "versions": "lerna version --no-push",
     "version": "node ./scripts/postversions",
+    "example:bootstrap": "lerna bootstrap --scope=@curi-example/*",
     "example:build": "node ./examples/build",
     "example:serve": "node ./examples/server",
     "example:versions": "node ./scripts/setDependenciesInExamples.js",

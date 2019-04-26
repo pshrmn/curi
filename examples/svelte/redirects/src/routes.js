@@ -1,10 +1,10 @@
 import { prepareRoutes } from "@curi/router";
 
-import Home from "./components/Home.html";
-import Protected from "./components/Protected.html";
-import Login from "./components/Login.html";
-import Logout from "./components/Logout.html";
-import NotFound from "./components/NotFound.html";
+import Home from "./components/Home.svelte";
+import Protected from "./components/Protected.svelte";
+import Login from "./components/Login.svelte";
+import Logout from "./components/Logout.svelte";
+import NotFound from "./components/NotFound.svelte";
 
 import fakeAuth from "./fakeAuth";
 

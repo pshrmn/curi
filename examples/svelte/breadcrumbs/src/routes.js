@@ -4,11 +4,11 @@ import ancestors from "@curi/route-ancestors";
 import api from "./api";
 import title from "./titleInteraction";
 
-import Home from "./components/Home.html";
-import Products from "./components/Products.html";
-import Category from "./components/Category.html";
-import Product from "./components/Product.html";
-import NotFound from "./components/NotFound.html";
+import Home from "./components/Home.svelte";
+import Products from "./components/Products.svelte";
+import Category from "./components/Category.svelte";
+import Product from "./components/Product.svelte";
+import NotFound from "./components/NotFound.svelte";
 
 export default prepareRoutes({
   routes: [

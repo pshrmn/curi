@@ -17,15 +17,8 @@
 </nav>
 
 <script>
-  import Link from "@curi/svelte/components/Link.html";
+  import Link from "@curi/svelte/components/Link.svelte";
   import fakeAuth from "../fakeAuth";
 
-  export default {
-    computed: {
-      authenticated({ $curi }) {
-        return fakeAuth.authenticated();
-      }
-    },
-    components: { Link }
-  }
+  $: authenticated = $fakeAuth;
 </script>

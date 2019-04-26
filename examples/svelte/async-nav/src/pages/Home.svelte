@@ -1,30 +1,24 @@
 <div class="container">
-  {#each $curi.response.data as movie}
-    <Link
+  {#each $response.response.data as movie (movie.id)}
+    <AsyncLink
       name="Movie"
       params={{ id: movie.id }}
-      key={movie.id}
       wrapper={SpinWhileNavigating}
       forward={{ class: "link" }}
     >
       {movie.title}
-    </Link>
+    </AsyncLink>
   {/each}
 </div>
 
 <script>
-  import Link from "@curi/svelte/components/Link.html";
-  import SpinWhileNavigating from "../components/SpinWhileNavigating.html";
-  export default {
-    components: {
-      Link
-    },
-    data() {
-      return {
-        SpinWhileNavigating
-      }
-    }
-  };
+  import { getResponse } from "@curi/svelte";
+  import AsyncLink from "@curi/svelte/components/AsyncLink.svelte";
+  import SpinWhileNavigating from "../components/SpinWhileNavigating.svelte";
+
+  const response = getResponse();
+
+  console.log({ movies: $response.response.data });
 </script>
 
 <style>

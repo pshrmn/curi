@@ -17,14 +17,7 @@
 </nav>
 
 <script>
-  import Link from "@curi/svelte/components/Link.html";
+  import Link from "@curi/svelte/components/Link.svelte";
 
-  export default {
-    data() {
-      return {
-        methods: ['email', 'phone']
-      }
-    },
-    components: { Link }
-  }
+  let methods = ['email', 'phone'];
 </script>

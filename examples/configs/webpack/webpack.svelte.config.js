@@ -8,12 +8,12 @@ const config = {
     publicPath: "/static/"
   },
   resolve: {
-    extensions: [".js", ".html"]
+    extensions: [".mjs", ".js"]
   },
   module: {
     rules: [
       {
-        test: /\.js$/,
+        test: /\.(mjs|js)$/,
         exclude: /(node_modules)/,
         use: [
           {
@@ -23,13 +23,10 @@ const config = {
         ]
       },
       {
-        test: /\.html$/,
+        test: /\.svelte$/,
         use: [
           {
-            loader: "svelte-loader",
-            options: {
-              store: true
-            }
+            loader: "svelte-loader"
           }
         ]
       }

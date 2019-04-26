@@ -4,7 +4,7 @@
     <ActiveLink name='Home'>Home</ActiveLink>
   </li>
 	<li>
-		<ActiveLink name='Contact' partial={true}>Contact Us</ActiveLink>
+		<ActiveLink name='Contact' partial={false}>Contact Us</ActiveLink>
     <ul>
       {#each methods as method}
         <li>
@@ -17,14 +17,7 @@
 </nav>
 
 <script>
-  import ActiveLink from "./ActiveLink.html";
+  import ActiveLink from "./ActiveLink.svelte";
 
-  export default {
-    data() {
-      return {
-        methods: ['email', 'phone']
-      }
-    },
-    components: { ActiveLink }
-  }
+  let methods = ['email', 'phone'];
 </script>

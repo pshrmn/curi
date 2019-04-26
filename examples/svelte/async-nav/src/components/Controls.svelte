@@ -8,15 +8,15 @@
     <input
       type="range"
       id="delayRange"
-      bind:value="delay"
+      bind:value={delay}
       min="0"
       max="5000"
       step="500"
-      on:input="delayHandler(event)"
+      on:input={delayHandler}
     />
   </div>
   <div>
-    <button type="button" on:click="clearCache()">
+    <button type="button" on:click={clearCache}>
       Clear Cache
     </button>
   </div>
@@ -26,20 +26,14 @@
   import { delay as delayAPI } from "../api";
   import cache from "../cache";
 
-  export default {
-    data() {
-      return {
-        delay: delayAPI()
-      };
-    },
-    methods: {
-      delayHandler(event) {
-        delayAPI(parseInt(event.target.value, 10));
-      },
-      clearCache() {
-        cache.reset();
-      }
-    }
+  let delay = delayAPI();
+
+  function delayHandler(event) {
+    delayAPI(parseInt(event.target.value, 10));
+  }
+
+  function clearCache() {
+    cache.reset();
   }
 </script>
 

@@ -6,7 +6,5 @@
 <script>
   import Spinner from "svelte-spinner";
 
-  export default {
-    components: { Spinner }
-  };
+  export let navigating;
 </script>
