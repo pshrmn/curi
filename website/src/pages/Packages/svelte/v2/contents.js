@@ -1,5 +1,7 @@
-import { meta as curiStoreMeta } from "./api/curiStore";
+import { meta as curiStoresMeta } from "./api/curiStores";
+import { meta as RouterMeta } from "./api/router";
 import { meta as LinkMeta } from "./api/link";
+import { meta as AsyncLinkMeta } from "./api/asynclink";
 import { meta as NavigatingMeta } from "./api/navigating";
 
 export default [
@@ -14,6 +16,12 @@ export default [
   {
     title: "API",
     hash: "API",
-    children: [curiStoreMeta, LinkMeta, NavigatingMeta]
+    children: [
+      curiStoresMeta,
+      RouterMeta,
+      LinkMeta,
+      AsyncLinkMeta,
+      NavigatingMeta
+    ]
   }
 ];

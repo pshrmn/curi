@@ -38,30 +38,53 @@ function SvelteGuide() {
       </PlainSection>
 
       <HashSection meta={storeMeta}>
+        <p>Curi's Svelte integration relies on stores and context.</p>
+
         <p>
-          Curi relies on Svelte's store to interface with an application. By
-          adding the <IJS>response</IJS> (plus the <IJS>router</IJS> and{" "}
-          <IJS>navigation</IJS> objects) to the store, they are accessible
-          throughout the application.
-        </p>
-        <p>
-          <IJS>@curi/svelte</IJS> provides a function to link the router to the
-          store. This sets up an{" "}
-          <Link name="Guide" params={{ slug: "navigating" }} hash="observer">
-            observer
-          </Link>
-          , so that whenever there is a new response, the parts of your
-          application that use the response will be re-rendered.
+          Stores are created using the <IJS>createStores</IJS> function.
         </p>
 
-        <CodeBlock lang="jsx">
-          {`import store from "svelte/store";
-import { curiStore } from "@curi/svelte";
+        <CodeBlock>
+          {`import { createStores } from "@curi/svelte";
 
-import router from "./router";
+const router = createRouter(browser, routes);
+const stores = createStores(router);`}
+        </CodeBlock>
 
-const store = new Store();
-curiStore(router, store);`}
+        <p>
+          The <IJS>Router</IJS> component makes the stores available throughout
+          the application.
+        </p>
+
+        <CodeBlock lang="html">
+          {`<Router stores={stores}>
+  <Root />
+</Router>
+
+<script>
+  import Router from "@curi/svelte/components/Router.svelte";
+  import Root from "./components/Root.svelte";
+
+  export let stores;
+
+  const response = stores.response;
+</script>`}
+        </CodeBlock>
+
+        <p>
+          Components that need to access the <IJS>router</IJS>,{" "}
+          <IJS>response</IJS>, or <IJS>navigation</IJS> can do so with their
+          corresponding getter functions.
+        </p>
+
+        <CodeBlock lang="html">
+          {`<script>
+  import { getRouter, getResponse, getNavigation } from "@curi/svelte";
+
+  const router = getRouter();
+  const response = getResponse();
+  const navigation = getNavigation();
+</script>`}
         </CodeBlock>
 
         <HashSection meta={renderingMeta} tag="h3">
@@ -80,20 +103,21 @@ curiStore(router, store);`}
           </p>
 
           <CodeBlock lang="html">
-            {`<template>
+            {`<!-- components/Root.svelte -->
+<template>
   <header>
     <NavLinks />
   </header>
   <main>
-    <svelte:component this={$curi.response.body} />
+    <svelte:component this={$response.body} />
   </main>
 </template>
 
 <script>
+  import { getResponse } from "@curi/svelte";
   import NavLinks from "./NavLinks";
-  export default {
-    components: { NavLinks }
-  };
+
+  const response = getResponse();
 </script>`}
           </CodeBlock>
 
@@ -140,16 +164,11 @@ const routes = prepareRoutes({
 </template>
 
 <script>
-  export default {
-    computed: {
-      main({ $curi }) {
-        return $curi.response.body.main;
-      },
-      menu({ $curi }) {
-        return $curi.response.body.menu;
-      }
-    }
-  }
+  import { getResponse } from "@curi/svelte";
+
+  const response = getResponse();
+  $: main = $response.body.main;
+  $: menu = $response.body.menu;
 </script>`}
           </CodeBlock>
         </HashSection>
@@ -162,7 +181,7 @@ const routes = prepareRoutes({
           an anchor (<Cmp>a</Cmp>) element.
         </p>
         <p>
-          The <IJS>Link</IJS>'s <IJS>to</IJS> prop describes which route
+          The <IJS>Link</IJS>'s <IJS>name</IJS> prop describes which route
           clicking the link should navigate to. If you pass an invalid route
           name, Curi will warn you.
         </p>
@@ -192,11 +211,7 @@ const routes = prepareRoutes({
 </template>
 
 <script>
-  import Link from "@curi/svelte/components/Link.html";
-
-  export default {
-    components: { Link }
-  };
+  import Link from "@curi/svelte/components/Link.svelte";
 </script>`}
         </CodeBlock>
 

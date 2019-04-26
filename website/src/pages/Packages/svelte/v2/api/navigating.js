@@ -34,15 +34,8 @@ export function NavigatingAPI() {
         {`<Navigating component={Cancel} />
 
 <script>
-  import Navigating from "@curi/svelte/components/Navigating.html";
+  import Navigating from "@curi/svelte/components/Navigating.svelte";
   import Cancel from "./Cancel";
-
-  export default {
-    components: { Navigating },
-    data() {
-      return { Cancel };
-    }
-  }
 </script>`}
       </CodeBlock>
 

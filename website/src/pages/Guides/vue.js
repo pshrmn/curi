@@ -207,7 +207,7 @@ const routes = prepareRoutes({
           an anchor (<Cmp>a</Cmp>) element.
         </p>
         <p>
-          The <IJS>curi-link</IJS>'s <IJS>to</IJS> prop describes which route
+          The <IJS>curi-link</IJS>'s <IJS>name</IJS> prop describes which route
           clicking the link should navigate to. If you pass an invalid route
           name, Curi will warn you.
         </p>
@@ -222,13 +222,13 @@ const routes = prepareRoutes({
   <nav>
     <ul>
       <li>
-        <curi-link to="Home">Home</curi-link>
+        <curi-link name="Home">Home</curi-link>
       </li>
       <li>
-        <curi-link to="About">About</curi-link>
+        <curi-link name="About">About</curi-link>
       </li>
       <li>
-        <curi-link to="User" :params="{ id: 'blue' }">
+        <curi-link name="User" :params="{ id: 'blue' }">
           Blue
         </curi-link>
       </li>
@@ -244,7 +244,7 @@ const routes = prepareRoutes({
         </p>
 
         <CodeBlock lang="jsx">
-          {`<curi-link to="Home" hash="details">Home</curi-link>
+          {`<curi-link name="Home" hash="details">Home</curi-link>
 // renders
 <a href="/#details">Home</a>`}
         </CodeBlock>

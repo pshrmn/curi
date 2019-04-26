@@ -275,7 +275,7 @@ function App()
           an anchor (<Cmp>a</Cmp>) element.
         </p>
         <p>
-          The <IJS>Link</IJS>'s <IJS>to</IJS> prop describes which route
+          The <IJS>Link</IJS>'s <IJS>name</IJS> prop describes which route
           clicking the link should navigate to. If you pass an invalid route
           name, Curi will warn you.
         </p>

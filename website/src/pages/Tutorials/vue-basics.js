@@ -680,12 +680,12 @@ export default prepareRoutes({
           <p>
             Navigation isn't done by manually typing the pathname of the
             location the link should navigate to. Instead, we specify the name
-            of the route using the <IJS>to</IJS> prop.
+            of the route using the <IJS>name</IJS> prop.
           </p>
 
           <CodeBlock lang="html">
             {`<!-- { name: "Home", path: "" } -->
-<curi-link to="Home">Home</curi-link>
+<curi-link name="Home">Home</curi-link>
 <!-- <a href="/">Home</a> -->`}
           </CodeBlock>
 
@@ -697,7 +697,7 @@ export default prepareRoutes({
 
           <CodeBlock lang="html">
             {`<!-- { name: "Book", path: "book/:id" } -->
-<curi-link to="Book" :params="{ id: 7 }">The Dark Forest</curi-link>
+<curi-link name="Book" :params="{ id: 7 }">The Dark Forest</curi-link>
 <!-- <a href="/book/7">The Dark Forest</a> -->`}
           </CodeBlock>
 
@@ -708,7 +708,7 @@ export default prepareRoutes({
 
           <CodeBlock lang="html">
             {`<!-- in-app -->
-<curi-link to="Some Route">Some Route</curi-link>
+<curi-link name="Some Route">Some Route</curi-link>
 
 <!-- out of app -->
 <a href="https://github.com">GitHub</a>`}
@@ -721,7 +721,7 @@ export default prepareRoutes({
 
           <CodeBlock lang="html">
             {`<!-- { name: "Checkout", path: "checkout" } -->
-<curi-link to="Checkout" :query="a=123">Checkout</curi-link>
+<curi-link name="Checkout" :query="a=123">Checkout</curi-link>
 <!-- <a href="/checkout?a=123">Checkout</a> -->`}
           </CodeBlock>
         </HashSection>
@@ -740,10 +740,10 @@ export default prepareRoutes({
   <nav>
     <ul>
       <li>
-        <curi-link to="Home">Home</curi-link>
+        <curi-link name="Home">Home</curi-link>
       </li>
       <li>
-        <curi-link to="Checkout">Checkout</curi-link>
+        <curi-link name="Checkout">Checkout</curi-link>
       </li>
     </ul>
   </nav>
@@ -848,7 +848,7 @@ export default [
   <div>
     <ul>
       <li v-for="b in books" :key="b.id">
-        <curi-link to="Book" :params="{ id: b.id }">
+        <curi-link name="Book" :params="{ id: b.id }">
           {{b.title}} by {{b.author}}
         </curi-link>
       </li>
