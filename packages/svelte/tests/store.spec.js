@@ -22,6 +22,7 @@ describe("curi stores", () => {
 
     expect(stores.hasOwnProperty("router")).toBe(true);
     expect(stores.hasOwnProperty("response")).toBe(true);
+    expect(stores.hasOwnProperty("navigation")).toBe(true);
   });
 
   describe("router store", () => {
@@ -34,31 +35,68 @@ describe("curi stores", () => {
   });
 
   describe("response store", () => {
-    it("initializes with the current response/navigation", () => {
+    it("initializes with the current response", () => {
       const initial = _router.current();
 
       const { response } = curiStores(_router);
       response.subscribe(value => {
-        expect(value).toMatchObject(initial);
+        expect(value).toBe(initial.response);
       });
     });
 
-    it("updates when new response/navigation are emitted", () => {
+    it("updates when new response is emitted", () => {
       const emitted = [];
       const { response } = curiStores(_router);
 
-      _router.observe(({ response, navigation }) => {
-        emitted.push({ response, navigation });
+      _router.observe(({ response }) => {
+        emitted.push(response);
       });
 
       let calls = 0;
       response.subscribe(value => {
         switch (calls++) {
           case 0:
-            expect(value).toMatchObject(emitted[0]);
+            expect(value).toBe(emitted[0]);
             break;
           case 1:
-            expect(value).toMatchObject(emitted[1]);
+            expect(value).toBe(emitted[1]);
+            break;
+          default:
+            throw new Error("Should not be reached");
+        }
+      });
+
+      const url = _router.url({ name: "About" });
+      _router.navigate({ url });
+    });
+  });
+
+  describe("navigation store", () => {
+    it("initializes with the current navigation", () => {
+      const initial = _router.current();
+
+      const { navigation } = curiStores(_router);
+      navigation.subscribe(value => {
+        expect(value).toBe(initial.navigation);
+      });
+    });
+
+    it("updates when new navigation is emitted", () => {
+      const emitted = [];
+      const { navigation } = curiStores(_router);
+
+      _router.observe(({ navigation }) => {
+        emitted.push(navigation);
+      });
+
+      let calls = 0;
+      navigation.subscribe(value => {
+        switch (calls++) {
+          case 0:
+            expect(value).toBe(emitted[0]);
+            break;
+          case 1:
+            expect(value).toBe(emitted[1]);
             break;
           default:
             throw new Error("Should not be reached");
