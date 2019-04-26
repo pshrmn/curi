@@ -21,6 +21,6 @@
   const router = getRouter();
   const response = getResponse();
 
-  $: params = $response.response.params;
-  $: products = $response.response.data;
+  $: params = $response.params;
+  $: products = $response.data;
 </script>

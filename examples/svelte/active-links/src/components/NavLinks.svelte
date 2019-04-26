@@ -4,7 +4,7 @@
     <ActiveLink name='Home'>Home</ActiveLink>
   </li>
 	<li>
-		<ActiveLink name='Contact' partial={false}>Contact Us</ActiveLink>
+		<ActiveLink name='Contact' partial={true}>Contact Us</ActiveLink>
     <ul>
       {#each methods as method}
         <li>

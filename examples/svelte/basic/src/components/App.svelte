@@ -1,6 +1,6 @@
 <Router stores={stores}>
   <Nav />
-  <svelte:component this={$response.response.body} />
+  <svelte:component this={$response.body} />
 </Router>
 
 <script>

@@ -1,5 +1,5 @@
 <div class="container">
-  {#each $response.response.data as movie (movie.id)}
+  {#each $response.data as movie (movie.id)}
     <AsyncLink
       name="Movie"
       params={{ id: movie.id }}
@@ -17,8 +17,6 @@
   import SpinWhileNavigating from "../components/SpinWhileNavigating.svelte";
 
   const response = getResponse();
-
-  console.log({ movies: $response.response.data });
 </script>
 
 <style>

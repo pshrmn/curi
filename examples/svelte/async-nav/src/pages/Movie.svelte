@@ -11,6 +11,6 @@
 
   const response = getResponse();
 
-  $: error = $response.response.data.error;
-  $: movie = $response.response.data.movie;
+  $: error = $response.data.error;
+  $: movie = $response.data.movie;
 </script>

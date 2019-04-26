@@ -1,8 +1,8 @@
 <Router stores={stores}>
   <Controls />
   <Navigating component={Cancel} />
-  {#if $response.response}
-    <svelte:component this={$response.response.body} />
+  {#if $response}
+    <svelte:component this={$response.body} />
   {:else}
     <div>loading...</div>
   {/if}
