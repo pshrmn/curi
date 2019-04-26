@@ -3,8 +3,8 @@
 </Router>
 
 <script>
-  import AsyncLink from "../../../../src/AsyncLink.svelte";
-  import Router from "../../../../src/Router.svelte";
+  import AsyncLink from "@curi/svelte/components/AsyncLink.svelte";
+  import Router from "@curi/svelte/components/Router.svelte";
   import Wrapper from "./wrapper.svelte";
 
   export let stores;

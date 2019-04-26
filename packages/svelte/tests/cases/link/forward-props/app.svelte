@@ -3,8 +3,8 @@
 </Router>
 
 <script>
-  import Link from "../../../../src/Link.svelte";
-  import Router from "../../../../src/Router.svelte";
+  import Link from "@curi/svelte/components/Link.svelte";
+  import Router from "@curi/svelte/components/Router.svelte";
 
   export let stores;
 </script>
