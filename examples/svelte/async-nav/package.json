@@ -10,6 +10,7 @@
   "author": "Paul Sherman",
   "license": "MIT",
   "dependencies": {
+    "@curi/helpers": "2.0.0-beta.3",
     "@curi/route-prefetch": "2.0.0-beta.11",
     "@curi/router": "2.0.0-beta.15",
     "@curi/svelte": "2.0.0-alpha.3",

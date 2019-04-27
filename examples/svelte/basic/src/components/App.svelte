@@ -1,13 +1,10 @@
 <Router stores={stores}>
-  <Nav />
-  <svelte:component this={$response.body} />
+  <Root />
 </Router>
 
 <script>
   import Router from "@curi/svelte/components/Router.svelte";
-	import Nav from './Nav.svelte';
+	import Root from './Root.svelte';
 
   export let stores;
-
-  let response = stores.response;
 </script>

@@ -2,15 +2,13 @@
   <h1>Products Page</h1>
   <h2>Categories</h2>
   <ul>
-    {#if categories}
-      {#each categories as category (category)}
-        <li>
-          <Link name="Category" params={{ category }}>
-            {$router.route.title("Category", { category })}
-          </Link>
-        </li>
-      {/each}
-    {/if}
+    {#each categories as category (category)}
+      <li>
+        <Link name="Category" params={{ category }}>
+          {$router.route.title("Category", { category })}
+        </Link>
+      </li>
+    {/each}
   </ul>
 </div>
 

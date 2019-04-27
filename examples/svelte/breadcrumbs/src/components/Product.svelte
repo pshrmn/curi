@@ -1,10 +1,8 @@
-{#if product}
 <div>
   <Breadcrumbs name="Product" params={params} />
   <h1>{product.name}</h1>
   <p>{product.description}</p>
 </div>
-{/if}
 
 <script>
   import { getResponse } from "@curi/svelte";
