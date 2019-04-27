@@ -1,6 +1,5 @@
 import { inMemory } from "@hickory/in-memory";
 import { createRouter, prepareRoutes } from "@curi/router";
-import { curiStores } from "@curi/svelte";
 
 import app from "./app.svelte";
 import cleanText from "../../../utils/cleanText";
@@ -32,11 +31,10 @@ const routes = prepareRoutes({
 });
 
 const router = createRouter(inMemory, routes);
-const stores = curiStores(router);
 
 export default function render(done) {
   const target = document.createElement("div");
-  new app.default({ target, props: { stores } });
+  new app.default({ target, props: { router } });
 
   router.once(
     ({ response }) => {

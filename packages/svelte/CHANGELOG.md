@@ -1,8 +1,10 @@
 ## Next
 
-* Add `Router` component, which takes a `stores` prop (result of `curiStores`).
-* Rename `curiStore` to `curiStores`. This returns an object with a `router` store to access the router and a `curi` store to access the `response`/`navigation` objects.
-* Export `routerKey` and `curiKey` for accessing stores from context.
+* Add `Router` component, which takes a `router` prop.
+* Export `getRouter` function for accessing router from components.
+* Export `getResponse` function for accessing response store from components.
+* Export `getNavigation` function for accessing navigation store from components.
+* Remove `curiStore`.
 
 ## 2.0.0-alpha.2
 

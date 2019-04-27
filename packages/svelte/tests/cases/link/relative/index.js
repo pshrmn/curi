@@ -1,6 +1,5 @@
 import { inMemory } from "@hickory/in-memory";
 import { createRouter, prepareRoutes } from "@curi/router";
-import { curiStores } from "@curi/svelte";
 
 import app from "./app.svelte";
 
@@ -17,11 +16,10 @@ const router = createRouter(inMemory, routes, {
     locations: [{ url: "/u/2" }]
   }
 });
-const stores = curiStores(router);
 
 export default function render() {
   const target = document.createElement("div");
-  new app.default({ target, props: { stores } });
+  new app.default({ target, props: { router } });
   const a = target.querySelector("a");
   expect(a.getAttribute("href")).toBe("#is-a-band");
 }

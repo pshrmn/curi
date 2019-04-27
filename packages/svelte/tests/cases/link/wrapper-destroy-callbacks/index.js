@@ -1,6 +1,5 @@
 import { inMemory } from "@hickory/in-memory";
 import { createRouter, prepareRoutes } from "@curi/router";
-import { curiStores } from "@curi/svelte";
 
 import app from "./app.svelte";
 import cleanText from "../../../utils/cleanText";
@@ -33,14 +32,13 @@ const routes = prepareRoutes({
 });
 
 const router = createRouter(inMemory, routes);
-const stores = curiStores(router);
 
 export default function render(done) {
   const realWarn = console.warn;
   const stateTracker = (console.warn = jest.fn());
 
   const target = document.createElement("div");
-  const application = new app.default({ target, props: { stores } });
+  const application = new app.default({ target, props: { router } });
   const a = target.querySelector("a");
 
   expect(stateTracker.mock.calls.length).toBe(1);

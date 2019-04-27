@@ -1,11 +1,9 @@
 <script>
-  import { setRouter, setResponse, setNavigation } from "@curi/svelte";
+  import { setup } from "@curi/svelte";
 
-  export let stores;
+  export let router;
 
-  setRouter(stores.router);
-  setResponse(stores.response);
-  setNavigation(stores.navigation);
+  setup(router);
 </script>
 
 <slot></slot>

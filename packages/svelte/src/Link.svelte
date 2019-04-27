@@ -25,13 +25,13 @@
   export let navigating = false;
   export let forward = {};
 
-  $: url = $router.url({ name, params, hash, query });
+  $: url = router.url({ name, params, hash, query });
   $: target = forward.target;
 
   function handleClick(event) {
     if (canNavigate(event, target)) {
       event.preventDefault();
-      $router.navigate({ url, state });
+      router.navigate({ url, state });
     }
   }
 </script>

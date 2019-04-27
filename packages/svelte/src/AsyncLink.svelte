@@ -28,7 +28,7 @@
   export let forward = {};
   export let wrapper;
 
-  $: url = $router.url({ name, params, hash, query });
+  $: url = router.url({ name, params, hash, query });
   $: target = forward.target;
 
   let cancelCallbacks;
@@ -43,7 +43,7 @@
       };
       navigating = true;
 
-      cancelCallbacks = $router.navigate({
+      cancelCallbacks = router.navigate({
         url,
         state,
         cancelled,

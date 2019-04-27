@@ -1,4 +1,4 @@
-<Router stores={stores}>
+<Router {router}>
   <AsyncLink name="Test" wrapper={Wrapper}>Test</AsyncLink>
 </Router>
 
@@ -7,5 +7,5 @@
   import Router from "@curi/svelte/components/Router.svelte";
   import Wrapper from "./wrapper.svelte";
 
-  export let stores;
+  export let router;
 </script>

@@ -15,7 +15,7 @@
   $: navigating = cancelCallback !== undefined;
 
   onMount(() => {
-    stop = $router.cancel(fn => {
+    stop = router.cancel(fn => {
       if (!removed) {
         cancelCallback = fn;
       }

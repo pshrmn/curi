@@ -1,4 +1,4 @@
-<Router stores={stores}>
+<Router {router}>
   <Navigating component={ Cancel } />
 </Router>
 
@@ -7,5 +7,5 @@
   import Router from "@curi/svelte/components/Router.svelte";
   import Cancel from "../../../fixtures/Cancel.svelte";
 
-  export let stores;
+  export let router;
 </script>

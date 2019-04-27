@@ -1,6 +1,5 @@
 import { inMemory } from "@hickory/in-memory";
 import { createRouter, prepareRoutes } from "@curi/router";
-import { curiStores } from "@curi/svelte";
 import simulant from "simulant";
 
 import app from "./app.svelte";
@@ -14,13 +13,12 @@ const routes = prepareRoutes({
 });
 
 const router = createRouter(inMemory, routes);
-const stores = curiStores(router);
 
 export default function render() {
   const target = document.createElement("div");
   const mockNavigate = jest.fn();
   router.history.navigate = mockNavigate;
-  new app.default({ target, props: { stores } });
+  new app.default({ target, props: { router } });
 
   const a = target.querySelector("a");
 
