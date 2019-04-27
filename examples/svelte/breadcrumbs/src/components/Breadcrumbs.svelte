@@ -17,5 +17,5 @@
 
   const router = getRouter();
 
-  $: ancestors = router.route.ancestors(name).reverse();
+  let ancestors = router.route.ancestors(name).reverse();
 </script>
