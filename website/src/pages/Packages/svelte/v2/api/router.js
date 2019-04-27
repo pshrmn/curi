@@ -20,27 +20,25 @@ export function RouterAPI() {
   return (
     <HashSection meta={meta}>
       <p>
-        The <IJS>Router</IJS> component is used to make stores available to
-        components throughout the application.
+        The <IJS>Router</IJS> component is used to make router related data
+        available to components throughout the application.
       </p>
 
       <CodeBlock lang="html">
-        {`<Router stores={stores} />
+        {`<Router {router}>
+  <Content />
+</Router>
 
 <script>
   import Router from "@curi/svelte/components/Router.svelte";
 
-  export let stores;
+  export let router;
 </script>`}
       </CodeBlock>
 
       <HashSection meta={propsMeta} tag="h3">
-        <HashSection meta={{ title: "stores", hash: "router-stores" }} tag="h4">
-          <p>
-            An object with <IJS>router</IJS>, <IJS>response</IJS>, and{" "}
-            <IJS>navigation</IJS> stores. This should be the result of calling{" "}
-            <IJS>curiStores</IJS>.
-          </p>
+        <HashSection meta={{ title: "router", hash: "router-router" }} tag="h4">
+          <p>A Curi router.</p>
         </HashSection>
       </HashSection>
     </HashSection>

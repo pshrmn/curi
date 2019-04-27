@@ -38,36 +38,36 @@ function SvelteGuide() {
       </PlainSection>
 
       <HashSection meta={storeMeta}>
-        <p>Curi's Svelte integration relies on stores and context.</p>
-
         <p>
-          Stores are created using the <IJS>createStores</IJS> function.
+          Curi's Svelte integration relies on stores and context. These are
+          setup automatically if you pass a Curi router to the <IJS>Router</IJS>{" "}
+          component.
         </p>
 
         <CodeBlock>
           {`import { createStores } from "@curi/svelte";
+import App from "./components/App.svelte";
 
 const router = createRouter(browser, routes);
-const stores = createStores(router);`}
+new App({ target, props: { router } });`}
         </CodeBlock>
 
         <p>
-          The <IJS>Router</IJS> component makes the stores available throughout
-          the application.
+          The <IJS>Router</IJS> component makes router related data available
+          throughout the application.
         </p>
 
         <CodeBlock lang="html">
-          {`<Router stores={stores}>
-  <Root />
+          {`<!-- /components/App.svelte -->
+<Router {router}>
+  <Content />
 </Router>
 
 <script>
   import Router from "@curi/svelte/components/Router.svelte";
-  import Root from "./components/Root.svelte";
+  import Content from "./components/Content.svelte";
 
-  export let stores;
-
-  const response = stores.response;
+  export let router;
 </script>`}
         </CodeBlock>
 
@@ -87,6 +87,12 @@ const stores = createStores(router);`}
 </script>`}
         </CodeBlock>
 
+        <p>
+          The <IJS>getRouter</IJS> function returns the actual router, while{" "}
+          <IJS>getResponse</IJS> and <IJS>getNavigation</IJS> return stores that
+          update whenever the application navigates.
+        </p>
+
         <HashSection meta={renderingMeta} tag="h3">
           <p>
             Svelte allows you to render dynamic components using the{" "}
@@ -103,7 +109,7 @@ const stores = createStores(router);`}
           </p>
 
           <CodeBlock lang="html">
-            {`<!-- components/Root.svelte -->
+            {`<!-- components/Content.svelte -->
 <template>
   <header>
     <NavLinks />
@@ -133,9 +139,8 @@ const stores = createStores(router);`}
             render, which can quickly become messy.
           </p>
 
-          <CodeBlock lang="html">
-            {`<script>
-const routes = prepareRoutes({
+          <CodeBlock>
+            {`const routes = prepareRoutes({
   routes: [
     {
       name: "Home",
@@ -151,17 +156,16 @@ const routes = prepareRoutes({
     },
     // ...
   ]
-});
-</script>
+});`}
+          </CodeBlock>
 
-<template>
-  <header>
-    <svelte:component this={menu} />
-  </header>
-  <main>
+          <CodeBlock lang="html">
+            {`<header>
+  <svelte:component this={menu} />
+</header>
+<main>
   <svelte:component this={main} />
-  </main>
-</template>
+</main>
 
 <script>
   import { getResponse } from "@curi/svelte";

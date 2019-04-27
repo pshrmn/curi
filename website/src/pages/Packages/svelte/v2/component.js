@@ -2,7 +2,6 @@ import React from "react";
 import { Link } from "@curi/react-dom";
 
 import { About, APIBlock } from "../../../../components/package/common";
-import { CuriStoresAPI } from "./api/curiStores";
 import { RouterAPI } from "./api/router";
 import { LinkAPI } from "./api/link";
 import { AsyncLinkAPI } from "./api/asynclink";
@@ -22,7 +21,6 @@ function SveltePkg() {
         </p>
       </About>
       <APIBlock>
-        <CuriStoresAPI />
         <RouterAPI />
         <LinkAPI />
         <AsyncLinkAPI />
