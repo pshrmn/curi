@@ -33,10 +33,7 @@ export function LinkAPI() {
 </div>
 
 <script>
-  import Link from '@curi/svelte/components/Link.html';
-  export default {
-    components: { Link }
-  }
+  import Link from '@curi/svelte/components/Link.svelte';
 </script>`}
       </CodeBlock>
 

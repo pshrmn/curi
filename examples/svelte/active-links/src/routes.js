@@ -1,9 +1,9 @@
 import { prepareRoutes } from "@curi/router";
 
-import Home from "./components/Home.html";
-import Contact from "./components/Contact.html";
-import Method from "./components/Method.html";
-import NotFound from "./components/NotFound.html";
+import Home from "./components/Home.svelte";
+import Contact from "./components/Contact.svelte";
+import Method from "./components/Method.svelte";
+import NotFound from "./components/NotFound.svelte";
 
 const routes = [
   {

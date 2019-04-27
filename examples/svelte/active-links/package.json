@@ -16,6 +16,6 @@
     "@hickory/browser": "^2.0.0-beta.13"
   },
   "devDependencies": {
-    "svelte": "^2.16.1"
+    "svelte": "^3.0.0"
   }
 }

@@ -1,3 +1,11 @@
+## Next
+
+* Add `Router` component, which takes a `router` prop.
+* Export `getRouter` function for accessing router from components.
+* Export `getResponse` function for accessing response store from components.
+* Export `getNavigation` function for accessing navigation store from components.
+* Remove `curiStore`.
+
 ## 2.0.0-alpha.2
 
 * Use `router.url`.

@@ -9,7 +9,7 @@ export default prepareRoutes({
     name: "Home",
     path: "",
     resolve() {
-      const body = import(/* webpackChunkName: "Home" */ "./pages/Home.html")
+      const body = import(/* webpackChunkName: "Home" */ "./pages/Home.svelte")
         .then(preferDefault);
       const movies = MOVIES();
       return Promise.all([ body, movies ]);
@@ -23,7 +23,7 @@ export default prepareRoutes({
     name: "Movie",
     path: "movie/:id",
     resolve({ params }) {
-      const body = import(/* webpackChunkName: "Movie" */ "./pages/Movie.html")
+      const body = import(/* webpackChunkName: "Movie" */ "./pages/Movie.svelte")
         .then(module => module.default);
       const movie = MOVIE(params.id)
         .then(
@@ -44,7 +44,7 @@ export default prepareRoutes({
     name: "Not Found",
     path: "(.*)",
     resolve() {
-      return import(/* webpackChunkName: "NotFound" */ "./pages/NotFound.html")
+      return import(/* webpackChunkName: "NotFound" */ "./pages/NotFound.svelte")
         .then(preferDefault);
     },
     respond({ resolved }) {

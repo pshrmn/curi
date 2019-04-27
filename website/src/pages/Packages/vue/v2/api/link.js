@@ -28,12 +28,12 @@ export function LinkAPI() {
       <HashSection tag="h3" meta={propsMeta}>
         <HashSection tag="h4" meta={{ title: "to", hash: "Link-to" }}>
           <p>
-            <IJS>to</IJS> - The name of the route to navigate to.{" "}
+            <IJS>name</IJS> - The name of the route to navigate to.{" "}
             <em>This is required</em>.
           </p>
 
           <CodeBlock lang="html">
-            {`<curi-link to='Home'>Home</curi-link>
+            {`<curi-link name='Home'>Home</curi-link>
 <!-- <a href="/">Home</a> -->`}
           </CodeBlock>
         </HashSection>
@@ -48,7 +48,7 @@ export function LinkAPI() {
 
           <CodeBlock lang="html">
             {`<curi-link
-  to='Album'
+  name='Album'
   :params="{ title: 'Coloring Book' }"
   >
   Coloring Book
@@ -62,7 +62,7 @@ export function LinkAPI() {
           </p>
 
           <CodeBlock lang="html">
-            {`<curi-link to="Home" hash="test">Home</curi-link>
+            {`<curi-link name="Home" hash="test">Home</curi-link>
 <!-- <a href="/#test">Home</a> -->`}
           </CodeBlock>
         </HashSection>
@@ -73,7 +73,7 @@ export function LinkAPI() {
           </p>
 
           <CodeBlock lang="html">
-            {`<curi-link to="Home" query="one=1">Home</curi-link>
+            {`<curi-link name="Home" query="one=1">Home</curi-link>
 <!-- <a href="/?one=1">Home</a> -->`}
           </CodeBlock>
         </HashSection>
@@ -97,12 +97,12 @@ export function LinkAPI() {
 
           <CodeBlock lang="html">
             {`<!-- a regular slot -->
-<curi-link to="Home">
+<curi-link name="Home">
   Home
 </curi-link>
 
 <!-- a scoped slot -->
-<curi-link to="User" :params="{ id: 1 }">
+<curi-link name="User" :params="{ id: 1 }">
   <template slot-scope="{ navigating }">
     User 1
     <spinner v-if="navigating" />

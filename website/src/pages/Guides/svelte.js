@@ -39,30 +39,59 @@ function SvelteGuide() {
 
       <HashSection meta={storeMeta}>
         <p>
-          Curi relies on Svelte's store to interface with an application. By
-          adding the <IJS>response</IJS> (plus the <IJS>router</IJS> and{" "}
-          <IJS>navigation</IJS> objects) to the store, they are accessible
+          Curi's Svelte integration relies on stores and context. These are
+          setup automatically if you pass a Curi router to the <IJS>Router</IJS>{" "}
+          component.
+        </p>
+
+        <CodeBlock>
+          {`import { createStores } from "@curi/svelte";
+import App from "./components/App.svelte";
+
+const router = createRouter(browser, routes);
+new App({ target, props: { router } });`}
+        </CodeBlock>
+
+        <p>
+          The <IJS>Router</IJS> component makes router related data available
           throughout the application.
         </p>
+
+        <CodeBlock lang="html">
+          {`<!-- /components/App.svelte -->
+<Router {router}>
+  <Content />
+</Router>
+
+<script>
+  import Router from "@curi/svelte/components/Router.svelte";
+  import Content from "./components/Content.svelte";
+
+  export let router;
+</script>`}
+        </CodeBlock>
+
         <p>
-          <IJS>@curi/svelte</IJS> provides a function to link the router to the
-          store. This sets up an{" "}
-          <Link name="Guide" params={{ slug: "navigating" }} hash="observer">
-            observer
-          </Link>
-          , so that whenever there is a new response, the parts of your
-          application that use the response will be re-rendered.
+          Components that need to access the <IJS>router</IJS>,{" "}
+          <IJS>response</IJS>, or <IJS>navigation</IJS> can do so with their
+          corresponding getter functions.
         </p>
 
-        <CodeBlock lang="jsx">
-          {`import store from "svelte/store";
-import { curiStore } from "@curi/svelte";
+        <CodeBlock lang="html">
+          {`<script>
+  import { getRouter, getResponse, getNavigation } from "@curi/svelte";
 
-import router from "./router";
-
-const store = new Store();
-curiStore(router, store);`}
+  const router = getRouter();
+  const response = getResponse();
+  const navigation = getNavigation();
+</script>`}
         </CodeBlock>
+
+        <p>
+          The <IJS>getRouter</IJS> function returns the actual router, while{" "}
+          <IJS>getResponse</IJS> and <IJS>getNavigation</IJS> return stores that
+          update whenever the application navigates.
+        </p>
 
         <HashSection meta={renderingMeta} tag="h3">
           <p>
@@ -80,20 +109,21 @@ curiStore(router, store);`}
           </p>
 
           <CodeBlock lang="html">
-            {`<template>
+            {`<!-- components/Content.svelte -->
+<template>
   <header>
     <NavLinks />
   </header>
   <main>
-    <svelte:component this={$curi.response.body} />
+    <svelte:component this={$response.body} />
   </main>
 </template>
 
 <script>
+  import { getResponse } from "@curi/svelte";
   import NavLinks from "./NavLinks";
-  export default {
-    components: { NavLinks }
-  };
+
+  const response = getResponse();
 </script>`}
           </CodeBlock>
 
@@ -109,9 +139,8 @@ curiStore(router, store);`}
             render, which can quickly become messy.
           </p>
 
-          <CodeBlock lang="html">
-            {`<script>
-const routes = prepareRoutes({
+          <CodeBlock>
+            {`const routes = prepareRoutes({
   routes: [
     {
       name: "Home",
@@ -127,29 +156,23 @@ const routes = prepareRoutes({
     },
     // ...
   ]
-});
-</script>
+});`}
+          </CodeBlock>
 
-<template>
-  <header>
-    <svelte:component this={menu} />
-  </header>
-  <main>
+          <CodeBlock lang="html">
+            {`<header>
+  <svelte:component this={menu} />
+</header>
+<main>
   <svelte:component this={main} />
-  </main>
-</template>
+</main>
 
 <script>
-  export default {
-    computed: {
-      main({ $curi }) {
-        return $curi.response.body.main;
-      },
-      menu({ $curi }) {
-        return $curi.response.body.menu;
-      }
-    }
-  }
+  import { getResponse } from "@curi/svelte";
+
+  const response = getResponse();
+  $: main = $response.body.main;
+  $: menu = $response.body.menu;
 </script>`}
           </CodeBlock>
         </HashSection>
@@ -162,7 +185,7 @@ const routes = prepareRoutes({
           an anchor (<Cmp>a</Cmp>) element.
         </p>
         <p>
-          The <IJS>Link</IJS>'s <IJS>to</IJS> prop describes which route
+          The <IJS>Link</IJS>'s <IJS>name</IJS> prop describes which route
           clicking the link should navigate to. If you pass an invalid route
           name, Curi will warn you.
         </p>
@@ -192,11 +215,7 @@ const routes = prepareRoutes({
 </template>
 
 <script>
-  import Link from "@curi/svelte/components/Link.html";
-
-  export default {
-    components: { Link }
-  };
+  import Link from "@curi/svelte/components/Link.svelte";
 </script>`}
         </CodeBlock>
 

@@ -2,9 +2,13 @@ import React from "react";
 import { Link } from "@curi/react-dom";
 
 import { About, APIBlock } from "../../../../components/package/common";
-import { CuriStoreAPI } from "./api/curiStore";
+import { RouterAPI } from "./api/router";
 import { LinkAPI } from "./api/link";
+import { AsyncLinkAPI } from "./api/asynclink";
 import { NavigatingAPI } from "./api/navigating";
+import { GetRouterAPI } from "./api/getRouter";
+import { GetResponseAPI } from "./api/getResponse";
+import { GetNavigationAPI } from "./api/getNavigation";
 
 function SveltePkg() {
   return (
@@ -20,9 +24,13 @@ function SveltePkg() {
         </p>
       </About>
       <APIBlock>
-        <CuriStoreAPI />
+        <RouterAPI />
         <LinkAPI />
+        <AsyncLinkAPI />
         <NavigatingAPI />
+        <GetRouterAPI />
+        <GetResponseAPI />
+        <GetNavigationAPI />
       </APIBlock>
     </React.Fragment>
   );
