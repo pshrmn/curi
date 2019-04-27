@@ -1,4 +1,4 @@
-<Router stores={stores}>
+<Router {router}>
   <Controls />
   <Navigating component={Cancel} />
   <Content />
@@ -12,5 +12,5 @@
   import Cancel from "./Cancel.svelte";
   import Content from "./Content.svelte";
 
-  export let stores;
+  export let router;
 </script>

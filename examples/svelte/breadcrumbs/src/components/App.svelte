@@ -1,4 +1,4 @@
-<Router stores={stores}>
+<Router {router}>
   <Content />
 </Router>
 
@@ -6,5 +6,5 @@
   import Router from "@curi/svelte/components/Router.svelte";
   import Content from "./Content.svelte";
 
-  export let stores;
+  export let router;
 </script>

@@ -1,4 +1,4 @@
-<Router stores={stores}>
+<Router {router}>
   <NavLinks />
   <Content />
 </Router>
@@ -8,5 +8,5 @@
 	import NavLinks from './NavLinks.svelte';
   import Content from "./Content.svelte";
 
-  export let stores;
+  export let router;
 </script>
