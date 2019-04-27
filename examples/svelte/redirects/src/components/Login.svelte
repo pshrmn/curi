@@ -14,6 +14,6 @@
   function loginAndRedirect() {
     fakeAuth.login();
     const { query } = $response.location;
-    $router.navigate({ url: query.next || "/", method: "replace" });
+    router.navigate({ url: query.next || "/", method: "replace" });
   }
 </script>

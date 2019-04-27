@@ -2,7 +2,7 @@
   {#each ancestors as name (name)}
     <li>
       <Link name={name} params={params}>
-        {$router.route.title(name, params)}
+        {router.route.title(name, params)}
       </Link>
     </li>
   {/each}
@@ -17,5 +17,5 @@
 
   const router = getRouter();
 
-  $: ancestors = $router.route.ancestors(name).reverse();
+  $: ancestors = router.route.ancestors(name).reverse();
 </script>

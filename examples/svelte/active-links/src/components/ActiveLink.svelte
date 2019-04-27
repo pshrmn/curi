@@ -17,6 +17,6 @@
   export let params;
   export let partial = false;
 
-  $: active = $router.route.active(name, $response, { params, partial });
+  $: active = router.route.active(name, $response, { params, partial });
   $: className = active ? "active" : "";
 </script>

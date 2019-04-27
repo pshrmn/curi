@@ -12,6 +12,6 @@
 
   function logoutAndRedirect() {
     fakeAuth.logout();
-    $router.navigate({ url: "/", method: "replace" });
+    router.navigate({ url: "/", method: "replace" });
   }
 </script>

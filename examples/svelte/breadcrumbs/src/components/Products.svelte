@@ -5,7 +5,7 @@
     {#each categories as category (category)}
       <li>
         <Link name="Category" params={{ category }}>
-          {$router.route.title("Category", { category })}
+          {router.route.title("Category", { category })}
         </Link>
       </li>
     {/each}
