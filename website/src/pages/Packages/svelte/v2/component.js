@@ -6,6 +6,9 @@ import { RouterAPI } from "./api/router";
 import { LinkAPI } from "./api/link";
 import { AsyncLinkAPI } from "./api/asynclink";
 import { NavigatingAPI } from "./api/navigating";
+import { GetRouterAPI } from "./api/getRouter";
+import { GetResponseAPI } from "./api/getResponse";
+import { GetNavigationAPI } from "./api/getNavigation";
 
 function SveltePkg() {
   return (
@@ -25,6 +28,9 @@ function SveltePkg() {
         <LinkAPI />
         <AsyncLinkAPI />
         <NavigatingAPI />
+        <GetRouterAPI />
+        <GetResponseAPI />
+        <GetNavigationAPI />
       </APIBlock>
     </React.Fragment>
   );
