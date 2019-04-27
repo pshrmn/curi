@@ -1,4 +1,4 @@
-## Next
+## 2.0.0-beta.0
 
 * Add `Router` component, which takes a `router` prop.
 * Export `getRouter` function for accessing router from components.

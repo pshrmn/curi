@@ -12,8 +12,8 @@
   "dependencies": {
     "@curi/helpers": "2.0.0-beta.3",
     "@curi/route-prefetch": "2.0.0-beta.11",
-    "@curi/router": "2.0.0-beta.15",
-    "@curi/svelte": "2.0.0-alpha.3",
+    "@curi/router": "2.0.0-beta.16",
+    "@curi/svelte": "2.0.0-beta.0",
     "@hickory/browser": "^2.0.0-beta.13",
     "svelte-spinner": "^2.0.0"
   },

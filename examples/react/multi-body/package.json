@@ -10,7 +10,7 @@
   "license": "MIT",
   "dependencies": {
     "@curi/react-dom": "2.0.0-beta.12",
-    "@curi/router": "2.0.0-beta.15",
+    "@curi/router": "2.0.0-beta.16",
     "@hickory/browser": "^2.0.0-beta.13",
     "prop-types": "^15.6.0",
     "react": "^16.9.0-alpha.0",
