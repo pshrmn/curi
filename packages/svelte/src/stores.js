@@ -3,17 +3,16 @@ import { getContext, setContext } from "svelte";
 
 export function curiStores(_router) {
   const router = readable(_router);
-  const response = readable(_router.current(), set => {
-    const stopObserving = _router.observe(({ response }) => {
+  const initial = _router.current();
+  const response = readable(initial.response, set => {
+    return _router.observe(({ response }) => {
       set(response);
     });
-    return stopObserving;
   });
-  const navigation = readable(_router.current(), set => {
-    const stopObserving = _router.observe(({ navigation }) => {
+  const navigation = readable(initial.navigation, set => {
+    return _router.observe(({ navigation }) => {
       set(navigation);
     });
-    return stopObserving;
   });
   return { router, response, navigation };
 }
