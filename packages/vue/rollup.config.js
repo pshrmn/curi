@@ -15,7 +15,6 @@ module.exports = [
     external: [...deps, "vue"],
     plugins: [
       plugins.typescript,
-      plugins.replacePure,
       plugins.resolveNode,
       plugins.commonjs,
       plugins.sizeSnapshot
@@ -33,7 +32,6 @@ module.exports = [
     external: [...deps, "vue"],
     plugins: [
       plugins.typescript,
-      plugins.replacePure,
       plugins.resolveNode,
       plugins.commonjs,
       plugins.sizeSnapshot
@@ -51,7 +49,6 @@ module.exports = [
     external: ["vue"],
     plugins: [
       plugins.typescript,
-      plugins.replacePure,
       plugins.replaceWithDevelopment,
       plugins.resolveNode,
       plugins.commonjs,
@@ -71,7 +68,6 @@ module.exports = [
     external: ["vue"],
     plugins: [
       plugins.typescript,
-      plugins.replacePure,
       plugins.replaceWithProduction,
       plugins.resolveNode,
       plugins.commonjs,

@@ -23,7 +23,6 @@ module.exports = [
     plugins: [
       svelte,
       babel,
-      plugins.replacePure,
       plugins.resolveNode,
       plugins.commonjs,
       plugins.sizeSnapshot
@@ -41,7 +40,6 @@ module.exports = [
     plugins: [
       svelte,
       babel,
-      plugins.replacePure,
       plugins.resolveNode,
       plugins.commonjs,
       plugins.sizeSnapshot

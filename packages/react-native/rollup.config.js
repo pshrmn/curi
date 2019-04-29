@@ -15,7 +15,6 @@ module.exports = [
     external: [...deps, "react", "react-native"],
     plugins: [
       plugins.typescript,
-      plugins.replacePure,
       plugins.resolveNode,
       plugins.commonjs,
       plugins.sizeSnapshot
@@ -33,7 +32,6 @@ module.exports = [
     external: [...deps, "react", "react-native"],
     plugins: [
       plugins.typescript,
-      plugins.replacePure,
       plugins.resolveNode,
       plugins.commonjs,
       plugins.sizeSnapshot
