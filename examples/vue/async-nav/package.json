@@ -14,7 +14,7 @@
   "dependencies": {
     "@curi/router": "2.0.0-beta.16",
     "@curi/vue": "2.0.0-alpha.5",
-    "@hickory/browser": "^2.0.0-beta.13",
+    "@hickory/browser": "2.0.0-beta.14",
     "epic-spinners": "^1.0.3",
     "vue": "^2.5.22"
   }
