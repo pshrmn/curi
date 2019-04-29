@@ -13,7 +13,6 @@ module.exports = [
     external: [...deps, "path"],
     plugins: [
       plugins.typescript,
-      plugins.replacePure,
       plugins.resolveNode,
       plugins.commonjs,
       plugins.sizeSnapshot

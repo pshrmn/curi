@@ -5,12 +5,6 @@ const resolve = require("rollup-plugin-node-resolve");
 const { sizeSnapshot } = require("rollup-plugin-size-snapshot");
 const typescript = require("rollup-plugin-typescript2");
 
-exports.replacePure = replace({
-  values: {
-    "@class": "#__PURE__"
-  },
-  delimiters: ["", ""]
-});
 exports.replaceWithProduction = replace({
   "process.env.NODE_ENV": `"production"`
 });
