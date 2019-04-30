@@ -1,12 +1,11 @@
-let mappedModule, mappedComponent;
+let mappedModule;
+const mappedComponent = "<rootDir>/components/$1";
 switch (process.env.TEST_ENV) {
   case "cjs":
     mappedModule = "<rootDir>/dist/curi-svelte.js";
-    mappedComponent = "<rootDir>/components/$1";
     break;
   default:
     mappedModule = "<rootDir>/src/index";
-    mappedComponent = "<rootDir>/src/$1";
 }
 
 module.exports = {

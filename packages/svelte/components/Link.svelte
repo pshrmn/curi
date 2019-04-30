@@ -22,7 +22,6 @@
   export let hash = undefined;
   export let query = undefined;
   export let state = null;
-  export let navigating = false;
   export let forward = {};
 
   $: url = router.url({ name, params, hash, query });
