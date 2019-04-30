@@ -12,8 +12,8 @@
   ],
   "sideEffects": false,
   "scripts": {
-    "prebuild": "rimraf dist && rimraf components",
-    "build": "BABEL_ENV=build rollup -c && node ./scripts/copyHTML",
+    "prebuild": "rimraf dist",
+    "build": "BABEL_ENV=build rollup -c",
     "prepare": "npm run build",
     "test": "npm run test:source && npm run test:cjs",
     "test:cjs": "TEST_ENV=cjs jest",
