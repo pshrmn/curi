@@ -1,7 +1,7 @@
 <Link
   name={name}
   params={params}
-  forward={{ class: className }}
+  class={className}
 >
   <slot></slot>
 </Link>
