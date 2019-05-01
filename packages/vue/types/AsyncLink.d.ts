@@ -9,7 +9,6 @@ export interface AsyncLinkComponent extends Vue {
     url: string;
     click(e: MouseEvent): void;
     navigating: boolean;
-    forward?: object;
 }
 declare const Link: ComponentOptions<AsyncLinkComponent>;
 export default Link;

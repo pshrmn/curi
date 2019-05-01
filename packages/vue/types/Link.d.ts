@@ -8,7 +8,6 @@ export interface LinkComponent extends Vue {
     state?: any;
     url: string;
     click(e: MouseEvent): void;
-    forward?: object;
 }
 declare const Link: ComponentOptions<LinkComponent>;
 export default Link;

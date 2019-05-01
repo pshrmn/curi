@@ -12,13 +12,12 @@ export interface AsyncLinkComponent extends Vue {
   url: string;
   click(e: MouseEvent): void;
   navigating: boolean;
-  forward?: object;
 }
 
 const Link: ComponentOptions<AsyncLinkComponent> = {
   name: "curi-async-link",
 
-  props: ["name", "params", "hash", "query", "state", "click", "forward"],
+  props: ["name", "params", "hash", "query", "state", "click"],
 
   computed: {
     url: function() {
@@ -43,7 +42,7 @@ const Link: ComponentOptions<AsyncLinkComponent> = {
         this.click(event);
       }
       // @ts-ignore
-      if (canNavigate(event, this.forward && this.forward.target)) {
+      if (canNavigate(event)) {
         event.preventDefault();
         let cancelled, finished;
         cancelled = finished = () => {
@@ -65,7 +64,7 @@ const Link: ComponentOptions<AsyncLinkComponent> = {
     return h(
       "a",
       {
-        attrs: { href: this.url, ...this.forward },
+        attrs: { href: this.url },
         on: { click: this.clickHandler }
       },
       this.$scopedSlots.default({
