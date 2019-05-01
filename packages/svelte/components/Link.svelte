@@ -1,4 +1,4 @@
-<a {...forward} href={url} on:click={handleClick}>
+<a {...rest} href={url} on:click={handleClick}>
   <slot></slot>
 </a>
 
@@ -22,10 +22,21 @@
   export let hash = undefined;
   export let query = undefined;
   export let state = null;
-  export let forward = {};
+
+  const {
+    name: _name,
+    params: _params,
+    hash: _hash,
+    query: _query,
+    state: _state,
+    wrapped: _wrapper,
+    '$$slots': _slots,
+    '$$scope': _scope,
+    ...rest
+  } = $$props;
 
   $: url = router.url({ name, params, hash, query });
-  $: target = forward.target;
+  $: target = rest.target;
 
   function handleClick(event) {
     if (canNavigate(event, target)) {

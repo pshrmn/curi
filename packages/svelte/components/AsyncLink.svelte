@@ -1,4 +1,4 @@
-<a {...forward} href={url} on:click={handleClick}>
+<a {...rest} href={url} on:click={handleClick}>
   <svelte:component this={wrapper} navigating={navigating}>
     <slot></slot>
   </svelte:component>
@@ -24,12 +24,24 @@
   export let hash = undefined;
   export let query = undefined;
   export let state = null;
-  export let navigating = false;
-  export let forward = {};
   export let wrapper;
 
+  let navigating = false;
+
+  const {
+    name: _name,
+    params: _params,
+    hash: _hash,
+    query: _query,
+    state: _state,
+    wrapper: _wrapper,
+    '$$slots': _slots,
+    '$$scope': _scope,
+    ...rest
+  } = $$props;
+
   $: url = router.url({ name, params, hash, query });
-  $: target = forward.target;
+  $: target = rest.target;
 
   let cancelCallbacks;
 

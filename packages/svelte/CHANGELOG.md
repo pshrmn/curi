@@ -1,3 +1,7 @@
+## Next
+
+* Remove `forward` from `Link` and `AsyncLink`. The components automatically pass any extra props to the underlying anchor element.
+
 ## 2.0.0-beta.0
 
 * Add `Router` component, which takes a `router` prop.

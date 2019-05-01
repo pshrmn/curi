@@ -1,5 +1,5 @@
 <Router {router}>
-  <AsyncLink name="Home" forward={{ class: "test", target: "_blank" }}>Home</AsyncLink>
+  <AsyncLink name="Home" href="/oh-no">Home</AsyncLink>
 </Router>
 
 <script>
