@@ -11,7 +11,7 @@ export default function MainContents() {
   return (
     <ul>
       <li>
-        <ActiveLink name="Home" forward={{ className: "home-link" }}>
+        <ActiveLink name="Home" className="home-link">
           Curi
         </ActiveLink>
       </li>

@@ -52,16 +52,16 @@ const StyledNav = styled("nav")`
       align-items: center;
       border-bottom: 3px solid ${color.purple};
       padding: 0 5px;
-  
+
       &:hover {
         color: ${color.brightOrange};
       }
-  
+
       &.active {
         color: ${color.brightOrange};
         border-bottom-color: ${color.brightOrange};
       }
-  
+
       &.activated {
         color: ${color.borderBlue};
         border-bottom-color: ${color.borderBlue};
@@ -71,7 +71,7 @@ const StyledNav = styled("nav")`
   }
 
   a {
-    text-decoration: none;      
+    text-decoration: none;
   }
 `;
 
@@ -84,10 +84,8 @@ function DropdownLink({ name, text, activated, toggle }) {
         e.preventDefault();
         toggle(name);
       }}
-      forward={{
-        "data-hide": false,
-        className: activated ? "activated group" : "group"
-      }}
+      data-hide={false}
+      className={activated ? "activated group" : "group"}
     >
       {text}
     </ActiveLink>
@@ -135,7 +133,7 @@ export default function Header(props) {
       <StyledNav>
         <FlexList>
           <li className="base">
-            <ActiveLink name="Home" forward={{ id: "home-link" }}>
+            <ActiveLink name="Home" id="home-link">
               Curi
             </ActiveLink>
           </li>

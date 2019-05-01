@@ -101,7 +101,7 @@ export function HashSection({
   return (
     <Wrapper css={hashSectionCSS} className={className} id={hash}>
       <Tag>
-        <Link hash={hash} forward={{ className: "header-link" }}>
+        <Link hash={hash} className="header-link">
           {title}
         </Link>
       </Tag>

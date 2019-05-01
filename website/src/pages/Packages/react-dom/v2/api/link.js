@@ -137,18 +137,16 @@ export function LinkAPI() {
           </Warning>
         </HashSection>
 
-        <HashSection tag="h4" meta={{ title: "forward", hash: "Link-forward" }}>
+        <HashSection tag="h4" meta={{ title: "rest", hash: "Link-rest" }}>
           <p>
-            The <IJS>forward</IJS> prop is an object of props to pass on to the
-            rendered anchor component.
+            Any additional props attached to the <IJS>Link</IJS> will be
+            attached to the element rendered by the <IJS>Link</IJS>.
           </p>
 
           <CodeBlock lang="jsx">
             {`<Link
   name="Home"
-  forward={{
-    className: "home"
-  }}
+  className="home"
 >
   Home
 </Link>

@@ -42,7 +42,7 @@ function ActiveLink({
     <Link
       name={name}
       params={params}
-      forward={{ className: active ? "active" : "" }}
+      className={active ? "active" : ""}
     >
       {children}
     </Link>

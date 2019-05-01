@@ -656,8 +656,7 @@ function render({ response }) {
 // The useActive hook returns a boolean indicating
 // if a route is active
 const active = useActive("Home");
-const className = active ? "active" : "";
-<Link name='Home' forward={{ className }}>
+<Link name='Home' className={active ? "active" : ""}>
   Home
 </Link>`}
             </CodeBlock>

@@ -19,6 +19,6 @@ const fancyLink = styled("a")`
   outline-color: ${color.brightOrange};
 `;
 
-export function FancyLink({ forward, ...rest }) {
-  return <Link {...rest} anchor={fancyLink} />;
+export function FancyLink(props) {
+  return <Link {...props} anchor={fancyLink} />;
 }
