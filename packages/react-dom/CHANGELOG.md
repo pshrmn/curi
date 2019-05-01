@@ -1,3 +1,7 @@
+## Next
+
+* Remove `forward` prop from `Link` and `AsyncLink`; additional props will be passed on to underlying element.
+
 ## 2.0.0-beta.10
 
 * `useResponse` only returns `response` and `navigation`.

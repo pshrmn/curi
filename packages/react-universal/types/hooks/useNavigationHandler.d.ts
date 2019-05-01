@@ -4,7 +4,7 @@ import { NavType } from "@hickory/root";
 export interface NavigationHookProps<T> {
     onNav?: (e: T) => void;
     method?: NavType;
-    forward?: object;
+    target?: string;
     state?: any;
 }
 export declare type NavigatingChildren = (navigating: boolean) => ReactNode;

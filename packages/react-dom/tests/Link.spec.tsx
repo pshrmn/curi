@@ -171,11 +171,11 @@ describe("<Link>", () => {
     });
   });
 
-  describe("forward", () => {
-    it("passes forward to the rendered anchor", () => {
+  describe("additional props", () => {
+    it("passes additional props to the rendered anchor", () => {
       ReactDOM.render(
         <Router>
-          <Link name="Test" forward={{ className: "hi" }}>
+          <Link name="Test" className="hi">
             Test
           </Link>
         </Router>,
@@ -189,7 +189,7 @@ describe("<Link>", () => {
     it('does not overwrite "native" props set on the rendered element', () => {
       ReactDOM.render(
         <Router>
-          <Link name="Test" forward={{ href: "/oh-no" }}>
+          <Link name="Test" href="/oh-no">
             Test
           </Link>
         </Router>,
@@ -403,8 +403,8 @@ describe("<Link>", () => {
       expect(mockNavigate.mock.calls.length).toBe(0);
     });
 
-    describe("forward.target", () => {
-      it("calls history.navigate if forward.target is _self", () => {
+    describe("target", () => {
+      it("calls history.navigate if target is _self", () => {
         const mockNavigate = jest.fn();
         const routes = prepareRoutes({
           routes: [
@@ -418,7 +418,7 @@ describe("<Link>", () => {
 
         ReactDOM.render(
           <Router>
-            <Link name="Test" forward={{ target: "_self" }}>
+            <Link name="Test" target="_self">
               Test
             </Link>
           </Router>,
@@ -442,7 +442,7 @@ describe("<Link>", () => {
         expect(mockNavigate.mock.calls.length).toBe(1);
       });
 
-      it("calls history.navigate if forward.target is not defined", () => {
+      it("calls history.navigate if target is not defined", () => {
         const mockNavigate = jest.fn();
         const routes = prepareRoutes({
           routes: [
@@ -478,7 +478,7 @@ describe("<Link>", () => {
         expect(mockNavigate.mock.calls.length).toBe(1);
       });
 
-      it("doesn't call history.navigate if forward.target is defined and not _self", () => {
+      it("doesn't call history.navigate if target is defined and not _self", () => {
         const mockNavigate = jest.fn();
         const routes = prepareRoutes({
           routes: [
@@ -492,7 +492,7 @@ describe("<Link>", () => {
 
         ReactDOM.render(
           <Router>
-            <Link name="Test" forward={{ target: "_blank" }}>
+            <Link name="Test" target="_blank">
               Test
             </Link>
           </Router>,

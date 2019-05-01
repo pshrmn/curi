@@ -191,8 +191,8 @@ describe("<Link>", () => {
     });
   });
 
-  describe("forward", () => {
-    it("passes forward to the rendered anchor", () => {
+  describe("additional props", () => {
+    it("passes additional props to the rendered anchor", () => {
       const mockNavigate = jest.fn();
       const routes = prepareRoutes({
         routes: [
@@ -211,7 +211,7 @@ describe("<Link>", () => {
       const style = { backgroundColor: "red" };
       const tree = renderer.create(
         <Router>
-          <Link name="Test" forward={{ style }}>
+          <Link name="Test" style={style}>
             <Text>Test</Text>
           </Link>
         </Router>
@@ -238,7 +238,7 @@ describe("<Link>", () => {
 
       const tree = renderer.create(
         <Router>
-          <Link name="Test" forward={{ onPress }}>
+          <Link name="Test" onPress={onPress}>
             <Text>Test</Text>
           </Link>
         </Router>

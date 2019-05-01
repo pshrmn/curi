@@ -7,7 +7,7 @@ import { NavType } from "@hickory/root";
 export interface NavigationHookProps<T> {
   onNav?: (e: T) => void;
   method?: NavType;
-  forward?: object;
+  target?: string;
   state?: any;
 }
 export type NavigatingChildren = (navigating: boolean) => ReactNode;
@@ -24,7 +24,7 @@ export function useNavigationHandler<T extends React.BaseSyntheticEvent>(
 ) {
   const router = useRouter();
   // @ts-ignore
-  const target = props.forward && props.forward.target;
+  const target = props.target;
   const eventHandler = React.useCallback(
     function eventHandler(event: T) {
       if (props.onNav) {
@@ -69,7 +69,7 @@ export function useStatefulNavigationHandler<
   }, []);
 
   // @ts-ignore
-  const target = props.forward && props.forward.target;
+  const target = props.target;
   const eventHandler = React.useCallback(
     function eventHandler(event: T) {
       if (props.onNav) {
