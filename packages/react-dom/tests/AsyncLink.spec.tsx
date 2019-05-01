@@ -714,44 +714,6 @@ describe("<AsyncLink>", () => {
     });
 
     describe("target", () => {
-      it("calls history.navigate if target is _self", () => {
-        const mockNavigate = jest.fn();
-        const routes = prepareRoutes({
-          routes: [
-            { name: "Test", path: "test" },
-            { name: "Catch All", path: "(.*)" }
-          ]
-        });
-        const router = createRouter(inMemory, routes);
-        router.history.navigate = mockNavigate;
-        const Router = createRouterComponent(router);
-
-        ReactDOM.render(
-          <Router>
-            <AsyncLink name="Test" target="_self">
-              {() => null}
-            </AsyncLink>
-          </Router>,
-          node
-        );
-        const a = node.querySelector("a");
-        const event = {
-          defaultPrevented: false,
-          preventDefault() {
-            this.defaultPrevented = true;
-          },
-          metaKey: null,
-          altKey: null,
-          ctrlKey: null,
-          shiftKey: null,
-          button: 0
-        };
-        act(() => {
-          Simulate.click(a, event);
-        });
-        expect(mockNavigate.mock.calls.length).toBe(1);
-      });
-
       it("calls history.navigate if target is not defined", () => {
         const mockNavigate = jest.fn();
         const routes = prepareRoutes({
@@ -788,7 +750,7 @@ describe("<AsyncLink>", () => {
         expect(mockNavigate.mock.calls.length).toBe(1);
       });
 
-      it("doesn't call history.navigate if target is defined and not _self", () => {
+      it("doesn't call history.navigate if target is defined", () => {
         const mockNavigate = jest.fn();
         const routes = prepareRoutes({
           routes: [
