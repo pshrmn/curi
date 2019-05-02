@@ -1,5 +1,5 @@
 <Router {router}>
-  <Link name="Home" forward={{ href: "/oh-no" }}>Home</Link>
+  <Link name="Home" class="test" target="_blank">Home</Link>
 </Router>
 
 <script>

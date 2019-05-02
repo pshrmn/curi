@@ -4,7 +4,6 @@
       name="Movie"
       params={{ id: movie.id }}
       wrapper={SpinWhileNavigating}
-      forward={{ class: "link" }}
     >
       {movie.title}
     </AsyncLink>
@@ -25,7 +24,7 @@
     flex-flow: column nowrap;
   }
 
-  .link {
+  .container :global(a) {
     background: #efefef;
     color: #444;
     margin: 5px 0;

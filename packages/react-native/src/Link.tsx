@@ -30,17 +30,32 @@ function canNavigate(event: GestureResponderEvent) {
 
 export const Link = React.forwardRef(
   (props: LinkProps, ref: React.Ref<any>) => {
-    const url = useURL(props);
-    const { eventHandler } = useNavigationHandler<GestureResponderEvent>(
+    const {
+      // url
+      name,
+      params,
+      query,
+      hash,
+      // navigation
+      state,
+      onNav,
+      method,
+      // props
+      children,
+      anchor: Anchor = TouchableHighlight,
+      ...rest
+    } = props;
+    const url = useURL({ name, params, query, hash });
+    const { eventHandler } = useNavigationHandler<GestureResponderEvent>({
       url,
-      props,
+      state,
+      onNav,
+      method,
       canNavigate
-    );
-
-    const { anchor: Anchor = TouchableHighlight, forward, children } = props;
+    });
 
     return (
-      <Anchor {...forward} onPress={eventHandler} ref={ref}>
+      <Anchor {...rest} onPress={eventHandler} ref={ref}>
         {children}
       </Anchor>
     );
@@ -49,15 +64,28 @@ export const Link = React.forwardRef(
 
 export const AsyncLink = React.forwardRef(
   (props: AsyncLinkProps, ref: React.Ref<any>) => {
-    const url = useURL(props);
+    const {
+      // url
+      name,
+      params,
+      query,
+      hash,
+      // navigation
+      state,
+      onNav,
+      method,
+      // props
+      children,
+      anchor: Anchor = TouchableHighlight,
+      ...rest
+    } = props;
+    const url = useURL({ name, params, query, hash });
     const { eventHandler, navigating } = useStatefulNavigationHandler<
       GestureResponderEvent
-    >(url, props, canNavigate);
-
-    const { anchor: Anchor = TouchableHighlight, forward, children } = props;
+    >({ url, state, onNav, method, canNavigate });
 
     return (
-      <Anchor {...forward} onPress={eventHandler} ref={ref}>
+      <Anchor {...rest} onPress={eventHandler} ref={ref}>
         {children(navigating)}
       </Anchor>
     );

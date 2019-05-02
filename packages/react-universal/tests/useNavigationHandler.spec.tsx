@@ -52,7 +52,7 @@ describe("useNavigationHandler", () => {
 
       function Link(props) {
         const url = useURL(props);
-        const { eventHandler } = useNavigationHandler(url, props);
+        const { eventHandler } = useNavigationHandler({ url, ...props });
         return (
           <a href="#" onClick={eventHandler}>
             {props.children}
@@ -93,7 +93,7 @@ describe("useNavigationHandler", () => {
 
       function Link(props) {
         const url = useURL(props);
-        const { eventHandler } = useNavigationHandler(url, props);
+        const { eventHandler } = useNavigationHandler({ url, ...props });
         return (
           <a href="#" onClick={eventHandler}>
             {props.children}
@@ -135,11 +135,11 @@ describe("useNavigationHandler", () => {
 
         function Link(props) {
           const url = useURL(props);
-          const { eventHandler } = useNavigationHandler(
+          const { eventHandler } = useNavigationHandler({
             url,
-            props,
-            canNavigate
-          );
+            canNavigate,
+            ...props
+          });
           return (
             <a href="#" onClick={eventHandler}>
               {props.children}

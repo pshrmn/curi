@@ -139,18 +139,16 @@ export function LinkAPI() {
           </CodeBlock>
         </HashSection>
 
-        <HashSection tag="h4" meta={{ title: "forward", hash: "Link-forward" }}>
+        <HashSection tag="h4" meta={{ title: "rest", hash: "Link-rest" }}>
           <p>
-            The <IJS>forward</IJS> prop is an object of props to pass on to the
-            rendered anchor component.
+            Any additional props attached to the <IJS>Link</IJS> will be
+            attached to the element rendered by the <IJS>Link</IJS>.
           </p>
 
           <CodeBlock lang="jsx">
             {`<Link
   name="Home"
-  forward={{
-    style: {...}
-  }}
+  style={{ ... }}
 >
   <Text>Home</Text>
 </Link>
@@ -158,15 +156,6 @@ export function LinkAPI() {
 //   <Text>Home</Text>
 // </TouchableOpacity>`}
           </CodeBlock>
-
-          <Note>
-            <p>
-              Previously, any extra props passed to a <IJS>Link</IJS> would be
-              forwarded to the anchor component. This behavior is now deprecated
-              and will be removed in <IJS>@curi/react-native</IJS> v2. Please
-              use the <IJS>forward</IJS> prop instead.
-            </p>
-          </Note>
         </HashSection>
       </HashSection>
     </HashSection>

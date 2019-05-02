@@ -1,16 +1,14 @@
 import React from "react";
 import { useActive, Link } from "@curi/react-dom";
 
-const ActiveLink = ({ name, params, partial, ...rest }) => {
+const ActiveLink = ({ name, params, partial, className = "", ...rest }) => {
   const active = useActive({ name, params, partial });
   return (
     <Link
       name={name}
       params={params}
       {...rest}
-      forward={{
-        className: active ? "active" : ""
-      }}
+      className={active ? `${className} active` : className}
     />
   );
 };

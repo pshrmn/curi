@@ -118,7 +118,7 @@ describe("<curi-async-link>", () => {
       expect(a.textContent).toBe("Kokomo");
     });
 
-    it("spreads forward object onto anchor", () => {
+    it("spreads additional props onto anchor", () => {
       wrapper = new Vue({
         el: node,
         template: `
@@ -126,7 +126,7 @@ describe("<curi-async-link>", () => {
             <curi-async-link
               name="Place"
               :params="{ name: 'Aruba' }"
-              :forward="{ class: 'hooray' }"
+              class="hooray"
             >
               Aruba
             </curi-async-link>

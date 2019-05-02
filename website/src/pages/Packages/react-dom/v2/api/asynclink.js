@@ -109,12 +109,9 @@ export function AsyncLinkAPI() {
           </p>
         </HashSection>
 
-        <HashSection
-          tag="h4"
-          meta={{ title: "forward", hash: "AsyncLink-forward" }}
-        >
+        <HashSection tag="h4" meta={{ title: "rest", hash: "AsyncLink-rest" }}>
           <p>
-            See <Link hash="Link-forward">Link forward</Link>
+            See <Link hash="Link-rest">Link rest</Link>
           </p>
         </HashSection>
       </HashSection>

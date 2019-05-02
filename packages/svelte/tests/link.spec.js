@@ -21,13 +21,13 @@ describe("<Link>", () => {
     });
   });
 
-  describe("forward prop", () => {
-    it('forwards "forward" properties to the anchor', () => {
-      test("./cases/link/forward-props");
+  describe("additional props", () => {
+    it("forwards additional properties to the anchor", () => {
+      test("./cases/link/additional-props");
     });
 
-    it('spreads "forward" before native props to avoid overwriting', () => {
-      test("./cases/link/forward-overwrite");
+    it("spreads additional props before native props to avoid overwriting", () => {
+      test("./cases/link/additional-overwrite");
     });
   });
 

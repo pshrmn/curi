@@ -1,3 +1,7 @@
+## Next
+
+* Change `use(Stateful)NavigationHandler` props to access `target`, not `forward`.
+
 ## 2.0.0-beta.11
 
 * Rename `useHref` to `useURL`.

@@ -21,13 +21,13 @@ describe("<AsyncLink>", () => {
     });
   });
 
-  describe("forward prop", () => {
-    it('forwards "forward" properties to the anchor', () => {
-      test("./cases/asynclink/forward-props");
+  describe("additional props", () => {
+    it("forwards additional properties to the anchor", () => {
+      test("./cases/asynclink/additional-props");
     });
 
-    it('spreads "forward" before native props to avoid overwriting', () => {
-      test("./cases/asynclink/forward-overwrite");
+    it("spreads additional props before native props to avoid overwriting", () => {
+      test("./cases/asynclink/additional-overwrite");
     });
   });
 

@@ -11,13 +11,12 @@ export interface LinkComponent extends Vue {
   state?: any;
   url: string;
   click(e: MouseEvent): void;
-  forward?: object;
 }
 
 const Link: ComponentOptions<LinkComponent> = {
   name: "curi-link",
 
-  props: ["name", "params", "hash", "query", "state", "click", "forward"],
+  props: ["name", "params", "hash", "query", "state", "click"],
 
   computed: {
     url: function() {
@@ -36,7 +35,7 @@ const Link: ComponentOptions<LinkComponent> = {
         this.click(event);
       }
       // @ts-ignore
-      if (canNavigate(event, this.forward && this.forward.target)) {
+      if (canNavigate(event)) {
         event.preventDefault();
         this.$router.navigate({
           url: this.url,
@@ -50,7 +49,7 @@ const Link: ComponentOptions<LinkComponent> = {
     return h(
       "a",
       {
-        attrs: { href: this.url, ...this.forward },
+        attrs: { href: this.url },
         on: { click: this.clickHandler }
       },
       this.$slots.default
