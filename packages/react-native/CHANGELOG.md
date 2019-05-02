@@ -1,4 +1,4 @@
-## Next
+## 2.0.0-beta.13
 
 * Remove `forward` prop from `Link` and `AsyncLink`; additional props will be passed on to underlying element.
 

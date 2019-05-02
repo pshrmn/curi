@@ -1,4 +1,4 @@
-## Next
+## 2.0.0-beta.13
 
 * Change `use(Stateful)NavigationHandler` props to access `target`, not `forward`.
 

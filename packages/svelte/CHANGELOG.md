@@ -1,4 +1,4 @@
-## Next
+## 2.0.0-beta.1
 
 * Remove `forward` from `Link` and `AsyncLink`. The components automatically pass any extra props to the underlying anchor element.
 
