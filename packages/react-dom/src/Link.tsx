@@ -25,22 +25,25 @@ export type AsyncLinkProps = BaseLinkProps &
 
 export const Link = React.forwardRef(
   (props: LinkProps, ref: React.Ref<any>) => {
-    const url = useURL(props);
     const {
-      anchor: Anchor = "a",
-      children,
+      // url
       name,
       params,
       query,
       hash,
+      // navigation
       state,
       onNav,
       method,
+      // props
+      children,
+      anchor: Anchor = "a",
       ...rest
     } = props;
+    const url = useURL({ name, params, query, hash });
     const { eventHandler } = useNavigationHandler<
       React.MouseEvent<HTMLElement>
-    >(url, props, canNavigate);
+    >({ url, state, onNav, method, canNavigate, target: rest.target });
 
     return (
       <Anchor {...rest} onClick={eventHandler} href={url} ref={ref}>
@@ -52,22 +55,25 @@ export const Link = React.forwardRef(
 
 export const AsyncLink = React.forwardRef(
   (props: AsyncLinkProps, ref: React.Ref<any>) => {
-    const url = useURL(props);
     const {
-      anchor: Anchor = "a",
-      children,
+      // url
       name,
       params,
       query,
       hash,
+      // navigation
       state,
       onNav,
       method,
+      // props
+      children,
+      anchor: Anchor = "a",
       ...rest
     } = props;
+    const url = useURL({ name, params, query, hash });
     const { eventHandler, navigating } = useStatefulNavigationHandler<
       React.MouseEvent<HTMLElement>
-    >(url, props, canNavigate);
+    >({ url, state, onNav, method, canNavigate, target: rest.target });
 
     return (
       <Anchor {...rest} onClick={eventHandler} href={url} ref={ref}>
