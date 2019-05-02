@@ -178,15 +178,6 @@ export function LinkAPI() {
 >Home</Link>
 // <a href="/" class="home">Home</a>`}
           </CodeBlock>
-
-          <Note>
-            <p>
-              Previously, any extra props passed to a <IJS>Link</IJS> would be
-              forwarded to the anchor component. This behavior is now deprecated
-              and will be removed in <IJS>@curi/react-native</IJS> v2. Please
-              use the <IJS>forward</IJS> prop instead.
-            </p>
-          </Note>
         </HashSection>
       </HashSection>
     </HashSection>

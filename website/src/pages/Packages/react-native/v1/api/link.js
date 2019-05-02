@@ -38,7 +38,7 @@ export function LinkAPI() {
 
       <CodeBlock lang="jsx">
         {`import { Link } from '@curi/react-native';
-  
+
 <Link name='User' params={{ id: 16 }}>
   <Text>User 16</Text>
 </Link>
@@ -185,15 +185,6 @@ export function LinkAPI() {
 //   <Text>Home</Text>
 // </TouchableOpacity>`}
           </CodeBlock>
-
-          <Note>
-            <p>
-              Previously, any extra props passed to a <IJS>Link</IJS> would be
-              forwarded to the anchor component. This behavior is now deprecated
-              and will be removed in <IJS>@curi/react-native</IJS> v2. Please
-              use the <IJS>forward</IJS> prop instead.
-            </p>
-          </Note>
         </HashSection>
       </HashSection>
     </HashSection>
