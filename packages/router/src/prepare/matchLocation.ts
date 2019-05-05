@@ -14,8 +14,6 @@ export function matchLocation(
   location: SessionLocation,
   routes: Array<PreparedRoute>
 ): Match | undefined {
-  // determine which route(s) match, then use the exact match
-  // as the matched route and the rest as partial routes
   for (let i = 0, len = routes.length; i < len; i++) {
     const routeMatches = matchRoute(routes[i], location.pathname);
     if (routeMatches.length) {
@@ -59,13 +57,11 @@ function createMatch(
   routeMatches: Array<MatchingRoute>,
   location: SessionLocation
 ): Match {
-  const partials: Array<string> = [];
   const params: Params = {};
 
   const best: MatchingRoute = routeMatches.pop() as MatchingRoute;
   // handle ancestor routes
   routeMatches.forEach(match => {
-    partials.push(match.route.public.name);
     mergeParsedParams(match.route, params, match.parsed);
   });
 
@@ -76,9 +72,8 @@ function createMatch(
     route: best.route.public,
     match: {
       location,
-      name: best.route.public.name,
-      params,
-      partials
+      name: best.route.public.meta.name,
+      params
     }
   };
 }

@@ -1,2 +1,2 @@
-import { Interaction } from "@curi/types";
-export default function generatePathname(): Interaction;
+import { Route, Params } from "@curi/types";
+export default function pathname(route: Route, params: Params): string | void;

@@ -67,7 +67,7 @@ export default function createRouter<O = HistoryOptions>(
       finalizeResponseAndEmit(route, match, pendingNav, navigation, null);
     } else {
       announceAsyncNav();
-      route
+      route.methods
         .resolve(match, options.external)
         .then(
           resolved => ({ resolved, error: null }),
@@ -189,7 +189,7 @@ export default function createRouter<O = HistoryOptions>(
   function url(details: RouteLocation): string {
     let { name, params, hash, query } = details;
     const pathname =
-      name != null ? routes.interactions.pathname(name, params) : undefined;
+      name != null ? routes.interactions("pathname", name, params) : undefined;
     return history.url({ pathname, hash, query });
   }
 

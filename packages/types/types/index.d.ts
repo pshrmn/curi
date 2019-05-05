@@ -56,7 +56,6 @@ export interface IntrinsicResponse {
     location: SessionLocation;
     name: string;
     params: Params;
-    partials: Array<string>;
 }
 export interface RedirectLocation extends RouteLocation {
     url: string;
@@ -86,12 +85,18 @@ export interface RouteDescriptor {
     };
 }
 export interface Route<R = unknown> {
-    name: string;
-    path: string;
-    keys: Array<string | number>;
-    pathname: PathFunction;
-    resolve: R;
-    respond?: RespondFn;
+    meta: {
+        name: string;
+        path: string;
+        keys: Array<string | number>;
+        ancestors: Array<string>;
+        descendants: Array<string>;
+    };
+    methods: {
+        pathname: PathFunction;
+        resolve: R;
+        respond?: RespondFn;
+    };
     extra?: {
         [key: string]: any;
     };
@@ -129,13 +134,5 @@ export interface ResolveResults {
     resolved: any;
     error: any;
 }
-export interface Interaction {
-    name: string;
-    register: RegisterInteraction;
-    get: GetInteraction;
-}
-export declare type Interactions = {
-    [key: string]: GetInteraction;
-};
-export declare type RegisterInteraction = (route: Route, parent?: any) => any;
-export declare type GetInteraction = (name: string, ...rest: Array<any>) => any;
+export declare type Interaction = (route: Readonly<Route>, ...rest: Array<any>) => any;
+export declare type Interactions = (type: string, name: string, ...rest: Array<any>) => any;

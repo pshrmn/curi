@@ -7,10 +7,20 @@ import { RouteDescriptor, Params } from "@curi/types";
 
 import { PreparedRoute } from "./prepareRoutes";
 
+interface ParentData {
+  path: string;
+  ancestors: Array<string>;
+  keys: Array<string | number>;
+}
+
 export function createRoute(
   props: RouteDescriptor,
   usedNames: Set<string>,
-  parentPath?: string
+  parent: ParentData = {
+    path: "",
+    ancestors: [],
+    keys: []
+  }
 ): PreparedRoute {
   if (process.env.NODE_ENV !== "production") {
     if (usedNames.has(props.name)) {
@@ -31,37 +41,60 @@ export function createRoute(
     }
   }
 
-  let fullPath = withLeadingSlash(join(parentPath || "", props.path));
+  let fullPath = withLeadingSlash(join(parent.path, props.path));
 
   const { match: matchOptions = {}, compile: compileOptions = {} } =
     props.pathOptions || {};
   // end must be false for routes with children, but we want to track its original value
   const exact = matchOptions.end == null || matchOptions.end;
 
-  let children: Array<PreparedRoute> = [];
   if (props.children && props.children.length) {
     matchOptions.end = false;
-    children = props.children.map((child: RouteDescriptor) => {
-      return createRoute(child, usedNames, fullPath);
-    });
   }
 
   const keys: Array<Key> = [];
   const re = PathToRegexp(withLeadingSlash(props.path), keys, matchOptions);
+  let keyNames = keys.map(key => key.name);
+  if (parent.keys.length) {
+    keyNames = parent.keys.concat(keyNames);
+  }
+
+  let children: Array<PreparedRoute> = [];
+  let ancestors = parent.ancestors;
+  let descendants: Array<string> = [];
+  if (props.children && props.children.length) {
+    children = props.children.map((child: RouteDescriptor) => {
+      return createRoute(child, usedNames, {
+        path: fullPath,
+        ancestors: [...ancestors, props.name],
+        keys: keyNames
+      });
+    });
+    children.forEach(child => {
+      descendants.push(child.public.meta.name);
+      descendants = descendants.concat(child.public.meta.descendants);
+    });
+  }
 
   const compiled = PathToRegexp.compile(fullPath);
 
   return {
     public: {
-      name: props.name,
-      path: props.path,
-      keys: keys.map(key => key.name),
-      resolve: props.resolve,
-      respond: props.respond,
-      extra: props.extra,
-      pathname(params?: Params) {
-        return compiled(params, compileOptions);
-      }
+      meta: {
+        name: props.name,
+        path: props.path,
+        keys: keyNames,
+        ancestors,
+        descendants
+      },
+      methods: {
+        resolve: props.resolve,
+        respond: props.respond,
+        pathname(params?: Params) {
+          return compiled(params, compileOptions);
+        }
+      },
+      extra: props.extra
     },
     matcher: {
       re,

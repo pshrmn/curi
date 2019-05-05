@@ -12,6 +12,8 @@ export interface PreparedRoute {
 }
 export interface PrepareRoutesOptions {
     routes: Array<RouteDescriptor>;
-    interactions?: Array<Interaction>;
+    interactions?: {
+        [key: string]: Interaction;
+    };
 }
 export default function prepareRoutes(options: PrepareRoutesOptions): RouteMatcher;

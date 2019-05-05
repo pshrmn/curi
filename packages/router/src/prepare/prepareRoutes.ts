@@ -1,6 +1,6 @@
 import { createRoute } from "./createRoute";
 import { matchLocation } from "./matchLocation";
-import registerRoutes from "./registerRoutes";
+import mapRoutes from "./mapRoutes";
 import pathname from "../interactions/pathname";
 import active from "../interactions/active";
 
@@ -10,7 +10,6 @@ import {
   RouteMatcher,
   RouteDescriptor,
   Interaction,
-  Interactions,
   Route,
   ParamParsers
 } from "@curi/types";
@@ -28,25 +27,42 @@ export interface PreparedRoute {
 
 export interface PrepareRoutesOptions {
   routes: Array<RouteDescriptor>;
-  interactions?: Array<Interaction>;
+  interactions?: { [key: string]: Interaction };
 }
 
 export default function prepareRoutes(
   options: PrepareRoutesOptions
 ): RouteMatcher {
-  const { routes, interactions = [] } = options;
   const usedNames = new Set<string>();
-  const prepared = routes.map(route => createRoute(route, usedNames));
-  const interactionGetters: Interactions = {};
-  [pathname(), active(), ...interactions].map(interaction => {
-    interactionGetters[interaction.name] = interaction.get;
-    registerRoutes(prepared, interaction);
-  });
+  const prepared = options.routes.map(route => createRoute(route, usedNames));
+  const mappedRoutes = mapRoutes(prepared, {});
+  const interactions: { [key: string]: Interaction } = { pathname, active };
+  for (let key in options.interactions) {
+    interactions[key] = options.interactions[key];
+  }
 
   return {
     match(location: SessionLocation) {
       return matchLocation(location, prepared);
     },
-    interactions: interactionGetters
+    interactions(type: string, name: string, ...rest: Array<any>) {
+      if (!(type in interactions)) {
+        if (process.env.NODE_ENV !== "production") {
+          console.warn(
+            `Attempting to use the "${type}" interaction, but it is not registered.`
+          );
+        }
+        return;
+      }
+      if (!(name in mappedRoutes)) {
+        if (process.env.NODE_ENV !== "production") {
+          console.warn(
+            `Attempting to use route "${name}", but no route with that name exists.`
+          );
+        }
+        return;
+      }
+      return interactions[type](mappedRoutes[name], ...rest);
+    }
   };
 }

@@ -1,34 +1,18 @@
-import { Route, Interaction } from "@curi/types";
+import { Route } from "@curi/types";
 
-export default function ancestors(): Interaction {
-  let scoped: { [key: string]: Array<string> } = {};
-
-  function get(name: string, level: number): string;
-  function get(name: string): Array<string>;
-  function get(name: string, level?: number) {
-    const ancestors = scoped[name];
-    if (!ancestors) {
-      return;
-    }
-    if (level == null) {
-      return ancestors.slice();
-    }
-    if (level <= 0) {
-      return;
-    }
-    return ancestors[level - 1];
+function ancestors(route: Route, level: number): string;
+function ancestors(route: Route): Array<string>;
+function ancestors(route: Route, level?: number) {
+  if (!route.meta.ancestors.length) {
+    return;
   }
-
-  return {
-    name: "ancestors",
-    register: (
-      route: Route,
-      parentRoutes: Array<string> = []
-    ): Array<string> => {
-      let { name } = route;
-      scoped[name] = parentRoutes;
-      return [name].concat(parentRoutes);
-    },
-    get
-  };
+  if (level == null) {
+    return route.meta.ancestors.slice();
+  }
+  if (level <= 0) {
+    return;
+  }
+  return route.meta.ancestors[route.meta.ancestors.length - level];
 }
+
+export default ancestors;

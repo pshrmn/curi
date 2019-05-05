@@ -6,14 +6,6 @@ import { SessionLocation } from "@hickory/root";
 import prefetch from "@curi/route-prefetch";
 
 describe("prefetch route interaction", () => {
-  it("is called using name", () => {
-    const routes = prepareRoutes({
-      routes: [{ name: "Catch All", path: "(.*)" }],
-      interactions: [prefetch()]
-    });
-    expect(routes.interactions.prefetch).toBeDefined();
-  });
-
   describe("routes", () => {
     it("adds routes with async function(s)", () => {
       const routes = prepareRoutes({
@@ -27,25 +19,25 @@ describe("prefetch route interaction", () => {
           },
           { name: "Catch All", path: "(.*)" }
         ],
-        interactions: [prefetch()]
+        interactions: { prefetch }
       });
-      expect(routes.interactions.prefetch("Player")).toBeDefined();
+      expect(routes.interactions("prefetch", "Player")).toBeDefined();
     });
 
-    it("does not register if there are no async functions", () => {
+    it("resolves with error for synchronous routes", () => {
       const routes = prepareRoutes({
         routes: [
           { name: "None", path: "player" },
           { name: "Catch All", path: "(.*)" }
         ],
-        interactions: [prefetch()]
+        interactions: { prefetch }
       });
       // This is a bit roundabout, but we verify that the paths did not register
       // by resolving from catch
       expect.assertions(1);
-      return routes.interactions.prefetch("None").then(resolved => {
+      return routes.interactions("prefetch", "None").then(resolved => {
         expect(resolved.error).toBe(
-          "Could not prefetch data for None because it is not registered."
+          "Could not prefetch data for None because it does not have a resolve function."
         );
       });
     });
@@ -64,30 +56,12 @@ describe("prefetch route interaction", () => {
           },
           { name: "Catch All", path: "(.*)" }
         ],
-        interactions: [prefetch()]
+        interactions: { prefetch }
       });
-      expect(routes.interactions.prefetch("Player").then).toBeDefined();
+      expect(routes.interactions("prefetch", "Player").then).toBeDefined();
     });
 
-    it("returns Promise with error message when path not found", () => {
-      const name = "Anonymous";
-
-      const routes = prepareRoutes({
-        routes: [{ name: "Catch All", path: "(.*)" }],
-        interactions: [prefetch()]
-      });
-
-      const output = routes.interactions.prefetch(name, { id: 123 });
-      expect.assertions(2);
-      expect(output).toBeInstanceOf(Promise);
-      return output.then(resolved => {
-        expect(resolved.error).toBe(
-          `Could not prefetch data for ${name} because it is not registered.`
-        );
-      });
-    });
-
-    it("returns Promise with error message when route throws", () => {
+    it("returns Promise with error message when resolve throws", () => {
       const name = "Thrower";
       const errorMessage = "woops!";
       const routes = prepareRoutes({
@@ -96,17 +70,15 @@ describe("prefetch route interaction", () => {
             name,
             path: "throws",
             resolve() {
-              return new Promise((resolve, reject) => {
-                reject(errorMessage);
-              });
+              return Promise.reject(errorMessage);
             }
           },
           { name: "Catch All", path: "(.*)" }
         ],
-        interactions: [prefetch()]
+        interactions: { prefetch }
       });
 
-      const output = routes.interactions.prefetch(name, { id: 123 });
+      const output = routes.interactions("prefetch", name, { id: 123 });
       expect.assertions(2);
       expect(output).toBeInstanceOf(Promise);
       return output.then(resolved => {
@@ -133,11 +105,11 @@ describe("prefetch route interaction", () => {
             },
             { name: "Catch All", path: "(.*)" }
           ],
-          interactions: [prefetch()]
+          interactions: { prefetch }
         });
         const paramsToPass = { id: 1 };
         const locationToPass = {} as SessionLocation;
-        routes.interactions.prefetch("Player", {
+        routes.interactions("prefetch", "Player", {
           match: {
             name: "Player",
             params: paramsToPass,
@@ -164,9 +136,9 @@ describe("prefetch route interaction", () => {
             },
             { name: "Catch All", path: "(.*)" }
           ],
-          interactions: [prefetch()]
+          interactions: { prefetch }
         });
-        routes.interactions.prefetch("Player", { external });
+        routes.interactions("prefetch", "Player", { external });
       });
     });
   });

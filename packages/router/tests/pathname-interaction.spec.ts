@@ -4,16 +4,6 @@ import { inMemory } from "@hickory/in-memory";
 import { prepareRoutes, createRouter } from "@curi/router";
 
 describe("pathname route interaction", () => {
-  describe("calling", () => {
-    it("it is accessed through route.name()", () => {
-      const routes = prepareRoutes({
-        routes: [{ name: "Catch All", path: "(.*)" }]
-      });
-      const router = createRouter(inMemory, routes);
-      expect(router.route.pathname).toBeDefined();
-    });
-  });
-
   describe("generating pathnames", () => {
     it("works when paths contain no params", () => {
       // duh?
@@ -24,7 +14,7 @@ describe("pathname route interaction", () => {
         ]
       });
       const router = createRouter(inMemory, routes);
-      const output = router.route.pathname("Static");
+      const output = router.route("pathname", "Static");
       expect(output).toBe("/this/has/no/params");
     });
 
@@ -36,14 +26,14 @@ describe("pathname route interaction", () => {
         ]
       });
       const router = createRouter(inMemory, routes);
-      const output = router.route.pathname("Player", { id: 17 });
+      const output = router.route("pathname", "Player", { id: 17 });
       expect(output).toBe("/player/17");
     });
 
     it("returns undefined and logs error when path not found", () => {
-      const error = console.error;
+      const warn = console.warn;
       const mockError = jest.fn();
-      console.error = mockError;
+      console.warn = mockError;
 
       const routes = prepareRoutes({
         routes: [
@@ -52,12 +42,12 @@ describe("pathname route interaction", () => {
         ]
       });
       const router = createRouter(inMemory, routes);
-      const output = router.route.pathname("Anonymous", { id: 123 });
+      const output = router.route("pathname", "Anonymous", { id: 123 });
 
       expect(output).toBe(undefined);
       expect(mockError.mock.calls.length).toBe(1);
 
-      console.error = error;
+      console.warn = warn;
     });
   });
 });

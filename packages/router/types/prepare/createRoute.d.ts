@@ -1,3 +1,9 @@
 import { RouteDescriptor } from "@curi/types";
 import { PreparedRoute } from "./prepareRoutes";
-export declare function createRoute(props: RouteDescriptor, usedNames: Set<string>, parentPath?: string): PreparedRoute;
+interface ParentData {
+    path: string;
+    ancestors: Array<string>;
+    keys: Array<string | number>;
+}
+export declare function createRoute(props: RouteDescriptor, usedNames: Set<string>, parent?: ParentData): PreparedRoute;
+export {};

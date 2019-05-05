@@ -30,11 +30,11 @@ export default function finishResponse(
     response[key as keyof Response] = match[key as keyof IntrinsicResponse];
   }
 
-  if (!route.respond) {
+  if (!route.methods.respond) {
     return response;
   }
 
-  const results = route.respond({
+  const results = route.methods.respond({
     resolved,
     error,
     match,

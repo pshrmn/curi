@@ -5,7 +5,7 @@ export default function pathnames(
 ): Array<string> {
   const { routes, pages } = config;
   return pages.map(page => {
-    const pathname = routes.interactions.pathname(page.name, page.params);
+    const pathname = routes.interactions("pathname", page.name, page.params);
     if (process.env.NODE_ENV !== "production") {
       if (pathname == null) {
         console.warn(

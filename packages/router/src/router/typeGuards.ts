@@ -7,7 +7,7 @@ import {
 } from "@curi/types";
 
 export function isAsyncRoute(route: Route): route is AsyncRoute {
-  return typeof route.resolve !== "undefined";
+  return typeof route.methods.resolve !== "undefined";
 }
 
 export function isExternalRedirect(

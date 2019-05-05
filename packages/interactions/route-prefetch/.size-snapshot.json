@@ -1,8 +1,8 @@
 {
   "dist/curi-route-prefetch.es.js": {
-    "bundled": 945,
-    "minified": 447,
-    "gzipped": 272,
+    "bundled": 557,
+    "minified": 351,
+    "gzipped": 216,
     "treeshaked": {
       "rollup": {
         "code": 0,
@@ -14,18 +14,18 @@
     }
   },
   "dist/curi-route-prefetch.js": {
-    "bundled": 962,
-    "minified": 460,
-    "gzipped": 280
+    "bundled": 574,
+    "minified": 364,
+    "gzipped": 227
   },
   "dist/curi-route-prefetch.umd.js": {
-    "bundled": 1284,
-    "minified": 613,
-    "gzipped": 354
+    "bundled": 870,
+    "minified": 527,
+    "gzipped": 301
   },
   "dist/curi-route-prefetch.min.js": {
-    "bundled": 1284,
-    "minified": 613,
-    "gzipped": 354
+    "bundled": 870,
+    "minified": 527,
+    "gzipped": 301
   }
 }

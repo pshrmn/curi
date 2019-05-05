@@ -1,4 +1,4 @@
-import { Interaction, Params } from "@curi/types";
+import { Route, Response, Params } from "@curi/types";
 import { SessionLocation } from "@hickory/root";
 export declare type ValidateComponents = (l: SessionLocation) => boolean;
 export interface ActiveCheckOptions {
@@ -6,4 +6,4 @@ export interface ActiveCheckOptions {
     partial?: boolean;
     components?: ValidateComponents;
 }
-export default function active(): Interaction;
+export default function active(route: Route, response: Response, options?: ActiveCheckOptions): boolean;

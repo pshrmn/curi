@@ -5,16 +5,12 @@ import { createRouter, prepareRoutes } from "@curi/router";
 import { InMemoryOptions } from "@hickory/in-memory";
 
 describe("active route interaction", () => {
-  it("is included in the router's interactions", () => {
-    const routes = prepareRoutes({
-      routes: [{ name: "Catch All", path: "(.*)" }]
-    });
-    const router = createRouter(inMemory, routes);
-    expect(router.route.active).toBeDefined();
-  });
-
   describe("checking if a route is active", () => {
-    it("returns false if the route is not registered", () => {
+    it("warns and is undefined if the route is not registered", () => {
+      const realWarn = console.warn;
+      const fakeWarn = jest.fn();
+      console.warn = fakeWarn;
+
       const routes = prepareRoutes({
         routes: [
           {
@@ -27,10 +23,18 @@ describe("active route interaction", () => {
       const router = createRouter<InMemoryOptions>(inMemory, routes);
 
       const { response } = router.current();
-      const playerIsActive = router.route.active("Does Not Exist", response, {
-        params: { id: "6" }
-      });
-      expect(playerIsActive).toBe(false);
+      const playerIsActive = router.route(
+        "active",
+        "Does Not Exist",
+        response,
+        {
+          params: { id: "6" }
+        }
+      );
+      expect(playerIsActive).toBeUndefined();
+      expect(fakeWarn.mock.calls.length).toBe(1);
+
+      console.warn = realWarn;
     });
 
     it("returns false when name does not match", () => {
@@ -46,7 +50,7 @@ describe("active route interaction", () => {
       const router = createRouter<InMemoryOptions>(inMemory, routes);
 
       const { response } = router.current();
-      const playerIsActive = router.route.active("Player", response, {
+      const playerIsActive = router.route("active", "Player", response, {
         params: { id: "6" }
       });
       expect(playerIsActive).toBe(false);
@@ -66,7 +70,7 @@ describe("active route interaction", () => {
         const router = createRouter<InMemoryOptions>(inMemory, routes);
 
         const { response } = router.current();
-        const homeIsActive = router.route.active("Home", response);
+        const homeIsActive = router.route("active", "Home", response);
         expect(homeIsActive).toBe(true);
       });
 
@@ -88,7 +92,7 @@ describe("active route interaction", () => {
           });
 
           const { response } = router.current();
-          const playerIsActive = router.route.active("Player", response, {
+          const playerIsActive = router.route("active", "Player", response, {
             params: { id: "7" }
           });
           expect(playerIsActive).toBe(true);
@@ -111,7 +115,7 @@ describe("active route interaction", () => {
           });
 
           const { response } = router.current();
-          const playerIsActive = router.route.active("Player", response, {
+          const playerIsActive = router.route("active", "Player", response, {
             params: { id: "6" }
           });
           expect(playerIsActive).toBe(false);
@@ -134,7 +138,7 @@ describe("active route interaction", () => {
           });
 
           const { response } = router.current();
-          const playerIsActive = router.route.active("Player", response);
+          const playerIsActive = router.route("active", "Player", response);
           expect(playerIsActive).toBe(false);
         });
       });
@@ -163,7 +167,7 @@ describe("active route interaction", () => {
           });
 
           const { response } = router.current();
-          const playerIsActive = router.route.active("Player", response, {
+          const playerIsActive = router.route("active", "Player", response, {
             params: { id: "6" }
           });
           expect(playerIsActive).toBe(false);
@@ -192,7 +196,7 @@ describe("active route interaction", () => {
           });
 
           const { response } = router.current();
-          const playerIsActive = router.route.active("Player", response, {
+          const playerIsActive = router.route("active", "Player", response, {
             params: { id: "6" },
             partial: false
           });
@@ -222,7 +226,7 @@ describe("active route interaction", () => {
           });
 
           const { response } = router.current();
-          const playerIsActive = router.route.active("Player", response, {
+          const playerIsActive = router.route("active", "Player", response, {
             params: { id: "6" },
             partial: true
           });
@@ -248,7 +252,7 @@ describe("active route interaction", () => {
           });
 
           const { response } = router.current();
-          const isActive = router.route.active("Home", response, {
+          const isActive = router.route("active", "Home", response, {
             components: location => location.hash === "test"
           });
           expect(isActive).toBe(true);
@@ -271,7 +275,7 @@ describe("active route interaction", () => {
           });
 
           const { response } = router.current();
-          const isActive = router.route.active("Home", response, {
+          const isActive = router.route("active", "Home", response, {
             components: location => false
           });
           expect(isActive).toBe(false);
@@ -294,7 +298,7 @@ describe("active route interaction", () => {
           });
           const components = jest.fn(() => true);
           const { response } = router.current();
-          const isActive = router.route.active("Home", response, {
+          const isActive = router.route("active", "Home", response, {
             components
           });
           expect(isActive).toBe(false);

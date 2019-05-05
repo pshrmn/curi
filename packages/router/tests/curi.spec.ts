@@ -5,10 +5,9 @@ import { NavType } from "@hickory/root";
 
 import { createRouter, prepareRoutes } from "@curi/router";
 
-describe("curi", () => {
+describe("createRouter", () => {
   describe("constructor", () => {
-    // these tests rely on the fact that the pathname generator
-    // is a default interaction
+    // these tests rely on the fact that the pathname interaction is built-in
     it("registers routes", () => {
       const routes = prepareRoutes({
         routes: [
@@ -21,7 +20,7 @@ describe("curi", () => {
 
       const names = ["Home", "About", "Contact"];
       names.forEach(n => {
-        expect(router.route.pathname(n)).toBeDefined();
+        expect(router.route("pathname", n)).toBeDefined();
       });
     });
 
@@ -43,23 +42,26 @@ describe("curi", () => {
       const router = createRouter(inMemory, routes);
       const names = ["Email", "Phone"];
       names.forEach(n => {
-        expect(router.route.pathname(n)).toBeDefined();
+        expect(router.route("pathname", n)).toBeDefined();
       });
     });
 
     it("makes interactions available through router.route", () => {
-      const createfakeInteraction = () => ({
-        name: "fake",
-        register: () => {},
-        reset: () => {},
-        get: () => {}
-      });
+      const realWarn = console.warn;
+      const fakeWarn = jest.fn();
+      console.warn = fakeWarn;
+
+      function fake() {}
       const routes = prepareRoutes({
         routes: [{ name: "Home", path: "" }],
-        interactions: [createfakeInteraction()]
+        interactions: { fake }
       });
       const router = createRouter(inMemory, routes);
-      expect(router.route.fake).toBeDefined();
+      router.route("fake", "Home");
+
+      expect(fakeWarn.mock.calls.length).toBe(0);
+
+      console.warn = realWarn;
     });
 
     describe("options", () => {
@@ -341,113 +343,16 @@ describe("curi", () => {
   });
 
   describe("interactions", () => {
-    it("includes pathname interaction by default", () => {
+    it("uses registered interactions from routes", () => {
       const routes = prepareRoutes({
-        routes: [{ name: "Home", path: "" }]
+        routes: [{ name: "Catch All", path: "(.*)" }]
       });
+      const mockInteractions = jest.fn();
+      routes.interactions = mockInteractions;
       const router = createRouter(inMemory, routes);
-      expect(router.route.pathname).toBeDefined();
-    });
-
-    it("includes pathname interaction even when other interactions are provided", () => {
-      const firstInteractionCache = {};
-      const createfirstInteraction = () => {
-        return {
-          name: "first",
-          register: (route, extra) => {
-            firstInteractionCache[route.name] = route.path;
-          },
-          get(route) {},
-          reset() {}
-        };
-      };
-
-      const routes = prepareRoutes({
-        routes: [{ name: "Home", path: "" }],
-        interactions: [createfirstInteraction()]
-      });
-      const router = createRouter(inMemory, routes);
-      expect(router.route.pathname).toBeDefined();
-    });
-
-    it("registers all of the routes with all of the interactions", () => {
-      // this might be a bit convoluted, but it ensures that the interactions
-      // are registered as expected
-      const firstInteractionCache = {};
-      const secondInteractionCache = {};
-      const createfirstInteraction = () => {
-        return {
-          name: "first",
-          register: (route, extra) => {
-            firstInteractionCache[route.name] = route.path;
-          },
-          get(route) {},
-          reset() {}
-        };
-      };
-
-      const createsecondInteraction = () => {
-        return {
-          name: "second",
-          register: (route, extra) => {
-            secondInteractionCache[route.name] = `${extra ? extra : "None"} + ${
-              route.name
-            }`;
-            return route.name;
-          },
-          get(route) {},
-          reset() {}
-        };
-      };
-
-      const routes = prepareRoutes({
-        routes: [
-          {
-            name: "Grandparent",
-            path: "grandparent",
-            children: [
-              {
-                name: "Parent",
-                path: "parent",
-                children: [{ name: "Child", path: "child" }]
-              }
-            ]
-          },
-          {
-            name: "Cousin",
-            path: "cousin"
-          }
-        ],
-        interactions: [createfirstInteraction(), createsecondInteraction()]
-      });
-      const router = createRouter(inMemory, routes, {
-        history: {
-          locations: [{ url: "/grandparent" }]
-        }
-      });
-      const expected = {
-        Grandparent: {
-          first: "grandparent",
-          second: "None + Grandparent"
-        },
-        Parent: {
-          first: "parent",
-          second: "Grandparent + Parent"
-        },
-        Child: {
-          first: "child",
-          second: "Parent + Child"
-        },
-        Cousin: {
-          first: "cousin",
-          second: "None + Cousin"
-        }
-      };
-      const keys = ["Grandparent", "Parent", "Child", "Cousin"];
-      keys.forEach(key => {
-        expect(firstInteractionCache[key]).toBe(expected[key].first);
-        expect(secondInteractionCache[key]).toBe(expected[key].second);
-      });
+      expect(mockInteractions.mock.calls.length).toBe(0);
+      router.route("test", "Catch All");
+      expect(mockInteractions.mock.calls.length).toBe(1);
     });
   });
 
@@ -587,7 +492,6 @@ describe("curi", () => {
         const check = ({ response, navigation }) => {
           expect(response).toMatchObject({
             name: "How",
-            partials: ["Contact"],
             params: {
               method: "mail"
             }
