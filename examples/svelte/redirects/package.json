@@ -17,6 +17,6 @@
     "qs": "^6.4.0"
   },
   "devDependencies": {
-    "svelte": "^3.0.0"
+    "svelte": "^3.2.0"
   }
 }
