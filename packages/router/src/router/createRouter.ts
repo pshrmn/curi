@@ -1,6 +1,5 @@
 import finishResponse from "./finishResponse";
-import { resolveRoute, isAsyncRoute } from "./resolveMatchedRoute";
-import { isExternalRedirect } from "./redirect";
+import { isAsyncRoute, isExternalRedirect } from "./typeGuards";
 
 import {
   HistoryConstructor,
@@ -68,12 +67,24 @@ export default function createRouter<O = HistoryOptions>(
       finalizeResponseAndEmit(route, match, pendingNav, navigation, null);
     } else {
       announceAsyncNav();
-      resolveRoute(route, match, options.external).then(resolved => {
-        if (pendingNav.cancelled) {
-          return;
-        }
-        finalizeResponseAndEmit(route, match, pendingNav, navigation, resolved);
-      });
+      route
+        .resolve(match, options.external)
+        .then(
+          resolved => ({ resolved, error: null }),
+          error => ({ error, resolved: null })
+        )
+        .then(resolved => {
+          if (pendingNav.cancelled) {
+            return;
+          }
+          finalizeResponseAndEmit(
+            route,
+            match,
+            pendingNav,
+            navigation,
+            resolved
+          );
+        });
     }
   }, options.history || <O>{});
 
