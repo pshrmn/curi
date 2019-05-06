@@ -54,7 +54,7 @@ const globalCSS = css`
   }
 
   h3 {
-    font-size: 1.25em;
+    font-size: 1.35em;
     line-height: 1.1em;
   }
 

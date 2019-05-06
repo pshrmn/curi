@@ -38,12 +38,14 @@ function PackageLinks({ active, close }) {
 
   return (
     <Container active={active} close={close}>
-      {Object.keys(groups).map(title => (
-        <div key={title}>
-          <h3>{title}</h3>
-          <GroupPackages packages={groups[title]} />
-        </div>
-      ))}
+      {Object.keys(groups)
+        .filter(t => t !== "route interactions")
+        .map(title => (
+          <div key={title}>
+            <h3>{title}</h3>
+            <GroupPackages packages={groups[title]} />
+          </div>
+        ))}
     </Container>
   );
 }

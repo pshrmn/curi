@@ -110,7 +110,7 @@ staticFiles({
         >
           <p>
             The router property is an object with two properties:{" "}
-            <IJS>routes</IJS> and <IJS>getRouterOptions</IJS>.
+            <IJS>routes</IJS> and <IJS>options</IJS>.
           </p>
 
           <HashSection
@@ -147,41 +147,30 @@ staticFiles({
           <HashSection
             tag="h6"
             meta={{
-              title: "getRouterOptions",
-              hash: "staticFiles-getRouterOptions"
+              title: "options",
+              hash: "staticFiles-options"
             }}
           >
             <p>
-              The <IJS>getRouterOptions</IJS> function returns the options for a
-              router. This is only necessary if you need to use route
-              interactions, side effects, or other route options.
+              The <IJS>options</IJS> object is the options for a router. This is
+              only necessary if you need to use side effects or other route
+              options.
             </p>
+
             <p>
               When you call <IJS>staticFiles</IJS>, a router is created for each
               page. <IJS>staticFiles</IJS> creates its own <IJS>history</IJS>{" "}
               instances, and gets its routes from the <IJS>routes</IJS> options,
-              but the router may also need to be provided with other options,
-              like route interactions.
+              but the router may also need to be provided with other options.
             </p>
-            <Note>
-              <p>
-                This is a function so that each router has its own instances of
-                route interactions in order to avoid any possible issues with
-                routers resetting other router's interactions.
-              </p>
-            </Note>
 
             <CodeBlock>
-              {`import active from "@curi/active";
-
-const getRouterOptions = () => ({
-  routes: [active()]
-});
-
-staticFiles({
+              {`staticFiles({
   // ...
   router: {
-    getRouterOptions
+    options: {
+      sideEffects: [...]
+    }
   }
 });`}
             </CodeBlock>

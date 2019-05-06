@@ -14,40 +14,36 @@ const argumentsMeta = {
 };
 export const meta = {
   title: "prefetch",
-  hash: "prefetch",
-  children: [argumentsMeta]
+  hash: "prefetch"
 };
 
 export function PrefetchAPI() {
   return (
     <HashSection meta={meta}>
       <p>
-        A function to create the prefetch route interaction. When you create
-        your router, the result is passed to the router using the{" "}
-        <IJS>route</IJS> option, which will add a <IJS>prefetch</IJS> function
-        to the router's route interactions.
+        A function that will call a route's <IJS>resolve</IJS> method.
       </p>
 
       <CodeBlock>
-        {`import { prepareRoutes, createRouter } from "@curi/router";
-import prefetch from '@curi/route-prefetch';
+        {`
+import { prefetch } from '@curi/router';
 
-const routes = prepareRoutes(
-  routes,
-  interactions: [prefetch()]
-)
-
-const router = createRouter(browser, routes);
-
-router.route.prefetch("Some Route");`}
+const route = router.route("Async Route");
+prefetch(route).then(...);`}
       </CodeBlock>
 
       <HashSection meta={argumentsMeta} tag="h3">
-        <HashSection tag="h4" meta={{ title: "name", hash: "name" }}>
-          <p>The name of the route to prefetch.</p>
+        <HashSection
+          tag="h4"
+          meta={{ title: "route", hash: "prefetch-arguments-route" }}
+        >
+          <p>The route to prefetch.</p>
         </HashSection>
 
-        <HashSection tag="h4" meta={{ title: "optional", hash: "optional" }}>
+        <HashSection
+          tag="h4"
+          meta={{ title: "optional", hash: "prefetch-arguments-optional" }}
+        >
           <p>
             A route's resolve function is called with two arguments: the{" "}
             <IJS>match</IJS> object for the matched route and an{" "}
@@ -67,13 +63,16 @@ router.route.prefetch("Some Route");`}
   external
 });
 
-router.route.prefetch("Some Route", {
+prefetch(route, {
   match: { params: {...} },
   external: router.external
 });`}
           </CodeBlock>
 
-          <HashSection tag="h5" meta={{ title: "match", hash: "match" }}>
+          <HashSection
+            tag="h5"
+            meta={{ title: "match", hash: "prefetch-arguments-match" }}
+          >
             <p>
               An object of "match" properties for the <IJS>resolve</IJS>{" "}
               function. The possible properties are <IJS>name</IJS>,{" "}
@@ -81,7 +80,10 @@ router.route.prefetch("Some Route", {
             </p>
           </HashSection>
 
-          <HashSection tag="h5" meta={{ title: "external", hash: "external" }}>
+          <HashSection
+            tag="h5"
+            meta={{ title: "external", hash: "prefetch-arguments-external" }}
+          >
             <p>
               Any external values passed to the <IJS>resolve</IJS> function.
             </p>
@@ -96,8 +98,8 @@ router.route.prefetch("Some Route", {
   external: {...}
 });
 
-router.route.prefetch(
-  "Some Route",
+prefetch(
+  route,
   { external: router.external }
 );`}
             </CodeBlock>

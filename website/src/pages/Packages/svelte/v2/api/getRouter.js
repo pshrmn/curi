@@ -27,7 +27,7 @@ export function GetRouterAPI() {
 
   const router = getRouter();
 
-  let pathname = router.route.pathname("Home");
+  const homeRoute = router.route("Home");
 </script>`}
       </CodeBlock>
     </HashSection>

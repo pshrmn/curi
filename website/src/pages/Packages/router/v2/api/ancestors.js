@@ -11,14 +11,13 @@ const argumentsMeta = {
 };
 export const meta = {
   title: "ancestors",
-  hash: "ancestors",
-  children: [argumentsMeta]
+  hash: "ancestors"
 };
 
 export function AncestorsAPI() {
   return (
     <HashSection meta={meta}>
-      <p>A function to create the ancestors route interaction.</p>
+      <p>An interaction function to get the ancestors of a route.</p>
 
       <p>
         The interaction returns the name of an ancestor route a given level "up"
@@ -27,37 +26,39 @@ export function AncestorsAPI() {
       </p>
 
       <CodeBlock>
-        {`import { prepareRoutes, createRouter } from "@curi/router";
-import ancestors from '@curi/route-ancestors';
+        {`import { ancestors } from "@curi/router";
 
 const routes = prepareRoutes({
   routes: [
     {
-      name: 'Grandparent', path: 'g',
+      name: "Grandparent", path: "g",
       children: [
         {
-          name: 'Parent', path: 'p',
+          name: "Parent", path: "p",
           children: [
-            { name: 'Child', path: 'c' }
+            { name: "Child", path: "c" }
           ]
         }
       ]
     }
-  ],
-  interactions: [ancestors()]
+  ]
 });
 
-const router = createRouter(history,routes);`}
+const route = router.route("Child");
+const parent = ancestors(route, 1); // "Parent"`}
       </CodeBlock>
 
       <HashSection meta={argumentsMeta} tag="h3">
-        <HashSection tag="h4" meta={{ title: "name", hash: "arguments-name" }}>
-          <p>The name of the route to get the ancestors of.</p>
+        <HashSection
+          tag="h4"
+          meta={{ title: "route", hash: "ancestor-arguments-route" }}
+        >
+          <p>The route to get the ancestors of.</p>
         </HashSection>
 
         <HashSection
           tag="h4"
-          meta={{ title: "level", hash: "arguments-level" }}
+          meta={{ title: "level", hash: "ancestor-arguments-level" }}
         >
           <p>
             A number of levels "up" to get the ancestor name of. If this
@@ -67,9 +68,11 @@ const router = createRouter(history,routes);`}
         </HashSection>
 
         <CodeBlock>
-          {`const parent = router.route.ancestors('Child', 1);
+          {`const childRoute = router.route("Child");
+const parent = ancestors(childRoute, 1);
 // parent === 'Parent'
-const ancestors = router.route.ancestors('Child');
+con
+const ancestors = ancestors(childRoute);
 // ancestors === ['Grandparent', 'Parent']`}
         </CodeBlock>
       </HashSection>

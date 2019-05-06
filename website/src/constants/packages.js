@@ -118,25 +118,15 @@ const packages = [
     globalName: "CuriRouteAncestors",
     type: "route interactions",
     script: true,
-    latest: "v2",
+    latest: "v1",
     versions: {
-      v1: "1.1.0",
-      v2: versions["route-ancestors"]
+      v1: "1.1.0"
     },
-    import: version => {
-      switch (version) {
-        case "v1":
-          return import(
-            /* webpackChunkName: 'package--route-ancestors-v1' */
-            `../pages/Packages/route-ancestors/v1/index.js`
-          );
-        case "v2":
-        default:
-          return import(
-            /* webpackChunkName: 'package--route-ancestors-v2' */
-            `../pages/Packages/route-ancestors/v2/index.js`
-          );
-      }
+    import: () => {
+      return import(
+        /* webpackChunkName: 'package--route-ancestors-v1' */
+        `../pages/Packages/route-ancestors/v1/index.js`
+      );
     }
   },
   {
@@ -145,25 +135,15 @@ const packages = [
     globalName: "CuriRoutePrefetch",
     type: "route interactions",
     script: true,
-    latest: "v2",
+    latest: "v1",
     versions: {
-      v1: "1.1.0",
-      v2: versions["route-prefetch"]
+      v1: "1.1.0"
     },
-    import: version => {
-      switch (version) {
-        case "v1":
-          return import(
-            /* webpackChunkName: 'package--route-prefetch-v1' */
-            `../pages/Packages/route-prefetch/v1/index.js`
-          );
-        case "v2":
-        default:
-          return import(
-            /* webpackChunkName: 'package--route-prefetch-v2' */
-            `../pages/Packages/route-prefetch/v2/index.js`
-          );
-      }
+    import: () => {
+      return import(
+        /* webpackChunkName: 'package--route-prefetch-v1' */
+        `../pages/Packages/route-prefetch/v1/index.js`
+      );
     }
   },
   {
@@ -176,15 +156,11 @@ const packages = [
     versions: {
       v1: "1.1.0"
     },
-    import: version => {
-      switch (version) {
-        case "v1":
-        default:
-          return import(
-            /* webpackChunkName: 'package--route-active-v1' */
-            `../pages/Packages/route-active/v1/index.js`
-          );
-      }
+    import: () => {
+      return import(
+        /* webpackChunkName: 'package--route-active-v1' */
+        `../pages/Packages/route-active/v1/index.js`
+      );
     }
   },
   {
