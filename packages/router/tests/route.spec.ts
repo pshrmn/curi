@@ -1,17 +1,17 @@
 import "jest";
 import { inMemory } from "@hickory/in-memory";
 
-import { createRouter, prepareRoutes } from "@curi/router";
+import {
+  createRouter,
+  prepareRoutes,
+  pathname as pathnameInteraction
+} from "@curi/router";
 
-import { Route, Interaction } from "@curi/types";
+import { AsyncRoute } from "@curi/types";
 
 describe("routes", () => {
   describe("public route properties", () => {
     describe("meta properties", () => {
-      function properties(route: Route) {
-        return route.meta;
-      }
-
       describe("name", () => {
         it("is the provided value", () => {
           const routes = prepareRoutes({
@@ -24,18 +24,15 @@ describe("routes", () => {
                 name: "Not Found",
                 path: "(.*)"
               }
-            ],
-            interactions: {
-              properties
-            }
+            ]
           });
           const router = createRouter(inMemory, routes, {
             history: {
               locations: [{ url: "/test" }]
             }
           });
-          const routeProperties = router.route("properties", "Test");
-          expect(routeProperties.name).toBe("Test");
+          const route = router.route("Test");
+          expect(route.meta.name).toBe("Test");
         });
       });
 
@@ -51,12 +48,11 @@ describe("routes", () => {
                 name: "Not Found",
                 path: "(.*)"
               }
-            ],
-            interactions: { properties }
+            ]
           });
           const router = createRouter(inMemory, routes);
-          const routeProperties = router.route("properties", "Test");
-          expect(routeProperties.path).toBe("test");
+          const route = router.route("Test");
+          expect(route.meta.path).toBe("test");
         });
       });
 
@@ -72,16 +68,15 @@ describe("routes", () => {
                 name: "Not Found",
                 path: "(.*)"
               }
-            ],
-            interactions: { properties }
+            ]
           });
           const router = createRouter(inMemory, routes, {
             history: {
               locations: [{ url: "/four/five/six" }]
             }
           });
-          const routeProperties = router.route("properties", "Test");
-          expect(routeProperties.keys).toEqual(["one", "two", "three"]);
+          const route = router.route("Test");
+          expect(route.meta.keys).toEqual(["one", "two", "three"]);
         });
 
         it("is an empty array when the path has no params", () => {
@@ -95,25 +90,20 @@ describe("routes", () => {
                 name: "Not Found",
                 path: "(.*)"
               }
-            ],
-            interactions: { properties }
+            ]
           });
           const router = createRouter(inMemory, routes, {
             history: {
               locations: [{ url: "/one/two/three" }]
             }
           });
-          const routeProperties = router.route("properties", "Test");
-          expect(routeProperties.keys).toEqual([]);
+          const route = router.route("Test");
+          expect(route.meta.keys).toEqual([]);
         });
       });
     });
 
     describe("methods", () => {
-      function properties(route: Route) {
-        return route.methods;
-      }
-
       describe("resolve", () => {
         it("is the resolve function", done => {
           const routes = prepareRoutes({
@@ -128,17 +118,16 @@ describe("routes", () => {
                   ]);
                 }
               }
-            ],
-            interactions: { properties }
+            ]
           });
           const router = createRouter(inMemory, routes, {
             history: {
               locations: [{ url: "/test" }]
             }
           });
-          const routeProperties = router.route("properties", "Test");
+          const route: AsyncRoute = router.route("Test") as AsyncRoute;
 
-          routeProperties.resolve().then(([iResult, eResult]) => {
+          route.methods.resolve().then(([iResult, eResult]) => {
             expect(iResult).toBe("iTest");
             expect(eResult).toBe("eTest");
             done();
@@ -156,16 +145,15 @@ describe("routes", () => {
                 name: "Not Found",
                 path: "(.*)"
               }
-            ],
-            interactions: { properties }
+            ]
           });
           const router = createRouter(inMemory, routes, {
             history: {
               locations: [{ url: "/test" }]
             }
           });
-          const routeProperties = router.route("properties", "Test");
-          expect(routeProperties.resolve).toBeUndefined();
+          const route = router.route("Test");
+          expect(route.methods.resolve).toBeUndefined();
           done();
         });
       });
@@ -181,17 +169,16 @@ describe("routes", () => {
                   return { data: "hi!" };
                 }
               }
-            ],
-            interactions: { properties }
+            ]
           });
           const router = createRouter(inMemory, routes, {
             history: {
               locations: [{ url: "/test" }]
             }
           });
-          const routeProperties = router.route("properties", "Test");
+          const route = router.route("Test");
 
-          expect(routeProperties.respond).toBeDefined();
+          expect(route.methods.respond).toBeDefined();
         });
 
         it("is undefined when route.respond isn't provided", () => {
@@ -205,24 +192,20 @@ describe("routes", () => {
                 name: "Not Found",
                 path: "(.*)"
               }
-            ],
-            interactions: { properties }
+            ]
           });
           const router = createRouter(inMemory, routes, {
             history: {
               locations: [{ url: "/test" }]
             }
           });
-          const routeProperties = router.route("properties", "Test");
-          expect(routeProperties.response).toBeUndefined();
+          const route = router.route("Test");
+          expect(route.methods.respond).toBeUndefined();
         });
       });
     });
 
     describe("extra", () => {
-      function properties(route: Route) {
-        return route.extra;
-      }
       it("is the provided value", () => {
         const extra = {
           unofficial: true,
@@ -239,16 +222,15 @@ describe("routes", () => {
               name: "Not Found",
               path: "(.*)"
             }
-          ],
-          interactions: { properties }
+          ]
         });
         const router = createRouter(inMemory, routes, {
           history: {
             locations: [{ url: "/test" }]
           }
         });
-        const routeProperties = router.route("properties", "Test");
-        expect(routeProperties).toBe(extra);
+        const route = router.route("Test");
+        expect(route.extra).toBe(extra);
       });
     });
   });
@@ -530,7 +512,8 @@ describe("routes", () => {
             }
           ]
         });
-        const pathname = routes.interactions("pathname", "Artist", {
+        const route = routes.route("Artist");
+        const pathname = pathnameInteraction(route, {
           name: "Beyoncé"
         });
         expect(pathname).toBe("/a/Beyonc%C3%A9");
@@ -554,7 +537,8 @@ describe("routes", () => {
             }
           ]
         });
-        const pathname = routes.interactions("pathname", "Artist", {
+        const route = routes.route("Artist");
+        const pathname = pathnameInteraction(route, {
           name: "Beyoncé"
         });
         expect(pathname).toBe("/a/Beyoncé");

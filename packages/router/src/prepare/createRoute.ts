@@ -3,7 +3,7 @@ import { withLeadingSlash, join } from "../utils/path";
 
 import { Key } from "path-to-regexp";
 
-import { RouteDescriptor, Params } from "@curi/types";
+import { RouteDescriptor, Params, Route } from "@curi/types";
 
 import { PreparedRoute } from "./prepareRoutes";
 
@@ -15,7 +15,7 @@ interface ParentData {
 
 export function createRoute(
   props: RouteDescriptor,
-  usedNames: Set<string>,
+  map: { [key: string]: Route },
   parent: ParentData = {
     path: "",
     ancestors: [],
@@ -23,14 +23,13 @@ export function createRoute(
   }
 ): PreparedRoute {
   if (process.env.NODE_ENV !== "production") {
-    if (usedNames.has(props.name)) {
+    if (props.name in map) {
       throw new Error(
         `Multiple routes have the name "${
           props.name
         }". Route names must be unique.`
       );
     }
-    usedNames.add(props.name);
 
     if (props.path.charAt(0) === "/") {
       throw new Error(
@@ -64,7 +63,7 @@ export function createRoute(
   let descendants: Array<string> = [];
   if (props.children && props.children.length) {
     children = props.children.map((child: RouteDescriptor) => {
-      return createRoute(child, usedNames, {
+      return createRoute(child, map, {
         path: fullPath,
         ancestors: [...ancestors, props.name],
         keys: keyNames
@@ -78,7 +77,7 @@ export function createRoute(
 
   const compiled = PathToRegexp.compile(fullPath);
 
-  return {
+  const route = {
     public: {
       meta: {
         name: props.name,
@@ -104,4 +103,8 @@ export function createRoute(
     },
     children
   };
+
+  map[props.name] = route.public;
+
+  return route;
 }

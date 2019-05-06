@@ -7,10 +7,11 @@ export interface CuriRouter {
     current(): CurrentResponse;
     url(details: RouteLocation): string;
     navigate(options: NavigationDetails): () => void;
-    route: Interactions;
+    route: RouteGetter;
     history: History;
     external: any;
 }
+export declare type RouteGetter = (name: string) => Route | undefined;
 export interface NavigationDetails {
     url: string;
     state?: any;
@@ -112,7 +113,7 @@ export interface Match {
 }
 export interface RouteMatcher {
     match(l: SessionLocation): Match | undefined;
-    interactions: Interactions;
+    route: RouteGetter;
 }
 export declare type RespondFn = (props: Readonly<ResponseBuilder>) => SettableResponseProperties;
 export interface ResponseBuilder {
@@ -135,4 +136,3 @@ export interface ResolveResults {
     error: any;
 }
 export declare type Interaction = (route: Readonly<Route>, ...rest: Array<any>) => any;
-export declare type Interactions = (type: string, name: string, ...rest: Array<any>) => any;

@@ -20,7 +20,7 @@ describe("createRouter", () => {
 
       const names = ["Home", "About", "Contact"];
       names.forEach(n => {
-        expect(router.route("pathname", n)).toBeDefined();
+        expect(router.route(n)).toBeDefined();
       });
     });
 
@@ -42,26 +42,21 @@ describe("createRouter", () => {
       const router = createRouter(inMemory, routes);
       const names = ["Email", "Phone"];
       names.forEach(n => {
-        expect(router.route("pathname", n)).toBeDefined();
+        expect(router.route(n)).toBeDefined();
       });
     });
 
-    it("makes interactions available through router.route", () => {
-      const realWarn = console.warn;
-      const fakeWarn = jest.fn();
-      console.warn = fakeWarn;
-
-      function fake() {}
+    it("makes routes available through router.route", () => {
       const routes = prepareRoutes({
-        routes: [{ name: "Home", path: "" }],
-        interactions: { fake }
+        routes: [{ name: "Home", path: "" }]
       });
       const router = createRouter(inMemory, routes);
-      router.route("fake", "Home");
-
-      expect(fakeWarn.mock.calls.length).toBe(0);
-
-      console.warn = realWarn;
+      const route = router.route("Home");
+      expect(route).toMatchObject({
+        meta: {
+          name: "Home"
+        }
+      });
     });
 
     describe("options", () => {
@@ -339,20 +334,6 @@ describe("createRouter", () => {
           done();
         });
       });
-    });
-  });
-
-  describe("interactions", () => {
-    it("uses registered interactions from routes", () => {
-      const routes = prepareRoutes({
-        routes: [{ name: "Catch All", path: "(.*)" }]
-      });
-      const mockInteractions = jest.fn();
-      routes.interactions = mockInteractions;
-      const router = createRouter(inMemory, routes);
-      expect(mockInteractions.mock.calls.length).toBe(0);
-      router.route("test", "Catch All");
-      expect(mockInteractions.mock.calls.length).toBe(1);
     });
   });
 

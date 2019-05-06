@@ -1,5 +1,5 @@
 import { Key } from "path-to-regexp";
-import { RouteMatcher, RouteDescriptor, Interaction, Route, ParamParsers } from "@curi/types";
+import { RouteMatcher, RouteDescriptor, Route, ParamParsers } from "@curi/types";
 export interface PreparedRoute {
     public: Route;
     children: Array<PreparedRoute>;
@@ -12,8 +12,5 @@ export interface PreparedRoute {
 }
 export interface PrepareRoutesOptions {
     routes: Array<RouteDescriptor>;
-    interactions?: {
-        [key: string]: Interaction;
-    };
 }
 export default function prepareRoutes(options: PrepareRoutesOptions): RouteMatcher;

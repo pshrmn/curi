@@ -1,43 +1,25 @@
 import "jest";
-import { prepareRoutes } from "@curi/router";
+import { prepareRoutes, prefetch } from "@curi/router";
 
 import { SessionLocation } from "@hickory/root";
-
-import prefetch from "@curi/route-prefetch";
+import { IntrinsicResponse } from "@curi/types";
 
 describe("prefetch route interaction", () => {
   describe("routes", () => {
-    it("adds routes with async function(s)", () => {
-      const routes = prepareRoutes({
-        routes: [
-          {
-            name: "Player",
-            path: "player",
-            resolve() {
-              return Promise.resolve();
-            }
-          },
-          { name: "Catch All", path: "(.*)" }
-        ],
-        interactions: { prefetch }
-      });
-      expect(routes.interactions("prefetch", "Player")).toBeDefined();
-    });
-
     it("resolves with error for synchronous routes", () => {
       const routes = prepareRoutes({
         routes: [
-          { name: "None", path: "player" },
+          { name: "Sync", path: "sync" },
           { name: "Catch All", path: "(.*)" }
-        ],
-        interactions: { prefetch }
+        ]
       });
       // This is a bit roundabout, but we verify that the paths did not register
       // by resolving from catch
       expect.assertions(1);
-      return routes.interactions("prefetch", "None").then(resolved => {
+      const route = routes.route("Sync");
+      return prefetch(route).then(resolved => {
         expect(resolved.error).toBe(
-          "Could not prefetch data for None because it does not have a resolve function."
+          "Could not prefetch data for Sync because it does not have a resolve function."
         );
       });
     });
@@ -55,10 +37,10 @@ describe("prefetch route interaction", () => {
             }
           },
           { name: "Catch All", path: "(.*)" }
-        ],
-        interactions: { prefetch }
+        ]
       });
-      expect(routes.interactions("prefetch", "Player").then).toBeDefined();
+      const route = routes.route("Player");
+      expect(prefetch(route).then).toBeDefined();
     });
 
     it("returns Promise with error message when resolve throws", () => {
@@ -74,11 +56,13 @@ describe("prefetch route interaction", () => {
             }
           },
           { name: "Catch All", path: "(.*)" }
-        ],
-        interactions: { prefetch }
+        ]
       });
-
-      const output = routes.interactions("prefetch", name, { id: 123 });
+      const route = routes.route(name);
+      const locationToPass = {} as SessionLocation;
+      const output = prefetch(route, {
+        match: { name, params: { id: 123 }, location: locationToPass }
+      });
       expect.assertions(2);
       expect(output).toBeInstanceOf(Promise);
       return output.then(resolved => {
@@ -104,12 +88,12 @@ describe("prefetch route interaction", () => {
               }
             },
             { name: "Catch All", path: "(.*)" }
-          ],
-          interactions: { prefetch }
+          ]
         });
         const paramsToPass = { id: 1 };
         const locationToPass = {} as SessionLocation;
-        routes.interactions("prefetch", "Player", {
+        const route = routes.route("Player");
+        prefetch(route, {
           match: {
             name: "Player",
             params: paramsToPass,
@@ -135,10 +119,10 @@ describe("prefetch route interaction", () => {
               }
             },
             { name: "Catch All", path: "(.*)" }
-          ],
-          interactions: { prefetch }
+          ]
         });
-        routes.interactions("prefetch", "Player", { external });
+        const route = routes.route("Player");
+        prefetch(route, { external });
       });
     });
   });

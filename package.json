@@ -124,8 +124,6 @@
     "@curi/react-dom": "file:packages/react-dom",
     "@curi/react-native": "file:packages/react-native",
     "@curi/react-universal": "file:packages/react-universal",
-    "@curi/route-ancestors": "file:packages/interactions/route-ancestors",
-    "@curi/route-prefetch": "file:packages/interactions/route-prefetch",
     "@curi/router": "file:packages/router",
     "@curi/side-effect-aria-live": "file:packages/side-effects/side-effect-aria-live",
     "@curi/side-effect-scroll": "file:packages/side-effects/side-effect-scroll",

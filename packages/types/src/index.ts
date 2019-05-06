@@ -13,10 +13,12 @@ export interface CuriRouter {
   current(): CurrentResponse;
   url(details: RouteLocation): string;
   navigate(options: NavigationDetails): () => void;
-  route: Interactions;
+  route: RouteGetter;
   history: History;
   external: any;
 }
+
+export type RouteGetter = (name: string) => Route | undefined;
 
 // options passed to router.navigate
 export interface NavigationDetails {
@@ -148,7 +150,7 @@ export interface Match {
 
 export interface RouteMatcher {
   match(l: SessionLocation): Match | undefined;
-  interactions: Interactions;
+  route: RouteGetter;
 }
 
 // a route's respond function is used to return properties to add
@@ -183,8 +185,3 @@ export interface ResolveResults {
 
 // the interface of an object used to create a route interaction
 export type Interaction = (route: Readonly<Route>, ...rest: Array<any>) => any;
-export type Interactions = (
-  type: string,
-  name: string,
-  ...rest: Array<any>
-) => any;

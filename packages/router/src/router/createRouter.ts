@@ -1,5 +1,6 @@
 import finishResponse from "./finishResponse";
 import { isAsyncRoute, isExternalRedirect } from "./typeGuards";
+import pathnameInteraction from "../interactions/pathname";
 
 import {
   HistoryConstructor,
@@ -188,8 +189,13 @@ export default function createRouter<O = HistoryOptions>(
   /* router.url */
   function url(details: RouteLocation): string {
     let { name, params, hash, query } = details;
-    const pathname =
-      name != null ? routes.interactions("pathname", name, params) : undefined;
+    let pathname;
+    if (name) {
+      const route = router.route(name);
+      if (route) {
+        pathname = pathnameInteraction(route, params);
+      }
+    }
     return history.url({ pathname, hash, query });
   }
 
@@ -269,7 +275,7 @@ export default function createRouter<O = HistoryOptions>(
   }
 
   const router: CuriRouter = {
-    route: routes.interactions,
+    route: routes.route,
     history,
     external: options.external,
     observe,

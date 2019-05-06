@@ -1,7 +1,7 @@
 import "jest";
 import { inMemory } from "@hickory/in-memory";
 
-import { prepareRoutes, createRouter } from "@curi/router";
+import { prepareRoutes, createRouter, pathname } from "@curi/router";
 
 describe("pathname route interaction", () => {
   describe("generating pathnames", () => {
@@ -14,7 +14,8 @@ describe("pathname route interaction", () => {
         ]
       });
       const router = createRouter(inMemory, routes);
-      const output = router.route("pathname", "Static");
+      const route = router.route("Static");
+      const output = pathname(route);
       expect(output).toBe("/this/has/no/params");
     });
 
@@ -26,28 +27,9 @@ describe("pathname route interaction", () => {
         ]
       });
       const router = createRouter(inMemory, routes);
-      const output = router.route("pathname", "Player", { id: 17 });
+      const route = router.route("Player");
+      const output = pathname(route, { id: 17 });
       expect(output).toBe("/player/17");
-    });
-
-    it("returns undefined and logs error when path not found", () => {
-      const warn = console.warn;
-      const mockError = jest.fn();
-      console.warn = mockError;
-
-      const routes = prepareRoutes({
-        routes: [
-          { name: "Player", path: "player/:id" },
-          { name: "Catch All", path: "(.*)" }
-        ]
-      });
-      const router = createRouter(inMemory, routes);
-      const output = router.route("pathname", "Anonymous", { id: 123 });
-
-      expect(output).toBe(undefined);
-      expect(mockError.mock.calls.length).toBe(1);
-
-      console.warn = warn;
     });
   });
 });
