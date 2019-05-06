@@ -2,7 +2,7 @@
   {#each ancestors as name (name)}
     <li>
       <Link name={name} params={params}>
-        {router.route.title(name, params)}
+        {title(router.route(name), params)}
       </Link>
     </li>
   {/each}
@@ -11,11 +11,14 @@
 <script>
   import { getRouter } from "@curi/svelte";
   import Link from "@curi/svelte/components/Link.svelte";
+  import { ancestors as ancestorsInteraction } from "@curi/router";
+  import title from "../titleInteraction";
 
   export let name;
   export let params;
 
   const router = getRouter();
 
-  let ancestors = router.route.ancestors(name).reverse();
+  let route = router.route(name);
+  let ancestors = ancestorsInteraction(name);
 </script>

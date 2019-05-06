@@ -1,5 +1,4 @@
 import { prepareRoutes } from "@curi/router";
-import prefetch from "@curi/route-prefetch";
 
 import fakeAPI from "./fakeAPI";
 
@@ -46,6 +45,5 @@ export default prepareRoutes({
         };
       }
     }
-  ],
-  interactions: [prefetch()]
+  ]
 });

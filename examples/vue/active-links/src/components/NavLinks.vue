@@ -2,24 +2,18 @@
   <nav>
     <ul>
       <li>
-        <active-link to='Home'>Home</active-link>
+        <active-link name="Home">Home</active-link>
       </li>
       <li>
-        <active-link to='Contact' :partial="true">Contact</active-link>
+        <active-link name="Contact" :partial="true">Contact</active-link>
         <ul>
           <li>
-            <active-link
-              to='Method'
-              :params="{ method: 'phone' }"
-            >
+            <active-link name="Method" :params="{ method: 'phone' }">
               By Phone
             </active-link>
           </li>
           <li>
-            <active-link
-              to='Method'
-              :params="{ method: 'email' }"
-            >
+            <active-link name="Method" :params="{ method: 'email' }">
               By Email
             </active-link>
           </li>

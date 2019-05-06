@@ -1,23 +1,25 @@
 <template>
-  <ul class='breadcrumbs'>
-    <li v-for="a in ancestors" :key="a">
-      <curi-link :to="a" :params="params">{{title(a)}}</curi-link>
+  <ul class="breadcrumbs">
+    <li v-for="a in ancestors" :key="a.name">
+      <curi-link :name="a.name" :params="params">{{ a.title }}</curi-link>
     </li>
   </ul>
 </template>
 
 <script>
+import { ancestors } from "@curi/router";
+import title from "../titleInteraction";
+
 export default {
   name: "breadcrumbs",
   props: ["name", "params"],
   computed: {
     ancestors() {
-      return this.$router.route.ancestors(this.name).reverse();
-    }
-  },
-  methods: {
-    title(a) {
-      return this.$router.route.title(a, this.params);
+      const route = this.$router.route(this.name);
+      return ancestors(route).map(name => ({
+        name,
+        title: title(this.$router.route(name), params)
+      }));
     }
   }
 };

@@ -5,7 +5,7 @@
     {#each categories as category (category)}
       <li>
         <Link name="Category" params={{ category }}>
-          {router.route.title("Category", { category })}
+          {title(categoryRoute, { category })}
         </Link>
       </li>
     {/each}
@@ -16,9 +16,12 @@
 <script>
   import { getRouter, getResponse } from "@curi/svelte";
   import Link from "@curi/svelte/components/Link.svelte";
+  import title from "../titleInteraction";
 
   const router = getRouter();
   const response = getResponse();
+
+  const categoryRoute = router.route("Category");
 
   $: categories = $response.data.categories;
 </script>

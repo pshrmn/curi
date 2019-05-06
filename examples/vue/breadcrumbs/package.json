@@ -12,7 +12,6 @@
   "author": "Paul Sherman",
   "license": "MIT",
   "dependencies": {
-    "@curi/route-ancestors": "2.0.0-alpha.12",
     "@curi/router": "2.0.0-beta.17",
     "@curi/vue": "2.0.0-alpha.6",
     "@hickory/browser": "2.0.0-beta.14",

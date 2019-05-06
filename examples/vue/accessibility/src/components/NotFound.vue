@@ -1,7 +1,7 @@
 <template>
   <div>
     <p>Sorry, but the requested page was not found</p>
-    <curi-link to='Home'>Home</curi-link>
+    <curi-link name="Home">Home</curi-link>
   </div>
 </template>
 
