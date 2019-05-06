@@ -1,5 +1,6 @@
 import React from "react";
 import { useRouter } from "@curi/react-dom";
+import { prefetch } from "@curi/router";
 
 export default function usePrefetch(routes, active) {
   const router = useRouter();
@@ -7,9 +8,10 @@ export default function usePrefetch(routes, active) {
   React.useEffect(() => {
     if (active && !hasPrefetched.current) {
       hasPrefetched.current = true;
-      routes.forEach(route => {
-        router.route.prefetch(route.name, {
-          match: { params: route.params }
+      routes.forEach(({ name, params }) => {
+        const route = router.route(name);
+        prefetch(route, {
+          match: { params }
         });
       });
     }
