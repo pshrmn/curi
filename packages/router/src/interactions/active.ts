@@ -9,6 +9,17 @@ export interface ActiveCheckOptions {
   components?: ValidateComponents;
 }
 
+function find(name: string, children: Array<Route>): boolean {
+  return children.some(node => {
+    if (node.meta.name === name) {
+      return true;
+    } else if (node.meta.children) {
+      return find(name, node.meta.children);
+    }
+    return false;
+  });
+}
+
 export default function active(
   route: Route,
   response: Response,
@@ -16,7 +27,7 @@ export default function active(
 ): boolean {
   if (
     response.name !== route.meta.name &&
-    (!options.partial || !route.meta.descendants.some(n => n === response.name))
+    (!options.partial || !find(response.name, route.meta.children))
   ) {
     return false;
   }

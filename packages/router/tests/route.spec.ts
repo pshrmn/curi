@@ -36,26 +36,6 @@ describe("routes", () => {
         });
       });
 
-      describe("path", () => {
-        it("is the provided value", () => {
-          const routes = prepareRoutes({
-            routes: [
-              {
-                name: "Test",
-                path: "test"
-              },
-              {
-                name: "Not Found",
-                path: "(.*)"
-              }
-            ]
-          });
-          const router = createRouter(inMemory, routes);
-          const route = router.route("Test");
-          expect(route.meta.path).toBe("test");
-        });
-      });
-
       describe("keys", () => {
         it("is the array of param names parsed from the path", () => {
           const routes = prepareRoutes({

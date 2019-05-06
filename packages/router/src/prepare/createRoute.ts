@@ -9,7 +9,6 @@ import { PreparedRoute } from "./prepareRoutes";
 
 interface ParentData {
   path: string;
-  ancestors: Array<string>;
   keys: Array<string | number>;
 }
 
@@ -18,7 +17,6 @@ export function createRoute(
   map: { [key: string]: Route },
   parent: ParentData = {
     path: "",
-    ancestors: [],
     keys: []
   }
 ): PreparedRoute {
@@ -59,20 +57,15 @@ export function createRoute(
   }
 
   let children: Array<PreparedRoute> = [];
-  let ancestors = parent.ancestors;
-  let descendants: Array<string> = [];
+  let descendants: Array<Route> = [];
   if (props.children && props.children.length) {
     children = props.children.map((child: RouteDescriptor) => {
       return createRoute(child, map, {
         path: fullPath,
-        ancestors: [...ancestors, props.name],
         keys: keyNames
       });
     });
-    children.forEach(child => {
-      descendants.push(child.public.meta.name);
-      descendants = descendants.concat(child.public.meta.descendants);
-    });
+    descendants = children.map(child => child.public);
   }
 
   const compiled = PathToRegexp.compile(fullPath);
@@ -81,10 +74,9 @@ export function createRoute(
     public: {
       meta: {
         name: props.name,
-        path: props.path,
         keys: keyNames,
-        ancestors,
-        descendants
+        parent: undefined,
+        children: descendants
       },
       methods: {
         resolve: props.resolve,
@@ -105,6 +97,11 @@ export function createRoute(
   };
 
   map[props.name] = route.public;
+  if (children.length) {
+    children.forEach(child => {
+      child.public.meta.parent = route.public;
+    });
+  }
 
   return route;
 }

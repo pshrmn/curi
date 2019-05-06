@@ -88,10 +88,9 @@ export interface RouteDescriptor {
 export interface Route<R = unknown> {
     meta: {
         name: string;
-        path: string;
         keys: Array<string | number>;
-        ancestors: Array<string>;
-        descendants: Array<string>;
+        parent: Route | undefined;
+        children: Array<Route>;
     };
     methods: {
         pathname: PathFunction;

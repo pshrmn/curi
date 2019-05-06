@@ -16,9 +16,9 @@ export default {
   computed: {
     ancestors() {
       const route = this.$router.route(this.name);
-      return ancestors(route).map(name => ({
-        name,
-        title: title(this.$router.route(name), this.params)
+      return ancestors(route).map(r => ({
+        name: r.meta.name,
+        title: title(r, this.params)
       }));
     }
   }

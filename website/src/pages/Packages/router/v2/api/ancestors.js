@@ -20,9 +20,9 @@ export function AncestorsAPI() {
       <p>An interaction function to get the ancestors of a route.</p>
 
       <p>
-        The interaction returns the name of an ancestor route a given level "up"
-        from the route. If no level is provided, then it will return an array of
-        the names of all ancestor routes (from most ancient to parent).
+        The interaction returns the public route data for each of the route's
+        ancestors. The first item in the array is the root-most ancestor, while
+        the last item in the array is the route's parent.
       </p>
 
       <CodeBlock>
@@ -45,7 +45,11 @@ const routes = prepareRoutes({
 });
 
 const route = router.route("Child");
-const parent = ancestors(route, 1); // "Parent"`}
+const family = ancestors(route);
+// [
+//   { meta: { name: "Grandparent", ... }, ... },
+//   { meta: { name: "Parent", ... }, ... },
+// ]`}
       </CodeBlock>
 
       <HashSection meta={argumentsMeta} tag="h3">
@@ -55,26 +59,6 @@ const parent = ancestors(route, 1); // "Parent"`}
         >
           <p>The route to get the ancestors of.</p>
         </HashSection>
-
-        <HashSection
-          tag="h4"
-          meta={{ title: "level", hash: "ancestor-arguments-level" }}
-        >
-          <p>
-            A number of levels "up" to get the ancestor name of. If this
-            argument is not provided, the interaction will return an array of
-            all ancestor routes names (from most ancient to parent).
-          </p>
-        </HashSection>
-
-        <CodeBlock>
-          {`const childRoute = router.route("Child");
-const parent = ancestors(childRoute, 1);
-// parent === 'Parent'
-con
-const ancestors = ancestors(childRoute);
-// ancestors === ['Grandparent', 'Parent']`}
-        </CodeBlock>
       </HashSection>
     </HashSection>
   );

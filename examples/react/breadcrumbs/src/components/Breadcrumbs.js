@@ -11,11 +11,10 @@ const Breadcrumbs = ({ name, params }) => {
   return (
     <ul className="breadcrumbs">
       {ancestorNames.map(a => {
-        const ancestorRoute = router.route(a);
         return (
-          <li key={a}>
-            <Link name={a} params={params}>
-              {title(ancestorRoute, params)}
+          <li key={a.meta.name}>
+            <Link name={a.meta.name} params={params}>
+              {title(a, params)}
             </Link>
           </li>
         );

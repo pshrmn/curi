@@ -124,24 +124,31 @@ const path = pathname(route);`}
             </p>
           </HashSection>
 
-          <HashSection
-            tag="h4"
-            meta={{ title: "ancestors", hash: "meta-ancestors" }}
-          >
+          <HashSection tag="h4" meta={{ title: "parent", hash: "meta-parent" }}>
             <p>
-              An array of route name strings for each of the route's ancestors.
-              The first item in the array is the most ancient route, while the
-              last item is the route's parent.
+              The route's parent's public data. For root routes, this is
+              undefined.
+            </p>
+
+            <p>
+              The <IJS>ancestors</IJS> interaction uses the <IJS>parent</IJS>{" "}
+              property to generate an array of a route's ancestors.
             </p>
           </HashSection>
 
           <HashSection
             tag="h4"
-            meta={{ title: "descendants", hash: "meta-descendants" }}
+            meta={{ title: "children", hash: "meta-children" }}
           >
             <p>
-              An array of route name strings for each of the route's
-              descendants. This includes children, their children, etc.
+              An array containing the public route data for each of the route's
+              children. In turn, each child's <IJS>meta.children</IJS> array
+              contains public route data for its children.
+            </p>
+
+            <p>
+              The <IJS>active</IJS> interaction walks through a routes tree of
+              descendants when checking if a route is a partial match.
             </p>
           </HashSection>
         </HashSection>
@@ -159,9 +166,10 @@ const path = pathname(route);`}
             tag="h4"
             meta={{ title: "pathname", hash: "methods-pathname" }}
           >
+            <p>A function for generating a pathname string from the route.</p>
+
             <p>
-              A function for generating a pathname string from the route. This
-              is what the <IJS>pathname</IJS> interaction uses.
+              The <IJS>pathname</IJS> interaction uses this method.
             </p>
           </HashSection>
 
@@ -172,6 +180,10 @@ const path = pathname(route);`}
             <p>
               The route's <IJS>resolve</IJS> function (if it exists). This will
               be <IJS>undefined</IJS> if the route is synchronous.
+            </p>
+
+            <p>
+              The <IJS>prefetch</IJS> interaction uses this method.
             </p>
           </HashSection>
 

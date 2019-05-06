@@ -66,7 +66,7 @@ active(route, response);`}
 
         <HashSection
           tag="h4"
-          meta={{ title: "optional", hash: "active-arguments-optional" }}
+          meta={{ title: "options", hash: "active-arguments-options" }}
         >
           <p>An object with additional options</p>
 
