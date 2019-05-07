@@ -1,8 +1,7 @@
 import { prepareRoutes } from "@curi/router";
-import ancestors from "@curi/route-ancestors";
+import title from "./titleInteraction";
 
 import api from "./api";
-import title from "./titleInteraction";
 
 import Home from "./components/Home";
 import Products from "./components/Products";
@@ -88,6 +87,5 @@ export default prepareRoutes({
         };
       }
     }
-  ],
-  interactions: [ancestors(), title()]
+  ]
 });

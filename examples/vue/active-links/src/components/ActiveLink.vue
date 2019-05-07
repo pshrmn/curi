@@ -1,21 +1,23 @@
 <template>
-  <curi-link :to="to" :params="params" :class="classes">
+  <curi-link :name="to" :params="params" :class="classes">
     <slot></slot>
   </curi-link>
 </template>
 
 <script>
+import { active as activeInteraction } from "@curi/router";
+
 export default {
   name: "active-links",
-  props: ["to", "params", "search", "hash", "state", "partial"],
+  props: ["name", "params", "search", "hash", "state", "partial"],
   computed: {
     classes: function() {
-      return this.$router.route.active(this.to, this.$curi.response, {
+      const route = this.$router.route(this.name);
+      const active = activeInteraction(route, this.$curi.response, {
         params: this.params,
         partial: this.partial
-      })
-        ? "active"
-        : "";
+      });
+      return active ? "active" : "";
     }
   }
 };

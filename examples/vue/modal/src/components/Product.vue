@@ -1,11 +1,11 @@
 <template>
   <div>
-    Paint color: {{response.location.state.name || "Unknown"}}
+    Paint color: {{ response.location.state.name || "Unknown" }}
     <Preview :color="response.params.color" />
     <curi-link
-      to="Product Detail"
+      name="Product Detail"
       :params="response.params"
-      :state='{ modal: true }'
+      :state="{ modal: true }"
     >
       Detail View
     </curi-link>

@@ -1,9 +1,11 @@
 import React from "react";
 import { Link, useRouter } from "@curi/react-dom";
 import Breadcrumbs from "./Breadcrumbs";
+import title from "../titleInteraction";
 
 function Category({ response: { params, data: products } }) {
   const router = useRouter();
+  const productRoute = router.route("Product");
   return (
     <div>
       <Breadcrumbs name="Category" params={params} />
@@ -15,7 +17,7 @@ function Category({ response: { params, data: products } }) {
           return (
             <li key={p.id}>
               <Link name="Product" params={productParams}>
-                {router.route.title("Product", { name: p.name })}
+                {title(productRoute, { name: p.name })}
               </Link>
             </li>
           );

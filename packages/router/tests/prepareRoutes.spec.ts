@@ -2,6 +2,8 @@ import "jest";
 
 import { prepareRoutes } from "@curi/router";
 
+import { Route } from "@curi/types";
+
 describe("prepareRoutes()", () => {
   describe("paths beginning with forward slash", () => {
     it("throws", () => {

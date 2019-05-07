@@ -7,10 +7,11 @@ export interface CuriRouter {
     current(): CurrentResponse;
     url(details: RouteLocation): string;
     navigate(options: NavigationDetails): () => void;
-    route: Interactions;
+    route: RouteGetter;
     history: History;
     external: any;
 }
+export declare type RouteGetter = (name: string) => Route | undefined;
 export interface NavigationDetails {
     url: string;
     state?: any;
@@ -56,7 +57,6 @@ export interface IntrinsicResponse {
     location: SessionLocation;
     name: string;
     params: Params;
-    partials: Array<string>;
 }
 export interface RedirectLocation extends RouteLocation {
     url: string;
@@ -70,6 +70,9 @@ export interface Response extends IntrinsicResponse {
     data?: any;
     redirect?: RedirectLocation | ExternalRedirect;
 }
+export interface RouteExtra {
+    [key: string]: any;
+}
 export interface RouteDescriptor {
     name: string;
     path: string;
@@ -81,19 +84,18 @@ export interface RouteDescriptor {
     children?: Array<RouteDescriptor>;
     respond?: RespondFn;
     resolve?: Resolver;
-    extra?: {
-        [key: string]: any;
-    };
+    extra?: RouteExtra;
 }
 export interface Route<R = unknown> {
     name: string;
-    path: string;
     keys: Array<string | number>;
-    pathname: PathFunction;
-    resolve: R;
-    respond?: RespondFn;
-    extra?: {
-        [key: string]: any;
+    parent: Route | undefined;
+    children: Array<Route>;
+    extra?: RouteExtra;
+    methods: {
+        pathname: PathFunction;
+        resolve: R;
+        respond?: RespondFn;
     };
 }
 export interface SyncRoute extends Route<undefined> {
@@ -107,7 +109,7 @@ export interface Match {
 }
 export interface RouteMatcher {
     match(l: SessionLocation): Match | undefined;
-    interactions: Interactions;
+    route: RouteGetter;
 }
 export declare type RespondFn = (props: Readonly<ResponseBuilder>) => SettableResponseProperties;
 export interface ResponseBuilder {
@@ -129,13 +131,4 @@ export interface ResolveResults {
     resolved: any;
     error: any;
 }
-export interface Interaction {
-    name: string;
-    register: RegisterInteraction;
-    get: GetInteraction;
-}
-export declare type Interactions = {
-    [key: string]: GetInteraction;
-};
-export declare type RegisterInteraction = (route: Route, parent?: any) => any;
-export declare type GetInteraction = (name: string, ...rest: Array<any>) => any;
+export declare type Interaction = (route: Readonly<Route>, ...rest: Array<any>) => any;

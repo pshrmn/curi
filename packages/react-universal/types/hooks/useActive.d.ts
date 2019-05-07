@@ -7,4 +7,4 @@ export interface ActiveHookProps {
     partial?: boolean;
     components?: ValidateComponents;
 }
-export default function useActive(props: ActiveHookProps): any;
+export default function useActive(props: ActiveHookProps): boolean;

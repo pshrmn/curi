@@ -1,6 +1,6 @@
+import { pathname as pathnameInteraction } from "@curi/interactions";
 import finishResponse from "./finishResponse";
-import { resolveRoute, isAsyncRoute } from "./resolveMatchedRoute";
-import { isExternalRedirect } from "./redirect";
+import { isAsyncRoute, isExternalRedirect } from "./typeGuards";
 
 import {
   HistoryConstructor,
@@ -68,12 +68,24 @@ export default function createRouter<O = HistoryOptions>(
       finalizeResponseAndEmit(route, match, pendingNav, navigation, null);
     } else {
       announceAsyncNav();
-      resolveRoute(route, match, options.external).then(resolved => {
-        if (pendingNav.cancelled) {
-          return;
-        }
-        finalizeResponseAndEmit(route, match, pendingNav, navigation, resolved);
-      });
+      route.methods
+        .resolve(match, options.external)
+        .then(
+          resolved => ({ resolved, error: null }),
+          error => ({ error, resolved: null })
+        )
+        .then(resolved => {
+          if (pendingNav.cancelled) {
+            return;
+          }
+          finalizeResponseAndEmit(
+            route,
+            match,
+            pendingNav,
+            navigation,
+            resolved
+          );
+        });
     }
   }, options.history || <O>{});
 
@@ -177,8 +189,13 @@ export default function createRouter<O = HistoryOptions>(
   /* router.url */
   function url(details: RouteLocation): string {
     let { name, params, hash, query } = details;
-    const pathname =
-      name != null ? routes.interactions.pathname(name, params) : undefined;
+    let pathname;
+    if (name) {
+      const route = router.route(name);
+      if (route) {
+        pathname = pathnameInteraction(route, params);
+      }
+    }
     return history.url({ pathname, hash, query });
   }
 
@@ -258,7 +275,7 @@ export default function createRouter<O = HistoryOptions>(
   }
 
   const router: CuriRouter = {
-    route: routes.interactions,
+    route: routes.route,
     history,
     external: options.external,
     observe,

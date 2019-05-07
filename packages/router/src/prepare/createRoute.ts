@@ -3,24 +3,31 @@ import { withLeadingSlash, join } from "../utils/path";
 
 import { Key } from "path-to-regexp";
 
-import { RouteDescriptor, Params } from "@curi/types";
+import { RouteDescriptor, Params, Route } from "@curi/types";
 
 import { PreparedRoute } from "./prepareRoutes";
 
+interface ParentData {
+  path: string;
+  keys: Array<string | number>;
+}
+
 export function createRoute(
   props: RouteDescriptor,
-  usedNames: Set<string>,
-  parentPath?: string
+  map: { [key: string]: Route },
+  parent: ParentData = {
+    path: "",
+    keys: []
+  }
 ): PreparedRoute {
   if (process.env.NODE_ENV !== "production") {
-    if (usedNames.has(props.name)) {
+    if (props.name in map) {
       throw new Error(
         `Multiple routes have the name "${
           props.name
         }". Route names must be unique.`
       );
     }
-    usedNames.add(props.name);
 
     if (props.path.charAt(0) === "/") {
       throw new Error(
@@ -31,37 +38,52 @@ export function createRoute(
     }
   }
 
-  let fullPath = withLeadingSlash(join(parentPath || "", props.path));
+  let fullPath = withLeadingSlash(join(parent.path, props.path));
 
   const { match: matchOptions = {}, compile: compileOptions = {} } =
     props.pathOptions || {};
   // end must be false for routes with children, but we want to track its original value
   const exact = matchOptions.end == null || matchOptions.end;
 
-  let children: Array<PreparedRoute> = [];
   if (props.children && props.children.length) {
     matchOptions.end = false;
-    children = props.children.map((child: RouteDescriptor) => {
-      return createRoute(child, usedNames, fullPath);
-    });
   }
 
   const keys: Array<Key> = [];
   const re = PathToRegexp(withLeadingSlash(props.path), keys, matchOptions);
+  let keyNames = keys.map(key => key.name);
+  if (parent.keys.length) {
+    keyNames = parent.keys.concat(keyNames);
+  }
+
+  let childRoutes: Array<PreparedRoute> = [];
+  let children: Array<Route> = [];
+  if (props.children && props.children.length) {
+    childRoutes = props.children.map((child: RouteDescriptor) => {
+      return createRoute(child, map, {
+        path: fullPath,
+        keys: keyNames
+      });
+    });
+    children = childRoutes.map(child => child.public);
+  }
 
   const compiled = PathToRegexp.compile(fullPath);
 
-  return {
+  const route = {
     public: {
       name: props.name,
-      path: props.path,
-      keys: keys.map(key => key.name),
-      resolve: props.resolve,
-      respond: props.respond,
-      extra: props.extra,
-      pathname(params?: Params) {
-        return compiled(params, compileOptions);
-      }
+      keys: keyNames,
+      parent: undefined,
+      children,
+      methods: {
+        resolve: props.resolve,
+        respond: props.respond,
+        pathname(params?: Params) {
+          return compiled(params, compileOptions);
+        }
+      },
+      extra: props.extra
     },
     matcher: {
       re,
@@ -69,6 +91,15 @@ export function createRoute(
       exact,
       parsers: props.params
     },
-    children
+    children: childRoutes
   };
+
+  map[props.name] = route.public;
+  if (childRoutes.length) {
+    childRoutes.forEach(child => {
+      child.public.parent = route.public;
+    });
+  }
+
+  return route;
 }

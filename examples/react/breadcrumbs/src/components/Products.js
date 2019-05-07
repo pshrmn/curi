@@ -1,8 +1,10 @@
 import React from "react";
 import { Link, useRouter } from "@curi/react-dom";
+import title from "../titleInteraction";
 
 function Products({ response: { data } }) {
   const router = useRouter();
+  const categoryRoute = router.route("Category");
   return (
     <div>
       <h1>Products Page</h1>
@@ -11,7 +13,7 @@ function Products({ response: { data } }) {
         {data.map(category => (
           <li key={category}>
             <Link name="Category" params={{ category }}>
-              {router.route.title("Category", { category })}
+              {title(categoryRoute, { category })}
             </Link>
           </li>
         ))}

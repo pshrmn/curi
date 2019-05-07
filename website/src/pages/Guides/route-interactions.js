@@ -13,31 +13,21 @@ const meta = {
 };
 
 const callingMeta = {
-  title: "Calling Intearctions",
+  title: "Calling Interactions",
   hash: "calling"
 };
 
-const builtinMeta = {
-  title: "Built-in Interactions",
-  hash: "built-in"
+const providedMeta = {
+  title: "Provided Interactions",
+  hash: "provided"
 };
 
-const addingMeta = {
-  title: "Adding Interactions",
-  hash: "adding"
+const routePropertiesMeta = {
+  title: "Route Properties",
+  hash: "route-properties"
 };
 
-const advancedMeta = {
-  title: "Slightly more advanced",
-  hash: "Slightly-more-advanced"
-};
-const creatingMeta = {
-  title: "Creating Route Interactions",
-  hash: "creating",
-  children: [advancedMeta]
-};
-
-const contents = [callingMeta, builtinMeta, addingMeta, creatingMeta];
+const contents = [providedMeta, callingMeta, routePropertiesMeta];
 
 function RouterInteractionsGuide() {
   return (
@@ -45,222 +35,177 @@ function RouterInteractionsGuide() {
       <PlainSection>
         <h1>{meta.title}</h1>
 
-        <p>
-          Route interactions let you interact with a registered route using its
-          name.
-        </p>
-
-        <p>
-          A registered route is generally any route that is in the array of
-          routes that you used to create your router. However, some interactions
-          only register routes that meet some criteria. For example, the{" "}
-          <Link name="Package" params={{ package: "route-prefetch" }}>
-            <IJS>prefetch</IJS>
-          </Link>{" "}
-          interaction only registers routes with a <IJS>resolve</IJS> property.
-        </p>
+        <p>Route interactions are used to interact with routes.</p>
       </PlainSection>
+
+      <HashSection meta={providedMeta}>
+        <p>
+          The <IJS>@curi/interactions</IJS> package provides four built-in
+          interactions:{" "}
+          <Link
+            name="Package"
+            params={{ package: "interactions", version: "v2" }}
+            hash="pathname"
+          >
+            <IJS>pathname</IJS>
+          </Link>
+          ,{" "}
+          <Link
+            name="Package"
+            params={{ package: "interactions", version: "v2" }}
+            hash="active"
+          >
+            <IJS>active</IJS>
+          </Link>
+          ,{" "}
+          <Link
+            name="Package"
+            params={{ package: "interactions", version: "v2" }}
+            hash="ancestors"
+          >
+            <IJS>ancestors</IJS>
+          </Link>
+          , and{" "}
+          <Link
+            name="Package"
+            params={{ package: "interactions", version: "v2" }}
+            hash="prefetch"
+          >
+            <IJS>prefetch</IJS>
+          </Link>
+          .
+        </p>
+      </HashSection>
 
       <HashSection meta={callingMeta}>
         <p>
-          Every interaction has a unique <IJS>name</IJS>. The interaction can be
-          called as a property of a route's <IJS>route</IJS> object. The first
-          argument to the call is always the name of the route to interact with.
-          Some interactions may also take additional arguments.
+          All interactions take a route's public data as its first argument. A
+          route's public data can be accessed using the router's{" "}
+          <IJS>route</IJS> method.
+        </p>
+
+        <p>
+          Any additional arguments to a route interaction are up to the
+          interaction. For example, the <IJS>pathname</IJS> interaction takes a
+          params object as its second argument, which it uses to generate
+          pathnames for routes that have params.
+        </p>
+
+        <p>
+          Interactions are stateless, so they can be imported in whatever module
+          needs to use them.
         </p>
 
         <CodeBlock>
-          {`router.route.myInteraction("Home");
-router.route.otherInteraction("User", false);`}
+          {`import { pathname } from "@curi/interactions";
+const route = router.route("Home");
+const path = pathname(route);`}
         </CodeBlock>
       </HashSection>
 
-      <HashSection meta={builtinMeta}>
+      <HashSection meta={routePropertiesMeta}>
         <p>
-          Curi comes with two built-in interactions: <IJS>pathname</IJS> and{" "}
-          <IJS>active</IJS>.
+          What are the route properties that an interaction can access? There
+          are a number of "base" properties based on the provided route object
+          and its related routes. Additionally, there is a <IJS>methods</IJS>{" "}
+          group containing some methods for interacting with the route.
         </p>
 
-        <p>
-          The <IJS>pathname</IJS> interaction is used to generate a pathname
-          string for a route. This is done using the route's name and an object
-          of route params (if they are necessary).
-        </p>
+        <HashSection
+          tag="h3"
+          meta={{ title: "Base Properties", hash: "base-properties" }}
+        >
+          <p>A route's meta properties provide information about the route.</p>
 
-        <CodeBlock>{`router.route.pathname("User", { id: 1 });`}</CodeBlock>
+          <HashSection tag="h4" meta={{ title: "name", hash: "base-name" }}>
+            <p>The route's name string.</p>
+          </HashSection>
 
-        <p>
-          The <IJS>active</IJS> interaction determines if a route is active by
-          comparing it to a <IJS>response</IJS> object.
-        </p>
+          <HashSection tag="h4" meta={{ title: "keys", hash: "base-keys" }}>
+            <p>
+              An array of the names of params for the route. This includes the
+              names of params for any ancestor routes.
+            </p>
+          </HashSection>
 
-        <CodeBlock>{`router.route.active("Home", response);`}</CodeBlock>
-      </HashSection>
+          <HashSection tag="h4" meta={{ title: "parent", hash: "base-parent" }}>
+            <p>
+              The route's parent's public data. For root routes, this is
+              undefined.
+            </p>
 
-      <HashSection meta={addingMeta}>
-        <p>
-          Route interactions are attached to routes using the second argument to{" "}
-          <IJS>prepareRoutes</IJS>, which is an array of route interactions.
-        </p>
+            <p>
+              The <IJS>ancestors</IJS> interaction uses the <IJS>parent</IJS>{" "}
+              property to generate an array of a route's ancestors.
+            </p>
+          </HashSection>
 
-        <p>
-          The router will make the interactions that it receives from its{" "}
-          <IJS>routes</IJS> available through its <IJS>route</IJS> property.
-        </p>
+          <HashSection
+            tag="h4"
+            meta={{ title: "children", hash: "base-children" }}
+          >
+            <p>
+              An array containing the public route data for each of the route's
+              children. In turn, each child's <IJS>meta.children</IJS> array
+              contains public route data for its children.
+            </p>
 
-        <CodeBlock>
-          {`const routes = prepareRoutes(
-  routes,
-  [createMyInteraction()] // name = myInteraction
-);
-const router = createRouter(browser, routes);
-router.route // all interactions`}
-        </CodeBlock>
-      </HashSection>
+            <p>
+              The <IJS>active</IJS> interaction walks through a routes tree of
+              descendants when checking if a route is a partial match.
+            </p>
+          </HashSection>
 
-      <HashSection meta={creatingMeta}>
-        <p>
-          Curi provides some interactions for common use cases, but you may have
-          need to create a custom interaction. There are a few steps to creating
-          your own route interactions.
-        </p>
-
-        <p>
-          While not strictly require, interactions are commonly created from a
-          function so that multiple instances of the interaction can be safely
-          created.
-        </p>
-
-        <p>
-          For this example, we'll create an interaction that confirms that a
-          route is registered.
-        </p>
-
-        <CodeBlock>
-          {`function confirmInteraction() {
-  ...
-}`}
-        </CodeBlock>
-
-        <p>
-          The function should return an object with three properties:{" "}
-          <IJS>name</IJS>, <IJS>register</IJS>, and <IJS>get</IJS>.
-        </p>
-
-        <HashSection tag="h3" meta={{ title: "name", hash: "property-name" }}>
-          <p>A unique identifier for the route interaction.</p>
+          <HashSection tag="h4" meta={{ title: "extra", hash: "base-extra" }}>
+            <p>
+              A route's extra property is the optional object of whatever you
+              want to attach to a route using its <IJS>extra</IJS> property.
+            </p>
+          </HashSection>
         </HashSection>
 
         <HashSection
           tag="h3"
-          meta={{ title: "register", hash: "property-register" }}
+          meta={{ title: "methods", hash: "methods-properties" }}
         >
           <p>
-            A function to internally store data about routes. The stored data
-            will be accessible from the interaction's <IJS>get</IJS> method.
+            A route's methods properties are functions for interacting with the
+            route.
           </p>
 
-          <p>
-            The first argument to <IJS>register</IJS> is the "public" data for a
-            route, such as its <IJS>name</IJS> and route param <IJS>keys</IJS>.
-            Data should be stored using the route's <IJS>name</IJS>.
-          </p>
+          <HashSection
+            tag="h4"
+            meta={{ title: "pathname", hash: "methods-pathname" }}
+          >
+            <p>A function for generating a pathname string from the route.</p>
 
-          <p>
-            The second argument, which is optional, is data from the route's
-            parent. If a <IJS>register</IJS> method returns a value, the
-            returned value will be passed as the second value when registering
-            the route's children routes.
-          </p>
-        </HashSection>
+            <p>
+              The <IJS>pathname</IJS> interaction uses this method.
+            </p>
+          </HashSection>
 
-        <HashSection tag="h3" meta={{ title: "get", hash: "property-get" }}>
-          <p>
-            A function that will receive a route's name (and possibly other
-            arguments) and perform some task using the related route. If the
-            interaction's <IJS>register</IJS> method stored data about the
-            route, it can be read here.
-          </p>
-        </HashSection>
+          <HashSection
+            tag="h4"
+            meta={{ title: "resolve", hash: "methods-resolve" }}
+          >
+            <p>
+              The route's <IJS>resolve</IJS> function (if it exists). This will
+              be <IJS>undefined</IJS> if the route is synchronous.
+            </p>
 
-        <p>
-          With these properties, we can create our confirmation interaction.
-        </p>
+            <p>
+              The <IJS>prefetch</IJS> interaction uses this method.
+            </p>
+          </HashSection>
 
-        <CodeBlock>
-          {`function confirmInteraction() {
-  // maintain a set of known routes
-  const knownRoutes = new Set();
-  return {
-    name: 'confirm',
-    // when a route is registered,
-    // we store it using its name
-    register: route => {
-      knownRoutes.add(route.name);
-    },
-    // get checks the known routes to see if one exists
-    // with the requested name
-    get: (name) => {
-      return knownRoutes.has(name);
-    }
-  };
-}`}
-        </CodeBlock>
-
-        <p>
-          In your application, you can import it, call the factory to create the
-          interaction, and register the interaction when you create the router.
-        </p>
-
-        <CodeBlock>
-          {`import { curi, prepareRoutes } from '@curi/router';
-import createConfirmation from './interactions/confirm'
-
-const routes = prepareRoutes(
-  [{ name: 'Home', path: '' }],
-  [createConfirmation()]
-);
-
-const router = createRouter(browser, routes);
-
-router.route.confirm('Home'); // true
-router.route.confirm('Elsewhere'); // false`}
-        </CodeBlock>
-
-        <HashSection meta={advancedMeta} tag="h3">
-          <p>
-            For a more advanced example, we can take advantage of the second
-            argument to <IJS>register</IJS>.
-          </p>
-
-          <p>
-            For root routes (no parent route), the second argument will be{" "}
-            <IJS>undefined</IJS>. For nested routes, this is the value returned
-            by the parent route's <IJS>register</IJS> function.
-          </p>
-
-          <CodeBlock>
-            {`function parentInteraction() {
-  const routeTree = {};
-  return {
-    name: 'routeParent',
-    register: (route, parent) => {
-      routeTree[route.name] = parent;
-      // we return route.name and any child routes will
-      // receive that as their parent value
-      return route.name;
-    },
-    get: (name) => {
-      return routeTree[name];
-    }
-  }
-}`}
-          </CodeBlock>
-
-          <p>
-            Curi handles passing the return value of <IJS>register</IJS> to the
-            route's children automatically.
-          </p>
+          <HashSection
+            tag="h4"
+            meta={{ title: "respond", hash: "methods-respond" }}
+          >
+            <p>
+              The route's <IJS>respond</IJS> function (if it exists).
+            </p>
+          </HashSection>
         </HashSection>
       </HashSection>
     </React.Fragment>

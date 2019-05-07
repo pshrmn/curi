@@ -13,10 +13,12 @@ export interface CuriRouter {
   current(): CurrentResponse;
   url(details: RouteLocation): string;
   navigate(options: NavigationDetails): () => void;
-  route: Interactions;
+  route: RouteGetter;
   history: History;
   external: any;
 }
+
+export type RouteGetter = (name: string) => Route | undefined;
 
 // options passed to router.navigate
 export interface NavigationDetails {
@@ -80,7 +82,6 @@ export interface IntrinsicResponse {
   location: SessionLocation;
   name: string;
   params: Params;
-  partials: Array<string>;
 }
 
 // properties describing a location to redirect to
@@ -100,6 +101,10 @@ export interface Response extends IntrinsicResponse {
   redirect?: RedirectLocation | ExternalRedirect;
 }
 
+export interface RouteExtra {
+  [key: string]: any;
+}
+
 // a route descriptor comes from the user
 export interface RouteDescriptor {
   name: string;
@@ -112,19 +117,20 @@ export interface RouteDescriptor {
   children?: Array<RouteDescriptor>;
   respond?: RespondFn;
   resolve?: Resolver;
-  extra?: { [key: string]: any };
+  extra?: RouteExtra;
 }
 
 // the public prepared route interface
 export interface Route<R = unknown> {
   name: string;
-  path: string;
   keys: Array<string | number>;
-  pathname: PathFunction;
-  resolve: R;
-  respond?: RespondFn;
-  extra?: {
-    [key: string]: any;
+  parent: Route | undefined;
+  children: Array<Route>;
+  extra?: RouteExtra;
+  methods: {
+    pathname: PathFunction;
+    resolve: R;
+    respond?: RespondFn;
   };
 }
 export interface SyncRoute extends Route<undefined> {}
@@ -143,7 +149,7 @@ export interface Match {
 
 export interface RouteMatcher {
   match(l: SessionLocation): Match | undefined;
-  interactions: Interactions;
+  route: RouteGetter;
 }
 
 // a route's respond function is used to return properties to add
@@ -177,12 +183,4 @@ export interface ResolveResults {
 }
 
 // the interface of an object used to create a route interaction
-export interface Interaction {
-  name: string;
-  register: RegisterInteraction;
-  get: GetInteraction;
-}
-export type Interactions = { [key: string]: GetInteraction };
-
-export type RegisterInteraction = (route: Route, parent?: any) => any;
-export type GetInteraction = (name: string, ...rest: Array<any>) => any;
+export type Interaction = (route: Readonly<Route>, ...rest: Array<any>) => any;

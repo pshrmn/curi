@@ -4,8 +4,8 @@
     <h2>Categories</h2>
     <ul>
       <li v-for="category in $curi.response.data" :key="category">
-        <curi-link to="Category" :params="{ category }">
-          {{title(category)}}
+        <curi-link name="Category" :params="{ category }">
+          {{ title(category) }}
         </curi-link>
       </li>
     </ul>
@@ -13,11 +13,14 @@
 </template>
 
 <script>
+import title from "../titleInteraction";
+
 export default {
   name: "products",
   methods: {
     title(category) {
-      return this.$router.route.title("Category", { category });
+      const categoryRoute = this.$router.route("Category");
+      return title(categoryRoute, { category });
     }
   }
 };

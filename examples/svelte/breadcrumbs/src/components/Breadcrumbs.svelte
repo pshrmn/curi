@@ -1,8 +1,8 @@
 <ul className="breadcrumbs">
-  {#each ancestors as name (name)}
+  {#each ancestors as route (route)}
     <li>
-      <Link name={name} params={params}>
-        {router.route.title(name, params)}
+      <Link name={route.name} params={params}>
+        {title(route, params)}
       </Link>
     </li>
   {/each}
@@ -11,11 +11,14 @@
 <script>
   import { getRouter } from "@curi/svelte";
   import Link from "@curi/svelte/components/Link.svelte";
+  import { ancestors as ancestorsInteraction } from "@curi/interactions";
+  import title from "../titleInteraction";
 
   export let name;
   export let params;
 
   const router = getRouter();
 
-  let ancestors = router.route.ancestors(name).reverse();
+  let route = router.route(name);
+  let ancestors = ancestorsInteraction(route);
 </script>

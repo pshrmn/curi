@@ -1,3 +1,5 @@
+import { active } from "@curi/interactions";
+
 import useRouter from "./useRouter";
 import useResponse from "./useResponse";
 
@@ -16,7 +18,11 @@ export interface ActiveHookProps {
 export default function useActive(props: ActiveHookProps) {
   const router = useRouter();
   const { response } = useResponse();
-  return router.route.active(props.name, response, {
+  const route = router.route(props.name);
+  if (!route) {
+    return false;
+  }
+  return active(route, response, {
     params: props.params,
     partial: props.partial,
     components: props.components

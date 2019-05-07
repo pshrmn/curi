@@ -35,9 +35,13 @@ const StyledContainer = styled("div")`
 const FlexContainer = styled("div")`
   display: flex;
   flex-flow: row nowrap;
-  justify-content: space-around;
+  justify-content: flex-start;
 
   background ${color.lightBlue};
+
+  > div {
+    margin: 0 25px;
+  }
 `;
 
 const Background = styled("div")`

@@ -1,4 +1,4 @@
-import { isExternalRedirect } from "./redirect";
+import { isExternalRedirect } from "./typeGuards";
 
 import {
   CuriRouter,
@@ -30,18 +30,18 @@ export default function finishResponse(
     response[key as keyof Response] = match[key as keyof IntrinsicResponse];
   }
 
-  if (!route.respond) {
+  if (!route.methods.respond) {
     return response;
   }
 
-  const responseModifiers = route.respond({
+  const results = route.methods.respond({
     resolved,
     error,
     match,
     external
   });
 
-  if (!responseModifiers) {
+  if (!results) {
     if (process.env.NODE_ENV !== "production") {
       console.warn(
         `"${
@@ -61,7 +61,7 @@ export default function finishResponse(
       data: true,
       redirect: true
     };
-    Object.keys(responseModifiers).forEach(property => {
+    Object.keys(results).forEach(property => {
       if (!validProperties.hasOwnProperty(property)) {
         console.warn(`"${property}" is not a valid response property. The valid properties are:
 
@@ -70,14 +70,11 @@ export default function finishResponse(
     });
   }
 
-  response["meta"] = responseModifiers["meta"];
-  response["body"] = responseModifiers["body"];
-  response["data"] = responseModifiers["data"];
-  if (responseModifiers["redirect"]) {
-    response["redirect"] = createRedirect(
-      responseModifiers["redirect"],
-      router
-    );
+  response["meta"] = results["meta"];
+  response["body"] = results["body"];
+  response["data"] = results["data"];
+  if (results["redirect"]) {
+    response["redirect"] = createRedirect(results["redirect"], router);
   }
 
   return response;
@@ -91,12 +88,7 @@ function createRedirect(
     return redirect;
   }
   const { name, params, query, hash, state } = redirect;
-  const url = router.url({
-    name,
-    params,
-    query,
-    hash
-  });
+  const url = router.url({ name, params, query, hash });
   return {
     name,
     params,

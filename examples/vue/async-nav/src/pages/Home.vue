@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <curi-link
-      to="Movie"
+      name="Movie"
       v-for="movie in $curi.response.data"
       :key="movie.id"
       :params="{ id: movie.id }"

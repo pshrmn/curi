@@ -9,6 +9,7 @@
 <script>
   import { getRouter, getResponse } from "@curi/svelte";
   import Link from "@curi/svelte/components/Link.svelte";
+  import { active as activeInteraction } from "@curi/router";
 
   const router = getRouter();
   const response = getResponse();
@@ -17,6 +18,7 @@
   export let params;
   export let partial = false;
 
-  $: active = router.route.active(name, $response, { params, partial });
+  $: route = router.route(name);
+  $: active = activeInteraction(route, $response, { params, partial });
   $: className = active ? "active" : "";
 </script>

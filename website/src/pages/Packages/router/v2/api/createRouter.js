@@ -48,7 +48,7 @@ export const meta = {
   children: [argumentsMeta, propertiesMeta]
 };
 
-export function CuriAPI() {
+export function CreateRouterAPI() {
   return (
     <HashSection meta={meta}>
       <p>
@@ -600,38 +600,13 @@ router.once(({ response, navigation }) => {
 
         <HashSection tag="h5" meta={routeMeta}>
           <p>
-            The router's{" "}
+            The <IJS>route</IJS> method is used to get the public data about a
+            route. This is useful in conjuction with{" "}
             <Link name="Guide" params={{ slug: "route-interactions" }}>
               route interactions
-            </Link>{" "}
-            are accessed through the <IJS>route</IJS> property. These are used
-            to interact with routes using their names.
+            </Link>
+            .
           </p>
-
-          <HashSection
-            tag="h6"
-            meta={{ title: "pathname", hash: "pathname-interaction" }}
-          >
-            <p>
-              Curi includes one built-in interaction, <IJS>pathname</IJS>, which
-              generates location pathnames using the name of a route and an
-              optional object containing any necessary params.
-            </p>
-
-            <CodeBlock>
-              {`const routes = prepareRoutes({
-  routes: [
-    { name: 'User', path: 'user/:id' }
-  ]
-});
-const router = createRouter(browser, routes);
-const userPathname = router.route.pathname(
-  'User',
-  { id: '12345' }
-);
-// userPathname === '/user/12345'`}
-            </CodeBlock>
-          </HashSection>
         </HashSection>
 
         <HashSection tag="h5" meta={historyMeta}>

@@ -1,3 +1,10 @@
+## Next
+
+* `router.route` returns a route's public data.
+* Restructure a route's public data to group functions under a `methods` property.
+* Rework interactions to be external, ideally stateless, functions.
+* Removed `partials` property from response objects.
+
 ## 2.0.0-beta.15
 
 * `router.url` returns relative URL string when `name` is not provided.

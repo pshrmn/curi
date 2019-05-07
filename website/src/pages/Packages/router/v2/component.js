@@ -1,7 +1,7 @@
 import React from "react";
 
 import { About, APIBlock, IJS } from "../../../../components/package/common";
-import { CuriAPI } from "./api/createRouter";
+import { CreateRouterAPI } from "./api/createRouter";
 import { PrepareRoutesAPI } from "./api/prepareRoutes";
 import { RoutePropertiesAPI } from "./api/route-objects";
 
@@ -16,7 +16,7 @@ export default class RouterPkg extends React.PureComponent {
         </About>
         <APIBlock>
           <PrepareRoutesAPI />
-          <CuriAPI />
+          <CreateRouterAPI />
           <RoutePropertiesAPI />
         </APIBlock>
       </React.Fragment>

@@ -351,9 +351,10 @@ const Verb = ({ response }) => (
             The{" "}
             <Link
               name="Package"
-              params={{ package: "route-prefetch", version: "v2" }}
+              params={{ package: "interactions", version: "v2" }}
+              hash="prefetch"
             >
-              <IJS>@curi/route-prefetch</IJS>
+              <IJS>prefetch</IJS>
             </Link>{" "}
             interaction lets you programmatically fetch the data for a route
             prior to navigating to a location.
@@ -361,7 +362,7 @@ const Verb = ({ response }) => (
 
           <CodeBlock>
             {`// index.js
-import prefetch from "@curi/route-prefetch";
+import { prefetch } from "@curi/router";
 
 const routes = prepareRoutes({
   routes: [
@@ -375,18 +376,15 @@ const routes = prepareRoutes({
         });
       }
     }
-  ],
-  interactions: [prefetch()]
+  ]
 });
 
 const router = createRouter(browser, routes);
 
 // this will call the GET_EXAMPLES query
 // and Apollo will cache the results
-router.route.prefetch(
-  "Example",
-  { params: { id: 2 }}
-);`}
+const exampleRoute = router.route("Example");
+prefetch(exampleRoute, { params: { id: 2 }});`}
           </CodeBlock>
         </HashSection>
       </HashSection>

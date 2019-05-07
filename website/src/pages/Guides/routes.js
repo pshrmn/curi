@@ -135,23 +135,22 @@ function RoutesGuide() {
           </CodeBlock>
 
           <p>
-            Curi lets you{" "}
+            The uniqueness of names is important so that you can interact with
+            routes. The router's <IJS>route</IJS> method is used for getting
+            data about a route using its name. Curi also has a concept of{" "}
             <Link name="Guide" params={{ slug: "route-interactions" }}>
-              interact
+              route interactions
             </Link>{" "}
-            with routes using their names. For example, Curi provides a{" "}
+            for working with this route data. For example, Curi provides a{" "}
             <IJS>pathname</IJS> route interaction to generate the pathname of a
-            URL. Instead of manually writing pathname strings, you give the{" "}
-            <IJS>pathname</IJS> interaction a route's name and it will create
-            the pathname string for you. This is particularly useful for routes
-            with path params, since the <IJS>pathname</IJS> interaction will
-            automatically insert these for you.
+            URL. This is particularly useful for routes with path params, since
+            the <IJS>pathname</IJS> interaction will automatically insert these
+            for you.
           </p>
 
           <CodeBlock>
-            {`const pathname = router.route.pathname(
-  "Album", { id: "abcd" }
-);
+            {`const route = router.route("Album");
+const path = pathname(route, { id: "abcd" });
 // pathname = "/a/abcd"`}
           </CodeBlock>
         </HashSection>
