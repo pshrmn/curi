@@ -1,4 +1,4 @@
-## Next
+## 2.0.0-beta.18
 
 * `router.route` returns a route's public data.
 * Restructure a route's public data to group functions under a `methods` property.

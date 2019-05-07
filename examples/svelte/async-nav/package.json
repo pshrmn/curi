@@ -11,8 +11,8 @@
   "license": "MIT",
   "dependencies": {
     "@curi/helpers": "2.0.0-beta.4",
-    "@curi/router": "2.0.0-beta.17",
-    "@curi/svelte": "2.0.0-beta.1",
+    "@curi/router": "2.0.0-beta.18",
+    "@curi/svelte": "2.0.0-beta.2",
     "@hickory/browser": "2.0.0-beta.14",
     "svelte-spinner": "^2.0.0"
   },
