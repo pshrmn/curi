@@ -8,15 +8,11 @@ import {
 } from "../../../../../components/package/common";
 
 const routesArgMeta = { title: "routes", hash: "options-routes" };
-const interactionsArgMeta = {
-  title: "interactions",
-  hash: "options-interactions"
-};
 
 const argumentsMeta = {
   title: "Arguments",
   hash: "prepareRoutes-arguments",
-  children: [routesArgMeta, interactionsArgMeta]
+  children: [routesArgMeta]
 };
 
 export const meta = {
@@ -60,25 +56,6 @@ const routes = prepareRoutes({
 
         <HashSection tag="h5" meta={routesArgMeta}>
           An array of <Link hash="route-objects">route objects</Link>.
-        </HashSection>
-
-        <HashSection tag="h5" meta={interactionsArgMeta}>
-          <p>
-            An array of{" "}
-            <Link name="Guide" params={{ slug: "route-interactions" }}>
-              route interactions
-            </Link>{" "}
-            for interacting with routes based on their <IJS>name</IJS>.
-          </p>
-
-          <CodeBlock>
-            {`import ancestors from "@curi/route-ancestors";
-
-const routes = prepareRoutes({
-  routes: [{ name: "Home", path: "" }],
-  interactions: [ancestors()]
-});`}
-          </CodeBlock>
         </HashSection>
       </HashSection>
     </HashSection>

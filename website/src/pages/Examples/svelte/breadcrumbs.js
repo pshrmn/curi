@@ -30,7 +30,7 @@ function BreadcrumbsExample() {
 
       <HashSection meta={explanationMeta}>
         <p>
-          The <IJS>@curi/route-ancestors</IJS> package lets you know what routes
+          The <IJS>ancestors</IJS> route interaction lets you know what routes
           are the ancestors of another route. Using this, we can build
           breadcrumb links.
         </p>
