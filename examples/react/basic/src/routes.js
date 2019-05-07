@@ -5,7 +5,7 @@ import Contact from "./components/Contact";
 import Method from "./components/Method";
 import NotFound from "./components/NotFound";
 
-const routes = [
+export default prepareRoutes([
   {
     name: "Home",
     path: "",
@@ -44,6 +44,4 @@ const routes = [
       };
     }
   }
-];
-
-export default prepareRoutes({ routes });
+]);

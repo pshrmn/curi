@@ -140,23 +140,21 @@ new App({ target, props: { router } });`}
           </p>
 
           <CodeBlock>
-            {`const routes = prepareRoutes({
-  routes: [
-    {
-      name: "Home",
-      path: "",
-      respond() {
-        return {
-          body: {
-            main: HomeMain,
-            menu: HomeMenu
-          }
+            {`const routes = prepareRoutes([
+  {
+    name: "Home",
+    path: "",
+    respond() {
+      return {
+        body: {
+          main: HomeMain,
+          menu: HomeMenu
         }
       }
-    },
-    // ...
-  ]
-});`}
+    }
+  },
+  // ...
+]);`}
           </CodeBlock>
 
           <CodeBlock lang="html">

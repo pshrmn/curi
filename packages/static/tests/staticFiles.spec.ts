@@ -21,24 +21,22 @@ describe("staticFiles()", () => {
       await remove(fixtures);
       await ensureDir(fixtures);
 
-      const routes = prepareRoutes({
-        routes: [
-          {
-            name: "Home",
-            path: "",
-            respond() {
-              return { body: "Home" };
-            }
-          },
-          {
-            name: "About",
-            path: "about",
-            respond() {
-              return { body: "About" };
-            }
+      const routes = prepareRoutes([
+        {
+          name: "Home",
+          path: "",
+          respond() {
+            return { body: "Home" };
           }
-        ]
-      });
+        },
+        {
+          name: "About",
+          path: "about",
+          respond() {
+            return { body: "About" };
+          }
+        }
+      ]);
       const pages = [{ name: "Home" }, { name: "About" }];
       await staticFiles({
         pages,
@@ -65,31 +63,29 @@ describe("staticFiles()", () => {
         await remove(fixtures);
         await ensureDir(fixtures);
 
-        const routes = prepareRoutes({
-          routes: [
-            {
-              name: "Home",
-              path: "",
-              respond() {
-                return { body: "Home" };
-              }
-            },
-            {
-              name: "About",
-              path: "about",
-              respond() {
-                return { body: "About" };
-              }
-            },
-            {
-              name: "Catch All",
-              path: "(.*)",
-              respond() {
-                return { body: "404" };
-              }
+        const routes = prepareRoutes([
+          {
+            name: "Home",
+            path: "",
+            respond() {
+              return { body: "Home" };
             }
-          ]
-        });
+          },
+          {
+            name: "About",
+            path: "about",
+            respond() {
+              return { body: "About" };
+            }
+          },
+          {
+            name: "Catch All",
+            path: "(.*)",
+            respond() {
+              return { body: "404" };
+            }
+          }
+        ]);
         const pages = [{ name: "Home" }, { name: "About" }];
         await staticFiles({
           pages,
@@ -130,24 +126,22 @@ describe("staticFiles()", () => {
         return `<html><body>${emitted.response.body}</body</html>`;
       }
 
-      const routes = prepareRoutes({
-        routes: [
-          {
-            name: "Home",
-            path: "",
-            respond() {
-              return { redirect: { name: "About" } };
-            }
-          },
-          {
-            name: "About",
-            path: "about",
-            respond() {
-              return { body: "About" };
-            }
+      const routes = prepareRoutes([
+        {
+          name: "Home",
+          path: "",
+          respond() {
+            return { redirect: { name: "About" } };
           }
-        ]
-      });
+        },
+        {
+          name: "About",
+          path: "about",
+          respond() {
+            return { body: "About" };
+          }
+        }
+      ]);
       const pages = [{ name: "Home" }, { name: "About" }];
       const results = await staticFiles({
         pages,
@@ -184,27 +178,25 @@ describe("staticFiles()", () => {
       await remove(fixtures);
       await ensureDir(fixtures);
 
-      const routes = prepareRoutes({
-        routes: [
-          {
-            name: "Home",
-            path: "",
-            respond() {
-              return {
-                body: "Home",
-                redirect: { name: "About" }
-              };
-            }
-          },
-          {
-            name: "About",
-            path: "about",
-            respond() {
-              return { body: "About" };
-            }
+      const routes = prepareRoutes([
+        {
+          name: "Home",
+          path: "",
+          respond() {
+            return {
+              body: "Home",
+              redirect: { name: "About" }
+            };
           }
-        ]
-      });
+        },
+        {
+          name: "About",
+          path: "about",
+          respond() {
+            return { body: "About" };
+          }
+        }
+      ]);
       const pages = [{ name: "Home" }, { name: "About" }];
       await staticFiles({
         pages,
@@ -232,17 +224,15 @@ describe("staticFiles()", () => {
       await remove(fixtures);
       await ensureDir(fixtures);
 
-      const routes = prepareRoutes({
-        routes: [
-          {
-            name: "Home",
-            path: "",
-            respond() {
-              return { body: "Home" };
-            }
+      const routes = prepareRoutes([
+        {
+          name: "Home",
+          path: "",
+          respond() {
+            return { body: "Home" };
           }
-        ]
-      });
+        }
+      ]);
       const pages = [{ name: "Home" }];
       const render = jest.fn(({ response }) => response.body);
       await staticFiles({
@@ -273,18 +263,16 @@ describe("staticFiles()", () => {
       await remove(fixtures);
       await ensureDir(fixtures);
 
-      const routes = prepareRoutes({
-        routes: [
-          {
-            name: "Home",
-            path: "",
-            respond({ external }) {
-              expect(external).toBe(providedExternal);
-              return { body: "Home" };
-            }
+      const routes = prepareRoutes([
+        {
+          name: "Home",
+          path: "",
+          respond({ external }) {
+            expect(external).toBe(providedExternal);
+            return { body: "Home" };
           }
-        ]
-      });
+        }
+      ]);
       const pages = [{ name: "Home" }];
 
       // verify that provided options are used by checking that the
@@ -311,17 +299,15 @@ describe("staticFiles()", () => {
       await remove(fixtures);
       await ensureDir(fixtures);
 
-      const routes = prepareRoutes({
-        routes: [
-          {
-            name: "Home",
-            path: "",
-            respond() {
-              return { body: "Home" };
-            }
+      const routes = prepareRoutes([
+        {
+          name: "Home",
+          path: "",
+          respond() {
+            return { body: "Home" };
           }
-        ]
-      });
+        }
+      ]);
       const pages = [{ name: "Home" }];
       await staticFiles({
         pages,
@@ -357,20 +343,18 @@ describe("staticFiles()", () => {
         await remove(fixtures);
         await ensureDir(fixtures);
 
-        const routes = prepareRoutes({
-          routes: [
-            {
-              name: "Home",
-              path: "",
-              resolve() {
-                return Promise.resolve(true);
-              },
-              respond() {
-                return { body: "Home" };
-              }
+        const routes = prepareRoutes([
+          {
+            name: "Home",
+            path: "",
+            resolve() {
+              return Promise.resolve(true);
+            },
+            respond() {
+              return { body: "Home" };
             }
-          ]
-        });
+          }
+        ]);
         const pages = [{ name: "Home" }];
         const results = await staticFiles({
           pages,

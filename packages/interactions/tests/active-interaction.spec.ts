@@ -9,15 +9,13 @@ import { active } from "@curi/interactions";
 describe("active route interaction", () => {
   describe("checking if a route is active", () => {
     it("returns false when name does not match", () => {
-      const routes = prepareRoutes({
-        routes: [
-          {
-            name: "Player",
-            path: "player/:id"
-          },
-          { name: "Catch All", path: "(.*)" }
-        ]
-      });
+      const routes = prepareRoutes([
+        {
+          name: "Player",
+          path: "player/:id"
+        },
+        { name: "Catch All", path: "(.*)" }
+      ]);
       const router = createRouter<InMemoryOptions>(inMemory, routes);
 
       const { response } = router.current();
@@ -28,15 +26,13 @@ describe("active route interaction", () => {
 
     describe("optional args", () => {
       it("works without getting passed optional object", () => {
-        const routes = prepareRoutes({
-          routes: [
-            {
-              name: "Home",
-              path: ""
-            },
-            { name: "Catch All", path: "(.*)" }
-          ]
-        });
+        const routes = prepareRoutes([
+          {
+            name: "Home",
+            path: ""
+          },
+          { name: "Catch All", path: "(.*)" }
+        ]);
         const router = createRouter<InMemoryOptions>(inMemory, routes);
 
         const { response } = router.current();
@@ -47,15 +43,13 @@ describe("active route interaction", () => {
 
       describe("params", () => {
         it("returns true when name matches and params match", () => {
-          const routes = prepareRoutes({
-            routes: [
-              {
-                name: "Player",
-                path: "player/:id"
-              },
-              { name: "Catch All", path: "(.*)" }
-            ]
-          });
+          const routes = prepareRoutes([
+            {
+              name: "Player",
+              path: "player/:id"
+            },
+            { name: "Catch All", path: "(.*)" }
+          ]);
           const router = createRouter<InMemoryOptions>(inMemory, routes, {
             history: {
               locations: [{ url: "/player/7" }]
@@ -71,15 +65,13 @@ describe("active route interaction", () => {
         });
 
         it("returns false when name matches but params do not", () => {
-          const routes = prepareRoutes({
-            routes: [
-              {
-                name: "Player",
-                path: "player/:id"
-              },
-              { name: "Catch All", path: "(.*)" }
-            ]
-          });
+          const routes = prepareRoutes([
+            {
+              name: "Player",
+              path: "player/:id"
+            },
+            { name: "Catch All", path: "(.*)" }
+          ]);
           const router = createRouter<InMemoryOptions>(inMemory, routes, {
             history: {
               locations: [{ url: "/player/7" }]
@@ -95,15 +87,13 @@ describe("active route interaction", () => {
         });
 
         it("returns false if route expects params but none are provided", () => {
-          const routes = prepareRoutes({
-            routes: [
-              {
-                name: "Player",
-                path: "player/:id"
-              },
-              { name: "Catch All", path: "(.*)" }
-            ]
-          });
+          const routes = prepareRoutes([
+            {
+              name: "Player",
+              path: "player/:id"
+            },
+            { name: "Catch All", path: "(.*)" }
+          ]);
           const router = createRouter<InMemoryOptions>(inMemory, routes, {
             history: {
               locations: [{ url: "/player/7" }]
@@ -119,21 +109,19 @@ describe("active route interaction", () => {
 
       describe("partial", () => {
         it("defaults to false (returns false when name is partial match but partial is not provided)", () => {
-          const routes = prepareRoutes({
-            routes: [
-              {
-                name: "Player",
-                path: "player/:id",
-                children: [
-                  {
-                    name: "Coach",
-                    path: "coach"
-                  }
-                ]
-              },
-              { name: "Catch All", path: "(.*)" }
-            ]
-          });
+          const routes = prepareRoutes([
+            {
+              name: "Player",
+              path: "player/:id",
+              children: [
+                {
+                  name: "Coach",
+                  path: "coach"
+                }
+              ]
+            },
+            { name: "Catch All", path: "(.*)" }
+          ]);
           const router = createRouter<InMemoryOptions>(inMemory, routes, {
             history: {
               locations: [{ url: "/player/6/coach" }]
@@ -149,21 +137,19 @@ describe("active route interaction", () => {
         });
 
         it("returns false when name is partial match but partial is not true", () => {
-          const routes = prepareRoutes({
-            routes: [
-              {
-                name: "Player",
-                path: "player/:id",
-                children: [
-                  {
-                    name: "Coach",
-                    path: "coach"
-                  }
-                ]
-              },
-              { name: "Catch All", path: "(.*)" }
-            ]
-          });
+          const routes = prepareRoutes([
+            {
+              name: "Player",
+              path: "player/:id",
+              children: [
+                {
+                  name: "Coach",
+                  path: "coach"
+                }
+              ]
+            },
+            { name: "Catch All", path: "(.*)" }
+          ]);
           const router = createRouter<InMemoryOptions>(inMemory, routes, {
             history: {
               locations: [{ url: "/player/6/coach" }]
@@ -180,21 +166,19 @@ describe("active route interaction", () => {
         });
 
         it("returns true when name is partial match and partial is true", () => {
-          const routes = prepareRoutes({
-            routes: [
-              {
-                name: "Player",
-                path: "player/:id",
-                children: [
-                  {
-                    name: "Coach",
-                    path: "coach"
-                  }
-                ]
-              },
-              { name: "Catch All", path: "(.*)" }
-            ]
-          });
+          const routes = prepareRoutes([
+            {
+              name: "Player",
+              path: "player/:id",
+              children: [
+                {
+                  name: "Coach",
+                  path: "coach"
+                }
+              ]
+            },
+            { name: "Catch All", path: "(.*)" }
+          ]);
           const router = createRouter<InMemoryOptions>(inMemory, routes, {
             history: {
               locations: [{ url: "/player/6/coach" }]
@@ -213,15 +197,13 @@ describe("active route interaction", () => {
 
       describe("components", () => {
         it("returns true when route matches and components returns true", () => {
-          const routes = prepareRoutes({
-            routes: [
-              {
-                name: "Home",
-                path: ""
-              },
-              { name: "Catch All", path: "(.*)" }
-            ]
-          });
+          const routes = prepareRoutes([
+            {
+              name: "Home",
+              path: ""
+            },
+            { name: "Catch All", path: "(.*)" }
+          ]);
           const router = createRouter<InMemoryOptions>(inMemory, routes, {
             history: {
               locations: [{ url: "/#test" }]
@@ -237,15 +219,13 @@ describe("active route interaction", () => {
         });
 
         it("returns false when route matches but components returns false", () => {
-          const routes = prepareRoutes({
-            routes: [
-              {
-                name: "Home",
-                path: ""
-              },
-              { name: "Catch All", path: "(.*)" }
-            ]
-          });
+          const routes = prepareRoutes([
+            {
+              name: "Home",
+              path: ""
+            },
+            { name: "Catch All", path: "(.*)" }
+          ]);
           const router = createRouter<InMemoryOptions>(inMemory, routes, {
             history: {
               locations: [{ url: "/#test" }]
@@ -261,15 +241,13 @@ describe("active route interaction", () => {
         });
 
         it("doesn't call components function if route doesn't match", () => {
-          const routes = prepareRoutes({
-            routes: [
-              {
-                name: "Home",
-                path: ""
-              },
-              { name: "Catch All", path: "(.*)" }
-            ]
-          });
+          const routes = prepareRoutes([
+            {
+              name: "Home",
+              path: ""
+            },
+            { name: "Catch All", path: "(.*)" }
+          ]);
           const router = createRouter<InMemoryOptions>(inMemory, routes, {
             history: {
               locations: [{ url: "/not-a#test" }]

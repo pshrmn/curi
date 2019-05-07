@@ -41,9 +41,8 @@ export function OnceAPI() {
 
 const cachedGetItems = once(() => api.getItems());
 
-const routes = prepareRoutes({
-  routes: [
-    {
+const routes = prepareRoutes([
+  {
     name: "Menu",
     path: "menu",
     resolve() {
@@ -56,8 +55,8 @@ const routes = prepareRoutes({
       const cached = cachedGetItems();
       return Promise.all([nonCached, cached]);
     }
-  ]
-});`}
+  }
+]);`}
       </CodeBlock>
     </HashSection>
   );

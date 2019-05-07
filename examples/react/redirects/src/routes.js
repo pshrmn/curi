@@ -8,83 +8,81 @@ import NotFound from "./components/NotFound";
 
 import fakeAuth from "./fakeAuth";
 
-export default prepareRoutes({
-  routes: [
-    {
-      name: "Home",
-      path: "",
-      respond: () => {
+export default prepareRoutes([
+  {
+    name: "Home",
+    path: "",
+    respond: () => {
+      return {
+        body: Home
+      };
+    }
+  },
+  {
+    name: "Protected",
+    path: "protected",
+    respond: ({ match }) => {
+      if (!fakeAuth.authenticated()) {
         return {
-          body: Home
-        };
-      }
-    },
-    {
-      name: "Protected",
-      path: "protected",
-      respond: ({ match }) => {
-        if (!fakeAuth.authenticated()) {
-          return {
-            redirect: {
-              name: "Login",
-              state: {
-                next: {
-                  name: match.name,
-                  params: match.params
-                }
+          redirect: {
+            name: "Login",
+            state: {
+              next: {
+                name: match.name,
+                params: match.params
               }
-            },
-            meta: {
-              status: 302
             }
-          };
-        } else {
-          return {
-            body: Protected
-          };
-        }
-      }
-    },
-    {
-      name: "Login",
-      path: "login",
-      respond: () => {
-        if (fakeAuth.authenticated()) {
-          return {
-            redirect: {
-              name: "Home"
-            }
-          };
-        }
-        return {
-          body: Login
+          },
+          meta: {
+            status: 302
+          }
         };
-      }
-    },
-    {
-      name: "Logout",
-      path: "logout",
-      respond: () => {
-        if (!fakeAuth.authenticated()) {
-          return {
-            redirect: {
-              name: "Home"
-            }
-          };
-        }
+      } else {
         return {
-          body: Logout
-        };
-      }
-    },
-    {
-      name: "Not Found",
-      path: "(.*)",
-      respond: () => {
-        return {
-          body: NotFound
+          body: Protected
         };
       }
     }
-  ]
-});
+  },
+  {
+    name: "Login",
+    path: "login",
+    respond: () => {
+      if (fakeAuth.authenticated()) {
+        return {
+          redirect: {
+            name: "Home"
+          }
+        };
+      }
+      return {
+        body: Login
+      };
+    }
+  },
+  {
+    name: "Logout",
+    path: "logout",
+    respond: () => {
+      if (!fakeAuth.authenticated()) {
+        return {
+          redirect: {
+            name: "Home"
+          }
+        };
+      }
+      return {
+        body: Logout
+      };
+    }
+  },
+  {
+    name: "Not Found",
+    path: "(.*)",
+    respond: () => {
+      return {
+        body: NotFound
+      };
+    }
+  }
+]);

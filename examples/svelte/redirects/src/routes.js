@@ -8,8 +8,7 @@ import NotFound from "./components/NotFound.svelte";
 
 import fakeAuth from "./fakeAuth";
 
-export default prepareRoutes({
-    routes: [
+export default prepareRoutes([
   {
     name: "Home",
     path: "",
@@ -81,5 +80,4 @@ export default prepareRoutes({
       };
     }
   }
-]
-});
+]);

@@ -11,18 +11,16 @@ describe("routes", () => {
     describe("properties", () => {
       describe("name", () => {
         it("is the provided value", () => {
-          const routes = prepareRoutes({
-            routes: [
-              {
-                name: "Test",
-                path: "test"
-              },
-              {
-                name: "Not Found",
-                path: "(.*)"
-              }
-            ]
-          });
+          const routes = prepareRoutes([
+            {
+              name: "Test",
+              path: "test"
+            },
+            {
+              name: "Not Found",
+              path: "(.*)"
+            }
+          ]);
           const router = createRouter(inMemory, routes, {
             history: {
               locations: [{ url: "/test" }]
@@ -35,18 +33,16 @@ describe("routes", () => {
 
       describe("keys", () => {
         it("is the array of param names parsed from the path", () => {
-          const routes = prepareRoutes({
-            routes: [
-              {
-                name: "Test",
-                path: ":one/:two/:three"
-              },
-              {
-                name: "Not Found",
-                path: "(.*)"
-              }
-            ]
-          });
+          const routes = prepareRoutes([
+            {
+              name: "Test",
+              path: ":one/:two/:three"
+            },
+            {
+              name: "Not Found",
+              path: "(.*)"
+            }
+          ]);
           const router = createRouter(inMemory, routes, {
             history: {
               locations: [{ url: "/four/five/six" }]
@@ -57,18 +53,16 @@ describe("routes", () => {
         });
 
         it("is an empty array when the path has no params", () => {
-          const routes = prepareRoutes({
-            routes: [
-              {
-                name: "Test",
-                path: "one/two/three"
-              },
-              {
-                name: "Not Found",
-                path: "(.*)"
-              }
-            ]
-          });
+          const routes = prepareRoutes([
+            {
+              name: "Test",
+              path: "one/two/three"
+            },
+            {
+              name: "Not Found",
+              path: "(.*)"
+            }
+          ]);
           const router = createRouter(inMemory, routes, {
             history: {
               locations: [{ url: "/one/two/three" }]
@@ -85,19 +79,17 @@ describe("routes", () => {
             unofficial: true,
             another: 1
           };
-          const routes = prepareRoutes({
-            routes: [
-              {
-                name: "Test",
-                path: "test",
-                extra
-              },
-              {
-                name: "Not Found",
-                path: "(.*)"
-              }
-            ]
-          });
+          const routes = prepareRoutes([
+            {
+              name: "Test",
+              path: "test",
+              extra
+            },
+            {
+              name: "Not Found",
+              path: "(.*)"
+            }
+          ]);
           const router = createRouter(inMemory, routes, {
             history: {
               locations: [{ url: "/test" }]
@@ -112,20 +104,18 @@ describe("routes", () => {
     describe("methods", () => {
       describe("resolve", () => {
         it("is the resolve function", done => {
-          const routes = prepareRoutes({
-            routes: [
-              {
-                name: "Test",
-                path: "test",
-                resolve() {
-                  return Promise.all([
-                    Promise.resolve("iTest"),
-                    Promise.resolve("eTest")
-                  ]);
-                }
+          const routes = prepareRoutes([
+            {
+              name: "Test",
+              path: "test",
+              resolve() {
+                return Promise.all([
+                  Promise.resolve("iTest"),
+                  Promise.resolve("eTest")
+                ]);
               }
-            ]
-          });
+            }
+          ]);
           const router = createRouter(inMemory, routes, {
             history: {
               locations: [{ url: "/test" }]
@@ -141,18 +131,16 @@ describe("routes", () => {
         });
 
         it("is undefined when route.resolve isn't provided", done => {
-          const routes = prepareRoutes({
-            routes: [
-              {
-                name: "Test",
-                path: "test"
-              },
-              {
-                name: "Not Found",
-                path: "(.*)"
-              }
-            ]
-          });
+          const routes = prepareRoutes([
+            {
+              name: "Test",
+              path: "test"
+            },
+            {
+              name: "Not Found",
+              path: "(.*)"
+            }
+          ]);
           const router = createRouter(inMemory, routes, {
             history: {
               locations: [{ url: "/test" }]
@@ -166,17 +154,15 @@ describe("routes", () => {
 
       describe("respond", () => {
         it("is the respond function", () => {
-          const routes = prepareRoutes({
-            routes: [
-              {
-                name: "Test",
-                path: "test",
-                respond() {
-                  return { data: "hi!" };
-                }
+          const routes = prepareRoutes([
+            {
+              name: "Test",
+              path: "test",
+              respond() {
+                return { data: "hi!" };
               }
-            ]
-          });
+            }
+          ]);
           const router = createRouter(inMemory, routes, {
             history: {
               locations: [{ url: "/test" }]
@@ -188,18 +174,16 @@ describe("routes", () => {
         });
 
         it("is undefined when route.respond isn't provided", () => {
-          const routes = prepareRoutes({
-            routes: [
-              {
-                name: "Test",
-                path: "test"
-              },
-              {
-                name: "Not Found",
-                path: "(.*)"
-              }
-            ]
-          });
+          const routes = prepareRoutes([
+            {
+              name: "Test",
+              path: "test"
+            },
+            {
+              name: "Not Found",
+              path: "(.*)"
+            }
+          ]);
           const router = createRouter(inMemory, routes, {
             history: {
               locations: [{ url: "/test" }]
@@ -216,18 +200,16 @@ describe("routes", () => {
     describe("match", () => {
       describe("sensitive", () => {
         it("does case-insensitive matching when false (default)", () => {
-          const routes = prepareRoutes({
-            routes: [
-              {
-                name: "Test",
-                path: "here"
-              },
-              {
-                name: "Not Found",
-                path: "(.*)"
-              }
-            ]
-          });
+          const routes = prepareRoutes([
+            {
+              name: "Test",
+              path: "here"
+            },
+            {
+              name: "Not Found",
+              path: "(.*)"
+            }
+          ]);
           const router = createRouter(inMemory, routes, {
             history: {
               locations: [{ url: "/Here" }]
@@ -238,19 +220,17 @@ describe("routes", () => {
         });
 
         it("does case sensitive matchign when true", () => {
-          const routes = prepareRoutes({
-            routes: [
-              {
-                name: "Test",
-                path: "here",
-                pathOptions: { match: { sensitive: true } }
-              },
-              {
-                name: "Not Found",
-                path: "(.*)"
-              }
-            ]
-          });
+          const routes = prepareRoutes([
+            {
+              name: "Test",
+              path: "here",
+              pathOptions: { match: { sensitive: true } }
+            },
+            {
+              name: "Not Found",
+              path: "(.*)"
+            }
+          ]);
           const router = createRouter(inMemory, routes, {
             history: {
               locations: [{ url: "/Here" }]
@@ -263,18 +243,16 @@ describe("routes", () => {
 
       describe("strict", () => {
         it("will match a trailing delimiter when false", () => {
-          const routes = prepareRoutes({
-            routes: [
-              {
-                name: "Test",
-                path: "here"
-              },
-              {
-                name: "Not Found",
-                path: "(.*)"
-              }
-            ]
-          });
+          const routes = prepareRoutes([
+            {
+              name: "Test",
+              path: "here"
+            },
+            {
+              name: "Not Found",
+              path: "(.*)"
+            }
+          ]);
           const router = createRouter(inMemory, routes, {
             history: {
               locations: [{ url: "/here/" }]
@@ -285,19 +263,17 @@ describe("routes", () => {
         });
 
         it("will not match a trailing delimiter when true", () => {
-          const routes = prepareRoutes({
-            routes: [
-              {
-                name: "Test",
-                path: "here",
-                pathOptions: { match: { strict: true } }
-              },
-              {
-                name: "Not Found",
-                path: "(.*)"
-              }
-            ]
-          });
+          const routes = prepareRoutes([
+            {
+              name: "Test",
+              path: "here",
+              pathOptions: { match: { strict: true } }
+            },
+            {
+              name: "Not Found",
+              path: "(.*)"
+            }
+          ]);
           const router = createRouter(inMemory, routes, {
             history: {
               locations: [{ url: "/here/" }]
@@ -310,18 +286,16 @@ describe("routes", () => {
 
       describe("end", () => {
         it("does not match if there are segments after the path when true", () => {
-          const routes = prepareRoutes({
-            routes: [
-              {
-                name: "Test",
-                path: "here"
-              },
-              {
-                name: "Not Found",
-                path: "(.*)"
-              }
-            ]
-          });
+          const routes = prepareRoutes([
+            {
+              name: "Test",
+              path: "here"
+            },
+            {
+              name: "Not Found",
+              path: "(.*)"
+            }
+          ]);
           const router = createRouter(inMemory, routes, {
             history: {
               locations: [{ url: "/here/again" }]
@@ -332,19 +306,17 @@ describe("routes", () => {
         });
 
         it("matches when there are segments after the path when false", () => {
-          const routes = prepareRoutes({
-            routes: [
-              {
-                name: "Test",
-                path: "here",
-                pathOptions: { match: { end: false } }
-              },
-              {
-                name: "Not Found",
-                path: "(.*)"
-              }
-            ]
-          });
+          const routes = prepareRoutes([
+            {
+              name: "Test",
+              path: "here",
+              pathOptions: { match: { end: false } }
+            },
+            {
+              name: "Not Found",
+              path: "(.*)"
+            }
+          ]);
           const router = createRouter(inMemory, routes, {
             history: {
               locations: [{ url: "/here/again" }]
@@ -356,24 +328,22 @@ describe("routes", () => {
 
         describe("with children routes", () => {
           it("matches if path matches exactly", () => {
-            const routes = prepareRoutes({
-              routes: [
-                {
-                  name: "Test",
-                  path: "test",
-                  children: [
-                    {
-                      name: "Ing",
-                      path: "ing"
-                    }
-                  ]
-                },
-                {
-                  name: "Not Found",
-                  path: "(.*)"
-                }
-              ]
-            });
+            const routes = prepareRoutes([
+              {
+                name: "Test",
+                path: "test",
+                children: [
+                  {
+                    name: "Ing",
+                    path: "ing"
+                  }
+                ]
+              },
+              {
+                name: "Not Found",
+                path: "(.*)"
+              }
+            ]);
             const router = createRouter(inMemory, routes, {
               history: {
                 locations: [{ url: "/test" }]
@@ -384,24 +354,22 @@ describe("routes", () => {
           });
 
           it("acts as if end is false in order to match children routes", () => {
-            const routes = prepareRoutes({
-              routes: [
-                {
-                  name: "Test",
-                  path: "test",
-                  children: [
-                    {
-                      name: "Ing",
-                      path: "ing"
-                    }
-                  ]
-                },
-                {
-                  name: "Not Found",
-                  path: "(.*)"
-                }
-              ]
-            });
+            const routes = prepareRoutes([
+              {
+                name: "Test",
+                path: "test",
+                children: [
+                  {
+                    name: "Ing",
+                    path: "ing"
+                  }
+                ]
+              },
+              {
+                name: "Not Found",
+                path: "(.*)"
+              }
+            ]);
             const router = createRouter(inMemory, routes, {
               history: {
                 locations: [{ url: "/test/ing" }]
@@ -412,24 +380,22 @@ describe("routes", () => {
           });
 
           it("when end is true, path doesn't match exactly, and no children match, it does not match", () => {
-            const routes = prepareRoutes({
-              routes: [
-                {
-                  name: "Test",
-                  path: "test",
-                  children: [
-                    {
-                      name: "Ing",
-                      path: "ing"
-                    }
-                  ]
-                },
-                {
-                  name: "Not Found",
-                  path: "(.*)"
-                }
-              ]
-            });
+            const routes = prepareRoutes([
+              {
+                name: "Test",
+                path: "test",
+                children: [
+                  {
+                    name: "Ing",
+                    path: "ing"
+                  }
+                ]
+              },
+              {
+                name: "Not Found",
+                path: "(.*)"
+              }
+            ]);
             const router = createRouter(inMemory, routes, {
               history: {
                 locations: [{ url: "/test/ed" }]
@@ -440,29 +406,27 @@ describe("routes", () => {
           });
 
           it("when end is false, path doesn't match exactly, and no children match, it matches", () => {
-            const routes = prepareRoutes({
-              routes: [
-                {
-                  name: "Test",
-                  path: "test",
-                  pathOptions: {
-                    match: {
-                      end: false
-                    }
-                  },
-                  children: [
-                    {
-                      name: "Ing",
-                      path: "ing"
-                    }
-                  ]
+            const routes = prepareRoutes([
+              {
+                name: "Test",
+                path: "test",
+                pathOptions: {
+                  match: {
+                    end: false
+                  }
                 },
-                {
-                  name: "Not Found",
-                  path: "(.*)"
-                }
-              ]
-            });
+                children: [
+                  {
+                    name: "Ing",
+                    path: "ing"
+                  }
+                ]
+              },
+              {
+                name: "Not Found",
+                path: "(.*)"
+              }
+            ]);
             const router = createRouter(inMemory, routes, {
               history: {
                 locations: [{ url: "/test/ed" }]
@@ -477,18 +441,16 @@ describe("routes", () => {
 
     describe("compile", () => {
       it("uses default encode function if none is provided", () => {
-        const routes = prepareRoutes({
-          routes: [
-            {
-              name: "Artist",
-              path: "a/:name"
-            },
-            {
-              name: "Not Found",
-              path: "(.*)"
-            }
-          ]
-        });
+        const routes = prepareRoutes([
+          {
+            name: "Artist",
+            path: "a/:name"
+          },
+          {
+            name: "Not Found",
+            path: "(.*)"
+          }
+        ]);
         const route = routes.route("Artist");
         const pathname = pathnameInteraction(route, {
           name: "Beyoncé"
@@ -497,23 +459,21 @@ describe("routes", () => {
       });
 
       it("uses custom encode function if provided", () => {
-        const routes = prepareRoutes({
-          routes: [
-            {
-              name: "Artist",
-              path: "a/:name",
-              pathOptions: {
-                compile: {
-                  encode: n => n
-                }
+        const routes = prepareRoutes([
+          {
+            name: "Artist",
+            path: "a/:name",
+            pathOptions: {
+              compile: {
+                encode: n => n
               }
-            },
-            {
-              name: "Not Found",
-              path: "(.*)"
             }
-          ]
-        });
+          },
+          {
+            name: "Not Found",
+            path: "(.*)"
+          }
+        ]);
         const route = routes.route("Artist");
         const pathname = pathnameInteraction(route, {
           name: "Beyoncé"
@@ -526,14 +486,12 @@ describe("routes", () => {
   describe("route matching/response generation", () => {
     describe("route matching", () => {
       it("ignores leading slash on the pathname", () => {
-        const routes = prepareRoutes({
-          routes: [
-            {
-              name: "Test",
-              path: "test"
-            }
-          ]
-        });
+        const routes = prepareRoutes([
+          {
+            name: "Test",
+            path: "test"
+          }
+        ]);
         const router = createRouter(inMemory, routes, {
           history: {
             locations: [{ url: "/test" }]
@@ -544,18 +502,16 @@ describe("routes", () => {
       });
 
       it("does exact matching", () => {
-        const routes = prepareRoutes({
-          routes: [
-            {
-              name: "Test",
-              path: "test"
-            },
-            {
-              name: "Not Found",
-              path: "(.*)"
-            }
-          ]
-        });
+        const routes = prepareRoutes([
+          {
+            name: "Test",
+            path: "test"
+          },
+          {
+            name: "Not Found",
+            path: "(.*)"
+          }
+        ]);
         const router = createRouter(inMemory, routes, {
           history: {
             locations: [{ url: "/test/leftovers" }]
@@ -571,7 +527,7 @@ describe("routes", () => {
           const realWarn = console.warn;
           console.warn = () => {};
 
-          const routes = prepareRoutes({ routes: [] });
+          const routes = prepareRoutes([]);
           const router = createRouter(inMemory, routes, {
             history: {
               locations: [{ url: "/test" }]
@@ -589,7 +545,7 @@ describe("routes", () => {
           const realWarn = console.warn;
           const fakeWarn = (console.warn = jest.fn());
 
-          const routes = prepareRoutes({ routes: [] });
+          const routes = prepareRoutes([]);
           const router = createRouter(inMemory, routes, {
             history: {
               locations: [{ url: "/test" }]
@@ -607,24 +563,22 @@ describe("routes", () => {
 
       describe("nested routes", () => {
         it("matches children when parent has trailing slash", () => {
-          const routes = prepareRoutes({
-            routes: [
-              {
-                name: "State",
-                path: ":state/",
-                children: [
-                  {
-                    name: "City",
-                    path: ":city/"
-                  }
-                ]
-              },
-              {
-                name: "Not Found",
-                path: "(.*)"
-              }
-            ]
-          });
+          const routes = prepareRoutes([
+            {
+              name: "State",
+              path: ":state/",
+              children: [
+                {
+                  name: "City",
+                  path: ":city/"
+                }
+              ]
+            },
+            {
+              name: "Not Found",
+              path: "(.*)"
+            }
+          ]);
           const router = createRouter(inMemory, routes, {
             history: {
               locations: [{ url: "/ND/Fargo/" }]
@@ -635,21 +589,19 @@ describe("routes", () => {
         });
 
         it("does non-end parent matching when there are child routes, even if pathOptions.match.end=true", () => {
-          const routes = prepareRoutes({
-            routes: [
-              {
-                name: "State",
-                path: ":state",
-                pathOptions: { match: { end: true } },
-                children: [
-                  {
-                    name: "City",
-                    path: ":city"
-                  }
-                ]
-              }
-            ]
-          });
+          const routes = prepareRoutes([
+            {
+              name: "State",
+              path: ":state",
+              pathOptions: { match: { end: true } },
+              children: [
+                {
+                  name: "City",
+                  path: ":city"
+                }
+              ]
+            }
+          ]);
           const router = createRouter(inMemory, routes, {
             history: {
               locations: [{ url: "/ND/Fargo" }]
@@ -660,24 +612,22 @@ describe("routes", () => {
         });
 
         it("skips parent match if no children match", () => {
-          const routes = prepareRoutes({
-            routes: [
-              {
-                name: "State",
-                path: ":state",
-                children: [
-                  {
-                    name: "Wat",
-                    path: "wat"
-                  }
-                ]
-              },
-              {
-                name: "Not Found",
-                path: "(.*)"
-              }
-            ]
-          });
+          const routes = prepareRoutes([
+            {
+              name: "State",
+              path: ":state",
+              children: [
+                {
+                  name: "Wat",
+                  path: "wat"
+                }
+              ]
+            },
+            {
+              name: "Not Found",
+              path: "(.*)"
+            }
+          ]);
           const router = createRouter(inMemory, routes, {
             history: {
               locations: [{ url: "/MT/Bozeman" }]
@@ -689,19 +639,17 @@ describe("routes", () => {
       });
 
       it("matches partial routes if route.pathOptions.match.end=false", () => {
-        const routes = prepareRoutes({
-          routes: [
-            {
-              name: "State",
-              path: ":state",
-              pathOptions: { match: { end: false } }
-            },
-            {
-              name: "Not Found",
-              path: "(.*)"
-            }
-          ]
-        });
+        const routes = prepareRoutes([
+          {
+            name: "State",
+            path: ":state",
+            pathOptions: { match: { end: false } }
+          },
+          {
+            name: "Not Found",
+            path: "(.*)"
+          }
+        ]);
         const router = createRouter(inMemory, routes, {
           history: {
             locations: [{ url: "/SD/Sioux City" }]
@@ -713,19 +661,17 @@ describe("routes", () => {
 
       describe("optional path parameters", () => {
         it("works when optional param is included", () => {
-          const routes = prepareRoutes({
-            routes: [
-              {
-                name: "State",
-                path: ":state?/about",
-                pathOptions: { match: { end: false } }
-              },
-              {
-                name: "Not Found",
-                path: "(.*)"
-              }
-            ]
-          });
+          const routes = prepareRoutes([
+            {
+              name: "State",
+              path: ":state?/about",
+              pathOptions: { match: { end: false } }
+            },
+            {
+              name: "Not Found",
+              path: "(.*)"
+            }
+          ]);
           const router = createRouter(inMemory, routes, {
             history: {
               locations: [{ url: "/NY/about" }]
@@ -736,19 +682,17 @@ describe("routes", () => {
         });
 
         it("works when optional param is NOT included", () => {
-          const routes = prepareRoutes({
-            routes: [
-              {
-                name: "State",
-                path: ":state?/about",
-                pathOptions: { match: { end: false } }
-              },
-              {
-                name: "Not Found",
-                path: "(.*)"
-              }
-            ]
-          });
+          const routes = prepareRoutes([
+            {
+              name: "State",
+              path: ":state?/about",
+              pathOptions: { match: { end: false } }
+            },
+            {
+              name: "Not Found",
+              path: "(.*)"
+            }
+          ]);
           const router = createRouter(inMemory, routes, {
             history: {
               locations: [{ url: "/about" }]
@@ -764,9 +708,7 @@ describe("routes", () => {
       describe("properties", () => {
         describe("location", () => {
           it("is the location used to match routes", () => {
-            const routes = prepareRoutes({
-              routes: [{ name: "Catch All", path: "(.*)" }]
-            });
+            const routes = prepareRoutes([{ name: "Catch All", path: "(.*)" }]);
             const router = createRouter(inMemory, routes, {
               history: {
                 locations: [{ url: "/other-page" }]
@@ -779,14 +721,12 @@ describe("routes", () => {
 
         describe("body", () => {
           it("exists on response as undefined if not set by route.respond()", () => {
-            const routes = prepareRoutes({
-              routes: [
-                {
-                  name: "Test",
-                  path: "test"
-                }
-              ]
-            });
+            const routes = prepareRoutes([
+              {
+                name: "Test",
+                path: "test"
+              }
+            ]);
             const router = createRouter(inMemory, routes, {
               history: {
                 locations: [{ url: "/test" }]
@@ -799,19 +739,17 @@ describe("routes", () => {
 
           it("is the body value of the object returned by route.respond()", () => {
             const body = () => "anybody out there?";
-            const routes = prepareRoutes({
-              routes: [
-                {
-                  name: "Test",
-                  path: "test",
-                  respond: () => {
-                    return {
-                      body: body
-                    };
-                  }
+            const routes = prepareRoutes([
+              {
+                name: "Test",
+                path: "test",
+                respond: () => {
+                  return {
+                    body: body
+                  };
                 }
-              ]
-            });
+              }
+            ]);
             const router = createRouter(inMemory, routes, {
               history: {
                 locations: [{ url: "/test" }]
@@ -824,18 +762,16 @@ describe("routes", () => {
 
         describe("meta", () => {
           it("exists on the response as undefined if not set by route.respond()", () => {
-            const routes = prepareRoutes({
-              routes: [
-                {
-                  name: "Contact",
-                  path: "contact",
-                  children: [
-                    { name: "Email", path: "email" },
-                    { name: "Phone", path: "phone" }
-                  ]
-                }
-              ]
-            });
+            const routes = prepareRoutes([
+              {
+                name: "Contact",
+                path: "contact",
+                children: [
+                  { name: "Email", path: "email" },
+                  { name: "Phone", path: "phone" }
+                ]
+              }
+            ]);
             const router = createRouter(inMemory, routes, {
               history: {
                 locations: [{ url: "/contact" }]
@@ -847,22 +783,20 @@ describe("routes", () => {
           });
 
           it("is the meta value of object returned by route.respond()", () => {
-            const routes = prepareRoutes({
-              routes: [
-                {
-                  name: "A Route",
-                  path: "",
-                  respond: () => {
-                    return {
-                      meta: {
-                        title: "A Route",
-                        status: 451
-                      }
-                    };
-                  }
+            const routes = prepareRoutes([
+              {
+                name: "A Route",
+                path: "",
+                respond: () => {
+                  return {
+                    meta: {
+                      title: "A Route",
+                      status: 451
+                    }
+                  };
                 }
-              ]
-            });
+              }
+            ]);
             const router = createRouter(inMemory, routes, {
               history: {
                 locations: [{ url: "/" }]
@@ -878,14 +812,12 @@ describe("routes", () => {
 
         describe("data", () => {
           it("exists on response as undefined if not set by route.respond()", () => {
-            const routes = prepareRoutes({
-              routes: [
-                {
-                  name: "A Route",
-                  path: ""
-                }
-              ]
-            });
+            const routes = prepareRoutes([
+              {
+                name: "A Route",
+                path: ""
+              }
+            ]);
             const router = createRouter(inMemory, routes, {
               history: {
                 locations: [{ url: "/" }]
@@ -897,21 +829,19 @@ describe("routes", () => {
           });
 
           it("is the data value of the object returned by route.respond()", () => {
-            const routes = prepareRoutes({
-              routes: [
-                {
-                  name: "A Route",
-                  path: "",
-                  respond: () => {
-                    return {
-                      data: {
-                        test: "value"
-                      }
-                    };
-                  }
+            const routes = prepareRoutes([
+              {
+                name: "A Route",
+                path: "",
+                respond: () => {
+                  return {
+                    data: {
+                      test: "value"
+                    }
+                  };
                 }
-              ]
-            });
+              }
+            ]);
             const router = createRouter(inMemory, routes, {
               history: {
                 locations: [{ url: "/" }]
@@ -924,14 +854,12 @@ describe("routes", () => {
 
         describe("name", () => {
           it("is the name of the best matching route", () => {
-            const routes = prepareRoutes({
-              routes: [
-                {
-                  name: "A Route",
-                  path: "a-route"
-                }
-              ]
-            });
+            const routes = prepareRoutes([
+              {
+                name: "A Route",
+                path: "a-route"
+              }
+            ]);
             const router = createRouter(inMemory, routes, {
               history: {
                 locations: [{ url: "/a-route" }]
@@ -944,20 +872,18 @@ describe("routes", () => {
 
         describe("params", () => {
           it("includes params from partially matched routes", () => {
-            const routes = prepareRoutes({
-              routes: [
-                {
-                  name: "State",
-                  path: ":state",
-                  children: [
-                    {
-                      name: "City",
-                      path: ":city"
-                    }
-                  ]
-                }
-              ]
-            });
+            const routes = prepareRoutes([
+              {
+                name: "State",
+                path: ":state",
+                children: [
+                  {
+                    name: "City",
+                    path: ":city"
+                  }
+                ]
+              }
+            ]);
             const router = createRouter(inMemory, routes, {
               history: {
                 locations: [{ url: "/MT/Bozeman" }]
@@ -971,15 +897,13 @@ describe("routes", () => {
           });
 
           it("overwrites param name conflicts", () => {
-            const routes = prepareRoutes({
-              routes: [
-                {
-                  name: "One",
-                  path: ":id",
-                  children: [{ name: "Two", path: ":id" }]
-                }
-              ]
-            });
+            const routes = prepareRoutes([
+              {
+                name: "One",
+                path: ":id",
+                children: [{ name: "Two", path: ":id" }]
+              }
+            ]);
             const router = createRouter(inMemory, routes, {
               history: {
                 locations: [{ url: "/1/2" }]
@@ -991,17 +915,15 @@ describe("routes", () => {
 
           describe("parsing params", () => {
             it("uses route.params to parse params", () => {
-              const routes = prepareRoutes({
-                routes: [
-                  {
-                    name: "number",
-                    path: ":num",
-                    params: {
-                      num: n => parseInt(n, 10)
-                    }
+              const routes = prepareRoutes([
+                {
+                  name: "number",
+                  path: ":num",
+                  params: {
+                    num: n => parseInt(n, 10)
                   }
-                ]
-              });
+                }
+              ]);
               const router = createRouter(inMemory, routes, {
                 history: {
                   locations: [{ url: "/123" }]
@@ -1012,26 +934,24 @@ describe("routes", () => {
             });
 
             it("parses params from parent routes", () => {
-              const routes = prepareRoutes({
-                routes: [
-                  {
-                    name: "first",
-                    path: ":first",
-                    children: [
-                      {
-                        name: "second",
-                        path: ":second",
-                        params: {
-                          second: n => parseInt(n, 10)
-                        }
+              const routes = prepareRoutes([
+                {
+                  name: "first",
+                  path: ":first",
+                  children: [
+                    {
+                      name: "second",
+                      path: ":second",
+                      params: {
+                        second: n => parseInt(n, 10)
                       }
-                    ],
-                    params: {
-                      first: n => parseInt(n, 10)
                     }
+                  ],
+                  params: {
+                    first: n => parseInt(n, 10)
                   }
-                ]
-              });
+                }
+              ]);
               const router = createRouter(inMemory, routes, {
                 history: {
                   locations: [{ url: "/123/456" }]
@@ -1045,17 +965,15 @@ describe("routes", () => {
             });
 
             it("decodes param using decodeURIComponent if param has no function", () => {
-              const routes = prepareRoutes({
-                routes: [
-                  {
-                    name: "combo",
-                    path: ":first/:second",
-                    params: {
-                      first: n => parseInt(n, 10)
-                    }
+              const routes = prepareRoutes([
+                {
+                  name: "combo",
+                  path: ":first/:second",
+                  params: {
+                    first: n => parseInt(n, 10)
                   }
-                ]
-              });
+                }
+              ]);
               const router = createRouter(inMemory, routes, {
                 history: {
                   locations: [{ url: "/123/test%20ing" }]
@@ -1069,14 +987,12 @@ describe("routes", () => {
             });
 
             it("throws if param parser throws", () => {
-              const routes = prepareRoutes({
-                routes: [
-                  {
-                    name: "number",
-                    path: "(.*)"
-                  }
-                ]
-              });
+              const routes = prepareRoutes([
+                {
+                  name: "number",
+                  path: "(.*)"
+                }
+              ]);
               expect(() => {
                 const router = createRouter(inMemory, routes, {
                   history: {
@@ -1090,29 +1006,27 @@ describe("routes", () => {
 
         describe("redirect", () => {
           it("contains the expected properties", () => {
-            const routes = prepareRoutes({
-              routes: [
-                {
-                  name: "A Route",
-                  path: "",
-                  respond: () => {
-                    return {
-                      redirect: {
-                        name: "B Route",
-                        params: { id: "bee" },
-                        hash: "bay",
-                        query: "type=honey",
-                        state: { why: "not" }
-                      }
-                    };
-                  }
-                },
-                {
-                  name: "B Route",
-                  path: "b/:id"
+            const routes = prepareRoutes([
+              {
+                name: "A Route",
+                path: "",
+                respond: () => {
+                  return {
+                    redirect: {
+                      name: "B Route",
+                      params: { id: "bee" },
+                      hash: "bay",
+                      query: "type=honey",
+                      state: { why: "not" }
+                    }
+                  };
                 }
-              ]
-            });
+              },
+              {
+                name: "B Route",
+                path: "b/:id"
+              }
+            ]);
 
             let firstCall = true;
             const logger = ({ response }) => {
@@ -1137,21 +1051,19 @@ describe("routes", () => {
           });
 
           it("works with external redirects", () => {
-            const routes = prepareRoutes({
-              routes: [
-                {
-                  name: "A Route",
-                  path: "",
-                  respond: () => {
-                    return {
-                      redirect: {
-                        externalURL: "https://example.com"
-                      }
-                    };
-                  }
+            const routes = prepareRoutes([
+              {
+                name: "A Route",
+                path: "",
+                respond: () => {
+                  return {
+                    redirect: {
+                      externalURL: "https://example.com"
+                    }
+                  };
                 }
-              ]
-            });
+              }
+            ]);
             const router = createRouter(inMemory, routes, {
               history: {
                 locations: [{ url: "/" }]
@@ -1168,20 +1080,18 @@ describe("routes", () => {
           it("warns when returned object has an invalid property", () => {
             const realWarn = console.warn;
             const fakeWarn = (console.warn = jest.fn());
-            const routes = prepareRoutes({
-              routes: [
-                {
-                  name: "Contact",
-                  path: "contact",
-                  // @ts-ignore
-                  respond() {
-                    return {
-                      bad: "property"
-                    };
-                  }
+            const routes = prepareRoutes([
+              {
+                name: "Contact",
+                path: "contact",
+                // @ts-ignore
+                respond() {
+                  return {
+                    bad: "property"
+                  };
                 }
-              ]
-            });
+              }
+            ]);
             expect(fakeWarn.mock.calls.length).toBe(0);
             const router = createRouter(inMemory, routes, {
               history: {
@@ -1199,20 +1109,18 @@ describe("routes", () => {
 
         describe("[undefined properties]", () => {
           it("are set to undefined on the response", () => {
-            const routes = prepareRoutes({
-              routes: [
-                {
-                  name: "A Route",
-                  path: "",
-                  respond: () => {
-                    return {
-                      body: "body",
-                      meta: undefined
-                    };
-                  }
+            const routes = prepareRoutes([
+              {
+                name: "A Route",
+                path: "",
+                respond: () => {
+                  return {
+                    body: "body",
+                    meta: undefined
+                  };
                 }
-              ]
-            });
+              }
+            ]);
             const router = createRouter(inMemory, routes);
             const { response } = router.current();
             expect(response.name).toBe("A Route");
@@ -1227,16 +1135,14 @@ describe("routes", () => {
             const realWarn = console.warn;
             console.warn = jest.fn();
 
-            const routes = prepareRoutes({
-              routes: [
-                {
-                  name: "A Route",
-                  path: "",
-                  // @ts-ignore
-                  respond: () => {}
-                }
-              ]
-            });
+            const routes = prepareRoutes([
+              {
+                name: "A Route",
+                path: "",
+                // @ts-ignore
+                respond: () => {}
+              }
+            ]);
 
             const router = createRouter(inMemory, routes);
 
@@ -1266,15 +1172,13 @@ describe("routes", () => {
             return Promise.resolve();
           });
 
-          const routes = prepareRoutes({
-            routes: [
-              {
-                name: "Catch All",
-                path: ":anything",
-                resolve: spy
-              }
-            ]
-          });
+          const routes = prepareRoutes([
+            {
+              name: "Catch All",
+              path: ":anything",
+              resolve: spy
+            }
+          ]);
 
           createRouter(inMemory, routes, {
             history: {
@@ -1291,15 +1195,13 @@ describe("routes", () => {
             return Promise.resolve();
           });
 
-          const routes = prepareRoutes({
-            routes: [
-              {
-                name: "Catch All",
-                path: ":anything",
-                resolve: spy
-              }
-            ]
-          });
+          const routes = prepareRoutes([
+            {
+              name: "Catch All",
+              path: ":anything",
+              resolve: spy
+            }
+          ]);
           createRouter(inMemory, routes, {
             external,
             history: {
@@ -1322,31 +1224,29 @@ describe("routes", () => {
             });
           });
 
-          const routes = prepareRoutes({
-            routes: [
-              {
-                name: "First",
-                path: "first",
-                resolve: spy,
-                respond: responseSpy
+          const routes = prepareRoutes([
+            {
+              name: "First",
+              path: "first",
+              resolve: spy,
+              respond: responseSpy
+            },
+            {
+              name: "Second",
+              path: "second",
+              respond: () => {
+                expect(firstHasResolved).toBe(true);
+                expect(spy.mock.calls.length).toBe(2);
+                expect(responseSpy.mock.calls.length).toBe(0);
+                done();
+                return {};
               },
-              {
-                name: "Second",
-                path: "second",
-                respond: () => {
-                  expect(firstHasResolved).toBe(true);
-                  expect(spy.mock.calls.length).toBe(2);
-                  expect(responseSpy.mock.calls.length).toBe(0);
-                  done();
-                  return {};
-                },
-                // re-use the spy so that this route's response
-                // fn isn't call until after the first route's spy
-                // fn has resolved
-                resolve: spy
-              }
-            ]
-          });
+              // re-use the spy so that this route's response
+              // fn isn't call until after the first route's spy
+              // fn has resolved
+              resolve: spy
+            }
+          ]);
           const router = createRouter(inMemory, routes, {
             history: {
               locations: [{ url: "/first" }]
@@ -1358,18 +1258,16 @@ describe("routes", () => {
 
         describe("resolved", () => {
           it("is null when route has no resolve functions", () => {
-            const routes = prepareRoutes({
-              routes: [
-                {
-                  name: "Catch All",
-                  path: ":anything",
-                  respond: ({ resolved }) => {
-                    expect(resolved).toBe(null);
-                    return {};
-                  }
+            const routes = prepareRoutes([
+              {
+                name: "Catch All",
+                path: ":anything",
+                respond: ({ resolved }) => {
+                  expect(resolved).toBe(null);
+                  return {};
                 }
-              ]
-            });
+              }
+            ]);
             const router = createRouter(inMemory, routes, {
               history: {
                 locations: [{ url: "/hello?one=two" }]
@@ -1378,21 +1276,19 @@ describe("routes", () => {
           });
 
           it("is null when a resolve function throws", () => {
-            const routes = prepareRoutes({
-              routes: [
-                {
-                  name: "Catch All",
-                  path: ":anything",
-                  resolve() {
-                    return Promise.reject("woops!");
-                  },
-                  respond: ({ resolved }) => {
-                    expect(resolved).toBe(null);
-                    return {};
-                  }
+            const routes = prepareRoutes([
+              {
+                name: "Catch All",
+                path: ":anything",
+                resolve() {
+                  return Promise.reject("woops!");
+                },
+                respond: ({ resolved }) => {
+                  expect(resolved).toBe(null);
+                  return {};
                 }
-              ]
-            });
+              }
+            ]);
             const router = createRouter(inMemory, routes, {
               history: {
                 locations: [{ url: "/hello?one=two" }]
@@ -1401,22 +1297,20 @@ describe("routes", () => {
           });
 
           it("is the resolve results", () => {
-            const routes = prepareRoutes({
-              routes: [
-                {
-                  name: "Catch All",
-                  path: ":anything",
-                  respond: ({ resolved }) => {
-                    expect(resolved.test).toBe(1);
-                    expect(resolved.yo).toBe("yo!");
-                    return {};
-                  },
-                  resolve() {
-                    return Promise.resolve({ test: 1, yo: "yo!" });
-                  }
+            const routes = prepareRoutes([
+              {
+                name: "Catch All",
+                path: ":anything",
+                respond: ({ resolved }) => {
+                  expect(resolved.test).toBe(1);
+                  expect(resolved.yo).toBe("yo!");
+                  return {};
+                },
+                resolve() {
+                  return Promise.resolve({ test: 1, yo: "yo!" });
                 }
-              ]
-            });
+              }
+            ]);
             const router = createRouter(inMemory, routes, {
               history: {
                 locations: [{ url: "/hello?one=two" }]
@@ -1433,18 +1327,16 @@ describe("routes", () => {
               return {};
             });
 
-            const routes = prepareRoutes({
-              routes: [
-                {
-                  name: "Catch All",
-                  path: ":anything",
-                  respond: spy,
-                  resolve() {
-                    return Promise.reject("rejected");
-                  }
+            const routes = prepareRoutes([
+              {
+                name: "Catch All",
+                path: ":anything",
+                respond: spy,
+                resolve() {
+                  return Promise.reject("rejected");
                 }
-              ]
-            });
+              }
+            ]);
             const router = createRouter(inMemory, routes, {
               history: {
                 locations: [{ url: "/hello?one=two" }]
@@ -1459,18 +1351,16 @@ describe("routes", () => {
               return {};
             });
 
-            const routes = prepareRoutes({
-              routes: [
-                {
-                  name: "Catch All",
-                  path: ":anything",
-                  respond: spy,
-                  resolve() {
-                    return Promise.resolve("hurray!");
-                  }
+            const routes = prepareRoutes([
+              {
+                name: "Catch All",
+                path: ":anything",
+                respond: spy,
+                resolve() {
+                  return Promise.resolve("hurray!");
                 }
-              ]
-            });
+              }
+            ]);
             const router = createRouter(inMemory, routes, {
               history: {
                 locations: [{ url: "/hello?one=two" }]
@@ -1481,25 +1371,23 @@ describe("routes", () => {
 
         describe("match", () => {
           it("receives the response properties based on the matched route", () => {
-            const routes = prepareRoutes({
-              routes: [
-                {
-                  name: "Catch All",
-                  path: ":anything",
-                  respond: props => {
-                    expect(props.match).toMatchObject({
-                      name: "Catch All",
-                      params: { anything: "hello" },
-                      location: {
-                        pathname: "/hello",
-                        query: "one=two"
-                      }
-                    });
-                    return {};
-                  }
+            const routes = prepareRoutes([
+              {
+                name: "Catch All",
+                path: ":anything",
+                respond: props => {
+                  expect(props.match).toMatchObject({
+                    name: "Catch All",
+                    params: { anything: "hello" },
+                    location: {
+                      pathname: "/hello",
+                      query: "one=two"
+                    }
+                  });
+                  return {};
                 }
-              ]
-            });
+              }
+            ]);
             const router = createRouter(inMemory, routes, {
               history: {
                 locations: [{ url: "/hello?one=two" }]
@@ -1514,29 +1402,27 @@ describe("routes", () => {
       // these tests mock history.navigate to track how many times
       // it is called.
       it("automatically redirects for internal redirects", () => {
-        const routes = prepareRoutes({
-          routes: [
-            {
-              name: "Home",
-              path: ""
-            },
-            {
-              name: "Redirects",
-              path: "redirects",
-              respond: () => {
-                return {
-                  redirect: {
-                    name: "Other"
-                  }
-                };
-              }
-            },
-            {
-              name: "Other",
-              path: "other"
+        const routes = prepareRoutes([
+          {
+            name: "Home",
+            path: ""
+          },
+          {
+            name: "Redirects",
+            path: "redirects",
+            respond: () => {
+              return {
+                redirect: {
+                  name: "Other"
+                }
+              };
             }
-          ]
-        });
+          },
+          {
+            name: "Other",
+            path: "other"
+          }
+        ]);
         const router = createRouter(inMemory, routes);
         const history = router.history;
 
@@ -1554,29 +1440,27 @@ describe("routes", () => {
       });
 
       it("does not try to redirect to external redirects", () => {
-        const routes = prepareRoutes({
-          routes: [
-            {
-              name: "Home",
-              path: ""
-            },
-            {
-              name: "Redirects",
-              path: "redirects",
-              respond: () => {
-                return {
-                  redirect: {
-                    externalURL: "https://example.com"
-                  }
-                };
-              }
-            },
-            {
-              name: "Other",
-              path: "other"
+        const routes = prepareRoutes([
+          {
+            name: "Home",
+            path: ""
+          },
+          {
+            name: "Redirects",
+            path: "redirects",
+            respond: () => {
+              return {
+                redirect: {
+                  externalURL: "https://example.com"
+                }
+              };
             }
-          ]
-        });
+          },
+          {
+            name: "Other",
+            path: "other"
+          }
+        ]);
         const router = createRouter(inMemory, routes);
         const history = router.history;
 

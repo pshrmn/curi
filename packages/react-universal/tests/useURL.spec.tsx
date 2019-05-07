@@ -9,13 +9,11 @@ import { createRouterComponent, useURL } from "@curi/react-universal";
 
 describe("useURL", () => {
   let node;
-  const routes = prepareRoutes({
-    routes: [
-      { name: "Home", path: "" },
-      { name: "User", path: "u/:id" },
-      { name: "Catch All", path: "(.*)" }
-    ]
-  });
+  const routes = prepareRoutes([
+    { name: "Home", path: "" },
+    { name: "User", path: "u/:id" },
+    { name: "Catch All", path: "(.*)" }
+  ]);
 
   beforeEach(() => {
     node = document.createElement("div");

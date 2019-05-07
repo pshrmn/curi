@@ -7,12 +7,10 @@ import { CuriPlugin } from "@curi/vue";
 
 describe("<curi-link>", () => {
   let Vue, node, router, wrapper;
-  const routes = prepareRoutes({
-    routes: [
-      { name: "Place", path: "place/:name" },
-      { name: "Catch All", path: "(.*)" }
-    ]
-  });
+  const routes = prepareRoutes([
+    { name: "Place", path: "place/:name" },
+    { name: "Catch All", path: "(.*)" }
+  ]);
 
   beforeEach(() => {
     node = document.createElement("div");

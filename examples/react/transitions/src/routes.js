@@ -5,45 +5,43 @@ import Contact from "./components/Contact";
 import Method from "./components/Method";
 import NotFound from "./components/NotFound";
 
-export default prepareRoutes({
-  routes: [
-    {
-      name: "Home",
-      path: "",
-      respond() {
-        return {
-          body: Home
-        };
-      }
-    },
-    {
-      name: "Contact",
-      path: "contact",
-      respond() {
-        return {
-          body: Contact
-        };
-      },
-      children: [
-        {
-          name: "Method",
-          path: ":method",
-          respond() {
-            return {
-              body: Method
-            };
-          }
-        }
-      ]
-    },
-    {
-      name: "Not Found",
-      path: "(.*)",
-      respond() {
-        return {
-          body: NotFound
-        };
-      }
+export default prepareRoutes([
+  {
+    name: "Home",
+    path: "",
+    respond() {
+      return {
+        body: Home
+      };
     }
-  ]
-});
+  },
+  {
+    name: "Contact",
+    path: "contact",
+    respond() {
+      return {
+        body: Contact
+      };
+    },
+    children: [
+      {
+        name: "Method",
+        path: ":method",
+        respond() {
+          return {
+            body: Method
+          };
+        }
+      }
+    ]
+  },
+  {
+    name: "Not Found",
+    path: "(.*)",
+    respond() {
+      return {
+        body: NotFound
+      };
+    }
+  }
+]);

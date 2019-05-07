@@ -5,27 +5,25 @@ import { ancestors } from "@curi/interactions";
 
 describe("ancestors route interaction", () => {
   describe("routes", () => {
-    const routes = prepareRoutes({
-      routes: [
-        {
-          name: "League",
-          path: "league/:lID",
-          children: [
-            {
-              name: "Team",
-              path: "team/:tID",
-              children: [
-                {
-                  name: "Player",
-                  path: "player/:pID"
-                }
-              ]
-            }
-          ]
-        },
-        { name: "Catch All", path: "(.*)" }
-      ]
-    });
+    const routes = prepareRoutes([
+      {
+        name: "League",
+        path: "league/:lID",
+        children: [
+          {
+            name: "Team",
+            path: "team/:tID",
+            children: [
+              {
+                name: "Player",
+                path: "player/:pID"
+              }
+            ]
+          }
+        ]
+      },
+      { name: "Catch All", path: "(.*)" }
+    ]);
 
     it("returns all ancestors of the route", () => {
       const route = routes.route("Player");

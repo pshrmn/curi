@@ -42,12 +42,10 @@ describe("useStatefulNavigationHandler", () => {
   describe("event handler", () => {
     it("it uses nav props (name, params, hash, query, and state) to generate nav location", () => {
       const mockNavigate = jest.fn();
-      const routes = prepareRoutes({
-        routes: [
-          { name: "Test", path: "test" },
-          { name: "Catch All", path: "(.*)" }
-        ]
-      });
+      const routes = prepareRoutes([
+        { name: "Test", path: "test" },
+        { name: "Catch All", path: "(.*)" }
+      ]);
       const router = createRouter(inMemory, routes);
       router.history.navigate = mockNavigate;
       const Router = createRouterComponent(router);
@@ -86,12 +84,10 @@ describe("useStatefulNavigationHandler", () => {
     it("calls onNav prop func if provided", () => {
       const mockNavigate = jest.fn();
       const onNav = jest.fn();
-      const routes = prepareRoutes({
-        routes: [
-          { name: "Test", path: "test" },
-          { name: "Catch All", path: "(.*)" }
-        ]
-      });
+      const routes = prepareRoutes([
+        { name: "Test", path: "test" },
+        { name: "Catch All", path: "(.*)" }
+      ]);
       const router = createRouter(inMemory, routes);
       router.history.navigate = mockNavigate;
       const Router = createRouterComponent(router);
@@ -131,12 +127,10 @@ describe("useStatefulNavigationHandler", () => {
 
       it("does not call history.navigate if canNavigate returns false", () => {
         const mockNavigate = jest.fn();
-        const routes = prepareRoutes({
-          routes: [
-            { name: "Test", path: "test" },
-            { name: "Catch All", path: "(.*)" }
-          ]
-        });
+        const routes = prepareRoutes([
+          { name: "Test", path: "test" },
+          { name: "Catch All", path: "(.*)" }
+        ]);
         const router = createRouter(inMemory, routes);
         router.history.navigate = mockNavigate;
         const Router = createRouterComponent(router);
@@ -173,12 +167,10 @@ describe("useStatefulNavigationHandler", () => {
 
   describe("navigating", () => {
     it("is false on initial render", () => {
-      const routes = prepareRoutes({
-        routes: [
-          { name: "Test", path: "test" },
-          { name: "Catch All", path: "(.*)" }
-        ]
-      });
+      const routes = prepareRoutes([
+        { name: "Test", path: "test" },
+        { name: "Catch All", path: "(.*)" }
+      ]);
       const router = createRouter(inMemory, routes);
       const Router = createRouterComponent(router);
 
@@ -207,28 +199,26 @@ describe("useStatefulNavigationHandler", () => {
     });
 
     it("is true when navigation starts", () => {
-      const routes = prepareRoutes({
-        routes: [
-          { name: "Test", path: "test" },
-          {
-            name: "Slow",
-            path: "slow",
-            resolve() {
-              // takes 100ms to resolve
-              return new Promise(resolve => {
-                setTimeout(() => {
-                  resolve("slow");
-                }, 100);
-              });
-            }
-          },
-          {
-            name: "Fast",
-            path: "fast"
-          },
-          { name: "Catch All", path: "(.*)" }
-        ]
-      });
+      const routes = prepareRoutes([
+        { name: "Test", path: "test" },
+        {
+          name: "Slow",
+          path: "slow",
+          resolve() {
+            // takes 100ms to resolve
+            return new Promise(resolve => {
+              setTimeout(() => {
+                resolve("slow");
+              }, 100);
+            });
+          }
+        },
+        {
+          name: "Fast",
+          path: "fast"
+        },
+        { name: "Catch All", path: "(.*)" }
+      ]);
       const router = createRouter(inMemory, routes);
       const Router = createRouterComponent(router);
 
@@ -260,28 +250,26 @@ describe("useStatefulNavigationHandler", () => {
     });
 
     it("is false when navigation finishes", async () => {
-      const routes = prepareRoutes({
-        routes: [
-          { name: "Test", path: "test" },
-          {
-            name: "Slow",
-            path: "slow",
-            resolve() {
-              // takes 50ms to resolve
-              return new Promise(resolve => {
-                setTimeout(() => {
-                  resolve("slow");
-                }, 50);
-              });
-            }
-          },
-          {
-            name: "Fast",
-            path: "fast"
-          },
-          { name: "Catch All", path: "(.*)" }
-        ]
-      });
+      const routes = prepareRoutes([
+        { name: "Test", path: "test" },
+        {
+          name: "Slow",
+          path: "slow",
+          resolve() {
+            // takes 50ms to resolve
+            return new Promise(resolve => {
+              setTimeout(() => {
+                resolve("slow");
+              }, 50);
+            });
+          }
+        },
+        {
+          name: "Fast",
+          path: "fast"
+        },
+        { name: "Catch All", path: "(.*)" }
+      ]);
       const router = createRouter(inMemory, routes);
       const Router = createRouterComponent(router);
 

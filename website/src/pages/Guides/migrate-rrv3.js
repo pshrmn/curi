@@ -187,24 +187,22 @@ function MigrateReactRouterv3Guide() {
           </p>
 
           <CodeBlock>
-            {`const routes = prepareRoutes({
-  routes: [
-    {
-      name: 'Home',
-      path: ''
-    },
-    {
-      name: 'Inbox',
-      path: 'inbox',
-      children: [
-        {
-          name: 'Message',
-          path: ':message'
-        }
-      ]
-    }
-  ]
-});`}
+            {`const routes = prepareRoutes([
+  {
+    name: 'Home',
+    path: ''
+  },
+  {
+    name: 'Inbox',
+    path: 'inbox',
+    children: [
+      {
+        name: 'Message',
+        path: ':message'
+      }
+    ]
+  }
+]);`}
           </CodeBlock>
 
           <p>
@@ -235,39 +233,37 @@ import Home from './pages/Home';
 import Inbox from './pages/Inbox';
 import Mesage from './pages/Message';
 
-const routes = prepareRoutes({
-  routes: [
-    {
-      name: 'Home',
-      path: '',
-      respond: () => {
-        return {
-          body: Home
-        };
-      }
-    },
-    {
-      name: 'Inbox',
-      path: 'inbox',
-      respond: () => {
-        return {
-          body: Inbox
-        };
-      },
-      children: [
-        {
-          name: 'Message',
-          path: ':message',
-          respond: () => {
-            return {
-              body: Message
-            };
-          }
-        }
-      ]
+const routes = prepareRoutes([
+  {
+    name: 'Home',
+    path: '',
+    respond: () => {
+      return {
+        body: Home
+      };
     }
-  ]
-});`}
+  },
+  {
+    name: 'Inbox',
+    path: 'inbox',
+    respond: () => {
+      return {
+        body: Inbox
+      };
+    },
+    children: [
+      {
+        name: 'Message',
+        path: ':message',
+        respond: () => {
+          return {
+            body: Message
+          };
+        }
+      }
+    ]
+  }
+]);`}
           </CodeBlock>
 
           <p>
@@ -309,40 +305,38 @@ const routes = prepareRoutes({
           </p>
 
           <CodeBlock>
-            {`const routes = prepareRoutes({
-  routes: [
-    {
-      name: 'Home',
-      path: '',
-      respond: () => {
-        return {
-          body: Home
-        };
-      }
-    },
-    {
-      name: 'Inbox',
-      path: 'inbox',
-      respond: () => {
-        return {
-          body: Inbox
-        };
-      },
-      children: [
-        {
-          name: 'Message',
-          path: ':message',
-          respond: () => {
-            return {
-              body: Message
-            };
-          },
-          resolve(match) { return ... },
-        }
-      ]
+            {`const routes = prepareRoutes([
+  {
+    name: 'Home',
+    path: '',
+    respond: () => {
+      return {
+        body: Home
+      };
     }
-  ]
-});`}
+  },
+  {
+    name: 'Inbox',
+    path: 'inbox',
+    respond: () => {
+      return {
+        body: Inbox
+      };
+    },
+    children: [
+      {
+        name: 'Message',
+        path: ':message',
+        respond: () => {
+          return {
+            body: Message
+          };
+        },
+        resolve(match) { return ... },
+      }
+    ]
+  }
+]);`}
           </CodeBlock>
         </HashSection>
         <p>
@@ -363,7 +357,7 @@ const routes = prepareRoutes({
 
         <CodeBlock lang="jsx">
           {`import { Router, browserHistory } from 'react-router';
-const routes = prepareRoutes({ routes: [...] });
+const routes = prepareRoutes([...]);
 ReactDOM.render((
   <Router history={browserHistory} routes={routes} />
 ), holder);`}
@@ -380,7 +374,7 @@ ReactDOM.render((
         <CodeBlock>
           {`import { curi, prepareRoutes } from '@curi/router';
 import { browser } from '@hickory/browser';
-const routes = prepareRoutes({ routes: [...] });
+const routes = prepareRoutes([...]);
 const router = createRouter(browser, routes);`}
         </CodeBlock>
       </HashSection>
@@ -516,18 +510,16 @@ ReactDOM.render((
           </Note>
 
           <CodeBlock>
-            {`const routes = prepareRoutes({
-  routes: [
-    // ...,
-    {
-      name: "Not Found",
-      path: "(.*)",
-      respond() {
-        return { body: NotFound };
-      }
+            {`const routes = prepareRoutes([
+  // ...,
+  {
+    name: "Not Found",
+    path: "(.*)",
+    respond() {
+      return { body: NotFound };
     }
-  ]
-});`}
+  }
+]);`}
           </CodeBlock>
 
           <p>

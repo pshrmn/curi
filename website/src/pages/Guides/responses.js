@@ -155,25 +155,23 @@ function ResponsesGuide() {
         <CodeBlock>
           {`// do NOT do this
 // mixing body shapes complicates rendering
-const routes = prepareRoutes({
-  routes: [
-    {
-      respond() {
-        return { body: One }
-      }
-    },
-    {
-      respond() {
-        return {
-          body: {
-            main: Main,
-            menu: Menu
-          }
+const routes = prepareRoutes([
+  {
+    respond() {
+      return { body: One }
+    }
+  },
+  {
+    respond() {
+      return {
+        body: {
+          main: Main,
+          menu: Menu
         }
       }
     }
-  ]
-});`}
+  }
+]);`}
         </CodeBlock>
       </HashSection>
 

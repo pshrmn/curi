@@ -62,39 +62,37 @@ function CodeSplittingGuide() {
 import Contact from './components/Contact';
 import ContactMethod from './components/ContactMethod';
 
-const routes = prepareRoutes({
-  routes: [
-    {
-      name: 'Home',
-      path: '',
-      respond: () => {
-        return {
-          body: Home
-        };
-      }
-    },
-    {
-      name: 'Contact',
-      path: 'contact',
-      respond: () => {
-        return {
-          body: Contact
-        };
-      },
-      children: [
-        {
-          name: 'Contact Method',
-          path: ':method',
-          respond: () => {
-            return {
-              body: ContactMethod
-            };
-          }
-        }
-      ]
+const routes = prepareRoutes([
+  {
+    name: 'Home',
+    path: '',
+    respond: () => {
+      return {
+        body: Home
+      };
     }
-  ]
-});`}
+  },
+  {
+    name: 'Contact',
+    path: 'contact',
+    respond: () => {
+      return {
+        body: Contact
+      };
+    },
+    children: [
+      {
+        name: 'Contact Method',
+        path: ':method',
+        respond: () => {
+          return {
+            body: ContactMethod
+          };
+        }
+      }
+    ]
+  }
+]);`}
         </CodeBlock>
       </HashSection>
 
@@ -129,51 +127,49 @@ const routes = prepareRoutes({
         </p>
 
         <CodeBlock>
-          {`const routes = prepareRoutes({
-  routes: [
-    {
-      name: 'Home',
-      path: '',
-      resolve() {
-        return import('./components/Home')
-          .then(module => module.default);
-      },
-      respond: ({ resolved }) => {
-        return {
-          body: resolved
-        };
-      }
+          {`const routes = prepareRoutes([
+  {
+    name: 'Home',
+    path: '',
+    resolve() {
+      return import('./components/Home')
+        .then(module => module.default);
     },
-    {
-      name: 'Contact',
-      path: 'contact',
-      resolve() {
-        return import('./components/Contact')
-          .then(module => module.default);
-      },
-      respond: ({ resolved }) => {
-        return {
-          body: resolved
-        };
-      },
-      children: [
-        {
-          name: 'Contact Method',
-          path: ':method',
-          resolve() {
-            return import('./components/ContactMethod')
-              .then(module => module.default);
-          },
-          respond: ({ resolved }) => {
-            return {
-              body: resolved
-            };
-          }
-        }
-      ]
+    respond: ({ resolved }) => {
+      return {
+        body: resolved
+      };
     }
-  ]
-});`}
+  },
+  {
+    name: 'Contact',
+    path: 'contact',
+    resolve() {
+      return import('./components/Contact')
+        .then(module => module.default);
+    },
+    respond: ({ resolved }) => {
+      return {
+        body: resolved
+      };
+    },
+    children: [
+      {
+        name: 'Contact Method',
+        path: ':method',
+        resolve() {
+          return import('./components/ContactMethod')
+            .then(module => module.default);
+        },
+        respond: ({ resolved }) => {
+          return {
+            body: resolved
+          };
+        }
+      }
+    ]
+  }
+]);`}
         </CodeBlock>
       </HashSection>
 

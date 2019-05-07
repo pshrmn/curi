@@ -11,31 +11,29 @@ import { createRouterComponent, useNavigating } from "@curi/react-universal";
 
 describe("useNavigating", () => {
   let node;
-  const routes = prepareRoutes({
-    routes: [
-      { name: "Home", path: "" },
-      { name: "Sync", path: "sync" },
-      {
-        name: "Slow",
-        path: "slow",
-        resolve() {
-          return new Promise(resolve => {
-            setTimeout(resolve, 1000, "slow");
-          });
-        }
-      },
-      {
-        name: "Fast",
-        path: "fast",
-        resolve() {
-          return new Promise(resolve => {
-            setTimeout(resolve, 50, "fast");
-          });
-        }
-      },
-      { name: "Catch All", path: "(.*)" }
-    ]
-  });
+  const routes = prepareRoutes([
+    { name: "Home", path: "" },
+    { name: "Sync", path: "sync" },
+    {
+      name: "Slow",
+      path: "slow",
+      resolve() {
+        return new Promise(resolve => {
+          setTimeout(resolve, 1000, "slow");
+        });
+      }
+    },
+    {
+      name: "Fast",
+      path: "fast",
+      resolve() {
+        return new Promise(resolve => {
+          setTimeout(resolve, 50, "fast");
+        });
+      }
+    },
+    { name: "Catch All", path: "(.*)" }
+  ]);
 
   beforeEach(() => {
     node = document.createElement("div");

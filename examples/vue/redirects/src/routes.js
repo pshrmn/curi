@@ -8,80 +8,78 @@ import NotFound from "./components/NotFound";
 
 import store from "./store";
 
-export default prepareRoutes({
-  routes: [
-    {
-      name: "Home",
-      path: "",
-      respond() {
+export default prepareRoutes([
+  {
+    name: "Home",
+    path: "",
+    respond() {
+      return {
+        body: Home
+      };
+    }
+  },
+  {
+    name: "Protected",
+    path: "protected",
+    respond() {
+      if (!store.state.user) {
         return {
-          body: Home
+          redirect: {
+            name: "Login",
+            query: { next: "/protected" }
+          },
+          meta: {
+            status: 302
+          }
         };
-      }
-    },
-    {
-      name: "Protected",
-      path: "protected",
-      respond() {
-        if (!store.state.user) {
-          return {
-            redirect: {
-              name: "Login",
-              query: { next: "/protected" }
-            },
-            meta: {
-              status: 302
-            }
-          };
-        } else {
-          return {
-            body: Protected
-          };
-        }
-      }
-    },
-    {
-      name: "Login",
-      path: "login",
-      respond() {
-        if (store.state.user) {
-          return {
-            redirect: {
-              name: "Home"
-            }
-          };
-        } else {
-          return {
-            body: Login
-          };
-        }
-      }
-    },
-    {
-      name: "Logout",
-      path: "logout",
-      respond() {
-        if (!store.state.user) {
-          return {
-            redirect: {
-              name: "Home"
-            }
-          };
-        } else {
-          return {
-            body: Logout
-          };
-        }
-      }
-    },
-    {
-      name: "Not Found",
-      path: "(.*)",
-      respond() {
+      } else {
         return {
-          body: NotFound
+          body: Protected
         };
       }
     }
-  ]
-});
+  },
+  {
+    name: "Login",
+    path: "login",
+    respond() {
+      if (store.state.user) {
+        return {
+          redirect: {
+            name: "Home"
+          }
+        };
+      } else {
+        return {
+          body: Login
+        };
+      }
+    }
+  },
+  {
+    name: "Logout",
+    path: "logout",
+    respond() {
+      if (!store.state.user) {
+        return {
+          redirect: {
+            name: "Home"
+          }
+        };
+      } else {
+        return {
+          body: Logout
+        };
+      }
+    }
+  },
+  {
+    name: "Not Found",
+    path: "(.*)",
+    respond() {
+      return {
+        body: NotFound
+      };
+    }
+  }
+]);

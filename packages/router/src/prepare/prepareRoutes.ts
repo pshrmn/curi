@@ -6,7 +6,6 @@ import { Key } from "path-to-regexp";
 import {
   RouteMatcher,
   RouteDescriptor,
-  Interaction,
   Route,
   ParamParsers
 } from "@curi/types";
@@ -22,17 +21,11 @@ export interface PreparedRoute {
   };
 }
 
-export interface PrepareRoutesOptions {
-  routes: Array<RouteDescriptor>;
-}
-
 export default function prepareRoutes(
-  options: PrepareRoutesOptions
+  routes: Array<RouteDescriptor>
 ): RouteMatcher {
   const mappedRoutes: { [key: string]: Route } = {};
-  const prepared = options.routes.map(route =>
-    createRoute(route, mappedRoutes)
-  );
+  const prepared = routes.map(route => createRoute(route, mappedRoutes));
 
   return {
     match(location: SessionLocation) {
