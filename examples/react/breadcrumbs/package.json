@@ -12,6 +12,7 @@
   "author": "Paul Sherman",
   "license": "MIT",
   "dependencies": {
+    "@curi/interactions": "2.0.0-alpha.0",
     "@curi/react-dom": "2.0.0-beta.13",
     "@curi/router": "2.0.0-beta.17",
     "@hickory/browser": "2.0.0-beta.14",

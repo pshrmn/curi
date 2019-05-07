@@ -1,6 +1,6 @@
 import React from "react";
 import { useRouter, Link } from "@curi/react-dom";
-import { ancestors } from "@curi/router";
+import { ancestors } from "@curi/interactions";
 import title from "../titleInteraction";
 
 const Breadcrumbs = ({ name, params }) => {

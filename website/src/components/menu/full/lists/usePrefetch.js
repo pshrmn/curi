@@ -1,6 +1,6 @@
 import React from "react";
 import { useRouter } from "@curi/react-dom";
-import { prefetch } from "@curi/router";
+import { prefetch } from "@curi/interactions";
 
 export default function usePrefetch(routes, active) {
   const router = useRouter();

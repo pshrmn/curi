@@ -3,10 +3,6 @@ import React from "react";
 import { About, APIBlock, IJS } from "../../../../components/package/common";
 import { CreateRouterAPI } from "./api/createRouter";
 import { PrepareRoutesAPI } from "./api/prepareRoutes";
-import { PathnameAPI } from "./api/pathname";
-import { ActiveAPI } from "./api/active";
-import { AncestorsAPI } from "./api/ancestors";
-import { PrefetchAPI } from "./api/prefetch";
 import { RoutePropertiesAPI } from "./api/route-objects";
 
 export default class RouterPkg extends React.PureComponent {
@@ -21,10 +17,6 @@ export default class RouterPkg extends React.PureComponent {
         <APIBlock>
           <PrepareRoutesAPI />
           <CreateRouterAPI />
-          <PathnameAPI />
-          <ActiveAPI />
-          <AncestorsAPI />
-          <PrefetchAPI />
           <RoutePropertiesAPI />
         </APIBlock>
       </React.Fragment>

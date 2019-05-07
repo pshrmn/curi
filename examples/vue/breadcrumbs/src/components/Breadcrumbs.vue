@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import { ancestors } from "@curi/router";
+import { ancestors } from "@curi/interactions";
 import title from "../titleInteraction";
 
 export default {

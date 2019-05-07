@@ -44,7 +44,7 @@ function RouterInteractionsGuide() {
           interactions:{" "}
           <Link
             name="Package"
-            params={{ package: "router", version: "v2" }}
+            params={{ package: "interactions", version: "v2" }}
             hash="pathname"
           >
             <IJS>pathname</IJS>
@@ -52,7 +52,7 @@ function RouterInteractionsGuide() {
           ,{" "}
           <Link
             name="Package"
-            params={{ package: "router", version: "v2" }}
+            params={{ package: "interactions", version: "v2" }}
             hash="active"
           >
             <IJS>active</IJS>
@@ -60,7 +60,7 @@ function RouterInteractionsGuide() {
           ,{" "}
           <Link
             name="Package"
-            params={{ package: "router", version: "v2" }}
+            params={{ package: "interactions", version: "v2" }}
             hash="ancestors"
           >
             <IJS>ancestors</IJS>
@@ -68,7 +68,7 @@ function RouterInteractionsGuide() {
           , and{" "}
           <Link
             name="Package"
-            params={{ package: "router", version: "v2" }}
+            params={{ package: "interactions", version: "v2" }}
             hash="prefetch"
           >
             <IJS>prefetch</IJS>

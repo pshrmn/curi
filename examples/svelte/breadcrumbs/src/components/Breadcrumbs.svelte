@@ -11,7 +11,7 @@
 <script>
   import { getRouter } from "@curi/svelte";
   import Link from "@curi/svelte/components/Link.svelte";
-  import { ancestors as ancestorsInteraction } from "@curi/router";
+  import { ancestors as ancestorsInteraction } from "@curi/interactions";
   import title from "../titleInteraction";
 
   export let name;

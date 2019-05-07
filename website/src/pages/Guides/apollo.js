@@ -351,7 +351,7 @@ const Verb = ({ response }) => (
             The{" "}
             <Link
               name="Package"
-              params={{ package: "router", version: "v2" }}
+              params={{ package: "interactions", version: "v2" }}
               hash="prefetch"
             >
               <IJS>prefetch</IJS>

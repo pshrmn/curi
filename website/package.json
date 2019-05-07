@@ -20,6 +20,7 @@
   "license": "UNLICENSED",
   "dependencies": {
     "@curi/helpers": "file:../packages/helpers",
+    "@curi/interactions": "file:../packages/interactions",
     "@curi/react-dom": "file:../packages/react-dom",
     "@curi/router": "file:../packages/router",
     "@curi/side-effect-aria-live": "file:../packages/side-effects/side-effect-aria-live",

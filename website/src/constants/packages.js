@@ -28,6 +28,26 @@ const packages = [
     }
   },
   {
+    name: "interactions",
+    globalName: "CuriInteractions",
+    type: "router",
+    script: true,
+    latest: "v2",
+    versions: {
+      v2: versions["interactions"]
+    },
+    import: version => {
+      switch (version) {
+        case "v2":
+        default:
+          return import(
+            /* webpackChunkName: 'package--interactions-v2' */
+            `../pages/Packages/interactions/v2/index.js`
+          );
+      }
+    }
+  },
+  {
     name: "react-dom",
     globalName: "CuriReactDOM",
     type: "render",
