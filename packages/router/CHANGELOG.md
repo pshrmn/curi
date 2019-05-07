@@ -1,4 +1,4 @@
-## Next
+## 2.0.0-beta.19
 
 * `prepareRoutes` takes an array of routes as its first (and only) argument.
 
