@@ -35,6 +35,7 @@
   "author": "Paul Sherman",
   "license": "MIT",
   "dependencies": {
+    "@curi/interactions": "file:../interactions",
     "@curi/types": "file:../types",
     "@hickory/root": "2.0.0-beta.14",
     "path-to-regexp": "^2.1.0"

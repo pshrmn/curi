@@ -19,12 +19,12 @@
     "gzipped": 1158
   },
   "dist/curi-react-dom.umd.js": {
-    "bundled": 11993,
+    "bundled": 12498,
     "minified": 4612,
     "gzipped": 1803
   },
   "dist/curi-react-dom.min.js": {
-    "bundled": 11492,
+    "bundled": 11979,
     "minified": 4286,
     "gzipped": 1627
   }

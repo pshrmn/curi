@@ -1,7 +1,8 @@
 import "jest";
 import { inMemory } from "@hickory/in-memory";
+import { prepareRoutes, createRouter } from "@curi/router";
 
-import { prepareRoutes, createRouter, pathname } from "@curi/router";
+import { pathname } from "@curi/interactions";
 
 describe("pathname route interaction", () => {
   describe("generating pathnames", () => {

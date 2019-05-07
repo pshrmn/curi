@@ -1,4 +1,4 @@
-import { active } from "@curi/router";
+import { active } from "@curi/interactions";
 
 import useRouter from "./useRouter";
 import useResponse from "./useResponse";

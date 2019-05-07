@@ -1,6 +1,6 @@
 import { PathnamesConfiguration } from "./types";
 
-import { pathname } from "@curi/router";
+import { pathname } from "@curi/interactions";
 
 export default function pathnames(
   config: PathnamesConfiguration

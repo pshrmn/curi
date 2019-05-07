@@ -1,8 +1,9 @@
 import "jest";
-import { prepareRoutes, prefetch } from "@curi/router";
+import { prepareRoutes } from "@curi/router";
 
 import { SessionLocation } from "@hickory/root";
-import { IntrinsicResponse } from "@curi/types";
+
+import { prefetch } from "@curi/interactions";
 
 describe("prefetch route interaction", () => {
   describe("routes", () => {

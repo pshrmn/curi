@@ -121,6 +121,7 @@
     "@curi-example/transitions-react": "file:examples/react/transitions",
     "@curi-example/transitions-vue": "file:examples/vue/transitions",
     "@curi/helpers": "file:packages/helpers",
+    "@curi/interactions": "file:packages/interactions",
     "@curi/react-dom": "file:packages/react-dom",
     "@curi/react-native": "file:packages/react-native",
     "@curi/react-universal": "file:packages/react-universal",

@@ -1,11 +1,8 @@
 import "jest";
 import { inMemory } from "@hickory/in-memory";
+import { pathname as pathnameInteraction } from "@curi/interactions";
 
-import {
-  createRouter,
-  prepareRoutes,
-  pathname as pathnameInteraction
-} from "@curi/router";
+import { createRouter, prepareRoutes } from "@curi/router";
 
 import { AsyncRoute } from "@curi/types";
 

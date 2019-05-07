@@ -1,6 +1,6 @@
+import { pathname as pathnameInteraction } from "@curi/interactions";
 import finishResponse from "./finishResponse";
 import { isAsyncRoute, isExternalRedirect } from "./typeGuards";
-import pathnameInteraction from "../interactions/pathname";
 
 import {
   HistoryConstructor,

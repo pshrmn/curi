@@ -1,5 +1,7 @@
 import "jest";
-import { prepareRoutes, ancestors } from "@curi/router";
+import { prepareRoutes } from "@curi/router";
+
+import { ancestors } from "@curi/interactions";
 
 describe("ancestors route interaction", () => {
   describe("routes", () => {

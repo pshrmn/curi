@@ -1,8 +1,10 @@
 import "jest";
 import { inMemory } from "@hickory/in-memory";
-import { createRouter, prepareRoutes, active } from "@curi/router";
+import { createRouter, prepareRoutes } from "@curi/router";
 
 import { InMemoryOptions } from "@hickory/in-memory";
+
+import { active } from "@curi/interactions";
 
 describe("active route interaction", () => {
   describe("checking if a route is active", () => {
