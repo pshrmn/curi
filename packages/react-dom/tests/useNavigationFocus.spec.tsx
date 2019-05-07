@@ -14,9 +14,10 @@ import {
 describe("useNavigationFocus", () => {
   let node;
   let router, Router;
-  const routes = prepareRoutes({
-    routes: [{ name: "Home", path: "" }, { name: "About", path: "about" }]
-  });
+  const routes = prepareRoutes([
+    { name: "Home", path: "" },
+    { name: "About", path: "about" }
+  ]);
 
   beforeEach(() => {
     node = document.createElement("div");
@@ -56,14 +57,12 @@ describe("useNavigationFocus", () => {
       const realWarn = console.warn;
       const fakeWarn = (console.warn = jest.fn());
 
-      const routes = prepareRoutes({
-        routes: [
-          {
-            name: "Home",
-            path: ""
-          }
-        ]
-      });
+      const routes = prepareRoutes([
+        {
+          name: "Home",
+          path: ""
+        }
+      ]);
 
       const router = createRouter(inMemory, routes);
       const Router = createRouterComponent(router);
@@ -192,24 +191,22 @@ describe("useNavigationFocus", () => {
             <h1>About</h1>
           </div>
         ));
-        const routes = prepareRoutes({
-          routes: [
-            {
-              name: "Home",
-              path: "",
-              respond() {
-                return { body: Home };
-              }
-            },
-            {
-              name: "About",
-              path: "about",
-              respond() {
-                return { body: About };
-              }
+        const routes = prepareRoutes([
+          {
+            name: "Home",
+            path: "",
+            respond() {
+              return { body: Home };
             }
-          ]
-        });
+          },
+          {
+            name: "About",
+            path: "about",
+            respond() {
+              return { body: About };
+            }
+          }
+        ]);
 
         const router = createRouter(inMemory, routes);
         const Router = createRouterComponent(router);
@@ -259,24 +256,22 @@ describe("useNavigationFocus", () => {
           </div>
         );
 
-        const routes = prepareRoutes({
-          routes: [
-            {
-              name: "Home",
-              path: "",
-              respond() {
-                return { body: Home };
-              }
-            },
-            {
-              name: "About",
-              path: "about",
-              respond() {
-                return { body: About };
-              }
+        const routes = prepareRoutes([
+          {
+            name: "Home",
+            path: "",
+            respond() {
+              return { body: Home };
             }
-          ]
-        });
+          },
+          {
+            name: "About",
+            path: "about",
+            respond() {
+              return { body: About };
+            }
+          }
+        ]);
 
         const router = createRouter(inMemory, routes);
         const Router = createRouterComponent(router);

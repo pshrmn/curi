@@ -28,18 +28,16 @@ export function PathnameAPI() {
       <CodeBlock>
         {`import { pathname } from "@curi/router";
 
-const routes = prepareRoutes({
-  routes: [
-    {
-      name: "Home",
-      path: ""
-    },
-    {
-      name: "User",
-      path: "u/:id",
-    }
-  ]
-});
+const routes = prepareRoutes([
+  {
+    name: "Home",
+    path: ""
+  },
+  {
+    name: "User",
+    path: "u/:id",
+  }
+]);
 
 const route = router.route("Home");
 const parent = pathname(route); // "/"`}

@@ -13,13 +13,11 @@ import {
 
 describe("createRouterComponent()", () => {
   let node;
-  const routes = prepareRoutes({
-    routes: [
-      { name: "Home", path: "" },
-      { name: "About", path: "about" },
-      { name: "Catch All", path: "(.*)" }
-    ]
-  });
+  const routes = prepareRoutes([
+    { name: "Home", path: "" },
+    { name: "About", path: "about" },
+    { name: "Catch All", path: "(.*)" }
+  ]);
 
   beforeEach(() => {
     node = document.createElement("div");
@@ -33,9 +31,7 @@ describe("createRouterComponent()", () => {
 
   describe("children prop", () => {
     it("renders children", () => {
-      const routes = prepareRoutes({
-        routes: [{ name: "Catch All", path: "(.*)" }]
-      });
+      const routes = prepareRoutes([{ name: "Catch All", path: "(.*)" }]);
       const router = createRouter(inMemory, routes);
 
       const App = jest.fn(() => {
@@ -52,9 +48,7 @@ describe("createRouterComponent()", () => {
     });
 
     it("works with multiple children", () => {
-      const routes = prepareRoutes({
-        routes: [{ name: "Catch All", path: "(.*)" }]
-      });
+      const routes = prepareRoutes([{ name: "Catch All", path: "(.*)" }]);
       const router = createRouter(inMemory, routes);
 
       const One = jest.fn(() => {

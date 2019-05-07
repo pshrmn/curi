@@ -90,12 +90,10 @@ const router = createRouter(browser, routes);`}
           </p>
 
           <CodeBlock lang="jsx">
-            {`const routes = prepareRoutes({
-  routes: [
-    { name: "Home", path: "" },
-    { name: "About", path: "about" }
-  ]
-});
+            {`const routes = prepareRoutes([
+  { name: "Home", path: "" },
+  { name: "About", path: "about" }
+]);
 
 const router = createRouter(browser, routes);`}
           </CodeBlock>
@@ -152,18 +150,16 @@ const router = createRouter(browser, routes, {
 });`}
             </CodeBlock>
             <CodeBlock>
-              {`const routes = prepareRoutes({
-  routes: [
-    {
-      name: "User",
-      path: "user/:id",
-      resolve(match, external) {
-        // use the external object to make a query
-        return external.client.query();
-      }
+              {`const routes = prepareRoutes([
+  {
+    name: "User",
+    path: "user/:id",
+    resolve(match, external) {
+      // use the external object to make a query
+      return external.client.query();
     }
-  ]
-});`}
+  }
+]);`}
             </CodeBlock>
           </HashSection>
 
@@ -199,27 +195,25 @@ const router = createRouter(browser, routes, {
             </p>
 
             <CodeBlock>
-              {`const routes = prepareRoutes({
-  routes: [
-    {
-      name: "Old",
-      path: "old/:id",
-      respond({ params }) {
-        // setup a redirect to the "New" route
-        return {
-          redirect: {
-            name: "New",
-            params
-          }
-        };
-      }
-    },
-    {
-      name: "New",
-      path: "new/:id"
+              {`const routes = prepareRoutes([
+  {
+    name: "Old",
+    path: "old/:id",
+    respond({ params }) {
+      // setup a redirect to the "New" route
+      return {
+        redirect: {
+          name: "New",
+          params
+        }
+      };
     }
-  ]
-});
+  },
+  {
+    name: "New",
+    path: "new/:id"
+  }
+]);
 
 const router = createRouter(browser, routes, {
   invisibleRedirects: false

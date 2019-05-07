@@ -10,7 +10,4 @@ export interface PreparedRoute {
         parsers?: ParamParsers;
     };
 }
-export interface PrepareRoutesOptions {
-    routes: Array<RouteDescriptor>;
-}
-export default function prepareRoutes(options: PrepareRoutesOptions): RouteMatcher;
+export default function prepareRoutes(routes: Array<RouteDescriptor>): RouteMatcher;

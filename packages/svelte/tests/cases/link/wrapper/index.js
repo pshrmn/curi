@@ -4,13 +4,11 @@ import { createRouter, prepareRoutes } from "@curi/router";
 import app from "./app.svelte";
 import cleanText from "../../../utils/cleanText";
 
-const routes = prepareRoutes({
-  routes: [
-    { name: "Home", path: "" },
-    { name: "User", path: "u/:id" },
-    { name: "Not Found", path: "(.*)" }
-  ]
-});
+const routes = prepareRoutes([
+  { name: "Home", path: "" },
+  { name: "User", path: "u/:id" },
+  { name: "Not Found", path: "(.*)" }
+]);
 
 const router = createRouter(inMemory, routes);
 

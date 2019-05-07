@@ -1,3 +1,7 @@
+## Next
+
+* `prepareRoutes` takes an array of routes as its first (and only) argument.
+
 ## 2.0.0-beta.18
 
 * `router.route` returns a route's public data.

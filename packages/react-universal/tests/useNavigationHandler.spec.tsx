@@ -40,12 +40,10 @@ describe("useNavigationHandler", () => {
   describe("event handler", () => {
     it("it uses nav props (name, params, hash, query, and state) to generate nav location", () => {
       const mockNavigate = jest.fn();
-      const routes = prepareRoutes({
-        routes: [
-          { name: "Test", path: "test" },
-          { name: "Catch All", path: "(.*)" }
-        ]
-      });
+      const routes = prepareRoutes([
+        { name: "Test", path: "test" },
+        { name: "Catch All", path: "(.*)" }
+      ]);
       const router = createRouter(inMemory, routes);
       router.history.navigate = mockNavigate;
       const Router = createRouterComponent(router);
@@ -81,12 +79,10 @@ describe("useNavigationHandler", () => {
     it("calls onNav prop func if provided", () => {
       const mockNavigate = jest.fn();
       const onNav = jest.fn();
-      const routes = prepareRoutes({
-        routes: [
-          { name: "Test", path: "test" },
-          { name: "Catch All", path: "(.*)" }
-        ]
-      });
+      const routes = prepareRoutes([
+        { name: "Test", path: "test" },
+        { name: "Catch All", path: "(.*)" }
+      ]);
       const router = createRouter(inMemory, routes);
       router.history.navigate = mockNavigate;
       const Router = createRouterComponent(router);
@@ -123,12 +119,10 @@ describe("useNavigationHandler", () => {
 
       it("does not call history.navigate if canNavigate returns false", () => {
         const mockNavigate = jest.fn();
-        const routes = prepareRoutes({
-          routes: [
-            { name: "Test", path: "test" },
-            { name: "Catch All", path: "(.*)" }
-          ]
-        });
+        const routes = prepareRoutes([
+          { name: "Test", path: "test" },
+          { name: "Catch All", path: "(.*)" }
+        ]);
         const router = createRouter(inMemory, routes);
         router.history.navigate = mockNavigate;
         const Router = createRouterComponent(router);

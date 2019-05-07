@@ -7,6 +7,11 @@ import packages from "./packages";
 import examples from "./examples";
 import notFound from "./not-found";
 
-export default prepareRoutes({
-  routes: [home, tutorials, guides, packages, examples, notFound]
-});
+export default prepareRoutes([
+  home,
+  tutorials,
+  guides,
+  packages,
+  examples,
+  notFound
+]);

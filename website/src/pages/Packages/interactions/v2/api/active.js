@@ -31,14 +31,12 @@ export function ActiveAPI() {
       <CodeBlock>
         {`import { active } from "@curi/router";
 
-const routes = prepareRoutes({
-  routes: [
-    {
-      name: "User",
-      path: "u/:id",
-    }
-  ]
-});
+const routes = prepareRoutes([
+  {
+    name: "User",
+    path: "u/:id",
+  }
+]);
 
 const route = router.route("User");
 const isActive = active(route, response, { id: "1" });`}

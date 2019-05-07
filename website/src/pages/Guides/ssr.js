@@ -438,17 +438,15 @@ import routes from "../client/routes";`}
 import fetch from "isomorphic-fetch";
 import { prepareRoutes } from "@curi/router";
 
-export default prepareRoutes({
-  routes: [
-    {
-      name: "Test",
-      path: "test",
-      resolve() {
-        return fetch("/test-data");
-      }
+export default prepareRoutes([
+  {
+    name: "Test",
+    path: "test",
+    resolve() {
+      return fetch("/test-data");
     }
-  ]
-});`}
+  }
+]);`}
           </CodeBlock>
         </HashSection>
       </HashSection>

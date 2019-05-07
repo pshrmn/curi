@@ -33,13 +33,11 @@ export function PrepareRoutesAPI() {
       <CodeBlock>
         {`import { prepareRoutes } from '@curi/router';
 
-const routes = prepareRoutes({
-  routes: [
-    { name: "Home", path: "" },
-    // ...
-    { name: "Not Found", path: "(.*)" }
-  ]
-});`}
+const routes = prepareRoutes([
+  { name: "Home", path: "" },
+  // ...
+  { name: "Not Found", path: "(.*)" }
+]);`}
       </CodeBlock>
 
       <p>
@@ -49,11 +47,6 @@ const routes = prepareRoutes({
       </p>
 
       <HashSection tag="h4" meta={argumentsMeta}>
-        <p>
-          <IJS>prepareRoutes</IJS> takes a single argument, which is an object.
-          The object has one required property: <IJS>routes</IJS>.
-        </p>
-
         <HashSection tag="h5" meta={routesArgMeta}>
           An array of <Link hash="route-objects">route objects</Link>.
         </HashSection>

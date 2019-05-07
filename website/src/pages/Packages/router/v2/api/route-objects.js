@@ -345,18 +345,16 @@ const user = {
 
             <CodeBlock>
               {`import Home from "./components/Home";
-const routes = prepareRoutes({
-  routes: [
-    {
-      name: "Home",
-      path: "",
-      respond() {
-        return { body: Home };
-      }
-    },
-    // ...
-  ]
-});
+const routes = prepareRoutes([
+  {
+    name: "Home",
+    path: "",
+    respond() {
+      return { body: Home };
+    }
+  },
+  // ...
+]);
 // response = { body: Home, ... }`}
             </CodeBlock>
           </HashSection>
@@ -517,17 +515,15 @@ const routes = prepareRoutes({
         </p>
 
         <CodeBlock>
-          {`const routes = prepareRoutes({
-  routes: [
-    {
-      name: 'Number',
-      path: 'number/:num',
-      params: {
-        num: n => parseInt(n, 10)
-      }
+          {`const routes = prepareRoutes([
+  {
+    name: 'Number',
+    path: 'number/:num',
+    params: {
+      num: n => parseInt(n, 10)
     }
-  ]
-});
+  }
+]);
 
 // when the user visits /number/1,
 // response.params will be { num: 1 }
@@ -539,18 +535,16 @@ const routes = prepareRoutes({
         </p>
 
         <CodeBlock>
-          {`const routes = prepareRoutes({
-  routes: [
-    {
-      name: 'Not Found',
-      path: '(.*)',
-      params: {
-        // skip decoding the unmatched value
-        0: value => value
-      }
+          {`const routes = prepareRoutes([
+  {
+    name: 'Not Found',
+    path: '(.*)',
+    params: {
+      // skip decoding the unmatched value
+      0: value => value
     }
-  ]
-});`}
+  }
+]);`}
         </CodeBlock>
       </HashSection>
 
@@ -629,24 +623,22 @@ const routes = prepareRoutes({
         </p>
 
         <CodeBlock>
-          {`const routes = prepareRoutes({
-  routes: [
-    {
-      name: 'A Route',
-      path: 'a-route',
-      extra: {
-        transition: 'fade'
-      }
-    },
-    {
-      name: 'B Route',
-      path: 'b-route',
-      extra: {
-        enter: 'slide-right'
-      }
+          {`const routes = prepareRoutes([
+  {
+    name: 'A Route',
+    path: 'a-route',
+    extra: {
+      transition: 'fade'
     }
-  ]
-});`}
+  },
+  {
+    name: 'B Route',
+    path: 'b-route',
+    extra: {
+      enter: 'slide-right'
+    }
+  }
+]);`}
         </CodeBlock>
       </HashSection>
     </HashSection>

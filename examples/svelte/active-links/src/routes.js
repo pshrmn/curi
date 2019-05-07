@@ -5,7 +5,7 @@ import Contact from "./components/Contact.svelte";
 import Method from "./components/Method.svelte";
 import NotFound from "./components/NotFound.svelte";
 
-const routes = [
+export default prepareRoutes([
   {
     name: "Home",
     path: "",
@@ -44,6 +44,4 @@ const routes = [
       };
     }
   }
-];
-
-export default prepareRoutes({ routes });
+]);

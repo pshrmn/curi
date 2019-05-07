@@ -85,26 +85,24 @@ function MultiBodyExample() {
         <CodeBlock lang="javascript">
           {`// be consistent, don't use
 // different body types
-const routes = prepareRoutes({
-  routes: [
-    {
-      ...,
-      respond() {
-        return {
-          body: OneLayout
-        };
-      }
-    },
-    {
-      ...,
-      respond() {
-        return {
-          body: { another: Layout }
-        };
-      }
+const routes = prepareRoutes([
+  {
+    ...,
+    respond() {
+      return {
+        body: OneLayout
+      };
     }
-  ]
-});`}
+  },
+  {
+    ...,
+    respond() {
+      return {
+        body: { another: Layout }
+      };
+    }
+  }
+]);`}
         </CodeBlock>
       </HashSection>
 

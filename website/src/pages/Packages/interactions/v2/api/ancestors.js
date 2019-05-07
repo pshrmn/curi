@@ -28,21 +28,19 @@ export function AncestorsAPI() {
       <CodeBlock>
         {`import { ancestors } from "@curi/router";
 
-const routes = prepareRoutes({
-  routes: [
-    {
-      name: "Grandparent", path: "g",
-      children: [
-        {
-          name: "Parent", path: "p",
-          children: [
-            { name: "Child", path: "c" }
-          ]
-        }
-      ]
-    }
-  ]
-});
+const routes = prepareRoutes([
+  {
+    name: "Grandparent", path: "g",
+    children: [
+      {
+        name: "Parent", path: "p",
+        children: [
+          { name: "Child", path: "c" }
+        ]
+      }
+    ]
+  }
+]);
 
 const route = router.route("Child");
 const family = ancestors(route);

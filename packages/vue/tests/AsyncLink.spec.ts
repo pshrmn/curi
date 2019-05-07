@@ -7,12 +7,10 @@ import { CuriPlugin } from "@curi/vue";
 
 describe("<curi-async-link>", () => {
   let Vue, node, router, wrapper;
-  const routes = prepareRoutes({
-    routes: [
-      { name: "Place", path: "place/:name" },
-      { name: "Catch All", path: "(.*)" }
-    ]
-  });
+  const routes = prepareRoutes([
+    { name: "Place", path: "place/:name" },
+    { name: "Catch All", path: "(.*)" }
+  ]);
 
   beforeEach(() => {
     node = document.createElement("div");
@@ -180,22 +178,20 @@ describe("<curi-async-link>", () => {
     });
 
     describe("navigating", () => {
-      const routes = prepareRoutes({
-        routes: [
-          {
-            name: "Test",
-            path: "test",
-            resolve() {
-              return new Promise(resolve => {
-                setTimeout(() => {
-                  resolve("done");
-                }, 100);
-              });
-            }
-          },
-          { name: "Catch All", path: "(.*)" }
-        ]
-      });
+      const routes = prepareRoutes([
+        {
+          name: "Test",
+          path: "test",
+          resolve() {
+            return new Promise(resolve => {
+              setTimeout(() => {
+                resolve("done");
+              }, 100);
+            });
+          }
+        },
+        { name: "Catch All", path: "(.*)" }
+      ]);
 
       it("navigating = true after clicking", done => {
         const router = createRouter(inMemory, routes);
@@ -279,29 +275,27 @@ describe("<curi-async-link>", () => {
       });
 
       it("navigating = false after navigation is cancelled", done => {
-        const routes = prepareRoutes({
-          routes: [
-            {
-              name: "Slow",
-              path: "slow",
-              resolve() {
-                return new Promise(resolve => {
-                  setTimeout(() => {
-                    resolve("slow");
-                  }, 100);
-                });
-              }
-            },
-            {
-              name: "Fast",
-              path: "fast",
-              resolve() {
-                return Promise.resolve("fast");
-              }
-            },
-            { name: "Catch All", path: "(.*)" }
-          ]
-        });
+        const routes = prepareRoutes([
+          {
+            name: "Slow",
+            path: "slow",
+            resolve() {
+              return new Promise(resolve => {
+                setTimeout(() => {
+                  resolve("slow");
+                }, 100);
+              });
+            }
+          },
+          {
+            name: "Fast",
+            path: "fast",
+            resolve() {
+              return Promise.resolve("fast");
+            }
+          },
+          { name: "Catch All", path: "(.*)" }
+        ]);
         const router = createRouter(inMemory, routes);
         const Vue = createLocalVue();
         Vue.use(CuriPlugin, { router });

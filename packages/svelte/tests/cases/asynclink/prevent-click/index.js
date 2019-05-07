@@ -4,13 +4,11 @@ import simulant from "simulant";
 
 import app from "./app.svelte";
 
-const routes = prepareRoutes({
-  routes: [
-    { name: "Home", path: "" },
-    { name: "User", path: "u/:id" },
-    { name: "Not Found", path: "(.*)" }
-  ]
-});
+const routes = prepareRoutes([
+  { name: "Home", path: "" },
+  { name: "User", path: "u/:id" },
+  { name: "Not Found", path: "(.*)" }
+]);
 
 const router = createRouter(inMemory, routes);
 

@@ -8,12 +8,10 @@ describe("pathname route interaction", () => {
   describe("generating pathnames", () => {
     it("works when paths contain no params", () => {
       // duh?
-      const routes = prepareRoutes({
-        routes: [
-          { name: "Static", path: "this/has/no/params" },
-          { name: "Catch All", path: "(.*)" }
-        ]
-      });
+      const routes = prepareRoutes([
+        { name: "Static", path: "this/has/no/params" },
+        { name: "Catch All", path: "(.*)" }
+      ]);
       const router = createRouter(inMemory, routes);
       const route = router.route("Static");
       const output = pathname(route);
@@ -21,12 +19,10 @@ describe("pathname route interaction", () => {
     });
 
     it("returns a pathname using params", () => {
-      const routes = prepareRoutes({
-        routes: [
-          { name: "Player", path: "player/:id" },
-          { name: "Catch All", path: "(.*)" }
-        ]
-      });
+      const routes = prepareRoutes([
+        { name: "Player", path: "player/:id" },
+        { name: "Catch All", path: "(.*)" }
+      ]);
       const router = createRouter(inMemory, routes);
       const route = router.route("Player");
       const output = pathname(route, { id: 17 });

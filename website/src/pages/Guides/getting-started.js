@@ -62,12 +62,10 @@ function GettingStartedGuide() {
         </p>
 
         <CodeBlock>
-          {`import { curi, prepareRoutes } from '@curi/router';
+          {`import { createRouter, prepareRoutes } from '@curi/router';
 import { browser } from "@hickory/browser";
 
-const routes = prepareRoutes({
-  routes: [...]
-});
+const routes = prepareRoutes([...]);
 const router = createRouter(browser, routes);`}
         </CodeBlock>
       </HashSection>
@@ -87,10 +85,10 @@ const router = createRouter(browser, routes);`}
         </p>
 
         <CodeBlock>
-          {`const routes = prepareRoutes({
+          {`const routes = prepareRoutes([
   { name: "Home", path: "" },
   { name: "Contact, path: "contact/:method" }
-});
+]);
 const router = createRouter(browser, routes);
 
 const homeURL = router.url({ name: "Home" });

@@ -43,32 +43,30 @@ function AuthenticationExample() {
         </p>
 
         <CodeBlock lang="javascript">
-          {`const routes = prepareRoutes({
-  routes: [
-    // ...,
-    {
-      name: 'Protected',
-      path: 'super-secret',
-      respond: () => {
-        if (!store.userIsAuthenticated) {
-          return {
-            redirect: {
-              name: "Login"
-            },
-            meta: {
-              status: 302
-            }
-          };
-        }
+          {`const routes = prepareRoutes([
+  // ...,
+  {
+    name: 'Protected',
+    path: 'super-secret',
+    respond: () => {
+      if (!store.userIsAuthenticated) {
+        return {
+          redirect: {
+            name: "Login"
+          },
+          meta: {
+            status: 302
+          }
+        };
       }
-    },
-    {
-      name: 'Login',
-      path: 'login',
-      ...
     }
-  ]
-});`}
+  },
+  {
+    name: 'Login',
+    path: 'login',
+    ...
+  }
+]);`}
         </CodeBlock>
       </HashSection>
 
