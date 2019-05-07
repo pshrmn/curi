@@ -45,23 +45,21 @@ new App({ target, props: { router } });</code></pre></div><p>The <code class="in
   import NavLinks from &quot;./NavLinks&quot;;
 
   const response = getResponse();
-&lt;/script&gt;</code></pre></div><p>If your routes use an object to attach multiple components to a response, splitting them apart in computed properties may give your templates a cleaner look.</p><p>If you do attach multiple components to a response, please remember that you want every route to set the same <code class="inline-code css-jo5c25 eutm4hs0">body</code> shape. Otherwise, you&#x27;ll have to determine the shape and change how you render, which can quickly become messy.</p><div class="css-xg7t84 e12etsbl0"><pre><code class="language-javascript">const routes = prepareRoutes({
-  routes: [
-    {
-      name: &quot;Home&quot;,
-      path: &quot;&quot;,
-      respond() {
-        return {
-          body: {
-            main: HomeMain,
-            menu: HomeMenu
-          }
+&lt;/script&gt;</code></pre></div><p>If your routes use an object to attach multiple components to a response, splitting them apart in computed properties may give your templates a cleaner look.</p><p>If you do attach multiple components to a response, please remember that you want every route to set the same <code class="inline-code css-jo5c25 eutm4hs0">body</code> shape. Otherwise, you&#x27;ll have to determine the shape and change how you render, which can quickly become messy.</p><div class="css-xg7t84 e12etsbl0"><pre><code class="language-javascript">const routes = prepareRoutes([
+  {
+    name: &quot;Home&quot;,
+    path: &quot;&quot;,
+    respond() {
+      return {
+        body: {
+          main: HomeMain,
+          menu: HomeMenu
         }
       }
-    },
-    // ...
-  ]
-});</code></pre></div><div class="css-xg7t84 e12etsbl0"><pre><code class="language-html">&lt;header&gt;
+    }
+  },
+  // ...
+]);</code></pre></div><div class="css-xg7t84 e12etsbl0"><pre><code class="language-html">&lt;header&gt;
   &lt;svelte:component this={menu} /&gt;
 &lt;/header&gt;
 &lt;main&gt;

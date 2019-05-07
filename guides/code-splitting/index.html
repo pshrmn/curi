@@ -14,83 +14,79 @@
 import Contact from &#x27;./components/Contact&#x27;;
 import ContactMethod from &#x27;./components/ContactMethod&#x27;;
 
-const routes = prepareRoutes({
-  routes: [
-    {
-      name: &#x27;Home&#x27;,
-      path: &#x27;&#x27;,
-      respond: () =&gt; {
-        return {
-          body: Home
-        };
-      }
-    },
-    {
-      name: &#x27;Contact&#x27;,
-      path: &#x27;contact&#x27;,
-      respond: () =&gt; {
-        return {
-          body: Contact
-        };
-      },
-      children: [
-        {
-          name: &#x27;Contact Method&#x27;,
-          path: &#x27;:method&#x27;,
-          respond: () =&gt; {
-            return {
-              body: ContactMethod
-            };
-          }
-        }
-      ]
+const routes = prepareRoutes([
+  {
+    name: &#x27;Home&#x27;,
+    path: &#x27;&#x27;,
+    respond: () =&gt; {
+      return {
+        body: Home
+      };
     }
-  ]
-});</code></pre></div></div><div class="section css-cwwtwq" id="import"><h2><a class="header-link" href="#import">import() in resolve</a></h2><p>Instead of having static imports, we will use the dynamic<!-- --> <style data-emotion-css="jo5c25">.css-jo5c25{padding:0.1em;border-radius:0.3em;white-space:normal;background:#fff;color:#222233;text-shadow:none;white-space:wrap;}.css-jo5c25 .token{color:#222233;}</style><code class="inline-code css-jo5c25 eutm4hs0">import</code> function to import our modules. We will import our components using a route&#x27;s <code class="inline-code css-jo5c25 eutm4hs0">resolve</code> object.</p><p>A route&#x27;s <code class="inline-code css-jo5c25 eutm4hs0">resolve</code> function is called every time it matches. However, <code class="inline-code css-jo5c25 eutm4hs0">import</code> calls automatically re-use the results of a previous call, so we do not have to worry about extra network requests.</p><p>A route&#x27;s <code class="inline-code css-jo5c25 eutm4hs0">resolve</code> function should return a Promise;<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">import</code>, conveniently, returns a Promise. In our<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">respond</code> function, instead of referencing values imported at the top of the file, we can reference the result of the<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">resolve</code> function using the <code class="inline-code css-jo5c25 eutm4hs0">resolved</code> property passed to the <code class="inline-code css-jo5c25 eutm4hs0">respond</code> function.</p><p><code class="inline-code css-jo5c25 eutm4hs0">import</code> resolves with a module object. If the component is a default export (<code class="inline-code css-jo5c25 eutm4hs0">export default MyComponent</code>), we can access the component through the imported module object&#x27;s <code class="inline-code css-jo5c25 eutm4hs0">default</code> <!-- -->property.</p><div class="css-xg7t84 e12etsbl0"><pre><code class="language-javascript">const routes = prepareRoutes({
-  routes: [
-    {
-      name: &#x27;Home&#x27;,
-      path: &#x27;&#x27;,
-      resolve() {
-        return import(&#x27;./components/Home&#x27;)
-          .then(module =&gt; module.default);
-      },
-      respond: ({ resolved }) =&gt; {
-        return {
-          body: resolved
-        };
-      }
+  },
+  {
+    name: &#x27;Contact&#x27;,
+    path: &#x27;contact&#x27;,
+    respond: () =&gt; {
+      return {
+        body: Contact
+      };
     },
-    {
-      name: &#x27;Contact&#x27;,
-      path: &#x27;contact&#x27;,
-      resolve() {
-        return import(&#x27;./components/Contact&#x27;)
-          .then(module =&gt; module.default);
-      },
-      respond: ({ resolved }) =&gt; {
-        return {
-          body: resolved
-        };
-      },
-      children: [
-        {
-          name: &#x27;Contact Method&#x27;,
-          path: &#x27;:method&#x27;,
-          resolve() {
-            return import(&#x27;./components/ContactMethod&#x27;)
-              .then(module =&gt; module.default);
-          },
-          respond: ({ resolved }) =&gt; {
-            return {
-              body: resolved
-            };
-          }
+    children: [
+      {
+        name: &#x27;Contact Method&#x27;,
+        path: &#x27;:method&#x27;,
+        respond: () =&gt; {
+          return {
+            body: ContactMethod
+          };
         }
-      ]
+      }
+    ]
+  }
+]);</code></pre></div></div><div class="section css-cwwtwq" id="import"><h2><a class="header-link" href="#import">import() in resolve</a></h2><p>Instead of having static imports, we will use the dynamic<!-- --> <style data-emotion-css="jo5c25">.css-jo5c25{padding:0.1em;border-radius:0.3em;white-space:normal;background:#fff;color:#222233;text-shadow:none;white-space:wrap;}.css-jo5c25 .token{color:#222233;}</style><code class="inline-code css-jo5c25 eutm4hs0">import</code> function to import our modules. We will import our components using a route&#x27;s <code class="inline-code css-jo5c25 eutm4hs0">resolve</code> object.</p><p>A route&#x27;s <code class="inline-code css-jo5c25 eutm4hs0">resolve</code> function is called every time it matches. However, <code class="inline-code css-jo5c25 eutm4hs0">import</code> calls automatically re-use the results of a previous call, so we do not have to worry about extra network requests.</p><p>A route&#x27;s <code class="inline-code css-jo5c25 eutm4hs0">resolve</code> function should return a Promise;<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">import</code>, conveniently, returns a Promise. In our<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">respond</code> function, instead of referencing values imported at the top of the file, we can reference the result of the<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">resolve</code> function using the <code class="inline-code css-jo5c25 eutm4hs0">resolved</code> property passed to the <code class="inline-code css-jo5c25 eutm4hs0">respond</code> function.</p><p><code class="inline-code css-jo5c25 eutm4hs0">import</code> resolves with a module object. If the component is a default export (<code class="inline-code css-jo5c25 eutm4hs0">export default MyComponent</code>), we can access the component through the imported module object&#x27;s <code class="inline-code css-jo5c25 eutm4hs0">default</code> <!-- -->property.</p><div class="css-xg7t84 e12etsbl0"><pre><code class="language-javascript">const routes = prepareRoutes([
+  {
+    name: &#x27;Home&#x27;,
+    path: &#x27;&#x27;,
+    resolve() {
+      return import(&#x27;./components/Home&#x27;)
+        .then(module =&gt; module.default);
+    },
+    respond: ({ resolved }) =&gt; {
+      return {
+        body: resolved
+      };
     }
-  ]
-});</code></pre></div></div><div class="section css-cwwtwq" id="other"><h2><a class="header-link" href="#other">Other Approaches</a></h2><p>The approaches taken here are not the only way to do code splitting. Another approach is to skip the <code class="inline-code css-jo5c25 eutm4hs0">resolve</code> method and do code splitting at other points in your application (e.g.<a href="https://reactjs.org/docs/react-api.html#reactlazy"><code class="inline-code css-jo5c25 eutm4hs0">React.lazy</code></a>).</p><p>Whatever path you decide to go, hopefully this has shown you that setting up code splitting with a <code class="inline-code css-jo5c25 eutm4hs0">resolve</code> function is fairly simple to do. If you are using Webpack and want to reduce your initial bundle size, using dynamic <code class="inline-code css-jo5c25 eutm4hs0">import</code> calls in a<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">resolve</code> functions is a good way to accomplish this.</p></div></div><style data-emotion-css="64fwtw">.css-64fwtw{display:none;}@media only screen and (min-width:751px){.css-64fwtw{background:#efefef;display:block;position:fixed;top:50px;bottom:0px;overflow:auto;-webkit-flex:0 0;-ms-flex:0 0;flex:0 0;-webkit-order:-1;-ms-flex-order:-1;order:-1;padding:25px;margin-right:25px;}}</style><div class="css-64fwtw e1hcridg2"><style data-emotion-css="1eimyfs">.css-1eimyfs{width:200px;}.css-1eimyfs p{margin:0;}.css-1eimyfs a{-webkit-text-decoration:none;text-decoration:none;display:block;}.css-1eimyfs ol{padding-left:0;margin-top:0;list-style-type:none;}.css-1eimyfs ol ol{padding-left:15px;font-size:0.9em;}</style><div class="css-1eimyfs e1evhjzy0"><ol><li><a href="#no-split">An app without code splitting</a></li><li><a href="#import">import() in resolve</a></li><li><a href="#other">Other Approaches</a></li></ol></div></div></div></main></div>
+  },
+  {
+    name: &#x27;Contact&#x27;,
+    path: &#x27;contact&#x27;,
+    resolve() {
+      return import(&#x27;./components/Contact&#x27;)
+        .then(module =&gt; module.default);
+    },
+    respond: ({ resolved }) =&gt; {
+      return {
+        body: resolved
+      };
+    },
+    children: [
+      {
+        name: &#x27;Contact Method&#x27;,
+        path: &#x27;:method&#x27;,
+        resolve() {
+          return import(&#x27;./components/ContactMethod&#x27;)
+            .then(module =&gt; module.default);
+        },
+        respond: ({ resolved }) =&gt; {
+          return {
+            body: resolved
+          };
+        }
+      }
+    ]
+  }
+]);</code></pre></div></div><div class="section css-cwwtwq" id="other"><h2><a class="header-link" href="#other">Other Approaches</a></h2><p>The approaches taken here are not the only way to do code splitting. Another approach is to skip the <code class="inline-code css-jo5c25 eutm4hs0">resolve</code> method and do code splitting at other points in your application (e.g.<a href="https://reactjs.org/docs/react-api.html#reactlazy"><code class="inline-code css-jo5c25 eutm4hs0">React.lazy</code></a>).</p><p>Whatever path you decide to go, hopefully this has shown you that setting up code splitting with a <code class="inline-code css-jo5c25 eutm4hs0">resolve</code> function is fairly simple to do. If you are using Webpack and want to reduce your initial bundle size, using dynamic <code class="inline-code css-jo5c25 eutm4hs0">import</code> calls in a<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">resolve</code> functions is a good way to accomplish this.</p></div></div><style data-emotion-css="64fwtw">.css-64fwtw{display:none;}@media only screen and (min-width:751px){.css-64fwtw{background:#efefef;display:block;position:fixed;top:50px;bottom:0px;overflow:auto;-webkit-flex:0 0;-ms-flex:0 0;flex:0 0;-webkit-order:-1;-ms-flex-order:-1;order:-1;padding:25px;margin-right:25px;}}</style><div class="css-64fwtw e1hcridg2"><style data-emotion-css="1eimyfs">.css-1eimyfs{width:200px;}.css-1eimyfs p{margin:0;}.css-1eimyfs a{-webkit-text-decoration:none;text-decoration:none;display:block;}.css-1eimyfs ol{padding-left:0;margin-top:0;list-style-type:none;}.css-1eimyfs ol ol{padding-left:15px;font-size:0.9em;}</style><div class="css-1eimyfs e1evhjzy0"><ol><li><a href="#no-split">An app without code splitting</a></li><li><a href="#import">import() in resolve</a></li><li><a href="#other">Other Approaches</a></li></ol></div></div></div></main></div>
     <script src="https://unpkg.com/react@16.8.6/umd/react.production.min.js"></script>
     <script src="https://unpkg.com/react-dom@16.8.6/umd/react-dom.production.min.js"></script>
     <script src="/static/js/prism.js"></script>

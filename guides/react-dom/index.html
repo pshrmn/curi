@@ -47,23 +47,21 @@ ReactDOM.render((
       &lt;App /&gt;
     &lt;/main&gt;
   &lt;/Router&gt;
-), document.getElementById(&quot;root&quot;));</code></pre></div><p>If your routes use an object to attach multiple components to a response, the <code class="inline-code css-jo5c25 eutm4hs0">children</code> function also provides a good place to split these apart.</p><div class="css-o0tph9 e1bjkffy0"><strong>Note:</strong> <p>If you do take this approach, please remember that you want every route to set the same <code class="inline-code css-jo5c25 eutm4hs0">body</code> shape. Otherwise, you&#x27;ll have to determine the shape and change how you render in the<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">children</code> function, which can quickly become messy.</p></div><div class="css-xg7t84 e12etsbl0"><pre data-line="20,24,27"><code class="language-jsx">const routes = prepareRoutes({
-  routes: [
-    {
-      name: &quot;Home&quot;,
-      path: &quot;&quot;,
-      respond() {
-        return {
-          body: {
-            Main: HomeMain,
-            Menu: HomeMenu
-          }
+), document.getElementById(&quot;root&quot;));</code></pre></div><p>If your routes use an object to attach multiple components to a response, the <code class="inline-code css-jo5c25 eutm4hs0">children</code> function also provides a good place to split these apart.</p><div class="css-o0tph9 e1bjkffy0"><strong>Note:</strong> <p>If you do take this approach, please remember that you want every route to set the same <code class="inline-code css-jo5c25 eutm4hs0">body</code> shape. Otherwise, you&#x27;ll have to determine the shape and change how you render in the<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">children</code> function, which can quickly become messy.</p></div><div class="css-xg7t84 e12etsbl0"><pre data-line="20,24,27"><code class="language-jsx">const routes = prepareRoutes([
+  {
+    name: &quot;Home&quot;,
+    path: &quot;&quot;,
+    respond() {
+      return {
+        body: {
+          Main: HomeMain,
+          Menu: HomeMenu
         }
       }
-    },
-    // ...
-  ]
-});
+    }
+  },
+  // ...
+]);
 
 function App() {
   const { response } = useResponse();

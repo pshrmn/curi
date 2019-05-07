@@ -14,9 +14,8 @@
 
 const cachedGetItems = once(() =&gt; api.getItems());
 
-const routes = prepareRoutes({
-  routes: [
-    {
+const routes = prepareRoutes([
+  {
     name: &quot;Menu&quot;,
     path: &quot;menu&quot;,
     resolve() {
@@ -29,24 +28,22 @@ const routes = prepareRoutes({
       const cached = cachedGetItems();
       return Promise.all([nonCached, cached]);
     }
-  ]
-});</code></pre></div></div><div class="section css-cwwtwq" id="preferDefault"><h2><a class="header-link" href="#preferDefault">preferDefault</a></h2><p>When using dynamic import syntax (<code class="inline-code css-jo5c25 eutm4hs0">import(&quot;someModule&quot;)</code>), the resolved module is a module object containing all of the exports from that module. If the module has a default export (<code class="inline-code css-jo5c25 eutm4hs0">export default ...</code>), that will be the module&#x27;s<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">default</code> property. The <code class="inline-code css-jo5c25 eutm4hs0">preferDefault</code> function will resolve with the <code class="inline-code css-jo5c25 eutm4hs0">default</code> property of the module if it exists and with the module if it does not.</p><div class="css-xg7t84 e12etsbl0"><pre><code class="language-javascript">import { preferDefault } from &quot;@curi/helpers&quot;;
+  }
+]);</code></pre></div></div><div class="section css-cwwtwq" id="preferDefault"><h2><a class="header-link" href="#preferDefault">preferDefault</a></h2><p>When using dynamic import syntax (<code class="inline-code css-jo5c25 eutm4hs0">import(&quot;someModule&quot;)</code>), the resolved module is a module object containing all of the exports from that module. If the module has a default export (<code class="inline-code css-jo5c25 eutm4hs0">export default ...</code>), that will be the module&#x27;s<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">default</code> property. The <code class="inline-code css-jo5c25 eutm4hs0">preferDefault</code> function will resolve with the <code class="inline-code css-jo5c25 eutm4hs0">default</code> property of the module if it exists and with the module if it does not.</p><div class="css-xg7t84 e12etsbl0"><pre><code class="language-javascript">import { preferDefault } from &quot;@curi/helpers&quot;;
 
-const routes = prepareRoutes({
-  routes: [
-    {
-      name: &quot;Menu&quot;,
-      path: &quot;menu&quot;,
-      resolve() {
-        return import(&quot;./components/Menu&quot;)
-          .then(preferDefault);
-      },
-      respond({ resolved }) {
-        return { body: resolved }
-      }
+const routes = prepareRoutes([
+  {
+    name: &quot;Menu&quot;,
+    path: &quot;menu&quot;,
+    resolve() {
+      return import(&quot;./components/Menu&quot;)
+        .then(preferDefault);
+    },
+    respond({ resolved }) {
+      return { body: resolved }
     }
-  ]
-});</code></pre></div></div></div></div></div><style data-emotion-css="64fwtw">.css-64fwtw{display:none;}@media only screen and (min-width:751px){.css-64fwtw{background:#efefef;display:block;position:fixed;top:50px;bottom:0px;overflow:auto;-webkit-flex:0 0;-ms-flex:0 0;flex:0 0;-webkit-order:-1;-ms-flex-order:-1;order:-1;padding:25px;margin-right:25px;}}</style><div class="css-64fwtw e1hcridg2"><style data-emotion-css="1eimyfs">.css-1eimyfs{width:200px;}.css-1eimyfs p{margin:0;}.css-1eimyfs a{-webkit-text-decoration:none;text-decoration:none;display:block;}.css-1eimyfs ol{padding-left:0;margin-top:0;list-style-type:none;}.css-1eimyfs ol ol{padding-left:15px;font-size:0.9em;}</style><div class="css-1eimyfs e1evhjzy0"><ol><li><a href="#installation">Installation</a></li><li><a href="#about">About</a></li><li><a href="#API">API</a><ol><li><a href="#once">once</a></li><li><a href="#preferDefault">preferDefault</a></li></ol></li></ol></div></div></div></main></div>
+  }
+]);</code></pre></div></div></div></div></div><style data-emotion-css="64fwtw">.css-64fwtw{display:none;}@media only screen and (min-width:751px){.css-64fwtw{background:#efefef;display:block;position:fixed;top:50px;bottom:0px;overflow:auto;-webkit-flex:0 0;-ms-flex:0 0;flex:0 0;-webkit-order:-1;-ms-flex-order:-1;order:-1;padding:25px;margin-right:25px;}}</style><div class="css-64fwtw e1hcridg2"><style data-emotion-css="1eimyfs">.css-1eimyfs{width:200px;}.css-1eimyfs p{margin:0;}.css-1eimyfs a{-webkit-text-decoration:none;text-decoration:none;display:block;}.css-1eimyfs ol{padding-left:0;margin-top:0;list-style-type:none;}.css-1eimyfs ol ol{padding-left:15px;font-size:0.9em;}</style><div class="css-1eimyfs e1evhjzy0"><ol><li><a href="#installation">Installation</a></li><li><a href="#about">About</a></li><li><a href="#API">API</a><ol><li><a href="#once">once</a></li><li><a href="#preferDefault">preferDefault</a></li></ol></li></ol></div></div></div></main></div>
     <script src="https://unpkg.com/react@16.8.6/umd/react.production.min.js"></script>
     <script src="https://unpkg.com/react-dom@16.8.6/umd/react-dom.production.min.js"></script>
     <script src="/static/js/prism.js"></script>

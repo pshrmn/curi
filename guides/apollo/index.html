@@ -25,19 +25,17 @@ ReactDOM.render((
 import Noun from &quot;./pages/Noun&quot;;
 
 // nothing Apollo related in here
-const routes = prepareRoutes({
-  routes: [
-    {
-      name: &#x27;Noun&#x27;,
-      path: &#x27;noun/:word&#x27;,
-      respond: () =&gt; {
-        return {
-          body: Noun
-        };
-      }
+const routes = prepareRoutes([
+  {
+    name: &#x27;Noun&#x27;,
+    path: &#x27;noun/:word&#x27;,
+    respond: () =&gt; {
+      return {
+        body: Noun
+      };
     }
-  ]
-});</code></pre></div><p>Any location data that a query needs can be taken from the response object. The best way to access this is to read the current<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">response</code> from the context. This can either be done in the component or the response can be passed down from the root app.</p><div class="css-xg7t84 e12etsbl0"><pre><code class="language-jsx">import { useResponse } from &quot;@curi/react-dom&quot;;
+  }
+]);</code></pre></div><p>Any location data that a query needs can be taken from the response object. The best way to access this is to read the current<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">response</code> from the context. This can either be done in the component or the response can be passed down from the root app.</p><div class="css-xg7t84 e12etsbl0"><pre><code class="language-jsx">import { useResponse } from &quot;@curi/react-dom&quot;;
 
 function App() {
   const { response } = useResponse();
@@ -83,20 +81,18 @@ const router = createRouter(browser, routes, {
   external: { client }
 });</code></pre></div><div class="css-xg7t84 e12etsbl0"><pre><code class="language-javascript">import { EXAMPLE_QUERY } from &quot;./queries&quot;;
 
-const routes = prepareRoutes({
-  routes: [
-    {
-      name: &quot;Example&quot;,
-      path: &quot;example/:id&quot;,
-      resolve({ params }, external) {
-        return external.client.query({
-          query: EXAMPLE_QUERY,
-          variables: { id: params.id }
-        });
-      }
+const routes = prepareRoutes([
+  {
+    name: &quot;Example&quot;,
+    path: &quot;example/:id&quot;,
+    resolve({ params }, external) {
+      return external.client.query({
+        query: EXAMPLE_QUERY,
+        variables: { id: params.id }
+      });
     }
-  ]
-});</code></pre></div><p>There are two strategies for doing this.</p><p>The first approach is to avoid the <code class="inline-code css-jo5c25 eutm4hs0">Query</code> altogether. Instead, you can use a route&#x27;s <code class="inline-code css-jo5c25 eutm4hs0">response</code> property to attach the data fetched by Apollo directly to a response through its<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">data</code> property.</p><p>While we know at this point that the query has executed, we should also check <code class="inline-code css-jo5c25 eutm4hs0">error</code> in the <code class="inline-code css-jo5c25 eutm4hs0">respond</code> function to ensure that the query was executed successfully.</p><div class="css-xg7t84 e12etsbl0"><pre><code class="language-javascript">// routes.js
+  }
+]);</code></pre></div><p>There are two strategies for doing this.</p><p>The first approach is to avoid the <code class="inline-code css-jo5c25 eutm4hs0">Query</code> altogether. Instead, you can use a route&#x27;s <code class="inline-code css-jo5c25 eutm4hs0">response</code> property to attach the data fetched by Apollo directly to a response through its<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">data</code> property.</p><p>While we know at this point that the query has executed, we should also check <code class="inline-code css-jo5c25 eutm4hs0">error</code> in the <code class="inline-code css-jo5c25 eutm4hs0">respond</code> function to ensure that the query was executed successfully.</p><div class="css-xg7t84 e12etsbl0"><pre><code class="language-javascript">// routes.js
 import GET_VERB from &quot;./queries&quot;;
 
 import Verb from &quot;./pages/Verb&quot;;
@@ -168,20 +164,18 @@ const Verb = ({ response }) =&gt; (
 )</code></pre></div><div class="section css-cwwtwq" id="prefetch"><h3><a class="header-link" href="#prefetch">Prefetching</a></h3><p>One additional benefit of adding queries to routes using<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">resolve</code> is that you can prefetch data for a route.</p><p>The<!-- --> <a href="/packages/@curi/interactions/v2/#prefetch"><code class="inline-code css-jo5c25 eutm4hs0">prefetch</code></a> <!-- -->interaction lets you programmatically fetch the data for a route prior to navigating to a location.</p><div class="css-xg7t84 e12etsbl0"><pre><code class="language-javascript">// index.js
 import { prefetch } from &quot;@curi/router&quot;;
 
-const routes = prepareRoutes({
-  routes: [
-    {
-      name: &quot;Example&quot;,
-      path: &quot;example/:id&quot;,
-      resolve({ params }, external) {
-        return external.client.query({
-          query: GET_EXAMPLES,
-          variables: { id: params.id }
-        });
-      }
+const routes = prepareRoutes([
+  {
+    name: &quot;Example&quot;,
+    path: &quot;example/:id&quot;,
+    resolve({ params }, external) {
+      return external.client.query({
+        query: GET_EXAMPLES,
+        variables: { id: params.id }
+      });
     }
-  ]
-});
+  }
+]);
 
 const router = createRouter(browser, routes);
 

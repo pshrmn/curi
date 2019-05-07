@@ -30,26 +30,24 @@ cd curi-react-bookstore # enter the new app directory</code></pre></div><p>There
 }</code></pre></div></div><p>The website will start with four routes.</p><style data-emotion-css="ayshjd">.css-ayshjd{overflow-x:auto;}</style><div class="css-ayshjd e18t55xi0"><table><thead><tr><th>name</th><th>path</th><th>use case</th></tr></thead><tbody><tr><td>Home</td><td><code class="inline-code css-jo5c25 eutm4hs0">&quot;&quot;</code></td><td>Lists books available for purchase.</td></tr><tr><td>Book</td><td><code class="inline-code css-jo5c25 eutm4hs0">&quot;book/:id&quot;</code></td><td>Details about an individual book. The <code class="inline-code css-jo5c25 eutm4hs0">id</code> param identifies a specific book.</td></tr><tr><td>Checkout</td><td><code class="inline-code css-jo5c25 eutm4hs0">&quot;checkout&quot;</code></td><td>Buy the books in the shopping cart.</td></tr><tr><td>Catch All</td><td><code class="inline-code css-jo5c25 eutm4hs0">&quot;(.*)&quot;</code></td><td>Display a not found page. This path matches every location (using a regular expression syntax), so it should be the last route.</td></tr></tbody></table></div><div class="css-o0tph9 e1bjkffy0"><strong>Note:</strong> <p>Curi uses the<!-- --> <a href="https://github.com/pillarjs/path-to-regexp"><code class="inline-code css-jo5c25 eutm4hs0">path-to-regexp</code></a> <!-- -->package for route matching. You can read its documentation to learn about more advanced path syntax.</p></div><p>Inside of the <code class="inline-code css-jo5c25 eutm4hs0">src</code> directory, we will create a<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">routes.js</code> file where we can define the application&#x27;s routes.</p><div class="css-xg7t84 e12etsbl0"><pre><code class="language-bash">touch src/routes.js</code></pre></div><p>We can create an array of routes using the above names and paths.</p><p><code class="inline-code css-jo5c25 eutm4hs0">@curi/router</code> provides a <code class="inline-code css-jo5c25 eutm4hs0">prepareRoutes</code> function, which is used to setup routes for the router. We will pass the routes array to <code class="inline-code css-jo5c25 eutm4hs0">prepareRoutes</code> and export the result of that function call.</p><div class="css-xg7t84 e12etsbl0"><pre><code class="language-javascript">// src/routes.js
 import { prepareRoutes } from &quot;@curi/router&quot;;
 
-export default prepareRoutes({
-  routes: [
-    {
-      name: &quot;Home&quot;,
-      path: &quot;&quot;
-    },
-    {
-      name: &quot;Book&quot;,
-      path: &quot;book/:id&quot;
-    },
-    {
-      name: &quot;Checkout&quot;,
-      path: &quot;checkout&quot;
-    },
-    {
-      name: &quot;Catch All&quot;,
-      path: &quot;(.*)&quot;
-    }
-  ]
-});</code></pre></div><p>We will be creating the router in the <code class="inline-code css-jo5c25 eutm4hs0">index.js</code> file, so the routes array should be imported there.</p><div class="css-xg7t84 e12etsbl0"><pre data-line="5"><code class="language-jsx">// src/index.js
+export default prepareRoutes([
+  {
+    name: &quot;Home&quot;,
+    path: &quot;&quot;
+  },
+  {
+    name: &quot;Book&quot;,
+    path: &quot;book/:id&quot;
+  },
+  {
+    name: &quot;Checkout&quot;,
+    path: &quot;checkout&quot;
+  },
+  {
+    name: &quot;Catch All&quot;,
+    path: &quot;(.*)&quot;
+  }
+]);</code></pre></div><p>We will be creating the router in the <code class="inline-code css-jo5c25 eutm4hs0">index.js</code> file, so the routes array should be imported there.</p><div class="css-xg7t84 e12etsbl0"><pre data-line="5"><code class="language-jsx">// src/index.js
 import React from &#x27;react&#x27;;
 import ReactDOM from &#x27;react-dom&#x27;;
 
@@ -201,38 +199,36 @@ import Book from &#x27;./components/Book&#x27;;
 import Checkout from &#x27;./components/Checkout&#x27;;
 import NotFound from &#x27;./components/NotFound&#x27;;
 
-export default prepareRoutes({
-  routes: [
-    {
-      name: &quot;Home&quot;,
-      path: &quot;&quot;,
-      respond() {
-        return { body: Home };
-      }
-    },
-    {
-      name: &quot;Book&quot;,
-      path: &quot;book/:id&quot;,
-      respond() {
-        return { body: Book };
-      }
-    },
-    {
-      name: &quot;Checkout&quot;,
-      path: &quot;checkout&quot;,
-      respond() {
-        return { body: Checkout };
-      }
-    },
-    {
-      name: &quot;Catch All&quot;,
-      path: &quot;(.*)&quot;,
-      respond() {
-        return { body: NotFound };
-      }
+export default prepareRoutes([
+  {
+    name: &quot;Home&quot;,
+    path: &quot;&quot;,
+    respond() {
+      return { body: Home };
     }
-  ]
-});</code></pre></div><p>Now that the responses have <code class="inline-code css-jo5c25 eutm4hs0">body</code> properties that are React components, we can update the <code class="inline-code css-jo5c25 eutm4hs0">App</code> to render them.</p><p>We will also pass the <code class="inline-code css-jo5c25 eutm4hs0">response</code> as a prop to the rendered component, which means that each of the route components will have access to the <code class="inline-code css-jo5c25 eutm4hs0">response</code> when they are rendered. This isn&#x27;t strictly necessary, but can come in handy.</p><div class="css-xg7t84 e12etsbl0"><pre data-line="7-8"><code class="language-jsx">// src/App.js
+  },
+  {
+    name: &quot;Book&quot;,
+    path: &quot;book/:id&quot;,
+    respond() {
+      return { body: Book };
+    }
+  },
+  {
+    name: &quot;Checkout&quot;,
+    path: &quot;checkout&quot;,
+    respond() {
+      return { body: Checkout };
+    }
+  },
+  {
+    name: &quot;Catch All&quot;,
+    path: &quot;(.*)&quot;,
+    respond() {
+      return { body: NotFound };
+    }
+  }
+]);</code></pre></div><p>Now that the responses have <code class="inline-code css-jo5c25 eutm4hs0">body</code> properties that are React components, we can update the <code class="inline-code css-jo5c25 eutm4hs0">App</code> to render them.</p><p>We will also pass the <code class="inline-code css-jo5c25 eutm4hs0">response</code> as a prop to the rendered component, which means that each of the route components will have access to the <code class="inline-code css-jo5c25 eutm4hs0">response</code> when they are rendered. This isn&#x27;t strictly necessary, but can come in handy.</p><div class="css-xg7t84 e12etsbl0"><pre data-line="7-8"><code class="language-jsx">// src/App.js
 import React from &quot;react&quot;;
 import { useResponse } from &quot;@curi/react-dom&quot;;
 

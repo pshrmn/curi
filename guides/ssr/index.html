@@ -65,17 +65,15 @@ import routes from &quot;../client/routes&quot;;</code></pre></div><p>One approa
 import fetch from &quot;isomorphic-fetch&quot;;
 import { prepareRoutes } from &quot;@curi/router&quot;;
 
-export default prepareRoutes({
-  routes: [
-    {
-      name: &quot;Test&quot;,
-      path: &quot;test&quot;,
-      resolve() {
-        return fetch(&quot;/test-data&quot;);
-      }
+export default prepareRoutes([
+  {
+    name: &quot;Test&quot;,
+    path: &quot;test&quot;,
+    resolve() {
+      return fetch(&quot;/test-data&quot;);
     }
-  ]
-});</code></pre></div></div></div><div class="section css-cwwtwq" id="handling-response"><h2><a class="header-link" href="#handling-response">Handling the Response</a></h2><p>When the router is created, it will start generating a response by matching its <code class="inline-code css-jo5c25 eutm4hs0">history</code> object&#x27;s current location. If the application has any asynchronous routes, the <code class="inline-code css-jo5c25 eutm4hs0">response</code> may not be ready immediately. The safest approach is to use<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">router.once</code> to wait for the <code class="inline-code css-jo5c25 eutm4hs0">response</code>.</p><div class="css-xg7t84 e12etsbl0"><pre data-line="5-7"><code class="language-javascript">function renderHandler(req, res) {
+  }
+]);</code></pre></div></div></div><div class="section css-cwwtwq" id="handling-response"><h2><a class="header-link" href="#handling-response">Handling the Response</a></h2><p>When the router is created, it will start generating a response by matching its <code class="inline-code css-jo5c25 eutm4hs0">history</code> object&#x27;s current location. If the application has any asynchronous routes, the <code class="inline-code css-jo5c25 eutm4hs0">response</code> may not be ready immediately. The safest approach is to use<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">router.once</code> to wait for the <code class="inline-code css-jo5c25 eutm4hs0">response</code>.</p><div class="css-xg7t84 e12etsbl0"><pre data-line="5-7"><code class="language-javascript">function renderHandler(req, res) {
   const router = createRouter(reusable, routes, {
     history: { location: req.url }
   });

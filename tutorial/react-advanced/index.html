@@ -31,27 +31,25 @@ npm run start</code></pre></div></div><div class="section css-cwwtwq" id="async"
   }
 }</code></pre></div><style data-emotion-css="o0tph9">.css-o0tph9{padding:10px 5px;margin:5px 0;border:1px solid #c7c7c7;background:#eeeeee;}.css-o0tph9 p:last-child{margin-bottom:0;}.aside .css-o0tph9{background:#fff;}.css-o0tph9 .inline-code{background:#fff !important;}</style><div class="css-o0tph9 e1bjkffy0"><strong>Note:</strong> <p>These async functions are called every time a route matches. If you have functions that should re-use the results from previous calls, you will probably want to implement some caching. Curi provides a<!-- --> <a href="/packages/@curi/helpers/v2/#once"><code class="inline-code css-jo5c25 eutm4hs0">once</code></a> <!-- -->function for simple caching, but leaves more advanced caching solutions to the user.</p></div><p>Curi uses Promises to manage async code, so async functions should return Promises. <code class="inline-code css-jo5c25 eutm4hs0">Promise.resolve</code> can be used to wrap a return value in a Promise.</p><div class="css-xg7t84 e12etsbl0"><pre><code class="language-javascript">import { preferDefault } from &quot;@curi/helpers&quot;;
 
-const routes = prepareRoutes({
-  routes: [
-    {
-      name: &quot;A Route&quot;,
-      path: &quot;route/:id&quot;,
-      resolve({ params }) {
-        const body = import(&quot;./components/SomeComponent&quot;)
-          .then(preferDefault);
-        const data = fetch(`/api/data/${params.id}`);
-        return Promise.all([ component, data ]);
-      },
-      respond({ resolved, error }) {
-        if (error) {
-          // handle an uncaught error
-        }
-        const [body, data] = resolved;
-        return { body, data };
+const routes = prepareRoutes([
+  {
+    name: &quot;A Route&quot;,
+    path: &quot;route/:id&quot;,
+    resolve({ params }) {
+      const body = import(&quot;./components/SomeComponent&quot;)
+        .then(preferDefault);
+      const data = fetch(`/api/data/${params.id}`);
+      return Promise.all([ component, data ]);
+    },
+    respond({ resolved, error }) {
+      if (error) {
+        // handle an uncaught error
       }
+      const [body, data] = resolved;
+      return { body, data };
     }
-  ]
-});</code></pre></div><div class="aside css-cwwtwq" id="initial-render"><h3><a class="header-link" href="#initial-render">Initial Render</a></h3><p>There is one caveat to async routes: we cannot safely render the application immediately on load because the initial response might not be ready yet.</p><p>Curi does not emit a response object to its observers until it is ready. If the initial route that matches is asynchronous, then there is a delay between when the application is ready to render and when there is a response to render.</p><p>If you attempt to render immediately after creating a router and the initial response is still being created, the <code class="inline-code css-jo5c25 eutm4hs0">response</code> <!-- -->that will be passed to the <code class="inline-code css-jo5c25 eutm4hs0">Router</code>&#x27;s <code class="inline-code css-jo5c25 eutm4hs0">children</code> <!-- -->will be <code class="inline-code css-jo5c25 eutm4hs0">null</code>.</p><p>There are a few possible ways to handle this situation.</p><p>The first is to delay rendering by placing your<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">ReactDOM.render</code> call inside of a <code class="inline-code css-jo5c25 eutm4hs0">router.once</code> <!-- -->callback. This will guarantee that the render isn&#x27;t called until the first response is ready.</p><div class="css-xg7t84 e12etsbl0"><pre><code class="language-javascript">// delay rendering
+  }
+]);</code></pre></div><div class="aside css-cwwtwq" id="initial-render"><h3><a class="header-link" href="#initial-render">Initial Render</a></h3><p>There is one caveat to async routes: we cannot safely render the application immediately on load because the initial response might not be ready yet.</p><p>Curi does not emit a response object to its observers until it is ready. If the initial route that matches is asynchronous, then there is a delay between when the application is ready to render and when there is a response to render.</p><p>If you attempt to render immediately after creating a router and the initial response is still being created, the <code class="inline-code css-jo5c25 eutm4hs0">response</code> <!-- -->that will be passed to the <code class="inline-code css-jo5c25 eutm4hs0">Router</code>&#x27;s <code class="inline-code css-jo5c25 eutm4hs0">children</code> <!-- -->will be <code class="inline-code css-jo5c25 eutm4hs0">null</code>.</p><p>There are a few possible ways to handle this situation.</p><p>The first is to delay rendering by placing your<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">ReactDOM.render</code> call inside of a <code class="inline-code css-jo5c25 eutm4hs0">router.once</code> <!-- -->callback. This will guarantee that the render isn&#x27;t called until the first response is ready.</p><div class="css-xg7t84 e12etsbl0"><pre><code class="language-javascript">// delay rendering
 router.once(() =&gt; {
   ReactDOM.render((
     &lt;Router&gt;
@@ -71,89 +69,83 @@ function App() {
 import(/* webpackChunkName: &quot;Test&quot; */ &quot;./components/Test.js&quot;)</code></pre></div><p><code class="inline-code css-jo5c25 eutm4hs0">import</code> returns a module object, so if you want to access a module&#x27;s default export, you can use a <code class="inline-code css-jo5c25 eutm4hs0">then</code> function to get that value.</p><div class="css-xg7t84 e12etsbl0"><pre><code class="language-javascript">import(&quot;some-module.js&quot;)
   .then(module =&gt; module.default)</code></pre></div></div><p>Currently <code class="inline-code css-jo5c25 eutm4hs0">respond</code> function returns an object whose<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">body</code> property is a module imported at the top of the file. In order to add code splitting to routes, we can add a<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">resolve</code> function that imports the module.</p><p>The <code class="inline-code css-jo5c25 eutm4hs0">@curi/helpers</code> package provides a<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">preferDefault</code> function. This function will return an imported module&#x27;s default property if it exists, and returns the entire module if it doesn&#x27;t have a default property.</p><div class="css-xg7t84 e12etsbl0"><pre><code class="language-javascript">import { preferDefault } from &quot;@curi/helpers&quot;;
 
-const routes = prepareRoutes({
-  routes: [
-    {
-      name: &quot;Test&quot;,
-      path: &quot;test&quot;,
-      resolve() {
-        return import(
-          /* webpackChunkName: &quot;Test&quot; */ &quot;./components/Test.js&quot;
-        ).then(preferDefault);
-      }
+const routes = prepareRoutes([
+  {
+    name: &quot;Test&quot;,
+    path: &quot;test&quot;,
+    resolve() {
+      return import(
+        /* webpackChunkName: &quot;Test&quot; */ &quot;./components/Test.js&quot;
+      ).then(preferDefault);
     }
-  ]
-});</code></pre></div><p>When a module fails to load, the error will be passed to the<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">respond</code> function through the <code class="inline-code css-jo5c25 eutm4hs0">error</code> property. We won&#x27;t be incorporating this into the application here, but in a real application you probably want to have a fallback component to display an error message (especially if you have an offline mode with service workers).</p><div class="css-xg7t84 e12etsbl0"><pre><code class="language-javascript">import displayLoadError from &quot;./components/LoadError&quot;;
+  }
+]);</code></pre></div><p>When a module fails to load, the error will be passed to the<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">respond</code> function through the <code class="inline-code css-jo5c25 eutm4hs0">error</code> property. We won&#x27;t be incorporating this into the application here, but in a real application you probably want to have a fallback component to display an error message (especially if you have an offline mode with service workers).</p><div class="css-xg7t84 e12etsbl0"><pre><code class="language-javascript">import displayLoadError from &quot;./components/LoadError&quot;;
 
-const routes = prepareRoutes({
-  routes: [
-    {
-      name: &quot;One&quot;,
-      path: &quot;one&quot;,
-      resolve() {
-        return import(&quot;./components/One.js&quot;)
-          .then(preferDefault)
-          .catch(err =&gt; displayLoadError(err);
-      },
-      respond({ resolved }) {
-        return {
-          body: resolved
-        };
-      }
+const routes = prepareRoutes([
+  {
+    name: &quot;One&quot;,
+    path: &quot;one&quot;,
+    resolve() {
+      return import(&quot;./components/One.js&quot;)
+        .then(preferDefault)
+        .catch(err =&gt; displayLoadError(err);
+    },
+    respond({ resolved }) {
+      return {
+        body: resolved
+      };
     }
-  ]
-});</code></pre></div><p>We can now update the <code class="inline-code css-jo5c25 eutm4hs0">routes.js</code> module to remove the imports at the top of the file and use <code class="inline-code css-jo5c25 eutm4hs0">import</code> to import the route components. We will use <code class="inline-code css-jo5c25 eutm4hs0">preferDefault</code> to only resolve the component instead of the entire module object.</p><p>The <code class="inline-code css-jo5c25 eutm4hs0">respond</code> functions should also be updated to set the return object&#x27;s <code class="inline-code css-jo5c25 eutm4hs0">body</code> property to <code class="inline-code css-jo5c25 eutm4hs0">resolved.body</code> <!-- -->instead of the import at the top of the file.</p><div class="css-xg7t84 e12etsbl0"><pre data-line="3,10-16,21-27,32-38,43-49"><code class="language-javascript">// src/routes.js
+  }
+]);</code></pre></div><p>We can now update the <code class="inline-code css-jo5c25 eutm4hs0">routes.js</code> module to remove the imports at the top of the file and use <code class="inline-code css-jo5c25 eutm4hs0">import</code> to import the route components. We will use <code class="inline-code css-jo5c25 eutm4hs0">preferDefault</code> to only resolve the component instead of the entire module object.</p><p>The <code class="inline-code css-jo5c25 eutm4hs0">respond</code> functions should also be updated to set the return object&#x27;s <code class="inline-code css-jo5c25 eutm4hs0">body</code> property to <code class="inline-code css-jo5c25 eutm4hs0">resolved.body</code> <!-- -->instead of the import at the top of the file.</p><div class="css-xg7t84 e12etsbl0"><pre data-line="3,10-16,21-27,32-38,43-49"><code class="language-javascript">// src/routes.js
 import { prepareRoutes } from &quot;@curi/router&quot;;
 import { preferDefault } from &quot;@curi/helpers&quot;;
 
-export default prepareRoutes({
-  routes: [
-    {
-      name: &quot;Home&quot;,
-      path: &quot;&quot;,
-      resolve() {
-        return import(&quot;./components/Home&quot;)
-          .then(preferDefault);
-      },
-      respond({ resolved }) {
-        return { body: resolved };
-      }
+export default prepareRoutes([
+  {
+    name: &quot;Home&quot;,
+    path: &quot;&quot;,
+    resolve() {
+      return import(&quot;./components/Home&quot;)
+        .then(preferDefault);
     },
-    {
-      name: &quot;Book&quot;,
-      path: &quot;book/:id&quot;,
-      resolve() {
-        return import(&quot;./components/Book&quot;)
-          .then(preferDefault);
-      },
-      respond({ resolved }) {
-        return { body: resolved };
-      }
-    },
-    {
-      name: &quot;Checkout&quot;,
-      path: &quot;checkout&quot;,
-      resolve() {
-        return import(&quot;./components/Checkout&quot;)
-          .then(preferDefault);
-      },
-      respond({ resolved }) {
-        return { body: resolved };
-      }
-    },
-    {
-      name: &quot;Catch All&quot;,
-      path: &quot;(.*)&quot;,
-      resolve() {
-        return import(&quot;./components/NotFound&quot;)
-          .then(preferDefault);
-      },
-      respond({ resolved }) {
-        return { body: resolved };
-      }
+    respond({ resolved }) {
+      return { body: resolved };
     }
-  ]
-});</code></pre></div><p>For this tutorial, we will use <code class="inline-code css-jo5c25 eutm4hs0">router.once</code> to delay the initial render while we wait for the initial response. We should update the <code class="inline-code css-jo5c25 eutm4hs0">index.js</code> module to do this.</p><div class="css-xg7t84 e12etsbl0"><pre data-line="16-22"><code class="language-javascript">// src/index.js
+  },
+  {
+    name: &quot;Book&quot;,
+    path: &quot;book/:id&quot;,
+    resolve() {
+      return import(&quot;./components/Book&quot;)
+        .then(preferDefault);
+    },
+    respond({ resolved }) {
+      return { body: resolved };
+    }
+  },
+  {
+    name: &quot;Checkout&quot;,
+    path: &quot;checkout&quot;,
+    resolve() {
+      return import(&quot;./components/Checkout&quot;)
+        .then(preferDefault);
+    },
+    respond({ resolved }) {
+      return { body: resolved };
+    }
+  },
+  {
+    name: &quot;Catch All&quot;,
+    path: &quot;(.*)&quot;,
+    resolve() {
+      return import(&quot;./components/NotFound&quot;)
+        .then(preferDefault);
+    },
+    respond({ resolved }) {
+      return { body: resolved };
+    }
+  }
+]);</code></pre></div><p>For this tutorial, we will use <code class="inline-code css-jo5c25 eutm4hs0">router.once</code> to delay the initial render while we wait for the initial response. We should update the <code class="inline-code css-jo5c25 eutm4hs0">index.js</code> module to do this.</p><div class="css-xg7t84 e12etsbl0"><pre data-line="16-22"><code class="language-javascript">// src/index.js
 import React from &#x27;react&#x27;;
 import ReactDOM from &#x27;react-dom&#x27;;
 import { createRouter } from &quot;@curi/router&quot;;
@@ -214,66 +206,64 @@ registerServiceWorker();</code></pre></div><p>What do we want to do with the dat
 import { prepareRoutes } from &quot;@curi/router&quot;;
 import { preferDefault } from &quot;@curi/helpers&quot;;
 
-export default prepareRoutes({
-  routes: [
-    {
-      name: &quot;Home&quot;,
-      path: &quot;&quot;,
-      resolve(_, external) {
-        const body = import(&quot;./components/Home&quot;)
-          .then(preferDefault);
-        const books = external.bookAPI.BOOKS();
-        return Promise.all([body, books]);
-      },
-      respond({ resolved }) {
-        const [body, books] = resolved;
-        return {
-          body,
-          data: { books }
-        };
-      }
+export default prepareRoutes([
+  {
+    name: &quot;Home&quot;,
+    path: &quot;&quot;,
+    resolve(_, external) {
+      const body = import(&quot;./components/Home&quot;)
+        .then(preferDefault);
+      const books = external.bookAPI.BOOKS();
+      return Promise.all([body, books]);
     },
-    {
-      name: &quot;Book&quot;,
-      path: &quot;book/:id&quot;,
-      resolve({ params }, external) {
-        const body = import(&quot;./components/Book&quot;)
-          .then(preferDefault);
-        const book = external.bookAPI.BOOK(params.id);
-        return Promise.all([body, books]);
-      },
-      respond({ resolved }) {
-        const [body, book] = resolved;
-        return {
-          body,
-          data: { book }
-        };
-      }
-    },
-    {
-      name: &quot;Checkout&quot;,
-      path: &quot;checkout&quot;,
-      resolve() {
-        return import(&quot;./components/Checkout&quot;)
-          .then(preferDefault);
-      },
-      respond({ resolved }) {
-        return { body: resolved };
-      }
-    },
-    {
-      name: &quot;Catch All&quot;,
-      path: &quot;(.*)&quot;,
-      resolve() {
-        return import(&quot;./components/NotFound&quot;)
-          .then(preferDefault);
-      },
-      respond({ resolved }) {
-        return { body: resolved };
-      }
+    respond({ resolved }) {
+      const [body, books] = resolved;
+      return {
+        body,
+        data: { books }
+      };
     }
-  ]
-});</code></pre></div><p>With the data attached to our responses, we can remove the data imports from the components and just read from the response.</p><p>In the <code class="inline-code css-jo5c25 eutm4hs0">Home</code> component&#x27;s module, we can remove the<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">books.js</code> import and grab the response from the component&#x27;s props. The books data can be access as <code class="inline-code css-jo5c25 eutm4hs0">response.data.books</code>.</p><div class="css-xg7t84 e12etsbl0"><pre data-line="5,9"><code class="language-jsx">// src/components/Home.js
+  },
+  {
+    name: &quot;Book&quot;,
+    path: &quot;book/:id&quot;,
+    resolve({ params }, external) {
+      const body = import(&quot;./components/Book&quot;)
+        .then(preferDefault);
+      const book = external.bookAPI.BOOK(params.id);
+      return Promise.all([body, books]);
+    },
+    respond({ resolved }) {
+      const [body, book] = resolved;
+      return {
+        body,
+        data: { book }
+      };
+    }
+  },
+  {
+    name: &quot;Checkout&quot;,
+    path: &quot;checkout&quot;,
+    resolve() {
+      return import(&quot;./components/Checkout&quot;)
+        .then(preferDefault);
+    },
+    respond({ resolved }) {
+      return { body: resolved };
+    }
+  },
+  {
+    name: &quot;Catch All&quot;,
+    path: &quot;(.*)&quot;,
+    resolve() {
+      return import(&quot;./components/NotFound&quot;)
+        .then(preferDefault);
+    },
+    respond({ resolved }) {
+      return { body: resolved };
+    }
+  }
+]);</code></pre></div><p>With the data attached to our responses, we can remove the data imports from the components and just read from the response.</p><p>In the <code class="inline-code css-jo5c25 eutm4hs0">Home</code> component&#x27;s module, we can remove the<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">books.js</code> import and grab the response from the component&#x27;s props. The books data can be access as <code class="inline-code css-jo5c25 eutm4hs0">response.data.books</code>.</p><div class="css-xg7t84 e12etsbl0"><pre data-line="5,9"><code class="language-jsx">// src/components/Home.js
 import React from &#x27;react&#x27;;
 import { Link } from &#x27;@curi/react-dom&#x27;;
 
