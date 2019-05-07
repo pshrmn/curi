@@ -40,7 +40,7 @@ function RouterInteractionsGuide() {
 
       <HashSection meta={providedMeta}>
         <p>
-          The <IJS>@curi/router</IJS> package provides four built-in
+          The <IJS>@curi/interactions</IJS> package provides four built-in
           interactions:{" "}
           <Link
             name="Package"
@@ -97,7 +97,7 @@ function RouterInteractionsGuide() {
         </p>
 
         <CodeBlock>
-          {`import { pathname } from "@curi/router";
+          {`import { pathname } from "@curi/interactions";
 const route = router.route("Home");
 const path = pathname(route);`}
         </CodeBlock>
@@ -105,26 +105,30 @@ const path = pathname(route);`}
 
       <HashSection meta={routePropertiesMeta}>
         <p>
-          What are the route properties that an interaction can access? The
-          properties are split into three groups: <IJS>meta</IJS>,{" "}
-          <IJS>methods</IJS>, and <IJS>extra</IJS>.
+          What are the route properties that an interaction can access? There
+          are a number of "base" properties based on the provided route object
+          and its related routes. Additionally, there is a <IJS>methods</IJS>{" "}
+          group containing some methods for interacting with the route.
         </p>
 
-        <HashSection tag="h3" meta={{ title: "meta", hash: "meta-properties" }}>
+        <HashSection
+          tag="h3"
+          meta={{ title: "Base Properties", hash: "base-properties" }}
+        >
           <p>A route's meta properties provide information about the route.</p>
 
-          <HashSection tag="h4" meta={{ title: "name", hash: "meta-name" }}>
+          <HashSection tag="h4" meta={{ title: "name", hash: "base-name" }}>
             <p>The route's name string.</p>
           </HashSection>
 
-          <HashSection tag="h4" meta={{ title: "keys", hash: "meta-keys" }}>
+          <HashSection tag="h4" meta={{ title: "keys", hash: "base-keys" }}>
             <p>
               An array of the names of params for the route. This includes the
               names of params for any ancestor routes.
             </p>
           </HashSection>
 
-          <HashSection tag="h4" meta={{ title: "parent", hash: "meta-parent" }}>
+          <HashSection tag="h4" meta={{ title: "parent", hash: "base-parent" }}>
             <p>
               The route's parent's public data. For root routes, this is
               undefined.
@@ -138,7 +142,7 @@ const path = pathname(route);`}
 
           <HashSection
             tag="h4"
-            meta={{ title: "children", hash: "meta-children" }}
+            meta={{ title: "children", hash: "base-children" }}
           >
             <p>
               An array containing the public route data for each of the route's
@@ -149,6 +153,13 @@ const path = pathname(route);`}
             <p>
               The <IJS>active</IJS> interaction walks through a routes tree of
               descendants when checking if a route is a partial match.
+            </p>
+          </HashSection>
+
+          <HashSection tag="h4" meta={{ title: "extra", hash: "base-extra" }}>
+            <p>
+              A route's extra property is the optional object of whatever you
+              want to attach to a route using its <IJS>extra</IJS> property.
             </p>
           </HashSection>
         </HashSection>
@@ -195,16 +206,6 @@ const path = pathname(route);`}
               The route's <IJS>respond</IJS> function (if it exists).
             </p>
           </HashSection>
-        </HashSection>
-
-        <HashSection
-          tag="h3"
-          meta={{ title: "extra", hash: "extra-properties" }}
-        >
-          <p>
-            A route's extra property is the optional object of whatever you want
-            to attach to a route using its <IJS>extra</IJS> property.
-          </p>
         </HashSection>
       </HashSection>
     </React.Fragment>

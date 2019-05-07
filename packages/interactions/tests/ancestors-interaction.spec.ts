@@ -29,7 +29,7 @@ describe("ancestors route interaction", () => {
 
     it("returns all ancestors of the route", () => {
       const route = routes.route("Player");
-      const names = ancestors(route).map(r => r.meta.name);
+      const names = ancestors(route).map(r => r.name);
       expect(names).toEqual(["League", "Team"]);
     });
 

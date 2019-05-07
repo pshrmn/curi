@@ -101,6 +101,10 @@ export interface Response extends IntrinsicResponse {
   redirect?: RedirectLocation | ExternalRedirect;
 }
 
+export interface RouteExtra {
+  [key: string]: any;
+}
+
 // a route descriptor comes from the user
 export interface RouteDescriptor {
   name: string;
@@ -113,24 +117,20 @@ export interface RouteDescriptor {
   children?: Array<RouteDescriptor>;
   respond?: RespondFn;
   resolve?: Resolver;
-  extra?: { [key: string]: any };
+  extra?: RouteExtra;
 }
 
 // the public prepared route interface
 export interface Route<R = unknown> {
-  meta: {
-    name: string;
-    keys: Array<string | number>;
-    parent: Route | undefined;
-    children: Array<Route>;
-  };
+  name: string;
+  keys: Array<string | number>;
+  parent: Route | undefined;
+  children: Array<Route>;
+  extra?: RouteExtra;
   methods: {
     pathname: PathFunction;
     resolve: R;
     respond?: RespondFn;
-  };
-  extra?: {
-    [key: string]: any;
   };
 }
 export interface SyncRoute extends Route<undefined> {}

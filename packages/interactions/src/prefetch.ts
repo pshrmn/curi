@@ -18,7 +18,7 @@ export default function prefetch(
     return Promise.resolve({
       resolved: null,
       error: `Could not prefetch data for ${
-        route.meta.name
+        route.name
       } because it does not have a resolve function.`
     });
   }

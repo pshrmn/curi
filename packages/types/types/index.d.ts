@@ -70,6 +70,9 @@ export interface Response extends IntrinsicResponse {
     data?: any;
     redirect?: RedirectLocation | ExternalRedirect;
 }
+export interface RouteExtra {
+    [key: string]: any;
+}
 export interface RouteDescriptor {
     name: string;
     path: string;
@@ -81,24 +84,18 @@ export interface RouteDescriptor {
     children?: Array<RouteDescriptor>;
     respond?: RespondFn;
     resolve?: Resolver;
-    extra?: {
-        [key: string]: any;
-    };
+    extra?: RouteExtra;
 }
 export interface Route<R = unknown> {
-    meta: {
-        name: string;
-        keys: Array<string | number>;
-        parent: Route | undefined;
-        children: Array<Route>;
-    };
+    name: string;
+    keys: Array<string | number>;
+    parent: Route | undefined;
+    children: Array<Route>;
+    extra?: RouteExtra;
     methods: {
         pathname: PathFunction;
         resolve: R;
         respond?: RespondFn;
-    };
-    extra?: {
-        [key: string]: any;
     };
 }
 export interface SyncRoute extends Route<undefined> {

@@ -72,7 +72,7 @@ function createMatch(
     route: best.route.public,
     match: {
       location,
-      name: best.route.public.meta.name,
+      name: best.route.public.name,
       params
     }
   };

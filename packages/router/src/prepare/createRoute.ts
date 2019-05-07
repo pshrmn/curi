@@ -56,28 +56,26 @@ export function createRoute(
     keyNames = parent.keys.concat(keyNames);
   }
 
-  let children: Array<PreparedRoute> = [];
-  let descendants: Array<Route> = [];
+  let childRoutes: Array<PreparedRoute> = [];
+  let children: Array<Route> = [];
   if (props.children && props.children.length) {
-    children = props.children.map((child: RouteDescriptor) => {
+    childRoutes = props.children.map((child: RouteDescriptor) => {
       return createRoute(child, map, {
         path: fullPath,
         keys: keyNames
       });
     });
-    descendants = children.map(child => child.public);
+    children = childRoutes.map(child => child.public);
   }
 
   const compiled = PathToRegexp.compile(fullPath);
 
   const route = {
     public: {
-      meta: {
-        name: props.name,
-        keys: keyNames,
-        parent: undefined,
-        children: descendants
-      },
+      name: props.name,
+      keys: keyNames,
+      parent: undefined,
+      children,
       methods: {
         resolve: props.resolve,
         respond: props.respond,
@@ -93,13 +91,13 @@ export function createRoute(
       exact,
       parsers: props.params
     },
-    children
+    children: childRoutes
   };
 
   map[props.name] = route.public;
-  if (children.length) {
-    children.forEach(child => {
-      child.public.meta.parent = route.public;
+  if (childRoutes.length) {
+    childRoutes.forEach(child => {
+      child.public.parent = route.public;
     });
   }
 

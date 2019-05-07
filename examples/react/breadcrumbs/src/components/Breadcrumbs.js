@@ -12,8 +12,8 @@ const Breadcrumbs = ({ name, params }) => {
     <ul className="breadcrumbs">
       {ancestorNames.map(a => {
         return (
-          <li key={a.meta.name}>
-            <Link name={a.meta.name} params={params}>
+          <li key={a.name}>
+            <Link name={a.name} params={params}>
               {title(a, params)}
             </Link>
           </li>

@@ -53,9 +53,7 @@ describe("createRouter", () => {
       const router = createRouter(inMemory, routes);
       const route = router.route("Home");
       expect(route).toMatchObject({
-        meta: {
-          name: "Home"
-        }
+        name: "Home"
       });
     });
 

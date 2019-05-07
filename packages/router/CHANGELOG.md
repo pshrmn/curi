@@ -1,7 +1,7 @@
 ## Next
 
 * `router.route` returns a route's public data.
-* Restructure a route's public data to have `meta`, `methods`, and `extra` properties.
+* Restructure a route's public data to group functions under a `methods` property.
 * Rework interactions to be external, ideally stateless, functions.
 * Removed `partials` property from response objects.
 

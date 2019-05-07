@@ -19,13 +19,13 @@
     "gzipped": 902
   },
   "dist/curi-react-universal.umd.js": {
-    "bundled": 6795,
-    "minified": 2567,
-    "gzipped": 1041
+    "bundled": 6765,
+    "minified": 2537,
+    "gzipped": 1036
   },
   "dist/curi-react-universal.min.js": {
-    "bundled": 6795,
-    "minified": 2567,
-    "gzipped": 1041
+    "bundled": 6765,
+    "minified": 2537,
+    "gzipped": 1036
   }
 }

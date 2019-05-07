@@ -8,7 +8,7 @@ import { AsyncRoute } from "@curi/types";
 
 describe("routes", () => {
   describe("public route properties", () => {
-    describe("meta properties", () => {
+    describe("properties", () => {
       describe("name", () => {
         it("is the provided value", () => {
           const routes = prepareRoutes({
@@ -29,7 +29,7 @@ describe("routes", () => {
             }
           });
           const route = router.route("Test");
-          expect(route.meta.name).toBe("Test");
+          expect(route.name).toBe("Test");
         });
       });
 
@@ -53,7 +53,7 @@ describe("routes", () => {
             }
           });
           const route = router.route("Test");
-          expect(route.meta.keys).toEqual(["one", "two", "three"]);
+          expect(route.keys).toEqual(["one", "two", "three"]);
         });
 
         it("is an empty array when the path has no params", () => {
@@ -75,7 +75,36 @@ describe("routes", () => {
             }
           });
           const route = router.route("Test");
-          expect(route.meta.keys).toEqual([]);
+          expect(route.keys).toEqual([]);
+        });
+      });
+
+      describe("extra", () => {
+        it("is the provided value", () => {
+          const extra = {
+            unofficial: true,
+            another: 1
+          };
+          const routes = prepareRoutes({
+            routes: [
+              {
+                name: "Test",
+                path: "test",
+                extra
+              },
+              {
+                name: "Not Found",
+                path: "(.*)"
+              }
+            ]
+          });
+          const router = createRouter(inMemory, routes, {
+            history: {
+              locations: [{ url: "/test" }]
+            }
+          });
+          const route = router.route("Test");
+          expect(route.extra).toBe(extra);
         });
       });
     });
@@ -179,35 +208,6 @@ describe("routes", () => {
           const route = router.route("Test");
           expect(route.methods.respond).toBeUndefined();
         });
-      });
-    });
-
-    describe("extra", () => {
-      it("is the provided value", () => {
-        const extra = {
-          unofficial: true,
-          another: 1
-        };
-        const routes = prepareRoutes({
-          routes: [
-            {
-              name: "Test",
-              path: "test",
-              extra
-            },
-            {
-              name: "Not Found",
-              path: "(.*)"
-            }
-          ]
-        });
-        const router = createRouter(inMemory, routes, {
-          history: {
-            locations: [{ url: "/test" }]
-          }
-        });
-        const route = router.route("Test");
-        expect(route.extra).toBe(extra);
       });
     });
   });

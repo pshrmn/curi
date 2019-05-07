@@ -11,10 +11,10 @@ export interface ActiveCheckOptions {
 
 function find(name: string, children: Array<Route>): boolean {
   return children.some(node => {
-    if (node.meta.name === name) {
+    if (node.name === name) {
       return true;
-    } else if (node.meta.children) {
-      return find(name, node.meta.children);
+    } else if (node.children) {
+      return find(name, node.children);
     }
     return false;
   });
@@ -26,12 +26,12 @@ export default function active(
   options: ActiveCheckOptions = {}
 ): boolean {
   if (
-    response.name !== route.meta.name &&
-    (!options.partial || !find(response.name, route.meta.children))
+    response.name !== route.name &&
+    (!options.partial || !find(response.name, route.children))
   ) {
     return false;
   }
-  const keys = route.meta.keys;
+  const keys = route.keys;
   if (keys.length) {
     if (!options.params) {
       return false;

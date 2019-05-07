@@ -7,5 +7,5 @@
  */
 export default function title(route, params) {
   const fn = route.extra && route.extra.title;
-  return fn ? fn(params) : route.meta.name;
+  return fn ? fn(params) : route.name;
 }

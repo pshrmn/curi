@@ -1,7 +1,7 @@
 <ul className="breadcrumbs">
   {#each ancestors as route (route)}
     <li>
-      <Link name={route.meta.name} params={params}>
+      <Link name={route.name} params={params}>
         {title(route, params)}
       </Link>
     </li>

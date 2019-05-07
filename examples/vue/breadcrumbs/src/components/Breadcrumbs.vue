@@ -17,7 +17,7 @@ export default {
     ancestors() {
       const route = this.$router.route(this.name);
       return ancestors(route).map(r => ({
-        name: r.meta.name,
+        name: r.name,
         title: title(r, this.params)
       }));
     }
