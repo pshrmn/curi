@@ -4,7 +4,6 @@
 * Restructure a route's public data to have `meta`, `methods`, and `extra` properties.
 * Rework interactions to be external, ideally stateless, functions.
 * Removed `partials` property from response objects.
-* Re-export interactions from `@curi/interactions`.
 
 ## 2.0.0-beta.15
 
