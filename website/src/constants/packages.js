@@ -301,6 +301,7 @@ const packages = [
 ];
 
 let groupedPackages;
+let versionedPackages = {};
 
 export default {
   find: function findPackage(name) {
@@ -318,6 +319,22 @@ export default {
       }, {});
     }
     return groupedPackages;
+  },
+  versioned: function versionPackages(version) {
+    if (!versionedPackages[version]) {
+      versionedPackages[version] = packages.reduce((acc, curr) => {
+        if (!(version in curr.versions)) {
+          return acc;
+        }
+        if (!acc[curr.type]) {
+          acc[curr.type] = [curr];
+        } else {
+          acc[curr.type].push(curr);
+        }
+        return acc;
+      }, {});
+    }
+    return versionedPackages[version];
   },
   all: function() {
     return packages;

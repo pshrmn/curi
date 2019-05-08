@@ -20,7 +20,7 @@ const GroupPackages = ({ packages }) => (
   </ul>
 );
 
-const groups = PACKAGE_API.grouped();
+const groups = PACKAGE_API.versioned("v2");
 const pkgs = PACKAGE_API.all().map(pkg => ({
   name: "Package",
   params: {
@@ -38,14 +38,12 @@ function PackageLinks({ active, close }) {
 
   return (
     <Container active={active} close={close}>
-      {Object.keys(groups)
-        .filter(t => t !== "route interactions" && t !== "side effects")
-        .map(title => (
-          <div key={title}>
-            <h3>{title}</h3>
-            <GroupPackages packages={groups[title]} />
-          </div>
-        ))}
+      {Object.keys(groups).map(title => (
+        <div key={title}>
+          <h3>{title}</h3>
+          <GroupPackages packages={groups[title]} />
+        </div>
+      ))}
     </Container>
   );
 }
