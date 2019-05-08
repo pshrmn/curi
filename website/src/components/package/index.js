@@ -34,7 +34,8 @@ export default function BasePackage({
   latest,
   globalName,
   children,
-  script = true
+  script = true,
+  sections
 }) {
   if (name !== undefined) {
     const major = params.version !== undefined ? params.version : latest;
@@ -47,13 +48,14 @@ export default function BasePackage({
           <GitHubLink name={name} dir={getDir(name)} />
           <NPMLink name={name} />
         </StyledPackageInfo>
+        {sections.about}
         <Installation
           name={name}
           version={currentVersion}
           globalName={globalName}
           script={script}
         />
-        {children || null}
+        {sections.api}
       </div>
     );
   } else {

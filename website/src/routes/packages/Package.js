@@ -5,7 +5,7 @@ import PageMenu from "../../components/layout/PageMenu";
 import BasePackage from "../../components/package";
 
 export default function PackagePage({ response }) {
-  const { component: Component, contents } = response.data.content;
+  const { sections, contents } = response.data.content;
   return (
     <FancyPage
       base={
@@ -16,9 +16,8 @@ export default function PackagePage({ response }) {
           latest={response.data.latest}
           globalName={response.data.globalName}
           script={response.data.script}
-        >
-          <Component />
-        </BasePackage>
+          sections={sections}
+        />
       }
       menu={<PageMenu contents={contents} />}
     />

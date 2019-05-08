@@ -14,8 +14,7 @@ function NPM({ name }) {
 function Unpkg({ name, version, globalName }) {
   return (
     <p>
-      Prefer inline scripts? A full (<IJS>.umd.js</IJS>) and minified (
-      <IJS>.min.js</IJS>) script is available for every version through{" "}
+      UMD scripts script are also available through{" "}
       <a href={`https://unpkg.com/@curi/${name}@${version}/dist/`}>Unpkg</a>.
       You can access the package's exports using <IJS>window.{globalName}</IJS>.
     </p>

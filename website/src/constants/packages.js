@@ -16,13 +16,13 @@ const packages = [
         case "v1":
           return import(
             /* webpackChunkName: 'package--router-v1' */
-            `../pages/Packages/router/v1/index.js`
+            `../pages/Packages/v1/router/index.js`
           );
         case "v2":
         default:
           return import(
             /* webpackChunkName: 'package--router-v2' */
-            `../pages/Packages/router/v2/index.js`
+            `../pages/Packages/v2/router/index.js`
           );
       }
     }
@@ -42,7 +42,7 @@ const packages = [
         default:
           return import(
             /* webpackChunkName: 'package--interactions-v2' */
-            `../pages/Packages/interactions/v2/index.js`
+            `../pages/Packages/v2/interactions/index.js`
           );
       }
     }
@@ -62,13 +62,13 @@ const packages = [
         case "v1":
           return import(
             /* webpackChunkName: 'package--react-dom-v1' */
-            `../pages/Packages/react-dom/v1/index.js`
+            `../pages/Packages/v1/react-dom/index.js`
           );
         case "v2":
         default:
           return import(
             /* webpackChunkName: 'package--react-dom-v2' */
-            `../pages/Packages/react-dom/v2/index.js`
+            `../pages/Packages/v2/react-dom/index.js`
           );
       }
     }
@@ -89,13 +89,13 @@ const packages = [
         case "v1":
           return import(
             /* webpackChunkName: 'package--react-native-v1' */
-            `../pages/Packages/react-native/v1/index.js`
+            `../pages/Packages/v1/react-native/index.js`
           );
         case "v2":
         default:
           return import(
             /* webpackChunkName: 'package--react-native-v2' */
-            `../pages/Packages/react-native/v2/index.js`
+            `../pages/Packages/v2/react-native/index.js`
           );
       }
     }
@@ -113,7 +113,7 @@ const packages = [
     import: () =>
       import(
         /* webpackChunkName: 'package--svelte' */
-        `../pages/Packages/svelte/v2/index.js`
+        `../pages/Packages/v2/svelte/index.js`
       )
   },
   {
@@ -129,7 +129,7 @@ const packages = [
     import: () =>
       import(
         /* webpackChunkName: 'package--vue' */
-        `../pages/Packages/vue/v2/index.js`
+        `../pages/Packages/v2/vue/index.js`
       )
   },
   {
@@ -145,7 +145,7 @@ const packages = [
     import: () => {
       return import(
         /* webpackChunkName: 'package--route-ancestors-v1' */
-        `../pages/Packages/route-ancestors/v1/index.js`
+        `../pages/Packages/v1/route-ancestors/index.js`
       );
     }
   },
@@ -162,7 +162,7 @@ const packages = [
     import: () => {
       return import(
         /* webpackChunkName: 'package--route-prefetch-v1' */
-        `../pages/Packages/route-prefetch/v1/index.js`
+        `../pages/Packages/v1/route-prefetch/index.js`
       );
     }
   },
@@ -179,7 +179,7 @@ const packages = [
     import: () => {
       return import(
         /* webpackChunkName: 'package--route-active-v1' */
-        `../pages/Packages/route-active/v1/index.js`
+        `../pages/Packages/v1/route-active/index.js`
       );
     }
   },
@@ -196,7 +196,7 @@ const packages = [
     import: () => {
       return import(
         /* webpackChunkName: 'package--side-effect-aria-live-v1' */
-        `../pages/Packages/side-effect-aria-live/v1/index.js`
+        `../pages/Packages/v1/side-effect-aria-live/index.js`
       );
     }
   },
@@ -213,7 +213,7 @@ const packages = [
     import: () => {
       return import(
         /* webpackChunkName: 'package--side-effect-scroll-v1' */
-        `../pages/Packages/side-effect-scroll/v1/index.js`
+        `../pages/Packages/v1/side-effect-scroll/index.js`
       );
     }
   },
@@ -230,7 +230,7 @@ const packages = [
     import: () => {
       return import(
         /* webpackChunkName: 'package--side-effect-title-v1' */
-        `../pages/Packages/side-effect-title/v1/index.js`
+        `../pages/Packages/v1/side-effect-title/index.js`
       );
     }
   },
@@ -247,7 +247,7 @@ const packages = [
     import: () =>
       import(
         /* webpackChunkName: 'package--static' */
-        `../pages/Packages/static/v2/index.js`
+        `../pages/Packages/v2/static/index.js`
       )
   },
   {
@@ -266,13 +266,13 @@ const packages = [
         case "v1":
           return import(
             /* webpackChunkName: 'package--helpers-v1' */
-            `../pages/Packages/helpers/v1/index.js`
+            `../pages/Packages/v1/helpers/index.js`
           );
         case "v2":
         default:
           return import(
             /* webpackChunkName: 'package--helpers-v2' */
-            `../pages/Packages/helpers/v2/index.js`
+            `../pages/Packages/v2/helpers/index.js`
           );
       }
     }
@@ -293,7 +293,7 @@ const packages = [
         default:
           return import(
             /* webpackChunkName: 'package--types-v2' */
-            `../pages/Packages/types/v2/index.js`
+            `../pages/Packages/v2/types/index.js`
           );
       }
     }

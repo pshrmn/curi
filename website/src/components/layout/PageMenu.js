@@ -44,10 +44,12 @@ function Group({ items }) {
   );
 }
 
-export default function PageMenu({ contents }) {
+function PageMenu({ contents }) {
   return (
     <StyledDiv>
       <Group items={contents} />
     </StyledDiv>
   );
 }
+
+export default React.memo(PageMenu);
