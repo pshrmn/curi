@@ -39,7 +39,7 @@ function PackageLinks({ active, close }) {
   return (
     <Container active={active} close={close}>
       {Object.keys(groups)
-        .filter(t => t !== "route interactions")
+        .filter(t => t !== "route interactions" && t !== "side effects")
         .map(title => (
           <div key={title}>
             <h3>{title}</h3>

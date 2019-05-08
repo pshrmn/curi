@@ -3,5 +3,6 @@ export { RouterOptions };
 
 import createRouter from "./router/createRouter";
 import prepareRoutes from "./prepare/prepareRoutes";
+import { announce, scroll, title } from "./side-effects";
 
-export { createRouter, prepareRoutes };
+export { createRouter, prepareRoutes, announce, scroll, title };

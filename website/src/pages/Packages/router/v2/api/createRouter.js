@@ -121,7 +121,7 @@ const router = createRouter(browser, routes);`}
             </p>
 
             <CodeBlock>
-              {`import scroll from "@curi/side-effect-scroll";
+              {`import { createRouter, scroll } from "@curi/router";
 
 const router = createRouter(browser, routes, {
   sideEffects: [scroll()]

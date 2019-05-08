@@ -12,14 +12,13 @@ const meta = {
   title: "Side Effects"
 };
 
-const officialMeta = {
-  title: "Official Side Effects",
-  hash: "official"
+const providedMeta = {
+  title: "@curi/side-effects",
+  hash: "provided"
 };
 const addingMeta = {
   title: "Adding Side Effects",
-  hash: "adding",
-  children: [officialMeta]
+  hash: "adding"
 };
 
 const creatingMeta = {
@@ -27,7 +26,7 @@ const creatingMeta = {
   hash: "creating"
 };
 
-const contents = [addingMeta, creatingMeta];
+const contents = [addingMeta, providedMeta, creatingMeta];
 
 function UsingSideEffectsGuide() {
   return (
@@ -91,37 +90,63 @@ router.observe(render);
 // whenever there is a response, render will be
 // called before logResponse`}
         </CodeBlock>
+      </HashSection>
 
-        <HashSection meta={officialMeta} tag="h3">
-          <p>Curi has two "official" side effect packages:</p>
-          <ul>
-            <li>
-              <Link
-                name="Package"
-                params={{ package: "side-effect-title", version: "v2" }}
-              >
-                @curi/side-effect-title
-              </Link>
-            </li>
-            <li>
-              <Link
-                name="Package"
-                params={{ package: "side-effect-scroll", version: "v2" }}
-              >
-                @curi/side-effect-scroll
-              </Link>
-            </li>
-          </ul>
+      <HashSection meta={providedMeta}>
+        <p>
+          Curi's <IJS>@curi/router</IJS> package provides three side effects:
+        </p>
+        <ul>
+          <li>
+            The{" "}
+            <Link
+              name="Package"
+              params={{ package: "router", version: "v2" }}
+              hash="announce"
+            >
+              <IJS>announce</IJS>
+            </Link>{" "}
+            side effect announces navigation for screen readers.
+          </li>
+          <li>
+            The{" "}
+            <Link
+              name="Package"
+              params={{ package: "router", version: "v2" }}
+              hash="scroll"
+            >
+              <IJS>scroll</IJS>
+            </Link>{" "}
+            side effect scrolls to the top of the page after navigation.
+          </li>
+          <li>
+            The{" "}
+            <Link
+              name="Package"
+              params={{ package: "router", version: "v2" }}
+              hash="title"
+            >
+              <IJS>title</IJS>
+            </Link>{" "}
+            side effect sets the document's title after navigation.
+          </li>
+        </ul>
 
-          <CodeBlock>
-            {`import titleEffect from "@curi/side-effect-title";
-import scrollEffect from "@curi/side-effect-scroll";
+        <CodeBlock>
+          {`import { announce, scroll, title } from "@curi/router";
 
 const router = createRouter(browser, routes, {
-  sideEffect: [titleEffect(), scrollEffect()]
+  sideEffect: [
+    announce(({ response }) => {
+      return \`Navigated to \${response.location.pathname}\`;
+    }),
+    scroll(),
+    title(({ response }) => {
+      return \`\${response.meta.title}\`;
+    })
+  ]
 });`}
-          </CodeBlock>
-        </HashSection>
+        </CodeBlock>
       </HashSection>
 
       <HashSection meta={creatingMeta}>

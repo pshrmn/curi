@@ -189,25 +189,15 @@ const packages = [
     globalName: "CuriSideEffectAriaLive",
     type: "side effects",
     script: true,
-    latest: "v2",
+    latest: "v1",
     versions: {
-      v1: "1.0.1",
-      v2: versions["side-effect-aria-live"]
+      v1: "1.0.1"
     },
-    import: version => {
-      switch (version) {
-        case "v1":
-          return import(
-            /* webpackChunkName: 'package--side-effect-aria-live-v1' */
-            `../pages/Packages/side-effect-aria-live/v1/index.js`
-          );
-        case "v2":
-        default:
-          return import(
-            /* webpackChunkName: 'package--side-effect-aria-live-v2' */
-            `../pages/Packages/side-effect-aria-live/v2/index.js`
-          );
-      }
+    import: () => {
+      return import(
+        /* webpackChunkName: 'package--side-effect-aria-live-v1' */
+        `../pages/Packages/side-effect-aria-live/v1/index.js`
+      );
     }
   },
   {
@@ -216,25 +206,15 @@ const packages = [
     globalName: "CuriSideEffectScroll",
     type: "side effects",
     script: true,
-    latest: "v2",
+    latest: "v1",
     versions: {
-      v1: "1.0.1",
-      v2: versions["side-effect-scroll"]
+      v1: "1.0.1"
     },
-    import: version => {
-      switch (version) {
-        case "v1":
-          return import(
-            /* webpackChunkName: 'package--side-effect-scroll-v1' */
-            `../pages/Packages/side-effect-scroll/v1/index.js`
-          );
-        case "v2":
-        default:
-          return import(
-            /* webpackChunkName: 'package--side-effect-scroll-v2' */
-            `../pages/Packages/side-effect-scroll/v2/index.js`
-          );
-      }
+    import: () => {
+      return import(
+        /* webpackChunkName: 'package--side-effect-scroll-v1' */
+        `../pages/Packages/side-effect-scroll/v1/index.js`
+      );
     }
   },
   {
@@ -243,25 +223,15 @@ const packages = [
     globalName: "CuriSideEffectTitle",
     type: "side effects",
     script: true,
-    latest: "v2",
+    latest: "v1",
     versions: {
-      v1: "1.0.1",
-      v2: versions["side-effect-title"]
+      v1: "1.0.1"
     },
-    import: version => {
-      switch (version) {
-        case "v1":
-          return import(
-            /* webpackChunkName: 'package--side-effect-title-v1' */
-            `../pages/Packages/side-effect-title/v1/index.js`
-          );
-        case "v2":
-        default:
-          return import(
-            /* webpackChunkName: 'package--side-effect-title-v2' */
-            `../pages/Packages/side-effect-title/v2/index.js`
-          );
-      }
+    import: () => {
+      return import(
+        /* webpackChunkName: 'package--side-effect-title-v1' */
+        `../pages/Packages/side-effect-title/v1/index.js`
+      );
     }
   },
   {

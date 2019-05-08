@@ -40,8 +40,7 @@ function RouterInteractionsGuide() {
 
       <HashSection meta={providedMeta}>
         <p>
-          The <IJS>@curi/interactions</IJS> package provides four built-in
-          interactions:{" "}
+          The <IJS>@curi/interactions</IJS> package provides four interactions:{" "}
           <Link
             name="Package"
             params={{ package: "interactions", version: "v2" }}

@@ -67,12 +67,14 @@ function AccessibilityGuide() {
           change, the new content will be announced to screen reader users. The{" "}
           <Link
             name="Package"
-            params={{ package: "side-effect-aria-live", version: "v2" }}
+            params={{ package: "router", version: "v2" }}
+            hash="announce"
           >
-            <IJS>@curi/side-effect-aria-live</IJS>
+            <IJS>announce</IJS>
           </Link>{" "}
-          package provides a side effect for creating a live region and updating
-          its content to announce navigation.
+          function exported by the <IJS>@curi/router</IJS> package is a side
+          effect for creating a live region and updating its content to announce
+          navigation.
         </p>
 
         <p>
@@ -84,11 +86,7 @@ function AccessibilityGuide() {
         </p>
 
         <CodeBlock>
-          {`import ariaLive from "@curi/side-effect-aria-live";
-
-const announcer = ariaLive(
-  ({ response }) => \`Navigated to \${response.meta.title}\`
-);
+          {`import { announce } from "@curi/router";
 
 const routes = prepareRoutes([
   {
@@ -103,7 +101,9 @@ const routes = prepareRoutes([
 ]);
 
 const router = createRouter(browser, routes, {
-  sideEffects: [announcer]
+  sideEffects: [announce(
+    ({ response }) => \`Navigated to \${response.meta.title}\`
+  )]
 });
 
 // when the user navigates to "/", the screen reader
