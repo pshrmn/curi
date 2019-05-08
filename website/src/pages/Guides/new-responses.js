@@ -214,12 +214,13 @@ router.observe(observer);`}
             The{" "}
             <Link
               name="Package"
-              params={{ package: "side-effect-title", version: "v2" }}
+              params={{ package: "router", version: "v2" }}
+              hash="title"
             >
-              <IJS>@curi/side-effect-title</IJS>
+              <IJS>title</IJS>
             </Link>{" "}
-            package provides a side effect that will use{" "}
-            <IJS>response.meta.title</IJS> to set the page's{" "}
+            function exported by <IJS>@curi/router</IJS> is a side effect that
+            will use <IJS>response.meta.title</IJS> to set the page's{" "}
             <IJS>document.title</IJS>.
           </p>
           <p>
@@ -227,13 +228,15 @@ router.observe(observer);`}
             always scroll to the matching element in the page. The{" "}
             <Link
               name="Package"
-              params={{ package: "side-effect-scroll", version: "v2" }}
+              params={{ package: "router", version: "v2" }}
+              hash="scroll"
             >
-              <IJS>@curi/side-effect-scroll</IJS>
+              <IJS>scroll</IJS>
             </Link>{" "}
-            package adds this behavior by scrolling the page to the element that
-            matches the new response's hash (<IJS>response.location.hash</IJS>)
-            after the new response has rendered.
+            function exported by <IJS>@curi/router</IJS> is a side effect that
+            scrolls the page to the element that matches the new response's hash
+            (<IJS>response.location.hash</IJS>) after the new response has
+            rendered.
           </p>
           <p>
             If you need to add logging to your application, you could write your

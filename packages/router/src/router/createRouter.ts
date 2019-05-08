@@ -13,6 +13,7 @@ import {
   Response,
   CuriRouter,
   Observer,
+  SideEffect,
   Emitted,
   ResponseHandlerOptions,
   CurrentResponse,
@@ -26,7 +27,7 @@ import {
 } from "@curi/types";
 
 export interface RouterOptions<O = HistoryOptions> {
-  sideEffects?: Array<Observer>;
+  sideEffects?: Array<SideEffect>;
   invisibleRedirects?: boolean;
   external?: any;
   history?: O;
