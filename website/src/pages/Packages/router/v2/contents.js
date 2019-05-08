@@ -20,10 +20,10 @@ export default [
     children: [
       prepareRoutesMeta,
       createRouterMeta,
-      RoutePropertiesMeta,
       announceMeta,
       scrollMeta,
-      titleMeta
+      titleMeta,
+      RoutePropertiesMeta
     ]
   }
 ];

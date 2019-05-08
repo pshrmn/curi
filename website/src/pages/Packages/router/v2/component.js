@@ -20,10 +20,10 @@ export default class RouterPkg extends React.PureComponent {
         <APIBlock>
           <PrepareRoutesAPI />
           <CreateRouterAPI />
-          <RoutePropertiesAPI />
           <AnnounceAPI />
           <ScrollAPI />
           <TitleAPI />
+          <RoutePropertiesAPI />
         </APIBlock>
       </React.Fragment>
     );
