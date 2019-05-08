@@ -9,16 +9,16 @@ const Nav = () =>
     h(
       "ul",
       null,
-      h("li", null, h(CuriReact.Link, { to: "Home" }, "Home")),
-      h("li", null, h(CuriReact.Link, { to: "About" }, "About"))
+      h("li", null, h(CuriReact.Link, { name: "Home" }, "Home")),
+      h("li", null, h(CuriReact.Link, { name: "About" }, "About"))
     )
   );
 
-const routes = [
+const routes = Curi.prepareRoutes([
   {
     name: "Home",
     path: "",
-    response() {
+    respond() {
       return {
         body: Home
       };
@@ -27,16 +27,22 @@ const routes = [
   {
     name: "About",
     path: "about",
-    response() {
+    respond() {
       return {
         body: About
       };
     }
   }
-];
+]);
 
-const router = Curi.curi(HickoryHash, routes);
-const Router = CuriReactDOM.create_router_component(router);
+const router = Curi.createRouter(HickoryHash.hash, routes, {
+  sideEffects: [
+    Curi.announce(({ response }) => {
+      return `Navigated to ${response.location.pathname}`;
+    })
+  ]
+});
+const Router = CuriReactDOM.createRouterComponent(router);
 const root = document.getElementById("root");
 
 function render({ response }) {

@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { createRouter } from "@curi/router";
+import { createRouter, announce } from "@curi/router";
 import { browser } from "@hickory/browser";
 import { parse, stringify } from "qs";
 import { createRouterComponent } from "@curi/react-dom";
@@ -12,7 +12,12 @@ const router = createRouter(browser, routes, {
   invisibleRedirects: true,
   history: {
     query: { parse, stringify }
-  }
+  },
+  sideEffects: [
+    announce(({ response }) => {
+      return `Navigated to ${response.location.pathname}`;
+    })
+  ]
 });
 const Router = createRouterComponent(router);
 

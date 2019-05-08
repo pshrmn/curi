@@ -1,13 +1,19 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { createRouterComponent } from "@curi/react-dom";
 import { browser } from "@hickory/browser";
-import { createRouter } from "@curi/router";
+import { createRouter, announce } from "@curi/router";
+import { createRouterComponent } from "@curi/react-dom";
 
 import routes from "./routes";
 import App from "./components/App";
 
-const router = createRouter(browser, routes);
+const router = createRouter(browser, routes, {
+  sideEffects: [
+    announce(({ response }) => {
+      return `Navigated to ${response.location.pathname}`;
+    })
+  ]
+});
 const Router = createRouterComponent(router);
 
 router.once(() => {
