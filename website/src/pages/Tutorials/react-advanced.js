@@ -471,11 +471,11 @@ export default prepareRoutes([
           update the <IJS>index.js</IJS> module to do this.
         </p>
 
-        <CodeBlock data-line="16-22">
+        <CodeBlock data-line="22-28">
           {`// src/index.js
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { createRouter } from "@curi/router";
+import { createRouter, announce } from "@curi/router";
 import { browser } from '@hickory/browser';
 import { createRouterComponent } from '@curi/react-dom';
 
@@ -484,7 +484,13 @@ import './index.css';
 import NavMenu from './components/NavMenu';
 import registerServiceWorker from './registerServiceWorker';
 
-const router = createRouter(browser, routes);
+const router = createRouter(browser, routes, {
+  sideEffects: [
+    announce(({ response }) => {
+      return \`Navigated to \${response.location.pathname}\`;
+    })
+  ]
+});
 const Router = createRouterComponent(router);
 
 router.once(() => {
@@ -579,7 +585,7 @@ export const BOOK = id => Promise.resolve(
           use it here.
         </p>
 
-        <CodeBlock data-line="11,14-18">
+        <CodeBlock data-line="11,20-22">
           {`// src/index.js
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -594,6 +600,11 @@ import * as bookAPI from "./api";
 import registerServiceWorker from './registerServiceWorker';
 
 const router = createRouter(browser, routes, {
+  sideEffects: [
+    announce(({ response }) => {
+      return \`Navigated to \${response.location.pathname}\`;
+    })
+  ],
   external: {
     bookAPI
   }

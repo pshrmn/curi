@@ -32,7 +32,15 @@ const routesMeta = {
 
 const historyMeta = { title: "History", hash: "history" };
 
-const routerMeta = { title: "The Router", hash: "router" };
+const a11yMeta = {
+  title: "Announcing Navigation",
+  hash: "announcing-navigation"
+};
+const routerMeta = {
+  title: "The Router",
+  hash: "router",
+  children: [a11yMeta]
+};
 
 const responseMeta = {
   title: "Responses and Navigation",
@@ -445,7 +453,76 @@ ReactDOM.render(<App />, document.getElementById('root'));
 registerServiceWorker();`}
         </CodeBlock>
 
-        <p>The router is now ready and we can render the application.</p>
+        <p>
+          The router is now ready and we can render the application, but first
+          we should do something really important: make the site more
+          accessible.
+        </p>
+
+        <HashSection meta={a11yMeta}>
+          <p>
+            In a multi-page application, a screen reader will announce
+            navigation to users. This happens automatically when a new Document
+            is loaded. A single-page application reuses its Document, which is
+            great for removing unnecessary server requests, but also means that
+            the navigation is no longer automatically announced.
+          </p>
+
+          <p>
+            Curi has a concept of "side effects". These are functions that are
+            called after a navigation happens and are passed an object with data
+            about the navigation.
+          </p>
+
+          <p>
+            The <IJS>@curi/router</IJS> package provides a few side effects that
+            are useful for websites. For now, we will focus on the{" "}
+            <Link
+              name="Package"
+              params={{ package: "router", version: "v2" }}
+              hash="announce"
+            >
+              <IJS>announce</IJS>
+            </Link>{" "}
+            side effect. The <IJS>announce</IJS> side effect returns a string,
+            which sets the text content of a{" "}
+            <a href="https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/ARIA_Live_Regions">
+              ARIA Live region
+            </a>
+            . Screen readers will detect the changed text and read it to the
+            users.
+          </p>
+
+          <p>
+            Let's go ahead and add the <IJS>announce</IJS> side effect to the
+            router. We will have it return a string of the response's{" "}
+            <IJS>pathname</IJS>.
+          </p>
+
+          <CodeBlock lang="jsx" data-line="4,12-18">
+            {`// src/index.js
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { createRouter, announce } from "@curi/router";
+import { browser } from '@hickory/browser';
+
+import routes from './routes';
+import './index.css';
+import App from './App';
+import registerServiceWorker from './registerServiceWorker';
+
+const router = createRouter(browser, routes, {
+  sideEffects: [
+    announce(({ response }) => {
+      return \`Navigated to \${response.location.pathname}\`;
+    })
+  ]
+});
+
+ReactDOM.render(<App />, document.getElementById('root'));
+registerServiceWorker();`}
+          </CodeBlock>
+        </HashSection>
       </HashSection>
 
       <HashSection meta={renderingMeta}>
@@ -467,11 +544,11 @@ registerServiceWorker();`}
           </p>
         </Note>
 
-        <CodeBlock lang="jsx" data-line="6,14">
+        <CodeBlock lang="jsx" data-line="6,20">
           {`// src/index.js
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { createRouter } from "@curi/router";
+import { createRouter, announce } from "@curi/router";
 import { browser } from '@hickory/browser';
 import { createRouterComponent } from "@curi/react-dom";
 
@@ -480,7 +557,13 @@ import './index.css';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 
-const router = createRouter(browser, routes);
+const router = createRouter(browser, routes, {
+  sideEffects: [
+    announce(({ response }) => {
+      return \`Navigated to \${response.location.pathname}\`;
+    })
+  ]
+});
 const Router = createRouterComponent(router);
 
 ReactDOM.render(<App />, document.getElementById('root'));
@@ -499,11 +582,11 @@ registerServiceWorker();`}
           is where we will render the application's content.
         </p>
 
-        <CodeBlock lang="jsx" data-line="16-20">
+        <CodeBlock lang="jsx" data-line="22-26">
           {`// src/index.js
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { createRouter } from "@curi/router";
+import { createRouter, announce } from "@curi/router";
 import { browser } from '@hickory/browser';
 import { createRouterComponent } from "@curi/react-dom";
 
@@ -512,7 +595,13 @@ import './index.css';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 
-const router = createRouter(browser, routes);
+const router = createRouter(browser, routes, {
+  sideEffects: [
+    announce(({ response }) => {
+      return \`Navigated to \${response.location.pathname}\`;
+    })
+  ]
+});
 const Router = createRouterComponent(router);
 
 ReactDOM.render((

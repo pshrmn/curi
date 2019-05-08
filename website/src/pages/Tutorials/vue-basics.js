@@ -31,7 +31,16 @@ const routesMeta = {
   children: [pathMeta]
 };
 
-const routerMeta = { title: "The Router", hash: "router" };
+const a11yMeta = {
+  title: "Announcing Navigation",
+  hash: "announcing-navigation"
+};
+const pluginMeta = { title: "The Vue Plugin", hash: "plugin" };
+const routerMeta = {
+  title: "The Router",
+  hash: "router",
+  children: [a11yMeta, pluginMeta]
+};
 
 const responseMeta = {
   title: "Responses and Navigation",
@@ -207,16 +216,16 @@ yarn serve`}
 
         <CodeBlock lang="javascript" data-line="3">
           {`// src/main.js
-import Vue from 'vue'
-import { browser } from '@hickory/browser'
+import Vue from 'vue';
+import { browser } from '@hickory/browser';
 
-import App from './App.vue'
+import App from './App.vue';
 
-Vue.config.productionTip = false
+Vue.config.productionTip = false;
 
 new Vue({
   render: h => h(App)
-}).$mount('#app')`}
+}).$mount('#app');`}
         </CodeBlock>
       </HashSection>
 
@@ -398,16 +407,16 @@ export default prepareRoutes([
 
         <CodeBlock lang="javascript" data-line="3,6,11">
           {`// src/main.js
-import Vue from 'vue'
+import Vue from 'vue';
 import { createRouter } from "@curi/router";
-import { browser } from '@hickory/browser'
+import { browser } from '@hickory/browser';
 
 import routes from './routes';
-import App from './App.vue'
+import App from './App.vue';
 
-Vue.config.productionTip = false
+Vue.config.productionTip = false;
 
-const router = createRouter(browser, routes)
+const router = createRouter(browser, routes);
 
 new Vue({
   render: h => h(App)
@@ -422,37 +431,116 @@ new Vue({
         </Note>
 
         <p>
-          We will add router support to the Vue application using a plugin. This
-          plugin does a couple of things. First, it makes some Curi components
-          available within the application. The only one of these components
-          that we will be using is the <IJS>curi-link</IJS>. Second, it makes
-          router related values accessible to the components in the application.
-          The router is available as <IJS>this.$router</IJS> and the{" "}
-          <IJS>response</IJS> and <IJS>navigation</IJS> (we will cover these
-          next) are grouped under <IJS>this.$curi</IJS>. When the{" "}
-          <IJS>CuriPlugin</IJS> is installed, the <IJS>router</IJS> as passed in
-          the options object.
+          The router is now ready and we can render the application, but first
+          we should do something really important: make the site more
+          accessible.
         </p>
 
-        <CodeBlock lang="javascript" data-line="5,13">
-          {`// src/main.js
-import Vue from 'vue'
-import { createRouter } from "@curi/router";
-import { browser } from '@hickory/browser'
-import { CuriPlugin } from '@curi/vue'
+        <HashSection meta={a11yMeta}>
+          <p>
+            In a multi-page application, a screen reader will announce
+            navigation to users. This happens automatically when a new Document
+            is loaded. A single-page application reuses its Document, which is
+            great for removing unnecessary server requests, but also means that
+            the navigation is no longer automatically announced.
+          </p>
+
+          <p>
+            Curi has a concept of "side effects". These are functions that are
+            called after a navigation happens and are passed an object with data
+            about the navigation.
+          </p>
+
+          <p>
+            The <IJS>@curi/router</IJS> package provides a few side effects that
+            are useful for websites. For now, we will focus on the{" "}
+            <Link
+              name="Package"
+              params={{ package: "router", version: "v2" }}
+              hash="announce"
+            >
+              <IJS>announce</IJS>
+            </Link>{" "}
+            side effect. The <IJS>announce</IJS> side effect returns a string,
+            which sets the text content of a{" "}
+            <a href="https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/ARIA_Live_Regions">
+              ARIA Live region
+            </a>
+            . Screen readers will detect the changed text and read it to the
+            users.
+          </p>
+
+          <p>
+            Let's go ahead and add the <IJS>announce</IJS> side effect to the
+            router. We will have it return a string of the response's{" "}
+            <IJS>pathname</IJS>.
+          </p>
+
+          <CodeBlock lang="javascript" data-line="3,11-17">
+            {`// src/main.js
+import Vue from 'vue';
+import { createRouter, announce } from "@curi/router";
+import { browser } from '@hickory/browser';
 
 import routes from './routes';
-import App from './App.vue'
+import App from './App.vue';
 
-Vue.config.productionTip = false
+Vue.config.productionTip = false;
 
-const router = createRouter(browser, routes)
-Vue.use(CuriPlugin, { router })
+const router = createRouter(browser, routes, {
+  sideEffects: [
+    announce(({ response }) => {
+      return \`Navigated to \${response.location.pathname}\`;
+    })
+  ]
+});
 
 new Vue({
   render: h => h(App)
-}).$mount('#app')`}
-        </CodeBlock>
+}).$mount('#app');`}
+          </CodeBlock>
+        </HashSection>
+
+        <HashSection meta={pluginMeta}>
+          <p>
+            We will add router support to the Vue application using a plugin.
+            This plugin does a couple of things. First, it makes some Curi
+            components available within the application. The only one of these
+            components that we will be using is the <IJS>curi-link</IJS>.
+            Second, it makes router related values accessible to the components
+            in the application. The router is available as{" "}
+            <IJS>this.$router</IJS> and the <IJS>response</IJS> and{" "}
+            <IJS>navigation</IJS> (we will cover these next) are grouped under{" "}
+            <IJS>this.$curi</IJS>. When the <IJS>CuriPlugin</IJS> is installed,
+            the <IJS>router</IJS> as passed in the options object.
+          </p>
+
+          <CodeBlock lang="javascript" data-line="5,19">
+            {`// src/main.js
+import Vue from 'vue'
+import { createRouter, announce } from "@curi/router";
+import { browser } from '@hickory/browser';
+import { CuriPlugin } from '@curi/vue';
+
+import routes from './routes';
+import App from './App.vue';
+
+Vue.config.productionTip = false;
+
+const router = createRouter(browser, routes, {
+  sideEffects: [
+    announce(({ response }) => {
+      return \`Navigated to \${response.location.pathname}\`;
+    })
+  ]
+});
+Vue.use(CuriPlugin, { router });
+
+new Vue({
+  render: h => h(App)
+}).$mount('#app');`}
+          </CodeBlock>
+        </HashSection>
       </HashSection>
 
       <HashSection meta={renderingMeta}>
