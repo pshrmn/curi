@@ -145,10 +145,10 @@ export default prepareRoutes([
       return { body: resolved };
     }
   }
-]);</code></pre></div><p>For this tutorial, we will use <code class="inline-code css-jo5c25 eutm4hs0">router.once</code> to delay the initial render while we wait for the initial response. We should update the <code class="inline-code css-jo5c25 eutm4hs0">index.js</code> module to do this.</p><div class="css-xg7t84 e12etsbl0"><pre data-line="16-22"><code class="language-javascript">// src/index.js
+]);</code></pre></div><p>For this tutorial, we will use <code class="inline-code css-jo5c25 eutm4hs0">router.once</code> to delay the initial render while we wait for the initial response. We should update the <code class="inline-code css-jo5c25 eutm4hs0">index.js</code> module to do this.</p><div class="css-xg7t84 e12etsbl0"><pre data-line="22-28"><code class="language-javascript">// src/index.js
 import React from &#x27;react&#x27;;
 import ReactDOM from &#x27;react-dom&#x27;;
-import { createRouter } from &quot;@curi/router&quot;;
+import { createRouter, announce } from &quot;@curi/router&quot;;
 import { browser } from &#x27;@hickory/browser&#x27;;
 import { createRouterComponent } from &#x27;@curi/react-dom&#x27;;
 
@@ -157,7 +157,13 @@ import &#x27;./index.css&#x27;;
 import NavMenu from &#x27;./components/NavMenu&#x27;;
 import registerServiceWorker from &#x27;./registerServiceWorker&#x27;;
 
-const router = createRouter(browser, routes);
+const router = createRouter(browser, routes, {
+  sideEffects: [
+    announce(({ response }) =&gt; {
+      return `Navigated to ${response.location.pathname}`;
+    })
+  ]
+});
 const Router = createRouterComponent(router);
 
 router.once(() =&gt; {
@@ -175,7 +181,7 @@ export const BOOKS = () =&gt; Promise.resolve(books);
 export const BOOK = id =&gt; Promise.resolve(
   const intID = parseInt(id, 10);
   books.find(b =&gt; b.id === intID)
-);</code></pre></div></div><p>When the router is created, it can take a third argument, which is an options object. One of the properties of this object is<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">external</code>, which is used to pass in external values that will be accessible in a route&#x27;s <code class="inline-code css-jo5c25 eutm4hs0">resolve</code> and<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">respond</code> functions. This is particularly useful for data that is initialized at runtime, like an Apollo store, but we will also use it here.</p><div class="css-xg7t84 e12etsbl0"><pre data-line="11,14-18"><code class="language-javascript">// src/index.js
+);</code></pre></div></div><p>When the router is created, it can take a third argument, which is an options object. One of the properties of this object is<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">external</code>, which is used to pass in external values that will be accessible in a route&#x27;s <code class="inline-code css-jo5c25 eutm4hs0">resolve</code> and<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">respond</code> functions. This is particularly useful for data that is initialized at runtime, like an Apollo store, but we will also use it here.</p><div class="css-xg7t84 e12etsbl0"><pre data-line="11,20-22"><code class="language-javascript">// src/index.js
 import React from &#x27;react&#x27;;
 import ReactDOM from &#x27;react-dom&#x27;;
 import { createRouter } from &quot;@curi/router&quot;;
@@ -189,6 +195,11 @@ import * as bookAPI from &quot;./api&quot;;
 import registerServiceWorker from &#x27;./registerServiceWorker&#x27;;
 
 const router = createRouter(browser, routes, {
+  sideEffects: [
+    announce(({ response }) =&gt; {
+      return `Navigated to ${response.location.pathname}`;
+    })
+  ],
   external: {
     bookAPI
   }
