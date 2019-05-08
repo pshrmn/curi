@@ -1,4 +1,4 @@
-## Next
+## 2.0.0-beta.20
 
 * Merge the `aria-live` (now `announce`), `scroll`, and `title` side effects into package.
 
