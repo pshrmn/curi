@@ -25,12 +25,19 @@ const render = () =&gt; {
 router.observe(render);
 
 // whenever there is a response, render will be
-// called before logResponse</code></pre></div><div class="section css-cwwtwq" id="official"><h3><a class="header-link" href="#official">Official Side Effects</a></h3><p>Curi has two &quot;official&quot; side effect packages:</p><ul><li><a href="/packages/@curi/side-effect-title/v2/">@curi/side-effect-title</a></li><li><a href="/packages/@curi/side-effect-scroll/v2/">@curi/side-effect-scroll</a></li></ul><div class="css-xg7t84 e12etsbl0"><pre><code class="language-javascript">import titleEffect from &quot;@curi/side-effect-title&quot;;
-import scrollEffect from &quot;@curi/side-effect-scroll&quot;;
+// called before logResponse</code></pre></div></div><div class="section css-cwwtwq" id="provided"><h2><a class="header-link" href="#provided">@curi/side-effects</a></h2><p>Curi&#x27;s <code class="inline-code css-jo5c25 eutm4hs0">@curi/router</code> package provides three side effects:</p><ul><li>The<!-- --> <a href="/packages/@curi/router/v2/#announce"><code class="inline-code css-jo5c25 eutm4hs0">announce</code></a> <!-- -->side effect announces navigation for screen readers.</li><li>The<!-- --> <a href="/packages/@curi/router/v2/#scroll"><code class="inline-code css-jo5c25 eutm4hs0">scroll</code></a> <!-- -->side effect scrolls to the top of the page after navigation.</li><li>The<!-- --> <a href="/packages/@curi/router/v2/#title"><code class="inline-code css-jo5c25 eutm4hs0">title</code></a> <!-- -->side effect sets the document&#x27;s title after navigation.</li></ul><div class="css-xg7t84 e12etsbl0"><pre><code class="language-javascript">import { announce, scroll, title } from &quot;@curi/router&quot;;
 
 const router = createRouter(browser, routes, {
-  sideEffect: [titleEffect(), scrollEffect()]
-});</code></pre></div></div></div><div class="section css-cwwtwq" id="creating"><h2><a class="header-link" href="#creating">Creating Side Effects</a></h2><p>When creating your own side effect, you can write a regular function or a side effect &quot;factory&quot;.</p><div class="css-xg7t84 e12etsbl0"><pre><code class="language-javascript">function mySideEffect({ response, navigation }) {
+  sideEffect: [
+    announce(({ response }) =&gt; {
+      return `Navigated to ${response.location.pathname}`;
+    }),
+    scroll(),
+    title(({ response }) =&gt; {
+      return `${response.meta.title}`;
+    })
+  ]
+});</code></pre></div></div><div class="section css-cwwtwq" id="creating"><h2><a class="header-link" href="#creating">Creating Side Effects</a></h2><p>When creating your own side effect, you can write a regular function or a side effect &quot;factory&quot;.</p><div class="css-xg7t84 e12etsbl0"><pre><code class="language-javascript">function mySideEffect({ response, navigation }) {
   console.log(&#x27;Navigating to&#x27;, response.location);
   console.log(&#x27;Navigation action:&#x27;, navigation.action);
 }
@@ -45,7 +52,7 @@ const router = createRouter(browser, routes, {
   return sideEffect({ response }) {
     logger(response);
   }
-}</code></pre></div><p>You may want to review the<!-- --> <a href="/guides/responses/#response-properties">response properties</a> <!-- -->to know which properties you should expect a response to have.</p></div></div><style data-emotion-css="64fwtw">.css-64fwtw{display:none;}@media only screen and (min-width:751px){.css-64fwtw{background:#efefef;display:block;position:fixed;top:50px;bottom:0px;overflow:auto;-webkit-flex:0 0;-ms-flex:0 0;flex:0 0;-webkit-order:-1;-ms-flex-order:-1;order:-1;padding:25px;margin-right:25px;}}</style><div class="css-64fwtw e1hcridg2"><style data-emotion-css="1eimyfs">.css-1eimyfs{width:200px;}.css-1eimyfs p{margin:0;}.css-1eimyfs a{-webkit-text-decoration:none;text-decoration:none;display:block;}.css-1eimyfs ol{padding-left:0;margin-top:0;list-style-type:none;}.css-1eimyfs ol ol{padding-left:15px;font-size:0.9em;}</style><div class="css-1eimyfs e1evhjzy0"><ol><li><a href="#adding">Adding Side Effects</a><ol><li><a href="#official">Official Side Effects</a></li></ol></li><li><a href="#creating">Creating Side Effects</a></li></ol></div></div></div></main></div>
+}</code></pre></div><p>You may want to review the<!-- --> <a href="/guides/responses/#response-properties">response properties</a> <!-- -->to know which properties you should expect a response to have.</p></div></div><style data-emotion-css="64fwtw">.css-64fwtw{display:none;}@media only screen and (min-width:751px){.css-64fwtw{background:#efefef;display:block;position:fixed;top:50px;bottom:0px;overflow:auto;-webkit-flex:0 0;-ms-flex:0 0;flex:0 0;-webkit-order:-1;-ms-flex-order:-1;order:-1;padding:25px;margin-right:25px;}}</style><div class="css-64fwtw e1hcridg2"><style data-emotion-css="1eimyfs">.css-1eimyfs{width:200px;}.css-1eimyfs p{margin:0;}.css-1eimyfs a{-webkit-text-decoration:none;text-decoration:none;display:block;}.css-1eimyfs ol{padding-left:0;margin-top:0;list-style-type:none;}.css-1eimyfs ol ol{padding-left:15px;font-size:0.9em;}</style><div class="css-1eimyfs e1evhjzy0"><ol><li><a href="#adding">Adding Side Effects</a></li><li><a href="#provided">@curi/side-effects</a></li><li><a href="#creating">Creating Side Effects</a></li></ol></div></div></div></main></div>
     <script src="https://unpkg.com/react@16.8.6/umd/react.production.min.js"></script>
     <script src="https://unpkg.com/react-dom@16.8.6/umd/react-dom.production.min.js"></script>
     <script src="/static/js/prism.js"></script>
