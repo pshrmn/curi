@@ -85,13 +85,13 @@ export function createRoute(
       },
       extra: props.extra
     },
-    matcher: {
+    matching: {
       re,
       keys,
       exact,
-      parsers: props.params
-    },
-    children: childRoutes
+      parsers: props.params || {},
+      children: childRoutes
+    }
   };
 
   map[props.name] = route.public;

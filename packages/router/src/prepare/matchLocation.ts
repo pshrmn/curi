@@ -26,7 +26,8 @@ function matchRoute(
   route: PreparedRoute,
   pathname: string
 ): Array<MatchingRoute> {
-  const regExpMatch = route.matcher.re.exec(pathname);
+  const { re, children, exact } = route.matching;
+  const regExpMatch = re.exec(pathname);
 
   if (!regExpMatch) {
     return [];
@@ -36,57 +37,44 @@ function matchRoute(
   let matches: Array<MatchingRoute> = [{ route, parsed }];
 
   const remainder = pathname.slice(matchedSegment.length);
-  if (!route.children.length || remainder === "") {
+  if (!children.length || remainder === "") {
     return matches;
   }
 
-  // a parent that ends with a slash will have stripped the leading
-  // slash from remaining segments, so re-add it
+  // match that ends with a strips it from the remainder
   const fullSegments = withLeadingSlash(remainder);
-  for (let i = 0, length = route.children.length; i < length; i++) {
-    const matched = matchRoute(route.children[i], fullSegments);
+  for (let i = 0, length = children.length; i < length; i++) {
+    const matched = matchRoute(children[i], fullSegments);
     if (matched.length) {
       return matches.concat(matched);
     }
   }
 
-  return route.matcher.exact ? [] : matches;
+  return exact ? [] : matches;
 }
 
 function createMatch(
   routeMatches: Array<MatchingRoute>,
   location: SessionLocation
 ): Match {
-  const params: Params = {};
-
-  const best: MatchingRoute = routeMatches.pop() as MatchingRoute;
-  // handle ancestor routes
-  routeMatches.forEach(match => {
-    mergeParsedParams(match.route, params, match.parsed);
-  });
-
-  // handle best match
-  mergeParsedParams(best.route, params, best.parsed);
+  const route = routeMatches[routeMatches.length - 1].route.public;
 
   return {
-    route: best.route.public,
+    route,
     match: {
       location,
-      name: best.route.public.name,
-      params
+      name: route.name,
+      params: routeMatches.reduce(
+        (params, { route, parsed }) => {
+          parsed.forEach((param, index) => {
+            const name = route.matching.keys[index].name;
+            const fn = route.matching.parsers[name] || decodeURIComponent;
+            params[name] = fn(param);
+          });
+          return params;
+        },
+        {} as Params
+      )
     }
   };
-}
-
-function mergeParsedParams(
-  route: PreparedRoute,
-  params: Params,
-  parsed: Array<string>
-) {
-  const fns = route.matcher.parsers || {};
-  for (let i = 0, len = parsed.length; i < len; i++) {
-    const name = route.matcher.keys[i].name;
-    const fn = fns[name] || decodeURIComponent;
-    params[name] = fn(parsed[i]);
-  }
 }

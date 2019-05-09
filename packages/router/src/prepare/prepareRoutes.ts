@@ -12,12 +12,12 @@ import {
 
 export interface PreparedRoute {
   public: Route;
-  children: Array<PreparedRoute>;
-  matcher: {
+  matching: {
+    children: Array<PreparedRoute>;
     exact: boolean;
     re: RegExp;
     keys: Array<Key>;
-    parsers?: ParamParsers;
+    parsers: ParamParsers;
   };
 }
 
