@@ -15,8 +15,7 @@ const optsMeta = {
 };
 export const meta = {
   title: "useActive",
-  hash: "useActive",
-  children: [optsMeta]
+  hash: "useActive"
 };
 
 export function UseActiveAPI() {

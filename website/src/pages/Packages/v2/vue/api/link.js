@@ -12,9 +12,8 @@ const propsMeta = {
   hash: "props"
 };
 export const meta = {
-  title: "<curi-link>",
-  hash: "link",
-  children: [propsMeta]
+  title: "curi-link",
+  hash: "link"
 };
 
 export function LinkAPI() {

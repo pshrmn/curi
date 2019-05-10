@@ -14,9 +14,8 @@ const propsMeta = {
   hash: "Link-props"
 };
 export const meta = {
-  title: "<Link>",
-  hash: "Link",
-  children: [propsMeta]
+  title: "Link",
+  hash: "Link"
 };
 
 export function LinkAPI() {

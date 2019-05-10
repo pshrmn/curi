@@ -4,7 +4,6 @@ import { Link } from "@curi/react-dom";
 import { About, APIBlock } from "../../../../components/package/common";
 import { CuriPluginAPI } from "./api/curiPlugin";
 import { LinkAPI } from "./api/link";
-import { BlockAPI } from "./api/block";
 import { FocusAPI } from "./api/focus";
 
 export default {
@@ -24,7 +23,6 @@ export default {
     <APIBlock>
       <CuriPluginAPI />
       <LinkAPI />
-      <BlockAPI />
       <FocusAPI />
     </APIBlock>
   )

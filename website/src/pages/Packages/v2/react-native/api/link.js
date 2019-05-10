@@ -3,9 +3,7 @@ import React from "react";
 import {
   HashSection,
   CodeBlock,
-  IJS,
-  Cmp,
-  Note
+  IJS
 } from "../../../../../components/package/common";
 
 const propsMeta = {
@@ -13,9 +11,8 @@ const propsMeta = {
   hash: "Link-props"
 };
 export const meta = {
-  title: "<Link>",
-  hash: "Link",
-  children: [propsMeta]
+  title: "Link",
+  hash: "Link"
 };
 
 export function LinkAPI() {

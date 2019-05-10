@@ -12,9 +12,8 @@ const propsMeta = {
   hash: "AsyncLink-props"
 };
 export const meta = {
-  title: "<AsyncLink>",
-  hash: "AsyncLink",
-  children: [propsMeta]
+  title: "AsyncLink",
+  hash: "AsyncLink"
 };
 
 export function AsyncLinkAPI() {

@@ -14,8 +14,7 @@ const argumentsMeta = {
 };
 export const meta = {
   title: "staticFiles",
-  hash: "staticFiles",
-  children: [argumentsMeta]
+  hash: "staticFiles"
 };
 
 export function StaticFilesAPI() {

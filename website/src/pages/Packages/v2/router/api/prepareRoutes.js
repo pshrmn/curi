@@ -17,8 +17,7 @@ const argumentsMeta = {
 
 export const meta = {
   title: "prepareRoutes",
-  hash: "prepareRoutes",
-  children: [argumentsMeta]
+  hash: "prepareRoutes"
 };
 
 export function PrepareRoutesAPI() {

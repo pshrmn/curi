@@ -1,12 +1,9 @@
 import React from "react";
-import { Link } from "@curi/react-dom";
 
 import {
   HashSection,
   CodeBlock,
-  IJS,
-  Cmp,
-  Note
+  IJS
 } from "../../../../../components/package/common";
 
 const optsMeta = {
@@ -15,8 +12,7 @@ const optsMeta = {
 };
 export const meta = {
   title: "useActive",
-  hash: "useActive",
-  children: [optsMeta]
+  hash: "useActive"
 };
 
 export function UseActiveAPI() {

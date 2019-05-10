@@ -44,8 +44,7 @@ const propertiesMeta = {
 
 export const meta = {
   title: "createRouter",
-  hash: "createRouter",
-  children: [argumentsMeta, propertiesMeta]
+  hash: "createRouter"
 };
 
 export function CreateRouterAPI() {

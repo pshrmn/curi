@@ -44,7 +44,7 @@ const preloadMeta = {
 };
 
 const navigatingMeta = {
-  title: "<Link> is navigating?",
+  title: "Link is navigating?",
   hash: "link-navigating"
 };
 const loadingMeta = {

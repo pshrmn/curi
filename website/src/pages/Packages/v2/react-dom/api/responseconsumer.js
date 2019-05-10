@@ -11,9 +11,8 @@ const propsMeta = {
   hash: "ResponseConsumer-props"
 };
 export const meta = {
-  title: "<ResponseConsumer>",
-  hash: "ResponseConsumer",
-  children: [propsMeta]
+  title: "ResponseConsumer",
+  hash: "ResponseConsumer"
 };
 
 export function ResponseConsumerAPI() {

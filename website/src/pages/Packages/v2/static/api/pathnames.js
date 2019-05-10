@@ -12,8 +12,7 @@ const argumentsMeta = {
 };
 export const meta = {
   title: "pathnames",
-  hash: "pathnames",
-  children: [argumentsMeta]
+  hash: "pathnames"
 };
 
 export function PathnamesAPI() {

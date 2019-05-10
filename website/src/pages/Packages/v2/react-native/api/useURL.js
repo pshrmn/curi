@@ -12,8 +12,7 @@ const optsMeta = {
 };
 export const meta = {
   title: "useURL",
-  hash: "useURL",
-  children: [optsMeta]
+  hash: "useURL"
 };
 
 export function UseURLAPI() {

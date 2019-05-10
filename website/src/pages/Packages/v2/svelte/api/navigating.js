@@ -11,9 +11,8 @@ const propsMeta = {
   hash: "navigating-props"
 };
 export const meta = {
-  title: "<Navigating>",
-  hash: "navigating",
-  children: [propsMeta]
+  title: "Navigating",
+  hash: "navigating"
 };
 
 export function NavigatingAPI() {

@@ -18,8 +18,7 @@ const returnMeta = {
 };
 export const meta = {
   title: "createRouterComponent",
-  hash: "createRouterComponent",
-  children: [argumentsMeta, returnMeta]
+  hash: "createRouterComponent"
 };
 
 export function CreateRouterComponentAPI() {

@@ -11,9 +11,8 @@ const propsMeta = {
   hash: "router-props"
 };
 export const meta = {
-  title: "<Router>",
-  hash: "router",
-  children: [propsMeta]
+  title: "Router",
+  hash: "router"
 };
 
 export function RouterAPI() {

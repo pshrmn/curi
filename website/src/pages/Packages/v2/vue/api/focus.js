@@ -13,9 +13,8 @@ const propertiesMeta = {
   hash: "focus-properties"
 };
 export const meta = {
-  title: "<curi-focus>",
-  hash: "focus",
-  children: [propertiesMeta]
+  title: "curi-focus",
+  hash: "focus"
 };
 
 export function FocusAPI() {
