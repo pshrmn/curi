@@ -286,6 +286,9 @@ export default function createRouter<O = HistoryOptions>(
     navigate,
     current() {
       return mostRecent;
+    },
+    destroy() {
+      history.destroy();
     }
   };
 
