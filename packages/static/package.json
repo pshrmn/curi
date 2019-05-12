@@ -34,7 +34,7 @@
     "@curi/interactions": "file:../interactions",
     "@curi/router": "file:../router",
     "@curi/types": "file:../types",
-    "@hickory/in-memory": "2.0.0-beta.14",
+    "@hickory/in-memory": "2.0.0-beta.15",
     "@types/express": "^4.16.0",
     "@types/fs-extra": "^5.0.4",
     "fs-extra": "^7.0.0"

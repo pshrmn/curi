@@ -1565,4 +1565,27 @@ describe("createRouter", () => {
       });
     });
   });
+
+  describe("destroy", () => {
+    it("doesn't navigate after destroyed", () => {
+      const routes = prepareRoutes([
+        { name: "Home", path: "" },
+        { name: "About", path: "about" },
+        { name: "Catch All", path: "(.*)" }
+      ]);
+      const router = createRouter(inMemory, routes);
+
+      expect(router.current()).toMatchObject({
+        response: { name: "Home" }
+      });
+
+      router.destroy();
+
+      router.navigate({ url: "/about" });
+
+      expect(router.current()).toMatchObject({
+        response: { name: "Home" }
+      });
+    });
+  });
 });

@@ -7,6 +7,7 @@ export interface CuriRouter {
     current(): CurrentResponse;
     url(details: RouteLocation): string;
     navigate(options: NavigationDetails): () => void;
+    destroy(): void;
     route: RouteGetter;
     history: History;
     external: any;
