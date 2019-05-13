@@ -1,6 +1,6 @@
-import { SideEffect } from "@curi/types";
+import { Observer } from "@curi/types";
 
-export default function scroll(): SideEffect {
+export default function scroll(): Observer {
   return function({ response, navigation }) {
     if (navigation.action === "pop") {
       return;

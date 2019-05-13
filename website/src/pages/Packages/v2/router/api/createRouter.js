@@ -573,15 +573,15 @@ stopCancelling();
             <p>
               If you call <IJS>current</IJS> before the initial response has
               been generated, the <IJS>response</IJS> and <IJS>navigation</IJS>{" "}
-              properties will be <IJS>null</IJS>.
+              properties will be <IJS>undefined</IJS>.
             </p>
           </Note>
 
           <CodeBlock>
             {`const router = createRouter(browser, routes);
 const tooSoon = router.current();
-// tooSoon.response === null
-// tooSoon.navigation === null
+// tooSoon.response === undefined
+// tooSoon.navigation === undefined
 
 router.once(({ response, navigation }) => {
   const perfect = router.current();

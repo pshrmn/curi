@@ -13,10 +13,8 @@ import {
   Response,
   CuriRouter,
   Observer,
-  SideEffect,
   Emitted,
   ResponseHandlerOptions,
-  CurrentResponse,
   RouteLocation,
   Navigation,
   NavigationDetails,
@@ -27,7 +25,7 @@ import {
 } from "@curi/types";
 
 export interface RouterOptions<O = HistoryOptions> {
-  sideEffects?: Array<SideEffect>;
+  sideEffects?: Array<Observer>;
   invisibleRedirects?: boolean;
   external?: any;
   history?: O;
@@ -38,15 +36,13 @@ export default function createRouter<O = HistoryOptions>(
   routes: RouteMatcher,
   options: RouterOptions<O> = {}
 ): CuriRouter {
-  const mostRecent: CurrentResponse = {
-    response: null,
-    navigation: null
-  };
+  let latestResponse: Response;
+  let latestNavigation: Navigation;
 
   const history = historyConstructor((pendingNav: PendingNavigation) => {
     const navigation: Navigation = {
       action: pendingNav.action,
-      previous: mostRecent.response
+      previous: latestResponse
     };
 
     const matched = routes.match(pendingNav.location);
@@ -118,11 +114,11 @@ export default function createRouter<O = HistoryOptions>(
       !invisibleRedirects ||
       isExternalRedirect(response.redirect)
     ) {
-      mostRecent.response = response;
-      mostRecent.navigation = navigation;
-
-      callObservers({ response, navigation, router });
-      callOneTimersAndSideEffects({ response, navigation, router });
+      latestResponse = response;
+      latestNavigation = navigation;
+      const emit = { response, navigation, router };
+      callObservers(emit);
+      callOneTimersAndSideEffects(emit);
     }
 
     if (
@@ -159,10 +155,10 @@ export default function createRouter<O = HistoryOptions>(
     const { initial = true } = options || {};
 
     observers.push(fn);
-    if (mostRecent.response && initial) {
-      fn.call(null, {
-        response: mostRecent.response,
-        navigation: mostRecent.navigation,
+    if (latestResponse && initial) {
+      fn({
+        response: latestResponse,
+        navigation: latestNavigation,
         router
       });
     }
@@ -176,10 +172,10 @@ export default function createRouter<O = HistoryOptions>(
   function once(fn: Observer, options?: ResponseHandlerOptions) {
     const { initial = true } = options || {};
 
-    if (mostRecent.response && initial) {
-      fn.call(null, {
-        response: mostRecent.response,
-        navigation: mostRecent.navigation,
+    if (latestResponse && initial) {
+      fn({
+        response: latestResponse,
+        navigation: latestNavigation,
         router
       });
     } else {
@@ -285,7 +281,10 @@ export default function createRouter<O = HistoryOptions>(
     url,
     navigate,
     current() {
-      return mostRecent;
+      return {
+        response: latestResponse,
+        navigation: latestNavigation
+      };
     },
     destroy() {
       history.destroy();

@@ -320,7 +320,7 @@ describe("createRouter", () => {
     });
 
     describe("async", () => {
-      it("initial value is an object with null response and navigation properties", () => {
+      it("initial value is an object with undefined response and navigation properties", () => {
         const routes = prepareRoutes([
           {
             name: "Catch All",
@@ -332,8 +332,8 @@ describe("createRouter", () => {
         ]);
         const router = createRouter(inMemory, routes);
         expect(router.current()).toMatchObject({
-          response: null,
-          navigation: null
+          response: undefined,
+          navigation: undefined
         });
       });
     });

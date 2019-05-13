@@ -229,7 +229,7 @@ const routes = prepareRoutes([
             If you attempt to render immediately after creating a router and the
             initial response is still being created, the <IJS>response</IJS>{" "}
             that will be passed to the <IJS>Router</IJS>'s <IJS>children</IJS>{" "}
-            will be <IJS>null</IJS>.
+            will be <IJS>undefined</IJS>.
           </p>
 
           <p>There are a few possible ways to handle this situation.</p>
@@ -255,15 +255,15 @@ router.once(() => {
 
           <p>
             Alternatively, you can update the root <IJS>App</IJS> component to
-            detect when the <IJS>response</IJS> is <IJS>null</IJS> and render a
-            loading message.
+            detect when the <IJS>response</IJS> is <IJS>undefined</IJS> and
+            render a loading message.
           </p>
 
           <CodeBlock>
             {`// render fallback when response is null
 function App() {
   const { response } = useResponse();
-  if (response == null) {
+  if (response === undefined) {
     return <div>Loading...</div>;
   }
   const { body:Body } = response;
