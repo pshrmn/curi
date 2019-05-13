@@ -1,4 +1,4 @@
-## Next
+## 2.0.0-beta.17
 
 * Initialize `response`/`navigation` values using `router.current`.
 

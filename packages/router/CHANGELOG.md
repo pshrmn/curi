@@ -1,4 +1,4 @@
-## Next
+## 2.0.0-beta.22
 
 * `response` and `navigation` are `undefined` until initial response is finalized.
 

@@ -17,8 +17,8 @@
   "license": "MIT",
   "dependencies": {
     "@babel/register": "^7.0.0",
-    "@curi/react-dom": "2.0.0-beta.16",
-    "@curi/router": "2.0.0-beta.21",
+    "@curi/react-dom": "2.0.0-beta.17",
+    "@curi/router": "2.0.0-beta.22",
     "@hickory/browser": "2.0.0-beta.15",
     "@hickory/in-memory": "2.0.0-beta.15",
     "express": "^4.16.2",
