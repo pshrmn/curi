@@ -1,2 +1,2 @@
-import { SideEffect } from "@curi/types";
-export default function scroll(): SideEffect;
+import { Observer } from "@curi/types";
+export default function scroll(): Observer;

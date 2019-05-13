@@ -1,7 +1,7 @@
 import { HistoryConstructor, HistoryOptions } from "@hickory/root";
-import { RouteMatcher, CuriRouter, SideEffect } from "@curi/types";
+import { RouteMatcher, CuriRouter, Observer } from "@curi/types";
 export interface RouterOptions<O = HistoryOptions> {
-    sideEffects?: Array<SideEffect>;
+    sideEffects?: Array<Observer>;
     invisibleRedirects?: boolean;
     external?: any;
     history?: O;

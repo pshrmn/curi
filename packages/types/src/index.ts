@@ -38,7 +38,7 @@ export interface CurrentResponse {
 // information about a navigation
 export interface Navigation {
   action: Action;
-  previous: Response | null;
+  previous: Response | undefined;
 }
 
 // configuration options for router.observe and router.once
@@ -46,9 +46,7 @@ export interface ResponseHandlerOptions {
   initial?: boolean;
 }
 // an observer function that will be called when there is a new navigation
-export type Observer = (props?: Emitted) => void;
-// a SideEffect is like an Observer, but will always be called with an Emitted
-export type SideEffect = (props: Emitted) => void;
+export type Observer = (props: Emitted) => void;
 
 export interface ResponseAndNav {
   response: Response;

@@ -26,13 +26,12 @@ export interface CurrentResponse {
 }
 export interface Navigation {
     action: Action;
-    previous: Response | null;
+    previous: Response | undefined;
 }
 export interface ResponseHandlerOptions {
     initial?: boolean;
 }
-export declare type Observer = (props?: Emitted) => void;
-export declare type SideEffect = (props: Emitted) => void;
+export declare type Observer = (props: Emitted) => void;
 export interface ResponseAndNav {
     response: Response;
     navigation: Navigation;

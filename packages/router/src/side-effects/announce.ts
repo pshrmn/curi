@@ -1,11 +1,11 @@
-import { SideEffect, Emitted } from "@curi/types";
+import { Observer, Emitted } from "@curi/types";
 
 export type AriaLiveValue = "assertive" | "polite" | "off";
 
 export default function announce(
   fmt: (emitted: Emitted) => string,
   mode: AriaLiveValue = "assertive"
-): SideEffect {
+): Observer {
   const announcer = document.createElement("div");
   announcer.setAttribute("aria-live", mode);
   // https://hugogiraudel.com/2016/10/13/css-hide-and-seek/

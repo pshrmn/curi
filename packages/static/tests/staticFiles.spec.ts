@@ -250,7 +250,7 @@ describe("staticFiles()", () => {
           name: "Home"
         },
         navigation: {
-          previous: null,
+          previous: undefined,
           action: "push"
         }
       });

@@ -21,7 +21,7 @@ const CuriPlugin: PluginObject<CuriPluginOptions> = {
     // create a reactive object so that components will receive
     // the new response/navigation when a new response is emitted
     const reactive: ReactiveResponse = new Vue({
-      data: { response: null, navigation: null }
+      data: options.router.current()
     });
 
     options.router.observe(({ response, navigation }) => {
