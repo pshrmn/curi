@@ -49,7 +49,7 @@ const routes = prepareRoutes([
       return { body, data };
     }
   }
-]);</code></pre></div><div class="aside css-cwwtwq" id="initial-render"><h3><a class="header-link" href="#initial-render">Initial Render</a></h3><p>There is one caveat to async routes: we cannot safely render the application immediately on load because the initial response might not be ready yet.</p><p>Curi does not emit a response object to its observers until it is ready. If the initial route that matches is asynchronous, then there is a delay between when the application is ready to render and when there is a response to render.</p><p>If you attempt to render immediately after creating a router and the initial response is still being created, the <code class="inline-code css-jo5c25 eutm4hs0">response</code> <!-- -->that will be passed to the <code class="inline-code css-jo5c25 eutm4hs0">Router</code>&#x27;s <code class="inline-code css-jo5c25 eutm4hs0">children</code> <!-- -->will be <code class="inline-code css-jo5c25 eutm4hs0">null</code>.</p><p>There are a few possible ways to handle this situation.</p><p>The first is to delay rendering by placing your<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">ReactDOM.render</code> call inside of a <code class="inline-code css-jo5c25 eutm4hs0">router.once</code> <!-- -->callback. This will guarantee that the render isn&#x27;t called until the first response is ready.</p><div class="css-xg7t84 e12etsbl0"><pre><code class="language-javascript">// delay rendering
+]);</code></pre></div><div class="aside css-cwwtwq" id="initial-render"><h3><a class="header-link" href="#initial-render">Initial Render</a></h3><p>There is one caveat to async routes: we cannot safely render the application immediately on load because the initial response might not be ready yet.</p><p>Curi does not emit a response object to its observers until it is ready. If the initial route that matches is asynchronous, then there is a delay between when the application is ready to render and when there is a response to render.</p><p>If you attempt to render immediately after creating a router and the initial response is still being created, the <code class="inline-code css-jo5c25 eutm4hs0">response</code> <!-- -->that will be passed to the <code class="inline-code css-jo5c25 eutm4hs0">Router</code>&#x27;s <code class="inline-code css-jo5c25 eutm4hs0">children</code> <!-- -->will be <code class="inline-code css-jo5c25 eutm4hs0">undefined</code>.</p><p>There are a few possible ways to handle this situation.</p><p>The first is to delay rendering by placing your<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">ReactDOM.render</code> call inside of a <code class="inline-code css-jo5c25 eutm4hs0">router.once</code> <!-- -->callback. This will guarantee that the render isn&#x27;t called until the first response is ready.</p><div class="css-xg7t84 e12etsbl0"><pre><code class="language-javascript">// delay rendering
 router.once(() =&gt; {
   ReactDOM.render((
     &lt;Router&gt;
@@ -57,10 +57,10 @@ router.once(() =&gt; {
     &lt;/Router&gt;
   ), holder);
 });
-</code></pre></div><p>Alternatively, you can update the root <code class="inline-code css-jo5c25 eutm4hs0">App</code> component to detect when the <code class="inline-code css-jo5c25 eutm4hs0">response</code> is <code class="inline-code css-jo5c25 eutm4hs0">null</code> and render a loading message.</p><div class="css-xg7t84 e12etsbl0"><pre><code class="language-javascript">// render fallback when response is null
+</code></pre></div><p>Alternatively, you can update the root <code class="inline-code css-jo5c25 eutm4hs0">App</code> component to detect when the <code class="inline-code css-jo5c25 eutm4hs0">response</code> is <code class="inline-code css-jo5c25 eutm4hs0">undefined</code> and render a loading message.</p><div class="css-xg7t84 e12etsbl0"><pre><code class="language-javascript">// render fallback when response is null
 function App() {
   const { response } = useResponse();
-  if (response == null) {
+  if (response === undefined) {
     return &lt;div&gt;Loading...&lt;/div&gt;;
   }
   const { body:Body } = response;
