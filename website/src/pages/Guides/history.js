@@ -5,7 +5,6 @@ import {
   HashSection,
   CodeBlock,
   Note,
-  Warning,
   IJS,
   Cmp
 } from "../../components/guide/common";
@@ -85,8 +84,8 @@ const router = createRouter(browser, routes);`}</CodeBlock>
 
       <HashSection meta={typesMeta}>
         <p>
-          There are three Hickory packages to choose from for an application.
-          Which one you use depends on where your application is running.
+          There are three Hickory packages to choose from. Which one you use
+          depends on where your application is running.
         </p>
 
         <HashSection meta={browserMeta} tag="h3">
@@ -129,15 +128,9 @@ const router = createRouter(Hash, routes);`}
           <p>
             The hash history is a fallback history for applications running in a
             browser. It should only be used if you cannot configure the server
-            to respond to requests that don't match files on the server.
+            to respond to requests that don't match files on the server. The
+            browser history is almost always a better choice.
           </p>
-
-          <Warning>
-            <p>
-              This should only be used as a last resort. The browser history is
-              almost always a better choice.
-            </p>
-          </Warning>
         </HashSection>
 
         <HashSection meta={inMemoryMeta} tag="h3">
@@ -153,12 +146,15 @@ const router = createRouter(reusable, routes);`}
           <p>
             An in-memory history is used for applications not running in a
             browser. For example, the in memory history is used on the server,
-            in a React Native app, and during testing.
+            in a React Native app, and during testing. The{" "}
+            <IJS>@hickory/in-memory</IJS> package provides two in-memory history
+            types.
           </p>
 
           <p>
             The <IJS>inMemory</IJS> function is a full history object, capable
-            of in-app navigation.
+            of in-app navigation, which is useful for native applications and
+            testing.
           </p>
 
           <p>
@@ -172,7 +168,7 @@ const router = createRouter(reusable, routes);`}
           <p>
             If you are not familiar with how single-page applications interact
             with a server, this article should help:{" "}
-            <a href="https://medium.com/@pshrmn/single-page-applications-and-the-server-32a23d67936">
+            <a href="https://blog.pshrmn.com/entry/single-page-applications-and-the-server/">
               Single-Page Applications and the Server
             </a>
             .

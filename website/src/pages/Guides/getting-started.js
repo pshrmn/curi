@@ -43,9 +43,9 @@ function GettingStartedGuide() {
         <h1>{meta.title}</h1>
 
         <p>
-          The core of a single-page application is with its router. The router
-          is responsible for matching locations to its known routes and for
-          powering navigating within the application.
+          The core of a single-page application is its router. The router is
+          responsible for matching locations to its known routes and for
+          powering navigation within the application.
         </p>
       </PlainSection>
 
@@ -53,7 +53,7 @@ function GettingStartedGuide() {
         <p>
           A router is created using a{" "}
           <Link name="Guide" params={{ slug: "history" }}>
-            <IJS>history</IJS> constructor
+            <IJS>history</IJS> function
           </Link>{" "}
           and a{" "}
           <Link name="Guide" params={{ slug: "routes" }}>
@@ -87,7 +87,7 @@ const router = createRouter(browser, routes);`}
         <CodeBlock>
           {`const routes = prepareRoutes([
   { name: "Home", path: "" },
-  { name: "Contact, path: "contact/:method" }
+  { name: "Contact", path: "contact/:method" }
 ]);
 const router = createRouter(browser, routes);
 
@@ -132,15 +132,15 @@ const queryURL = router.url({
         <p>
           There are two types of navigation within a single-page application:
           in-app navigation (e.g. clicking a link) and platform navigation (e.g.
-          clicking the back button or typing URL in the address bar and hitting
-          enter).
+          clicking the back button or typing a URL in the address bar and
+          hitting enter).
         </p>
 
         <p>
           A Curi router object has a <IJS>navigate</IJS> method to let you
           navigate with code. The function takes an object with a <IJS>url</IJS>{" "}
           property of the URL to navigate to; this pairs well with the router's{" "}
-          <IJS>url</IJS> method. There are also a number of{" "}
+          <IJS>url</IJS> method described above. There are also a number of{" "}
           <Link
             name="Package"
             params={{ package: "router", version: "v2" }}
@@ -197,7 +197,7 @@ const queryURL = router.url({
 
         <CodeBlock>
           {`const router = createRouter(browser, routes, {
-  sideEffects: [scroll, title]
+  sideEffects: [scroll(), title(...)]
 })`}
         </CodeBlock>
 
@@ -209,9 +209,10 @@ const queryURL = router.url({
 
         <CodeBlock>
           {`const router = createRouter(browser, routes);
+// wait for the initial route's async action to complete
 router.once(() => {
   // this is not called until the initial response is ready
-  // so we can safely render now
+  // so we can safely render in here
 });`}
         </CodeBlock>
 
@@ -230,19 +231,6 @@ router.once(() => {
         <CodeBlock>
           {`router.observe(({ response }) => {
   console.log('new response!', response);
-});`}
-        </CodeBlock>
-
-        <p>
-          If you have any asynchronous routes (a route with a <IJS>resolve</IJS>{" "}
-          function), <IJS>router.once</IJS> should be used to delay the initial
-          render until after the initial response is ready.
-        </p>
-
-        <CodeBlock>
-          {`// wait for initial response to be ready
-router.once(() => {
-  // safe to render async routes now
 });`}
         </CodeBlock>
       </HashSection>

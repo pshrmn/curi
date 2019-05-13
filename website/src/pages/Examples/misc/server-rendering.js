@@ -35,7 +35,7 @@ function ServerRenderingExample() {
           {`// express
 import { createReusable } from "@curi/in-memory";
 
-// 1. Create a history constructor
+// 1. Create a history function
 const reusable = createReusable();
 
 function catchAll(req, res) {

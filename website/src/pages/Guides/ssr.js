@@ -363,9 +363,9 @@ function handler(req, res) {
 
           <p>
             The <IJS>createReusable</IJS> function exported by{" "}
-            <IJS>@hickory/in-memory</IJS> is made specifically for this job.
-            This function takes history options and returns a history
-            constructor function.
+            <IJS>@hickory/in-memory</IJS> is made specifically for this job.{" "}
+            <IJS>createReusable</IJS> takes history options and returns a
+            history function.
           </p>
 
           <p>
