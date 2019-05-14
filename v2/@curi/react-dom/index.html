@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="description" content="API documentation for @curi/react-dom">
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@curi/react-dom | Curi Documentation</title>
+    <link href="https://fonts.googleapis.com/css?family=Zilla+Slab:300,400" rel="stylesheet">
+    <link href="/static/css/prism.css" rel="stylesheet">
+  </head>
+  <body>
+    <div id="root"><style data-emotion-css="1fhy669">body{font-family:"Zilla Slab",serif;font-weight:300;font-size:24px;line-height:36px;margin:0;box-sizing:border-box;}@media only screen and (min-width:751px){body{font-size:20px;}}*,*:before,*:after{box-sizing:inherit;}h1,h2,h3,h4,h5,h6{font-weight:normal;margin:5px 0;overflow:hidden;text-overflow:ellipsis;}p{margin:5px 0;word-break:break-word;}h1{font-size:1.75em;line-height:1.5em;}h2{font-size:1.5em;line-height:1.2em;}h3{font-size:1.35em;line-height:1.1em;}h4{font-size:1.2em;line-height:1.1em;}h5{font-size:1.1em;line-height:1.1em;}h6{font-size:1em;line-height:1.1em;}table,th,td{border:1px solid #c7c7c7;border-collapse:collapse;}table{margin-bottom:10px;}th{text-align:left;}th,td{padding:10px;}pre[class*="language-"]{margin:0;background:#222233;}:not(pre) > code[class*="language-"]{white-space:nowrap;}</style><style data-emotion-css="137i3vd">.css-137i3vd{display:none;}@media only screen and (min-width:751px){.css-137i3vd{display:block;width:100vw;max-width:100%;background:#222233;padding:0;position:fixed;z-index:1;}.css-137i3vd #home-link{font-size:1.5em;color:#ff9800;}}</style><header class="css-137i3vd e132noc00"><style data-emotion-css="1j4n5ho">.css-1j4n5ho{color:#efefef;}.css-1j4n5ho li{margin-right:20px;padding:0;}.css-1j4n5ho li.base > a{color:#efefef;font-size:1.1em;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;height:50px;-webkit-align-items:center;-webkit-box-align:center;-ms-flex-align:center;align-items:center;border-bottom:3px solid #222233;padding:0 5px;}.css-1j4n5ho li.base > a:hover{color:#ff9800;}.css-1j4n5ho li.base > a.active{color:#ff9800;border-bottom-color:#ff9800;}.css-1j4n5ho li.base > a.activated{color:#2196f3;border-bottom-color:#2196f3;}.css-1j4n5ho a{-webkit-text-decoration:none;text-decoration:none;}</style><nav class="css-1j4n5ho e132noc02"><style data-emotion-css="192aemx">.css-192aemx{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-flex-flow:row wrap;-ms-flex-flow:row wrap;flex-flow:row wrap;-webkit-align-items:flex-end;-webkit-box-align:flex-end;-ms-flex-align:flex-end;align-items:flex-end;list-style:none;padding:0;margin:0;max-width:100%;}</style><ul class="css-192aemx e132noc01"><li class="base"><a id="home-link" class=" " href="/">Curi</a></li><li class="base"><a data-hide="false" class="group active" href="/v2/">API</a></li><li class="base"><a data-hide="false" class="group " href="/guides/">Guides</a></li><li class="base"><a data-hide="false" class="group " href="/tutorial/">Tutorials</a></li><li class="base"><a data-hide="false" class="group " href="/examples/">Examples</a></li><li class="base"><a href="https://github.com/pshrmn/curi">GitHub</a></li></ul></nav></header><style data-emotion-css="bupcgl">.css-bupcgl{position:fixed;right:15px;bottom:15px;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-flex-flow:column-reverse;-ms-flex-flow:column-reverse;flex-flow:column-reverse;z-index:9999;}</style><div class="css-bupcgl e18ecyrg1"><style data-emotion-css="8wphu1">.css-8wphu1{width:75px;height:75px;border-radius:40px;border:0;margin-top:10px;font-size:1em;font-family:"Zilla Slab",serif;background:#2196f3;}@media only screen and (min-width:751px){.css-8wphu1{display:none;}}</style><button type="button" class="toggler css-8wphu1 e1105ass0">Menu</button><style data-emotion-css="4pglcz">.css-4pglcz{width:75px;height:75px;border-radius:40px;border:0;margin-top:10px;font-size:1em;font-family:"Zilla Slab",serif;background:#c7c7c7;}@media only screen and (min-width:751px){.css-4pglcz{display:none;}}.css-4pglcz.active{background:#81c784;}</style><button hidden="" class="false active main css-4pglcz e1105ass1">Main</button><button hidden="" class="false false page css-4pglcz e1105ass1">Page</button></div><style data-emotion-css="b9kg8f">.css-b9kg8f{display:none;position:fixed;overflow-y:scroll;width:100vw;height:100vh;background:#efefef;z-index:999;padding:15px;}.css-b9kg8f.visible{display:block;}.css-b9kg8f ul{margin:3px 0;padding-left:0px;list-style:none;}.css-b9kg8f li{margin:3px 0;}.css-b9kg8f a{-webkit-text-decoration:none;text-decoration:none;display:inline-block;color:#222233;}.css-b9kg8f h3{border-bottom:1px solid #333;}.css-b9kg8f .active{font-weight:bold;}.css-b9kg8f .children{display:none;background:#efefef;padding:10px;}.css-b9kg8f .children.visible{display:block;position:fixed;top:0;bottom:0;left:0;right:0;overflow-y:scroll;}@media only screen and (min-width:751px){.css-b9kg8f{display:none;}.css-b9kg8f.visible{display:none;}}</style><div hidden="" class=" css-b9kg8f e18ecyrg0"><nav></nav></div><style data-emotion-css="89bx5e">.css-89bx5e{width:100vw;max-width:100%;padding:10px 10px 0;margin-bottom:20px;}.css-89bx5e a{color:#222233;}@media only screen and (min-width:751px){.css-89bx5e{padding:50px 0 0;margin-bottom:0;}}</style><main tabindex="-1" style="outline:none" class="css-89bx5e e1fl12nk0"><style data-emotion-css="csv88t">.css-csv88t{position:relative;}@media only screen and (min-width:751px){.css-csv88t{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-flex-flow:row nowrap;-ms-flex-flow:row nowrap;flex-flow:row nowrap;}}@media only screen and (min-width:751px){.css-csv88t{max-width:100vw;}}</style><div class="css-csv88t e1hcridg0"><style data-emotion-css="q1fc1d">@media only screen and (min-width:751px){.css-q1fc1d{margin-left:275px;}}</style><div class="css-q1fc1d e1hcridg1"><div><h1>@curi/<!-- -->react-dom</h1><style data-emotion-css="1tgs534">.css-1tgs534{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-flex-flow:column nowrap;-ms-flex-flow:column nowrap;flex-flow:column nowrap;-webkit-align-items:flex-start;-webkit-box-align:flex-start;-ms-flex-align:flex-start;align-items:flex-start;}.css-1tgs534 > *{margin-right:5px;margin-bottom:5px;}</style><div class="css-1tgs534 e1yyl7510"><label>Version:<!-- --> <style data-emotion-css="1e5r9qm">.css-1e5r9qm{font-size:20px;font-family:"Zilla Slab",serif;margin:5px 0;}</style><select class="css-1e5r9qm eaxhdgo0"><option value="v1">1.2.1</option><option selected="" value="v2">2.0.0-beta.17</option></select></label><a href="https://github.com/pshrmn/curi/tree/master/packages/react-dom"><img style="height:16px;margin-right:5px" src="/static/img/github-logo.png" alt="GitHub logo"/>GitHub Repo</a><a href="https://npmjs.com/package/@curi/react-dom"><img style="height:16px;margin-right:5px" src="/static/img/npm-logo.png" alt="NPM logo"/>NPM Package</a></div><style data-emotion-css="cwwtwq">.css-cwwtwq{margin-top:15px;}.css-cwwtwq p{margin:0 0 25px;font-size:0.8em;}.css-cwwtwq .aside{padding:5px 10px;border-left:2px solid $border-green;background:#e8f5e9;margin-top:15px;}.css-cwwtwq .aside .inline-code{background:#b7dab9 !important;}@media only screen and (min-width:751px){.css-cwwtwq{max-width:751px;}.css-cwwtwq p{font-size:1em;}.css-cwwtwq.centered{margin:0 auto;}}.css-cwwtwq .header-link{-webkit-text-decoration:none;text-decoration:none;}.css-cwwtwq .header-link::after{content:"#";color:#333;margin-left:5px;}@media only screen and (min-width:751px){.css-cwwtwq:before{content:"";display:block;margin-top:-50px;height:50px;visibility:hidden;}.css-cwwtwq p{font-size:1em;}.css-cwwtwq .header-link::after{display:none;}.css-cwwtwq .header-link:hover::after{display:inline-block;}}</style><div class="section css-cwwtwq" id="about"><h2><a class="header-link" href="#about">About</a></h2><p>The <style data-emotion-css="jo5c25">.css-jo5c25{padding:0.1em;border-radius:0.3em;white-space:normal;background:#fff;color:#222233;text-shadow:none;white-space:wrap;}.css-jo5c25 .token{color:#222233;}</style><code class="inline-code css-jo5c25 eutm4hs0">@curi/react-dom</code> package provides a number of React components that you can use for rendering your application.</p><p>For more information on using Curi with React DOM, please check out the<!-- --> <a href="/guides/react-dom/">React DOM guide</a>.</p></div><div class="section css-cwwtwq" id="installation"><h2><a class="header-link" href="#installation">Installation</a></h2><style data-emotion-css="xg7t84">.css-xg7t84{width:100%;margin:0 0 25px;font-size:0.8em;}.css-xg7t84 pre{white-space:pre-wrap;height:100%;vertical-align:top;}@media only screen and (min-width:751px){.css-xg7t84{font-size:1em;}.css-xg7t84 code{min-width:200px;white-space:pre-wrap;}}</style><div class="css-xg7t84 e12etsbl0"><pre><code class="language-bash">npm install @curi/react-dom</code></pre></div><p>UMD scripts script are also available through<!-- --> <a href="https://unpkg.com/@curi/react-dom@2.0.0-beta.17/dist/">Unpkg</a>. You can access the package&#x27;s exports using <code class="inline-code css-jo5c25 eutm4hs0">window.<!-- -->CuriReactDOM</code>.</p></div><style data-emotion-css="st3ft1">.css-st3ft1 .section{padding-left:10px;margin-bottom:5px;}</style><style data-emotion-css="62wwz6">.css-62wwz6{margin-top:15px;}.css-62wwz6 p{margin:0 0 25px;font-size:0.8em;}.css-62wwz6 .aside{padding:5px 10px;border-left:2px solid $border-green;background:#e8f5e9;margin-top:15px;}.css-62wwz6 .aside .inline-code{background:#b7dab9 !important;}@media only screen and (min-width:751px){.css-62wwz6{max-width:751px;}.css-62wwz6 p{font-size:1em;}.css-62wwz6.centered{margin:0 auto;}}.css-62wwz6 .header-link{-webkit-text-decoration:none;text-decoration:none;}.css-62wwz6 .header-link::after{content:"#";color:#333;margin-left:5px;}@media only screen and (min-width:751px){.css-62wwz6:before{content:"";display:block;margin-top:-50px;height:50px;visibility:hidden;}.css-62wwz6 p{font-size:1em;}.css-62wwz6 .header-link::after{display:none;}.css-62wwz6 .header-link:hover::after{display:inline-block;}}.css-62wwz6 .section{padding-left:10px;margin-bottom:5px;}</style><div class="eva37ac0 css-62wwz6" id="API"><h2><a class="header-link" href="#API">API</a></h2><div class="section css-cwwtwq" id="createRouterComponent"><h2><a class="header-link" href="#createRouterComponent">createRouterComponent</a></h2><p>A higher-order component that returns a <code class="inline-code css-jo5c25 eutm4hs0">Router</code> component.</p><div class="css-xg7t84 e12etsbl0"><pre><code class="language-jsx">import { createRouterComponent } from &#x27;@curi/react-dom&#x27;;
+
+const router = createRouter(browser, routes);
+const Router = createRouterComponent(router);
+
+ReactDOM.render((
+  &lt;Router&gt;
+    &lt;App /&gt;
+  &lt;/Router&gt;
+), node);</code></pre></div><style data-emotion-css="o0tph9">.css-o0tph9{padding:10px 5px;margin:5px 0;border:1px solid #c7c7c7;background:#eeeeee;}.css-o0tph9 p:last-child{margin-bottom:0;}.aside .css-o0tph9{background:#fff;}.css-o0tph9 .inline-code{background:#fff !important;}</style><div class="css-o0tph9 e1bjkffy0"><strong>Note:</strong> <p>Why a higher-order component not regular component? Props signify values that can change, but an application should only ever have one router. Using a higher-order component hard-codes the provided<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">router</code> as the one and only router.</p></div><div class="section css-cwwtwq" id="createRouterComponent-arguments"><h3><a class="header-link" href="#createRouterComponent-arguments">Arguments</a></h3><div class="section css-cwwtwq" id="createRouterComponent-router"><h4><a class="header-link" href="#createRouterComponent-router">router</a></h4><p>A Curi<!-- --> <a href="/v2/@curi/router/#curi">router</a>.</p></div></div><div class="section css-cwwtwq" id="createRouterComponent-return"><h3><a class="header-link" href="#createRouterComponent-return">Return Value</a></h3><p>A component that sets routing context data. Any component that relies on routing data must be a descendant of the <code class="inline-code css-jo5c25 eutm4hs0">Router</code>.</p><div class="section css-cwwtwq" id="createRouterComponent-children"><h4><a class="header-link" href="#createRouterComponent-children">children</a></h4><p>The <code class="inline-code css-jo5c25 eutm4hs0">Router</code> takes any valid React node (elements, strings, etc.) as its <code class="inline-code css-jo5c25 eutm4hs0">children</code>.</p></div></div></div><div class="section css-cwwtwq" id="Link"><h2><a class="header-link" href="#Link">Link</a></h2><p>A <code class="inline-code css-jo5c25 eutm4hs0">Link</code> is use for in-app navigation. By default, the component renders an anchor element (<code class="inline-code css-jo5c25 eutm4hs0">&lt;<!-- -->a<!-- -->&gt;</code>). When the rendered element is clicked, instead of reloading the page it will use the router to navigate.</p><p>With the <code class="inline-code css-jo5c25 eutm4hs0">Link</code>, instead of providing a URI to navigate to, you specify the name of the route that you want to link to. The pathname of the URI you want the component to link to will be automatically generated for you.</p><div class="css-xg7t84 e12etsbl0"><pre><code class="language-jsx">import { Link } from &#x27;@curi/react-dom&#x27;;
+
+&lt;Link name=&#x27;User&#x27; params={{ id: 16 }}&gt;User 16&lt;/Link&gt;
+// &lt;a href=&#x27;/user/16&#x27;&gt;User 16&lt;/a&gt;</code></pre></div><div class="section css-cwwtwq" id="Link-props"><h3><a class="header-link" href="#Link-props">Props</a></h3><div class="section css-cwwtwq" id="Link-name"><h4><a class="header-link" href="#Link-name">name</a></h4><p>The name of the route that the <code class="inline-code css-jo5c25 eutm4hs0">Link</code> should navigate to when it is clicked.</p><p>To navigate within the same location, the <code class="inline-code css-jo5c25 eutm4hs0">name</code> can be skipped. This is useful for linking to hashes within the current page.</p><div class="css-xg7t84 e12etsbl0"><pre><code class="language-jsx">// Home route is { name: &quot;Home&quot;, path: &quot;&quot; }
+&lt;Link name=&quot;Home&quot;&gt;Home&lt;/Link&gt;</code></pre></div></div><div class="section css-cwwtwq" id="Link-params"><h4><a class="header-link" href="#Link-params">params</a></h4><p>If the named route (or any of its parents) include path parameters, they must be provided using the <code class="inline-code css-jo5c25 eutm4hs0">params</code> prop.</p><div class="css-xg7t84 e12etsbl0"><pre><code class="language-jsx">// User route is { name: &#x27;User&#x27;, path: &#x27;/user/:id&#x27; }
+&lt;Link name=&#x27;User&#x27; params={{ id: 16 }}&gt;User 16&lt;/Link&gt;</code></pre></div></div><div class="section css-cwwtwq" id="Link-hash-query-state"><h4><a class="header-link" href="#Link-hash-query-state">hash, query &amp; state</a></h4><p>The <code class="inline-code css-jo5c25 eutm4hs0">query</code>, <code class="inline-code css-jo5c25 eutm4hs0">hash</code>, and <code class="inline-code css-jo5c25 eutm4hs0">state</code> values for the location to navigate to.</p><div class="css-xg7t84 e12etsbl0"><pre><code class="language-jsx">&lt;Link
+  name=&#x27;Products&#x27;
+  params={{ type: &#x27;vacuums&#x27; }}
+  hash=&quot;iroomba&quot;
+  query=&quot;volume=loud&quot;
+  state={{ owner: &quot;Tom Haverford&quot; }}
+&gt;
+  DJ Roomba
+&lt;/Link&gt;
+
+// &lt;a href=&quot;products/vacuums?volume=loud#iroomba&quot;&gt;
+//  DJ Roomba
+// &lt;/a&gt;</code></pre></div></div><div class="section css-cwwtwq" id="Link-children"><h4><a class="header-link" href="#Link-children">children</a></h4><p>A valid React Node (e.g. a React element, a string, or<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">null</code>).</p><div class="css-xg7t84 e12etsbl0"><pre><code class="language-jsx">// a React node
+&lt;Link name=&quot;Home&quot;&gt;
+  Home
+&lt;/Link&gt;</code></pre></div></div><div class="section css-cwwtwq" id="Link-anchor"><h4><a class="header-link" href="#Link-anchor">anchor</a></h4><p>A <code class="inline-code css-jo5c25 eutm4hs0">Link</code> renders an anchor element by default, but this can be changed using the <code class="inline-code css-jo5c25 eutm4hs0">anchor</code> prop. This can be useful for using styled components.</p><style data-emotion-css="1op01r7">.css-1op01r7{padding:10px 5px;margin:5px 0;border:1px solid #c7c7c7;background:#ffe8bf;border-color:#ff9800;}.css-1op01r7 p:last-child{margin-bottom:0;}.css-1op01r7 .inline-code{background:#ffb74d !important;}</style><div class="css-1op01r7 e1bjkffy1"><strong>Warning:</strong> <p>You can provide any component that you want, but you<!-- --> <em>should</em> stick with an anchor (or a component that renders an anchor). There are accessibility issues that will occur when you use other DOM elements as links. The component&#x27;s prop type is func in an attempt to discourage you from making your link render a button, div, span, etc.</p></div></div><div class="section css-cwwtwq" id="Link-rest"><h4><a class="header-link" href="#Link-rest">rest</a></h4><p>Any additional props attached to the <code class="inline-code css-jo5c25 eutm4hs0">Link</code> will be attached to the element rendered by the <code class="inline-code css-jo5c25 eutm4hs0">Link</code>.</p><div class="css-xg7t84 e12etsbl0"><pre><code class="language-jsx">&lt;Link
+  name=&quot;Home&quot;
+  className=&quot;home&quot;
+&gt;
+  Home
+&lt;/Link&gt;
+// &lt;a href=&quot;/&quot; class=&quot;home&quot;&gt;Home&lt;/a&gt;</code></pre></div></div></div></div><div class="section css-cwwtwq" id="AsyncLink"><h2><a class="header-link" href="#AsyncLink">AsyncLink</a></h2><p>An <code class="inline-code css-jo5c25 eutm4hs0">AsyncLink</code> is similar to a<!-- --> <a href="#Link"><code class="inline-code css-jo5c25 eutm4hs0">Link</code></a>, but uses a render-invoked function as its <code class="inline-code css-jo5c25 eutm4hs0">children</code> <!-- -->component.</p><div class="css-xg7t84 e12etsbl0"><pre><code class="language-jsx">import { AsyncLink } from &#x27;@curi/react-dom&#x27;;
+
+&lt;AsyncLink name=&#x27;User&#x27; params={{ id: 16 }}&gt;
+  {navigating =&gt; {
+    return navigating
+      ? &quot;Navigating to User 16&quot;
+      : &quot;Go to User 16&quot;
+  }}
+&lt;/AsyncLink&gt;
+
+&lt;a href=&#x27;/user/16&#x27;&gt;Go to User 16&lt;/a&gt;
+// click link
+&lt;a href=&#x27;/user/16&#x27;&gt;Navigating to User 16&lt;/a&gt;
+// navigating finishes
+&lt;a href=&#x27;/user/16&#x27;&gt;Go to User 16&lt;/a&gt;</code></pre></div><div class="section css-cwwtwq" id="AsyncLink-props"><h3><a class="header-link" href="#AsyncLink-props">Props</a></h3><div class="section css-cwwtwq" id="AsyncLink-name"><h4><a class="header-link" href="#AsyncLink-name">name</a></h4><p>See <a href="#Link-name">Link name</a></p></div><div class="section css-cwwtwq" id="AsyncLink-params"><h4><a class="header-link" href="#AsyncLink-params">params</a></h4><p>See <a href="#Link-params">Link params</a></p></div><div class="section css-cwwtwq" id="AsyncLink-hash-query-state"><h4><a class="header-link" href="#AsyncLink-hash-query-state">hash, query &amp; state</a></h4><p>See<!-- --> <a href="#Link-hash-query-state">Link hash, query &amp; state</a></p></div><div class="section css-cwwtwq" id="AsyncLink-children"><h4><a class="header-link" href="#AsyncLink-children">children</a></h4><p>A render-invoked <code class="inline-code css-jo5c25 eutm4hs0">children</code> function that is called with the <code class="inline-code css-jo5c25 eutm4hs0">AsyncLink</code>&#x27;s navigation state. The navigation state is<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">false</code> to start, <code class="inline-code css-jo5c25 eutm4hs0">true</code> when the<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">AsyncLink</code> is clicked, and <code class="inline-code css-jo5c25 eutm4hs0">false</code> when the the navigation finishes/is cancelled.</p><div class="css-xg7t84 e12etsbl0"><pre><code class="language-jsx">&lt;AsyncLink name=&quot;User&quot; params={{ id: 1 }}&gt;
+  {navigating =&gt; (
+    &lt;React.Fragment&gt;
+      User 1
+      {navigating ? &lt;Spinner /&gt; : null}
+    &lt;/React.Fragment&gt;
+  )}
+&lt;/AsyncLink&gt;</code></pre></div></div><div class="section css-cwwtwq" id="AsyncLink-anchor"><h4><a class="header-link" href="#AsyncLink-anchor">anchor</a></h4><p>See <a href="#Link-anchor">Link anchor</a></p></div><div class="section css-cwwtwq" id="AsyncLink-rest"><h4><a class="header-link" href="#AsyncLink-rest">rest</a></h4><p>See <a href="#Link-rest">Link rest</a></p></div></div></div><div class="section css-cwwtwq" id="useResponse"><h2><a class="header-link" href="#useResponse">useResponse</a></h2><p>The <code class="inline-code css-jo5c25 eutm4hs0">useResponse</code> hook reads the current <code class="inline-code css-jo5c25 eutm4hs0">response</code> <!-- -->and <code class="inline-code css-jo5c25 eutm4hs0">navigation</code> values from React&#x27;s context. This will be called every time a new response is emitted.</p><div class="css-xg7t84 e12etsbl0"><pre><code class="language-jsx">import { useResponse } from &#x27;@curi/react-dom&#x27;;
+
+function App() {
+  const {
+    response,
+    navigation
+  } = useResponse();
+  return (
+    &lt;ThingThatNeedsResponse
+      response={response}
+    /&gt;
+  );
+}</code></pre></div></div><div class="section css-cwwtwq" id="useRouter"><h2><a class="header-link" href="#useRouter">useRouter</a></h2><p>The <code class="inline-code css-jo5c25 eutm4hs0">useRouter</code> hook returns the <code class="inline-code css-jo5c25 eutm4hs0">router</code> object.</p><div class="css-xg7t84 e12etsbl0"><pre><code class="language-jsx">import { useRouter } from &#x27;@curi/react-dom&#x27;;
+
+function App() {
+  const router = useRouter();
+  // ...
+}</code></pre></div></div><div class="section css-cwwtwq" id="useActive"><h2><a class="header-link" href="#useActive">useActive</a></h2><p>The <code class="inline-code css-jo5c25 eutm4hs0">useActive</code> hook determines if a route is active by comparing a route name (and possibly params) to a <code class="inline-code css-jo5c25 eutm4hs0">response</code> <!-- -->object.</p><div class="css-xg7t84 e12etsbl0"><pre><code class="language-jsx">import { useActive, Link } from &#x27;@curi/react-dom&#x27;;
+
+function ActiveLink({
+  name,
+  params,
+  partial,
+  children
+}) {
+  const active = useActive({ name, params, partial });
+  return (
+    &lt;Link
+      name={name}
+      params={params}
+      className={active ? &quot;active&quot; : &quot;&quot;}
+    &gt;
+      {children}
+    &lt;/Link&gt;
+  );
+}
+
+&lt;ActiveLink name=&quot;Home&quot;&gt;Home&lt;/ActiveLink&gt;</code></pre></div><div class="section css-cwwtwq" id="useActive-opts"><h3><a class="header-link" href="#useActive-opts">Options</a></h3><p><code class="inline-code css-jo5c25 eutm4hs0">useActive</code> takes a single argument, an options object.</p><div class="section css-cwwtwq" id="useActive-name"><h4><a class="header-link" href="#useActive-name">name</a></h4><p>The name of the route to compare against the response object.</p></div><div class="section css-cwwtwq" id="useActive-params"><h4><a class="header-link" href="#useActive-params">params</a></h4><p>An object containing route parameters. These will be compared against the route params of the response object.</p></div><div class="section css-cwwtwq" id="useActive-partial"><h4><a class="header-link" href="#useActive-partial">partial</a></h4><p>Allows ancestor routes to be considered active when true. Defaults to false.</p><div class="css-xg7t84 e12etsbl0"><pre><code class="language-jsx">// response = { name: &quot;User Album&quot;, params: { id: &quot;abcde&quot; }}
+// where &quot;User Album&quot; is a child route of &quot;User&quot;
+
+useActive({ name: &quot;User&quot; }); // false
+useActive({ name: &quot;User&quot;, partial: true }); // true</code></pre></div></div></div><div class="section css-cwwtwq" id="useActive-components"><h4><a class="header-link" href="#useActive-components">components</a></h4><p>The base active check only checks that the route (i.e. pathname) is active. <code class="inline-code css-jo5c25 eutm4hs0">components</code> allows you to check if other components of the location are also active.</p><div class="css-xg7t84 e12etsbl0"><pre><code class="language-jsx">useActive({
+  name: &quot;Results&quot;,
+  components: loc =&gt; loc.query === &quot;page=3&quot;
+});
+
+// active for /results?page=3
+// not active for /results?page=1</code></pre></div></div></div><div class="section css-cwwtwq" id="useNavigationFocus"><h2><a class="header-link" href="#useNavigationFocus">useNavigationFocus</a></h2><p>The <code class="inline-code css-jo5c25 eutm4hs0">useNavigationFocus</code> hook is used to focus a DOM element after a navigation.</p><div class="css-o0tph9 e1bjkffy0"><strong>Note:</strong> <p>The DOM component that gets the ref should either already be &quot;focusable&quot;, like an <code class="inline-code css-jo5c25 eutm4hs0">&lt;<!-- -->input<!-- -->&gt;</code>, or be given a<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">tabIndex</code> prop (usually with the value of <code class="inline-code css-jo5c25 eutm4hs0">-1</code>). If neither of these conditions is met, then the document&#x27;s<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">&lt;<!-- -->body<!-- -->&gt;</code> will be focused.</p></div><div class="css-xg7t84 e12etsbl0"><pre><code class="language-jsx">import { useNavigationFocus } from &quot;@curi/react-dom&quot;;
+
+function App() {
+  const ref = React.createRef(null);
+  useNavigationFocus(ref);
+
+  return (
+    &lt;div tabIndex={-1} ref={ref}&gt;
+      {/* ... */}
+    &lt;/div&gt;
+  );
+}</code></pre></div><p>The focused element will have an outline (the exact style varies by browser). You can remove this with CSS by setting <code class="inline-code css-jo5c25 eutm4hs0">outline</code> to<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">&quot;none&quot;</code>. This should only be done for non-focusable elements. Setting <code class="inline-code css-jo5c25 eutm4hs0">outline</code> to <code class="inline-code css-jo5c25 eutm4hs0">&quot;none&quot;</code> globally is bad for accessibility.</p><div class="css-xg7t84 e12etsbl0"><pre><code class="language-jsx">&lt;div
+  ref={ref}
+  tabIndex={-1}
+  style={{ outline: &quot;none&quot; }}
+&gt;
+  {/* ... */}
+&lt;/div&gt;</code></pre></div><div class="section css-cwwtwq" id="useNavigationFocus-opts"><h3><a class="header-link" href="#useNavigationFocus-opts">Options</a></h3><div class="section css-cwwtwq" id="useNavigationFocus-preventScroll"><h4><a class="header-link" href="#useNavigationFocus-preventScroll">preventScroll</a></h4><p>The default behavior for focusing an element is to scroll to it. If you want to prevent this, set <code class="inline-code css-jo5c25 eutm4hs0">preventScroll</code> to<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">true</code>.</p><div class="css-xg7t84 e12etsbl0"><pre><code class="language-jsx">// scrolls
+useNavigationFocus(ref);
+
+// does not scroll
+useNavigationFocus(ref, { preventScroll: true });</code></pre></div></div><div class="section css-cwwtwq" id="useNavigationFocus-preserve"><h4><a class="header-link" href="#useNavigationFocus-preserve">preserve</a></h4><p>The default focus behavior is to always focus the element that the ref is attached to. However, if you want to preserve the focus on some other element (e.g. an autofocused element), setting the<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">preserve</code> option to <code class="inline-code css-jo5c25 eutm4hs0">true</code> will stop the<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">ref</code> element from claiming the focus.</p><p>This only works when the already-focused element is a child of the<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">ref</code> element. If it is not a child, then the<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">ref</code> element will take the focus.</p><div class="css-xg7t84 e12etsbl0"><pre><code class="language-jsx">// claim focus for the &lt;div&gt;
+useNavigationFocus(ref)
+&lt;div tabIndex={-1} ref={ref}&gt;
+  &lt;input autoFocus={true} /&gt;
+&lt;/div&gt;
+
+// preserve focus on the &lt;input&gt;
+useNavigationFocus(ref, { preserve: true });
+&lt;div tabIndex={-1} ref={ref}&gt;
+  &lt;input autoFocus={true} /&gt;
+&lt;/div&gt;</code></pre></div></div></div></div><div class="section css-cwwtwq" id="useNavigating"><h2><a class="header-link" href="#useNavigating">useNavigating</a></h2><p>The <code class="inline-code css-jo5c25 eutm4hs0">useNavigating</code> hook is used to determine if the application is currently navigating. It pairs up with<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">router.cancel</code> to enable cancelling asynchronous navigation.</p><p>This is only useful for asynchronous routes because with synchronous routes, navigation happens immediately.</p><div class="css-xg7t84 e12etsbl0"><pre><code class="language-jsx">import { useNavigating } from &quot;@curi/react-dom&quot;;
+
+function CancelNavigation() {
+  const cancel = useNavigating();
+
+  return cancel
+    ? &lt;button onClick={cancel}&gt;Cancel&lt;/button&gt;
+    : null;
+}</code></pre></div><div class="css-o0tph9 e1bjkffy0"><strong>Note:</strong> <p>Ideally, browsers would natively handle asynchronous navigation and this would be unnecessary. For the time being, this is the next best solution.</p></div></div><div class="section css-cwwtwq" id="useURL"><h2><a class="header-link" href="#useURL">useURL</a></h2><p>The <code class="inline-code css-jo5c25 eutm4hs0">useURL</code> hook creates a URL string.</p><div class="css-xg7t84 e12etsbl0"><pre><code class="language-jsx">import { useURL } from &#x27;@curi/react-dom&#x27;;
+
+const href = useURL({
+  name: &quot;Video&quot;,
+  params: { id: &quot;jaifeo9&quot; } },
+  hash: &quot;comments&quot;,
+  query: &quot;t=15&quot;
+});
+// href = &quot;/video/jaifeo9?t=15#comments&quot;</code></pre></div><div class="section css-cwwtwq" id="useURL-opts"><h3><a class="header-link" href="#useURL-opts">Options</a></h3><div class="section css-cwwtwq" id="useURL-name"><h4><a class="header-link" href="#useURL-name">name</a></h4><p>The name of the route to generate the location&#x27;s pathname from. If this is not provided, the generated location&#x27;s pathname will be an empty string (<code class="inline-code css-jo5c25 eutm4hs0">&quot;&quot;</code>);</p></div><div class="section css-cwwtwq" id="useURL-params"><h4><a class="header-link" href="#useURL-params">params</a></h4><p>An object of params for the named route.</p></div><div class="section css-cwwtwq" id="useURL-hash"><h4><a class="header-link" href="#useURL-hash">hash</a></h4><p>A hash string for the location.</p></div><div class="section css-cwwtwq" id="useURL-query"><h4><a class="header-link" href="#useURL-query">query</a></h4><p>The location&#x27;s query value.</p><p>By default, this is expected to be a string, but if you configure your history object with the<!-- --> <a href="https://github.com/pshrmn/hickory/blob/master/docs/api/browser.md#options"><code class="inline-code css-jo5c25 eutm4hs0">query</code></a> <!-- -->option, this may be something else.</p></div></div></div><div class="section css-cwwtwq" id="ResponseConsumer"><h2><a class="header-link" href="#ResponseConsumer">ResponseConsumer</a></h2><p>A context consumer component for injecting response values into components. Its primary use case is in class components.</p><div class="css-xg7t84 e12etsbl0"><pre><code class="language-jsx">import { ResponseConsumer } from &#x27;@curi/react-dom&#x27;;
+
+class MyComponent {
+  render() {
+    return (
+      &lt;ResponseConsumer&gt;
+        {({ response, navigation }) =&gt; {
+          // pass these props to any components
+          // that needs them
+          return (
+            &lt;ThingThatNeedsResponse
+              response={response}
+            /&gt;
+          );
+        }}
+      &lt;/ResponseConsumer&gt;
+    );
+  }
+}</code></pre></div><div class="section css-cwwtwq" id="ResponseConsumer-props"><h3><a class="header-link" href="#ResponseConsumer-props">Props</a></h3><div class="section css-cwwtwq" id="ResponseConsumer-children"><h4><a class="header-link" href="#ResponseConsumer-children">children</a></h4><p>A render-invoked function that returns a React element. This function will receive an object with <code class="inline-code css-jo5c25 eutm4hs0">response</code> and<!-- --> <code class="inline-code css-jo5c25 eutm4hs0">navigation</code> properties.</p></div></div></div><div class="section css-cwwtwq" id="RouterConsumer"><h2><a class="header-link" href="#RouterConsumer">RouterConsumer</a></h2><p>A context consumer component for injecting the router into components. Its primary use case is in class components.</p><div class="css-xg7t84 e12etsbl0"><pre><code class="language-jsx">import { RouterConsumer } from &#x27;@curi/react-dom&#x27;;
+
+class MyComponent {
+  render() {
+    return (
+      &lt;RouterConsumer&gt;
+        {router =&gt; {
+          return (
+            &lt;button onClick={e =&gt; {
+              login();
+              const url = router.url({ name: &quot;Home&quot; });
+              router.navigate({ url });
+            }}&gt;
+              Submit
+            &lt;/button&gt;
+          );
+        }}
+      &lt;/RouterConsumer&gt;
+    );
+  }
+}</code></pre></div><div class="section css-cwwtwq" id="RouterConsumer-props"><h3><a class="header-link" href="#RouterConsumer-props">Props</a></h3><div class="section css-cwwtwq" id="RouterConsumer-children"><h4><a class="header-link" href="#RouterConsumer-children">children</a></h4><p>A render-invoked function that returns a React element. This function will receive the application&#x27;s <code class="inline-code css-jo5c25 eutm4hs0">router</code>.</p></div></div></div></div></div></div><style data-emotion-css="64fwtw">.css-64fwtw{display:none;}@media only screen and (min-width:751px){.css-64fwtw{background:#efefef;display:block;position:fixed;top:50px;bottom:0px;overflow:auto;-webkit-flex:0 0;-ms-flex:0 0;flex:0 0;-webkit-order:-1;-ms-flex-order:-1;order:-1;padding:25px;margin-right:25px;}}</style><div class="css-64fwtw e1hcridg2"><style data-emotion-css="1eimyfs">.css-1eimyfs{width:200px;}.css-1eimyfs p{margin:0;}.css-1eimyfs a{-webkit-text-decoration:none;text-decoration:none;display:block;}.css-1eimyfs ol{padding-left:0;margin-top:0;list-style-type:none;}.css-1eimyfs ol ol{padding-left:15px;font-size:0.9em;}</style><div class="css-1eimyfs e1evhjzy0"><ol><li><a href="#installation">Installation</a></li><li><a href="#about">About</a></li><li><a href="#API">API</a><ol><li><a href="#createRouterComponent">createRouterComponent</a></li><li><a href="#Link">Link</a></li><li><a href="#AsyncLink">AsyncLink</a></li><li><a href="#useResponse">useResponse</a></li><li><a href="#useRouter">useRouter</a></li><li><a href="#useActive">useActive</a></li><li><a href="#useNavigationFocus">useNavigationFocus</a></li><li><a href="#useNavigating">useNavigating</a></li><li><a href="#useURL">useURL</a></li><li><a href="#ResponseConsumer">ResponseConsumer</a></li><li><a href="#RouterConsumer">RouterConsumer</a></li></ol></li></ol></div></div></div></main></div>
+    <script src="https://unpkg.com/react@16.8.6/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@16.8.6/umd/react-dom.production.min.js"></script>
+    <script src="/static/js/prism.js"></script>
+    <script src="/static/js/bundle.js"></script>
+  </body>
+</html>
