@@ -79,7 +79,7 @@ function RoutesGuide() {
           <IJS>name</IJS> and <IJS>path</IJS>—and a number of{" "}
           <Link
             name="Package"
-            params={{ package: "router" }}
+            params={{ package: "router", version: "v2" }}
             hash="route-objects"
           >
             optional properties

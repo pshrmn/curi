@@ -13,4 +13,4 @@
 npm install --save @curi/static
 ```
 
-For more information, please check out the [`@curi/static`](https://curi.js.org/packages/@curi/static) page on the documentation website.
+For more information, please check out the [`@curi/static`](https://curi.js.org/v2/@curi/static/) page on the documentation website.

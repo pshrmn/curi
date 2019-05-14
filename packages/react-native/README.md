@@ -13,4 +13,4 @@
 npm install --save @curi/react-native
 ```
 
-For more information, please check out the [`@curi/react-native`](https://curi.js.org/packages/@curi/react-native) page on the documentation website.
+For more information, please check out the [`@curi/react-native`](https://curi.js.org/v2/@curi/react-native/) page on the documentation website.

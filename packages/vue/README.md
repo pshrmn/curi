@@ -13,4 +13,4 @@ Vue has its own official routing solution, but the `@curi/vue` package offers an
 npm install --save @curi/vue
 ```
 
-For more information, please check out the [`@curi/vue`](https://curi.js.org/packages/@curi/vue) page on the documentation website.
+For more information, please check out the [`@curi/vue`](https://curi.js.org/v2/@curi/vue/) page on the documentation website.

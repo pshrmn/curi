@@ -8,7 +8,7 @@ const UNKNOWN_VERSION = "unknown version";
 
 export default {
   name: "Packages",
-  path: "packages/",
+  path: ":version(v\\d)/",
   respond: () => {
     return {
       body: PackageList,
@@ -21,7 +21,7 @@ export default {
   children: [
     {
       name: "Package",
-      path: "@curi/:package/:version(v\\d)?/",
+      path: "@curi/:package/",
       resolve({ params }) {
         const pkg = PACKAGE_API.find(params.package);
         if (!pkg) {

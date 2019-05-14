@@ -13,4 +13,4 @@ Functions that may be useful in a Curi application.
 npm install --save @curi/helpers
 ```
 
-For more information, please check out the [`@curi/helpers`](https://curi.js.org/packages/@curi/helpers) page on the documentation website.
+For more information, please check out the [`@curi/helpers`](https://curi.js.org/v2/@curi/helpers/) page on the documentation website.

@@ -7,12 +7,10 @@
 [badge]: https://img.shields.io/npm/v/@curi/react-universal.svg
 [npm-link]: https://npmjs.com/package/@curi/react-universal
 
-`@curi/react-universal` provides a number of components to create a React appliation that uses the `curi` package to manage routing. This is in part inspired by React Router, but takes a "flat" approach to rendering components. Instead of nesting route components, only the component associated with the best-matched route will be attached to the response.
+`@curi/react-universal` provides a number of components to create a React appliation that uses the `@curi/router` package to manage routing. You most likely do not need to install this directly; the package provides components/hooks for the `@curi/react-dom` and `@curi/react-native` packages.
 
 ## Installation
 
 ```
 npm install --save @curi/react-universal
 ```
-
-For more information, please check out the [`@curi/react-universal`](https://curi.js.org/packages/@curi/react-universal) page on the documentation website.

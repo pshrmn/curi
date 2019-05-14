@@ -13,4 +13,4 @@
 npm install --save @curi/interactions
 ```
 
-For more information, please check out the [`@curi/interactions`](https://curi.js.org/packages/@curi/interactions) page on the documentation website.
+For more information, please check out the [`@curi/interactions`](https://curi.js.org/v2/@curi/interactions/) page on the documentation website.

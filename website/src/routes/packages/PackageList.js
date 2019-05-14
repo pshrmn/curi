@@ -19,8 +19,8 @@ const GroupPackages = ({ packages }) => (
   </ul>
 );
 
-function PackageLinks() {
-  const groups = PACKAGE_API.grouped();
+function PackageLinks({ version = "v2" }) {
+  const groups = PACKAGE_API.versioned(version);
   return (
     <div>
       {Object.keys(groups).map(title => (
@@ -33,7 +33,7 @@ function PackageLinks() {
   );
 }
 
-export default function PackageList() {
+export default function PackageList({ response }) {
   return (
     <Page>
       <PlainSection>
@@ -43,7 +43,7 @@ export default function PackageList() {
           Curi is split into a number of different packages that you can pick
           and choose from in order to only use what you need. You will always
           need the{" "}
-          <Link name="Package" params={{ package: "router" }}>
+          <Link name="Package" params={{ package: "router", version: "v2" }}>
             router
           </Link>{" "}
           package, but no other package is necessary.
@@ -59,7 +59,7 @@ export default function PackageList() {
       </PlainSection>
 
       <PlainSection>
-        <PackageLinks />
+        <PackageLinks version={response.params.version} />
       </PlainSection>
     </Page>
   );

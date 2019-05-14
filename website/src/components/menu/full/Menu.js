@@ -75,7 +75,7 @@ const StyledNav = styled("nav")`
   }
 `;
 
-function DropdownLink({ name, text, activated, toggle }) {
+function DropdownLink({ name, text, activated, toggle, ...rest }) {
   return (
     <ActiveLink
       name={name}
@@ -86,6 +86,7 @@ function DropdownLink({ name, text, activated, toggle }) {
       }}
       data-hide={false}
       className={activated ? "activated group" : "group"}
+      {...rest}
     >
       {text}
     </ActiveLink>
@@ -140,6 +141,7 @@ export default function Header(props) {
           <li className="base">
             <DropdownLink
               name="Packages"
+              params={{ version: "v2" }}
               text="API"
               activated={group === "Packages"}
               toggle={toggleDropdown}

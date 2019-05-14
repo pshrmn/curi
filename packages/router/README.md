@@ -13,4 +13,4 @@
 npm install --save @curi/router
 ```
 
-For more information, please check out the [`@curi/router`](https://curi.js.org/packages/@curi/router) page on the documentation website.
+For more information, please check out the [`@curi/router`](https://curi.js.org/v2/@curi/router/) page on the documentation website.

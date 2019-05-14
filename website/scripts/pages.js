@@ -1,4 +1,3 @@
-const routes = require("../src/routes").default;
 const packagesAPI = require("../src/constants/packages").default;
 const guidesAPI = require("../src/constants/guides").default;
 const examplesAPI = require("../src/constants/examples").default;
@@ -25,7 +24,8 @@ const tutorialParams = tutorialsAPI.all().map(t => ({ slug: t.slug }));
 module.exports = [
   { name: "Home" },
 
-  { name: "Packages" },
+  { name: "Packages", params: { version: "v1" } },
+  { name: "Packages", params: { version: "v2" } },
   ...packageParams.map(params => ({ name: "Package", params })),
 
   { name: "Guides" },

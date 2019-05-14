@@ -13,4 +13,4 @@ A package to integrate Curi routing with [Svelte](https://github.com/sveltejs/sv
 npm install --save @curi/svelte
 ```
 
-For more information, please check out the [`@curi/svelte`](https://curi.js.org/packages/@curi/svelte) page on the documentation website.
+For more information, please check out the [`@curi/svelte`](https://curi.js.org/v2/@curi/svelte/) page on the documentation website.

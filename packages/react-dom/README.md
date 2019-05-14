@@ -13,4 +13,4 @@
 npm install --save @curi/react-dom
 ```
 
-For more information, please check out the [`@curi/react-dom`](https://curi.js.org/packages/@curi/react-dom) page on the documentation website.
+For more information, please check out the [`@curi/react-dom`](https://curi.js.org/v2/@curi/react-dom/) page on the documentation website.
