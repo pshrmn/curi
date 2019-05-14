@@ -11,14 +11,7 @@ const packageParams = packagesAPI.all().reduce((acc, pkg) => {
   return acc.concat(pkgs);
 }, []);
 const guideParams = guidesAPI.all().map(p => ({ slug: p.slug }));
-const categories = examplesAPI.all();
-const exampleParams = Object.keys(categories)
-  .map(key => categories[key])
-  .reduce((acc, category) => {
-    const params = category.map(e => ({ category: e.category, slug: e.slug }));
-    acc = acc.concat(params);
-    return acc;
-  }, []);
+const exampleParams = examplesAPI.all().map(e => ({ slug: e.slug }));
 const tutorialParams = tutorialsAPI.all().map(t => ({ slug: t.slug }));
 
 module.exports = [

@@ -59,10 +59,7 @@ export function AsyncLinkAPI() {
 
           <p>
             For a demonstration, please check out the{" "}
-            <Link
-              name="Example"
-              params={{ category: "svelte", slug: "async-nav" }}
-            >
+            <Link name="Example" params={{ slug: "async" }}>
               asynchronous navigation example
             </Link>
             .

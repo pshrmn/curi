@@ -1,337 +1,163 @@
-const reactExamples = [
+const examples = [
   {
     name: "Basic",
-    category: "react",
     slug: "basic",
-    description: "A basic React & Curi example",
-    import: () =>
+    description: "A basic Curi example",
+    load: () =>
       import(
-        /* webpackChunkName: 'example--react-basic' */
-        `../pages/Examples/react/basic.js`
+        /* webpackChunkName: 'example--basic' */
+        `../pages/Examples/basic.js`
       )
   },
+
   {
-    name: "Active Links",
-    category: "react",
-    slug: "active-links",
-    description:
-      "An example of styling active content in a React & Curi application",
-    import: () =>
-      import(
-        /* webpackChunkName: 'example--react-active-links' */
-        `../pages/Examples/react/active-links.js`
-      )
-  },
-  {
-    name: "Accessibility",
-    category: "react",
+    name: "Accessibility with Focus Management",
     slug: "accessibility",
-    description: "An accessibility example in a React & Curi application",
-    import: () =>
+    description: "Focusing content after navigation for improved accessibility",
+    load: () =>
       import(
-        /* webpackChunkName: 'example--react-accessibility' */
-        `../pages/Examples/react/accessibility.js`
+        /* webpackChunkName: 'example--accessibility' */
+        `../pages/Examples/accessibility.js`
       )
   },
+
   {
-    name: "Redirects",
-    category: "react",
-    slug: "redirects",
-    description:
-      "An example of redirecting routes in a React & Curi application",
-    import: () =>
+    name: "Active",
+    slug: "active",
+    description: 'Determine if a route is "active"',
+    load: () =>
       import(
-        /* webpackChunkName: 'example--react-redirects' */
-        `../pages/Examples/react/redirects.js`
+        /* webpackChunkName: 'example--active' */
+        `../pages/Examples/active.js`
       )
   },
+
+  {
+    name: "Async Routes & Navigation",
+    slug: "async",
+    description: "Async navigation to routes with resolve methods",
+    load: () =>
+      import(
+        /* webpackChunkName: 'example--async' */
+        `../pages/Examples/async.js`
+      )
+  },
+
   {
     name: "Breadcrumbs",
-    category: "react",
     slug: "breadcrumbs",
-    description: "An example of breadcrumb links in a React & Curi application",
-    import: () =>
+    description: "Access a route's ancestors to create breadcrumbs",
+    load: () =>
       import(
-        /* webpackChunkName: 'example--react-breadcrumbs' */
-        `../pages/Examples/react/breadcrumbs.js`
+        /* webpackChunkName: 'example--breadcrumbs' */
+        `../pages/Examples/breadcrumbs.js`
       )
   },
+
   {
-    name: "Async Navigation",
-    category: "react",
-    slug: "async-nav",
-    description:
-      "An example of asynchronous navigation in a React & Curi application",
-    import: () =>
+    name: "Redirects",
+    slug: "redirects",
+    description: "Routes can redirect to other routes",
+    load: () =>
       import(
-        /* webpackChunkName: 'example--react-async-nav' */
-        `../pages/Examples/react/async-nav.js`
+        /* webpackChunkName: 'example--redirects' */
+        `../pages/Examples/redirects.js`
       )
   },
+
   {
     name: "Multiple Body Components",
-    category: "react",
     slug: "multi-body",
-    description:
-      "An example of route with multiple body components in a React & Curi application",
-    import: () =>
+    description: "A response's body property can contain multiple components.",
+    load: () =>
       import(
-        /* webpackChunkName: 'example--react-multi-body' */
-        `../pages/Examples/react/multi-body.js`
+        /* webpackChunkName: 'example--multi-body' */
+        `../pages/Examples/multi-body.js`
       )
   },
+
   {
-    name: "Transitions",
-    category: "react",
+    name: "Route Transitions",
     slug: "transitions",
-    description:
-      "An example of route transitions in a React & Curi application",
-    import: () =>
+    description: "CSS can be used to animate transitions between routes",
+    load: () =>
       import(
-        /* webpackChunkName: 'example--react-transitions' */
-        `../pages/Examples/react/transitions.js`
+        /* webpackChunkName: 'example--transitions' */
+        `../pages/Examples/transitions.js`
       )
   },
+
   {
-    name: "Modal Routes",
-    category: "react",
+    name: "Modal Content",
     slug: "modal",
-    description: "An example of modal routes in a React & Curi application",
-    import: () =>
+    description:
+      "Modal routes can render content on top of another route's content",
+    load: () =>
       import(
-        /* webpackChunkName: 'example--react-modal' */
-        `../pages/Examples/react/modal.js`
+        /* webpackChunkName: 'example--modal' */
+        `../pages/Examples/modal.js`
       )
-  }
-];
+  },
 
-const vueExamples = [
   {
-    name: "Basic",
-    category: "vue",
-    slug: "basic",
-    description: "A basic Vue & Curi example",
-    import: () =>
+    name: "Twitch Clone",
+    slug: "twitch",
+    load: () =>
       import(
-        /* webpackChunkName: 'example--vue-basic' */
-        `../pages/Examples/vue/basic.js`
+        /* webpackChunkName: 'example--full-twitch'*/
+        `../pages/Examples/twitch.js`
       )
   },
-  {
-    name: "Active Links",
-    category: "vue",
-    slug: "active-links",
-    description:
-      "An example of styling active content in a Vue & Curi application",
-    import: () =>
-      import(
-        /* webpackChunkName: 'example--vue-active-links' */
-        `../pages/Examples/vue/active-links.js`
-      )
-  },
-  {
-    name: "Accessibility",
-    category: "vue",
-    slug: "accessibility",
-    description: "An accessibility example in a Vue & Curi application",
-    import: () =>
-      import(
-        /* webpackChunkName: 'example--vue-accessibility' */
-        `../pages/Examples/vue/accessibility.js`
-      )
-  },
-  {
-    name: "Redirects",
-    category: "vue",
-    slug: "redirects",
-    description: "An example of redirecting routes in a Vue & Curi application",
-    import: () =>
-      import(
-        /* webpackChunkName: 'example--vue-redirects' */
-        `../pages/Examples/vue/redirects.js`
-      )
-  },
-  {
-    name: "Breadcrumbs",
-    category: "vue",
-    slug: "breadcrumbs",
-    description: "An example of breadcrumb links in a Vue & Curi application",
-    import: () =>
-      import(
-        /* webpackChunkName: 'example--vue-breadcrumbs' */
-        `../pages/Examples/vue/breadcrumbs.js`
-      )
-  },
-  {
-    name: "Async Navigation",
-    category: "vue",
-    slug: "async-nav",
-    description:
-      "An example of asynchronous navigation in a Vue & Curi application",
-    import: () =>
-      import(
-        /* webpackChunkName: 'example--vue-async-nav' */
-        `../pages/Examples/vue/async-nav.js`
-      )
-  },
-  {
-    name: "Transitions",
-    category: "vue",
-    slug: "transitions",
-    description: "An example of route transitions in a Vue & Curi application",
-    import: () =>
-      import(
-        /* webpackChunkName: 'example--vue-transitions' */
-        `../pages/Examples/vue/transitions.js`
-      )
-  },
-  {
-    name: "Modal Routes",
-    category: "vue",
-    slug: "modal",
-    description: "An example of modal routes in a Vue & Curi application",
-    import: () =>
-      import(
-        /* webpackChunkName: 'example--vue-modal' */
-        `../pages/Examples/vue/modal.js`
-      )
-  }
-];
 
-const svelteExamples = [
-  {
-    name: "Basic",
-    category: "svelte",
-    slug: "basic",
-    description: "A basic Svelte & Curi example",
-    import: () =>
-      import(
-        /* webpackChunkName: 'example--svelte-basic' */
-        `../pages/Examples/svelte/basic.js`
-      )
-  },
-  {
-    name: "Active Links",
-    category: "svelte",
-    slug: "active-links",
-    description:
-      "An example of styling active content in a Svelte & Curi application",
-    import: () =>
-      import(
-        /* webpackChunkName: 'example--svelte-active-links' */
-        `../pages/Examples/svelte/active-links.js`
-      )
-  },
-  {
-    name: "Redirects",
-    category: "svelte",
-    slug: "redirects",
-    description:
-      "An example of redirecting routes in a Svelte & Curi application",
-    import: () =>
-      import(
-        /* webpackChunkName: 'example--svelte-redirects' */
-        `../pages/Examples/svelte/redirects.js`
-      )
-  },
-  {
-    name: "Breadcrumbs",
-    category: "svelte",
-    slug: "breadcrumbs",
-    description:
-      "An example of breadcrumb links in a Svelte & Curi application",
-    import: () =>
-      import(
-        /* webpackChunkName: 'example--svelte-breadcrumbs' */
-        `../pages/Examples/svelte/breadcrumbs.js`
-      )
-  },
-  {
-    name: "Async Navigation",
-    category: "svelte",
-    slug: "async-nav",
-    description:
-      "An example of asynchronous navigation in a Svelte & Curi application",
-    import: () =>
-      import(
-        /* webpackChunkName: 'example--svelte-async-nav' */
-        `../pages/Examples/svelte/async-nav.js`
-      )
-  }
-];
-
-const miscExamples = [
   {
     name: "Code Splitting",
-    category: "misc",
     slug: "code-splitting",
     description: "An example of code splitting in a Curi application",
-    import: () =>
+    load: () =>
       import(
-        /* webpackChunkName: 'example--misc-code-splitting' */
-        `../pages/Examples/misc/code-splitting`
+        /* webpackChunkName: 'example--code-splitting' */
+        `../pages/Examples/code-splitting.js`
       )
   },
+
   {
     name: "Script Tags",
-    category: "misc",
     slug: "script-tags",
     description: "An example of a project that uses script tags to import Curi",
-    import: () =>
+    load: () =>
       import(
-        /* webpackChunkName: 'example--misc-script-tags' */
-        `../pages/Examples/misc/script-tags`
+        /* webpackChunkName: 'example--script-tags' */
+        `../pages/Examples/script-tags.js`
       )
   },
+
   {
     name: "Server Rendering",
-    category: "misc",
     slug: "server-rendering",
     description:
       "An example of a Curi application that does server-side rendering",
-    import: () =>
+    load: () =>
       import(
-        /* webpackChunkName: 'example--misc-server-rendering' */
-        `../pages/Examples/misc/server-rendering`
+        /* webpackChunkName: 'example--server-rendering' */
+        `../pages/Examples/server-rendering.js`
       )
   },
+
   {
     name: "Side Effects",
-    category: "misc",
-    slug: "side-effect",
+    slug: "side-effects",
     description: "An example of a Curi application that uses side effects",
-    import: () =>
+    load: () =>
       import(
-        /* webpackChunkName: 'example--misc-side-effect' */
-        `../pages/Examples/misc/side-effect`
+        /* webpackChunkName: 'example--side-effects' */
+        `../pages/Examples/side-effects.js`
       )
   }
 ];
 
-const examples = {
-  react: reactExamples,
-  vue: vueExamples,
-  svelte: svelteExamples,
-  /*full: [
-    {
-      name: "Twitch Clone",
-      category: "full",
-      slug: "twitch",
-      import: () =>
-        import(/* webpackChunkName: 'example--full-twitch'
-          `../pages/Examples/full/twitch.js`)
-    }
-  ],*/
-  misc: miscExamples
-};
-
 export default {
-  find: function findExample(category, slug) {
-    if (!examples[category]) {
-      return;
-    } else {
-      return examples[category].find(e => e.slug === slug);
-    }
+  find: function findExample(slug) {
+    return examples.find(e => e.slug === slug);
   },
   all: function() {
     return examples;

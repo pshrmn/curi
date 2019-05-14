@@ -136,10 +136,7 @@ function ResponsesGuide() {
           component(s) to render when a route matches. This can either be a
           single component for basic layouts or an object with a number of
           components for{" "}
-          <Link
-            name="Example"
-            params={{ category: "react", slug: "multi-body" }}
-          >
+          <Link name="Example" params={{ slug: "multi-body" }}>
             advanced layouts
           </Link>
           .

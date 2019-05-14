@@ -20,7 +20,7 @@ export default function CodeSandboxDemo({
   id,
   view = "split",
   help = true,
-  title
+  name
 }) {
   let helpText = null;
   if (help) {
@@ -35,7 +35,7 @@ export default function CodeSandboxDemo({
   return (
     <StyledDemo>
       <iframe
-        title={title}
+        title={name}
         src={`https://codesandbox.io/embed/${id}?view=${view}`}
         width="100%"
         height="600px"

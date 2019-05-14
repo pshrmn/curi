@@ -6,7 +6,7 @@ import {
   IJS,
   OnGithub,
   onGitHubMeta
-} from "../../../components/example/common";
+} from "../../components/example/common";
 
 const meta = {
   title: "Code Splitting"

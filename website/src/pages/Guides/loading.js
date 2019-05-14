@@ -172,13 +172,10 @@ function LoadingGuide() {
           route, but please remember that your application will not be
           re-rendering until <em>after</em> the fetching has resolved. If you
           have a long running load function, you may wish to implement some sort
-          of loading display to let the user know that somethign is happening.
+          of loading display to let the user know that something is happening.
           The{" "}
-          <Link
-            name="Example"
-            params={{ category: "react", slug: "data-loading" }}
-          >
-            data loading example
+          <Link name="Example" params={{ slug: "async" }}>
+            async examples
           </Link>{" "}
           shows one approach to how to do this.
         </p>

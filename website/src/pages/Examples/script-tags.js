@@ -5,7 +5,7 @@ import {
   Cmp,
   OnGithub,
   onGitHubMeta
-} from "../../../components/example/common";
+} from "../../components/example/common";
 
 const meta = {
   title: "Script Tags"

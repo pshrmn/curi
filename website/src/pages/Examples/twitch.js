@@ -2,14 +2,13 @@ import React from "react";
 
 import {
   HashSection,
-  IJS,
   CodeSandboxDemo,
   OnGithub,
   onGitHubMeta
-} from "../../../components/example/common";
+} from "../../components/example/common";
 
 const meta = {
-  title: "Breadcrumbs"
+  title: "Twitch Clone"
 };
 
 const explanationMeta = {
@@ -23,29 +22,32 @@ const demoMeta = {
 
 const contents = [explanationMeta, demoMeta, onGitHubMeta];
 
-function BreadcrumbsExample() {
+function TwitchExample() {
   return (
     <React.Fragment>
       <h1>{meta.title}</h1>
 
       <HashSection meta={explanationMeta}>
         <p>
-          The <IJS>ancestors</IJS> route interaction lets you know what routes
-          are the ancestors of another route. Using this, we can build
-          breadcrumb links.
+          A clone of <a href="https://twitch.tv">Twitch</a> without all of the
+          "good stuff" (streaming video). This application uses Vue for
+          rendering and Curi for routing.
         </p>
       </HashSection>
 
       <HashSection meta={demoMeta}>
         <CodeSandboxDemo
-          id="github/pshrmn/curi/tree/master/examples/vue/breadcrumbs"
-          title="Curi Vue breadcrumbs demo"
+          id="github/pshrmn/twitch-curi-demo"
+          title="Curi Twitch clone demo"
         />
       </HashSection>
 
-      <OnGithub path="vue/breadcrumbs" />
+      <OnGithub
+        path="https://github.com/pshrmn/twitch-curi-demo"
+        repo={false}
+      />
     </React.Fragment>
   );
 }
 
-export { BreadcrumbsExample as component, contents };
+export { TwitchExample as component, contents };

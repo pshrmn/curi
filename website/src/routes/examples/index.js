@@ -21,17 +21,13 @@ export default {
   children: [
     {
       name: "Example",
-      path: ":category/:slug/",
+      path: ":slug/",
       resolve({ params }) {
-        const example = EXAMPLE_API.find(params.category, params.slug);
-
+        const example = EXAMPLE_API.find(params.slug);
         const content = example
           ? example
-              .import()
-              .then(
-                preferDefault,
-                catchImportError(`example: ${params.category}/${params.slug}`)
-              )
+              .load()
+              .then(preferDefault, catchImportError(`example: ${params.slug}`))
           : Example404;
         return Promise.all([example, content]);
       },
@@ -47,6 +43,18 @@ export default {
             description: example
               ? `${example.name} Example`
               : "Example Not Found"
+          }
+        };
+      }
+    },
+    {
+      name: "Legacy Example",
+      path: ":category/:slug/",
+      respond: ({ match }) => {
+        return {
+          redirect: {
+            name: "Example",
+            params: { slug: match.params.slug }
           }
         };
       }

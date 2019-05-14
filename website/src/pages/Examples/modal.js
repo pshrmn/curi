@@ -1,16 +1,13 @@
 import React from "react";
 
 import {
-  PlainSection,
   HashSection,
-  IJS,
-  CodeSandboxDemo,
-  OnGithub,
-  onGitHubMeta
-} from "../../../components/example/common";
+  MultiSandbox,
+  IJS
+} from "../../components/example/common";
 
 const meta = {
-  title: "Modal Routes"
+  title: "Basics"
 };
 
 const explanationMeta = {
@@ -22,16 +19,16 @@ const demoMeta = {
   hash: "demo"
 };
 
-const contents = [explanationMeta, demoMeta, onGitHubMeta];
+const contents = [explanationMeta, demoMeta];
 
 function ModalExample() {
   return (
     <React.Fragment>
-      <PlainSection>
-        <h1>{meta.title}</h1>
-      </PlainSection>
+      <h1>{meta.title}</h1>
 
       <HashSection meta={explanationMeta}>
+        <p>A "modal" route can display content on top of other content.</p>
+
         <p>
           This example mimics the way that Pinterest works. Whether or not this
           is a good design pattern is up for debate, but at the very least it is
@@ -63,13 +60,19 @@ function ModalExample() {
       </HashSection>
 
       <HashSection meta={demoMeta}>
-        <CodeSandboxDemo
-          id="github/pshrmn/curi/tree/master/examples/react/modal"
-          title="Curi React modal demo"
+        <MultiSandbox
+          sandboxes={[
+            {
+              id: "github/pshrmn/curi/tree/master/examples/react/modal",
+              name: "React"
+            },
+            {
+              id: "github/pshrmn/curi/tree/master/examples/vue/modal",
+              name: "Vue"
+            }
+          ]}
         />
       </HashSection>
-
-      <OnGithub path="react/modal" />
     </React.Fragment>
   );
 }

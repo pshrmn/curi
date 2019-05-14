@@ -4,6 +4,7 @@ import { Note, Warning } from "../Messages";
 import { InlineJS as IJS, InlineComponent as Cmp } from "../highlight/Inline";
 import { OnGithub, meta as onGitHubMeta } from "./OnGithub";
 import CodeSandboxDemo from "../CodeSandboxDemo";
+import MultiSandbox from "./MultiSandbox";
 
 export {
   PlainSection,
@@ -14,6 +15,7 @@ export {
   Note,
   Warning,
   CodeSandboxDemo,
+  MultiSandbox,
   OnGithub,
   onGitHubMeta
 };

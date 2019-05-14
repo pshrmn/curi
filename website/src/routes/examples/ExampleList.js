@@ -5,31 +5,21 @@ import EXAMPLE_API from "../../constants/examples";
 import Page from "../../components/layout/Page";
 import { PlainSection } from "../../components/layout/Sections";
 
-const Category = ({ examples }) => {
-  return (
-    <ul className="link-list">
-      {examples.map(e => (
-        <li key={`${e.category}/${e.slug}`} className="solo">
-          <Link name="Example" params={{ category: e.category, slug: e.slug }}>
-            {e.name}
-          </Link>
-        </li>
-      ))}
-    </ul>
-  );
-};
-
 function ExampleLinks() {
   const examples = EXAMPLE_API.all();
-  const categories = Object.keys(examples);
   return (
     <div>
-      {categories.map(title => (
-        <div key={title}>
-          <h3>{title}</h3>
-          <Category examples={examples[title]} />
-        </div>
-      ))}
+      <ul className="link-list">
+        {examples.map(e => {
+          return (
+            <li key={`${e.slug}`} className="solo">
+              <Link name="Example" params={{ slug: e.slug }}>
+                {e.name}
+              </Link>
+            </li>
+          );
+        })}
+      </ul>
     </div>
   );
 }
@@ -43,8 +33,7 @@ export default function ExampleList() {
         <p>
           Example projects that you can use for reference while building your
           own application. Most examples have CodeSandbox demos embedded with
-          them. Each example includes source code available through the Curi
-          package{" "}
+          them. The source code for the examples is also available{" "}
           <a href="https://github.com/pshrmn/curi/tree/master/examples">
             on GitHub
           </a>
