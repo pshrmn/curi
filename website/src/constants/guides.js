@@ -90,6 +90,19 @@ const guides = [
   },
 
   {
+    name: "Accessibility",
+    slug: "accessibility",
+    description:
+      "Make your Curi application inclusive to users who use screen readers.",
+    type: "basic",
+    import: () =>
+      import(
+        /* webpackChunkName: 'guide--accessibility' */
+        `../pages/Guides/accessibility.js`
+      )
+  },
+
+  {
     name: "React DOM",
     slug: "react-dom",
     description: "Learn the basics of using Curi and React DOM",
@@ -190,18 +203,6 @@ const guides = [
       import(
         /* webpackChunkName: 'guide--ssr' */
         `../pages/Guides/ssr.js`
-      )
-  },
-  {
-    name: "Accessibility",
-    slug: "accessibility",
-    description:
-      "Make your Curi application inclusive to users who use screen readers.",
-    type: "advanced",
-    import: () =>
-      import(
-        /* webpackChunkName: 'guide--accessibility' */
-        `../pages/Guides/accessibility.js`
       )
   },
   {
