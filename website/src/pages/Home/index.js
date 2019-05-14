@@ -49,24 +49,17 @@ export default function HomePage() {
 
       <PlainSection className="centered">
         <CodeBlock>
-          {`import {
-  prepareRoutes,
-  createRouter,
-  announce
-} from "@curi/router";
+          {`import { prepareRoutes, createRouter, announce } from "@curi/router";
 import { browser } from "@hickory/browser";
 
-// define the application's routes
 const routes = prepareRoutes([
   { name: "Home", path: "" },
   { name: "About", path: "about" },
   { name: "Catch All", path: "(.*)" }
 ]);
 
-// create a router
 const router = createRouter(browser, routes, {
   sideEffects: [
-    // announce navigation for screen readers
     announce(({ response }) => {
       return \`Navigated to \${response.location.pathname}\`;
     })
