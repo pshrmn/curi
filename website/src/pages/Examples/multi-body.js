@@ -7,7 +7,7 @@ import {
 } from "../../components/example/common";
 
 const meta = {
-  title: "Basics"
+  title: "Multi-body Responses"
 };
 
 const explanationMeta = {

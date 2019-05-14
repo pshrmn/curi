@@ -8,7 +8,7 @@ import {
 } from "../../components/example/common";
 
 const meta = {
-  title: "Basics"
+  title: "Active"
 };
 
 const explanationMeta = {

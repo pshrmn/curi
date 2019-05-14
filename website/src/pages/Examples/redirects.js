@@ -1,5 +1,4 @@
 import React from "react";
-import { Link } from "@curi/react-dom";
 
 import {
   HashSection,
@@ -8,7 +7,7 @@ import {
 } from "../../components/example/common";
 
 const meta = {
-  title: "Basics"
+  title: "Redirects"
 };
 
 const explanationMeta = {

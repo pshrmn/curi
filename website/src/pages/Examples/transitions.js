@@ -1,14 +1,9 @@
 import React from "react";
-import { Link } from "@curi/react-dom";
 
-import {
-  HashSection,
-  MultiSandbox,
-  IJS
-} from "../../components/example/common";
+import { HashSection, MultiSandbox } from "../../components/example/common";
 
 const meta = {
-  title: "Basics"
+  title: "Route Transitions"
 };
 
 const explanationMeta = {

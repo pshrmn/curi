@@ -8,7 +8,7 @@ import {
 } from "../../components/example/common";
 
 const meta = {
-  title: "Basics"
+  title: "Breadcrumbs with Route Ancestors"
 };
 
 const explanationMeta = {
