@@ -1,6 +1,6 @@
 {
   "name": "@curi/interactions",
-  "version": "2.0.0-beta.3",
+  "version": "2.0.0",
   "description": "Route interactions for a Curi application",
   "main": "dist/curi-interactions.js",
   "module": "dist/curi-interactions.es.js",

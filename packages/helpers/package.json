@@ -1,6 +1,6 @@
 {
   "name": "@curi/helpers",
-  "version": "2.0.0-beta.4",
+  "version": "2.0.0",
   "description": "Functions that can be useful in Curi apps",
   "main": "dist/curi-helpers.js",
   "module": "dist/curi-helpers.es.js",
