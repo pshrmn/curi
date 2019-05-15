@@ -1,4 +1,4 @@
-## 2.0.0-beta.0
+## Next
 
 * Add `ancestors` interaction, which now returns an array of ancestor routes.
 * Add `prefetch` interaction.

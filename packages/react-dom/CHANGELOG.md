@@ -1,65 +1,24 @@
-## 2.0.0-beta.13
+## Next
 
-* Remove `forward` prop from `Link` and `AsyncLink`; additional props will be passed on to underlying element.
-
-## 2.0.0-beta.10
-
-* `useResponse` only returns `response` and `navigation`.
-
-## 2.0.0-beta.9
-
-* Fix UMD builds.
-
-## 2.0.0-beta.7
-
-* Spread `forward` props to link elements before "native" props.
-
-## 2.0.0-beta.6
-
-* Revert snake case. `create_router_component` is now `createRouterComponent`.
-
-## 2.0.0-beta.5
-
-* Add `useRouter` hook. Other hooks that access the `router` but not the `response`/`navigation` have been switched to `useRouter` to prevent unnecessary re-renders.
-* Rename `useCuri` to `useResponse`.
-* Rename `Curious` to `ResponseConsumer`.
-* Export `RouterConsumer` context consumer component.
-
-## 2.0.0-beta.3
-
-* Import common Curi types from `@curi/types`.
-
-## 2.0.0-beta.2
-
-* `<Link>` uses `history.href`.
-
-## 2.0.0-beta.0
-
-* Rename `curiProvider` to `create_router_component`
-* Use snake cased `history.to_href`
-
-## 2.0.0-alpha.2
+Consolidated CHANGELOG for v2:
 
 * Split `Link` into `Link` (regular `children`) and `AsyncLink` (`children` is a render-invoked function).
-
-## 2.0.0-alpha.1
-
-* Internal `Link` changes.
-
-## 2.0.0-alpha.0
-
-* Use hooks in `Link`.
 * `Link` no longer does shallow prop comparison (this can be added on the user's end using `React.memo`).
+* Rename `curiProvider` to `createRouterComponent`
+* Use hooks in `Link`.
 * Use hooks in `Router` (component created by `curiProvider`).
-* Add `useCuri` React hook for reading context.
-* Add `useActive` React hook for checking if a route is "active".
-* Add `useBlock` React hook for blocking navigation.
-* Add `useNavigating` React hook for cancelling async navigation.
-* Add `useHref` React hook for generating an HREF string.
-* Add `useLocation` React hook for generation a location object.
+* Add `useRouter` hook for accessing the router.
+* Add `useResponse` hook for accessing the current response/navigation objects.
+* Add `useActive` hook for checking if a route is "active".
+* Add `useNavigating` hook for cancelling async navigation.
+* Add `useURL` hook for generating an HREF string.
+* Add `useLocation` hook for generation a location object.
 * Remove `Active` component (prefer `useActive`).
-* Remove `Block` component (prefer `useBlock`).
+* Remove `Block` component.
 * Remove `Navigating` component (prefer `useNavigating`).
+* Rename `Curious` to `ResponseConsumer`.
+* Export `RouterConsumer` context consumer component.
+* Import common Curi types from `@curi/types`.
 
 ## 1.2.1
 

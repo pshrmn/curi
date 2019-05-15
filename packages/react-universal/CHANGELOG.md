@@ -1,75 +1,24 @@
-## 2.0.0-beta.17
+## Next
 
-* Initialize `response`/`navigation` values using `router.current`.
-
-## 2.0.0-beta.13
-
-* Change `use(Stateful)NavigationHandler` props to access `target`, not `forward`.
-
-## 2.0.0-beta.11
-
-* Rename `useHref` to `useURL`.
-* Remove `useLocation` hook.
-* Pass `url` string to `useNavigationHandler` & `useStatefulNavigationHandler`.
-
-## 2.0.0-beta.10
-
-* `useResponse` only returns `response` and `navigation`.
-
-## 2.0.0-beta.8
-
-* Remove `useMemo` from `useLocation`.
-
-## 2.0.0-beta.7
-
-* `useNavigationHandler` & `useStatefulNavigationHandler` re-use event handler callback when possible. They also take a `target` string instead of the full `forward` props object.
-
-## 2.0.0-beta.6
-
-* Revert snake case. `create_router_component` is now `createRouterComponent`.
-
-## 2.0.0-beta.5
+Consolidated CHANGELOG for v2:
 
 * Add a `RouterProvider` to make the `router` accessible through the application.
-* Add `useRouter` hook. Other hooks that access the `router` but not the `response`/`navigation` have been switched to `useRouter` to prevent unnecessary re-renders.
-* Rename `useCuri` to `useResponse`.
 * Rename `Curious` to `ResponseConsumer`.
 * Export `RouterConsumer` context consumer component.
-
-## 2.0.0-beta.3
-
 * Import common Curi types from `@curi/types`.
-
-## 2.0.0-beta.2
-
-* `useHref` hook uses `history.href`.
-
-## 2.0.0-beta.0
-
-* Rename `curiProvider` to `create_router_component`
-* Use snake cased `history.to_href`
-
-## 2.0.0-alpha.2
-
-* Remove `useBlock` hook
-* Use `SessionLocation` type
-* Split `useNavigationHandler` into `useNavigationHandler` and `useStatefulNavigationHandler`. The latter is for tracking the component's `navigating` state.
-
-## 2.0.0-alpha.1
-
+* Rename `curiProvider` to `createRouterComponent`
 * Internal `useNavigationHandler` changes.
-
-## 2.0.0-alpha.0
-
 * Use hooks in `Router` (component created by `curiProvider`).
-* Add `useCuri` React hook for reading context.
-* Add `useActive` React hook for checking if a route is "active".
-* Add `useBlock` React hook for blocking navigation.
-* Add `useNavigating` React hook for cancelling async navigation.
-* Add `useHref` React hook for generating an HREF string.
-* Add `useLocation` React hook for generation a location object.
+* Add `useRouter` hook for accessing the router.
+* Add `useResponse` hook for accessing the current response/navigation objects.
+* Add `useActive` hook for checking if a route is "active".
+* Add `useNavigating` hook for cancelling async navigation.
+* Add `useURL` hook for generating an HREF string.
+* Add `useLocation` hook for generation a location object.
+* Add `useNavigationHandler` for creating link event handler functions.
+* Add `useStatefulNavigationHandler` for creating async link event handler functions.
 * Remove `Active` component (prefer `useActive`).
-* Remove `Block` component (prefer `useBlock`).
+* Remove `Block` component.
 * Remove `Navigating` component (prefer `useNavigating`).
 
 ## 1.1.0

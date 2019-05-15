@@ -1,106 +1,57 @@
-## 2.0.0-beta.22
+## Next
 
+Consolidated CHANGELOG for v2:
+
+### routes
+
+* Route paths that begin with a forward slash are no longer fixed for you. This will throw in development for easier detection.
+* `route.resolve` is now a single function.
+* A route param is parsed using `decodeURIComponent` if no `param` function exists for it.
+* `route.pathOptions` is an object with `match` (for matching location) and `compile` (for generating pathnames) properties.
+* Throw if param parsing fails.
+* Rename `route.response` to `route.respond`.
+* Warn if `route.respond`'s return object includes an invalid property.
+* `prepareRoutes` returns an object with `match` and `route` properties.
+* Restructure a route's public data to group functions under a `methods` property.
+
+### router
+
+* `router.route` returns public data for the route with the given name.
 * `response` and `navigation` are `undefined` until initial response is finalized.
+* Rework interactions to be external, ideally stateless, functions.
+* Expose the `external` value passed to `createRouter` options through `external` property.
+* Routes array passed to `createRouter` must be prepared using `prepareRoutes`.
+* `router.navigate` sets default `method`.
+* Rely on `history` instance for cancelling navigations.
+* `createRouter` receives a history constructor function as its first argument.
+* Add `history` option to `curi` options for history object configuration.
+* Remove `automaticRedirects` option. `createReusable`, from `@hickory/in-memory`, makes `navigate` a no-op and should be used for server rendering.
+* Change `emitRedirects` (default `true`) to `invisibleRedirects` (default `false`).
+* Remove `pathnameOptions` from `createRouter` options.
+* A redirect can point to an external URL; the actual redirecting for external redirects is left to the user.
+* Remove `route` option from `createRoutes`. Router interactions are no longer registered.
+* Add `router.url` method for generating a URL string.
+* `router.url` returns relative URL string when `name` is not provided.
+* `router.navigate` takes a `url` string property, not `name`/`params`/`query`/`hash`.
 
-## 2.0.0-beta.20
+### responses
+
+* Rename `redirectTo` property returned by a `response` function to `redirect`.
+* A response's `redirect.url` property is generated using `history.href`.
+* Remove `title`, `status`, and `error` types from response/settable response properties.
+* Add `meta` property to response/settable response properties.
+* `meta`, `body`, and `data` properties always exist on response objects. They are `undefined` if not set by a route's `response()` function.
+* Removed `partials` property from response objects.
+
+### side effects
 
 * Merge the `aria-live` (now `announce`), `scroll`, and `title` side effects into package.
 
-## 2.0.0-beta.19
+### other
 
-* `prepareRoutes` takes an array of routes as its first (and only) argument.
-
-## 2.0.0-beta.18
-
-* `router.route` returns a route's public data.
-* Restructure a route's public data to group functions under a `methods` property.
-* Rework interactions to be external, ideally stateless, functions.
-* Removed `partials` property from response objects.
-
-## 2.0.0-beta.15
-
-* `router.url` returns relative URL string when `name` is not provided.
-
-## 2.0.0-beta.14
-
-* Add `router.url` method for generating a URL string.
-* `router.navigate` takes a `url` string property, not `name`/`params`/`query`/`hash`.
-
-## 2.0.0-beta.12
-
-* Fix UMD builds.
-* Rename `route.response` to `route.respond`.
-* `meta`, `body`, and `data` properties always exist on response objects. They are `undefined` if not set by a route's `response()` function.
-* Add `meta` property to response/settable response properties.
-* Remove `title`, `status`, and `error` types from response/settable response properties.
-* Add and export `RouterOptions` type.
-
-## 2.0.0-beta.11
-
-* Improve internal route matching.
-
-## 2.0.0-beta.9
-
-* `prepareRoutes` returns an object with `match` and `interactions` properties.
-* `prepareRoutes` takes an options argument with a required `routes` array and an optional `interactions` array.
-* Remove `route` option from `createRoutes`.
-* The `active` interaction is now automatically included in a router.
-* A redirect can point to an external URL; the actual redirecting for external redirects is left to the user.
-* If the object returned by `route.response` has a property whose value is `undefined`, that property is left off of the `response`.
-* Change `emitRedirects` (default `true`) to `invisibleRedirects` (default `false`).
-
-## 2.0.0-beta.7
-
-* `route.path_options` is an object with `match` (for matching location) and `compile` (for generating pathnames) properties.
-* Remove `pathname_options` option.
-
-## 2.0.0-beta.6
-
-* Throw if param parsing fails.
-* Warn if `route.response` includes an invalid property.
-* Rename `redirect_to` property returned by a `response` function to `redirect`.
-
-## 2.0.0-beta.5
-
-* A route param is parsed using `decodeURIComponent` if no `param` function exists for it.
-* Move common types from `@curi/router` to `@curi/types`.
-
-## 2.0.0-beta.4
-
-* `redirect_to`'s `url` property generated using `history.href`.
-
-## 2.0.0-beta.3
-
-* Rename `curi` export to `create_router`.
-
-## 2.0.0-beta.2
-
-* Rename `prepareRoutes` to `prepare_routes`
-* Use snake cased `history.to_href`
-
-## 2.0.0-beta.1
-
-* Remove `automaticRedirects` option. `createServerHistory`, from `@hickory/in-memory`, makes `navigate` a no-op and should be used for server rendering.
-
-## 2.0.0-beta.0
-
-* First argument to `curi` is a history constructor.
-* Add `history` option to `curi` options for history object configuration.
-
-## 2.0.0-alpha.1
-
-* `curi` receives a pending history function.
-* Rely on `history` instance for cancelling navigations.
-* Use `SessionLocation` type
-* `navigate` does set default `method`.
-
-## 2.0.0-alpha.0
-
-* `route.resolve` is now a single function.
-* Routes array passed to `curi` must be prepared using `prepareRoutes`.
-* Expose the `external` value passed to `curi` options through `external` property.
 * Remove deprecated `pathname` and `once` exports.
-* Route paths that begin with a forward slash are no longer fixed for you. This will throw in development for easier detection.
+* Move common types from `@curi/router` to `@curi/types`.
+* Fix UMD builds.
 
 ## 1.1.1
 
