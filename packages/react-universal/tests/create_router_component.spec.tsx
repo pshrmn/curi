@@ -29,6 +29,8 @@ describe("createRouterComponent()", () => {
 
   describe("router argument", () => {});
 
+  describe("suspend argument", () => {});
+
   describe("children prop", () => {
     it("renders children", () => {
       const routes = prepareRoutes([{ name: "Catch All", path: "(.*)" }]);

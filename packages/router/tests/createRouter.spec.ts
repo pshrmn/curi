@@ -238,6 +238,145 @@ describe("createRouter", () => {
           expect(router.external).toBe(external);
         });
       });
+
+      describe("suspend", () => {
+        describe("router.suspends()", () => {
+          it("returns true when suspend is true", () => {
+            const routes = prepareRoutes([
+              {
+                name: "Home",
+                path: ""
+              },
+              {
+                name: "Not Found",
+                path: "(.*)"
+              }
+            ]);
+            const router = createRouter(inMemory, routes, {
+              suspend: true
+            });
+            expect(router.suspends()).toBe(true);
+          });
+
+          it("returns false when suspend is false", () => {
+            const routes = prepareRoutes([
+              {
+                name: "Home",
+                path: ""
+              },
+              {
+                name: "Not Found",
+                path: "(.*)"
+              }
+            ]);
+            const router = createRouter(inMemory, routes, {
+              suspend: false
+            });
+            expect(router.suspends()).toBe(false);
+          });
+
+          it("returns false when suspend is undefined", () => {
+            const routes = prepareRoutes([
+              {
+                name: "Home",
+                path: ""
+              },
+              {
+                name: "Not Found",
+                path: "(.*)"
+              }
+            ]);
+            const router = createRouter(inMemory, routes);
+            expect(router.suspends()).toBe(false);
+          });
+        });
+
+        it("when false (default), emits navigation objects without a finish() fn", () => {
+          const routes = prepareRoutes([
+            {
+              name: "Home",
+              path: ""
+            },
+            {
+              name: "Not Found",
+              path: "(.*)"
+            }
+          ]);
+          const router = createRouter(inMemory, routes, {
+            suspend: false
+          });
+
+          const { navigation } = router.current();
+          expect(navigation.finish).toBeUndefined();
+        });
+
+        it("when true, emits navigation objects with a finish() fn", () => {
+          const routes = prepareRoutes([
+            {
+              name: "Home",
+              path: ""
+            },
+            {
+              name: "Not Found",
+              path: "(.*)"
+            }
+          ]);
+          const router = createRouter(inMemory, routes, {
+            suspend: true
+          });
+
+          const { navigation } = router.current();
+          expect(typeof navigation.finish).toBe("function");
+        });
+
+        it("calls correct navigation's finish() fn", () => {
+          const routes = prepareRoutes([
+            {
+              name: "Home",
+              path: ""
+            },
+            {
+              name: "One",
+              path: "one"
+            },
+            {
+              name: "Two",
+              path: "two"
+            },
+            {
+              name: "Not Found",
+              path: "(.*)"
+            }
+          ]);
+          const router = createRouter(inMemory, routes, {
+            suspend: true
+          });
+          // start a navigation, but don't finish it
+          let oneNavigation;
+          const oneURL = router.url({ name: "One" });
+          router.navigate({ url: oneURL });
+          router.once(({ navigation }) => {
+            oneNavigation = navigation;
+          });
+
+          // start a second navigation, but don't finish it
+          // at this point, the first navigation has been cancelled
+          let twoNavigation;
+          const twoURL = router.url({ name: "Two" });
+          router.navigate({ url: twoURL });
+          router.once(({ navigation }) => {
+            twoNavigation = navigation;
+          });
+
+          // try to finish the first navigation
+          oneNavigation.finish();
+          // the navigation is cancelled, so still at Home
+          expect(router.history.location.pathname).toBe("/");
+
+          twoNavigation.finish();
+          expect(router.history.location.pathname).toBe("/two");
+        });
+      });
     });
 
     describe("sync/async matching", () => {
@@ -571,6 +710,47 @@ describe("createRouter", () => {
           router.navigate({ url: phoneURL });
           router.navigate({ url: mailURL });
         });
+
+        describe("suspend", () => {
+          it("calls function before navigation is finished", done => {
+            const routes = prepareRoutes([
+              { name: "Home", path: "" },
+              { name: "About", path: "about" },
+              {
+                name: "Contact",
+                path: "contact",
+                children: [
+                  {
+                    name: "How",
+                    path: ":method",
+                    resolve() {
+                      return Promise.resolve();
+                    }
+                  }
+                ]
+              }
+            ]);
+            const router = createRouter(inMemory, routes, {
+              suspend: true
+            });
+            // Register an observer function, but don't call it immediately
+            // so that we can compare its received location to the history's
+            // current location.
+            router.observe(
+              ({ response }) => {
+                expect(response.location.pathname).toBe("/contact/phone");
+                expect(router.history.location.pathname).toBe("/");
+                done();
+              },
+              { initial: false }
+            );
+            const url = router.url({
+              name: "How",
+              params: { method: "phone" }
+            });
+            router.navigate({ url });
+          });
+        });
       });
     });
 
@@ -778,6 +958,51 @@ describe("createRouter", () => {
             }
           });
           router.once(check);
+        });
+
+        describe("suspend", () => {
+          it("calls function before navigation is finished", done => {
+            const routes = prepareRoutes([
+              { name: "Home", path: "" },
+              { name: "About", path: "about" },
+              {
+                name: "Contact",
+                path: "contact",
+                children: [
+                  {
+                    name: "How",
+                    path: ":method",
+                    resolve() {
+                      return Promise.resolve();
+                    }
+                  }
+                ]
+              }
+            ]);
+            const router = createRouter(inMemory, routes, {
+              suspend: true
+            });
+            // Register a one timer function, but don't call it immediately
+            // so that we can compare its received location to the history's
+            // current location.
+            // While router.once() is typically used with the initial location,
+            // the easiest way to verify that a one time function is called before
+            // finishing navigation is to verify that its location is the new one,
+            // while the history's is the old one.
+            router.once(
+              ({ response }) => {
+                expect(response.location.pathname).toBe("/contact/phone");
+                expect(router.history.location.pathname).toBe("/");
+                done();
+              },
+              { initial: false }
+            );
+            const url = router.url({
+              name: "How",
+              params: { method: "phone" }
+            });
+            router.navigate({ url });
+          });
         });
 
         it("does not emit responses for cancelled navigation", done => {

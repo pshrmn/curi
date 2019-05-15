@@ -5,5 +5,6 @@ export interface RouterOptions<O = HistoryOptions> {
     invisibleRedirects?: boolean;
     external?: any;
     history?: O;
+    suspend?: boolean;
 }
 export default function createRouter<O = HistoryOptions>(historyConstructor: HistoryConstructor<O>, routes: RouteMatcher, options?: RouterOptions<O>): CuriRouter;

@@ -29,6 +29,7 @@ export interface RouterOptions<O = HistoryOptions> {
   invisibleRedirects?: boolean;
   external?: any;
   history?: O;
+  suspend?: boolean;
 }
 
 export default function createRouter<O = HistoryOptions>(
@@ -38,6 +39,9 @@ export default function createRouter<O = HistoryOptions>(
 ): CuriRouter {
   let latestResponse: Response;
   let latestNavigation: Navigation;
+
+  const { invisibleRedirects = false, suspend = false } = options;
+  const emit = suspend ? emitSuspended : emitImmediate;
 
   const history = historyConstructor((pendingNav: PendingNavigation) => {
     const navigation: Navigation = {
@@ -93,8 +97,6 @@ export default function createRouter<O = HistoryOptions>(
     navigation: Navigation,
     resolved: ResolveResults | null
   ) {
-    asyncNavComplete();
-    pending.finish();
     const response = finishResponse(
       route,
       match,
@@ -102,13 +104,18 @@ export default function createRouter<O = HistoryOptions>(
       router,
       options.external
     );
-    finishAndResetNavCallbacks();
-    emitImmediate(response, navigation);
+    emit(pending, response, navigation);
   }
 
-  const { invisibleRedirects = false } = options;
+  function emitImmediate(
+    pending: PendingNavigation,
+    response: Response,
+    navigation: Navigation
+  ) {
+    asyncNavComplete();
+    pending.finish();
+    finishAndResetNavCallbacks();
 
-  function emitImmediate(response: Response, navigation: Navigation) {
     if (
       !response.redirect ||
       !invisibleRedirects ||
@@ -116,11 +123,39 @@ export default function createRouter<O = HistoryOptions>(
     ) {
       latestResponse = response;
       latestNavigation = navigation;
-      const emit = { response, navigation, router };
-      callObservers(emit);
-      callOneTimersAndSideEffects(emit);
+      const output = { response, navigation, router };
+      callObservers(output);
+      callOneTimers(output);
+      callSideEffects(output);
     }
 
+    autoRedirect(response);
+  }
+
+  function emitSuspended(
+    pending: PendingNavigation,
+    response: Response,
+    navigation: Navigation
+  ) {
+    navigation.finish = createFinisher(pending, response, navigation);
+
+    if (
+      !response.redirect ||
+      !invisibleRedirects ||
+      isExternalRedirect(response.redirect)
+    ) {
+      latestResponse = response;
+      latestNavigation = navigation;
+
+      const output = { response, navigation, router };
+      callObservers(output);
+      callOneTimers(output);
+    }
+
+    autoRedirect(response);
+  }
+
+  function autoRedirect(response: Response) {
     if (
       response.redirect !== undefined &&
       !isExternalRedirect(response.redirect)
@@ -129,16 +164,40 @@ export default function createRouter<O = HistoryOptions>(
     }
   }
 
+  function createFinisher(
+    pending: PendingNavigation,
+    response: Response,
+    navigation: Navigation
+  ) {
+    let called = false;
+    return function finisher() {
+      if (called || pending.cancelled) {
+        return;
+      }
+      called = true;
+      asyncNavComplete();
+      finishAndResetNavCallbacks();
+      if (pending.finish) {
+        pending.finish();
+      }
+
+      callSideEffects({ response, navigation, router });
+    };
+  }
+
   function callObservers(emitted: Emitted) {
     observers.forEach(fn => {
       fn(emitted);
     });
   }
 
-  function callOneTimersAndSideEffects(emitted: Emitted) {
+  function callOneTimers(emitted: Emitted) {
     oneTimers.splice(0).forEach(fn => {
       fn(emitted);
     });
+  }
+
+  function callSideEffects(emitted: Emitted) {
     if (options.sideEffects) {
       options.sideEffects.forEach(fn => {
         fn(emitted);
@@ -288,6 +347,9 @@ export default function createRouter<O = HistoryOptions>(
     },
     destroy() {
       history.destroy();
+    },
+    suspends() {
+      return suspend;
     }
   };
 

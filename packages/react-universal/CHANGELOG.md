@@ -1,3 +1,8 @@
+## Next
+
+* Add `suspend`, a boolean, as second argument to `createRouterComponent`. When `true`, response context will be set asynchronously.
+* Add `useFinishNavigation` hook, which finishes a navigation after a render is complete.
+
 ## 2.0.0
 
 Consolidated CHANGELOG for v2:

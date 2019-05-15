@@ -8,6 +8,7 @@ export interface CuriRouter {
     url(details: RouteLocation): string;
     navigate(options: NavigationDetails): (() => void) | void;
     destroy(): void;
+    suspends(): boolean;
     route: RouteGetter;
     history: History;
     external: any;
@@ -27,6 +28,7 @@ export interface CurrentResponse {
 export interface Navigation {
     action: Action;
     previous: Response | undefined;
+    finish?: () => void;
 }
 export interface ResponseHandlerOptions {
     initial?: boolean;

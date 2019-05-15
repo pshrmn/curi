@@ -14,6 +14,8 @@ export default function createRouterComponent(
     return router.current();
   }
 
+  const suspend = router.suspends();
+
   return function Router(props: RouterProps) {
     const [response, setResponse] = React.useState<ResponseAndNav>(
       initialState
@@ -24,7 +26,14 @@ export default function createRouterComponent(
       const stop = router.observe(
         ({ response, navigation }) => {
           if (!removed) {
-            setResponse({ response, navigation });
+            if (suspend) {
+              // filler until React scheduler is ready
+              setTimeout(() => {
+                setResponse({ response, navigation });
+              });
+            } else {
+              setResponse({ response, navigation });
+            }
           }
         },
         { initial: false }
