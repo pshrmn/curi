@@ -1040,6 +1040,56 @@ describe("createRouter", () => {
       });
     });
 
+    describe("return value", () => {
+      it("returns a function if a finished property is passed to navigate", () => {
+        const routes = prepareRoutes([
+          { name: "Home", path: "" },
+          {
+            name: "Contact",
+            path: "contact",
+            children: [{ name: "Method", path: ":method" }]
+          },
+          { name: "Catch All", path: "(.*)" }
+        ]);
+        const router = createRouter(inMemory, routes);
+        const url = router.url({ name: "Contact" });
+        const fn = router.navigate({ url, finished: () => {} });
+        expect(fn).not.toBeUndefined();
+      });
+
+      it("returns a function if a cancelled property is passed to navigate", () => {
+        const routes = prepareRoutes([
+          { name: "Home", path: "" },
+          {
+            name: "Contact",
+            path: "contact",
+            children: [{ name: "Method", path: ":method" }]
+          },
+          { name: "Catch All", path: "(.*)" }
+        ]);
+        const router = createRouter(inMemory, routes);
+        const url = router.url({ name: "Contact" });
+        const fn = router.navigate({ url, cancelled: () => {} });
+        expect(fn).not.toBeUndefined();
+      });
+
+      it("returns undefind if neither finished nor cancelled properties are provided", () => {
+        const routes = prepareRoutes([
+          { name: "Home", path: "" },
+          {
+            name: "Contact",
+            path: "contact",
+            children: [{ name: "Method", path: ":method" }]
+          },
+          { name: "Catch All", path: "(.*)" }
+        ]);
+        const router = createRouter(inMemory, routes);
+        const url = router.url({ name: "Contact" });
+        const fn = router.navigate({ url });
+        expect(fn).toBeUndefined();
+      });
+    });
+
     describe("cancelling a navigation", () => {
       it("calls the navigation's cancelled function", () => {
         const routes = prepareRoutes([

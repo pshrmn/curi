@@ -12,7 +12,7 @@ export interface CuriRouter {
   cancel(fn: Cancellable): () => void;
   current(): CurrentResponse;
   url(details: RouteLocation): string;
-  navigate(options: NavigationDetails): () => void;
+  navigate(options: NavigationDetails): (() => void) | void;
   destroy(): void;
   route: RouteGetter;
   history: History;

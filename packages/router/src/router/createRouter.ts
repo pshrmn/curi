@@ -205,13 +205,13 @@ export default function createRouter<O = HistoryOptions>(
     cancelAndResetNavCallbacks();
 
     let { url, state, method } = details;
-
-    cancelCallback = details.cancelled;
-    finishCallback = details.finished;
-
     history.navigate({ url, state }, method);
 
-    return resetCallbacks;
+    if (details.cancelled || details.finished) {
+      cancelCallback = details.cancelled;
+      finishCallback = details.finished;
+      return resetCallbacks;
+    }
   }
 
   function cancelAndResetNavCallbacks() {
