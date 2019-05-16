@@ -4,11 +4,10 @@ import { useResponse } from "@curi/react-dom";
 
 import MainContents from "./MainContents";
 import PageMenu from "../../layout/PageMenu";
-import { MenuToggleButton, MainMenuButton, PageMenuButton } from "./buttons";
+import { MainMenuButton, PageMenuButton } from "./buttons";
 import { color, screen } from "../../../constants/styles";
 
 const StyledMenu = styled("div")`
-  display: none;
   position: fixed;
   overflow-y: scroll;
   width: 100vw;
@@ -72,17 +71,19 @@ const StyledMenu = styled("div")`
 
 const StyledControls = styled("div")`
   position: fixed;
-  right: 15px;
-  bottom: 15px;
+  width: 100vw;
+  height: 50px;
+  left: 0;
+  bottom: 0;
   display: flex;
-  flex-flow: column-reverse;
+  flex: row nowrap;
+  justify-content: space-between;
   z-index: 9999;
 `;
 
 function MenuControls(props) {
   return (
     <StyledControls>
-      <MenuToggleButton {...props} />
       <MainMenuButton {...props} />
       {props.hasPage && <PageMenuButton {...props} />}
     </StyledControls>
@@ -90,29 +91,24 @@ function MenuControls(props) {
 }
 
 export default function MobileMenu(props) {
-  const [visible, setVisible] = React.useState(false);
-  const [which, setWhich] = React.useState("main");
+  const [which, setWhich] = React.useState(undefined);
   const { response } = useResponse();
 
   React.useEffect(() => {
-    // reset to main when switching pages
-    // this is primarily a safeguard in case
-    // the new page doesn't have
-    setWhich("main");
+    // reset to hidden when switching pages
+    setWhich(undefined);
   }, [response.location.pathname]);
 
-  const toggleMenuVisibility = () => {
-    setVisible(prev => !prev);
-  };
-
-  const toggleMenuType = which => {
-    setWhich(which);
+  const toggleMenuType = type => {
+    if (type === which) {
+      setWhich(undefined);
+    } else {
+      setWhich(type);
+    }
   };
 
   const hideMenu = () => {
-    if (visible) {
-      setVisible(false);
-    }
+    setWhich(undefined);
   };
 
   const { contents } = props;
@@ -126,22 +122,20 @@ export default function MobileMenu(props) {
   return (
     <React.Fragment>
       <MenuControls
-        toggleMenuVisibility={toggleMenuVisibility}
         toggleMenuType={toggleMenuType}
-        visible={visible}
         activeMenu={which}
         hasPage={contents !== undefined}
       />
       <StyledMenu
-        hidden={!visible}
-        className={visible ? "visible" : ""}
+        hidden={which === undefined}
+        className={which !== undefined ? "visible" : ""}
         onClick={e => {
           if (e.target.tagName === "A") {
             hideMenu();
           }
         }}
       >
-        <nav>{visible && menu}</nav>
+        <nav>{menu}</nav>
       </StyledMenu>
     </React.Fragment>
   );

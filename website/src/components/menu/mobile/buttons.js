@@ -4,88 +4,64 @@ import { css } from "@emotion/core";
 
 import { color, screen, font } from "../../../constants/styles";
 
-const buttonDiameter = 75;
-
 const buttonStyles = css`
-  width: ${buttonDiameter}px;
-  height: ${buttonDiameter}px;
-  border-radius: 40px;
+  height: 50px;
   border: 0;
-  margin-top 10px;
   font-size: 1em;
   font-family: ${font.serif};
+  flex: 1;
+
+  &.active {
+    background: ${color.buttonRed};
+  }
 
   @media only screen and (min-width: ${screen.medium}) {
     display: none;
   }
 `;
 
-const StyledButton = styled("button")`
+const StyledMainButton = styled("button")`
   ${buttonStyles}
-  background: ${color.borderBlue};
+
+  background: ${color.buttonGreen};
 `;
 
-const StyledMiniButton = styled("button")`
+const StyledPageButton = styled("button")`
   ${buttonStyles}
-  background: ${color.borderGray};
 
-  &.active {
-    background: ${color.buttonGreen};
-  }
+  background: ${color.buttonBlue};
 `;
-
-export function MenuToggleButton(props) {
-  return (
-    <StyledButton
-      type="button"
-      className="toggler"
-      onClick={props.toggleMenuVisibility}
-    >
-      {props.visible ? "Hide" : "Menu"}
-    </StyledButton>
-  );
-}
 
 export function MainMenuButton(props) {
-  const classNames = [
-    props.visible && "visible",
-    props.activeMenu === "main" && "active",
-    "main"
-  ]
+  const classNames = [props.activeMenu === "main" && "active", "main"]
     .filter(c => c !== undefined)
     .join(" ");
 
   return (
-    <StyledMiniButton
-      hidden={!props.visible}
+    <StyledMainButton
       onClick={() => {
         props.toggleMenuType("main");
       }}
       className={classNames}
     >
-      Main
-    </StyledMiniButton>
+      Main Menu
+    </StyledMainButton>
   );
 }
 
 export function PageMenuButton(props) {
-  const classNames = [
-    props.visible && "visible",
-    props.activeMenu === "page" && "active",
-    "page"
-  ]
+  const classNames = [props.activeMenu === "page" && "active", "page"]
     .filter(c => c !== undefined)
     .join(" ");
 
   return (
-    <StyledMiniButton
-      hidden={!props.visible}
+    <StyledPageButton
       onClick={() => {
         props.toggleMenuType("page");
       }}
       className={classNames}
     >
-      Page
-    </StyledMiniButton>
+      Page Menu
+    </StyledPageButton>
   );
 }

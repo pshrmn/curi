@@ -85,7 +85,7 @@ const router = createRouter(browser, routes, {
 
             <p>
               <Link name="Guide" params={{ slug: "accessibility" }}>
-                Read more.
+                Learn more.
               </Link>
             </p>
           </Tile>
@@ -99,7 +99,7 @@ const router = createRouter(browser, routes, {
             </p>
             <p>
               <Link name="Guide" params={{ slug: "sync-or-async" }}>
-                Read more.
+                Learn more.
               </Link>
             </p>
           </Tile>

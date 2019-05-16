@@ -7,7 +7,7 @@ const StyledMain = styled("main")`
   width: 100vw;
   max-width: 100%;
   padding: 10px 10px 0;
-  margin-bottom: 20px;
+  margin-bottom: 55px;
 
   a {
     color: ${color.purple};
