@@ -14,7 +14,7 @@ const StyledMenu = styled("div")`
   height: 100vh;
   background: ${color.lightGray};
   z-index: 999;
-  padding: 15px;
+  padding: 15px 15px 45px;
 
   &.visible {
     display: block;
@@ -72,11 +72,11 @@ const StyledMenu = styled("div")`
 const StyledControls = styled("div")`
   position: fixed;
   width: 100vw;
-  height: 50px;
+  height: 40px;
   left: 0;
   bottom: 0;
   display: flex;
-  flex: row nowrap;
+  flex-flow: row nowrap;
   justify-content: space-between;
   z-index: 9999;
 `;

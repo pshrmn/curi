@@ -29,12 +29,16 @@ const Tiles = styled("div")`
 const Tile = styled("div")`
   margin: 0 25px 25px 0;
 
-  h2 {
+  h3 {
     font-size: 1.2em;
   }
 
   p {
-    margin: 0;
+    margin-bottom: 10px;
+
+    &:last-child {
+      margin: 0;
+    }
   }
 
   justify-content: space-between;
@@ -77,7 +81,7 @@ const router = createRouter(browser, routes, {
         <h2>What is Curi?</h2>
         <Tiles>
           <Tile>
-            <h2>Accessible</h2>
+            <h3>Accessible</h3>
             <p>
               Curi helps make your application more accessible with focus
               management and navigation announcements.
@@ -91,7 +95,7 @@ const router = createRouter(browser, routes, {
           </Tile>
 
           <Tile>
-            <h2>Asynchronous</h2>
+            <h3>Asynchronous</h3>
             <p>
               Routes can have asynchronous actions, like code splitting and data
               fetching. When the route matches, the application will not
@@ -105,30 +109,81 @@ const router = createRouter(browser, routes, {
           </Tile>
 
           <Tile>
-            <h2>Render How You Want</h2>
+            <h3>Flexible</h3>
             <p>
-              Curi is a Javascript router, not a React router, a Vue router,
-              etc.
+              You choose how to render. Curi is a Javascript router, not a React
+              router, a Vue router, etc.
             </p>
+
             <p>
-              Curi provides packages to interface with some popular UI
-              renderers, but you can also write your own.
+              Curi provides official support for some UI renderers, but you can
+              also interface it to work with your renderer of choice.
             </p>
           </Tile>
 
           <Tile>
-            <h2>Resources</h2>
+            <h3>SSR Friendly</h3>
+            <p>
+              <Link name="Guide" params={{ slug: "ssr" }}>
+                Server-side rendering
+              </Link>{" "}
+              with Curi is pain free. Thanks to Curi's async model, data loading
+              with SSR doesn't require double renders.
+            </p>
+
+            <p>
+              Curi also provides a{" "}
+              <Link
+                name="Package"
+                params={{ package: "static", version: "v2" }}
+              >
+                static
+              </Link>{" "}
+              package for pre-rendering static HTML pages.
+            </p>
+          </Tile>
+        </Tiles>
+      </PlainSection>
+
+      <PlainSection className="centered">
+        <h2>Resources</h2>
+        <Tiles>
+          <Tile>
+            <h3>Guides</h3>
             <p>
               Want to learn more? Check out the{" "}
               <Link name="Guide" params={{ slug: "getting-started" }}>
-                Get Started
-              </Link>{" "}
-              guide.
+                getting started guide
+              </Link>
+              .
             </p>
+          </Tile>
+
+          <Tile>
+            <h3>API Documentation</h3>
+            <p>
+              Each package's API is{" "}
+              <Link name="Packages" params={{ version: "v2" }}>
+                well documented
+              </Link>{" "}
+              so you can spend less time wondering and more time building.
+            </p>
+          </Tile>
+
+          <Tile>
+            <h3>Examples</h3>
             <p>
               Want to see some example applications? There are{" "}
               <Link name="Examples">many examples</Link> to choose from, using a
               few different UI renderers.
+            </p>
+          </Tile>
+
+          <Tile>
+            <h3>Tutorials</h3>
+            <p>
+              Do you learn by doing? Curi provides a few{" "}
+              <Link name="Tutorials">tutorials</Link> to help you get started.
             </p>
           </Tile>
         </Tiles>

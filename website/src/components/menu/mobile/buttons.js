@@ -5,7 +5,7 @@ import { css } from "@emotion/core";
 import { color, screen, font } from "../../../constants/styles";
 
 const buttonStyles = css`
-  height: 50px;
+  height: 40px;
   border: 0;
   font-size: 1em;
   font-family: ${font.serif};
@@ -44,7 +44,7 @@ export function MainMenuButton(props) {
       }}
       className={classNames}
     >
-      Main Menu
+      {props.activeMenu === "main" ? "Close Menu" : "Main Menu"}
     </StyledMainButton>
   );
 }
@@ -61,7 +61,7 @@ export function PageMenuButton(props) {
       }}
       className={classNames}
     >
-      Page Menu
+      {props.activeMenu === "page" ? "Close Menu" : "Page Menu"}
     </StyledPageButton>
   );
 }
