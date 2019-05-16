@@ -1,6 +1,6 @@
 # @curi/react-universal
 
-**You probably want to install `@curi/react-universal-dom` instead!**
+**You probably want to install `@curi/react-dom` instead!**
 
 [![npm][badge]][npm-link]
 
