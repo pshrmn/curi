@@ -11,7 +11,7 @@ const examples = [
   },
 
   {
-    name: "Accessibility with Focus Management",
+    name: "Focus Management",
     slug: "accessibility",
     description: "Focusing content after navigation for improved accessibility",
     load: () =>

@@ -25,7 +25,11 @@ function SyncAndAsyncGuide() {
       <PlainSection>
         <h1>{meta.title}</h1>
 
-        <p>With Curi, routes can be synchronous or asynchronous.</p>
+        <p>
+          With Curi, routes can be synchronous or asynchronous. By default,
+          routes are synchronous. If a route has a <IJS>resolve</IJS> function,
+          it becomes async.
+        </p>
 
         <p>
           When a navigation event is triggered (e.g. clicking a link or button),
@@ -34,11 +38,6 @@ function SyncAndAsyncGuide() {
           the response will not be emitted until the route's async functions
           have finished. Asynchronous routes are useful for code splitting and
           preloading data.
-        </p>
-
-        <p>
-          By default, routes are synchronous. If a route has a{" "}
-          <IJS>resolve</IJS> function, it becomes async.
         </p>
 
         <CodeBlock>

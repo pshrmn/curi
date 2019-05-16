@@ -10,32 +10,37 @@ const StyledH1 = styled("h1")`
   font-size: 1.75em;
   text-align: center;
   color: ${color.purple};
+  margin: 0;
 `;
 
 const StyledH2 = styled("h2")`
   font-size: 1.2em;
   text-align: center;
   color: ${color.darkGray};
+  margin: 0;
 `;
 
 const Tiles = styled("div")`
   margin: 25px auto 0;
   display: flex;
   flex-flow: row wrap;
-  justify-content: center;
-
-  @media only screen and (min-width: ${screen.medium}) {
-    justify-content: space-between;
-  }
 `;
 
 const Tile = styled("div")`
-  margin-right: 25px;
-  max-width: 300px;
-  min-width: 200px;
+  margin: 0 25px 25px 0;
 
   h2 {
     font-size: 1.2em;
+  }
+
+  p {
+    margin: 0;
+  }
+
+  justify-content: space-between;
+  @media only screen and (min-width: ${screen.medium}) {
+    max-width: 300px;
+    min-width: 200px;
   }
 `;
 
@@ -69,20 +74,33 @@ const router = createRouter(browser, routes, {
       </PlainSection>
 
       <PlainSection className="centered">
+        <h2>What is Curi?</h2>
         <Tiles>
           <Tile>
             <h2>Accessible</h2>
             <p>
               Curi helps make your application more accessible with focus
-              management and announcing page navigations.
+              management and navigation announcements.
+            </p>
+
+            <p>
+              <Link name="Guide" params={{ slug: "accessibility" }}>
+                Read more.
+              </Link>
             </p>
           </Tile>
 
           <Tile>
             <h2>Asynchronous</h2>
             <p>
-              Curi supports attaching asynchronous actions, like code splitting
-              and data fetching, to routes.
+              Routes can have asynchronous actions, like code splitting and data
+              fetching. When the route matches, the application will not
+              re-render until the route's async actions complete.
+            </p>
+            <p>
+              <Link name="Guide" params={{ slug: "sync-or-async" }}>
+                Read more.
+              </Link>
             </p>
           </Tile>
 

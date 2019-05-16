@@ -3,7 +3,7 @@ import React from "react";
 import { HashSection, MultiSandbox } from "../../components/example/common";
 
 const meta = {
-  title: "Accessibility with Focus Management"
+  title: "Focus Management"
 };
 
 const explanationMeta = {
