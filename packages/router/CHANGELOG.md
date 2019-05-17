@@ -1,3 +1,7 @@
+## Next
+
+* The `div` inserted by `announce` sets `top: 0;` to prevent overflow on fixed size websites.
+
 ## 2.0.0
 
 Consolidated CHANGELOG for v2:

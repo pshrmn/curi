@@ -21,7 +21,8 @@ export default function announce(
       "padding: 0 !important;",
       "position: absolute !important;",
       "width: 1px !important;",
-      "white-space: nowrap !important;"
+      "white-space: nowrap !important;",
+      "top: 0;"
     ].join(" ")
   );
   document.body.appendChild(announcer);
