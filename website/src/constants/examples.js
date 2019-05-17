@@ -100,6 +100,16 @@ const examples = [
   },
 
   {
+    name: "Spotify Clone",
+    slug: "spotify",
+    load: () =>
+      import(
+        /* webpackChunkName: 'example--full-spotify'*/
+        `../pages/Examples/spotify.js`
+      )
+  },
+
+  {
     name: "Twitch Clone",
     slug: "twitch",
     load: () =>
