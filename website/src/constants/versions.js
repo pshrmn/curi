@@ -5,8 +5,8 @@ export default {
   "react-dom": "2.0.0",
   "react-native": "2.0.0",
   "react-universal": "2.0.0",
-  "router": "2.0.0",
-  "static": "2.0.0",
+  "router": "2.0.1",
+  "static": "2.0.1",
   "svelte": "2.0.0-beta.4",
   "types": "2.0.0",
   "vue": "2.0.0-alpha.11"
