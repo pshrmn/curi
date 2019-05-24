@@ -1578,6 +1578,48 @@ describe("createRouter", () => {
     });
   });
 
+  describe("route matching", () => {
+    describe("no matching routes", () => {
+      it("no response is emitted", () => {
+        // suppress the warning
+        const realWarn = console.warn;
+        console.warn = () => {};
+
+        const routes = prepareRoutes([]);
+        const router = createRouter(inMemory, routes, {
+          history: {
+            locations: [{ url: "/test" }]
+          }
+        });
+
+        const observer = jest.fn();
+        router.once(observer);
+        expect(observer.mock.calls.length).toBe(0);
+
+        console.warn = realWarn;
+      });
+
+      it("warns that no route matched", () => {
+        const realWarn = console.warn;
+        const fakeWarn = (console.warn = jest.fn());
+
+        const routes = prepareRoutes([]);
+        const router = createRouter(inMemory, routes, {
+          history: {
+            locations: [{ url: "/test" }]
+          }
+        });
+        const observer = jest.fn();
+
+        router.once(observer);
+        expect(fakeWarn.mock.calls[0][0]).toBe(
+          `The current location (/test) has no matching route, so a response could not be emitted. A catch-all route ({ path: "(.*)" }) can be used to match locations with no other matching route.`
+        );
+        console.warn = realWarn;
+      });
+    });
+  });
+
   describe("response.redirect", () => {
     it("triggers a replace navigation AFTER emitting initial response", done => {
       const routes = prepareRoutes([
