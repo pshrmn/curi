@@ -1,11 +1,50 @@
 import "jest";
+import { pathname as pathnameInteraction } from "@curi/interactions";
 
 import { prepareRoutes } from "@curi/router";
 
+import { AsyncRoute } from "@curi/types";
+
 describe("prepareRoutes()", () => {
   describe("route properties", () => {
-    describe("paths beginning with forward slash", () => {
-      it("throws", () => {
+    describe("name", () => {
+      describe("unique names", () => {
+        it("throws if multiple routes have the same name", () => {
+          expect(() => {
+            prepareRoutes([
+              { name: "Home", path: "" },
+              { name: "Home", path: "home" },
+              { name: "Catch All", path: "(.*)" }
+            ]);
+          }).toThrow(
+            `Multiple routes have the name "Home". Route names must be unique.`
+          );
+        });
+
+        it("throws with non-unique nested routes", () => {
+          expect(() => {
+            prepareRoutes([
+              {
+                name: "Home",
+                path: "",
+                children: [{ name: "Child", path: "child" }]
+              },
+              {
+                name: "About",
+                path: "about",
+                children: [{ name: "Child", path: "child" }]
+              },
+              { name: "Catch All", path: "(.*)" }
+            ]);
+          }).toThrow(
+            `Multiple routes have the name "Child". Route names must be unique.`
+          );
+        });
+      });
+    });
+
+    describe("path", () => {
+      it("throws if a path begins with a forward slash", () => {
         expect(() => {
           const routes = prepareRoutes([
             { name: "Home", path: "/" },
@@ -17,43 +56,296 @@ describe("prepareRoutes()", () => {
       });
     });
 
-    describe("unique names", () => {
-      it("throws if multiple routes have the same name", () => {
-        expect(() => {
-          prepareRoutes([
-            { name: "Home", path: "" },
-            { name: "Home", path: "home" },
-            { name: "Catch All", path: "(.*)" }
-          ]);
-        }).toThrow(
-          `Multiple routes have the name "Home". Route names must be unique.`
-        );
+    describe("pathOptions", () => {
+      describe("match", () => {
+        describe("sensitive", () => {
+          it("does case-insensitive matching when false (default)", () => {
+            const routes = prepareRoutes([
+              {
+                name: "Test",
+                path: "here"
+              },
+              {
+                name: "Not Found",
+                path: "(.*)"
+              }
+            ]);
+            const match = routes.match({
+              pathname: "/Here",
+              hash: "",
+              query: "",
+              key: [0, 0]
+            });
+            expect(match.match.name).toBe("Test");
+          });
+
+          it("does case sensitive matchign when true", () => {
+            const routes = prepareRoutes([
+              {
+                name: "Test",
+                path: "here",
+                pathOptions: { match: { sensitive: true } }
+              },
+              {
+                name: "Not Found",
+                path: "(.*)"
+              }
+            ]);
+            const match = routes.match({
+              pathname: "/Here",
+              hash: "",
+              query: "",
+              key: [0, 0]
+            });
+            expect(match.match.name).toBe("Not Found");
+          });
+        });
+
+        describe("strict", () => {
+          it("will match a trailing delimiter when false", () => {
+            const routes = prepareRoutes([
+              {
+                name: "Test",
+                path: "here"
+              },
+              {
+                name: "Not Found",
+                path: "(.*)"
+              }
+            ]);
+            const match = routes.match({
+              pathname: "/here/",
+              hash: "",
+              query: "",
+              key: [0, 0]
+            });
+            expect(match.match.name).toBe("Test");
+          });
+
+          it("will not match a trailing delimiter when true", () => {
+            const routes = prepareRoutes([
+              {
+                name: "Test",
+                path: "here",
+                pathOptions: { match: { strict: true } }
+              },
+              {
+                name: "Not Found",
+                path: "(.*)"
+              }
+            ]);
+            const match = routes.match({
+              pathname: "/here/",
+              hash: "",
+              query: "",
+              key: [0, 0]
+            });
+            expect(match.match.name).toBe("Not Found");
+          });
+        });
+
+        describe("end", () => {
+          it("does not match if there are segments after the path when true", () => {
+            const routes = prepareRoutes([
+              {
+                name: "Test",
+                path: "here"
+              },
+              {
+                name: "Not Found",
+                path: "(.*)"
+              }
+            ]);
+            const match = routes.match({
+              pathname: "/here/again",
+              hash: "",
+              query: "",
+              key: [0, 0]
+            });
+            expect(match.match.name).toBe("Not Found");
+          });
+
+          it("matches when there are segments after the path when false", () => {
+            const routes = prepareRoutes([
+              {
+                name: "Test",
+                path: "here",
+                pathOptions: { match: { end: false } }
+              },
+              {
+                name: "Not Found",
+                path: "(.*)"
+              }
+            ]);
+            const match = routes.match({
+              pathname: "/here/again",
+              hash: "",
+              query: "",
+              key: [0, 0]
+            });
+            expect(match.match.name).toBe("Test");
+          });
+
+          describe("with children routes", () => {
+            it("matches if path matches exactly", () => {
+              const routes = prepareRoutes([
+                {
+                  name: "Test",
+                  path: "test",
+                  children: [
+                    {
+                      name: "Ing",
+                      path: "ing"
+                    }
+                  ]
+                },
+                {
+                  name: "Not Found",
+                  path: "(.*)"
+                }
+              ]);
+              const match = routes.match({
+                pathname: "/test",
+                hash: "",
+                query: "",
+                key: [0, 0]
+              });
+              expect(match.match.name).toBe("Test");
+            });
+
+            it("acts as if end is false in order to match children routes", () => {
+              const routes = prepareRoutes([
+                {
+                  name: "Test",
+                  path: "test",
+                  children: [
+                    {
+                      name: "Ing",
+                      path: "ing"
+                    }
+                  ]
+                },
+                {
+                  name: "Not Found",
+                  path: "(.*)"
+                }
+              ]);
+              const match = routes.match({
+                pathname: "/test/ing",
+                hash: "",
+                query: "",
+                key: [0, 0]
+              });
+              expect(match.match.name).toBe("Ing");
+            });
+
+            it("when end is true, path doesn't match exactly, and no children match, it does not match", () => {
+              const routes = prepareRoutes([
+                {
+                  name: "Test",
+                  path: "test",
+                  children: [
+                    {
+                      name: "Ing",
+                      path: "ing"
+                    }
+                  ]
+                },
+                {
+                  name: "Not Found",
+                  path: "(.*)"
+                }
+              ]);
+              const match = routes.match({
+                pathname: "/test/ed",
+                hash: "",
+                query: "",
+                key: [0, 0]
+              });
+              expect(match.match.name).toBe("Not Found");
+            });
+
+            it("when end is false, path doesn't match exactly, and no children match, it matches", () => {
+              const routes = prepareRoutes([
+                {
+                  name: "Test",
+                  path: "test",
+                  pathOptions: {
+                    match: {
+                      end: false
+                    }
+                  },
+                  children: [
+                    {
+                      name: "Ing",
+                      path: "ing"
+                    }
+                  ]
+                },
+                {
+                  name: "Not Found",
+                  path: "(.*)"
+                }
+              ]);
+              const match = routes.match({
+                pathname: "/test/ed",
+                hash: "",
+                query: "",
+                key: [0, 0]
+              });
+              expect(match.match.name).toBe("Test");
+            });
+          });
+        });
       });
 
-      it("throws with nested routes", () => {
-        expect(() => {
-          prepareRoutes([
+      describe("compile", () => {
+        it("uses default encode function if none is provided", () => {
+          const routes = prepareRoutes([
             {
-              name: "Home",
-              path: "",
-              children: [{ name: "Child", path: "child" }]
+              name: "Artist",
+              path: "a/:name"
             },
             {
-              name: "About",
-              path: "about",
-              children: [{ name: "Child", path: "child" }]
-            },
-            { name: "Catch All", path: "(.*)" }
+              name: "Not Found",
+              path: "(.*)"
+            }
           ]);
-        }).toThrow(
-          `Multiple routes have the name "Child". Route names must be unique.`
-        );
+          const route = routes.route("Artist");
+          const pathname = pathnameInteraction(route, {
+            name: "Beyoncé"
+          });
+          expect(pathname).toBe("/a/Beyonc%C3%A9");
+        });
+
+        it("uses custom encode function if provided", () => {
+          const routes = prepareRoutes([
+            {
+              name: "Artist",
+              path: "a/:name",
+              pathOptions: {
+                compile: {
+                  encode: n => n
+                }
+              }
+            },
+            {
+              name: "Not Found",
+              path: "(.*)"
+            }
+          ]);
+          const route = routes.route("Artist");
+          const pathname = pathnameInteraction(route, {
+            name: "Beyoncé"
+          });
+          expect(pathname).toBe("/a/Beyoncé");
+        });
       });
     });
   });
 
   describe("route", () => {
-    it("returns the public route properties for the named route", () => {
+    it("returns the public route for the named route", () => {
       const routes = prepareRoutes([
         { name: "Home", path: "" },
         { name: "Catch All", path: "(.*)" }
@@ -97,6 +389,155 @@ describe("prepareRoutes()", () => {
       );
 
       console.warn = realWarn;
+    });
+
+    describe("public route properties", () => {
+      describe("properties", () => {
+        describe("name", () => {
+          it("is the provided value", () => {
+            const routes = prepareRoutes([
+              {
+                name: "Test",
+                path: "test"
+              },
+              {
+                name: "Not Found",
+                path: "(.*)"
+              }
+            ]);
+            const route = routes.route("Test");
+            expect(route.name).toBe("Test");
+          });
+        });
+
+        describe("keys", () => {
+          it("is the array of param names parsed from the path", () => {
+            const routes = prepareRoutes([
+              {
+                name: "Test",
+                path: ":one/:two/:three"
+              },
+              {
+                name: "Not Found",
+                path: "(.*)"
+              }
+            ]);
+            const route = routes.route("Test");
+            expect(route.keys).toEqual(["one", "two", "three"]);
+          });
+
+          it("is an empty array when the path has no params", () => {
+            const routes = prepareRoutes([
+              {
+                name: "Test",
+                path: "one/two/three"
+              },
+              {
+                name: "Not Found",
+                path: "(.*)"
+              }
+            ]);
+            const route = routes.route("Test");
+            expect(route.keys).toEqual([]);
+          });
+        });
+
+        describe("extra", () => {
+          it("is the provided value", () => {
+            const extra = {
+              unofficial: true,
+              another: 1
+            };
+            const routes = prepareRoutes([
+              {
+                name: "Test",
+                path: "test",
+                extra
+              },
+              {
+                name: "Not Found",
+                path: "(.*)"
+              }
+            ]);
+            const route = routes.route("Test");
+            expect(route.extra).toBe(extra);
+          });
+        });
+      });
+
+      describe("methods", () => {
+        describe("resolve", () => {
+          it("is the resolve function", done => {
+            const routes = prepareRoutes([
+              {
+                name: "Test",
+                path: "test",
+                resolve() {
+                  return Promise.all([
+                    Promise.resolve("iTest"),
+                    Promise.resolve("eTest")
+                  ]);
+                }
+              }
+            ]);
+            const route: AsyncRoute = routes.route("Test") as AsyncRoute;
+
+            route.methods.resolve().then(([iResult, eResult]) => {
+              expect(iResult).toBe("iTest");
+              expect(eResult).toBe("eTest");
+              done();
+            });
+          });
+
+          it("is undefined when route.resolve isn't provided", done => {
+            const routes = prepareRoutes([
+              {
+                name: "Test",
+                path: "test"
+              },
+              {
+                name: "Not Found",
+                path: "(.*)"
+              }
+            ]);
+            const route = routes.route("Test");
+            expect(route.methods.resolve).toBeUndefined();
+            done();
+          });
+        });
+
+        describe("respond", () => {
+          it("is the respond function", () => {
+            const routes = prepareRoutes([
+              {
+                name: "Test",
+                path: "test",
+                respond() {
+                  return { data: "hi!" };
+                }
+              }
+            ]);
+            const route = routes.route("Test");
+
+            expect(route.methods.respond).toBeDefined();
+          });
+
+          it("is undefined when route.respond isn't provided", () => {
+            const routes = prepareRoutes([
+              {
+                name: "Test",
+                path: "test"
+              },
+              {
+                name: "Not Found",
+                path: "(.*)"
+              }
+            ]);
+            const route = routes.route("Test");
+            expect(route.methods.respond).toBeUndefined();
+          });
+        });
+      });
     });
   });
 
