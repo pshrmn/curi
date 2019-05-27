@@ -8,5 +8,6 @@
     "examples/svelte/*",
     "examples/vue/*",
     "website"
-  ]
+  ],
+  "ignoreChanges": ["packages/**/tests/**", "packages/**/*.md"]
 }
