@@ -23,7 +23,7 @@ const config = {
         use: [
           {
             loader: "babel-loader",
-            options: require("../babel/.babelrc.vue.js")
+            options: require("../babel/vue.js")
           }
         ]
       },

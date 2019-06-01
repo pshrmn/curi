@@ -4,26 +4,26 @@ const config = {
     filename: "js/bundle.js",
     publicPath: "/static/"
   },
+  resolve: {
+    extensions: [".mjs", ".js"]
+  },
   module: {
     rules: [
       {
-        test: /\.js$/,
+        test: /\.(mjs|js)$/,
         exclude: /(node_modules)/,
         use: [
           {
             loader: "babel-loader",
-            options: require("../babel/.babelrc.react.js")
+            options: require("../babel/svelte.js")
           }
         ]
       },
       {
-        test: /\.css$/,
+        test: /\.svelte$/,
         use: [
           {
-            loader: "style-loader"
-          },
-          {
-            loader: "css-loader"
+            loader: "svelte-loader"
           }
         ]
       }
