@@ -9,9 +9,7 @@ const deps = Object.keys(pkg.dependencies).map(key => key);
 const input = "src/index.js";
 const sourcemap = false;
 
-const svelte = sveltePlugin({
-  include: "src/**/*.html"
-});
+const svelte = sveltePlugin();
 const babel = babelPlugin({
   exclude: "node_modules/**"
 });

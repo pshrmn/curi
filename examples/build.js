@@ -7,12 +7,7 @@ const type = process.argv[3];
 
 const entry = path.join(__dirname, location, "src", "index.js");
 const outputPath = path.join(__dirname, location, "public");
-const config = path.join(
-  __dirname,
-  "configs",
-  "webpack",
-  `webpack.${type}.config.js`
-);
+const config = path.join(__dirname, "configs", "webpack", `${type}.config.js`);
 
 execSync(
   `npx webpack \
