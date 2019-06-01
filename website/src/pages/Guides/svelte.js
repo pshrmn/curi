@@ -45,8 +45,7 @@ function SvelteGuide() {
         </p>
 
         <CodeBlock>
-          {`import { createStores } from "@curi/svelte";
-import App from "./components/App.svelte";
+          {`import App from "./components/App.svelte";
 
 const router = createRouter(browser, routes);
 new App({ target, props: { router } });`}
