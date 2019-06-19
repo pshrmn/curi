@@ -14,7 +14,7 @@ export const meta = {
 
 export function AnnounceAPI() {
   return (
-    <HashSection meta={meta}>
+    <HashSection meta={meta} tag="h2">
       <p>
         The <IJS>announce</IJS> side effect is used to announce navigation to
         screen readers. The announcement is done using an{" "}

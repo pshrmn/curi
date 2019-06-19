@@ -19,7 +19,7 @@ export const meta = {
 
 export function FocusAPI() {
   return (
-    <HashSection meta={meta}>
+    <HashSection meta={meta} tag="h2">
       <p>
         The <IJS>curi-focus</IJS> directive is used to specify an element that
         should be focused when a new response is emitted.

@@ -27,7 +27,7 @@ function TwitchExample() {
     <React.Fragment>
       <h1>{meta.title}</h1>
 
-      <HashSection meta={explanationMeta}>
+      <HashSection meta={explanationMeta} tag="h2">
         <p>
           A clone of <a href="https://twitch.tv">Twitch</a> without all of the
           "good stuff" (streaming video). This application uses Vue for
@@ -35,7 +35,7 @@ function TwitchExample() {
         </p>
       </HashSection>
 
-      <HashSection meta={demoMeta}>
+      <HashSection meta={demoMeta} tag="h2">
         <CodeSandboxDemo
           id="github/pshrmn/twitch-curi-demo"
           title="Curi Twitch clone demo"

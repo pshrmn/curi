@@ -18,7 +18,7 @@ export const meta = {
 
 export function AsyncLinkAPI() {
   return (
-    <HashSection meta={meta}>
+    <HashSection meta={meta} tag="h2">
       <p>
         An <IJS>AsyncLink</IJS> is similar to a{" "}
         <Link hash="Link">

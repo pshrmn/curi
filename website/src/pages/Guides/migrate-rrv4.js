@@ -78,7 +78,7 @@ function MigrateReactRouterv4Guide() {
         </p>
       </PlainSection>
 
-      <HashSection meta={routesMeta}>
+      <HashSection meta={routesMeta} tag="h2">
         <p>Let’s get started with setting up our routes.</p>
         <HashSection meta={rrRoutesMeta} tag="h3">
           <p>
@@ -261,7 +261,7 @@ const routes = prepareRoutes([
         </p>
       </HashSection>
 
-      <HashSection meta={creatingMeta}>
+      <HashSection meta={creatingMeta} tag="h2">
         <p>
           With React Router, you create your router by rendering a{" "}
           <IJS>Router</IJS> component. This may be a <IJS>BrowserRouter</IJS>, a{" "}
@@ -297,7 +297,7 @@ const router = createRouter(browser, routes);`}
         </CodeBlock>
       </HashSection>
 
-      <HashSection meta={renderingMeta}>
+      <HashSection meta={renderingMeta} tag="h2">
         <p>
           We will walk through the rendering differences between React Router
           and Curi by looking at what happens in each when we navigate to the
@@ -526,7 +526,7 @@ function render({ response }) {
         </HashSection>
       </HashSection>
 
-      <HashSection meta={linksMeta}>
+      <HashSection meta={linksMeta} tag="h2">
         <p>
           You will want to be able to navigate between routes in your
           application. React Router provides a <IJS>Link</IJS> component to do
@@ -606,7 +606,7 @@ const active = useActive("Home");
         </ul>
       </HashSection>
 
-      <HashSection meta={propsMeta}>
+      <HashSection meta={propsMeta} tag="h2">
         <p>
           React Router provides a <IJS>withRouter</IJS> higher-order component
           that will inject router props into the wrapped component.

@@ -21,7 +21,7 @@ export const meta = {
 
 export function ActiveAPI() {
   return (
-    <HashSection meta={meta}>
+    <HashSection meta={meta} tag="h2">
       <p>
         The <IJS>Active</IJS> component is used to render based on whether or
         not a route is "active" (its name and params match the current

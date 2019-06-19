@@ -14,7 +14,7 @@ export const meta = {
 
 export function OnceAPI() {
   return (
-    <HashSection meta={meta}>
+    <HashSection meta={meta} tag="h2">
       <p>
         <IJS>once</IJS> is a simple caching function. It takes a function as its
         argument and returns a new function. The first time the returned

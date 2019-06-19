@@ -88,7 +88,7 @@ function ReactAdvancedTutorial() {
         </Outline>
       </PlainSection>
 
-      <HashSection meta={demoMeta}>
+      <HashSection meta={demoMeta} tag="h2">
         <p>You can run a demo of the site we are building with CodeSandbox.</p>
 
         <CodeSandboxDemo
@@ -97,7 +97,7 @@ function ReactAdvancedTutorial() {
         />
       </HashSection>
 
-      <HashSection meta={setupMeta}>
+      <HashSection meta={setupMeta} tag="h2">
         <p>
           If you did not complete the React basics tutorial, you should either
           clone its{" "}
@@ -121,7 +121,7 @@ npm run start`}
         </CodeBlock>
       </HashSection>
 
-      <HashSection meta={asyncMeta}>
+      <HashSection meta={asyncMeta} tag="h2">
         <p>
           Curi lets you attach async functions to a route through its{" "}
           <IJS>resolve</IJS> function. When that route matches, a response will
@@ -289,7 +289,7 @@ function App() {
         </p>
       </HashSection>
 
-      <HashSection meta={splitMeta}>
+      <HashSection meta={splitMeta} tag="h2">
         <p>
           Currently, the <IJS>routes.js</IJS> module imports all of the route
           modules at the top of the file. This results in a single bundle of all
@@ -510,7 +510,7 @@ registerServiceWorker();`}
         </p>
       </HashSection>
 
-      <HashSection meta={preloadMeta}>
+      <HashSection meta={preloadMeta} tag="h2">
         <p>
           Preloading data lets you delay navigation until after the data for a
           route has loaded. This can save you from having to render a partial
@@ -789,7 +789,7 @@ export default function Book({ response }) {
         </CodeBlock>
       </HashSection>
 
-      <HashSection meta={loadingMeta}>
+      <HashSection meta={loadingMeta} tag="h2">
         <p>
           At this point, we have the same functionality as the basic tutorial,
           but we have added async data loading. The bundle importing has real
@@ -920,7 +920,7 @@ export default function Home({ response }) {
         </HashSection>
       </HashSection>
 
-      <HashSection meta={caveatsMeta}>
+      <HashSection meta={caveatsMeta} tag="h2">
         <p>
           Adding asynchronous loading to an application can help reduce initial
           load size and speed up user interactions, however it also has some

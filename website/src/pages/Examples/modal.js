@@ -26,7 +26,7 @@ function ModalExample() {
     <React.Fragment>
       <h1>{meta.title}</h1>
 
-      <HashSection meta={explanationMeta}>
+      <HashSection meta={explanationMeta} tag="h2">
         <p>A "modal" route can display content on top of other content.</p>
 
         <p>
@@ -59,7 +59,7 @@ function ModalExample() {
         </p>
       </HashSection>
 
-      <HashSection meta={demoMeta}>
+      <HashSection meta={demoMeta} tag="h2">
         <MultiSandbox
           sandboxes={[
             {

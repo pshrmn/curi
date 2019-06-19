@@ -24,7 +24,7 @@ function DevTipsGuide() {
         <h1>{meta.title}</h1>
       </PlainSection>
 
-      <HashSection meta={hmrMeta}>
+      <HashSection meta={hmrMeta} tag="h2">
         <p>
           Hot module replacement (HMR) can make development more convenient by
           automatically updating page content without refreshing the page. With

@@ -17,7 +17,7 @@ export const meta = {
 
 export function RouterAPI() {
   return (
-    <HashSection meta={meta}>
+    <HashSection meta={meta} tag="h2">
       <p>
         The <IJS>Router</IJS> component is used to make router related data
         available to components throughout the application.

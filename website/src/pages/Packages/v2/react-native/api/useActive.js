@@ -17,7 +17,7 @@ export const meta = {
 
 export function UseActiveAPI() {
   return (
-    <HashSection meta={meta}>
+    <HashSection meta={meta} tag="h2">
       <p>
         The <IJS>useActive</IJS> hook determines if a route is active by
         comparing a route name (and possibly params) to a <IJS>response</IJS>{" "}

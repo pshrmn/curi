@@ -20,7 +20,7 @@ export const meta = {
 
 export function FocusAPI() {
   return (
-    <HashSection meta={meta}>
+    <HashSection meta={meta} tag="h2">
       <p>
         <IJS>Focus</IJS> lets you focus a DOM element whenever there is a new
         response.

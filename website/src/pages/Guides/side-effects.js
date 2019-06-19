@@ -55,7 +55,7 @@ function UsingSideEffectsGuide() {
         </CodeBlock>
       </PlainSection>
 
-      <HashSection meta={addingMeta}>
+      <HashSection meta={addingMeta} tag="h2">
         <p>
           Side effects are provided to your router with the{" "}
           <IJS>sideEffects</IJS> property of the options object. This is an
@@ -92,7 +92,7 @@ router.observe(render);
         </CodeBlock>
       </HashSection>
 
-      <HashSection meta={providedMeta}>
+      <HashSection meta={providedMeta} tag="h2">
         <p>
           Curi's <IJS>@curi/router</IJS> package provides three side effects:
         </p>
@@ -149,7 +149,7 @@ const router = createRouter(browser, routes, {
         </CodeBlock>
       </HashSection>
 
-      <HashSection meta={creatingMeta}>
+      <HashSection meta={creatingMeta} tag="h2">
         <p>
           When creating your own side effect, you can write a regular function
           or a side effect "factory".

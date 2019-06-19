@@ -21,7 +21,7 @@ export const meta = {
 
 export function LinkAPI() {
   return (
-    <HashSection meta={meta}>
+    <HashSection meta={meta} tag="h2">
       <p>
         A <IJS>Link</IJS> is for navigating within your application using an
         anchor element (<Cmp>a</Cmp>). When the rendered element is clicked,

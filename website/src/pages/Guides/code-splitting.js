@@ -50,7 +50,7 @@ function CodeSplittingGuide() {
         </Note>
       </PlainSection>
 
-      <HashSection meta={noSplitMeta}>
+      <HashSection meta={noSplitMeta} tag="h2">
         <p>
           Let's start out by describing our application's routes without code
           splitting. We will import each route's component from the files where
@@ -96,7 +96,7 @@ const routes = prepareRoutes([
         </CodeBlock>
       </HashSection>
 
-      <HashSection meta={importMeta}>
+      <HashSection meta={importMeta} tag="h2">
         <p>
           Instead of having static imports, we will use the dynamic{" "}
           <IJS>import</IJS> function to import our modules. We will import our
@@ -173,7 +173,7 @@ const routes = prepareRoutes([
         </CodeBlock>
       </HashSection>
 
-      <HashSection meta={otherMeta}>
+      <HashSection meta={otherMeta} tag="h2">
         <p>
           The approaches taken here are not the only way to do code splitting.
           Another approach is to skip the <IJS>resolve</IJS> method and do code

@@ -23,7 +23,10 @@ function Unpkg({ name, version, globalName }) {
 
 export default function Installation({ name, version, globalName, script }) {
   return (
-    <HashSection meta={{ title: "Installation", hash: "installation" }}>
+    <HashSection
+      meta={{ title: "Installation", hash: "installation" }}
+      tag="h2"
+    >
       <NPM name={name} />
       {script ? (
         <Unpkg name={name} version={version} globalName={globalName} />

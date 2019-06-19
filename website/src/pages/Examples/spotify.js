@@ -27,7 +27,7 @@ function SpotifyExample() {
     <React.Fragment>
       <h1>{meta.title}</h1>
 
-      <HashSection meta={explanationMeta}>
+      <HashSection meta={explanationMeta} tag="h2">
         <p>
           A clone of <a href="https://open.spotify.com">Spotify</a> without all
           of the good stuff (aka being able to listen to music). This
@@ -35,7 +35,7 @@ function SpotifyExample() {
         </p>
       </HashSection>
 
-      <HashSection meta={demoMeta}>
+      <HashSection meta={demoMeta} tag="h2">
         <CodeSandboxDemo
           id="github/pshrmn/spotify-curi-demo"
           title="Curi Spotify clone demo"

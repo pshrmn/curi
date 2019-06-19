@@ -37,7 +37,7 @@ function SvelteGuide() {
         <h1>{meta.title}</h1>
       </PlainSection>
 
-      <HashSection meta={storeMeta}>
+      <HashSection meta={storeMeta} tag="h2">
         <p>
           Curi's Svelte integration relies on stores and context. These are
           setup automatically if you pass a Curi router to the <IJS>Router</IJS>{" "}
@@ -175,7 +175,7 @@ new App({ target, props: { router } });`}
         </HashSection>
       </HashSection>
 
-      <HashSection meta={navigatingMeta}>
+      <HashSection meta={navigatingMeta} tag="h2">
         <p>
           The <IJS>Link</IJS> component is used to navigate between routes
           within an application. When it renders in the DOM, it will render as

@@ -108,7 +108,7 @@ function VueBasicsTutorial() {
         </Outline>
       </PlainSection>
 
-      {/*<HashSection meta={demoMeta}>
+      {/*<HashSection meta={demoMeta} tag="h2">
       <p>You can run a demo of the site we are building with CodeSandbox.</p>
 
       <CodeSandboxDemo
@@ -117,7 +117,7 @@ function VueBasicsTutorial() {
       />
 </HashSection>*/}
 
-      <HashSection meta={setupMeta}>
+      <HashSection meta={setupMeta} tag="h2">
         <p>
           We will be using{" "}
           <a href="https://github.com/vuejs/vue-cli">
@@ -177,7 +177,7 @@ yarn serve`}
         </p>
       </HashSection>
 
-      <HashSection meta={historyMeta}>
+      <HashSection meta={historyMeta} tag="h2">
         <p>
           URIs can be broken into parts to identify a location. With a
           single-page application, we don't care about the URI's protocol (http,
@@ -229,7 +229,7 @@ new Vue({
         </CodeBlock>
       </HashSection>
 
-      <HashSection meta={routesMeta}>
+      <HashSection meta={routesMeta} tag="h2">
         <p>
           Routes are JavaScript objects that define the valid locations for a
           router. They have a <IJS>name</IJS> and a <IJS>path</IJS>.
@@ -394,7 +394,7 @@ export default prepareRoutes([
         </CodeBlock>
       </HashSection>
 
-      <HashSection meta={routerMeta}>
+      <HashSection meta={routerMeta} tag="h2">
         <p>
           With the history object created and the routes defined, we are ready
           to create the router. Back in the <IJS>src/index.js</IJS> file, we
@@ -436,7 +436,7 @@ new Vue({
           accessible.
         </p>
 
-        <HashSection meta={a11yMeta}>
+        <HashSection meta={a11yMeta} tag="h3">
           <p>
             In a multi-page application, a screen reader will announce
             navigation to users. This happens automatically when a new Document
@@ -501,7 +501,7 @@ new Vue({
           </CodeBlock>
         </HashSection>
 
-        <HashSection meta={pluginMeta}>
+        <HashSection meta={pluginMeta} tag="h3">
           <p>
             We will add router support to the Vue application using a plugin.
             This plugin does a couple of things. First, it makes some Curi
@@ -543,7 +543,7 @@ new Vue({
         </HashSection>
       </HashSection>
 
-      <HashSection meta={renderingMeta}>
+      <HashSection meta={renderingMeta} tag="h2">
         <p>
           We can now render our application. We will re-use the provide{" "}
           <IJS>App.vue</IJS> file.
@@ -753,7 +753,7 @@ export default prepareRoutes([
         </p>
       </HashSection>
 
-      <HashSection meta={navigatingMeta}>
+      <HashSection meta={navigatingMeta} tag="h2">
         <p>
           The <IJS>CuriPlugin</IJS> makes a <IJS>curi-link</IJS> component
           available with the appliaction. We can use that to navigate between
@@ -993,7 +993,7 @@ export default [
         </HashSection>
       </HashSection>
 
-      <HashSection meta={shoppingMeta}>
+      <HashSection meta={shoppingMeta} tag="h2">
         <p>
           We want to be able to add books to our shopping cart. Since this is a
           play site, we will store the cart data in memory.
@@ -1230,7 +1230,7 @@ router.navigate({ url: "/new", method: "anchor" });
         </CodeBlock>
       </HashSection>
 
-      <HashSection meta={nextMeta}>
+      <HashSection meta={nextMeta} tag="h2">
         <p>
           We now have a functional website built with Vue and Curi. What should
           you do next? Build another site! You can also check out the{" "}

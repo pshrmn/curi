@@ -105,7 +105,7 @@ function SSRGuide() {
         </p>
       </PlainSection>
 
-      <HashSection meta={reuseMeta}>
+      <HashSection meta={reuseMeta} tag="h2">
         <p>
           Being able to reuse code on the client and server is one of the
           benefits of JavaScript. If you are using syntax in your client-side
@@ -133,7 +133,7 @@ function SSRGuide() {
         </Warning>
       </HashSection>
 
-      <HashSection meta={frameworkMeta}>
+      <HashSection meta={frameworkMeta} tag="h2">
         <p>
           In order to render JavaScript on the server, you will need to use
           Node. This guide will be using the{" "}
@@ -184,7 +184,7 @@ babel-node server.js`}
         </p>
       </HashSection>
 
-      <HashSection meta={requestMeta}>
+      <HashSection meta={requestMeta} tag="h2">
         <p>
           A web framework receives requests from the client and returns
           responses.
@@ -269,7 +269,7 @@ app.get("*", renderHandler);`}
         </HashSection>
       </HashSection>
 
-      <HashSection meta={handlerMeta}>
+      <HashSection meta={handlerMeta} tag="h2">
         <p>
           The render handler function receives the request object and a response
           object. The response object is used to build and send a response to
@@ -305,7 +305,7 @@ function renderHandler(req, res) {
         </CodeBlock>
       </HashSection>
 
-      <HashSection meta={routerMeta}>
+      <HashSection meta={routerMeta} tag="h2">
         <p>
           A router instance will be created for every single request. The router
           will match the requested location to its routes and generate a
@@ -451,7 +451,7 @@ export default prepareRoutes([
         </HashSection>
       </HashSection>
 
-      <HashSection meta={responseMeta}>
+      <HashSection meta={responseMeta} tag="h2">
         <p>
           When the router is created, it will start generating a response by
           matching its <IJS>history</IJS> object's current location. If the

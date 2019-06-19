@@ -22,7 +22,7 @@ function ScriptTagExample() {
     <React.Fragment>
       <h1>{meta.title}</h1>
 
-      <HashSection meta={explanationMeta}>
+      <HashSection meta={explanationMeta} tag="h2">
         <p>
           This example uses unbundled JavaScript and script tags to serve its
           content. If you want to use <Cmp>script</Cmp> tags in your

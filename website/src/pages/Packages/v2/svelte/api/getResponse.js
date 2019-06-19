@@ -13,7 +13,7 @@ export const meta = {
 
 export function GetResponseAPI() {
   return (
-    <HashSection meta={meta}>
+    <HashSection meta={meta} tag="h2">
       <p>
         The <IJS>getResponse</IJS> function is used to read the{" "}
         <IJS>response</IJS> store from Svelte's context. The value will update

@@ -17,16 +17,16 @@ export const meta = {
 
 export function PathnamesAPI() {
   return (
-    <HashSection meta={meta}>
+    <HashSection meta={meta} tag="h2">
       <p>
         The <IJS>pathnames</IJS> function is used to generate pathnames from an
         array of provided page descriptors. This can be useful for generating a
         sitemap.
       </p>
 
-      <HashSection tag="h4" meta={argumentsMeta}>
+      <HashSection tag="h3" meta={argumentsMeta}>
         <HashSection
-          tag="h5"
+          tag="h4"
           meta={{ title: "routes", hash: "pathnames-routes" }}
         >
           <p>The array of route descriptors that is passed to a router.</p>
@@ -52,7 +52,7 @@ const paths = pathnames({
         </HashSection>
 
         <HashSection
-          tag="h5"
+          tag="h4"
           meta={{ title: "pages", hash: "pathnames-pages" }}
         >
           <p>
@@ -78,7 +78,7 @@ const paths = pathnames({
         </HashSection>
 
         <HashSection
-          tag="h5"
+          tag="h4"
           meta={{ title: "routerOptions", hash: "pathnames-routerOptions" }}
         >
           <p>

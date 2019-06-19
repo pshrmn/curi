@@ -17,7 +17,7 @@ export const meta = {
 
 export function LinkAPI() {
   return (
-    <HashSection meta={meta}>
+    <HashSection meta={meta} tag="h2">
       <p>
         The <IJS>Link</IJS> component is used to create an anchor for navigating
         to another route.

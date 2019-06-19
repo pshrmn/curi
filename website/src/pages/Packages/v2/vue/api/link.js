@@ -18,7 +18,7 @@ export const meta = {
 
 export function LinkAPI() {
   return (
-    <HashSection meta={meta}>
+    <HashSection meta={meta} tag="h2">
       <p>
         The <IJS>curi-link</IJS> component will render an anchor (<Cmp>a</Cmp>)
         element.

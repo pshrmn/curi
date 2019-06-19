@@ -14,7 +14,7 @@ export const meta = {
 
 export function UseRouterAPI() {
   return (
-    <HashSection meta={meta}>
+    <HashSection meta={meta} tag="h2">
       <p>
         The <IJS>useRouter</IJS> hook returns the <IJS>router</IJS> object.
       </p>

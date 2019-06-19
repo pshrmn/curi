@@ -17,7 +17,7 @@ export const meta = {
 
 export function RouterConsumerAPI() {
   return (
-    <HashSection meta={meta}>
+    <HashSection meta={meta} tag="h2">
       <p>
         A context consumer component for injecting the router into components.
         Its primary use case is in class components.

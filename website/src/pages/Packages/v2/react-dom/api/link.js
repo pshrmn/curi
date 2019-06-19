@@ -20,7 +20,7 @@ export const meta = {
 
 export function LinkAPI() {
   return (
-    <HashSection meta={meta}>
+    <HashSection meta={meta} tag="h2">
       <p>
         A <IJS>Link</IJS> is use for in-app navigation. By default, the
         component renders an anchor element (<Cmp>a</Cmp>). When the rendered

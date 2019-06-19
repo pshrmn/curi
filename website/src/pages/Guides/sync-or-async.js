@@ -56,7 +56,7 @@ function SyncAndAsyncGuide() {
         </CodeBlock>
       </PlainSection>
 
-      <HashSection meta={thinkMeta}>
+      <HashSection meta={thinkMeta} tag="h2">
         <p>
           For the most part, it shouldn't matter to you (or your users) whether
           routes are sync or async, but there are a couple of things that you

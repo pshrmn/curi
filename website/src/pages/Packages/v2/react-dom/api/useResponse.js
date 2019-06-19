@@ -13,7 +13,7 @@ export const meta = {
 
 export function UseResponseAPI() {
   return (
-    <HashSection meta={meta}>
+    <HashSection meta={meta} tag="h2">
       <p>
         The <IJS>useResponse</IJS> hook reads the current <IJS>response</IJS>{" "}
         and <IJS>navigation</IJS> values from React's context. This will be

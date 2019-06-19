@@ -58,7 +58,7 @@ function NewResponsesGuide() {
         </p>
       </PlainSection>
 
-      <HashSection meta={handlerMeta} tag="h3">
+      <HashSection meta={handlerMeta} tag="h2">
         <p>
           When response handlers are called, they are passed an object with
           three properties:{" "}
@@ -92,7 +92,7 @@ function NewResponsesGuide() {
         </CodeBlock>
       </HashSection>
 
-      <HashSection meta={registeringMeta} tag="h3">
+      <HashSection meta={registeringMeta} tag="h2">
         <p>
           There are three ways to attach response handlers to the router:{" "}
           <IJS>router.once</IJS> and <IJS>router.observe</IJS> or as a side
@@ -120,9 +120,9 @@ const stop = router.observe(fn);`}
         </CodeBlock>
       </HashSection>
 
-      <HashSection meta={useCaseMeta} tag="h3">
+      <HashSection meta={useCaseMeta} tag="h2">
         <p>What should you use response handlers for?</p>
-        <HashSection meta={setupMeta} tag="h4">
+        <HashSection meta={setupMeta} tag="h3">
           <p>
             If any of the routes in an application have <IJS>resolve</IJS>{" "}
             functions, when they match their responses are created
@@ -157,7 +157,7 @@ router.once(setup);`}
           </CodeBlock>
         </HashSection>
 
-        <HashSection meta={renderingMeta} tag="h4">
+        <HashSection meta={renderingMeta} tag="h3">
           <p>
             Rendering libraries need to know when there is a new response so
             that they can re-render the application.
@@ -203,7 +203,7 @@ router.observe(observer);`}
           </CodeBlock>
         </HashSection>
 
-        <HashSection meta={sideEffectsMeta} tag="h4">
+        <HashSection meta={sideEffectsMeta} tag="h3">
           <p>
             Side effects are observers that are provided to the router at
             creation instead of by calling <IJS>router.observe</IJS>. These can

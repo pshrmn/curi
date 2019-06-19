@@ -13,7 +13,7 @@ export const meta = {
 
 export function CuriPluginAPI() {
   return (
-    <HashSection meta={meta}>
+    <HashSection meta={meta} tag="h2">
       <p>What does the plugin do?</p>
       <ol>
         <li>

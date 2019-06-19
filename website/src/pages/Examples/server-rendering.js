@@ -24,7 +24,7 @@ function ServerRenderingExample() {
     <React.Fragment>
       <h1>{meta.title}</h1>
 
-      <HashSection meta={explanationMeta}>
+      <HashSection meta={explanationMeta} tag="h2">
         <p>
           Server rendering with Curi is pretty similar to client side rendering.
           The server should have a catch all route handler that will respond to

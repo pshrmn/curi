@@ -26,14 +26,14 @@ function MultiBodyExample() {
     <React.Fragment>
       <h1>{meta.title}</h1>
 
-      <HashSection meta={explanationMeta}>
+      <HashSection meta={explanationMeta} tag="h2">
         <p>
           A response's <IJS>body</IJS> can contain multiple components for
           advanced layouts.
         </p>
       </HashSection>
 
-      <HashSection meta={demoMeta}>
+      <HashSection meta={demoMeta} tag="h2">
         <MultiSandbox
           sandboxes={[
             {

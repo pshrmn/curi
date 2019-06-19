@@ -14,7 +14,7 @@ export const meta = {
 
 export function AriaLiveAPI() {
   return (
-    <HashSection meta={meta}>
+    <HashSection meta={meta} tag="h2">
       <p>
         When you create an ARIA live side effect, an element with a{" "}
         <IJS>aria-live</IJS> attribute will be added to the DOM. This element

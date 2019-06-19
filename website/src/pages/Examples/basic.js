@@ -22,14 +22,14 @@ function BasicExample() {
     <React.Fragment>
       <h1>{meta.title}</h1>
 
-      <HashSection meta={explanationMeta}>
+      <HashSection meta={explanationMeta} tag="h2">
         <p>
           A basic Curi application that defines routes and uses links to
           navigate between them.
         </p>
       </HashSection>
 
-      <HashSection meta={demoMeta}>
+      <HashSection meta={demoMeta} tag="h2">
         <MultiSandbox
           sandboxes={[
             {

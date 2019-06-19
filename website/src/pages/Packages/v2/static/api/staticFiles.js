@@ -19,7 +19,7 @@ export const meta = {
 
 export function StaticFilesAPI() {
   return (
-    <HashSection meta={meta}>
+    <HashSection meta={meta} tag="h2">
       <p>
         The <IJS>staticFiles</IJS> function is used to generate HTML files for a
         static website and save them to the disk. An HTML file will be created
@@ -72,13 +72,13 @@ staticFiles({
   });`}
       </CodeBlock>
 
-      <HashSection tag="h4" meta={argumentsMeta}>
+      <HashSection tag="h3" meta={argumentsMeta}>
         <p>
           The <IJS>staticFiles</IJS> functions is passed an object of arguments.
         </p>
 
         <HashSection
-          tag="h5"
+          tag="h4"
           meta={{ title: "pages", hash: "staticFiles-pages" }}
         >
           <p>
@@ -104,7 +104,7 @@ staticFiles({
         </HashSection>
 
         <HashSection
-          tag="h5"
+          tag="h4"
           meta={{ title: "router", hash: "staticFiles-router" }}
         >
           <p>
@@ -113,7 +113,7 @@ staticFiles({
           </p>
 
           <HashSection
-            tag="h6"
+            tag="h5"
             meta={{ title: "routes", hash: "staticFiles-routes" }}
           >
             <p>
@@ -144,7 +144,7 @@ staticFiles({
           </HashSection>
 
           <HashSection
-            tag="h6"
+            tag="h5"
             meta={{
               title: "options",
               hash: "staticFiles-options"
@@ -177,7 +177,7 @@ staticFiles({
         </HashSection>
 
         <HashSection
-          tag="h5"
+          tag="h4"
           meta={{ title: "fallback", hash: "staticFiles-fallback" }}
         >
           <p>
@@ -200,7 +200,7 @@ staticFiles({
         </HashSection>
 
         <HashSection
-          tag="h5"
+          tag="h4"
           meta={{ title: "output", hash: "staticFiles-output" }}
         >
           <p>
@@ -209,7 +209,7 @@ staticFiles({
           </p>
 
           <HashSection
-            tag="h6"
+            tag="h5"
             meta={{ title: "render", hash: "staticFiles-render" }}
           >
             <p>
@@ -278,7 +278,7 @@ staticFiles({
           </HashSection>
 
           <HashSection
-            tag="h6"
+            tag="h5"
             meta={{ title: "dir", hash: "staticFiles-dir" }}
           >
             <p>The folder where the generated HTML files should be saved.</p>

@@ -17,7 +17,7 @@ export const meta = {
 
 export function PathnameAPI() {
   return (
-    <HashSection meta={meta}>
+    <HashSection meta={meta} tag="h2">
       <p>An interaction function to generate a pathname string for a route.</p>
 
       <p>

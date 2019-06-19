@@ -22,7 +22,7 @@ export const meta = {
 
 export function PrepareRoutesAPI() {
   return (
-    <HashSection meta={meta}>
+    <HashSection meta={meta} tag="h2">
       <p>
         The <IJS>prepareRoutes</IJS> function takes an application's routes and
         route interactions and returns an object. The returned object will be
@@ -45,8 +45,8 @@ const routes = prepareRoutes([
         request.
       </p>
 
-      <HashSection tag="h4" meta={argumentsMeta}>
-        <HashSection tag="h5" meta={routesArgMeta}>
+      <HashSection tag="h3" meta={argumentsMeta}>
+        <HashSection tag="h4" meta={routesArgMeta}>
           An array of <Link hash="route-objects">route objects</Link>.
         </HashSection>
       </HashSection>

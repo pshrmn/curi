@@ -82,7 +82,7 @@ const router = createRouter(browser, routes);`}</CodeBlock>
         </p>
       </PlainSection>
 
-      <HashSection meta={typesMeta}>
+      <HashSection meta={typesMeta} tag="h2">
         <p>
           There are three Hickory packages to choose from. Which one you use
           depends on where your application is running.
@@ -176,7 +176,7 @@ const router = createRouter(reusable, routes);`}
         </Note>
       </HashSection>
 
-      <HashSection meta={locationsMeta}>
+      <HashSection meta={locationsMeta} tag="h2">
         <p>
           The history object will map URL strings into location objects. Only
           the <IJS>pathname</IJS>, <IJS>query</IJS> (search), and{" "}
@@ -242,7 +242,7 @@ location = {
         </HashSection>
       </HashSection>
 
-      <HashSection meta={navigationMeta}>
+      <HashSection meta={navigationMeta} tag="h2">
         <p>
           A history object has two methods for navigation: <IJS>navigate</IJS>{" "}
           and <IJS>go</IJS>.

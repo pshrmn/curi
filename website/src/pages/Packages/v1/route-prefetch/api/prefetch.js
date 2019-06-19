@@ -20,7 +20,7 @@ export const meta = {
 
 export function PrefetchAPI() {
   return (
-    <HashSection meta={meta}>
+    <HashSection meta={meta} tag="h2">
       <p>
         A function to create the prefetch route interaction. When you create
         your router, the result is passed to the router using the{" "}

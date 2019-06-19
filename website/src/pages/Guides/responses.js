@@ -43,7 +43,7 @@ function ResponsesGuide() {
         </p>
       </PlainSection>
 
-      <HashSection meta={propertiesMeta}>
+      <HashSection meta={propertiesMeta} tag="h2">
         <p>There are two types of response properties.</p>
 
         <p>
@@ -127,7 +127,7 @@ function ResponsesGuide() {
         </CodeBlock>
       </HashSection>
 
-      <HashSection meta={bodyMeta}>
+      <HashSection meta={bodyMeta} tag="h2">
         <p>
           Curi isn't strict about how you use responses, but you will most
           likely always want to use a route's <IJS>respond</IJS> function to
@@ -172,7 +172,7 @@ const routes = prepareRoutes([
         </CodeBlock>
       </HashSection>
 
-      <HashSection meta={redirectMeta}>
+      <HashSection meta={redirectMeta} tag="h2">
         <p>
           When a route's <IJS>respond</IJS> function returns an object with a{" "}
           <Link

@@ -19,7 +19,7 @@ export const meta = {
 
 export function PrefetchAPI() {
   return (
-    <HashSection meta={meta}>
+    <HashSection meta={meta} tag="h2">
       <p>
         A function that will call a route's <IJS>resolve</IJS> method.
       </p>

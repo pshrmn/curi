@@ -35,7 +35,7 @@ function InstallationGuide() {
         <h1>{meta.title}</h1>
       </PlainSection>
 
-      <HashSection meta={npmMeta}>
+      <HashSection meta={npmMeta} tag="h2">
         <p>
           There are a number of Curi packages, all of which can be installed
           using NPM. The only one that every application requires is{" "}
@@ -56,7 +56,7 @@ function InstallationGuide() {
         </CodeBlock>
       </HashSection>
 
-      <HashSection meta={unpkgMeta}>
+      <HashSection meta={unpkgMeta} tag="h2">
         <p>
           These packages can also be loaded from{" "}
           <a href="https://unpkg.com">Unpkg</a>.
@@ -72,7 +72,7 @@ function InstallationGuide() {
         </CodeBlock>
       </HashSection>
 
-      <HashSection meta={promisesMeta}>
+      <HashSection meta={promisesMeta} tag="h2">
         <p>
           Curi uses Promises, so you may need to include a polyfill to add
           Promise support for older browsers (including IE 11).

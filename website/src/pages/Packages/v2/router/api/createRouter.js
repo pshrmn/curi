@@ -49,7 +49,7 @@ export const meta = {
 
 export function CreateRouterAPI() {
   return (
-    <HashSection meta={meta}>
+    <HashSection meta={meta} tag="h2">
       <p>
         The <IJS>createRouter</IJS> function is used to create a router.
       </p>
@@ -60,8 +60,8 @@ export function CreateRouterAPI() {
 const router = createRouter(browser, routes, options);`}
       </CodeBlock>
 
-      <HashSection tag="h4" meta={argumentsMeta}>
-        <HashSection tag="h5" meta={historyArgMeta}>
+      <HashSection tag="h3" meta={argumentsMeta}>
+        <HashSection tag="h4" meta={historyArgMeta}>
           <p>
             A <a href="https://github.com/pshrmn/hickory">Hickory</a> history
             function. The{" "}
@@ -79,7 +79,7 @@ const router = createRouter(browser, routes);`}
           </CodeBlock>
         </HashSection>
 
-        <HashSection tag="h5" meta={routesArgMeta}>
+        <HashSection tag="h4" meta={routesArgMeta}>
           <p>
             An array of prepared{" "}
             <Link name="Guide" params={{ slug: "routes" }}>
@@ -98,14 +98,14 @@ const router = createRouter(browser, routes);`}
           </CodeBlock>
         </HashSection>
 
-        <HashSection tag="h5" meta={optionsArgMeta}>
+        <HashSection tag="h4" meta={optionsArgMeta}>
           <p>
             An optional object with additional properties that can be passed to
             the router.
           </p>
 
           <HashSection
-            tag="h6"
+            tag="h5"
             meta={{
               title: <IJS>sideEffects</IJS>,
               hash: "options-sideEffects"
@@ -129,7 +129,7 @@ const router = createRouter(browser, routes, {
           </HashSection>
 
           <HashSection
-            tag="h6"
+            tag="h5"
             meta={{ title: <IJS>external</IJS>, hash: "options-external" }}
           >
             <p>
@@ -163,7 +163,7 @@ const router = createRouter(browser, routes, {
           </HashSection>
 
           <HashSection
-            tag="h6"
+            tag="h5"
             meta={{
               title: <IJS>invisibleRedirects</IJS>,
               hash: "options-invisibleRedirects"
@@ -224,13 +224,13 @@ const router = createRouter(browser, routes, {
         </HashSection>
       </HashSection>
 
-      <HashSection tag="h4" meta={propertiesMeta}>
+      <HashSection tag="h3" meta={propertiesMeta}>
         <p>
           The router has a number of properties for you to use when rendering
           your application.
         </p>
 
-        <HashSection tag="h5" meta={urlMeta}>
+        <HashSection tag="h4" meta={urlMeta}>
           <p>
             The <IJS>url</IJS> method is used to generate a URL string.
           </p>
@@ -243,18 +243,18 @@ const router = createRouter(browser, routes, {
 });`}
           </CodeBlock>
 
-          <HashSection tag="h6" meta={{ title: "Arguments", hash: "url-args" }}>
+          <HashSection tag="h5" meta={{ title: "Arguments", hash: "url-args" }}>
             <p>
               <IJS>url</IJS> takes a single argument, an object with details
               about the location to navigate to and how to navigate.
             </p>
 
-            <HashSection tag="h6" meta={{ title: "name", hash: "url-name" }}>
+            <HashSection tag="h5" meta={{ title: "name", hash: "url-name" }}>
               <p>The name of a route.</p>
             </HashSection>
 
             <HashSection
-              tag="h6"
+              tag="h5"
               meta={{ title: "params", hash: "url-params" }}
             >
               <p>
@@ -263,17 +263,17 @@ const router = createRouter(browser, routes, {
               </p>
             </HashSection>
 
-            <HashSection tag="h6" meta={{ title: "hash", hash: "url-hash" }}>
+            <HashSection tag="h5" meta={{ title: "hash", hash: "url-hash" }}>
               <p>The hash string of a location.</p>
             </HashSection>
 
-            <HashSection tag="h6" meta={{ title: "query", hash: "url-query" }}>
+            <HashSection tag="h5" meta={{ title: "query", hash: "url-query" }}>
               <p>The query value of a location.</p>
             </HashSection>
           </HashSection>
         </HashSection>
 
-        <HashSection tag="h5" meta={navigateMeta}>
+        <HashSection tag="h4" meta={navigateMeta}>
           <p>
             The <IJS>navigate</IJS> method is used to navigate programmatically.
             It takes an object with the details of where and how to navigate.
@@ -286,7 +286,7 @@ const router = createRouter(browser, routes, {
           </CodeBlock>
 
           <HashSection
-            tag="h6"
+            tag="h5"
             meta={{ title: "Arguments", hash: "navigate-args" }}
           >
             <p>
@@ -294,19 +294,19 @@ const router = createRouter(browser, routes, {
               details about the location to navigate to and how to navigate.
             </p>
 
-            <HashSection tag="h6" meta={{ title: "url", hash: "navigate-url" }}>
+            <HashSection tag="h5" meta={{ title: "url", hash: "navigate-url" }}>
               <p>The URL string of the location to navigate to.</p>
             </HashSection>
 
             <HashSection
-              tag="h6"
+              tag="h5"
               meta={{ title: "state", hash: "navigate-state" }}
             >
               <p>Any serializable state to attach to the location.</p>
             </HashSection>
 
             <HashSection
-              tag="h6"
+              tag="h5"
               meta={{ title: "method", hash: "navigate-method" }}
             >
               <p>
@@ -320,7 +320,7 @@ const router = createRouter(browser, routes, {
             </HashSection>
 
             <HashSection
-              tag="h6"
+              tag="h5"
               meta={{
                 title: "finished & cancelled",
                 hash: "navigate-finished-cancelled"
@@ -345,7 +345,7 @@ const router = createRouter(browser, routes, {
           </HashSection>
         </HashSection>
 
-        <HashSection tag="h5" meta={onceMeta}>
+        <HashSection tag="h4" meta={onceMeta}>
           <p>Register a response handler that will only be called one time.</p>
 
           <p>
@@ -362,11 +362,11 @@ const router = createRouter(browser, routes, {
           </CodeBlock>
 
           <HashSection
-            tag="h6"
+            tag="h5"
             meta={{ title: "Arguments", hash: "once-args" }}
           >
             <HashSection
-              tag="h6"
+              tag="h5"
               meta={{
                 title: "Response Handler",
                 hash: "once-response-handler"
@@ -388,11 +388,11 @@ const router = createRouter(browser, routes, {
             </HashSection>
 
             <HashSection
-              tag="h6"
+              tag="h5"
               meta={{ title: "Options", hash: "once-options" }}
             >
               <HashSection
-                tag="h6"
+                tag="h5"
                 meta={{ title: "initial", hash: "once-options-initial" }}
               >
                 <p>
@@ -412,7 +412,7 @@ const router = createRouter(browser, routes, {
           </HashSection>
         </HashSection>
 
-        <HashSection tag="h5" meta={observeMeta}>
+        <HashSection tag="h4" meta={observeMeta}>
           <p>
             Register a response handler that will be called every time a
             response is generated.
@@ -444,11 +444,11 @@ stopObserving();
           </CodeBlock>
 
           <HashSection
-            tag="h6"
+            tag="h5"
             meta={{ title: "Arguments", hash: "observe-args" }}
           >
             <HashSection
-              tag="h6"
+              tag="h5"
               meta={{
                 title: "Response Handler",
                 hash: "observe-response-handler"
@@ -463,11 +463,11 @@ stopObserving();
             </HashSection>
 
             <HashSection
-              tag="h6"
+              tag="h5"
               meta={{ title: "Options", hash: "observe-options" }}
             >
               <HashSection
-                tag="h6"
+                tag="h5"
                 meta={{ title: "initial", hash: "observe-options-initial" }}
               >
                 <p>
@@ -487,7 +487,7 @@ stopObserving();
           </HashSection>
         </HashSection>
 
-        <HashSection tag="h5" meta={cancelMeta}>
+        <HashSection tag="h4" meta={cancelMeta}>
           <p>
             With navigating to an asynchronous route, there is a time between
             when a navigation begins and when the route's asynchronous actions
@@ -523,11 +523,11 @@ stopCancelling();
           </CodeBlock>
 
           <HashSection
-            tag="h6"
+            tag="h5"
             meta={{ title: "Arguments", hash: "cancel-args" }}
           >
             <HashSection
-              tag="h6"
+              tag="h5"
               meta={{ title: "Cancel Handler", hash: "cancel-handler" }}
             >
               <p>
@@ -563,7 +563,7 @@ stopCancelling();
           </HashSection>
         </HashSection>
 
-        <HashSection tag="h5" meta={currentMeta}>
+        <HashSection tag="h4" meta={currentMeta}>
           <p>
             The <IJS>current</IJS> method returns the current{" "}
             <IJS>response</IJS> and <IJS>navigation</IJS> objects.
@@ -591,7 +591,7 @@ router.once(({ response, navigation }) => {
           </CodeBlock>
         </HashSection>
 
-        <HashSection tag="h5" meta={routeMeta}>
+        <HashSection tag="h4" meta={routeMeta}>
           <p>
             The <IJS>route</IJS> method is used to get the public data about a
             route. This is useful in conjuction with{" "}
@@ -602,11 +602,11 @@ router.once(({ response, navigation }) => {
           </p>
         </HashSection>
 
-        <HashSection tag="h5" meta={historyMeta}>
+        <HashSection tag="h4" meta={historyMeta}>
           <p>The route's history object.</p>
         </HashSection>
 
-        <HashSection tag="h5" meta={externalMeta}>
+        <HashSection tag="h4" meta={externalMeta}>
           <p>
             The <IJS>external</IJS> value that was passed through{" "}
             <Link hash="options-external">

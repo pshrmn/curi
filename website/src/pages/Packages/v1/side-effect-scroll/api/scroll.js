@@ -12,7 +12,7 @@ export const meta = {
 
 export function ScrollAPI() {
   return (
-    <HashSection meta={meta}>
+    <HashSection meta={meta} tag="h2">
       <CodeBlock>
         {`import { curi } from '@curi/router';
 import scroll from '@curi/side-effect-scroll';

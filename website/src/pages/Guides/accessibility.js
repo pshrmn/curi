@@ -58,7 +58,7 @@ function AccessibilityGuide() {
         </p>
       </PlainSection>
 
-      <HashSection meta={announceMeta}>
+      <HashSection meta={announceMeta} tag="h2">
         <p>
           When the content of{" "}
           <a href="https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/ARIA_Live_Regions">
@@ -111,7 +111,7 @@ const router = createRouter(browser, routes, {
         </CodeBlock>
       </HashSection>
 
-      <HashSection meta={focusMeta}>
+      <HashSection meta={focusMeta} tag="h2">
         <p>
           Screen readers read the content of elements in the page that are
           focused. They can move through the page to read different elements.
@@ -219,7 +219,7 @@ function App() {
         </HashSection>
       </HashSection>
 
-      <HashSection meta={moreMeta}>
+      <HashSection meta={moreMeta} tag="h2">
         <p>
           The above content is great for making navigation within your
           application accessible, but those aren't the only steps that you

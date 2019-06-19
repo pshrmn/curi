@@ -22,14 +22,14 @@ function AccessibilityExample() {
     <React.Fragment>
       <h1>{meta.title}</h1>
 
-      <HashSection meta={explanationMeta}>
+      <HashSection meta={explanationMeta} tag="h2">
         <p>
           Focus management after navigation is important for improving the
           accessibility of an application.
         </p>
       </HashSection>
 
-      <HashSection meta={demoMeta}>
+      <HashSection meta={demoMeta} tag="h2">
         <MultiSandbox
           sandboxes={[
             {

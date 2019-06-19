@@ -14,7 +14,7 @@ export const meta = {
 
 export function TitleAPI() {
   return (
-    <HashSection meta={meta}>
+    <HashSection meta={meta} tag="h2">
       <p>
         The <IJS>title</IJS> side effect will set the document's title.
       </p>

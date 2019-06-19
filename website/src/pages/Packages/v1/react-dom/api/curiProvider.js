@@ -24,7 +24,7 @@ export const meta = {
 
 export function CuriProviderAPI() {
   return (
-    <HashSection meta={meta}>
+    <HashSection meta={meta} tag="h2">
       <p>
         The application needs a component at its root to re-render the
         application when new responses are emitted and to make routing related

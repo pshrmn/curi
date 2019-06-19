@@ -23,7 +23,7 @@ export const meta = {
 
 export function CreateRouterComponentAPI() {
   return (
-    <HashSection meta={meta}>
+    <HashSection meta={meta} tag="h2">
       <p>
         A higher-order component that returns a <IJS>Router</IJS> component.
       </p>

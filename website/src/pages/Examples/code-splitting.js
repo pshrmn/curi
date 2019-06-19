@@ -24,7 +24,7 @@ function CodeSplittingExample() {
     <React.Fragment>
       <h1>{meta.title}</h1>
 
-      <HashSection meta={explanationMeta}>
+      <HashSection meta={explanationMeta} tag="h2">
         <p>
           Code splitting with Curi routes is done using a <IJS>resolve</IJS>{" "}
           function. The{" "}

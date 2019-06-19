@@ -13,7 +13,7 @@ export const meta = {
 
 export function GetRouterAPI() {
   return (
-    <HashSection meta={meta}>
+    <HashSection meta={meta} tag="h2">
       <p>
         The <IJS>getRouter</IJS> function is used to read the <IJS>router</IJS>{" "}
         from Svelte's context.

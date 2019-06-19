@@ -14,7 +14,7 @@ export const meta = {
 
 export function ScrollAPI() {
   return (
-    <HashSection meta={meta}>
+    <HashSection meta={meta} tag="h2">
       <p>
         The <IJS>scroll</IJS> side effect will scroll the page after a
         navigation.

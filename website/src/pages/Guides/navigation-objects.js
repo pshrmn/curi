@@ -35,7 +35,7 @@ function NavigationObjectGuide() {
         </p>
       </PlainSection>
 
-      <HashSection meta={propertiesMeta}>
+      <HashSection meta={propertiesMeta} tag="h2">
         <p>
           A navigation object has two properties: <IJS>action</IJS> and{" "}
           <IJS>previous</IJS>.
@@ -57,7 +57,7 @@ function NavigationObjectGuide() {
         </CodeBlock>
       </HashSection>
 
-      <HashSection meta={usageMeta}>
+      <HashSection meta={usageMeta} tag="h2">
         <p>
           What is the point of the <IJS>navigation</IJS> object? It is there to
           provide you information about a navigation that doesn't make sense to

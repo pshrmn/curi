@@ -25,7 +25,7 @@ export const meta = {
 
 export function CuriAPI() {
   return (
-    <HashSection meta={meta}>
+    <HashSection meta={meta} tag="h2">
       <p>
         The <IJS>curi</IJS> export is a function to create a router. It has two
         required arguments: a <IJS>history</IJS> object and a <IJS>routes</IJS>{" "}
@@ -38,8 +38,8 @@ export function CuriAPI() {
 const router = curi(history, routes, options);`}
       </CodeBlock>
 
-      <HashSection tag="h4" meta={argumentsMeta}>
-        <HashSection tag="h5" meta={{ title: "history", hash: "history" }}>
+      <HashSection tag="h3" meta={argumentsMeta}>
+        <HashSection tag="h4" meta={{ title: "history", hash: "history" }}>
           <p>
             A <a href="https://github.com/pshrmn/hickory">Hickory</a> history
             object that will power navigation within the application. The{" "}
@@ -62,7 +62,7 @@ const router = curi(history, routes);`}
           </CodeBlock>
         </HashSection>
 
-        <HashSection tag="h5" meta={{ title: "routes", hash: "routes" }}>
+        <HashSection tag="h4" meta={{ title: "routes", hash: "routes" }}>
           <p>
             An array of prepared{" "}
             <Link name="Guide" params={{ slug: "routes" }}>
@@ -81,14 +81,14 @@ const router = curi(history, routes);`}
           </CodeBlock>
         </HashSection>
 
-        <HashSection tag="h5" meta={{ title: "options", hash: "options" }}>
+        <HashSection tag="h4" meta={{ title: "options", hash: "options" }}>
           <p>
             An optional object with additional properties that can be passed to
             the router.
           </p>
 
           <HashSection
-            tag="h6"
+            tag="h5"
             meta={{ title: <IJS>route</IJS>, hash: "options-route" }}
           >
             <p>
@@ -130,7 +130,7 @@ router.route.pathname("Home");
           </HashSection>
 
           <HashSection
-            tag="h6"
+            tag="h5"
             meta={{
               title: <IJS>sideEffects</IJS>,
               hash: "options-sideEffects"
@@ -178,7 +178,7 @@ const router = curi(history, routes, {
           </HashSection>
 
           <HashSection
-            tag="h6"
+            tag="h5"
             meta={{ title: <IJS>external</IJS>, hash: "options-external" }}
           >
             <p>
@@ -214,7 +214,7 @@ const router = curi(history, routes, {
           </HashSection>
 
           <HashSection
-            tag="h6"
+            tag="h5"
             meta={{
               title: <IJS>emitRedirects</IJS>,
               hash: "options-emitRedirects"
@@ -258,7 +258,7 @@ const router = curi(history, routes, {
           </HashSection>
 
           <HashSection
-            tag="h6"
+            tag="h5"
             meta={{
               title: <IJS>automaticRedirects</IJS>,
               hash: "options-automaticRedirects"
@@ -310,7 +310,7 @@ router.once(({ response }) => {
           </HashSection>
 
           <HashSection
-            tag="h6"
+            tag="h5"
             meta={{
               title: <IJS>pathnameOptions</IJS>,
               hash: "options-pathnameOptions"
@@ -341,14 +341,14 @@ router.once(({ response }) => {
         </HashSection>
       </HashSection>
 
-      <HashSection tag="h4" meta={propertiesMeta}>
+      <HashSection tag="h3" meta={propertiesMeta}>
         <p>
           The router has a number of properties for you to use when rendering
           your application.
         </p>
 
         <HashSection
-          tag="h5"
+          tag="h4"
           meta={{ title: "navigate(details)", hash: "navigate" }}
         >
           <p>
@@ -436,7 +436,7 @@ router.navigate({
         </HashSection>
 
         <HashSection
-          tag="h5"
+          tag="h4"
           meta={{ title: "once(fn, options)", hash: "once" }}
         >
           <p>
@@ -486,7 +486,7 @@ router.navigate({
           </CodeBlock>
 
           <HashSection
-            tag="h6"
+            tag="h5"
             meta={{ title: "options", hash: "once-options" }}
           >
             <div style={{ overflowX: "scroll" }}>
@@ -521,7 +521,7 @@ router.navigate({
         </HashSection>
 
         <HashSection
-          tag="h5"
+          tag="h4"
           meta={{ title: "observe(fn, options)", hash: "observe" }}
         >
           <p>
@@ -571,7 +571,7 @@ router.navigate({
           </CodeBlock>
 
           <HashSection
-            tag="h6"
+            tag="h5"
             meta={{ title: "options", hash: "observe-options" }}
           >
             <div style={{ overflowX: "scroll" }}>
@@ -621,7 +621,7 @@ stopObserving();
         </HashSection>
 
         <HashSection
-          tag="h5"
+          tag="h4"
           meta={{ title: "cancel(fn)", hash: "cancel-property" }}
         >
           <p>
@@ -655,7 +655,7 @@ stopObserving();
         </HashSection>
 
         <HashSection
-          tag="h5"
+          tag="h4"
           meta={{ title: "current", hash: "current-property" }}
         >
           <p>
@@ -684,7 +684,7 @@ router.once(({ response, navigation }) => {
           </CodeBlock>
         </HashSection>
 
-        <HashSection tag="h5" meta={{ title: "route", hash: "router-route" }}>
+        <HashSection tag="h4" meta={{ title: "route", hash: "router-route" }}>
           <p>
             The router's{" "}
             <Link name="Guide" params={{ slug: "route-interactions" }}>
@@ -695,7 +695,7 @@ router.once(({ response, navigation }) => {
           </p>
 
           <HashSection
-            tag="h6"
+            tag="h5"
             meta={{ title: "pathname", hash: "pathname-interaction" }}
           >
             <p>
@@ -719,7 +719,7 @@ const userPathname = router.route.pathname(
         </HashSection>
 
         <HashSection
-          tag="h5"
+          tag="h4"
           meta={{ title: "refresh", hash: "refresh-property" }}
         >
           <p>
@@ -745,7 +745,7 @@ router.refresh(newRoutes);
         </HashSection>
 
         <HashSection
-          tag="h5"
+          tag="h4"
           meta={{ title: "history", hash: "history-property" }}
         >
           <p>

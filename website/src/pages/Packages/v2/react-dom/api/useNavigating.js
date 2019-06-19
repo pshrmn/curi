@@ -14,7 +14,7 @@ export const meta = {
 
 export function UseNavigatingAPI() {
   return (
-    <HashSection meta={meta}>
+    <HashSection meta={meta} tag="h2">
       <p>
         The <IJS>useNavigating</IJS> hook is used to determine if the
         application is currently navigating. It pairs up with{" "}

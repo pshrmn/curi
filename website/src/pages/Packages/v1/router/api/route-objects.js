@@ -17,7 +17,7 @@ export const meta = {
 
 export function RoutePropertiesAPI() {
   return (
-    <HashSection meta={meta}>
+    <HashSection meta={meta} tag="h2">
       <HashSection meta={{ title: "route.name", hash: "name" }} tag="h3">
         <p>A string, this must be unique for every route.</p>
 
@@ -119,7 +119,11 @@ export function RoutePropertiesAPI() {
 };`}
         </CodeBlock>
       </HashSection>
-      <HashSection meta={{ title: "route.response", hash: "response" }}>
+
+      <HashSection
+        meta={{ title: "route.response", hash: "response" }}
+        tag="h3"
+      >
         <p>
           A function for modifying the response object. This returns an object
           whose properties will be merged with the matched route properties to

@@ -17,7 +17,7 @@ export const meta = {
 
 export function NavigatingAPI() {
   return (
-    <HashSection meta={meta}>
+    <HashSection meta={meta} tag="h2">
       <p>
         The <IJS>Navigating</IJS> component is used to cancel an active
         asynchronous navigation.

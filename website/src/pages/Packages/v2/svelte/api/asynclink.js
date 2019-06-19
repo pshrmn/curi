@@ -18,7 +18,7 @@ export const meta = {
 
 export function AsyncLinkAPI() {
   return (
-    <HashSection meta={meta}>
+    <HashSection meta={meta} tag="h2">
       <p>
         The <IJS>AsyncLink</IJS> component is used to create an anchor for
         navigating to another route. This is similar to the the{" "}

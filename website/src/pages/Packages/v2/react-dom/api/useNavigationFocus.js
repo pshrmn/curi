@@ -19,7 +19,7 @@ export const meta = {
 
 export function UseNavigationFocusAPI() {
   return (
-    <HashSection meta={meta}>
+    <HashSection meta={meta} tag="h2">
       <p>
         The <IJS>useNavigationFocus</IJS> hook is used to focus a DOM element
         after a navigation.

@@ -124,7 +124,7 @@ function ReactBasicsTutorial() {
         </Outline>
       </PlainSection>
 
-      <HashSection meta={demoMeta}>
+      <HashSection meta={demoMeta} tag="h2">
         <p>You can run a demo of the site we are building with CodeSandbox.</p>
         <CodeSandboxDemo
           id="github/curijs/react-basic-tutorial/tree/master/"
@@ -132,7 +132,7 @@ function ReactBasicsTutorial() {
         />
       </HashSection>
 
-      <HashSection meta={setupMeta}>
+      <HashSection meta={setupMeta} tag="h2">
         <p>
           We will be using{" "}
           <a href="https://github.com/facebook/create-react-app">
@@ -189,7 +189,7 @@ cd curi-react-bookstore # enter the new app directory`}
         </CodeBlock>
       </HashSection>
 
-      <HashSection meta={routesMeta}>
+      <HashSection meta={routesMeta} tag="h2">
         <p>
           A single-page application is made up of a number of "routes", which
           are the valid locations within the application. The router matches the
@@ -389,7 +389,7 @@ registerServiceWorker();`}
         </CodeBlock>
       </HashSection>
 
-      <HashSection meta={historyMeta}>
+      <HashSection meta={historyMeta} tag="h2">
         <p>
           The routes define what the application renders for a particular
           location, but we also need to define how the application navigates.
@@ -426,7 +426,7 @@ registerServiceWorker();`}
         </CodeBlock>
       </HashSection>
 
-      <HashSection meta={routerMeta}>
+      <HashSection meta={routerMeta} tag="h2">
         <p>
           We are now ready to create the router. In the <IJS>src/index.js</IJS>{" "}
           file, we should import the <IJS>createRouter</IJS> function from{" "}
@@ -459,7 +459,7 @@ registerServiceWorker();`}
           accessible.
         </p>
 
-        <HashSection meta={a11yMeta}>
+        <HashSection meta={a11yMeta} tag="h3">
           <p>
             In a multi-page application, a screen reader will announce
             navigation to users. This happens automatically when a new Document
@@ -525,7 +525,7 @@ registerServiceWorker();`}
         </HashSection>
       </HashSection>
 
-      <HashSection meta={renderingMeta}>
+      <HashSection meta={renderingMeta} tag="h2">
         <p>
           The <IJS>@curi/react-dom</IJS> provides the components that we will
           use to interact with the router.
@@ -889,7 +889,7 @@ export default function App() {
         </p>
       </HashSection>
 
-      <HashSection meta={navigatingMeta}>
+      <HashSection meta={navigatingMeta} tag="h2">
         <p>
           The <IJS>@curi/react-dom</IJS> package provides a <IJS>Link</IJS>{" "}
           component that we can use to navigate between locations within our
@@ -1136,7 +1136,7 @@ export default function Book({ response }) {
         </HashSection>
       </HashSection>
 
-      <HashSection meta={shoppingMeta}>
+      <HashSection meta={shoppingMeta} tag="h2">
         <p>
           Users of the website should be able to add books to their shopping
           cart. For brevity, we will store the cart data in memory (i.e. it will
@@ -1183,7 +1183,7 @@ export default {
         </CodeBlock>
       </HashSection>
 
-      <HashSection meta={useRouterMeta} tag="h4">
+      <HashSection meta={useRouterMeta} tag="h2">
         <p>
           The <IJS>useRouter</IJS> hook allows us to access our router from
           anywhere in our component tree (that is a descendant of the{" "}
@@ -1386,7 +1386,7 @@ export default function Checkout({ response }) {
         </CodeBlock>
       </HashSection>
 
-      <HashSection meta={nextMeta}>
+      <HashSection meta={nextMeta} tag="h2">
         <p>
           We now have a functional website built with React and Curi. What
           should you do next? Build another site!

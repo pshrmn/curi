@@ -73,7 +73,7 @@ function RoutesGuide() {
         </p>
       </PlainSection>
 
-      <HashSection meta={propertiesMeta}>
+      <HashSection meta={propertiesMeta} tag="h2">
         <p>
           Routes have two required properties—
           <IJS>name</IJS> and <IJS>path</IJS>—and a number of{" "}
@@ -255,7 +255,7 @@ const routes = prepareRoutes([
         </HashSection>
       </HashSection>
 
-      <HashSection meta={matchingMeta}>
+      <HashSection meta={matchingMeta} tag="h2">
         <p>
           When you create a router, you pass an array of all of the valid routes
           for the application. Whenever Curi receives a new location, it matches
@@ -416,7 +416,7 @@ const routes = prepareRoutes([
         </HashSection>
       </HashSection>
 
-      <HashSection meta={prepareMeta}>
+      <HashSection meta={prepareMeta} tag="h2">
         <p>
           The routes array should be wrapped in a <IJS>prepareRoutes</IJS> call.
           This will pre-build the routes for the router, which is especially

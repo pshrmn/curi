@@ -16,7 +16,7 @@ export const meta = {
 
 export function AncestorsAPI() {
   return (
-    <HashSection meta={meta}>
+    <HashSection meta={meta} tag="h2">
       <p>An interaction function to get the ancestors of a route.</p>
 
       <p>

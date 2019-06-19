@@ -17,7 +17,7 @@ export const meta = {
 
 export function UseURLAPI() {
   return (
-    <HashSection meta={meta}>
+    <HashSection meta={meta} tag="h2">
       <p>
         The <IJS>useURL</IJS> hook creates a URL string.
       </p>

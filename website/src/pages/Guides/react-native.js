@@ -48,7 +48,7 @@ function ReactNativeGuide() {
         <h1>{meta.title}</h1>
       </PlainSection>
 
-      <HashSection meta={renderingMeta}>
+      <HashSection meta={renderingMeta} tag="h2">
         <p>
           The <IJS>createRouterComponent</IJS> function is used to create the
           component at the root of a Curi + React application. You can call this
@@ -221,7 +221,7 @@ function App() {
         </HashSection>
       </HashSection>
 
-      <HashSection meta={navigatingMeta}>
+      <HashSection meta={navigatingMeta} tag="h2">
         <p>
           The <IJS>Link</IJS> component is used to navigate between routes
           within an application. By default, the <IJS>Link</IJS> will render as
@@ -282,7 +282,7 @@ const NavLinks = () => (
         API documentation to see every component that the package provides.
       </p>
 
-      <HashSection meta={tipsMeta}>
+      <HashSection meta={tipsMeta} tag="h2">
         <Note>
           <p>
             This guide assumes that you are already familiar with React Native.

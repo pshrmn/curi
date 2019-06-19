@@ -27,7 +27,7 @@ function BreadcrumbsExample() {
     <React.Fragment>
       <h1>{meta.title}</h1>
 
-      <HashSection meta={explanationMeta}>
+      <HashSection meta={explanationMeta} tag="h2">
         <p>
           Curi can use the{" "}
           <Link
@@ -42,7 +42,7 @@ function BreadcrumbsExample() {
         </p>
       </HashSection>
 
-      <HashSection meta={demoMeta}>
+      <HashSection meta={demoMeta} tag="h2">
         <MultiSandbox
           sandboxes={[
             {

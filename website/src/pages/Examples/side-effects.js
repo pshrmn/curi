@@ -29,7 +29,7 @@ function SideEffectExample() {
     <React.Fragment>
       <h1>{meta.title}</h1>
 
-      <HashSection meta={explanationMeta}>
+      <HashSection meta={explanationMeta} tag="h2">
         <p>
           Side effects are observer functions that are run when a new response
           is created. They are called after other response handlers (observers
@@ -53,7 +53,7 @@ const router = createRouter(browser, routes, {
         </CodeBlock>
       </HashSection>
 
-      <HashSection meta={demoMeta}>
+      <HashSection meta={demoMeta} tag="h2">
         <CodeSandboxDemo
           id="github/pshrmn/curi/tree/master/examples/misc/side-effect"
           title="Curi side effect demo"

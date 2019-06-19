@@ -18,7 +18,7 @@ export const meta = {
 
 export function NavigatingAPI() {
   return (
-    <HashSection meta={meta}>
+    <HashSection meta={meta} tag="h2">
       <p>
         The <IJS>Navigating</IJS> component lets you know when the application
         is navigating and let users cancel the navigation. Its{" "}

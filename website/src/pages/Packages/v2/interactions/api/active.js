@@ -17,7 +17,7 @@ export const meta = {
 
 export function ActiveAPI() {
   return (
-    <HashSection meta={meta}>
+    <HashSection meta={meta} tag="h2">
       <p>
         An interaction function that uses a response object to determine if a
         route is "active".

@@ -26,7 +26,7 @@ function AsyncExample() {
     <React.Fragment>
       <h1>{meta.title}</h1>
 
-      <HashSection meta={explanationMeta}>
+      <HashSection meta={explanationMeta} tag="h2">
         <p>
           Route's with a <IJS>resolve</IJS> property are asynchronous. When they
           match, a response will not be emitted until the <IJS>resolve</IJS>{" "}
@@ -35,7 +35,7 @@ function AsyncExample() {
         </p>
       </HashSection>
 
-      <HashSection meta={demoMeta}>
+      <HashSection meta={demoMeta} tag="h2">
         <MultiSandbox
           sandboxes={[
             {

@@ -94,7 +94,7 @@ const hashSectionCSS = css`
 export function HashSection({
   meta: { title, hash },
   children,
-  tag: Tag = "h2",
+  tag: Tag,
   wrapper: Wrapper = "div",
   className = "section"
 }) {

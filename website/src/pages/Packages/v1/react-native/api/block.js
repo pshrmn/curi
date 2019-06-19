@@ -20,7 +20,7 @@ export const meta = {
 
 export function BlockAPI() {
   return (
-    <HashSection meta={meta}>
+    <HashSection meta={meta} tag="h2">
       <p>
         The <IJS>Block</IJS> component lets you prevent navigation until a user
         has confirmed that they want to navigate. This can be useful when the

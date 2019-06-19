@@ -16,7 +16,7 @@ export const meta = {
 
 export function RoutePropertiesAPI() {
   return (
-    <HashSection meta={meta}>
+    <HashSection meta={meta} tag="h2">
       <HashSection meta={{ title: "route.name", hash: "name" }} tag="h3">
         <p>
           A string that will be used to identify a route. This must be unique
@@ -166,7 +166,7 @@ export function RoutePropertiesAPI() {
         </CodeBlock>
       </HashSection>
 
-      <HashSection meta={{ title: "route.respond", hash: "respond" }}>
+      <HashSection meta={{ title: "route.respond", hash: "respond" }} tag="h3">
         <p>A function for modifying the response object.</p>
 
         <p>
@@ -181,11 +181,11 @@ export function RoutePropertiesAPI() {
         </p>
 
         <HashSection
-          tag="h3"
+          tag="h4"
           meta={{ title: "Arguments", hash: "response-arguments" }}
         >
           <HashSection
-            tag="h4"
+            tag="h5"
             meta={{ title: "options", hash: "response-options" }}
           >
             <p>
@@ -202,7 +202,7 @@ export function RoutePropertiesAPI() {
             </CodeBlock>
 
             <HashSection
-              tag="h5"
+              tag="h6"
               meta={{ title: "match", hash: "response-options-match" }}
             >
               <p>
@@ -260,7 +260,7 @@ export function RoutePropertiesAPI() {
             </HashSection>
 
             <HashSection
-              tag="h5"
+              tag="h6"
               meta={{ title: "resolved", hash: "response-options-resolved" }}
             >
               <p>
@@ -292,7 +292,7 @@ const user = {
             </HashSection>
 
             <HashSection
-              tag="h5"
+              tag="h6"
               meta={{ title: "error", hash: "response-options-error" }}
             >
               <p>
@@ -334,10 +334,10 @@ const user = {
         </HashSection>
 
         <HashSection
-          tag="h3"
+          tag="h4"
           meta={{ title: "Return Value", hash: "response-return" }}
         >
-          <HashSection tag="h4" meta={{ title: "body", hash: "response-body" }}>
+          <HashSection tag="h5" meta={{ title: "body", hash: "response-body" }}>
             <p>
               Typically, the <IJS>body</IJS> is a component (or components) that
               will be rendered.
@@ -360,7 +360,7 @@ const routes = prepareRoutes([
           </HashSection>
 
           <HashSection
-            tag="h4"
+            tag="h5"
             meta={{ title: "meta", hash: "response-return-meta" }}
           >
             <p>
@@ -386,7 +386,7 @@ const routes = prepareRoutes([
           </HashSection>
 
           <HashSection
-            tag="h4"
+            tag="h5"
             meta={{ title: "data", hash: "response-return-data" }}
           >
             <p>Anything you want it to be.</p>
@@ -402,7 +402,7 @@ const routes = prepareRoutes([
           </HashSection>
 
           <HashSection
-            tag="h4"
+            tag="h5"
             meta={{ title: "redirect", hash: "response-return-redirect" }}
           >
             <p>

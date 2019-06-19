@@ -19,7 +19,7 @@ export const meta = {
 
 export function CuriousAPI() {
   return (
-    <HashSection meta={meta}>
+    <HashSection meta={meta} tag="h2">
       <p>
         A context consumer component for injecting router values into
         components.

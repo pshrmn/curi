@@ -41,7 +41,7 @@ function VueGuide() {
         <h1>{meta.title}</h1>
       </PlainSection>
 
-      <HashSection meta={pluginMeta}>
+      <HashSection meta={pluginMeta} tag="h2">
         <p>
           The <IJS>CuriPlugin</IJS> for Vue allows you to interface your router
           with a Vue application. The plugin sets up a reactive object for
@@ -198,7 +198,7 @@ const routes = prepareRoutes([
         </HashSection>
       </HashSection>
 
-      <HashSection meta={navigatingMeta}>
+      <HashSection meta={navigatingMeta} tag="h2">
         <p>
           The <IJS>curi-link</IJS> component is used to navigate between routes
           within an application. When it renders in the DOM, it will render as

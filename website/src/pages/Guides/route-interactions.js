@@ -38,7 +38,7 @@ function RouterInteractionsGuide() {
         <p>Route interactions are used to interact with routes.</p>
       </PlainSection>
 
-      <HashSection meta={providedMeta}>
+      <HashSection meta={providedMeta} tag="h2">
         <p>
           The <IJS>@curi/interactions</IJS> package provides four interactions:{" "}
           <Link
@@ -76,7 +76,7 @@ function RouterInteractionsGuide() {
         </p>
       </HashSection>
 
-      <HashSection meta={callingMeta}>
+      <HashSection meta={callingMeta} tag="h2">
         <p>
           All interactions take a route's public data as its first argument. A
           route's public data can be accessed using the router's{" "}
@@ -102,7 +102,7 @@ const path = pathname(route);`}
         </CodeBlock>
       </HashSection>
 
-      <HashSection meta={routePropertiesMeta}>
+      <HashSection meta={routePropertiesMeta} tag="h2">
         <p>
           What are the route properties that an interaction can access? There
           are a number of "base" properties based on the provided route object

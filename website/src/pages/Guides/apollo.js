@@ -65,7 +65,7 @@ function ApolloGuide() {
         </Note>
       </PlainSection>
 
-      <HashSection meta={setupMeta}>
+      <HashSection meta={setupMeta} tag="h2">
         <p>
           Apollo's React package provides an <IJS>ApolloProvider</IJS> component
           for accessing your Apollo client throughout the application. The{" "}
@@ -91,7 +91,7 @@ ReactDOM.render((
         </CodeBlock>
       </HashSection>
 
-      <HashSection meta={looseMeta}>
+      <HashSection meta={looseMeta} tag="h2">
         <p>
           Apollo and Curi don't actually have to know about each other. Curi can
           create a response without doing any data fetching and let Apollo
@@ -178,7 +178,7 @@ const Noun = ({ response }) => (
         </CodeBlock>
       </HashSection>
 
-      <HashSection meta={tightMeta}>
+      <HashSection meta={tightMeta} tag="h2">
         <p>
           You can use your Apollo client instance to call queries in a route's{" "}
           <IJS>resolve</IJS> function. <IJS>resolve</IJS> is expected to return

@@ -42,7 +42,7 @@ function ReactDOMGuide() {
         <h1>{meta.title}</h1>
       </PlainSection>
 
-      <HashSection meta={renderingMeta}>
+      <HashSection meta={renderingMeta} tag="h2">
         <p>
           The <IJS>createRouterComponent</IJS> function is used to create the
           component at the root of a Curi + React application. You can call this
@@ -266,7 +266,7 @@ function App()
         </HashSection>
       </HashSection>
 
-      <HashSection meta={navigatingMeta}>
+      <HashSection meta={navigatingMeta} tag="h2">
         <p>
           The <IJS>Link</IJS> component is used to navigate between routes
           within an application. When it renders in the DOM, it will render as

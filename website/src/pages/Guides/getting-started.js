@@ -49,7 +49,7 @@ function GettingStartedGuide() {
         </p>
       </PlainSection>
 
-      <HashSection meta={routerMeta}>
+      <HashSection meta={routerMeta} tag="h2">
         <p>
           A router is created using a{" "}
           <Link name="Guide" params={{ slug: "history" }}>
@@ -70,7 +70,7 @@ const router = createRouter(browser, routes);`}
         </CodeBlock>
       </HashSection>
 
-      <HashSection meta={urlsMeta}>
+      <HashSection meta={urlsMeta} tag="h2">
         <p>
           Locations are represented using URLs. URLs are a combination of a{" "}
           <IJS>pathname</IJS> string, a <IJS>query</IJS>, and a <IJS>hash</IJS>.
@@ -128,7 +128,7 @@ const queryURL = router.url({
         </CodeBlock>
       </HashSection>
 
-      <HashSection meta={navigationMeta}>
+      <HashSection meta={navigationMeta} tag="h2">
         <p>
           There are two types of navigation within a single-page application:
           in-app navigation (e.g. clicking a link) and platform navigation (e.g.
@@ -172,7 +172,7 @@ const queryURL = router.url({
         </Note>
       </HashSection>
 
-      <HashSection meta={handlerMeta}>
+      <HashSection meta={handlerMeta} tag="h2">
         <p>
           When Curi matches a location to a route, it creates a "response"
           object. Respons objects provide information about the route that
@@ -235,7 +235,7 @@ router.once(() => {
         </CodeBlock>
       </HashSection>
 
-      <HashSection meta={renderingMeta}>
+      <HashSection meta={renderingMeta} tag="h2">
         <p>
           Curi adapts its API to work with different UI libraries. You can check
           out the respective guides for the officially supported libraries to

@@ -36,7 +36,7 @@ function LoadingGuide() {
         </p>
       </PlainSection>
 
-      <HashSection meta={resolveMeta}>
+      <HashSection meta={resolveMeta} tag="h2">
         <p>
           An async function (with any name you want it to have) can be added to
           the <IJS>resolve</IJS> function and the value it resolves will be
@@ -81,7 +81,7 @@ function LoadingGuide() {
         </CodeBlock>
       </HashSection>
 
-      <HashSection meta={responseMeta}>
+      <HashSection meta={responseMeta} tag="h2">
         <p>
           While <IJS>resolve</IJS> starts our data loading, it doesn't actually
           do anything. Instead, we should handle any loaded data with the{" "}
