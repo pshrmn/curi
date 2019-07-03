@@ -215,7 +215,7 @@ const guides = [
         /* webpackChunkName: 'guide--apollo' */
         `../pages/Guides/apollo.js`
       )
-  },
+  }
   /* {
     name: "Development Tips",
     slug: "dev-tips",
@@ -224,7 +224,7 @@ const guides = [
     import: () =>
       import(/* webpackChunkName: 'guide--dev-tips'
       `../pages/Guides/dev-tips.js`)
-  }, */
+  },
   {
     name: "React Router v2/3",
     slug: "migrate-rrv3",
@@ -233,7 +233,7 @@ const guides = [
     type: "migration",
     import: () =>
       import(
-        /* webpackChunkName: 'guide--migrate-rrv3' */
+        /* webpackChunkName: 'guide--migrate-rrv3'
         `../pages/Guides/migrate-rrv3.js`
       )
   },
@@ -245,10 +245,10 @@ const guides = [
     type: "migration",
     import: () =>
       import(
-        /* webpackChunkName: 'guide--migrate-rrv4' */
+        /* webpackChunkName: 'guide--migrate-rrv4'
         `../pages/Guides/migrate-rrv4.js`
       )
-  }
+  }*/
 ];
 
 let groupedGuides;
