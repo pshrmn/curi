@@ -43,9 +43,9 @@ function App() {
   useNavigationFocus(ref);
 
   return (
-    <div tabIndex={-1} ref={ref}>
+    <main tabIndex={-1} ref={ref}>
       {/* ... */}
-    </div>
+    </main>
   );
 }`}
       </CodeBlock>
@@ -59,13 +59,13 @@ function App() {
       </p>
 
       <CodeBlock lang="jsx">
-        {`<div
+        {`<main
   ref={ref}
   tabIndex={-1}
   style={{ outline: "none" }}
 >
   {/* ... */}
-</div>`}
+</main>`}
       </CodeBlock>
 
       <HashSection tag="h3" meta={optsMeta}>
@@ -109,17 +109,17 @@ useNavigationFocus(ref, { preventScroll: true });`}
           </p>
 
           <CodeBlock lang="jsx">
-            {`// claim focus for the <div>
+            {`// claim focus for the <main>
 useNavigationFocus(ref)
-<div tabIndex={-1} ref={ref}>
+<main tabIndex={-1} ref={ref}>
   <input autoFocus={true} />
-</div>
+</main>
 
 // preserve focus on the <input>
 useNavigationFocus(ref, { preserve: true });
-<div tabIndex={-1} ref={ref}>
+<main tabIndex={-1} ref={ref}>
   <input autoFocus={true} />
-</div>`}
+</main>`}
           </CodeBlock>
         </HashSection>
       </HashSection>

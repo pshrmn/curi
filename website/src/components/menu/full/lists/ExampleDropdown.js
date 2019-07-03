@@ -3,6 +3,7 @@ import React from "react";
 import EXAMPLE_API from "../../../../constants/examples";
 import ActiveLink from "../../../links/ActiveLink";
 import Container from "./Container";
+import StyledDropdownMenu from "./DropdownMenu";
 import usePrefetch from "./usePrefetch";
 
 const examples = EXAMPLE_API.all();
@@ -23,20 +24,22 @@ function ExampleLinks({ active, close }) {
 
   return (
     <Container active={active} close={close}>
-      <ul className="link-list" style={{ margin: "0 25px" }}>
-        {examples.map(e => {
-          return (
-            <li key={`${e.category}/${e.slug}`} className="solo">
-              <ActiveLink
-                name="Example"
-                params={{ category: e.category, slug: e.slug }}
-              >
-                {e.name}
-              </ActiveLink>
-            </li>
-          );
-        })}
-      </ul>
+      <StyledDropdownMenu>
+        <ul className="link-list" style={{ margin: "0 25px" }}>
+          {examples.map(e => {
+            return (
+              <li key={`${e.category}/${e.slug}`} className="solo">
+                <ActiveLink
+                  name="Example"
+                  params={{ category: e.category, slug: e.slug }}
+                >
+                  {e.name}
+                </ActiveLink>
+              </li>
+            );
+          })}
+        </ul>
+      </StyledDropdownMenu>
     </Container>
   );
 }

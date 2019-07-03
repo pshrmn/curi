@@ -501,11 +501,11 @@ ReactDOM.render((
 function render({ response }) {
   const { body:Body } = response;
   return (
-    <div>
+    <React.Fragment>
       <Header />
       <Body />
       <Footer />
-    </div>
+    </React.Fragment>
   );
 }`}
           </CodeBlock>

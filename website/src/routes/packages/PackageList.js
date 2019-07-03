@@ -22,14 +22,14 @@ const GroupPackages = ({ packages }) => (
 function PackageLinks({ version = "v2" }) {
   const groups = PACKAGE_API.versioned(version);
   return (
-    <div>
+    <menu>
       {Object.keys(groups).map(title => (
-        <div key={title}>
+        <section key={title}>
           <h3>{title}</h3>
           <GroupPackages packages={groups[title]} />
-        </div>
+        </section>
       ))}
-    </div>
+    </menu>
   );
 }
 

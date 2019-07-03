@@ -6,7 +6,7 @@ import Installation from "./Installation";
 import GitHubLink from "./GitHubLink";
 import NPMLink from "./NPMLink";
 
-const StyledPackageInfo = styled("div")`
+const StyledPackageInfo = styled("section")`
   display: flex;
   flex-flow: column nowrap;
   align-items: flex-start;
@@ -41,7 +41,7 @@ export default function BasePackage({
     const major = params.version !== undefined ? params.version : latest;
     const currentVersion = versions[major];
     return (
-      <div>
+      <React.Fragment>
         <h1>@curi/{name}</h1>
         <StyledPackageInfo>
           <Version major={major} versions={versions} params={params} />
@@ -56,7 +56,7 @@ export default function BasePackage({
           script={script}
         />
         {sections.api}
-      </div>
+      </React.Fragment>
     );
   } else {
     return children;

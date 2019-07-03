@@ -3,6 +3,7 @@ import React from "react";
 import TUTORIAL_API from "../../../../constants/tutorials";
 import ActiveLink from "../../../links/ActiveLink";
 import Container from "./Container";
+import StyledDropdownMenu from "./DropdownMenu";
 import usePrefetch from "./usePrefetch";
 
 const GroupTutorials = ({ tutorials }) => (
@@ -33,10 +34,10 @@ function TutorialLinks({ active, close }) {
   return (
     <Container active={active} close={close}>
       {Object.keys(tutorialGroups).map(title => (
-        <div key={title}>
+        <StyledDropdownMenu key={title}>
           <h3>{title}</h3>
           <GroupTutorials tutorials={tutorialGroups[title]} />
-        </div>
+        </StyledDropdownMenu>
       ))}
     </Container>
   );

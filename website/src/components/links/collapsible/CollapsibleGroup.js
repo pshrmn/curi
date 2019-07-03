@@ -37,17 +37,15 @@ export default function CollapsibleGroup(props) {
   return (
     <StyledList>
       <li>
-        <div>
-          <StyledButton
-            onClick={e => {
-              setCollapsed(!collapsed);
-            }}
-            title="Toggle group visibility"
-          >
-            {collapsed ? <Down /> : <Up />}
-            {title}
-          </StyledButton>
-        </div>
+        <StyledButton
+          onClick={e => {
+            setCollapsed(!collapsed);
+          }}
+          title="Toggle group visibility"
+        >
+          {collapsed ? <Down /> : <Up />}
+          {title}
+        </StyledButton>
         {collapsed ? null : children}
       </li>
     </StyledList>

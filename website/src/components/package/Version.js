@@ -40,5 +40,5 @@ export default function Version({ versions, major, params }) {
     );
   }
 
-  return <div>v{versions[major]}</div>;
+  return <p>v{versions[major]}</p>;
 }

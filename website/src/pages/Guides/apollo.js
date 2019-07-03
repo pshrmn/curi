@@ -167,10 +167,10 @@ const Noun = ({ response }) => (
       // ...
 
       return (
-        <div>
+        <article>
           <h1>{data.noun.word}</h1>
           <p>{data.noun.definition}</p>
-        </div>
+        </article>
       )
     }}
   </Query>
@@ -269,12 +269,12 @@ export default [
         <CodeBlock lang="jsx">
           {`// pages/Verb.js
 const Verb = ({ response }) => (
-  <div>
+  <article>
     <h1>{response.data.verb.word}</h1>
     <p>
       {response.data.verb.definition}
     </p>
-  </div>
+  </article>
 )`}
         </CodeBlock>
 
@@ -325,12 +325,12 @@ const Verb = ({ response }) => (
     {({ loading, error, data }) => {
       // ...
       return (
-        <div>
+        <article>
           <h1>{data.verb.word}</h1>
           <p>
             {data.verb.definition}
           </p>
-        </div>
+        </article>
       );
     }}
   </Query>

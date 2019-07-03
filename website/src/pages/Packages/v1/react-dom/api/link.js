@@ -156,9 +156,7 @@ export function LinkAPI() {
               You can provide any component that you want, but you{" "}
               <em>should</em> stick with an anchor (or a component that renders
               an anchor). There are accessibility issues that will occur when
-              you use other DOM elements as links. The component's prop type is
-              func in an attempt to discourage you from making your link render
-              a button, div, span, etc.
+              you use other DOM elements, such as a div or a button, as links.
             </p>
           </Warning>
         </HashSection>

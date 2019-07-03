@@ -10,13 +10,13 @@ const StyledPage = styled(Page)`
   }
 `;
 
-const StyledBase = styled("div")`
+const StyledBase = styled("article")`
   @media only screen and (min-width: ${screen.medium}) {
     margin-left: 275px;
   }
 `;
 
-const StyledMenu = styled("div")`
+const StyledMenuWrapper = styled("div")`
   display: none;
 
   @media only screen and (min-width: ${screen.medium}) {
@@ -38,7 +38,7 @@ export default function FancyPage({ base, menu }) {
   return (
     <StyledPage>
       <StyledBase>{base}</StyledBase>
-      <StyledMenu>{menu}</StyledMenu>
+      <StyledMenuWrapper>{menu}</StyledMenuWrapper>
     </StyledPage>
   );
 }

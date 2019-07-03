@@ -1,7 +1,11 @@
 import React from "react";
 
 export default function Tutorial404() {
-  return <div>The requested tutorial could not be found.</div>;
+  return (
+    <article>
+      <p>The requested tutorial could not be found.</p>
+    </article>
+  );
 }
 
 const contents = [];

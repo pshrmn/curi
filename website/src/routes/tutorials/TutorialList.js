@@ -20,14 +20,14 @@ const GroupTutorials = ({ tutorials }) => (
 function TutorialLinks() {
   const groups = TUTORIAL_API.grouped();
   return (
-    <div>
+    <menu>
       {Object.keys(groups).map(title => (
-        <div key={title}>
+        <section key={title}>
           <h3>{title}</h3>
           <GroupTutorials tutorials={groups[title]} />
-        </div>
+        </section>
       ))}
-    </div>
+    </menu>
   );
 }
 

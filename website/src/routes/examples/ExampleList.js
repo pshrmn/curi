@@ -8,7 +8,7 @@ import { PlainSection } from "../../components/layout/Sections";
 function ExampleLinks() {
   const examples = EXAMPLE_API.all();
   return (
-    <div>
+    <menu>
       <ul className="link-list">
         {examples.map(e => {
           return (
@@ -20,7 +20,7 @@ function ExampleLinks() {
           );
         })}
       </ul>
-    </div>
+    </menu>
   );
 }
 

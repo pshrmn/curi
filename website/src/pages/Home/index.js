@@ -26,7 +26,7 @@ const Tiles = styled("div")`
   flex-flow: row wrap;
 `;
 
-const Tile = styled("div")`
+const Tile = styled("section")`
   margin: 0 25px 25px 0;
 
   h3 {

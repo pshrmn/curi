@@ -14,7 +14,7 @@ const noteCSS = css`
   }
 `;
 
-const StyledNote = styled("div")`
+const StyledNote = styled("aside")`
   ${noteCSS}
 
   .aside & {
@@ -28,7 +28,7 @@ const StyledNote = styled("div")`
   }
 `;
 
-const StyledWarning = styled("div")`
+const StyledWarning = styled("aside")`
   ${noteCSS}
 
   background: ${color.lightOrange};

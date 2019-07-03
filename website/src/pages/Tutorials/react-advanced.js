@@ -264,7 +264,7 @@ router.once(() => {
 function App() {
   const { response } = useResponse();
   if (response === undefined) {
-    return <div>Loading...</div>;
+    return <p>Loading...</p>;
   }
   const { body:Body } = response;
   return <Body response={response} />;
@@ -732,7 +732,7 @@ import { Link } from '@curi/react-dom';
 
 export default function Home({ response }) {
   return (
-    <div>
+    <article>
       <ul>
         {response.data.books.map(book => (
           <li key={book.id}>
@@ -742,7 +742,7 @@ export default function Home({ response }) {
           </li>
         ))}
       </ul>
-    </div>
+    </article>
   );
 }`}
         </CodeBlock>
@@ -765,10 +765,10 @@ export default function Book({ response }) {
   const router = useRouter();
   const { book } = response.data;
   if (!book) {
-    return <div>The requested book could not be found</div>;
+    return <article>The requested book could not be found</article>;
   }
   return (
-    <div>
+    <article>
       <h1>{book.title}</h1>
       <h2>by {book.author}</h2>
       <p>Published in {book.published}</p>
@@ -783,7 +783,7 @@ export default function Book({ response }) {
       >
         Add to Cart
       </button>
-    </div>
+    </article>
   );
 };`}
         </CodeBlock>
@@ -898,7 +898,7 @@ import Spinner from "react-spinkit";
 
 export default function Home({ response }) {
   return (
-    <div>
+    <article>
       <ul>
         {response.data.books.map(book => (
           <li key={book.id}>
@@ -913,7 +913,7 @@ export default function Home({ response }) {
           </li>
         ))}
       </ul>
-    </div>
+    </article>
   );
 }`}
           </CodeBlock>

@@ -24,12 +24,12 @@ export function LinkAPI() {
       </p>
 
       <CodeBlock lang="html">
-        {`<div>
+        {`<menu>
   <Link name='Home'>Home</Link>
   <Link name='User' params={{ userID: 5 }}>
     Profile
   </Link>
-</div>
+</menu>
 
 <script>
   import Link from '@curi/svelte/components/Link.svelte';

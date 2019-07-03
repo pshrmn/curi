@@ -102,6 +102,11 @@ const globalCSS = css`
   :not(pre) > code[class*="language-"] {
     white-space: nowrap;
   }
+
+  menu {
+    padding: 0;
+    margin: 0;
+  }
 `;
 
 export default function GlobalCSS() {

@@ -160,10 +160,10 @@ const router = createRouter(browser, routes, {
           {`<!-- you can focus us -->
 <input />
 <a href="https://example.com">Example</a>
-<div tabIndex="-1"></div>
+<main tabIndex="-1"></main>
 
 <!-- but not me -->
-<div></div>`}
+<main></main>`}
         </CodeBlock>
 
         <HashSection meta={focusReactMeta} tag="h3">

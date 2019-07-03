@@ -3,6 +3,7 @@ import React from "react";
 import PACKAGE_API from "../../../../constants/packages";
 import ActiveLink from "../../../links/ActiveLink";
 import Container from "./Container";
+import StyledDropdownMenu from "./DropdownMenu";
 import usePrefetch from "./usePrefetch";
 
 const GroupPackages = ({ packages }) => (
@@ -39,10 +40,10 @@ function PackageLinks({ active, close }) {
   return (
     <Container active={active} close={close}>
       {Object.keys(groups).map(title => (
-        <div key={title}>
+        <StyledDropdownMenu key={title}>
           <h3>{title}</h3>
           <GroupPackages packages={groups[title]} />
-        </div>
+        </StyledDropdownMenu>
       ))}
     </Container>
   );

@@ -774,7 +774,9 @@ import React from 'react';
 
 export default function Home() {
   return (
-    <div>Home</div>
+    <article>
+      <p>Home</p>
+    </article>
   );
 }`}
         </CodeBlock>
@@ -785,7 +787,9 @@ import React from 'react';
 
 export default function Book(){
   return (
-    <div>Book</div>
+    <article>
+      <p>Book</p>
+    </article>
   );
 }`}
         </CodeBlock>
@@ -796,7 +800,9 @@ import React from 'react';
 
 export default function Checkout() {
   return (
-    <div>Checkout</div>
+    <article>
+      <p>Checkout</p>
+    </article>
   );
 }`}
         </CodeBlock>
@@ -807,7 +813,9 @@ import React from 'react';
 
 export default function NotFound() {
   return (
-    <div>Not Found</div>
+    <article>
+      <p>Not Found</p>
+    </article>
   );
 }`}
         </CodeBlock>
@@ -1079,7 +1087,7 @@ import books from '../books';
 
 export default function Home() {
   return (
-    <div>
+    <article>
       <ul>
         {books.map(book => (
           <li key={book.id}>
@@ -1089,7 +1097,7 @@ export default function Home() {
           </li>
         ))}
       </ul>
-    </div>
+    </article>
   );
 }`}
           </CodeBlock>
@@ -1121,15 +1129,19 @@ export default function Book({ response }) {
   const id = parseInt(response.params.id, 10);
   const book = books.find(b => b.id === id);
   if (!book) {
-    return <div>The requested book could not be found</div>;
+    return (
+      <article>
+        <p>The requested book could not be found</p>
+      </article>
+    );
   }
   return (
-    <div>
+    <article>
       <h1>{book.title}</h1>
       <h2>by {book.author}</h2>
       <p>Published in {book.published}</p>
       <p>{book.pages} pages</p>
-    </div>
+    </article>
   );
 }`}
           </CodeBlock>
@@ -1294,10 +1306,14 @@ export default function Book({ response }) {
   const id = parseInt(response.params.id, 10);
   const book = books.find(b => b.id === id);
   if (!book) {
-    return <div>The requested book could not be found</div>;
+    return (
+      <article>
+        <p>The requested book could not be found</p>
+      </article>
+    );
   }
   return (
-    <div>
+    <article>
       <h1>{book.title}</h1>
       <h2>by {book.author}</h2>
       <p>Published in {book.published}</p>
@@ -1312,7 +1328,7 @@ export default function Book({ response }) {
       >
         Add to Cart
       </button>
-    </div>
+    </article>
   );
 }`}
         </CodeBlock>
@@ -1345,11 +1361,15 @@ export default function Checkout({ response }) {
   const books = cart.items();
   if (!books.length) {
     return response.location.hash === 'thanks'
-      ? <div>Thanks for your purchase!</div>
-      : <div>The cart is currently empty</div>;
+      ? <article>
+          <p>Thanks for your purchase!</p>
+        </article>
+      : <article>
+          <p>The cart is currently empty</p>
+        </article>;
   }
   return (
-    <div>
+    <article>
       <h1>Checkout</h1>
       <ScrollableTable>
         <thead>
@@ -1380,7 +1400,7 @@ export default function Checkout({ response }) {
       >
         Buy
       </button>
-    </div>
+    </article>
   );
 };`}
         </CodeBlock>

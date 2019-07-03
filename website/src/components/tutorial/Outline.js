@@ -3,7 +3,7 @@ import styled from "@emotion/styled";
 
 import { color } from "../../constants/styles";
 
-const StyledDiv = styled("div")`
+const StyledAside = styled("aside")`
   border: 1px solid ${color.borderBlue};
   padding: 10px;
   margin: 5px 0;
@@ -20,11 +20,11 @@ const StyledDiv = styled("div")`
 
 export default function Outline({ children }) {
   return (
-    <StyledDiv>
+    <StyledAside>
       <p>
         <strong>We will be doing the following:</strong>
       </p>
       {children}
-    </StyledDiv>
+    </StyledAside>
   );
 }

@@ -4,7 +4,7 @@ import styled from "@emotion/styled";
 
 import { screen } from "../../constants/styles";
 
-const StyledCodeBlock = styled("div")`
+const StyledCodeBlock = styled("figure")`
   width: 100%;
   margin: 0 0 25px;
   font-size: 0.8em;

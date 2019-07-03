@@ -43,7 +43,7 @@ const sectionCSS = css`
 
 export function PlainSection({
   children,
-  wrapper: Wrapper = "div",
+  wrapper: Wrapper = "section",
   className = "section"
 }) {
   return (
@@ -95,7 +95,7 @@ export function HashSection({
   meta: { title, hash },
   children,
   tag: Tag,
-  wrapper: Wrapper = "div",
+  wrapper: Wrapper = "section",
   className = "section"
 }) {
   return (

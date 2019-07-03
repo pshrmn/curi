@@ -5,6 +5,6 @@ export default function catchImportError(name) {
     if (process.env.NODE_ENV !== "production") {
       console.error("Failed to load module for:", name, error);
     }
-    return () => <div>Sorry, something went wrong...</div>;
+    return () => <p>Sorry, something went wrong...</p>;
   };
 }

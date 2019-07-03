@@ -7,7 +7,7 @@ import PageMenu from "../../layout/PageMenu";
 import { MainMenuButton, PageMenuButton } from "./buttons";
 import { color, screen } from "../../../constants/styles";
 
-const StyledMenu = styled("div")`
+const StyledMenu = styled("menu")`
   position: fixed;
   overflow-y: scroll;
   width: 100vw;
@@ -69,7 +69,7 @@ const StyledMenu = styled("div")`
   }
 `;
 
-const StyledControls = styled("div")`
+const StyledControls = styled("menu")`
   position: fixed;
   width: 100vw;
   height: 40px;

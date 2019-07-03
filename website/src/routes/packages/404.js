@@ -1,7 +1,11 @@
 import React from "react";
 
 function Example404() {
-  return <div>The requested package could not be found.</div>;
+  return (
+    <article>
+      <p>The requested package could not be found.</p>
+    </article>
+  );
 }
 
 const contents = [];

@@ -2,8 +2,10 @@ import React from "react";
 import { Link } from "@curi/react-dom";
 import styled from "@emotion/styled";
 
-const StyledDiv = styled("div")`
+const StyledMenu = styled("menu")`
   width: 200px;
+  padding: 0;
+  margin: 0;
 
   p {
     margin: 0;
@@ -46,9 +48,9 @@ function Group({ items }) {
 
 function PageMenu({ contents }) {
   return (
-    <StyledDiv>
+    <StyledMenu>
       <Group items={contents} />
-    </StyledDiv>
+    </StyledMenu>
   );
 }
 

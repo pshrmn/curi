@@ -20,14 +20,14 @@ const GroupGuides = ({ guides }) => (
 function GuideLinks() {
   const groups = GUIDE_API.grouped();
   return (
-    <div>
+    <menu>
       {Object.keys(groups).map(title => (
-        <div key={title}>
+        <section key={title}>
           <h3>{title}</h3>
           <GroupGuides guides={groups[title]} />
-        </div>
+        </section>
       ))}
-    </div>
+    </menu>
   );
 }
 

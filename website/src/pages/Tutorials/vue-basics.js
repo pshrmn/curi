@@ -648,28 +648,36 @@ new Vue({
         <CodeBlock lang="html">
           {`<!-- src/components/Home.vue -->
 <template>
-  <div>Home</div>
+  <article>
+    <p>Home</p>
+  </article>
 </template>`}
         </CodeBlock>
 
         <CodeBlock lang="html">
           {`<!-- src/components/Book.vue -->
 <template>
-  <div>Book</div>
+  <article>
+    <p>Book</p>
+  </article>
 </template>`}
         </CodeBlock>
 
         <CodeBlock lang="html">
           {`<!-- src/components/Checkout.vue -->
 <template>
-  <div>Checkout</div>
+  <article>
+    <p>Checkout</p>
+  </article>
 </template>`}
         </CodeBlock>
 
         <CodeBlock lang="html">
           {`<!-- src/components/NotFound.vue -->
 <template>
-  <div>Not Found</div>
+  <article>
+    <p>Not Found</p>
+  </article>
 </template>`}
         </CodeBlock>
 
@@ -929,7 +937,7 @@ export default [
           <CodeBlock lang="html">
             {`<!-- src/components/Home.vue -->
 <template>
-  <div>
+  <article>
     <ul>
       <li v-for="b in books" :key="b.id">
         <curi-link name="Book" :params="{ id: b.id }">
@@ -937,7 +945,7 @@ export default [
         </curi-link>
       </li>
     </ul>
-  </div>
+  </article>
 </template>
 
 <script>
@@ -965,15 +973,17 @@ export default [
           <CodeBlock lang="html">
             {`<!-- src/components/Book.vue -->
 <template>
-  <div v-if="book">
+  <article v-if="book">
     <h1>{{book.title}}</h1>
     <h2>by {{book.author}}</h2>
     <p>Published in {{book.published}}</p>
     <p>{{book.pages}} pages</p>
-  </div>
-  <div v-else>
-    The requested book could not be found
-  </div>
+  </article>
+  <article v-else>
+    <p>
+      The requested book could not be found
+    </p>
+  </article>
 </template>
 
 <script>
@@ -1122,7 +1132,7 @@ router.navigate({ url: "/new", method: "anchor" });
         <CodeBlock lang="html" data-line="8-10,19,29-35">
           {`<!-- src/components/Book.vue -->
 <template>
-  <div v-if="book">
+  <article v-if="book">
     <h1>{{book.title}}</h1>
     <h2>by {{book.author}}</h2>
     <p>Published in {{book.published}}</p>
@@ -1130,10 +1140,12 @@ router.navigate({ url: "/new", method: "anchor" });
     <button type="button" v-on:click="onClick">
       Add to Cart
     </button>
-  </div>
-  <div v-else>
-    The requested book could not be found
-  </div>
+  </article>
+  <article v-else>
+    <p>
+      The requested book could not be found
+    </p>
+  </article>
 </template>
 
 <script>
@@ -1177,7 +1189,7 @@ router.navigate({ url: "/new", method: "anchor" });
         <CodeBlock lang="html">
           {`<!-- src/components/Checkout.vue -->
 <template>
-  <div v-if="books.length">
+  <article v-if="books.length">
     <h1>Checkout</h1>
     <ScrollableTable>
       <thead>
@@ -1196,13 +1208,13 @@ router.navigate({ url: "/new", method: "anchor" });
     <button type="button" v-on:click="onClick">
       Buy
     </button>
-  </div>
-  <div v-else-if="$curi.response.location.hash === 'thanks'">
-    Thanks for your purchase!
-  </div>
-  <div v-else>
-    The cart is currently empty
-  </div>
+  </article>
+  <article v-else-if="$curi.response.location.hash === 'thanks'">
+    <p>Thanks for your purchase!</p>
+  </article>
+  <article v-else>
+    <p>The cart is currently empty</p>
+  </article>
 </template>
 
 <script>

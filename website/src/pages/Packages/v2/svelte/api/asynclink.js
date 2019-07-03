@@ -29,11 +29,11 @@ export function AsyncLinkAPI() {
       </p>
 
       <CodeBlock lang="html">
-        {`<div>
+        {`<menu>
   <AsyncLink wrapper={NavSpinner} name='User' params={{ userID: 5 }}>
     Profile
   </AsyncLink>
-</div>
+</menu>
 
 <script>
   import AsyncLink from '@curi/svelte/components/AsyncLink.svelte';
