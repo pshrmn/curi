@@ -35,7 +35,7 @@ const StyledAside = styled("aside")`
   ${sectionCSS}
 
   padding: 5px 10px;
-  border-left: 2px solid $border-green;
+  border-left: 2px solid ${color.borderGreen};
   background: ${color.lightGreen};
   margin-top: 15px;
 
