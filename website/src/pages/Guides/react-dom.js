@@ -53,11 +53,10 @@ function ReactDOMGuide() {
         <Note>
           <p>
             Why does <IJS>@curi/react-dom</IJS> export a function to create a
-            component and not just a component? Props signify values that can
-            change, but an application should only ever have one router. By
-            hard-coding the <IJS>router</IJS> into a component, we avoid having
-            to handle the possibility of switching routers (which should not
-            happen).
+            component and not a component? Props signify values that can change,
+            but an application should only ever have one router. By hard-coding
+            the <IJS>router</IJS> into a component, we avoid having to handle
+            the possibility of switching routers (which should not happen).
           </p>
         </Note>
 

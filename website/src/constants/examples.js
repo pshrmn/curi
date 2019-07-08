@@ -22,7 +22,7 @@ const examples = [
   },
 
   {
-    name: "Active",
+    name: "Active Routes",
     slug: "active",
     description: 'Determine if a route is "active"',
     load: () =>

@@ -22,8 +22,8 @@ const StyledH2 = styled("h2")`
 
 const Tiles = styled("div")`
   margin: 25px auto 0;
-  display: flex;
-  flex-flow: row wrap;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
 `;
 
 const Tile = styled("section")`

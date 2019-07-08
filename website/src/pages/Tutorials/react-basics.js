@@ -4,6 +4,7 @@ import { Link } from "@curi/react-dom";
 import {
   PlainSection,
   HashSection,
+  HashAside,
   CodeBlock,
   Outline,
   Note,
@@ -217,7 +218,7 @@ cd curi-react-bookstore # enter the new app directory`}
           for matching.
         </p>
 
-        <HashSection meta={pathMeta} className="aside" tag="h3">
+        <HashAside meta={pathMeta} tag="h3">
           <p>
             Route paths are strings describing the pathname segments of a URL
             that they should match.
@@ -268,7 +269,7 @@ cd curi-react-bookstore # enter the new app directory`}
   ]
 }`}
           </CodeBlock>
-        </HashSection>
+        </HashAside>
 
         <p>The website will start with four routes.</p>
 
@@ -647,7 +648,7 @@ export default function App() {
           other two?
         </p>
 
-        <HashSection meta={responseMeta} className="aside" tag="h3">
+        <HashAside meta={responseMeta} tag="h3">
           <p>
             Whenever Curi receives a location, it matches its routes against it
             and creates a response object, which contains data about the route
@@ -694,7 +695,7 @@ export default function App() {
   previous: { name: ..., location: ..., ... }
 }`}
           </CodeBlock>
-        </HashSection>
+        </HashAside>
 
         <p>
           The response is the most useful of these three properties, but the
@@ -706,7 +707,7 @@ export default function App() {
           best way is to use a <IJS>response</IJS>'s <IJS>body</IJS> property.
         </p>
 
-        <HashSection meta={respondFnMeta} className="aside" tag="h3">
+        <HashAside meta={respondFnMeta} tag="h3">
           <p>
             Route's can have a <IJS>respond</IJS> property, which is a function
             that returns an object. The (valid) properties of the object will be
@@ -739,7 +740,7 @@ export default function App() {
   }
 }`}
           </CodeBlock>
-        </HashSection>
+        </HashAside>
 
         <p>
           We can update the <IJS>App</IJS> to get the response using{" "}
@@ -904,7 +905,7 @@ export default function App() {
           application.
         </p>
 
-        <HashSection meta={linkMeta} className="aside" tag="h3">
+        <HashAside meta={linkMeta} tag="h3">
           <p>
             Navigation isn't done by manually typing the pathname of the
             location the link should navigate to. Instead, we specify the name
@@ -952,7 +953,7 @@ export default function App() {
 <Link name="Checkout" query='affiliate=123'>Checkout</Link>
 // <a href="/checkout?affiliate=123">Checkout</a>`}
           </CodeBlock>
-        </HashSection>
+        </HashAside>
 
         <HashSection meta={menuMeta} tag="h3">
           <p>
@@ -1215,7 +1216,7 @@ export default {
           add a book to it.
         </p>
 
-        <HashSection meta={urlAndNavigateMeta} className="aside" tag="h3">
+        <HashAside meta={urlAndNavigateMeta} tag="h3">
           <p>
             The router has a <IJS>url</IJS> method that is used to generate a
             URL string using the name of a route and an object of the route's
@@ -1285,7 +1286,7 @@ router.navigate({ url: "/new", method: "anchor" });
 // current = '/new'`}
             `}
           </CodeBlock>
-        </HashSection>
+        </HashAside>
 
         <p>
           In the <IJS>Book</IJS> components module, we should import the{" "}

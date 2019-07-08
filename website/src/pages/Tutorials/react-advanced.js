@@ -4,6 +4,7 @@ import { Link } from "@curi/react-dom";
 import {
   PlainSection,
   HashSection,
+  HashAside,
   CodeBlock,
   Outline,
   Note,
@@ -211,7 +212,7 @@ const routes = prepareRoutes([
 ]);`}
         </CodeBlock>
 
-        <HashSection meta={initialMeta} className="aside" tag="h3">
+        <HashAside meta={initialMeta} tag="h3">
           <p>
             There is one caveat to async routes: we cannot safely render the
             application immediately on load because the initial response might
@@ -278,7 +279,7 @@ function App() {
             load. For async code with short loading times, a blank screen might
             be more acceptable.
           </p>
-        </HashSection>
+        </HashAside>
 
         <p>
           For more information on async route properties, please refer to the{" "}
@@ -297,7 +298,7 @@ function App() {
           an application, which will result in more, but smaller, bundles.
         </p>
 
-        <HashSection meta={splittingMeta} className="aside" tag="h3">
+        <HashAside meta={splittingMeta} tag="h3">
           <p>
             Code splitting works by "dynamically" importing modules using the{" "}
             <IJS>import</IJS> function. When bundlers like Webpack see{" "}
@@ -338,7 +339,7 @@ import(/* webpackChunkName: "Test" */ "./components/Test.js")`}
             {`import("some-module.js")
   .then(module => module.default)`}
           </CodeBlock>
-        </HashSection>
+        </HashAside>
 
         <p>
           Currently <IJS>respond</IJS> function returns an object whose{" "}

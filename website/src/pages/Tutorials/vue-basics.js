@@ -4,6 +4,7 @@ import { Link } from "@curi/react-dom";
 import {
   PlainSection,
   HashSection,
+  HashAside,
   CodeBlock,
   Outline,
   Note,
@@ -246,7 +247,7 @@ new Vue({
           describes the location pathname that it should match.
         </p>
 
-        <HashSection meta={pathMeta} className="aside" tag="h3">
+        <HashAside meta={pathMeta} tag="h3">
           <p>
             Route paths are strings describing the pathname segments they should
             match.
@@ -296,7 +297,7 @@ new Vue({
   ]
 }`}
           </CodeBlock>
-        </HashSection>
+        </HashAside>
 
         <p>The website will start with four routes.</p>
 
@@ -549,7 +550,7 @@ new Vue({
           <IJS>App.vue</IJS> file.
         </p>
 
-        <HashSection meta={responseMeta} className="aside" tag="h3">
+        <HashAside meta={responseMeta} tag="h3">
           <p>
             Whenever Curi receives a location, it matches its routes against it
             and generates a response. This is an object with data related to the
@@ -588,7 +589,7 @@ new Vue({
             previous response object. This can be useful for animation and
             modals.
           </p>
-        </HashSection>
+        </HashAside>
 
         <p>
           Most of the time, the response is the only property you will need to
@@ -768,7 +769,7 @@ export default prepareRoutes([
           locations within our application.
         </p>
 
-        <HashSection meta={linkMeta} className="aside" tag="h3">
+        <HashAside meta={linkMeta} tag="h3">
           <p>
             Navigation isn't done by manually typing the pathname of the
             location the link should navigate to. Instead, we specify the name
@@ -816,7 +817,7 @@ export default prepareRoutes([
 <curi-link name="Checkout" :query="a=123">Checkout</curi-link>
 <!-- <a href="/checkout?a=123">Checkout</a> -->`}
           </CodeBlock>
-        </HashSection>
+        </HashAside>
 
         <HashSection meta={menuMeta} tag="h3">
           <p>
@@ -1052,7 +1053,7 @@ export default {
           page.
         </p>
 
-        <HashSection meta={urlAndNavigateMeta} className="aside" tag="h3">
+        <HashAside meta={urlAndNavigateMeta} tag="h3">
           <p>
             The router has a <IJS>url</IJS> method that is used to generate a
             URL string using the name of a route and an object of the route's
@@ -1122,7 +1123,7 @@ router.navigate({ url: "/new", method: "anchor" });
 // current = '/new'`}
             `}
           </CodeBlock>
-        </HashSection>
+        </HashAside>
 
         <p>
           We also want to import our shopping cart API so that we can add a book

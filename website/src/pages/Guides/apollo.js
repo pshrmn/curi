@@ -281,7 +281,7 @@ const Verb = ({ response }) => (
         <p>
           The second approach is to use the <IJS>resolve</IJS> function as a way
           to cache the data, but also use <IJS>Query</IJS>. With this approach,
-          we do not have to attach the query data to the response; we are just
+          we do not have to attach the query data to the response; we are
           relying on the fact that Apollo will execute and cache the results
           prior to navigation.
         </p>

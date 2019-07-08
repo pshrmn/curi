@@ -17,10 +17,6 @@ const noteCSS = css`
 const StyledNote = styled("aside")`
   ${noteCSS}
 
-  .aside & {
-    background: ${color.white};
-  }
-
   background: ${color.gray};
 
   .inline-code {
