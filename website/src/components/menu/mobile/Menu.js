@@ -1,10 +1,12 @@
 import React from "react";
 import styled from "@emotion/styled";
 import { useResponse } from "@curi/react-dom";
+import { TabList, Tab, TabPanels, TabPanel } from "@reach/tabs";
 
 import MainContents from "./MainContents";
 import PageMenu from "../../layout/PageMenu";
-import { MainMenuButton, PageMenuButton } from "./buttons";
+import { MenuButton } from "./buttons";
+import { StyledTabs, PaddedPanels } from "../../tabs/Tabs";
 import { color, screen } from "../../../constants/styles";
 
 const StyledMenu = styled("menu")`
@@ -14,7 +16,7 @@ const StyledMenu = styled("menu")`
   height: 100vh;
   background: ${color.lightGray};
   z-index: 999;
-  padding: 15px 15px 45px;
+  padding: 0 0 45px 0;
 
   &.visible {
     display: block;
@@ -81,61 +83,56 @@ const StyledControls = styled("menu")`
   z-index: 9999;
 `;
 
-function MenuControls(props) {
-  return (
-    <StyledControls>
-      <MainMenuButton {...props} />
-      {props.hasPage && <PageMenuButton {...props} />}
-    </StyledControls>
-  );
-}
-
 export default function MobileMenu(props) {
-  const [which, setWhich] = React.useState(undefined);
+  const [visible, setVisible] = React.useState(false);
   const { response } = useResponse();
 
   React.useEffect(() => {
     // reset to hidden when switching pages
-    setWhich(undefined);
+    setVisible(false);
   }, [response.location.pathname]);
 
-  const toggleMenuType = type => {
-    if (type === which) {
-      setWhich(undefined);
-    } else {
-      setWhich(type);
-    }
-  };
-
-  const hideMenu = () => {
-    setWhich(undefined);
+  const toggleVisible = () => {
+    setVisible(!visible);
   };
 
   const { contents } = props;
-  let menu = null;
-  if (which === "main") {
-    menu = <MainContents />;
-  } else if (which === "page") {
-    menu = contents ? <PageMenu contents={contents} /> : null;
+  const hasPage = contents !== undefined;
+
+  const tabs = [<Tab key="main">Main</Tab>];
+  const panels = [
+    <TabPanel key="main">
+      <MainContents />
+    </TabPanel>
+  ];
+  if (hasPage) {
+    tabs.push(<Tab key="page">Page</Tab>);
+    panels.push(
+      <TabPanel key="page">
+        <PageMenu contents={contents} />
+      </TabPanel>
+    );
   }
 
   return (
     <React.Fragment>
-      <MenuControls
-        toggleMenuType={toggleMenuType}
-        activeMenu={which}
-        hasPage={contents !== undefined}
-      />
+      <StyledControls>
+        <MenuButton toggle={toggleVisible} active={visible} />
+      </StyledControls>
       <StyledMenu
-        hidden={which === undefined}
-        className={which !== undefined ? "visible" : ""}
+        hidden={!visible}
+        className={visible ? "visible" : ""}
         onClick={e => {
           if (e.target.tagName === "A") {
-            hideMenu();
+            setVisible(false);
           }
         }}
       >
-        <nav>{menu}</nav>
+        <StyledTabs>
+          <TabList>{tabs}</TabList>
+
+          <PaddedPanels>{panels}</PaddedPanels>
+        </StyledTabs>
       </StyledMenu>
     </React.Fragment>
   );

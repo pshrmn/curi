@@ -26,15 +26,11 @@ const guides = GUIDE_API.all().map(g => ({
   }
 }));
 
-function GuideLinks({ active, close }) {
-  usePrefetch(guides, active);
-
-  if (!active) {
-    return null;
-  }
+function GuideLinks({ hidden }) {
+  usePrefetch(guides, !hidden);
 
   return (
-    <Container active={active} close={close}>
+    <Container hidden={hidden}>
       {Object.keys(groups).map(title => (
         <StyledDropdownMenu key={title}>
           <h3>{title}</h3>

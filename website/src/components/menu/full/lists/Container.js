@@ -32,7 +32,7 @@ const StyledContainer = styled("div")`
   }
 `;
 
-const FlexContainer = styled("div")`
+const FlexContainer = styled("ul")`
   display: flex;
   flex-flow: row nowrap;
   justify-content: flex-start;
@@ -52,11 +52,10 @@ const Background = styled("div")`
   cursor: pointer;
 `;
 
-export default function Container({ active, close, children }) {
+export default function Container({ hidden, children }) {
   return (
-    <StyledContainer className={active ? "active" : ""}>
+    <StyledContainer className={hidden ? "" : "active"}>
       <FlexContainer>{children}</FlexContainer>
-      <Background onClick={close} />
     </StyledContainer>
   );
 }

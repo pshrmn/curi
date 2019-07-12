@@ -41,8 +41,7 @@ const StyledNav = styled("nav")`
   color: ${color.lightGray};
 
   li {
-    margin-right: 20px;
-    padding: 0;
+    padding: 0 20px 0 0;
 
     &.base > a {
       color: ${color.lightGray};
@@ -75,16 +74,58 @@ const StyledNav = styled("nav")`
   }
 `;
 
-function DropdownLink({ name, text, activated, toggle, ...rest }) {
+export function unmodifiedLeftClick(event) {
+  return (
+    event.button === 0 &&
+    !(event.metaKey || event.altKey || event.ctrlKey || event.shiftKey)
+  );
+}
+
+function MenuItem({ name, params, text, show, hide, Submenu, group }) {
+  const active = group === name;
+  return (
+    <li
+      className="base"
+      aria-haspopup="true"
+      onBlur={e => {
+        if (!e.currentTarget.contains(e.relatedTarget)) {
+          hide(name);
+        }
+      }}
+      onMouseEnter={e => {
+        show(name);
+      }}
+      onMouseLeave={e => {
+        hide(name);
+      }}
+    >
+      <DropdownLink
+        name={name}
+        params={params}
+        text={text}
+        activated={active}
+        show={show}
+        hide={hide}
+      />
+      <Submenu hidden={!active} />
+    </li>
+  );
+}
+
+function DropdownLink({ name, text, activated, show, hide, ...rest }) {
   return (
     <ActiveLink
       name={name}
       onNav={e => {
-        // don't navigate!
-        e.preventDefault();
-        toggle(name);
+        if (unmodifiedLeftClick(e)) {
+          // don't navigate!
+          e.preventDefault();
+          show(name);
+        }
       }}
-      data-hide={false}
+      onFocus={e => {
+        show(name);
+      }}
       className={activated ? "activated group" : "group"}
       {...rest}
     >
@@ -96,13 +137,8 @@ function DropdownLink({ name, text, activated, toggle, ...rest }) {
 export default function Header(props) {
   const [group, setGroup] = React.useState();
 
-  const toggleDropdown = group => {
-    setGroup(prevGroup => {
-      if (prevGroup === group) {
-        return undefined;
-      }
-      return group;
-    });
+  const showDropdown = group => {
+    setGroup(group);
   };
 
   const hideDropdown = () => {
@@ -111,16 +147,6 @@ export default function Header(props) {
 
   return (
     <StyledHeader
-      onClick={e => {
-        if (e.target.tagName === "A") {
-          // we don't want to hide a click on the dropdown toggle links,
-          // so they have data-hide="false" attributes
-          if (e.target.dataset.hide && e.target.dataset.hide === "false") {
-            return;
-          }
-          hideDropdown();
-        }
-      }}
       onKeyDown={
         group === undefined
           ? null
@@ -132,58 +158,45 @@ export default function Header(props) {
       }
     >
       <StyledNav>
-        <FlexList>
+        <FlexList role="menubar">
           <li className="base">
             <ActiveLink name="Home" id="home-link">
               Curi
             </ActiveLink>
           </li>
-          <li className="base">
-            <DropdownLink
-              name="Packages"
-              params={{ version: "v2" }}
-              text="API"
-              activated={group === "Packages"}
-              toggle={toggleDropdown}
-            />
-            <PackageDropdown
-              active={group === "Packages"}
-              close={hideDropdown}
-            />
-          </li>
-          <li className="base">
-            <DropdownLink
-              name="Guides"
-              text="Guides"
-              activated={group === "Guides"}
-              toggle={toggleDropdown}
-            />
-            <GuideDropdown active={group === "Guides"} close={hideDropdown} />
-          </li>
-          <li className="base">
-            <DropdownLink
-              name="Tutorials"
-              text="Tutorials"
-              activated={group === "Tutorials"}
-              toggle={toggleDropdown}
-            />
-            <TutorialDropdown
-              active={group === "Tutorials"}
-              close={hideDropdown}
-            />
-          </li>
-          <li className="base">
-            <DropdownLink
-              name="Examples"
-              text="Examples"
-              activated={group === "Examples"}
-              toggle={toggleDropdown}
-            />
-            <ExampleDropdown
-              active={group === "Examples"}
-              close={hideDropdown}
-            />
-          </li>
+          <MenuItem
+            name="Packages"
+            params={{ version: "v2" }}
+            text="API"
+            group={group}
+            show={showDropdown}
+            hide={hideDropdown}
+            Submenu={PackageDropdown}
+          />
+          <MenuItem
+            name="Guides"
+            text="Guides"
+            group={group}
+            show={showDropdown}
+            hide={hideDropdown}
+            Submenu={GuideDropdown}
+          />
+          <MenuItem
+            name="Tutorials"
+            text="Tutorials"
+            group={group}
+            show={showDropdown}
+            hide={hideDropdown}
+            Submenu={TutorialDropdown}
+          />
+          <MenuItem
+            name="Examples"
+            text="Examples"
+            group={group}
+            show={showDropdown}
+            hide={hideDropdown}
+            Submenu={ExampleDropdown}
+          />
           <li className="base">
             <a href="https://github.com/pshrmn/curi">GitHub</a>
           </li>

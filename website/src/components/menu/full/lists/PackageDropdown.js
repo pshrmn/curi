@@ -30,20 +30,18 @@ const pkgs = PACKAGE_API.all().map(pkg => ({
   }
 }));
 
-function PackageLinks({ active, close }) {
-  usePrefetch(pkgs, active);
-
-  if (!active) {
-    return null;
-  }
+function PackageLinks({ hidden }) {
+  usePrefetch(pkgs, !hidden);
 
   return (
-    <Container active={active} close={close}>
+    <Container hidden={hidden}>
       {Object.keys(groups).map(title => (
-        <StyledDropdownMenu key={title}>
-          <h3>{title}</h3>
-          <GroupPackages packages={groups[title]} />
-        </StyledDropdownMenu>
+        <li key={title}>
+          <StyledDropdownMenu>
+            <h3>{title}</h3>
+            <GroupPackages packages={groups[title]} />
+          </StyledDropdownMenu>
+        </li>
       ))}
     </Container>
   );

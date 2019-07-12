@@ -15,15 +15,11 @@ const exampleParams = Object.keys(examples).reduce((acc, e) => {
   return acc;
 }, []);
 
-function ExampleLinks({ active, close }) {
-  usePrefetch(exampleParams, active);
-
-  if (!active) {
-    return null;
-  }
+function ExampleLinks({ hidden }) {
+  usePrefetch(exampleParams, !hidden);
 
   return (
-    <Container active={active} close={close}>
+    <Container hidden={hidden}>
       <StyledDropdownMenu>
         <ul className="link-list" style={{ margin: "0 25px" }}>
           {examples.map(e => {

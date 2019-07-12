@@ -24,15 +24,11 @@ const flatTutorials = TUTORIAL_API.all().map(t => ({
   params: { slug: t.slug }
 }));
 
-function TutorialLinks({ active, close }) {
-  usePrefetch(flatTutorials, active);
-
-  if (!active) {
-    return null;
-  }
+function TutorialLinks({ hidden }) {
+  usePrefetch(flatTutorials, !hidden);
 
   return (
-    <Container active={active} close={close}>
+    <Container hidden={hidden}>
       {Object.keys(tutorialGroups).map(title => (
         <StyledDropdownMenu key={title}>
           <h3>{title}</h3>
