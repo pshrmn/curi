@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "@curi/react-dom";
 
 import {
+  TitledPlainSection,
   PlainSection,
   HashSection,
   CodeBlock,
@@ -33,9 +34,7 @@ const contents = [storeMeta, navigatingMeta];
 function SvelteGuide() {
   return (
     <React.Fragment>
-      <PlainSection>
-        <h1>{meta.title}</h1>
-      </PlainSection>
+      <TitledPlainSection title={meta.title} />
 
       <HashSection meta={storeMeta} tag="h2">
         <p>

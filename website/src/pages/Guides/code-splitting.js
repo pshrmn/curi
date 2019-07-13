@@ -1,7 +1,7 @@
 import React from "react";
 
 import {
-  PlainSection,
+  TitledPlainSection,
   HashSection,
   CodeBlock,
   Note,
@@ -30,9 +30,7 @@ const contents = [noSplitMeta, importMeta, otherMeta];
 function CodeSplittingGuide() {
   return (
     <React.Fragment>
-      <PlainSection>
-        <h1>{meta.title}</h1>
-
+      <TitledPlainSection title={meta.title}>
         <p>
           If you are bundling an application with a lot of routes, users of your
           application may be downloading a lot of unnecessary content for the
@@ -48,7 +46,7 @@ function CodeSplittingGuide() {
             application.
           </p>
         </Note>
-      </PlainSection>
+      </TitledPlainSection>
 
       <HashSection meta={noSplitMeta} tag="h2">
         <p>

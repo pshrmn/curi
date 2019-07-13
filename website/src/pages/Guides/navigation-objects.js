@@ -1,7 +1,7 @@
 import React from "react";
 
 import {
-  PlainSection,
+  TitledPlainSection,
   HashSection,
   CodeBlock,
   IJS
@@ -26,14 +26,12 @@ const contents = [propertiesMeta, usageMeta];
 function NavigationObjectGuide() {
   return (
     <React.Fragment>
-      <PlainSection>
-        <h1>{meta.title}</h1>
-
+      <TitledPlainSection title={meta.title}>
         <p>
           The <IJS>navigation</IJS> object contains information about the
           previous location and how the user navigated to the current location.
         </p>
-      </PlainSection>
+      </TitledPlainSection>
 
       <HashSection meta={propertiesMeta} tag="h2">
         <p>

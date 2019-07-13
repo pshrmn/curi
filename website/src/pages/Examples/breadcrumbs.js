@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "@curi/react-dom";
 
 import {
+  Page,
   HashSection,
   MultiSandbox,
   IJS
@@ -24,9 +25,7 @@ const contents = [explanationMeta, demoMeta];
 
 function BreadcrumbsExample() {
   return (
-    <React.Fragment>
-      <h1>{meta.title}</h1>
-
+    <Page title={meta.title}>
       <HashSection meta={explanationMeta} tag="h2">
         <p>
           Curi can use the{" "}
@@ -60,7 +59,7 @@ function BreadcrumbsExample() {
           ]}
         />
       </HashSection>
-    </React.Fragment>
+    </Page>
   );
 }
 

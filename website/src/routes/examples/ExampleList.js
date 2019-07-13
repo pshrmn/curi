@@ -3,7 +3,10 @@ import { Link } from "@curi/react-dom";
 
 import EXAMPLE_API from "../../constants/examples";
 import Page from "../../components/layout/Page";
-import { PlainSection } from "../../components/layout/Sections";
+import {
+  PlainSection,
+  TitledPlainSection
+} from "../../components/layout/Sections";
 
 function ExampleLinks() {
   const examples = EXAMPLE_API.all();
@@ -27,9 +30,7 @@ function ExampleLinks() {
 export default function ExampleList() {
   return (
     <Page>
-      <PlainSection>
-        <h1>Curi Examples</h1>
-
+      <TitledPlainSection title="Curi Examples">
         <p>
           Example projects that you can use for reference while building your
           own application. Most examples have CodeSandbox demos embedded with
@@ -39,7 +40,7 @@ export default function ExampleList() {
           </a>
           .
         </p>
-      </PlainSection>
+      </TitledPlainSection>
 
       <PlainSection>
         <ExampleLinks />

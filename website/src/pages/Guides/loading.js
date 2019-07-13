@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "@curi/react-dom";
 
 import {
+  TitledPlainSection,
   PlainSection,
   HashSection,
   CodeBlock,
@@ -26,15 +27,13 @@ const contents = [resolveMeta, responseMeta];
 function LoadingGuide() {
   return (
     <React.Fragment>
-      <PlainSection>
-        <h1>{meta.title}</h1>
-
+      <TitledPlainSection title={meta.title}>
         <p>
           In the code splitting guide, we added a function that uses dynamic{" "}
           <IJS>import</IJS> in a route's <IJS>resolve</IJS> function to
           dynamically load modules. We can do the same thing for other data.
         </p>
-      </PlainSection>
+      </TitledPlainSection>
 
       <HashSection meta={resolveMeta} tag="h2">
         <p>

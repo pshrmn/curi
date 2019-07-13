@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "@curi/react-dom";
 
 import {
-  PlainSection,
+  TitledPlainSection,
   HashSection,
   CodeBlock,
   Note,
@@ -64,14 +64,12 @@ const contents = [propertiesMeta, matchingMeta, prepareMeta];
 function RoutesGuide() {
   return (
     <React.Fragment>
-      <PlainSection>
-        <h1>{meta.title}</h1>
-
+      <TitledPlainSection title={meta.title}>
         <p>
           Routes are JavaScript objects that describe valid locations within an
           application.
         </p>
-      </PlainSection>
+      </TitledPlainSection>
 
       <HashSection meta={propertiesMeta} tag="h2">
         <p>

@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "@curi/react-dom";
 
 import {
-  PlainSection,
+  TitledPlainSection,
   HashSection,
   CodeBlock,
   IJS
@@ -31,9 +31,7 @@ const contents = [addingMeta, providedMeta, creatingMeta];
 function UsingSideEffectsGuide() {
   return (
     <React.Fragment>
-      <PlainSection>
-        <h1>{meta.title}</h1>
-
+      <TitledPlainSection title={meta.title}>
         <p>
           Curi side effects are permanent router response handlers that are run
           after those registered using <IJS>router.observe</IJS> and{" "}
@@ -53,7 +51,7 @@ function UsingSideEffectsGuide() {
   // call your logging API to record the response
 }`}
         </CodeBlock>
-      </PlainSection>
+      </TitledPlainSection>
 
       <HashSection meta={addingMeta} tag="h2">
         <p>

@@ -1,6 +1,7 @@
 import React from "react";
 
 import {
+  Page,
   HashSection,
   MultiSandbox,
   IJS
@@ -23,9 +24,7 @@ const contents = [explanationMeta, demoMeta];
 
 function AsyncExample() {
   return (
-    <React.Fragment>
-      <h1>{meta.title}</h1>
-
+    <Page title={meta.title}>
       <HashSection meta={explanationMeta} tag="h2">
         <p>
           Route's with a <IJS>resolve</IJS> property are asynchronous. When they
@@ -53,7 +52,7 @@ function AsyncExample() {
           ]}
         />
       </HashSection>
-    </React.Fragment>
+    </Page>
   );
 }
 

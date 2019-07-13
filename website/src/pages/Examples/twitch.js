@@ -1,6 +1,7 @@
 import React from "react";
 
 import {
+  Page,
   HashSection,
   CodeSandboxDemo,
   OnGithub,
@@ -24,9 +25,7 @@ const contents = [explanationMeta, demoMeta, onGitHubMeta];
 
 function TwitchExample() {
   return (
-    <React.Fragment>
-      <h1>{meta.title}</h1>
-
+    <Page title={meta.title}>
       <HashSection meta={explanationMeta} tag="h2">
         <p>
           A clone of <a href="https://twitch.tv">Twitch</a> without all of the
@@ -46,7 +45,7 @@ function TwitchExample() {
         path="https://github.com/pshrmn/twitch-curi-demo"
         repo={false}
       />
-    </React.Fragment>
+    </Page>
   );
 }
 

@@ -52,7 +52,9 @@ export default function HomePage() {
   return (
     <React.Fragment>
       <PlainSection className="centered">
-        <StyledH1>Curi</StyledH1>
+        <StyledH1 tabIndex={-1} style={{ outline: "none" }}>
+          Curi
+        </StyledH1>
         <StyledH2>A JavaScript router for single-page applications</StyledH2>
       </PlainSection>
 

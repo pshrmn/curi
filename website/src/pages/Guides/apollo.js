@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "@curi/react-dom";
 
 import {
-  PlainSection,
+  TitledPlainSection,
   HashSection,
   CodeBlock,
   Note,
@@ -36,9 +36,7 @@ const contents = [setupMeta, looseMeta, tightMeta];
 function ApolloGuide() {
   return (
     <React.Fragment>
-      <PlainSection>
-        <h1>{meta.title}</h1>
-
+      <TitledPlainSection title={meta.title}>
         <p>
           <a href="https://apollographql.com">Apollo</a> is a great solution for
           managing an application's data using{" "}
@@ -63,7 +61,7 @@ function ApolloGuide() {
             render your application.
           </p>
         </Note>
-      </PlainSection>
+      </TitledPlainSection>
 
       <HashSection meta={setupMeta} tag="h2">
         <p>

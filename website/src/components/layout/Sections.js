@@ -83,6 +83,17 @@ export function PlainSection({
   );
 }
 
+export function TitledPlainSection({ title, children, ...rest }) {
+  return (
+    <PlainSection {...rest}>
+      <h1 tabIndex={-1} style={{ outline: "none" }}>
+        {title}
+      </h1>
+      {children}
+    </PlainSection>
+  );
+}
+
 function ArticleSection({
   meta: { title, hash },
   children,
@@ -91,7 +102,7 @@ function ArticleSection({
 }) {
   return (
     <Wrapper>
-      <Tag id={hash} css={tagCSS}>
+      <Tag id={hash} css={tagCSS} tabIndex={-1} style={{ outline: "none" }}>
         <Link hash={hash} className="header-link">
           {title}
         </Link>

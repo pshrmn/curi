@@ -1,7 +1,7 @@
 import React from "react";
 
 import {
-  PlainSection,
+  TitledPlainSection,
   HashSection,
   CodeBlock,
   Note,
@@ -83,9 +83,7 @@ const contents = [
 function SSRGuide() {
   return (
     <React.Fragment>
-      <PlainSection>
-        <h1>{meta.title}</h1>
-
+      <TitledPlainSection title={meta.title}>
         <p>
           Server-side rendering (SSR) is used to generate the HTML for pages
           when the server receives a request for them. While not strictly
@@ -103,7 +101,7 @@ function SSRGuide() {
           This guide will cover how to setup server-side rendering and some of
           the issues that you may run into.
         </p>
-      </PlainSection>
+      </TitledPlainSection>
 
       <HashSection meta={reuseMeta} tag="h2">
         <p>

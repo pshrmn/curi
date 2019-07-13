@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "@curi/react-dom";
 
 import {
+  TitledPlainSection,
   PlainSection,
   HashSection,
   CodeBlock,
@@ -37,9 +38,7 @@ const contents = [pluginMeta, navigatingMeta];
 function VueGuide() {
   return (
     <React.Fragment>
-      <PlainSection>
-        <h1>{meta.title}</h1>
-      </PlainSection>
+      <TitledPlainSection title={meta.title} />
 
       <HashSection meta={pluginMeta} tag="h2">
         <p>

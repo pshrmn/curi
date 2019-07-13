@@ -1,6 +1,7 @@
 import React from "react";
 
 import {
+  Page,
   HashSection,
   MultiSandbox,
   IJS
@@ -23,9 +24,7 @@ const contents = [explanationMeta, demoMeta];
 
 function MultiBodyExample() {
   return (
-    <React.Fragment>
-      <h1>{meta.title}</h1>
-
+    <Page title={meta.title}>
       <HashSection meta={explanationMeta} tag="h2">
         <p>
           A response's <IJS>body</IJS> can contain multiple components for
@@ -43,7 +42,7 @@ function MultiBodyExample() {
           ]}
         />
       </HashSection>
-    </React.Fragment>
+    </Page>
   );
 }
 

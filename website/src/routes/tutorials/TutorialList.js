@@ -3,7 +3,10 @@ import { Link } from "@curi/react-dom";
 
 import TUTORIAL_API from "../../constants/tutorials";
 import Page from "../../components/layout/Page";
-import { PlainSection } from "../../components/layout/Sections";
+import {
+  TitledPlainSection,
+  PlainSection
+} from "../../components/layout/Sections";
 
 const GroupTutorials = ({ tutorials }) => (
   <ul className="link-list">
@@ -34,11 +37,9 @@ function TutorialLinks() {
 export default function TutorialList() {
   return (
     <Page>
-      <PlainSection>
-        <h1>Curi Tutorials</h1>
-
+      <TitledPlainSection title="Curi Tutorials">
         <p>A few tutorials to help get you up to speed with Curi.</p>
-      </PlainSection>
+      </TitledPlainSection>
 
       <PlainSection>
         <TutorialLinks />

@@ -1,6 +1,7 @@
 import React from "react";
 
 import {
+  Page,
   HashSection,
   MultiSandbox,
   IJS
@@ -23,9 +24,7 @@ const contents = [explanationMeta, demoMeta];
 
 function RedirectsExample() {
   return (
-    <React.Fragment>
-      <h1>{meta.title}</h1>
-
+    <Page title={meta.title}>
       <HashSection meta={explanationMeta} tag="h2">
         <p>
           When a route matches, it can redirect to another route. This is done
@@ -52,7 +51,7 @@ function RedirectsExample() {
           ]}
         />
       </HashSection>
-    </React.Fragment>
+    </Page>
   );
 }
 

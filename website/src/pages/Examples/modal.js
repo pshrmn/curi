@@ -1,6 +1,7 @@
 import React from "react";
 
 import {
+  Page,
   HashSection,
   MultiSandbox,
   IJS
@@ -23,9 +24,7 @@ const contents = [explanationMeta, demoMeta];
 
 function ModalExample() {
   return (
-    <React.Fragment>
-      <h1>{meta.title}</h1>
-
+    <Page title={meta.title}>
       <HashSection meta={explanationMeta} tag="h2">
         <p>A "modal" route can display content on top of other content.</p>
 
@@ -73,7 +72,7 @@ function ModalExample() {
           ]}
         />
       </HashSection>
-    </React.Fragment>
+    </Page>
   );
 }
 

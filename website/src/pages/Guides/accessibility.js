@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "@curi/react-dom";
 
 import {
-  PlainSection,
+  TitledPlainSection,
   HashSection,
   CodeBlock,
   Warning,
@@ -41,9 +41,7 @@ const contents = [announceMeta, focusMeta, moreMeta];
 function AccessibilityGuide() {
   return (
     <React.Fragment>
-      <PlainSection>
-        <h1>{meta.title}</h1>
-
+      <TitledPlainSection title={meta.title}>
         <p>
           It is important to keep in mind that some visitors to your site rely
           on screen readers, so you should ensure that they have a pleasant
@@ -56,7 +54,7 @@ function AccessibilityGuide() {
           Curi provides a couple approaches to help you make your site
           accessible.
         </p>
-      </PlainSection>
+      </TitledPlainSection>
 
       <HashSection meta={announceMeta} tag="h2">
         <p>

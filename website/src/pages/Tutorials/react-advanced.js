@@ -2,14 +2,13 @@ import React from "react";
 import { Link } from "@curi/react-dom";
 
 import {
-  PlainSection,
+  TitledPlainSection,
   HashSection,
   HashAside,
   CodeBlock,
   Outline,
   Note,
   IJS,
-  Cmp,
   CodeSandboxDemo
 } from "../../components/tutorial/common";
 
@@ -69,9 +68,7 @@ const contents = [
 function ReactAdvancedTutorial() {
   return (
     <React.Fragment>
-      <PlainSection>
-        <h1>React Advanced Tutorial</h1>
-
+      <TitledPlainSection title="React Advanced Tutorial">
         <p>
           In this tutorial, we will be expanding on the website built in the{" "}
           <Link name="Tutorial" params={{ slug: "react-basics" }}>
@@ -87,7 +84,7 @@ function ReactAdvancedTutorial() {
             <li>Preload route data with asynchronous navigation.</li>
           </ul>
         </Outline>
-      </PlainSection>
+      </TitledPlainSection>
 
       <HashSection meta={demoMeta} tag="h2">
         <p>You can run a demo of the site we are building with CodeSandbox.</p>

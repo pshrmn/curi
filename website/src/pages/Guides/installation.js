@@ -2,7 +2,7 @@ import React from "react";
 
 import {
   HashSection,
-  PlainSection,
+  TitledPlainSection,
   CodeBlock,
   IJS
 } from "../../components/guide/common";
@@ -31,9 +31,7 @@ const contents = [npmMeta, unpkgMeta, promisesMeta];
 function InstallationGuide() {
   return (
     <React.Fragment>
-      <PlainSection>
-        <h1>{meta.title}</h1>
-      </PlainSection>
+      <TitledPlainSection title={meta.title} />
 
       <HashSection meta={npmMeta} tag="h2">
         <p>

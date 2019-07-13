@@ -1,6 +1,7 @@
 import React from "react";
 
 import {
+  TitledPlainSection,
   PlainSection,
   HashSection,
   CodeBlock,
@@ -54,9 +55,7 @@ const contents = [typesMeta, locationsMeta, navigationMeta];
 function HistoryGuide() {
   return (
     <React.Fragment>
-      <PlainSection>
-        <h1>{meta.title}</h1>
-
+      <TitledPlainSection title={meta.title}>
         <p>
           A router's history enables navigation. It is responsible for creating
           the location objects, interfacing with its native environment (e.g. a
@@ -80,7 +79,7 @@ const router = createRouter(browser, routes);`}</CodeBlock>
           application's <IJS>history</IJS>, but you should be familiar with the
           different choices.
         </p>
-      </PlainSection>
+      </TitledPlainSection>
 
       <HashSection meta={typesMeta} tag="h2">
         <p>

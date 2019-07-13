@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "@curi/react-dom";
 
 import {
+  TitledPlainSection,
   PlainSection,
   HashSection,
   CodeBlock,
@@ -38,9 +39,7 @@ const contents = [renderingMeta, navigatingMeta];
 function ReactDOMGuide() {
   return (
     <React.Fragment>
-      <PlainSection>
-        <h1>{meta.title}</h1>
-      </PlainSection>
+      <TitledPlainSection title={meta.title} />
 
       <HashSection meta={renderingMeta} tag="h2">
         <p>

@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "@curi/react-dom";
 
 import {
-  PlainSection,
+  TitledPlainSection,
   HashSection,
   CodeBlock,
   Note,
@@ -46,9 +46,7 @@ const contents = [handlerMeta, registeringMeta, useCaseMeta];
 function NewResponsesGuide() {
   return (
     <React.Fragment>
-      <PlainSection>
-        <h1>{meta.title}</h1>
-
+      <TitledPlainSection title={meta.title}>
         <p>
           Curi uses an observer pattern to call registered functions (called
           response handlers) when there is a new response. The primary use care
@@ -56,7 +54,7 @@ function NewResponsesGuide() {
           response, but other functionalities (like logging) can also be
           performed.
         </p>
-      </PlainSection>
+      </TitledPlainSection>
 
       <HashSection meta={handlerMeta} tag="h2">
         <p>

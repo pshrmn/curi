@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "@curi/react-dom";
 
 import {
-  PlainSection,
+  TitledPlainSection,
   HashSection,
   CodeBlock,
   Note,
@@ -33,15 +33,13 @@ const contents = [propertiesMeta, bodyMeta, redirectMeta];
 function ResponsesGuide() {
   return (
     <React.Fragment>
-      <PlainSection>
-        <h1>{meta.title}</h1>
-
+      <TitledPlainSection title={meta.title}>
         <p>
           When Curi receives a location, it compares the location's{" "}
           <IJS>pathname</IJS> to each route's <IJS>path</IJS> to find which one
           matches best and uses that route to create a response object.
         </p>
-      </PlainSection>
+      </TitledPlainSection>
 
       <HashSection meta={propertiesMeta} tag="h2">
         <p>There are two types of response properties.</p>

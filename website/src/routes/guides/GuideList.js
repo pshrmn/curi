@@ -3,7 +3,10 @@ import { Link } from "@curi/react-dom";
 
 import GUIDE_API from "../../constants/guides";
 import Page from "../../components/layout/Page";
-import { PlainSection } from "../../components/layout/Sections";
+import {
+  TitledPlainSection,
+  PlainSection
+} from "../../components/layout/Sections";
 
 const GroupGuides = ({ guides }) => (
   <ul className="link-list">
@@ -34,9 +37,7 @@ function GuideLinks() {
 export default function GuideList() {
   return (
     <Page>
-      <PlainSection>
-        <h1>Curi Guides</h1>
-
+      <TitledPlainSection title="Curi Guides">
         <p>
           There are a number of guides to help you make the most of Curi in your
           application.
@@ -61,7 +62,7 @@ export default function GuideList() {
           The "migration" guides are helpful for transitioning to Curi from
           other single-page application routers.
         </p>
-      </PlainSection>
+      </TitledPlainSection>
 
       <PlainSection>
         <GuideLinks />

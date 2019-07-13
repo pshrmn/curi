@@ -1,7 +1,7 @@
 import React from "react";
 
 import {
-  PlainSection,
+  TitledPlainSection,
   HashSection,
   CodeBlock,
   IJS
@@ -20,9 +20,7 @@ const contents = [hmrMeta];
 function DevTipsGuide() {
   return (
     <React.Fragment>
-      <PlainSection>
-        <h1>{meta.title}</h1>
-      </PlainSection>
+      <TitledPlainSection title={meta.title} />
 
       <HashSection meta={hmrMeta} tag="h2">
         <p>

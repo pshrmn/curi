@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "@curi/react-dom";
 
 import {
-  PlainSection,
+  TitledPlainSection,
   HashSection,
   HashAside,
   CodeBlock,
@@ -92,8 +92,7 @@ const contents = [
 function VueBasicsTutorial() {
   return (
     <React.Fragment>
-      <PlainSection>
-        <h1>Vue Basics Tutorial</h1>
+      <TitledPlainSection title="Vue Basics Tutorial">
         <p>
           In this tutorial, we will be building a website for a bookstore. This
           will focus on the front-end part of the application.
@@ -107,16 +106,7 @@ function VueBasicsTutorial() {
             <li>Learn how to navigate within the application.</li>
           </ul>
         </Outline>
-      </PlainSection>
-
-      {/*<HashSection meta={demoMeta} tag="h2">
-      <p>You can run a demo of the site we are building with CodeSandbox.</p>
-
-      <CodeSandboxDemo
-        id="github/curijs/vue-basic-tutorial/tree/master/"
-        title="Curi Vue basic tutorial"
-      />
-</HashSection>*/}
+      </TitledPlainSection>
 
       <HashSection meta={setupMeta} tag="h2">
         <p>

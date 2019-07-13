@@ -1,6 +1,10 @@
 import React from "react";
 
-import { HashSection, MultiSandbox } from "../../components/example/common";
+import {
+  Page,
+  HashSection,
+  MultiSandbox
+} from "../../components/example/common";
 
 const meta = {
   title: "Focus Management"
@@ -19,9 +23,7 @@ const contents = [explanationMeta, demoMeta];
 
 function AccessibilityExample() {
   return (
-    <React.Fragment>
-      <h1>{meta.title}</h1>
-
+    <Page title={meta.title}>
       <HashSection meta={explanationMeta} tag="h2">
         <p>
           Focus management after navigation is important for improving the
@@ -43,7 +45,7 @@ function AccessibilityExample() {
           ]}
         />
       </HashSection>
-    </React.Fragment>
+    </Page>
   );
 }
 

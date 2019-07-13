@@ -1,6 +1,7 @@
 import React from "react";
 
 import {
+  Page,
   HashSection,
   CodeBlock,
   IJS,
@@ -26,9 +27,7 @@ const contents = [explanationMeta, demoMeta, onGitHubMeta];
 
 function SideEffectExample() {
   return (
-    <React.Fragment>
-      <h1>{meta.title}</h1>
-
+    <Page title={meta.title}>
       <HashSection meta={explanationMeta} tag="h2">
         <p>
           Side effects are observer functions that are run when a new response
@@ -61,7 +60,7 @@ const router = createRouter(browser, routes, {
       </HashSection>
 
       <OnGithub path="misc/side-effect" />
-    </React.Fragment>
+    </Page>
   );
 }
 

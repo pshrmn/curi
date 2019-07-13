@@ -42,7 +42,9 @@ export default function BasePackage({
     const currentVersion = versions[major];
     return (
       <React.Fragment>
-        <h1>@curi/{name}</h1>
+        <h1 tabIndex={-1} style={{ outline: "none" }}>
+          @curi/{name}
+        </h1>
         <StyledPackageInfo>
           <Version major={major} versions={versions} params={params} />
           <GitHubLink name={name} dir={getDir(name)} />

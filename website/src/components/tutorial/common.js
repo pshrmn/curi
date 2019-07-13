@@ -1,6 +1,11 @@
 import Outline from "./Outline";
 import { InlineJS as IJS, InlineComponent as Cmp } from "../highlight/Inline";
-import { HashSection, HashAside, PlainSection } from "../layout/Sections";
+import {
+  HashSection,
+  HashAside,
+  PlainSection,
+  TitledPlainSection
+} from "../layout/Sections";
 import { CodeBlock } from "../layout/Groups";
 import { Note } from "../Messages";
 import CodeSandboxDemo from "../CodeSandboxDemo";
@@ -10,6 +15,7 @@ export {
   PlainSection,
   HashSection,
   HashAside,
+  TitledPlainSection,
   CodeBlock,
   Outline,
   Note,

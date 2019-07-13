@@ -224,30 +224,6 @@ const guides = [
     import: () =>
       import(/* webpackChunkName: 'guide--dev-tips'
       `../pages/Guides/dev-tips.js`)
-  },
-  {
-    name: "React Router v2/3",
-    slug: "migrate-rrv3",
-    descriptioni:
-      "Learn how to migrate an application from React Router v2 or v3 to Curi",
-    type: "migration",
-    import: () =>
-      import(
-        /* webpackChunkName: 'guide--migrate-rrv3'
-        `../pages/Guides/migrate-rrv3.js`
-      )
-  },
-  {
-    name: "React Router v4",
-    slug: "migrate-rrv4",
-    descriptioni:
-      "Learn how to migrate an application from React Router v4 to Curi",
-    type: "migration",
-    import: () =>
-      import(
-        /* webpackChunkName: 'guide--migrate-rrv4'
-        `../pages/Guides/migrate-rrv4.js`
-      )
   }*/
 ];
 

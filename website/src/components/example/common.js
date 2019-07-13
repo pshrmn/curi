@@ -5,6 +5,7 @@ import { InlineJS as IJS, InlineComponent as Cmp } from "../highlight/Inline";
 import { OnGithub, meta as onGitHubMeta } from "./OnGithub";
 import CodeSandboxDemo from "../CodeSandboxDemo";
 import MultiSandbox from "./MultiSandbox";
+import Page from "./Page";
 
 export {
   PlainSection,
@@ -17,5 +18,6 @@ export {
   CodeSandboxDemo,
   MultiSandbox,
   OnGithub,
-  onGitHubMeta
+  onGitHubMeta,
+  Page
 };

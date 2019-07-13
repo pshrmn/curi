@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "@curi/react-dom";
 
 import {
-  PlainSection,
+  TitledPlainSection,
   HashSection,
   HashAside,
   CodeBlock,
@@ -100,9 +100,7 @@ const contents = [
 function ReactBasicsTutorial() {
   return (
     <React.Fragment>
-      <PlainSection>
-        <h1>React Basics Tutorial</h1>
-
+      <TitledPlainSection title="React Basics Tutorial">
         <p>
           In this tutorial, we will be building the front end of a website for a
           bookstore.
@@ -123,7 +121,7 @@ function ReactBasicsTutorial() {
             <li>Writing links to navigate within the application.</li>
           </ul>
         </Outline>
-      </PlainSection>
+      </TitledPlainSection>
 
       <HashSection meta={demoMeta} tag="h2">
         <p>You can run a demo of the site we are building with CodeSandbox.</p>

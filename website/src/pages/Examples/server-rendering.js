@@ -1,6 +1,7 @@
 import React from "react";
 
 import {
+  Page,
   HashSection,
   CodeBlock,
   IJS,
@@ -21,9 +22,7 @@ const contents = [explanationMeta, onGitHubMeta];
 
 function ServerRenderingExample() {
   return (
-    <React.Fragment>
-      <h1>{meta.title}</h1>
-
+    <Page title={meta.title}>
       <HashSection meta={explanationMeta} tag="h2">
         <p>
           Server rendering with Curi is pretty similar to client side rendering.
@@ -108,7 +107,7 @@ app.get("*", catchAll);`}
       </HashSection>
 
       <OnGithub path="misc/server-rendering" />
-    </React.Fragment>
+    </Page>
   );
 }
 

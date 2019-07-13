@@ -3,7 +3,10 @@ import { Link } from "@curi/react-dom";
 
 import PACKAGE_API from "../../constants/packages";
 import Page from "../../components/layout/Page";
-import { PlainSection } from "../../components/layout/Sections";
+import {
+  TitledPlainSection,
+  PlainSection
+} from "../../components/layout/Sections";
 import { Note } from "../../components/Messages";
 import { InlineJS as IJS } from "../../components/highlight/Inline";
 
@@ -36,9 +39,7 @@ function PackageLinks({ version = "v2" }) {
 export default function PackageList({ response }) {
   return (
     <Page>
-      <PlainSection>
-        <h1>Curi Packages</h1>
-
+      <TitledPlainSection title="Curi Packages">
         <p>
           Curi is split into a number of different packages that you can pick
           and choose from in order to only use what you need. You will always
@@ -56,7 +57,7 @@ export default function PackageList({ response }) {
             <IJS>npm install @curi/router</IJS>.
           </p>
         </Note>
-      </PlainSection>
+      </TitledPlainSection>
 
       <PlainSection>
         <PackageLinks version={response.params.version} />

@@ -1,6 +1,10 @@
 import React from "react";
 
-import { HashSection, MultiSandbox } from "../../components/example/common";
+import {
+  Page,
+  HashSection,
+  MultiSandbox
+} from "../../components/example/common";
 
 const meta = {
   title: "Basics"
@@ -19,9 +23,7 @@ const contents = [explanationMeta, demoMeta];
 
 function BasicExample() {
   return (
-    <React.Fragment>
-      <h1>{meta.title}</h1>
-
+    <Page title={meta.title}>
       <HashSection meta={explanationMeta} tag="h2">
         <p>
           A basic Curi application that defines routes and uses links to
@@ -47,7 +49,7 @@ function BasicExample() {
           ]}
         />
       </HashSection>
-    </React.Fragment>
+    </Page>
   );
 }
 

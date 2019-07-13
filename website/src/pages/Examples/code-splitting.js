@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "@curi/react-dom";
 
 import {
+  Page,
   HashSection,
   IJS,
   OnGithub,
@@ -21,9 +22,7 @@ const contents = [explanationMeta, onGitHubMeta];
 
 function CodeSplittingExample() {
   return (
-    <React.Fragment>
-      <h1>{meta.title}</h1>
-
+    <Page title={meta.title}>
       <HashSection meta={explanationMeta} tag="h2">
         <p>
           Code splitting with Curi routes is done using a <IJS>resolve</IJS>{" "}
@@ -38,7 +37,7 @@ function CodeSplittingExample() {
       </HashSection>
 
       <OnGithub path="misc/code-splitting" />
-    </React.Fragment>
+    </Page>
   );
 }
 

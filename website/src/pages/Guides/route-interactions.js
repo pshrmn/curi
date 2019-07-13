@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "@curi/react-dom";
 
 import {
-  PlainSection,
+  TitledPlainSection,
   HashSection,
   CodeBlock,
   IJS
@@ -32,11 +32,9 @@ const contents = [providedMeta, callingMeta, routePropertiesMeta];
 function RouterInteractionsGuide() {
   return (
     <React.Fragment>
-      <PlainSection>
-        <h1>{meta.title}</h1>
-
+      <TitledPlainSection title={meta.title}>
         <p>Route interactions are used to interact with routes.</p>
-      </PlainSection>
+      </TitledPlainSection>
 
       <HashSection meta={providedMeta} tag="h2">
         <p>

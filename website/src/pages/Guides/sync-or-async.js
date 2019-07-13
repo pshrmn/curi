@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "@curi/react-dom";
 
 import {
-  PlainSection,
+  TitledPlainSection,
   HashSection,
   CodeBlock,
   IJS
@@ -22,9 +22,7 @@ const contents = [thinkMeta];
 function SyncAndAsyncGuide() {
   return (
     <React.Fragment>
-      <PlainSection>
-        <h1>{meta.title}</h1>
-
+      <TitledPlainSection title={meta.title}>
         <p>
           With Curi, routes can be synchronous or asynchronous. By default,
           routes are synchronous. If a route has a <IJS>resolve</IJS> function,
@@ -54,7 +52,7 @@ function SyncAndAsyncGuide() {
   }
 }`}
         </CodeBlock>
-      </PlainSection>
+      </TitledPlainSection>
 
       <HashSection meta={thinkMeta} tag="h2">
         <p>

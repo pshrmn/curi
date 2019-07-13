@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "@curi/react-dom";
 
 import {
-  PlainSection,
+  TitledPlainSection,
   HashSection,
   CodeBlock,
   Note,
@@ -39,15 +39,13 @@ const contents = [routerMeta, navigationMeta, handlerMeta, renderingMeta];
 function GettingStartedGuide() {
   return (
     <React.Fragment>
-      <PlainSection>
-        <h1>{meta.title}</h1>
-
+      <TitledPlainSection title={meta.title}>
         <p>
           The core of a single-page application is its router. The router is
           responsible for matching locations to its known routes and for
           powering navigation within the application.
         </p>
-      </PlainSection>
+      </TitledPlainSection>
 
       <HashSection meta={routerMeta} tag="h2">
         <p>

@@ -1,6 +1,7 @@
 import React from "react";
 
 import {
+  Page,
   HashSection,
   Cmp,
   OnGithub,
@@ -19,9 +20,7 @@ const explanationMeta = {
 const contents = [explanationMeta, onGitHubMeta];
 function ScriptTagExample() {
   return (
-    <React.Fragment>
-      <h1>{meta.title}</h1>
-
+    <Page title={meta.title}>
       <HashSection meta={explanationMeta} tag="h2">
         <p>
           This example uses unbundled JavaScript and script tags to serve its
@@ -33,7 +32,7 @@ function ScriptTagExample() {
       </HashSection>
 
       <OnGithub path="misc/script-tags" />
-    </React.Fragment>
+    </Page>
   );
 }
 
