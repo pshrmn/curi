@@ -108,14 +108,12 @@ new App({ target, props: { router } });`}
 
           <CodeBlock lang="html">
             {`<!-- components/Content.svelte -->
-<template>
-  <header>
-    <NavLinks />
-  </header>
-  <main>
-    <svelte:component this={$response.body} />
-  </main>
-</template>
+<header>
+  <NavLinks />
+</header>
+<main>
+  <svelte:component this={$response.body} />
+</main>
 
 <script>
   import { getResponse } from "@curi/svelte";
