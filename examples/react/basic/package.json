@@ -12,7 +12,7 @@
     "@curi/react-dom": "2.0.0",
     "@curi/router": "2.0.1",
     "@hickory/browser": "^2.0.0",
-    "react": "^16.9.0-alpha.0",
-    "react-dom": "^16.9.0-alpha.0"
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0"
   }
 }
