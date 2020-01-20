@@ -55,6 +55,17 @@ const examples = [
   },
 
   {
+    name: "Navigation Confirmation",
+    slug: "confirmation",
+    description: "Prompt the user to confirm navigation",
+    load: () =>
+      import(
+        /* webpackChunkName: 'example--confirmation' */
+        `../pages/Examples/confirmation.js`
+      )
+  },
+
+  {
     name: "Redirects",
     slug: "redirects",
     description: "Routes can redirect to other routes",
