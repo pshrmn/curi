@@ -13,7 +13,7 @@
   "dependencies": {
     "@curi/router": "2.0.1",
     "@curi/vue": "2.0.0-alpha.11",
-    "@hickory/browser": "^2.0.0",
+    "@hickory/browser": "^2.1.0",
     "qs": "^6.4.0",
     "vue": "^2.5.22",
     "vuex": "^3.0.1"

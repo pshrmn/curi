@@ -15,7 +15,7 @@
     "@curi/interactions": "2.0.0",
     "@curi/react-dom": "2.0.0",
     "@curi/router": "2.0.1",
-    "@hickory/browser": "^2.0.0",
+    "@hickory/browser": "^2.1.0",
     "react": "^16.12.0",
     "react-dom": "^16.12.0"
   }
