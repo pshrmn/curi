@@ -1,12 +1,10 @@
 {
-  "name": "@curi-example/transitions-react",
+  "name": "@curi-example/confirmation-react",
   "private": true,
-  "description": "Animate transitions betweeen locations",
+  "description": "Show dialog to confirm navigation in a React application",
   "main": "index.js",
   "keywords": [
-    "curi",
-    "transition",
-    "animation"
+    "Curi"
   ],
   "author": "Paul Sherman",
   "license": "MIT",
@@ -15,7 +13,6 @@
     "@curi/router": "2.0.1",
     "@hickory/browser": "^2.1.0",
     "react": "^16.12.0",
-    "react-dom": "^16.12.0",
-    "react-transition-group": "^2.2.1"
+    "react-dom": "^16.12.0"
   }
 }

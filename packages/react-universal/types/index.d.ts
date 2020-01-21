@@ -9,4 +9,5 @@ import useActive from "./hooks/useActive";
 import useURL from "./hooks/useURL";
 import useNavigating from "./hooks/useNavigating";
 import { useStatefulNavigationHandler, useNavigationHandler } from "./hooks/useNavigationHandler";
-export { createRouterComponent, ResponseConsumer, RouterConsumer, useRouter, useResponse, useActive, useURL, useNavigating, useStatefulNavigationHandler, useNavigationHandler };
+import useConfirm from "./hooks/useConfirm";
+export { createRouterComponent, ResponseConsumer, RouterConsumer, useRouter, useResponse, useActive, useURL, useNavigating, useStatefulNavigationHandler, useNavigationHandler, useConfirm };

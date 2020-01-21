@@ -17,6 +17,7 @@ import {
   useStatefulNavigationHandler,
   useNavigationHandler
 } from "./hooks/useNavigationHandler";
+import useConfirm from "./hooks/useConfirm";
 
 export {
   createRouterComponent,
@@ -28,5 +29,6 @@ export {
   useURL,
   useNavigating,
   useStatefulNavigationHandler,
-  useNavigationHandler
+  useNavigationHandler,
+  useConfirm
 };

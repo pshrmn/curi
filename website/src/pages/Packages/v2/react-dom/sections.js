@@ -8,6 +8,7 @@ import { AsyncLinkAPI } from "./api/asynclink";
 import { UseResponseAPI } from "./api/useResponse";
 import { UseRouterAPI } from "./api/useRouter";
 import { UseActiveAPI } from "./api/useActive";
+import { UseConfirmAPI } from "./api/useConfirm";
 import { UseNavigationFocusAPI } from "./api/useNavigationFocus";
 import { UseNavigatingAPI } from "./api/useNavigating";
 import { UseURLAPI } from "./api/useURL";
@@ -38,6 +39,7 @@ export default {
       <UseResponseAPI />
       <UseRouterAPI />
       <UseActiveAPI />
+      <UseConfirmAPI />
       <UseNavigationFocusAPI />
       <UseNavigatingAPI />
       <UseURLAPI />
