@@ -9,7 +9,7 @@
   import { getResponse } from "@curi/svelte";
   import Link from "@curi/svelte/components/Link.svelte";
 
-  const response = getResponse();
+  let response = getResponse();
 
   $: error = $response.data.error;
   $: movie = $response.data.movie;

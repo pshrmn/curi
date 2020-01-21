@@ -8,20 +8,20 @@ import {
   IJS
 } from "../../components/example/common";
 
-const meta = {
+let meta = {
   title: "Breadcrumbs with Route Ancestors"
 };
 
-const explanationMeta = {
+let explanationMeta = {
   title: "Explanation",
   hash: "explanation"
 };
-const demoMeta = {
+let demoMeta = {
   title: "Live Demo",
   hash: "demo"
 };
 
-const contents = [explanationMeta, demoMeta];
+let contents = [explanationMeta, demoMeta];
 
 function BreadcrumbsExample() {
   return (

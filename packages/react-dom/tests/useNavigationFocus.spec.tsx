@@ -14,7 +14,7 @@ import {
 describe("useNavigationFocus", () => {
   let node;
   let router, Router;
-  const routes = prepareRoutes([
+  let routes = prepareRoutes([
     { name: "Home", path: "" },
     { name: "About", path: "about" }
   ]);
@@ -34,7 +34,7 @@ describe("useNavigationFocus", () => {
   describe("mounting", () => {
     it("focuses ref when mounting", () => {
       function Focuser() {
-        const ref = React.useRef(null);
+        let ref = React.useRef(null);
         useNavigationFocus(ref);
         return <div id="test" tabIndex={-1} ref={ref} />;
       }
@@ -48,27 +48,27 @@ describe("useNavigationFocus", () => {
         );
       });
 
-      const wrapper = document.querySelector("#test");
-      const focused = document.activeElement;
+      let wrapper = document.querySelector("#test");
+      let focused = document.activeElement;
       expect(focused).toBe(wrapper);
     });
 
     it("warns if ref isn't attached to an element (body focused)", () => {
-      const realWarn = console.warn;
-      const fakeWarn = (console.warn = jest.fn());
+      let realWarn = console.warn;
+      let fakeWarn = (console.warn = jest.fn());
 
-      const routes = prepareRoutes([
+      let routes = prepareRoutes([
         {
           name: "Home",
           path: ""
         }
       ]);
 
-      const router = createRouter(inMemory, routes);
-      const Router = createRouterComponent(router);
+      let router = createRouter(inMemory, routes);
+      let Router = createRouterComponent(router);
 
       function Focuser() {
-        const ref = React.useRef(null);
+        let ref = React.useRef(null);
         useNavigationFocus(ref);
         return <div id="test" tabIndex={-1} />;
       }
@@ -93,7 +93,7 @@ describe("useNavigationFocus", () => {
   describe("updates", () => {
     it("does not re-focus ref for regular re-renders", () => {
       function Focuser({ children }) {
-        const ref = React.useRef(null);
+        let ref = React.useRef(null);
         useNavigationFocus(ref);
         return (
           <div id="test" tabIndex={-1} ref={ref}>
@@ -113,14 +113,14 @@ describe("useNavigationFocus", () => {
         );
       });
 
-      const wrapper = document.querySelector("#test");
-      const initialFocus = document.activeElement;
+      let wrapper = document.querySelector("#test");
+      let initialFocus = document.activeElement;
       expect(initialFocus).toBe(wrapper);
 
-      const input = document.querySelector("input");
+      let input = document.querySelector("input");
       // steal the focus
       input.focus();
-      const stolenFocus = document.activeElement;
+      let stolenFocus = document.activeElement;
       expect(stolenFocus).toBe(input);
 
       act(() => {
@@ -140,7 +140,7 @@ describe("useNavigationFocus", () => {
     describe("new response", () => {
       it("re-focuses ref for new response re-renders", () => {
         function Focuser() {
-          const ref = React.useRef(null);
+          let ref = React.useRef(null);
           useNavigationFocus(ref);
           return (
             <div id="test" tabIndex={-1} ref={ref}>
@@ -158,40 +158,40 @@ describe("useNavigationFocus", () => {
           );
         });
 
-        const input = document.querySelector("input");
-        const wrapper = input.parentElement;
-        const initialFocused = document.activeElement;
+        let input = document.querySelector("input");
+        let wrapper = input.parentElement;
+        let initialFocused = document.activeElement;
 
         expect(wrapper).toBe(initialFocused);
 
         // steal the focus
         input.focus();
-        const stolenFocus = document.activeElement;
+        let stolenFocus = document.activeElement;
         expect(input).toBe(stolenFocus);
 
         act(() => {
           // navigate and verify wrapper is re-focused
-          const url = router.url({ name: "About" });
+          let url = router.url({ name: "About" });
           router.navigate({ url });
         });
 
-        const postNavFocus = document.activeElement;
+        let postNavFocus = document.activeElement;
 
         expect(wrapper).toBe(postNavFocus);
       });
 
       it("focuses new ref for new responses", () => {
-        const Home = React.forwardRef((_, ref: React.Ref<any>) => (
+        let Home = React.forwardRef((_, ref: React.Ref<any>) => (
           <div id="home" tabIndex={-1} ref={ref}>
             <h1>Home</h1>
           </div>
         ));
-        const About = React.forwardRef((_, ref: React.Ref<any>) => (
+        let About = React.forwardRef((_, ref: React.Ref<any>) => (
           <div id="about" tabIndex={-1} ref={ref}>
             <h1>About</h1>
           </div>
         ));
-        const routes = prepareRoutes([
+        let routes = prepareRoutes([
           {
             name: "Home",
             path: "",
@@ -208,13 +208,13 @@ describe("useNavigationFocus", () => {
           }
         ]);
 
-        const router = createRouter(inMemory, routes);
-        const Router = createRouterComponent(router);
+        let router = createRouter(inMemory, routes);
+        let Router = createRouterComponent(router);
 
         function Focuser() {
-          const { response } = useResponse();
-          const { body: Body } = response;
-          const ref = React.useRef(null);
+          let { response } = useResponse();
+          let { body: Body } = response;
+          let ref = React.useRef(null);
           useNavigationFocus(ref);
           return <Body ref={ref} />;
         }
@@ -228,35 +228,35 @@ describe("useNavigationFocus", () => {
           );
         });
 
-        const homeDiv = node.querySelector("#home");
+        let homeDiv = node.querySelector("#home");
         expect(document.activeElement).toBe(homeDiv);
 
         act(() => {
-          const url = router.url({ name: "About" });
+          let url = router.url({ name: "About" });
           router.navigate({ url });
         });
 
-        const aboutDiv = node.querySelector("#about");
+        let aboutDiv = node.querySelector("#about");
         expect(document.activeElement).toBe(aboutDiv);
       });
 
       it("warns if ref isn't attached to an element (body focused)", () => {
-        const realWarn = console.warn;
-        const fakeWarn = (console.warn = jest.fn());
+        let realWarn = console.warn;
+        let fakeWarn = (console.warn = jest.fn());
 
-        const Home = ({ innerRef }) => (
+        let Home = ({ innerRef }) => (
           <div id="home" tabIndex={-1} ref={innerRef}>
             <h1>Home</h1>
           </div>
         );
 
-        const About = () => (
+        let About = () => (
           <div id="about">
             <h1>About</h1>
           </div>
         );
 
-        const routes = prepareRoutes([
+        let routes = prepareRoutes([
           {
             name: "Home",
             path: "",
@@ -273,13 +273,13 @@ describe("useNavigationFocus", () => {
           }
         ]);
 
-        const router = createRouter(inMemory, routes);
-        const Router = createRouterComponent(router);
+        let router = createRouter(inMemory, routes);
+        let Router = createRouterComponent(router);
 
         function Focuser() {
-          const { response } = useResponse();
-          const { body: Body } = response;
-          const ref = React.useRef(null);
+          let { response } = useResponse();
+          let { body: Body } = response;
+          let ref = React.useRef(null);
           useNavigationFocus(ref);
           return <Body innerRef={ref} />;
         }
@@ -293,12 +293,12 @@ describe("useNavigationFocus", () => {
           );
         });
 
-        const homeDiv = node.querySelector("#home");
+        let homeDiv = node.querySelector("#home");
         expect(document.activeElement).toBe(homeDiv);
         expect(fakeWarn.mock.calls.length).toBe(0);
 
         act(() => {
-          const url = router.url({ name: "About" });
+          let url = router.url({ name: "About" });
           router.navigate({ url });
         });
 
@@ -315,7 +315,7 @@ describe("useNavigationFocus", () => {
     describe("false (default)", () => {
       it("re-focuses for new response re-renders", () => {
         function Focuser() {
-          const ref = React.useRef(null);
+          let ref = React.useRef(null);
           useNavigationFocus(ref, { preserve: false });
           return (
             <div id="test" tabIndex={-1} ref={ref}>
@@ -333,24 +333,24 @@ describe("useNavigationFocus", () => {
           );
         });
 
-        const input = document.querySelector("input");
-        const wrapper = input.parentElement;
-        const initialFocused = document.activeElement;
+        let input = document.querySelector("input");
+        let wrapper = input.parentElement;
+        let initialFocused = document.activeElement;
 
         expect(wrapper).toBe(initialFocused);
 
         // steal the focus
         input.focus();
-        const stolenFocus = document.activeElement;
+        let stolenFocus = document.activeElement;
         expect(input).toBe(stolenFocus);
 
         act(() => {
           // navigate and verify wrapper is re-focused
-          const url = router.url({ name: "About" });
+          let url = router.url({ name: "About" });
           router.navigate({ url });
         });
 
-        const postNavFocus = document.activeElement;
+        let postNavFocus = document.activeElement;
 
         expect(wrapper).toBe(postNavFocus);
       });
@@ -359,7 +359,7 @@ describe("useNavigationFocus", () => {
     describe("true", () => {
       it("does not focus ref if something is already ", () => {
         function Focuser() {
-          const ref = React.useRef(null);
+          let ref = React.useRef(null);
           useNavigationFocus(ref, { preserve: true });
           return (
             <div id="test" tabIndex={-1} ref={ref}>
@@ -377,24 +377,24 @@ describe("useNavigationFocus", () => {
           );
         });
 
-        const input = document.querySelector("input");
-        const wrapper = input.parentElement;
-        const initialFocused = document.activeElement;
+        let input = document.querySelector("input");
+        let wrapper = input.parentElement;
+        let initialFocused = document.activeElement;
 
         expect(wrapper).toBe(initialFocused);
 
         // steal the focus
         input.focus();
-        const stolenFocus = document.activeElement;
+        let stolenFocus = document.activeElement;
         expect(input).toBe(stolenFocus);
 
         act(() => {
           // navigate and verify wrapper is re-focused
-          const url = router.url({ name: "About" });
+          let url = router.url({ name: "About" });
           router.navigate({ url });
         });
 
-        const postNavFocus = document.activeElement;
+        let postNavFocus = document.activeElement;
 
         expect(postNavFocus).toBe(input);
       });
@@ -402,7 +402,7 @@ describe("useNavigationFocus", () => {
   });
 
   describe("preventScroll", () => {
-    const realFocus = HTMLElement.prototype.focus;
+    let realFocus = HTMLElement.prototype.focus;
     let fakeFocus;
 
     beforeEach(() => {
@@ -416,7 +416,7 @@ describe("useNavigationFocus", () => {
 
     it("calls focus({ preventScroll: false }} when not provided", () => {
       function Focuser() {
-        const ref = React.useRef(null);
+        let ref = React.useRef(null);
         useNavigationFocus(ref);
         return (
           <div id="test" tabIndex={-1} ref={ref}>
@@ -441,7 +441,7 @@ describe("useNavigationFocus", () => {
 
     it("calls focus({ preventScroll: true }} when preventScroll = true", () => {
       function Focuser() {
-        const ref = React.useRef(null);
+        let ref = React.useRef(null);
         useNavigationFocus(ref, { preventScroll: true });
         return (
           <div id="test" tabIndex={-1} ref={ref}>
@@ -464,7 +464,7 @@ describe("useNavigationFocus", () => {
 
     it("calls focus({ preventScroll: false }} when preventScroll = false", () => {
       function Focuser() {
-        const ref = React.useRef(null);
+        let ref = React.useRef(null);
         useNavigationFocus(ref, { preventScroll: false });
         return (
           <div id="test" tabIndex={-1} ref={ref}>
@@ -490,11 +490,11 @@ describe("useNavigationFocus", () => {
 
   describe("tabIndex", () => {
     it("warns when ref element does not have a tabIndex attribute", () => {
-      const realWarn = console.warn;
-      const fakeWarn = (console.warn = jest.fn());
+      let realWarn = console.warn;
+      let fakeWarn = (console.warn = jest.fn());
 
       function Focuser() {
-        const ref = React.useRef(null);
+        let ref = React.useRef(null);
         useNavigationFocus(ref);
         return (
           <div id="test" ref={ref}>
@@ -517,11 +517,11 @@ describe("useNavigationFocus", () => {
     });
 
     it("does not warn when ref element does not have a tabIndex attribute, but ele is already focusable", () => {
-      const realWarn = console.warn;
-      const fakeWarn = (console.warn = jest.fn());
+      let realWarn = console.warn;
+      let fakeWarn = (console.warn = jest.fn());
 
       function Focuser() {
-        const ref = React.useRef(null);
+        let ref = React.useRef(null);
         useNavigationFocus(ref);
         return (
           <div id="test">

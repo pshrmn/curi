@@ -4,7 +4,7 @@ import styled from "@emotion/styled";
 
 import { screen } from "../../constants/styles";
 
-const StyledCodeBlock = styled("figure")`
+let StyledCodeBlock = styled("figure")`
   width: 100%;
   margin: 0 0 25px;
   font-size: 0.8em;
@@ -25,7 +25,7 @@ const StyledCodeBlock = styled("figure")`
   }
 `;
 
-const CodeBlock = ({ children, lang = "javascript", ...rest }) => (
+let CodeBlock = ({ children, lang = "javascript", ...rest }) => (
   <StyledCodeBlock>
     <pre {...rest}>
       <PrismCode component="code" className={`language-${lang}`}>

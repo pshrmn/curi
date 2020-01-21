@@ -19,7 +19,7 @@ export default {
   name: "products",
   methods: {
     title(category) {
-      const categoryRoute = this.$router.route("Category");
+      let categoryRoute = this.$router.route("Category");
       return title(categoryRoute, { category });
     }
   }

@@ -3,11 +3,11 @@ import Vuex from "vuex";
 
 Vue.use(Vuex);
 
-const state = {
+let state = {
   user: undefined
 };
 
-const mutations = {
+let mutations = {
   login(state) {
     state.user = "User";
   },

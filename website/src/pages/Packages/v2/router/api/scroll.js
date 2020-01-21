@@ -7,7 +7,7 @@ import {
   Warning
 } from "../../../../../components/package/common";
 
-export const meta = {
+export let meta = {
   title: "scroll",
   hash: "scroll"
 };
@@ -42,7 +42,7 @@ export function ScrollAPI() {
       <CodeBlock>
         {`import { createRouter, scroll } from "@curi/router";
 
-const router = createRouter(browser, routes, {
+let router = createRouter(browser, routes, {
   sideEffects: [scroll()]
 });`}
       </CodeBlock>

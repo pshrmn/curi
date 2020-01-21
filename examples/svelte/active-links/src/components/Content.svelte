@@ -3,5 +3,5 @@
 <script>
   import { getResponse } from "@curi/svelte";
 
-  const response = getResponse();
+  let response = getResponse();
 </script>

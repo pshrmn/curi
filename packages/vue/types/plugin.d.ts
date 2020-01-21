@@ -3,5 +3,5 @@ import { CuriRouter } from "@curi/types";
 export interface CuriPluginOptions {
     router: CuriRouter;
 }
-declare const CuriPlugin: PluginObject<CuriPluginOptions>;
+declare let CuriPlugin: PluginObject<CuriPluginOptions>;
 export default CuriPlugin;

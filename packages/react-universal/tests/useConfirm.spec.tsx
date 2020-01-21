@@ -9,7 +9,7 @@ import { createRouterComponent, useConfirm } from "@curi/react-universal";
 
 describe("useConfirm", () => {
   let node;
-  const routes = prepareRoutes([
+  let routes = prepareRoutes([
     { name: "Home", path: "" },
     {
       name: "Contact",
@@ -27,10 +27,10 @@ describe("useConfirm", () => {
   });
 
   it("sets a confirmation function that will be called upon navigation", () => {
-    const router = createRouter(inMemory, routes);
-    const Router = createRouterComponent(router);
+    let router = createRouter(inMemory, routes);
+    let Router = createRouterComponent(router);
 
-    const confirmation = jest.fn();
+    let confirmation = jest.fn();
 
     function Confirmation() {
       useConfirm(confirmation);
@@ -54,13 +54,13 @@ describe("useConfirm", () => {
   });
 
   it("stops calling confirmation function after useConfirm is called with no function", () => {
-    const router = createRouter(inMemory, routes);
-    const Router = createRouterComponent(router);
+    let router = createRouter(inMemory, routes);
+    let Router = createRouterComponent(router);
 
-    const confirmation = jest.fn();
+    let confirmation = jest.fn();
 
     function Confirmation() {
-      const [confirm, setConfirm] = React.useState(() => confirmation);
+      let [confirm, setConfirm] = React.useState(() => confirmation);
       useConfirm(confirm);
 
       return (
@@ -91,8 +91,8 @@ describe("useConfirm", () => {
 
     expect(confirmation.mock.calls.length).toBe(1);
 
-    const button = node.querySelector("button");
-    const leftClickEvent = {
+    let button = node.querySelector("button");
+    let leftClickEvent = {
       defaultPrevented: false,
       preventDefault() {
         this.defaultPrevented = true;
@@ -116,10 +116,10 @@ describe("useConfirm", () => {
   });
 
   it("stops calling confirmation function if useConfirm unmounts", () => {
-    const router = createRouter(inMemory, routes);
-    const Router = createRouterComponent(router);
+    let router = createRouter(inMemory, routes);
+    let Router = createRouterComponent(router);
 
-    const confirmation = jest.fn();
+    let confirmation = jest.fn();
 
     function Confirmation() {
       useConfirm(confirmation);

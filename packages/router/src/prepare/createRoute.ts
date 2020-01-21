@@ -40,17 +40,17 @@ export function createRoute(
 
   let fullPath = withLeadingSlash(join(parent.path, props.path));
 
-  const { match: matchOptions = {}, compile: compileOptions = {} } =
+  let { match: matchOptions = {}, compile: compileOptions = {} } =
     props.pathOptions || {};
   // end must be false for routes with children, but we want to track its original value
-  const exact = matchOptions.end == null || matchOptions.end;
+  let exact = matchOptions.end == null || matchOptions.end;
 
   if (props.children && props.children.length) {
     matchOptions.end = false;
   }
 
-  const keys: Array<Key> = [];
-  const re = PathToRegexp(withLeadingSlash(props.path), keys, matchOptions);
+  let keys: Array<Key> = [];
+  let re = PathToRegexp(withLeadingSlash(props.path), keys, matchOptions);
   let keyNames = keys.map(key => key.name);
   if (parent.keys.length) {
     keyNames = parent.keys.concat(keyNames);
@@ -68,9 +68,9 @@ export function createRoute(
     children = childRoutes.map(child => child.public);
   }
 
-  const compiled = PathToRegexp.compile(fullPath);
+  let compiled = PathToRegexp.compile(fullPath);
 
-  const route = {
+  let route = {
     public: {
       name: props.name,
       keys: keyNames,

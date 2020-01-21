@@ -12,7 +12,7 @@ import { StaticConfiguration, Result } from "./types";
 export default async function staticFiles(
   config: StaticConfiguration
 ): Promise<Array<Result>> {
-  const {
+  let {
     pages,
     router: { routes, options: routerOptions = {} },
     output: { render, dir },
@@ -21,7 +21,7 @@ export default async function staticFiles(
 
   // generate input pathname/output filename pairs
   // for the provided pages
-  const io = pathnames({
+  let io = pathnames({
     routes,
     pages
   }).map(pathname => {
@@ -34,14 +34,14 @@ export default async function staticFiles(
   // if there is a catch all page to be generated,
   // add it to the input/output array
   if (config.fallback) {
-    const { pathname, filename } = config.fallback;
+    let { pathname, filename } = config.fallback;
     io.push({
       pathname,
       outputPath: join(dir, filename)
     });
   }
 
-  const reusable = createReusable(historyOptions);
+  let reusable = createReusable(historyOptions);
 
   return Promise.all<Result>(
     io.map(({ pathname, outputPath }) => {
@@ -50,7 +50,7 @@ export default async function staticFiles(
           // create a new router for each so we don't run into any issues
           // with overlapping requests
 
-          const router = createRouter<LocationOptions>(reusable, routes, {
+          let router = createRouter<LocationOptions>(reusable, routes, {
             ...routerOptions,
             // need to emit redirects or will get stuck waiting forever
             invisibleRedirects: false,
@@ -62,7 +62,7 @@ export default async function staticFiles(
           router.once(
             (emitted: Emitted) => {
               try {
-                const html = render(emitted);
+                let html = render(emitted);
                 fs.outputFile(outputPath, html).then(() => {
                   resolve({ pathname, success: true });
                 });

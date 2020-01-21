@@ -7,7 +7,7 @@ Sometimes you will want to redirect based on the results of your `load` function
 When this happens, your `load` function should modify the response by calling its `redirect` method.
 
 ```js
-const routes = [
+let routes = [
   // ...,
   {
     name: 'Protected',

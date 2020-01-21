@@ -6,11 +6,11 @@ import {
   IJS
 } from "../../../../../components/package/common";
 
-const argumentsMeta = {
+let argumentsMeta = {
   title: "Arguments",
   hash: "arguments"
 };
-export const meta = {
+export let meta = {
   title: "active",
   hash: "active"
 };
@@ -31,15 +31,15 @@ export function ActiveAPI() {
       <CodeBlock>
         {`import { active } from "@curi/router";
 
-const routes = prepareRoutes([
+let routes = prepareRoutes([
   {
     name: "User",
     path: "u/:id",
   }
 ]);
 
-const route = router.route("User");
-const isActive = active(route, response, { id: "1" });`}
+let route = router.route("User");
+let isActive = active(route, response, { id: "1" });`}
       </CodeBlock>
 
       <HashSection meta={argumentsMeta} tag="h3">
@@ -57,7 +57,7 @@ const isActive = active(route, response, { id: "1" });`}
           <p>A response object emitted by the router.</p>
 
           <CodeBlock>
-            {`const { response } = router.current();
+            {`let { response } = router.current();
 active(route, response);`}
           </CodeBlock>
         </HashSection>

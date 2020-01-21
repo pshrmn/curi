@@ -4,7 +4,7 @@ import { createRouter, announce } from "@curi/router";
 import routes from "./routes";
 import app from "./components/App.svelte";
 
-const router = createRouter(browser, routes, {
+let router = createRouter(browser, routes, {
   sideEffects: [
     announce(({ response }) => {
       return `Navigated to ${response.location.pathname}`;
@@ -12,5 +12,5 @@ const router = createRouter(browser, routes, {
   ]
 });
 
-const target = document.getElementById("root");
-const view = new app({ target, props: { router } });
+let target = document.getElementById("root");
+let view = new app({ target, props: { router } });

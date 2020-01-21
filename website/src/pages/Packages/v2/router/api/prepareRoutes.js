@@ -7,15 +7,15 @@ import {
   IJS
 } from "../../../../../components/package/common";
 
-const routesArgMeta = { title: "routes", hash: "options-routes" };
+let routesArgMeta = { title: "routes", hash: "options-routes" };
 
-const argumentsMeta = {
+let argumentsMeta = {
   title: "Arguments",
   hash: "prepareRoutes-arguments",
   children: [routesArgMeta]
 };
 
-export const meta = {
+export let meta = {
   title: "prepareRoutes",
   hash: "prepareRoutes"
 };
@@ -32,7 +32,7 @@ export function PrepareRoutesAPI() {
       <CodeBlock>
         {`import { prepareRoutes } from '@curi/router';
 
-const routes = prepareRoutes([
+let routes = prepareRoutes([
   { name: "Home", path: "" },
   // ...
   { name: "Not Found", path: "(.*)" }

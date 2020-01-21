@@ -8,13 +8,13 @@ import { CuriPlugin } from "@curi/vue";
 describe("curi-focus directive", () => {
   let vueWrapper;
 
-  const routes = prepareRoutes([
+  let routes = prepareRoutes([
     { name: "Place", path: "place/:name" },
     { name: "Catch All", path: "(.*)" }
   ]);
-  const router = createRouter(inMemory, routes);
+  let router = createRouter(inMemory, routes);
 
-  const Vue = createLocalVue();
+  let Vue = createLocalVue();
   Vue.use(CuriPlugin, { router });
 
   let node;
@@ -43,7 +43,7 @@ describe("curi-focus directive", () => {
       });
 
       setTimeout(() => {
-        const main = document.querySelector("main");
+        let main = document.querySelector("main");
         expect(document.activeElement).toBe(main);
         done();
       }, 25);
@@ -70,14 +70,14 @@ describe("curi-focus directive", () => {
       });
 
       setTimeout(() => {
-        const wrapper = document.querySelector("main");
-        const initialFocus = document.activeElement;
+        let wrapper = document.querySelector("main");
+        let initialFocus = document.activeElement;
         expect(initialFocus).toBe(wrapper);
 
-        const input = document.querySelector("input");
+        let input = document.querySelector("input");
         // steal the focus
         input.focus();
-        const stolenFocus = document.activeElement;
+        let stolenFocus = document.activeElement;
         expect(stolenFocus).toBe(input);
 
         vueWrapper.type = "number";
@@ -105,22 +105,22 @@ describe("curi-focus directive", () => {
       });
 
       setTimeout(() => {
-        const input = document.querySelector("input");
-        const wrapper = input.parentElement;
-        const initialFocused = document.activeElement;
+        let input = document.querySelector("input");
+        let wrapper = input.parentElement;
+        let initialFocused = document.activeElement;
 
         expect(initialFocused).toBe(wrapper);
 
         // steal the focus
         input.focus();
-        const stolenFocus = document.activeElement;
+        let stolenFocus = document.activeElement;
         expect(stolenFocus).toBe(input);
 
         // navigate and verify wrapper is re-focused
-        const url = router.url({ name: "Place", params: { name: "Hawaii" } });
+        let url = router.url({ name: "Place", params: { name: "Hawaii" } });
         router.navigate({ url });
         setTimeout(() => {
-          const postNavFocus = document.activeElement;
+          let postNavFocus = document.activeElement;
           expect(postNavFocus).toBe(wrapper);
           done();
         }, 25);
@@ -148,22 +148,22 @@ describe("curi-focus directive", () => {
     });
 
     setTimeout(() => {
-      const input = document.querySelector("input");
-      const wrapper = input.parentElement;
-      const initialFocused = document.activeElement;
+      let input = document.querySelector("input");
+      let wrapper = input.parentElement;
+      let initialFocused = document.activeElement;
 
       expect(initialFocused).toBe(wrapper);
       expect(wrapper.className).toBe("no");
 
       // steal the focus
       input.focus();
-      const stolenFocus = document.activeElement;
+      let stolenFocus = document.activeElement;
       expect(stolenFocus).toBe(input);
 
       vueWrapper.wat = "yes";
 
       Vue.nextTick(() => {
-        const postUpdateFocus = document.activeElement;
+        let postUpdateFocus = document.activeElement;
         expect(postUpdateFocus).toBe(input);
 
         expect(wrapper.className).toBe("yes");
@@ -190,23 +190,23 @@ describe("curi-focus directive", () => {
         });
 
         setTimeout(() => {
-          const input = document.querySelector("input");
-          const wrapper = input.parentElement;
-          const initialFocused = document.activeElement;
+          let input = document.querySelector("input");
+          let wrapper = input.parentElement;
+          let initialFocused = document.activeElement;
 
           expect(wrapper).toBe(initialFocused);
 
           // steal the focus
           input.focus();
-          const stolenFocus = document.activeElement;
+          let stolenFocus = document.activeElement;
           expect(input).toBe(stolenFocus);
 
           // navigate and verify wrapper is re-focused
-          const url = router.url({ name: "Place", params: { name: "maybe" } });
+          let url = router.url({ name: "Place", params: { name: "maybe" } });
           router.navigate({ url });
 
           setTimeout(() => {
-            const postNavFocus = document.activeElement;
+            let postNavFocus = document.activeElement;
             expect(wrapper).toBe(postNavFocus);
             done();
           }, 25);
@@ -231,23 +231,23 @@ describe("curi-focus directive", () => {
         });
 
         setTimeout(() => {
-          const input = document.querySelector("input");
-          const wrapper = input.parentElement;
-          const initialFocused = document.activeElement;
+          let input = document.querySelector("input");
+          let wrapper = input.parentElement;
+          let initialFocused = document.activeElement;
 
           expect(wrapper).toBe(initialFocused);
 
           // steal the focus
           input.focus();
-          const stolenFocus = document.activeElement;
+          let stolenFocus = document.activeElement;
           expect(input).toBe(stolenFocus);
 
           // navigate and verify wrapper is re-focused
-          const url = router.url({ name: "Place", params: { name: "maybe" } });
+          let url = router.url({ name: "Place", params: { name: "maybe" } });
           router.navigate({ url });
 
           setTimeout(() => {
-            const postNavFocus = document.activeElement;
+            let postNavFocus = document.activeElement;
             expect(postNavFocus).toBe(input);
             done();
           }, 25);
@@ -257,7 +257,7 @@ describe("curi-focus directive", () => {
   });
 
   describe("preventScroll", () => {
-    const realFocus = HTMLElement.prototype.focus;
+    let realFocus = HTMLElement.prototype.focus;
     let fakeFocus;
 
     beforeEach(() => {
@@ -338,8 +338,8 @@ describe("curi-focus directive", () => {
 
   describe("tabIndex", () => {
     it("warns when element with directive does not have a tabIndex attribute", () => {
-      const realWarn = console.warn;
-      const fakeWarn = (console.warn = jest.fn());
+      let realWarn = console.warn;
+      let fakeWarn = (console.warn = jest.fn());
 
       vueWrapper = new Vue({
         template: `
@@ -355,8 +355,8 @@ describe("curi-focus directive", () => {
     });
 
     it("does not warn when element with directive does not have a tabIndex attribute, but ele is already focusable", done => {
-      const realWarn = console.warn;
-      const fakeWarn = (console.warn = jest.fn());
+      let realWarn = console.warn;
+      let fakeWarn = (console.warn = jest.fn());
 
       vueWrapper = new Vue({
         template: `
@@ -377,7 +377,7 @@ describe("curi-focus directive", () => {
 
       setTimeout(() => {
         expect(fakeWarn.mock.calls.length).toBe(0);
-        const input = document.body.querySelector("input");
+        let input = document.body.querySelector("input");
         expect(document.activeElement).toBe(input);
         console.warn = realWarn;
         done();

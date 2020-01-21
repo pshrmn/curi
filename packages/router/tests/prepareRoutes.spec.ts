@@ -46,7 +46,7 @@ describe("prepareRoutes()", () => {
     describe("path", () => {
       it("throws if a path begins with a forward slash", () => {
         expect(() => {
-          const routes = prepareRoutes([
+          let routes = prepareRoutes([
             { name: "Home", path: "/" },
             { name: "Catch All", path: "(.*)" }
           ]);
@@ -60,7 +60,7 @@ describe("prepareRoutes()", () => {
       describe("match", () => {
         describe("sensitive", () => {
           it("does case-insensitive matching when false (default)", () => {
-            const routes = prepareRoutes([
+            let routes = prepareRoutes([
               {
                 name: "Test",
                 path: "here"
@@ -70,7 +70,7 @@ describe("prepareRoutes()", () => {
                 path: "(.*)"
               }
             ]);
-            const match = routes.match({
+            let match = routes.match({
               pathname: "/Here",
               hash: "",
               query: "",
@@ -80,7 +80,7 @@ describe("prepareRoutes()", () => {
           });
 
           it("does case sensitive matchign when true", () => {
-            const routes = prepareRoutes([
+            let routes = prepareRoutes([
               {
                 name: "Test",
                 path: "here",
@@ -91,7 +91,7 @@ describe("prepareRoutes()", () => {
                 path: "(.*)"
               }
             ]);
-            const match = routes.match({
+            let match = routes.match({
               pathname: "/Here",
               hash: "",
               query: "",
@@ -103,7 +103,7 @@ describe("prepareRoutes()", () => {
 
         describe("strict", () => {
           it("will match a trailing delimiter when false", () => {
-            const routes = prepareRoutes([
+            let routes = prepareRoutes([
               {
                 name: "Test",
                 path: "here"
@@ -113,7 +113,7 @@ describe("prepareRoutes()", () => {
                 path: "(.*)"
               }
             ]);
-            const match = routes.match({
+            let match = routes.match({
               pathname: "/here/",
               hash: "",
               query: "",
@@ -123,7 +123,7 @@ describe("prepareRoutes()", () => {
           });
 
           it("will not match a trailing delimiter when true", () => {
-            const routes = prepareRoutes([
+            let routes = prepareRoutes([
               {
                 name: "Test",
                 path: "here",
@@ -134,7 +134,7 @@ describe("prepareRoutes()", () => {
                 path: "(.*)"
               }
             ]);
-            const match = routes.match({
+            let match = routes.match({
               pathname: "/here/",
               hash: "",
               query: "",
@@ -146,7 +146,7 @@ describe("prepareRoutes()", () => {
 
         describe("end", () => {
           it("does not match if there are segments after the path when true", () => {
-            const routes = prepareRoutes([
+            let routes = prepareRoutes([
               {
                 name: "Test",
                 path: "here"
@@ -156,7 +156,7 @@ describe("prepareRoutes()", () => {
                 path: "(.*)"
               }
             ]);
-            const match = routes.match({
+            let match = routes.match({
               pathname: "/here/again",
               hash: "",
               query: "",
@@ -166,7 +166,7 @@ describe("prepareRoutes()", () => {
           });
 
           it("matches when there are segments after the path when false", () => {
-            const routes = prepareRoutes([
+            let routes = prepareRoutes([
               {
                 name: "Test",
                 path: "here",
@@ -177,7 +177,7 @@ describe("prepareRoutes()", () => {
                 path: "(.*)"
               }
             ]);
-            const match = routes.match({
+            let match = routes.match({
               pathname: "/here/again",
               hash: "",
               query: "",
@@ -188,7 +188,7 @@ describe("prepareRoutes()", () => {
 
           describe("with children routes", () => {
             it("matches if path matches exactly", () => {
-              const routes = prepareRoutes([
+              let routes = prepareRoutes([
                 {
                   name: "Test",
                   path: "test",
@@ -204,7 +204,7 @@ describe("prepareRoutes()", () => {
                   path: "(.*)"
                 }
               ]);
-              const match = routes.match({
+              let match = routes.match({
                 pathname: "/test",
                 hash: "",
                 query: "",
@@ -214,7 +214,7 @@ describe("prepareRoutes()", () => {
             });
 
             it("acts as if end is false in order to match children routes", () => {
-              const routes = prepareRoutes([
+              let routes = prepareRoutes([
                 {
                   name: "Test",
                   path: "test",
@@ -230,7 +230,7 @@ describe("prepareRoutes()", () => {
                   path: "(.*)"
                 }
               ]);
-              const match = routes.match({
+              let match = routes.match({
                 pathname: "/test/ing",
                 hash: "",
                 query: "",
@@ -240,7 +240,7 @@ describe("prepareRoutes()", () => {
             });
 
             it("when end is true, path doesn't match exactly, and no children match, it does not match", () => {
-              const routes = prepareRoutes([
+              let routes = prepareRoutes([
                 {
                   name: "Test",
                   path: "test",
@@ -256,7 +256,7 @@ describe("prepareRoutes()", () => {
                   path: "(.*)"
                 }
               ]);
-              const match = routes.match({
+              let match = routes.match({
                 pathname: "/test/ed",
                 hash: "",
                 query: "",
@@ -266,7 +266,7 @@ describe("prepareRoutes()", () => {
             });
 
             it("when end is false, path doesn't match exactly, and no children match, it matches", () => {
-              const routes = prepareRoutes([
+              let routes = prepareRoutes([
                 {
                   name: "Test",
                   path: "test",
@@ -287,7 +287,7 @@ describe("prepareRoutes()", () => {
                   path: "(.*)"
                 }
               ]);
-              const match = routes.match({
+              let match = routes.match({
                 pathname: "/test/ed",
                 hash: "",
                 query: "",
@@ -301,7 +301,7 @@ describe("prepareRoutes()", () => {
 
       describe("compile", () => {
         it("uses default encode function if none is provided", () => {
-          const routes = prepareRoutes([
+          let routes = prepareRoutes([
             {
               name: "Artist",
               path: "a/:name"
@@ -311,15 +311,15 @@ describe("prepareRoutes()", () => {
               path: "(.*)"
             }
           ]);
-          const route = routes.route("Artist");
-          const pathname = pathnameInteraction(route, {
+          let route = routes.route("Artist");
+          let pathname = pathnameInteraction(route, {
             name: "Beyoncé"
           });
           expect(pathname).toBe("/a/Beyonc%C3%A9");
         });
 
         it("uses custom encode function if provided", () => {
-          const routes = prepareRoutes([
+          let routes = prepareRoutes([
             {
               name: "Artist",
               path: "a/:name",
@@ -334,8 +334,8 @@ describe("prepareRoutes()", () => {
               path: "(.*)"
             }
           ]);
-          const route = routes.route("Artist");
-          const pathname = pathnameInteraction(route, {
+          let route = routes.route("Artist");
+          let pathname = pathnameInteraction(route, {
             name: "Beyoncé"
           });
           expect(pathname).toBe("/a/Beyoncé");
@@ -346,7 +346,7 @@ describe("prepareRoutes()", () => {
 
   describe("route", () => {
     it("returns the public route for the named route", () => {
-      const routes = prepareRoutes([
+      let routes = prepareRoutes([
         { name: "Home", path: "" },
         { name: "Catch All", path: "(.*)" }
       ]);
@@ -357,11 +357,11 @@ describe("prepareRoutes()", () => {
     });
 
     it("returns undefined if no route with provided name exists", () => {
-      const realWarn = console.warn;
-      const fakeWarn = jest.fn();
+      let realWarn = console.warn;
+      let fakeWarn = jest.fn();
       console.warn = fakeWarn;
 
-      const routes = prepareRoutes([
+      let routes = prepareRoutes([
         { name: "Home", path: "" },
         { name: "Catch All", path: "(.*)" }
       ]);
@@ -372,11 +372,11 @@ describe("prepareRoutes()", () => {
     });
 
     it("warns when no route matches", () => {
-      const realWarn = console.warn;
-      const fakeWarn = jest.fn();
+      let realWarn = console.warn;
+      let fakeWarn = jest.fn();
       console.warn = fakeWarn;
 
-      const routes = prepareRoutes([
+      let routes = prepareRoutes([
         { name: "Home", path: "" },
         { name: "Catch All", path: "(.*)" }
       ]);
@@ -395,7 +395,7 @@ describe("prepareRoutes()", () => {
       describe("properties", () => {
         describe("name", () => {
           it("is the provided value", () => {
-            const routes = prepareRoutes([
+            let routes = prepareRoutes([
               {
                 name: "Test",
                 path: "test"
@@ -405,14 +405,14 @@ describe("prepareRoutes()", () => {
                 path: "(.*)"
               }
             ]);
-            const route = routes.route("Test");
+            let route = routes.route("Test");
             expect(route.name).toBe("Test");
           });
         });
 
         describe("keys", () => {
           it("is the array of param names parsed from the path", () => {
-            const routes = prepareRoutes([
+            let routes = prepareRoutes([
               {
                 name: "Test",
                 path: ":one/:two/:three"
@@ -422,12 +422,12 @@ describe("prepareRoutes()", () => {
                 path: "(.*)"
               }
             ]);
-            const route = routes.route("Test");
+            let route = routes.route("Test");
             expect(route.keys).toEqual(["one", "two", "three"]);
           });
 
           it("is an empty array when the path has no params", () => {
-            const routes = prepareRoutes([
+            let routes = prepareRoutes([
               {
                 name: "Test",
                 path: "one/two/three"
@@ -437,18 +437,18 @@ describe("prepareRoutes()", () => {
                 path: "(.*)"
               }
             ]);
-            const route = routes.route("Test");
+            let route = routes.route("Test");
             expect(route.keys).toEqual([]);
           });
         });
 
         describe("extra", () => {
           it("is the provided value", () => {
-            const extra = {
+            let extra = {
               unofficial: true,
               another: 1
             };
-            const routes = prepareRoutes([
+            let routes = prepareRoutes([
               {
                 name: "Test",
                 path: "test",
@@ -459,7 +459,7 @@ describe("prepareRoutes()", () => {
                 path: "(.*)"
               }
             ]);
-            const route = routes.route("Test");
+            let route = routes.route("Test");
             expect(route.extra).toBe(extra);
           });
         });
@@ -468,7 +468,7 @@ describe("prepareRoutes()", () => {
       describe("methods", () => {
         describe("resolve", () => {
           it("is the resolve function", done => {
-            const routes = prepareRoutes([
+            let routes = prepareRoutes([
               {
                 name: "Test",
                 path: "test",
@@ -480,7 +480,7 @@ describe("prepareRoutes()", () => {
                 }
               }
             ]);
-            const route: AsyncRoute = routes.route("Test") as AsyncRoute;
+            let route: AsyncRoute = routes.route("Test") as AsyncRoute;
 
             route.methods.resolve().then(([iResult, eResult]) => {
               expect(iResult).toBe("iTest");
@@ -490,7 +490,7 @@ describe("prepareRoutes()", () => {
           });
 
           it("is undefined when route.resolve isn't provided", done => {
-            const routes = prepareRoutes([
+            let routes = prepareRoutes([
               {
                 name: "Test",
                 path: "test"
@@ -500,7 +500,7 @@ describe("prepareRoutes()", () => {
                 path: "(.*)"
               }
             ]);
-            const route = routes.route("Test");
+            let route = routes.route("Test");
             expect(route.methods.resolve).toBeUndefined();
             done();
           });
@@ -508,7 +508,7 @@ describe("prepareRoutes()", () => {
 
         describe("respond", () => {
           it("is the respond function", () => {
-            const routes = prepareRoutes([
+            let routes = prepareRoutes([
               {
                 name: "Test",
                 path: "test",
@@ -517,13 +517,13 @@ describe("prepareRoutes()", () => {
                 }
               }
             ]);
-            const route = routes.route("Test");
+            let route = routes.route("Test");
 
             expect(route.methods.respond).toBeDefined();
           });
 
           it("is undefined when route.respond isn't provided", () => {
-            const routes = prepareRoutes([
+            let routes = prepareRoutes([
               {
                 name: "Test",
                 path: "test"
@@ -533,7 +533,7 @@ describe("prepareRoutes()", () => {
                 path: "(.*)"
               }
             ]);
-            const route = routes.route("Test");
+            let route = routes.route("Test");
             expect(route.methods.respond).toBeUndefined();
           });
         });
@@ -543,13 +543,13 @@ describe("prepareRoutes()", () => {
 
   describe("match", () => {
     it("matches the pathname and returns object with match/route properties", () => {
-      const routes = prepareRoutes([
+      let routes = prepareRoutes([
         {
           name: "Test",
           path: "test"
         }
       ]);
-      const match = routes.match({
+      let match = routes.match({
         pathname: "/test",
         hash: "",
         query: "",
@@ -565,7 +565,7 @@ describe("prepareRoutes()", () => {
 
     describe("exact matching", () => {
       it("does exact matching", () => {
-        const routes = prepareRoutes([
+        let routes = prepareRoutes([
           {
             name: "Test",
             path: "test"
@@ -575,7 +575,7 @@ describe("prepareRoutes()", () => {
             path: "(.*)"
           }
         ]);
-        const match = routes.match({
+        let match = routes.match({
           pathname: "/test/leftovers",
           hash: "",
           query: "",
@@ -585,7 +585,7 @@ describe("prepareRoutes()", () => {
       });
 
       it("matches partially if route.pathOptions.match.end=false", () => {
-        const routes = prepareRoutes([
+        let routes = prepareRoutes([
           {
             name: "State",
             path: ":state",
@@ -596,7 +596,7 @@ describe("prepareRoutes()", () => {
             path: "(.*)"
           }
         ]);
-        const match = routes.match({
+        let match = routes.match({
           pathname: "/SD/Sioux%20City",
           hash: "",
           query: "",
@@ -607,8 +607,8 @@ describe("prepareRoutes()", () => {
     });
 
     it("returns undefined if no routes match", () => {
-      const routes = prepareRoutes([]);
-      const match = routes.match({
+      let routes = prepareRoutes([]);
+      let match = routes.match({
         pathname: "/test",
         hash: "",
         query: "",
@@ -619,7 +619,7 @@ describe("prepareRoutes()", () => {
 
     describe("nested routes", () => {
       it("matches child routes", () => {
-        const routes = prepareRoutes([
+        let routes = prepareRoutes([
           {
             name: "State",
             path: ":state",
@@ -631,7 +631,7 @@ describe("prepareRoutes()", () => {
             ]
           }
         ]);
-        const match = routes.match({
+        let match = routes.match({
           pathname: "/ND/Fargo",
           hash: "",
           query: "",
@@ -641,7 +641,7 @@ describe("prepareRoutes()", () => {
       });
 
       it("is not affected by parent route having pathOptions.match.end=true", () => {
-        const routes = prepareRoutes([
+        let routes = prepareRoutes([
           {
             name: "State",
             path: ":state",
@@ -654,7 +654,7 @@ describe("prepareRoutes()", () => {
             ]
           }
         ]);
-        const match = routes.match({
+        let match = routes.match({
           pathname: "/ND/Fargo",
           hash: "",
           query: "",
@@ -664,7 +664,7 @@ describe("prepareRoutes()", () => {
       });
 
       it("works when parent route's path has trailing slash", () => {
-        const routes = prepareRoutes([
+        let routes = prepareRoutes([
           {
             name: "State",
             path: ":state/",
@@ -680,7 +680,7 @@ describe("prepareRoutes()", () => {
             path: "(.*)"
           }
         ]);
-        const match = routes.match({
+        let match = routes.match({
           pathname: "/ND/Fargo/",
           hash: "",
           query: "",
@@ -691,7 +691,7 @@ describe("prepareRoutes()", () => {
       });
 
       it("skips partial parent match if no children match (effective exact)", () => {
-        const routes = prepareRoutes([
+        let routes = prepareRoutes([
           {
             name: "State",
             path: ":state",
@@ -707,7 +707,7 @@ describe("prepareRoutes()", () => {
             path: "(.*)"
           }
         ]);
-        const match = routes.match({
+        let match = routes.match({
           pathname: "/MT/Bozeman",
           hash: "",
           query: "",
@@ -717,7 +717,7 @@ describe("prepareRoutes()", () => {
       });
 
       it("uses partial parent match if pathOptions.match.end=false", () => {
-        const routes = prepareRoutes([
+        let routes = prepareRoutes([
           {
             name: "State",
             path: ":state",
@@ -736,7 +736,7 @@ describe("prepareRoutes()", () => {
             path: "(.*)"
           }
         ]);
-        const match = routes.match({
+        let match = routes.match({
           pathname: "/MT/Bozeman",
           hash: "",
           query: "",
@@ -748,7 +748,7 @@ describe("prepareRoutes()", () => {
 
     describe("optional path parameters", () => {
       it("works when optional param is included", () => {
-        const routes = prepareRoutes([
+        let routes = prepareRoutes([
           {
             name: "State",
             path: ":state?/about",
@@ -759,7 +759,7 @@ describe("prepareRoutes()", () => {
             path: "(.*)"
           }
         ]);
-        const match = routes.match({
+        let match = routes.match({
           pathname: "/NY/about",
           hash: "",
           query: "",
@@ -769,7 +769,7 @@ describe("prepareRoutes()", () => {
       });
 
       it("works when optional param is NOT included", () => {
-        const routes = prepareRoutes([
+        let routes = prepareRoutes([
           {
             name: "State",
             path: ":state?/about",
@@ -780,7 +780,7 @@ describe("prepareRoutes()", () => {
             path: "(.*)"
           }
         ]);
-        const match = routes.match({
+        let match = routes.match({
           pathname: "/about",
           hash: "",
           query: "",

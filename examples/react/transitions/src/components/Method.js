@@ -1,6 +1,6 @@
 import React from "react";
 
-const Method = ({ response }) => (
+let Method = ({ response }) => (
   <div>Please do not contact us by {response.params.method}</div>
 );
 

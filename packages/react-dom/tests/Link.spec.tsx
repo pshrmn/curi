@@ -10,7 +10,7 @@ import { createRouterComponent, Link } from "@curi/react-dom";
 describe("<Link>", () => {
   let node;
   let router, Router: React.FunctionComponent;
-  const routes = prepareRoutes([
+  let routes = prepareRoutes([
     { name: "Test", path: "" },
     { name: "Best", path: "best" },
     { name: "Catch All", path: "(.*)" }
@@ -34,14 +34,12 @@ describe("<Link>", () => {
         </Router>,
         node
       );
-      const a = node.querySelector("a");
+      let a = node.querySelector("a");
       expect(a).toBeDefined();
     });
 
     it("renders the provided component instead of an anchor", () => {
-      const StyledAnchor = props => (
-        <a style={{ color: "orange" }} {...props} />
-      );
+      let StyledAnchor = props => <a style={{ color: "orange" }} {...props} />;
       ReactDOM.render(
         <Router>
           <Link anchor={StyledAnchor} name="Test">
@@ -50,7 +48,7 @@ describe("<Link>", () => {
         </Router>,
         node
       );
-      const a = node.querySelector("a");
+      let a = node.querySelector("a");
       expect(a).toBeDefined();
       expect(getComputedStyle(a).color).toBe("orange");
     });
@@ -65,32 +63,32 @@ describe("<Link>", () => {
           </Router>,
           node
         );
-        const a = node.querySelector("a");
+        let a = node.querySelector("a");
         expect(a.getAttribute("href")).toBe("/");
       });
 
       it("has no pathname component if name is not provided", () => {
-        const routes = prepareRoutes([{ name: "Catch All", path: "(.*)" }]);
-        const router = createRouter(inMemory, routes, {
+        let routes = prepareRoutes([{ name: "Catch All", path: "(.*)" }]);
+        let router = createRouter(inMemory, routes, {
           history: {
             locations: [{ url: "/the-initial-location" }]
           }
         });
-        const Router = createRouterComponent(router);
+        let Router = createRouterComponent(router);
         ReactDOM.render(
           <Router>
             <Link hash="test">Test</Link>
           </Router>,
           node
         );
-        const a = node.querySelector("a");
+        let a = node.querySelector("a");
         expect(a.getAttribute("href")).toBe("#test");
       });
     });
 
     describe("params", () => {
       let router, Router;
-      const routes = prepareRoutes([
+      let routes = prepareRoutes([
         { name: "Park", path: "park/:name" },
         { name: "Catch All", path: "(.*)" }
       ]);
@@ -101,7 +99,7 @@ describe("<Link>", () => {
       });
 
       it("uses params to generate the href", () => {
-        const params = { name: "Glacier" };
+        let params = { name: "Glacier" };
         ReactDOM.render(
           <Router>
             <Link name="Park" params={params}>
@@ -110,12 +108,12 @@ describe("<Link>", () => {
           </Router>,
           node
         );
-        const a = node.querySelector("a");
+        let a = node.querySelector("a");
         expect(a.getAttribute("href")).toBe("/park/Glacier");
       });
 
       it("updates href when props change", () => {
-        const params = { name: "Glacier" };
+        let params = { name: "Glacier" };
         ReactDOM.render(
           <Router>
             <Link name="Park" params={params}>
@@ -127,7 +125,7 @@ describe("<Link>", () => {
         let a = node.querySelector("a");
         expect(a.getAttribute("href")).toBe("/park/Glacier");
 
-        const newParams = { name: "Yellowstone" };
+        let newParams = { name: "Yellowstone" };
         ReactDOM.render(
           <Router>
             <Link name="Park" params={newParams}>
@@ -143,12 +141,12 @@ describe("<Link>", () => {
 
     describe("hash & query", () => {
       it("merges hash & query props with the pathname when creating href", () => {
-        const routes = prepareRoutes([
+        let routes = prepareRoutes([
           { name: "Test", path: "test" },
           { name: "Catch All", path: "(.*)" }
         ]);
-        const router = createRouter(inMemory, routes);
-        const Router = createRouterComponent(router);
+        let router = createRouter(inMemory, routes);
+        let Router = createRouterComponent(router);
         ReactDOM.render(
           <Router>
             <Link name="Test" query="one=two" hash="hashtag">
@@ -157,7 +155,7 @@ describe("<Link>", () => {
           </Router>,
           node
         );
-        const a = node.querySelector("a");
+        let a = node.querySelector("a");
         expect(a.getAttribute("href")).toBe("/test?one=two#hashtag");
       });
     });
@@ -174,7 +172,7 @@ describe("<Link>", () => {
         node
       );
 
-      const a = node.querySelector("a");
+      let a = node.querySelector("a");
       expect(a.classList.contains("hi")).toBe(true);
     });
 
@@ -188,20 +186,20 @@ describe("<Link>", () => {
         node
       );
 
-      const a = node.querySelector("a");
+      let a = node.querySelector("a");
       expect(a.getAttribute("href")).toBe("/");
     });
   });
 
   describe("ref", () => {
     it("returns the anchor's ref, not the link's", () => {
-      const routes = prepareRoutes([
+      let routes = prepareRoutes([
         { name: "Test", path: "test" },
         { name: "Catch All", path: "(.*)" }
       ]);
-      const router = createRouter(inMemory, routes);
-      const Router = createRouterComponent(router);
-      const ref = React.createRef();
+      let router = createRouter(inMemory, routes);
+      let Router = createRouterComponent(router);
+      let ref = React.createRef();
       ReactDOM.render(
         <Router>
           <Link name="Test" ref={ref}>
@@ -210,27 +208,27 @@ describe("<Link>", () => {
         </Router>,
         node
       );
-      const a = node.querySelector("a");
+      let a = node.querySelector("a");
       expect(a).toBe(ref.current);
     });
   });
 
   describe("children", () => {
     it("renders the provided children", () => {
-      const routes = prepareRoutes([
+      let routes = prepareRoutes([
         { name: "Test", path: "test" },
         { name: "Catch All", path: "(.*)" }
       ]);
-      const router = createRouter(inMemory, routes);
-      const Router = createRouterComponent(router);
-      const children = "Test Value";
+      let router = createRouter(inMemory, routes);
+      let Router = createRouterComponent(router);
+      let children = "Test Value";
       ReactDOM.render(
         <Router>
           <Link name="Test">{children}</Link>
         </Router>,
         node
       );
-      const a = node.querySelector("a");
+      let a = node.querySelector("a");
       expect(a.textContent).toBe(children);
     });
   });
@@ -238,15 +236,15 @@ describe("<Link>", () => {
   describe("clicking a link", () => {
     describe("onNav", () => {
       it("calls onNav prop func if provided", () => {
-        const mockNavigate = jest.fn();
-        const onNav = jest.fn();
-        const routes = prepareRoutes([
+        let mockNavigate = jest.fn();
+        let onNav = jest.fn();
+        let routes = prepareRoutes([
           { name: "Test", path: "test" },
           { name: "Catch All", path: "(.*)" }
         ]);
-        const router = createRouter(inMemory, routes);
+        let router = createRouter(inMemory, routes);
         router.history.navigate = mockNavigate;
-        const Router = createRouterComponent(router);
+        let Router = createRouterComponent(router);
 
         ReactDOM.render(
           <Router>
@@ -256,8 +254,8 @@ describe("<Link>", () => {
           </Router>,
           node
         );
-        const a = node.querySelector("a");
-        const leftClickEvent = {
+        let a = node.querySelector("a");
+        let leftClickEvent = {
           defaultPrevented: false,
           preventDefault() {
             this.defaultPrevented = true;
@@ -274,17 +272,17 @@ describe("<Link>", () => {
       });
 
       it("does not call history.navigate if onNav prevents default", () => {
-        const mockNavigate = jest.fn();
-        const onNav = jest.fn(event => {
+        let mockNavigate = jest.fn();
+        let onNav = jest.fn(event => {
           event.preventDefault();
         });
-        const routes = prepareRoutes([
+        let routes = prepareRoutes([
           { name: "Test", path: "test" },
           { name: "Catch All", path: "(.*)" }
         ]);
-        const router = createRouter(inMemory, routes);
+        let router = createRouter(inMemory, routes);
         router.history.navigate = mockNavigate;
-        const Router = createRouterComponent(router);
+        let Router = createRouterComponent(router);
 
         ReactDOM.render(
           <Router>
@@ -294,8 +292,8 @@ describe("<Link>", () => {
           </Router>,
           node
         );
-        const a = node.querySelector("a");
-        const leftClickEvent = {
+        let a = node.querySelector("a");
+        let leftClickEvent = {
           defaultPrevented: false,
           preventDefault() {
             this.defaultPrevented = true;
@@ -313,14 +311,14 @@ describe("<Link>", () => {
     });
 
     it("doesn't call history.navigate for modified clicks", () => {
-      const mockNavigate = jest.fn();
-      const routes = prepareRoutes([
+      let mockNavigate = jest.fn();
+      let routes = prepareRoutes([
         { name: "Test", path: "test" },
         { name: "Catch All", path: "(.*)" }
       ]);
-      const router = createRouter(inMemory, routes);
+      let router = createRouter(inMemory, routes);
       router.history.navigate = mockNavigate;
-      const Router = createRouterComponent(router);
+      let Router = createRouterComponent(router);
 
       ReactDOM.render(
         <Router>
@@ -328,8 +326,8 @@ describe("<Link>", () => {
         </Router>,
         node
       );
-      const a = node.querySelector("a");
-      const modifiedClickEvent = {
+      let a = node.querySelector("a");
+      let modifiedClickEvent = {
         defaultPrevented: false,
         preventDefault() {
           this.defaultPrevented = true;
@@ -340,9 +338,9 @@ describe("<Link>", () => {
         shiftKey: null,
         button: 0
       };
-      const modifiers = ["metaKey", "altKey", "ctrlKey", "shiftKey"];
+      let modifiers = ["metaKey", "altKey", "ctrlKey", "shiftKey"];
       modifiers.forEach(m => {
-        const eventCopy = Object.assign({}, modifiedClickEvent);
+        let eventCopy = Object.assign({}, modifiedClickEvent);
         eventCopy[m] = true;
         Simulate.click(a, eventCopy);
         expect(mockNavigate.mock.calls.length).toBe(0);
@@ -350,14 +348,14 @@ describe("<Link>", () => {
     });
 
     it("doesn't call history.navigate if event.preventDefault has been called", () => {
-      const mockNavigate = jest.fn();
-      const routes = prepareRoutes([
+      let mockNavigate = jest.fn();
+      let routes = prepareRoutes([
         { name: "Test", path: "test" },
         { name: "Catch All", path: "(.*)" }
       ]);
-      const router = createRouter(inMemory, routes);
+      let router = createRouter(inMemory, routes);
       router.history.navigate = mockNavigate;
-      const Router = createRouterComponent(router);
+      let Router = createRouterComponent(router);
 
       ReactDOM.render(
         <Router>
@@ -365,8 +363,8 @@ describe("<Link>", () => {
         </Router>,
         node
       );
-      const a = node.querySelector("a");
-      const preventedEvent = {
+      let a = node.querySelector("a");
+      let preventedEvent = {
         defaultPrevented: true,
         preventDefault() {
           this.defaultPrevented = true;
@@ -385,14 +383,14 @@ describe("<Link>", () => {
 
     describe("target", () => {
       it("calls history.navigate if target is not defined", () => {
-        const mockNavigate = jest.fn();
-        const routes = prepareRoutes([
+        let mockNavigate = jest.fn();
+        let routes = prepareRoutes([
           { name: "Test", path: "test" },
           { name: "Catch All", path: "(.*)" }
         ]);
-        const router = createRouter(inMemory, routes);
+        let router = createRouter(inMemory, routes);
         router.history.navigate = mockNavigate;
-        const Router = createRouterComponent(router);
+        let Router = createRouterComponent(router);
 
         ReactDOM.render(
           <Router>
@@ -400,8 +398,8 @@ describe("<Link>", () => {
           </Router>,
           node
         );
-        const a = node.querySelector("a");
-        const event = {
+        let a = node.querySelector("a");
+        let event = {
           defaultPrevented: false,
           preventDefault() {
             this.defaultPrevented = true;
@@ -419,14 +417,14 @@ describe("<Link>", () => {
       });
 
       it("doesn't call history.navigate if target is defined", () => {
-        const mockNavigate = jest.fn();
-        const routes = prepareRoutes([
+        let mockNavigate = jest.fn();
+        let routes = prepareRoutes([
           { name: "Test", path: "test" },
           { name: "Catch All", path: "(.*)" }
         ]);
-        const router = createRouter(inMemory, routes);
+        let router = createRouter(inMemory, routes);
         router.history.navigate = mockNavigate;
-        const Router = createRouterComponent(router);
+        let Router = createRouterComponent(router);
 
         ReactDOM.render(
           <Router>
@@ -436,8 +434,8 @@ describe("<Link>", () => {
           </Router>,
           node
         );
-        const a = node.querySelector("a");
-        const event = {
+        let a = node.querySelector("a");
+        let event = {
           defaultPrevented: false,
           preventDefault() {
             this.defaultPrevented = true;

@@ -3,7 +3,7 @@ import styled from "@emotion/styled";
 
 import { screen, color } from "../../constants/styles";
 
-const StyledMain = styled("main")`
+let StyledMain = styled("main")`
   width: 100vw;
   max-width: 100%;
   padding: 10px 10px 0;

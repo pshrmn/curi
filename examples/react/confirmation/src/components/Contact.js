@@ -16,7 +16,7 @@ function useBeforeUnload(confirm) {
       return;
     }
 
-    const confirmation = event => {
+    let confirmation = event => {
       event.preventDefault();
       event.returnValue = "";
     };
@@ -29,10 +29,10 @@ function useBeforeUnload(confirm) {
   }, [confirm]);
 }
 
-const Contact = () => {
-  const [email, setEmail] = React.useState("");
-  const [msg, setMsg] = React.useState("");
-  const dirty = email !== "" || msg !== "";
+let Contact = () => {
+  let [email, setEmail] = React.useState("");
+  let [msg, setMsg] = React.useState("");
+  let dirty = email !== "" || msg !== "";
 
   useConfirm(dirty ? confirmation : undefined);
   useBeforeUnload(dirty);

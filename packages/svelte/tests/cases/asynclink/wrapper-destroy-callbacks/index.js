@@ -20,7 +20,7 @@ function sleep(ms) {
  * to determine if it is called the expected number of times.
  */
 
-const routes = prepareRoutes([
+let routes = prepareRoutes([
   { name: "Home", path: "" },
   {
     name: "Test",
@@ -36,14 +36,14 @@ const routes = prepareRoutes([
   { name: "Not Found", path: "(.*)" }
 ]);
 
-const router = createRouter(inMemory, routes);
+let router = createRouter(inMemory, routes);
 
 export default function render(done) {
-  const realWarn = console.warn;
-  const stateTracker = (console.warn = jest.fn());
+  let realWarn = console.warn;
+  let stateTracker = (console.warn = jest.fn());
 
-  const target = document.createElement("div");
-  const application = new app.default({ target, props: { router } });
+  let target = document.createElement("div");
+  let application = new app.default({ target, props: { router } });
 
   router.once(
     ({ response }) => {
@@ -54,7 +54,7 @@ export default function render(done) {
     { initial: false }
   );
 
-  const a = target.querySelector("a");
+  let a = target.querySelector("a");
 
   expect(stateTracker.mock.calls.length).toBe(1);
 

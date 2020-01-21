@@ -19,9 +19,9 @@ export default function finishResponse(
   router: CuriRouter,
   external: any
 ): Response {
-  const { resolved = null, error = null } = resolvedResults || {};
+  let { resolved = null, error = null } = resolvedResults || {};
 
-  const response: Response = {
+  let response: Response = {
     data: undefined,
     body: undefined,
     meta: undefined
@@ -34,7 +34,7 @@ export default function finishResponse(
     return response;
   }
 
-  const results = route.methods.respond({
+  let results = route.methods.respond({
     resolved,
     error,
     match,
@@ -53,7 +53,7 @@ export default function finishResponse(
   }
 
   if (process.env.NODE_ENV !== "production") {
-    const validProperties: {
+    let validProperties: {
       [key in keyof SettableResponseProperties]: boolean
     } = {
       meta: true,
@@ -87,8 +87,8 @@ function createRedirect(
   if (isExternalRedirect(redirect)) {
     return redirect;
   }
-  const { name, params, query, hash, state } = redirect;
-  const url = router.url({ name, params, query, hash });
+  let { name, params, query, hash, state } = redirect;
+  let url = router.url({ name, params, query, hash });
   return {
     name,
     params,

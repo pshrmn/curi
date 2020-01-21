@@ -22,43 +22,43 @@ function fakeEvent(props = {}) {
 describe("<Link>", () => {
   describe("anchor", () => {
     it("renders a <TouchableHighlight> by default", () => {
-      const routes = prepareRoutes([
+      let routes = prepareRoutes([
         { name: "Test", path: "" },
         { name: "Catch All", path: "(.*)" }
       ]);
-      const router = createRouter(inMemory, routes);
-      const Router = createRouterComponent(router);
-      const tree = renderer.create(
+      let router = createRouter(inMemory, routes);
+      let Router = createRouterComponent(router);
+      let tree = renderer.create(
         <Router>
           <Link name="Test">
             <Text>Test</Text>
           </Link>
         </Router>
       );
-      const anchor = tree.root.findByType(TouchableHighlight);
+      let anchor = tree.root.findByType(TouchableHighlight);
       expect(anchor).toBeDefined();
     });
 
     it("when provided, it renders the component instead of an anchor", () => {
-      const routes = prepareRoutes([
+      let routes = prepareRoutes([
         { name: "Test", path: "" },
         { name: "Catch All", path: "(.*)" }
       ]);
-      const router = createRouter(inMemory, routes);
-      const Router = createRouterComponent(router);
+      let router = createRouter(inMemory, routes);
+      let Router = createRouterComponent(router);
 
-      const StyledAnchor = props => (
+      let StyledAnchor = props => (
         <TouchableHighlight style={{ borderColor: "orange" }} {...props} />
       );
 
-      const tree = renderer.create(
+      let tree = renderer.create(
         <Router>
           <Link name="Test" anchor={StyledAnchor}>
             <Text>Test</Text>
           </Link>
         </Router>
       );
-      const anchor = tree.root.find(StyledAnchor);
+      let anchor = tree.root.find(StyledAnchor);
       expect(anchor).toBeDefined();
     });
   });
@@ -66,24 +66,24 @@ describe("<Link>", () => {
   describe("navigation location", () => {
     describe("name", () => {
       it("has no pathname component if name is not provided", () => {
-        const mockNavigate = jest.fn();
-        const routes = prepareRoutes([{ name: "Catch All", path: "(.*)" }]);
-        const router = createRouter(inMemory, routes, {
+        let mockNavigate = jest.fn();
+        let routes = prepareRoutes([{ name: "Catch All", path: "(.*)" }]);
+        let router = createRouter(inMemory, routes, {
           history: {
             locations: [{ url: "/the-initial-location" }]
           }
         });
         router.history.navigate = mockNavigate;
-        const Router = createRouterComponent(router);
+        let Router = createRouterComponent(router);
 
-        const tree = renderer.create(
+        let tree = renderer.create(
           <Router>
             <Link name={null} hash="test">
               <Text>Test</Text>
             </Link>
           </Router>
         );
-        const anchor = tree.root.findByType(TouchableHighlight);
+        let anchor = tree.root.findByType(TouchableHighlight);
         anchor.props.onPress(fakeEvent());
         expect(mockNavigate.mock.calls[0][0]).toMatchObject({
           url: "#test"
@@ -92,26 +92,26 @@ describe("<Link>", () => {
     });
 
     describe("params", () => {
-      const routes = prepareRoutes([
+      let routes = prepareRoutes([
         { name: "Park", path: "park/:name" },
         { name: "Catch All", path: "(.*)" }
       ]);
 
       it("uses params to generate the location to navigate to", () => {
-        const mockNavigate = jest.fn();
-        const router = createRouter(inMemory, routes);
+        let mockNavigate = jest.fn();
+        let router = createRouter(inMemory, routes);
         router.history.navigate = mockNavigate;
-        const Router = createRouterComponent(router);
+        let Router = createRouterComponent(router);
 
-        const params = { name: "Glacier" };
-        const tree = renderer.create(
+        let params = { name: "Glacier" };
+        let tree = renderer.create(
           <Router>
             <Link name="Park" params={params}>
               <Text>Test</Text>
             </Link>
           </Router>
         );
-        const anchor = tree.root.findByType(TouchableHighlight);
+        let anchor = tree.root.findByType(TouchableHighlight);
         anchor.props.onPress(fakeEvent());
         expect(mockNavigate.mock.calls[0][0]).toMatchObject({
           url: "/park/Glacier"
@@ -119,26 +119,26 @@ describe("<Link>", () => {
       });
 
       it("updates location to navigate to when props change", () => {
-        const mockNavigate = jest.fn();
-        const router = createRouter(inMemory, routes);
+        let mockNavigate = jest.fn();
+        let router = createRouter(inMemory, routes);
         router.history.navigate = mockNavigate;
-        const Router = createRouterComponent(router);
+        let Router = createRouterComponent(router);
 
-        const params = { name: "Glacier" };
-        const tree = renderer.create(
+        let params = { name: "Glacier" };
+        let tree = renderer.create(
           <Router>
             <Link name="Park" params={params}>
               <Text>Test</Text>
             </Link>
           </Router>
         );
-        const anchor = tree.root.findByType(TouchableHighlight);
+        let anchor = tree.root.findByType(TouchableHighlight);
         anchor.props.onPress(fakeEvent());
         expect(mockNavigate.mock.calls[0][0]).toMatchObject({
           url: "/park/Glacier"
         });
 
-        const newParams = { name: "Yellowstone" };
+        let newParams = { name: "Yellowstone" };
         tree.update(
           <Router>
             <Link name="Park" params={newParams}>
@@ -155,16 +155,16 @@ describe("<Link>", () => {
 
     describe("hash & query", () => {
       it("merges hash & query props with the pathname when creating href", () => {
-        const mockNavigate = jest.fn();
-        const routes = prepareRoutes([
+        let mockNavigate = jest.fn();
+        let routes = prepareRoutes([
           { name: "Test", path: "test" },
           { name: "Catch All", path: "(.*)" }
         ]);
-        const router = createRouter(inMemory, routes);
+        let router = createRouter(inMemory, routes);
         router.history.navigate = mockNavigate;
-        const Router = createRouterComponent(router);
+        let Router = createRouterComponent(router);
 
-        const tree = renderer.create(
+        let tree = renderer.create(
           <Router>
             <Link name="Test" query="one=two" hash="hashtag">
               <Text>Test</Text>
@@ -172,7 +172,7 @@ describe("<Link>", () => {
           </Router>
         );
 
-        const anchor = tree.root.findByType(TouchableHighlight);
+        let anchor = tree.root.findByType(TouchableHighlight);
         anchor.props.onPress(fakeEvent());
         expect(mockNavigate.mock.calls[0][0]).toMatchObject({
           url: "/test?one=two#hashtag"
@@ -183,46 +183,46 @@ describe("<Link>", () => {
 
   describe("additional props", () => {
     it("passes additional props to the rendered anchor", () => {
-      const mockNavigate = jest.fn();
-      const routes = prepareRoutes([
+      let mockNavigate = jest.fn();
+      let routes = prepareRoutes([
         { name: "Test", path: "" },
         { name: "Catch All", path: "(.*)" }
       ]);
-      const router = createRouter(inMemory, routes, {
+      let router = createRouter(inMemory, routes, {
         history: {
           locations: [{ url: "/the-initial-location" }]
         }
       });
       router.history.navigate = mockNavigate;
-      const Router = createRouterComponent(router);
+      let Router = createRouterComponent(router);
 
-      const style = { backgroundColor: "red" };
-      const tree = renderer.create(
+      let style = { backgroundColor: "red" };
+      let tree = renderer.create(
         <Router>
           <Link name="Test" style={style}>
             <Text>Test</Text>
           </Link>
         </Router>
       );
-      const anchor = tree.root.findByType(TouchableHighlight);
+      let anchor = tree.root.findByType(TouchableHighlight);
       expect(anchor.props.style).toMatchObject(style);
     });
 
     it('does not overwrite "native" props set on the rendered element', () => {
-      const onPress = jest.fn();
+      let onPress = jest.fn();
 
-      const routes = prepareRoutes([
+      let routes = prepareRoutes([
         { name: "Test", path: "" },
         { name: "Catch All", path: "(.*)" }
       ]);
-      const router = createRouter(inMemory, routes, {
+      let router = createRouter(inMemory, routes, {
         history: {
           locations: [{ url: "/the-initial-location" }]
         }
       });
-      const Router = createRouterComponent(router);
+      let Router = createRouterComponent(router);
 
-      const tree = renderer.create(
+      let tree = renderer.create(
         <Router>
           <Link name="Test" onPress={onPress}>
             <Text>Test</Text>
@@ -230,58 +230,58 @@ describe("<Link>", () => {
         </Router>
       );
 
-      const anchor = tree.root.findByType(TouchableHighlight);
+      let anchor = tree.root.findByType(TouchableHighlight);
       expect(anchor.props.onPress).not.toBe(onPress);
     });
   });
 
   describe("ref", () => {
     it("returns the anchor's ref, not the link's", () => {
-      const mockNavigate = jest.fn();
-      const routes = prepareRoutes([
+      let mockNavigate = jest.fn();
+      let routes = prepareRoutes([
         { name: "Parks", path: "parks" },
         { name: "Catch All", path: "(.*)" }
       ]);
-      const router = createRouter(inMemory, routes, {
+      let router = createRouter(inMemory, routes, {
         history: {
           locations: [{ url: "/the-initial-location" }]
         }
       });
       router.history.navigate = mockNavigate;
-      const Router = createRouterComponent(router);
+      let Router = createRouterComponent(router);
 
-      const ref = React.createRef();
-      const tree = renderer.create(
+      let ref = React.createRef();
+      let tree = renderer.create(
         <Router>
           <Link name="Parks" ref={ref}>
             <Text>Test</Text>
           </Link>
         </Router>
       );
-      const anchor = tree.root.findByType(TouchableHighlight);
+      let anchor = tree.root.findByType(TouchableHighlight);
       expect(anchor.instance).toBe(ref.current);
     });
   });
 
   describe("children", () => {
     it("renders the provided children value(s)", () => {
-      const routes = prepareRoutes([
+      let routes = prepareRoutes([
         { name: "Test", path: "" },
         { name: "Catch All", path: "(.*)" }
       ]);
-      const router = createRouter(inMemory, routes);
-      const Router = createRouterComponent(router);
+      let router = createRouter(inMemory, routes);
+      let Router = createRouterComponent(router);
 
-      const children = "Test Value";
-      const tree = renderer.create(
+      let children = "Test Value";
+      let tree = renderer.create(
         <Router>
           <Link name="Test">
             <Text>{children}</Text>
           </Link>
         </Router>
       );
-      const anchor = tree.root.findByType(TouchableHighlight);
-      const text = anchor.findByType(Text);
+      let anchor = tree.root.findByType(TouchableHighlight);
+      let text = anchor.findByType(Text);
       expect(anchor).toBeDefined();
       expect(text.instance.props.children).toBe(children);
     });
@@ -290,67 +290,67 @@ describe("<Link>", () => {
   describe("pressing a link", () => {
     describe("navigation method", () => {
       it('method="anchor"', () => {
-        const routes = prepareRoutes([
+        let routes = prepareRoutes([
           { name: "Test", path: "" },
           { name: "Catch All", path: "(.*)" }
         ]);
-        const router = createRouter(inMemory, routes);
-        const mockNavigate = jest.fn();
+        let router = createRouter(inMemory, routes);
+        let mockNavigate = jest.fn();
         router.history.navigate = mockNavigate;
-        const Router = createRouterComponent(router);
+        let Router = createRouterComponent(router);
 
-        const tree = renderer.create(
+        let tree = renderer.create(
           <Router>
             <Link name="Test" method="anchor">
               <Text>Test</Text>
             </Link>
           </Router>
         );
-        const anchor = tree.root.findByType(TouchableHighlight);
+        let anchor = tree.root.findByType(TouchableHighlight);
         anchor.props.onPress(fakeEvent());
         expect(mockNavigate.mock.calls[0][1]).toBe("anchor");
       });
 
       it('method="push"', () => {
-        const mockNavigate = jest.fn();
-        const routes = prepareRoutes([
+        let mockNavigate = jest.fn();
+        let routes = prepareRoutes([
           { name: "Test", path: "" },
           { name: "Catch All", path: "(.*)" }
         ]);
-        const router = createRouter(inMemory, routes);
+        let router = createRouter(inMemory, routes);
         router.history.navigate = mockNavigate;
-        const Router = createRouterComponent(router);
+        let Router = createRouterComponent(router);
 
-        const tree = renderer.create(
+        let tree = renderer.create(
           <Router>
             <Link name="Test" method="push">
               <Text>Test</Text>
             </Link>
           </Router>
         );
-        const anchor = tree.root.findByType(TouchableHighlight);
+        let anchor = tree.root.findByType(TouchableHighlight);
         anchor.props.onPress(fakeEvent());
         expect(mockNavigate.mock.calls[0][1]).toBe("push");
       });
 
       it('method="replace"', () => {
-        const mockNavigate = jest.fn();
-        const routes = prepareRoutes([
+        let mockNavigate = jest.fn();
+        let routes = prepareRoutes([
           { name: "Test", path: "" },
           { name: "Catch All", path: "(.*)" }
         ]);
-        const router = createRouter(inMemory, routes);
+        let router = createRouter(inMemory, routes);
         router.history.navigate = mockNavigate;
-        const Router = createRouterComponent(router);
+        let Router = createRouterComponent(router);
 
-        const tree = renderer.create(
+        let tree = renderer.create(
           <Router>
             <Link name="Test" method={"replace"}>
               <Text>Test</Text>
             </Link>
           </Router>
         );
-        const anchor = tree.root.findByType(TouchableHighlight);
+        let anchor = tree.root.findByType(TouchableHighlight);
         anchor.props.onPress(fakeEvent());
         expect(mockNavigate.mock.calls[0][1]).toBe("replace");
       });
@@ -358,24 +358,24 @@ describe("<Link>", () => {
 
     describe("onNav", () => {
       it("calls onNav prop func if provided", () => {
-        const mockNavigate = jest.fn();
-        const onNav = jest.fn();
-        const routes = prepareRoutes([
+        let mockNavigate = jest.fn();
+        let onNav = jest.fn();
+        let routes = prepareRoutes([
           { name: "Test", path: "" },
           { name: "Catch All", path: "(.*)" }
         ]);
-        const router = createRouter(inMemory, routes);
+        let router = createRouter(inMemory, routes);
         router.history.navigate = mockNavigate;
-        const Router = createRouterComponent(router);
+        let Router = createRouterComponent(router);
 
-        const tree = renderer.create(
+        let tree = renderer.create(
           <Router>
             <Link name="Test" onNav={onNav}>
               <Text>Test</Text>
             </Link>
           </Router>
         );
-        const anchor = tree.root.findByType(TouchableHighlight);
+        let anchor = tree.root.findByType(TouchableHighlight);
         anchor.props.onPress(fakeEvent());
         expect(mockNavigate.mock.calls.length).toBe(1);
         expect(onNav.mock.calls.length).toBe(1);
@@ -383,26 +383,26 @@ describe("<Link>", () => {
       });
 
       it("does not call history.navigate if onNav prevents default", () => {
-        const mockNavigate = jest.fn();
-        const onNav = jest.fn(event => {
+        let mockNavigate = jest.fn();
+        let onNav = jest.fn(event => {
           event.preventDefault();
         });
-        const routes = prepareRoutes([
+        let routes = prepareRoutes([
           { name: "Test", path: "" },
           { name: "Catch All", path: "(.*)" }
         ]);
-        const router = createRouter(inMemory, routes);
+        let router = createRouter(inMemory, routes);
         router.history.navigate = mockNavigate;
-        const Router = createRouterComponent(router);
+        let Router = createRouterComponent(router);
 
-        const tree = renderer.create(
+        let tree = renderer.create(
           <Router>
             <Link name="Test" onNav={onNav}>
               <Text>Test</Text>
             </Link>
           </Router>
         );
-        const anchor = tree.root.findByType(TouchableHighlight);
+        let anchor = tree.root.findByType(TouchableHighlight);
         anchor.props.onPress(fakeEvent());
         expect(onNav.mock.calls.length).toBe(1);
         expect(mockNavigate.mock.calls.length).toBe(0);
@@ -410,23 +410,23 @@ describe("<Link>", () => {
     });
 
     it("doesn't call history.navigate if event.preventDefault has been called", () => {
-      const mockNavigate = jest.fn();
-      const routes = prepareRoutes([
+      let mockNavigate = jest.fn();
+      let routes = prepareRoutes([
         { name: "Test", path: "" },
         { name: "Catch All", path: "(.*)" }
       ]);
-      const router = createRouter(inMemory, routes);
+      let router = createRouter(inMemory, routes);
       router.history.navigate = mockNavigate;
-      const Router = createRouterComponent(router);
+      let Router = createRouterComponent(router);
 
-      const tree = renderer.create(
+      let tree = renderer.create(
         <Router>
           <Link name="Test">
             <Text>Test</Text>
           </Link>
         </Router>
       );
-      const anchor = tree.root.findByType(TouchableHighlight);
+      let anchor = tree.root.findByType(TouchableHighlight);
       anchor.props.onPress(fakeEvent({ defaultPrevented: true }));
       expect(mockNavigate.mock.calls.length).toBe(0);
     });

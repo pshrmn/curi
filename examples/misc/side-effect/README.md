@@ -12,7 +12,7 @@ You pass any side effect functions that you want to use to the `curi` call, usin
 import curi from 'curi';
 import mySideEffect from './mySideEffect';
 
-const router = createRouter(history, routes, {
+let router = createRouter(history, routes, {
   sideEffects: [mySideEffect]
 });
 ```

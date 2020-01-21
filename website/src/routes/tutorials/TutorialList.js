@@ -8,7 +8,7 @@ import {
   PlainSection
 } from "../../components/layout/Sections";
 
-const GroupTutorials = ({ tutorials }) => (
+let GroupTutorials = ({ tutorials }) => (
   <ul className="link-list">
     {tutorials.map(g => (
       <li key={g.title} className="solo">
@@ -21,7 +21,7 @@ const GroupTutorials = ({ tutorials }) => (
 );
 
 function TutorialLinks() {
-  const groups = TUTORIAL_API.grouped();
+  let groups = TUTORIAL_API.grouped();
   return (
     <menu>
       {Object.keys(groups).map(title => (

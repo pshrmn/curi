@@ -4,7 +4,7 @@ import { css, jsx, Global } from "@emotion/core";
 
 import { color, screen, font } from "../../constants/styles";
 
-const globalCSS = css`
+let globalCSS = css`
   body {
     font-family: ${font.serif};
     font-weight: 300;

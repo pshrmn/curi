@@ -10,20 +10,20 @@ import {
   onGitHubMeta
 } from "../../components/example/common";
 
-const meta = {
+let meta = {
   title: "Side Effects"
 };
 
-const explanationMeta = {
+let explanationMeta = {
   title: "Explanation",
   hash: "explanation"
 };
-const demoMeta = {
+let demoMeta = {
   title: "Live Demo",
   hash: "demo"
 };
 
-const contents = [explanationMeta, demoMeta, onGitHubMeta];
+let contents = [explanationMeta, demoMeta, onGitHubMeta];
 
 function SideEffectExample() {
   return (
@@ -46,7 +46,7 @@ function SideEffectExample() {
           {`import { createRouter } from "@curi/router";
 import mySideEffect from './mySideEffect';
 
-const router = createRouter(browser, routes, {
+let router = createRouter(browser, routes, {
   sideEffects: [mySideEffect]
 });`}
         </CodeBlock>

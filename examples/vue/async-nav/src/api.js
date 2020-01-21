@@ -1,6 +1,6 @@
 import cache from "./cache";
 
-const MOVIES = [
+let MOVIES = [
   {
     id: "the_river",
     title: "The River",
@@ -25,16 +25,16 @@ const MOVIES = [
 
 let latency = 1500;
 
-export const delay = value => {
+export let delay = value => {
   if (value !== undefined) {
     latency = value;
   }
   return latency;
 };
 
-export const movies = () => Promise.resolve(MOVIES);
+export let movies = () => Promise.resolve(MOVIES);
 
-export const movie = id => {
+export let movie = id => {
   let cached = cache.get(id);
   if (cached) {
     return cached;
@@ -42,8 +42,8 @@ export const movie = id => {
   // cache the promise, not the data, so that
   // re-navigation doesn't trigger a new request
   // while an old request is running
-  const loader = new Promise((resolve, reject) => {
-    const movie = MOVIES.find(m => m.id === id);
+  let loader = new Promise((resolve, reject) => {
+    let movie = MOVIES.find(m => m.id === id);
     if (movie) {
       // artificial delay
       setTimeout(() => {

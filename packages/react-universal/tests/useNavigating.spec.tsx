@@ -11,7 +11,7 @@ import { createRouterComponent, useNavigating } from "@curi/react-universal";
 
 describe("useNavigating", () => {
   let node;
-  const routes = prepareRoutes([
+  let routes = prepareRoutes([
     { name: "Home", path: "" },
     { name: "Sync", path: "sync" },
     {
@@ -45,11 +45,11 @@ describe("useNavigating", () => {
 
   describe("mount", () => {
     it("cancel is undefined", () => {
-      const router = createRouter(inMemory, routes);
-      const Router = createRouterComponent(router);
+      let router = createRouter(inMemory, routes);
+      let Router = createRouterComponent(router);
 
       function Nav() {
-        const result = useNavigating();
+        let result = useNavigating();
         expect(result).toBeUndefined();
         return null;
       }
@@ -65,12 +65,12 @@ describe("useNavigating", () => {
   describe("while navigating", () => {
     describe("to synchronous routes", () => {
       it("cancel is undefined", async () => {
-        const router = createRouter(inMemory, routes);
-        const Router = createRouterComponent(router);
+        let router = createRouter(inMemory, routes);
+        let Router = createRouterComponent(router);
 
-        const children = jest.fn((arg: any) => null);
+        let children = jest.fn((arg: any) => null);
         function Nav() {
-          const result = useNavigating();
+          let result = useNavigating();
           return children(result);
         }
 
@@ -83,30 +83,30 @@ describe("useNavigating", () => {
           );
         });
 
-        const { response: beforeResponse } = router.current();
+        let { response: beforeResponse } = router.current();
         expect(beforeResponse.name).toBe("Home");
 
         expect(children.mock.calls.length).toBe(1);
 
         act(() => {
-          const url = router.url({ name: "Sync" });
+          let url = router.url({ name: "Sync" });
           router.navigate({ url });
         });
 
         expect(children.mock.calls.length).toBe(1);
-        const { response: afterResponse } = router.current();
+        let { response: afterResponse } = router.current();
         expect(afterResponse.name).toBe("Sync");
       });
     });
 
     describe("to asynchronous routes", () => {
       it("cancel is a function", async () => {
-        const router = createRouter(inMemory, routes);
-        const Router = createRouterComponent(router);
+        let router = createRouter(inMemory, routes);
+        let Router = createRouterComponent(router);
 
-        const children = jest.fn((arg: any) => null);
+        let children = jest.fn((arg: any) => null);
         function Nav() {
-          const result = useNavigating();
+          let result = useNavigating();
           return children(result);
         }
 
@@ -119,11 +119,11 @@ describe("useNavigating", () => {
           );
         });
 
-        const { response: beforeResponse } = router.current();
+        let { response: beforeResponse } = router.current();
         expect(beforeResponse.name).toBe("Home");
 
         act(() => {
-          const url = router.url({ name: "Fast" });
+          let url = router.url({ name: "Fast" });
           router.navigate({ url });
         });
 
@@ -131,11 +131,11 @@ describe("useNavigating", () => {
       });
 
       it("is undefined once navigation finishes", async () => {
-        const router = createRouter(inMemory, routes);
-        const Router = createRouterComponent(router);
-        const children = jest.fn((arg: any) => null);
+        let router = createRouter(inMemory, routes);
+        let Router = createRouterComponent(router);
+        let children = jest.fn((arg: any) => null);
         function Nav() {
-          const result = useNavigating();
+          let result = useNavigating();
           return children(result);
         }
 
@@ -148,16 +148,16 @@ describe("useNavigating", () => {
           );
         });
 
-        const { response: beforeResponse } = router.current();
+        let { response: beforeResponse } = router.current();
         expect(beforeResponse.name).toBe("Home");
 
         await act(async () => {
-          const url = router.url({ name: "Fast" });
+          let url = router.url({ name: "Fast" });
           router.navigate({ url });
           await sleep(100);
         });
 
-        const { response: afterResponse } = router.current();
+        let { response: afterResponse } = router.current();
         expect(afterResponse.name).toBe("Fast");
         expect(children.mock.calls[2][0]).toBeUndefined();
       });
@@ -166,10 +166,10 @@ describe("useNavigating", () => {
 
   describe("calling the cancel function", () => {
     it("cancels the navigation, which triggers a call of the children function", async () => {
-      const router = createRouter(inMemory, routes);
-      const Router = createRouterComponent(router);
+      let router = createRouter(inMemory, routes);
+      let Router = createRouterComponent(router);
       let cancelFn;
-      const children = jest.fn(cancel => {
+      let children = jest.fn(cancel => {
         if (cancel === undefined) {
           return null;
         }
@@ -178,7 +178,7 @@ describe("useNavigating", () => {
       });
 
       function Nav() {
-        const result = useNavigating();
+        let result = useNavigating();
         return children(result);
       }
 
@@ -191,12 +191,12 @@ describe("useNavigating", () => {
         );
       });
 
-      const { response: beforeResponse } = router.current();
+      let { response: beforeResponse } = router.current();
       expect(beforeResponse.name).toBe("Home");
       expect(children.mock.calls[0][0]).toBeUndefined();
 
       act(() => {
-        const url = router.url({ name: "Slow" });
+        let url = router.url({ name: "Slow" });
         router.navigate({ url });
       });
 
@@ -210,10 +210,10 @@ describe("useNavigating", () => {
     });
 
     it("does nothing if calling function after navigation finishes", async () => {
-      const router = createRouter(inMemory, routes);
-      const Router = createRouterComponent(router);
+      let router = createRouter(inMemory, routes);
+      let Router = createRouterComponent(router);
       let cancelFn;
-      const children = jest.fn(cancel => {
+      let children = jest.fn(cancel => {
         if (cancel === undefined) {
           return null;
         }
@@ -221,7 +221,7 @@ describe("useNavigating", () => {
         return null;
       });
       function Nav() {
-        const result = useNavigating();
+        let result = useNavigating();
         return children(result);
       }
 
@@ -234,20 +234,20 @@ describe("useNavigating", () => {
         );
       });
 
-      const { response: beforeResponse } = router.current();
+      let { response: beforeResponse } = router.current();
       expect(beforeResponse.name).toBe("Home");
 
       await act(async () => {
-        const url = router.url({ name: "Fast" });
+        let url = router.url({ name: "Fast" });
         router.navigate({ url });
         // sleep while we wait for the Fast route to render
         await sleep(100);
       });
 
-      const { response: afterResponse } = router.current();
+      let { response: afterResponse } = router.current();
 
       expect(afterResponse.name).toBe("Fast");
-      const childrenCalls = children.mock.calls.length;
+      let childrenCalls = children.mock.calls.length;
 
       await act(async () => {
         cancelFn();

@@ -3,7 +3,7 @@ import styled from "@emotion/styled";
 
 import { color } from "../../constants/styles";
 
-const StyledAside = styled("aside")`
+let StyledAside = styled("aside")`
   border: 1px solid ${color.borderBlue};
   padding: 10px;
   margin: 5px 0;

@@ -8,7 +8,7 @@ import ExampleDropdown from "./lists/ExampleDropdown";
 import TutorialDropdown from "./lists/TutorialDropdown";
 import { color, screen } from "../../../constants/styles";
 
-const StyledHeader = styled("header")`
+let StyledHeader = styled("header")`
   display: none;
 
   @media only screen and (min-width: ${screen.medium}) {
@@ -27,7 +27,7 @@ const StyledHeader = styled("header")`
   }
 `;
 
-const FlexList = styled("ul")`
+let FlexList = styled("ul")`
   display: flex;
   flex-flow: row wrap;
   align-items: flex-end;
@@ -37,7 +37,7 @@ const FlexList = styled("ul")`
   max-width: 100%;
 `;
 
-const StyledNav = styled("nav")`
+let StyledNav = styled("nav")`
   color: ${color.lightGray};
 
   li {
@@ -82,7 +82,7 @@ export function unmodifiedLeftClick(event) {
 }
 
 function MenuItem({ name, params, text, show, hide, Submenu, group }) {
-  const active = group === name;
+  let active = group === name;
   return (
     <li
       className="base"
@@ -135,13 +135,13 @@ function DropdownLink({ name, text, activated, show, hide, ...rest }) {
 }
 
 export default function Header(props) {
-  const [group, setGroup] = React.useState();
+  let [group, setGroup] = React.useState();
 
-  const showDropdown = group => {
+  let showDropdown = group => {
     setGroup(group);
   };
 
-  const hideDropdown = () => {
+  let hideDropdown = () => {
     setGroup(undefined);
   };
 

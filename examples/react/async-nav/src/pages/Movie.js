@@ -1,8 +1,8 @@
 import React from "react";
 import { Link } from "@curi/react-dom";
 
-const Movie = ({ response }) => {
-  const { error, movie } = response.data;
+let Movie = ({ response }) => {
+  let { error, movie } = response.data;
   if (error) {
     return (
       <div>

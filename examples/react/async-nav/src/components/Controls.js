@@ -9,7 +9,7 @@ class Controls extends React.Component {
   };
 
   delayHandler = event => {
-    const value = delay(parseInt(event.target.value, 10));
+    let value = delay(parseInt(event.target.value, 10));
     this.setState({
       delay: value
     });

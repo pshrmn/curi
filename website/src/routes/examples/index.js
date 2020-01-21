@@ -23,8 +23,8 @@ export default {
       name: "Example",
       path: ":slug/",
       resolve({ params }) {
-        const example = EXAMPLE_API.find(params.slug);
-        const content = example
+        let example = EXAMPLE_API.find(params.slug);
+        let content = example
           ? example
               .load()
               .then(preferDefault, catchImportError(`example: ${params.slug}`))
@@ -32,7 +32,7 @@ export default {
         return Promise.all([example, content]);
       },
       respond: ({ resolved }) => {
-        const [example, content] = resolved;
+        let [example, content] = resolved;
         return {
           body: Example,
           data: {

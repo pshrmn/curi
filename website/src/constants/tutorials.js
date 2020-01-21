@@ -1,4 +1,4 @@
-const tutorials = [
+let tutorials = [
   {
     title: "React Basics",
     slug: "react-basics",

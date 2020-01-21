@@ -14,7 +14,7 @@ import {
 describe("<RouterConsumer>", () => {
   let node;
   let router, Router;
-  const routes = prepareRoutes([
+  let routes = prepareRoutes([
     { name: "Home", path: "" },
     { name: "About", path: "about" },
     { name: "Catch All", path: "(.*)" }
@@ -53,7 +53,7 @@ describe("<RouterConsumer>", () => {
   });
 
   it("does not need to re-render when there is a new response", () => {
-    const Test = jest.fn(() => {
+    let Test = jest.fn(() => {
       return (
         <RouterConsumer>
           {contextRouter => {
@@ -63,15 +63,15 @@ describe("<RouterConsumer>", () => {
       );
     });
 
-    const Pure = () => {
+    let Pure = () => {
       // @ts-ignore
       return <Test />;
     };
 
-    const Memoized = React.memo(Pure);
+    let Memoized = React.memo(Pure);
 
-    const App = jest.fn(() => {
-      const { response } = useResponse();
+    let App = jest.fn(() => {
+      let { response } = useResponse();
       return (
         <React.Fragment>
           <div>{response.name}</div>
@@ -95,7 +95,7 @@ describe("<RouterConsumer>", () => {
     expect(App.mock.calls.length).toBe(1);
 
     act(() => {
-      const url = router.url({ name: "About" });
+      let url = router.url({ name: "About" });
       router.navigate({ url });
     });
 

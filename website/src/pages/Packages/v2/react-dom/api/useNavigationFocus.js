@@ -8,11 +8,11 @@ import {
   Note
 } from "../../../../../components/package/common";
 
-const optsMeta = {
+let optsMeta = {
   title: "Options",
   hash: "useNavigationFocus-opts"
 };
-export const meta = {
+export let meta = {
   title: "useNavigationFocus",
   hash: "useNavigationFocus"
 };
@@ -39,7 +39,7 @@ export function UseNavigationFocusAPI() {
         {`import { useNavigationFocus } from "@curi/react-dom";
 
 function App() {
-  const ref = React.createRef(null);
+  let ref = React.createRef(null);
   useNavigationFocus(ref);
 
   return (

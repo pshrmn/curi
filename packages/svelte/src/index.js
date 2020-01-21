@@ -1,18 +1,18 @@
 import { readable } from "svelte/store";
 import { getContext, setContext } from "svelte";
 
-const routerKey = {};
-const responseKey = {};
-const navigationKey = {};
+let routerKey = {};
+let responseKey = {};
+let navigationKey = {};
 
 export function setup(router) {
-  const initial = router.current();
-  const response = readable(initial.response, set => {
+  let initial = router.current();
+  let response = readable(initial.response, set => {
     return router.observe(({ response }) => {
       set(response);
     });
   });
-  const navigation = readable(initial.navigation, set => {
+  let navigation = readable(initial.navigation, set => {
     return router.observe(({ navigation }) => {
       set(navigation);
     });

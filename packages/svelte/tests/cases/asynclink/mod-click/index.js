@@ -4,23 +4,23 @@ import simulant from "simulant";
 
 import app from "./app.svelte";
 
-const routes = prepareRoutes([
+let routes = prepareRoutes([
   { name: "Home", path: "" },
   { name: "User", path: "u/:id" },
   { name: "Not Found", path: "(.*)" }
 ]);
 
-const router = createRouter(inMemory, routes);
+let router = createRouter(inMemory, routes);
 
 export default function render() {
-  const target = document.createElement("div");
-  const mockNavigate = jest.fn();
+  let target = document.createElement("div");
+  let mockNavigate = jest.fn();
   router.history.navigate = mockNavigate;
   new app.default({ target, props: { router } });
 
-  const a = target.querySelector("a");
+  let a = target.querySelector("a");
 
-  const modifiers = ["metaKey", "altKey", "ctrlKey", "shiftKey"];
+  let modifiers = ["metaKey", "altKey", "ctrlKey", "shiftKey"];
   modifiers.forEach(m => {
     simulant.fire(a, "click", { [m]: true });
     expect(mockNavigate.mock.calls.length).toBe(0);

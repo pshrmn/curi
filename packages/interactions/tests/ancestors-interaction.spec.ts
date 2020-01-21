@@ -5,7 +5,7 @@ import { ancestors } from "@curi/interactions";
 
 describe("ancestors route interaction", () => {
   describe("routes", () => {
-    const routes = prepareRoutes([
+    let routes = prepareRoutes([
       {
         name: "League",
         path: "league/:lID",
@@ -26,13 +26,13 @@ describe("ancestors route interaction", () => {
     ]);
 
     it("returns all ancestors of the route", () => {
-      const route = routes.route("Player");
-      const names = ancestors(route).map(r => r.name);
+      let route = routes.route("Player");
+      let names = ancestors(route).map(r => r.name);
       expect(names).toEqual(["League", "Team"]);
     });
 
     it("returns empty array if route has no ancestors", () => {
-      const route = routes.route("League");
+      let route = routes.route("League");
       expect(ancestors(route)).toEqual([]);
     });
   });

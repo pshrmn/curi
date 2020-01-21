@@ -8,14 +8,14 @@ import routes from "./routes";
 import Controls from "./components/Controls";
 import App from "./components/App";
 
-const router = createRouter(browser, routes, {
+let router = createRouter(browser, routes, {
   sideEffects: [
     announce(({ response }) => {
       return `Navigated to ${response.location.pathname}`;
     })
   ]
 });
-const Router = createRouterComponent(router);
+let Router = createRouterComponent(router);
 
 router.once(() => {
   ReactDOM.render(

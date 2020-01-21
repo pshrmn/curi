@@ -4,7 +4,7 @@ import { css } from "@emotion/core";
 
 import { color } from "../constants/styles";
 
-const noteCSS = css`
+let noteCSS = css`
   padding: 10px 5px;
   margin: 5px 0;
   border: 1px solid ${color.borderGray};
@@ -14,7 +14,7 @@ const noteCSS = css`
   }
 `;
 
-const StyledNote = styled("aside")`
+let StyledNote = styled("aside")`
   ${noteCSS}
 
   background: ${color.gray};
@@ -24,7 +24,7 @@ const StyledNote = styled("aside")`
   }
 `;
 
-const StyledWarning = styled("aside")`
+let StyledWarning = styled("aside")`
   ${noteCSS}
 
   background: ${color.lightOrange};
@@ -35,13 +35,13 @@ const StyledWarning = styled("aside")`
   }
 `;
 
-export const Note = ({ children }) => (
+export let Note = ({ children }) => (
   <StyledNote>
     <strong>Note:</strong> {children}
   </StyledNote>
 );
 
-export const Warning = ({ children }) => (
+export let Warning = ({ children }) => (
   <StyledWarning>
     <strong>Warning:</strong> {children}
   </StyledWarning>

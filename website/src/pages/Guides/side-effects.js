@@ -8,25 +8,25 @@ import {
   IJS
 } from "../../components/guide/common";
 
-const meta = {
+let meta = {
   title: "Side Effects"
 };
 
-const providedMeta = {
+let providedMeta = {
   title: "@curi/side-effects",
   hash: "provided"
 };
-const addingMeta = {
+let addingMeta = {
   title: "Adding Side Effects",
   hash: "adding"
 };
 
-const creatingMeta = {
+let creatingMeta = {
   title: "Creating Side Effects",
   hash: "creating"
 };
 
-const contents = [addingMeta, providedMeta, creatingMeta];
+let contents = [addingMeta, providedMeta, creatingMeta];
 
 function UsingSideEffectsGuide() {
   return (
@@ -61,7 +61,7 @@ function UsingSideEffectsGuide() {
         </p>
 
         <CodeBlock>
-          {`const router = createRouter(browser, routes, {
+          {`let router = createRouter(browser, routes, {
   sideEffects: [logResponse, updateTitle]
 });`}
         </CodeBlock>
@@ -75,11 +75,11 @@ function UsingSideEffectsGuide() {
         </p>
 
         <CodeBlock>
-          {`const router = createRouter(browser, routes, {
+          {`let router = createRouter(browser, routes, {
   sideEffects: [logResponse]
 });
 
-const render = () => {
+let render = () => {
   // render the app
 };
 
@@ -133,7 +133,7 @@ router.observe(render);
         <CodeBlock>
           {`import { announce, scroll, title } from "@curi/router";
 
-const router = createRouter(browser, routes, {
+let router = createRouter(browser, routes, {
   sideEffect: [
     announce(({ response }) => {
       return \`Navigated to \${response.location.pathname}\`;
@@ -159,7 +159,7 @@ const router = createRouter(browser, routes, {
   console.log('Navigation action:', navigation.action);
 }
 
-const router = createRouter(browser, routes, {
+let router = createRouter(browser, routes, {
   sideEffects: [mySideEffect]
 });`}
         </CodeBlock>
@@ -171,7 +171,7 @@ const router = createRouter(browser, routes, {
         <CodeBlock>
           {`function AnalyticsLogger(options) {
   // do some setup with the provided options
-  const logger = setupMyLogger(options);
+  let logger = setupMyLogger(options);
 
   // and return the actual side effect function
   return sideEffect({ response }) {

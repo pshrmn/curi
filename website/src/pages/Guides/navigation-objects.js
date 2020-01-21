@@ -7,21 +7,21 @@ import {
   IJS
 } from "../../components/guide/common";
 
-const meta = {
+let meta = {
   title: "Navigation Objects"
 };
 
-const propertiesMeta = {
+let propertiesMeta = {
   title: "The Properties of a Navigation Object",
   hash: "navigation-properties"
 };
 
-const usageMeta = {
+let usageMeta = {
   title: "Usage",
   hash: "usage"
 };
 
-const contents = [propertiesMeta, usageMeta];
+let contents = [propertiesMeta, usageMeta];
 
 function NavigationObjectGuide() {
   return (

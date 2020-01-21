@@ -9,32 +9,32 @@ import {
   IJS
 } from "../../components/guide/common";
 
-const meta = {
+let meta = {
   title: "Getting Started"
 };
 
-const routerMeta = {
+let routerMeta = {
   title: "The Router",
   hash: "router-object"
 };
-const urlsMeta = {
+let urlsMeta = {
   title: "URLs",
   hash: "urls"
 };
-const navigationMeta = {
+let navigationMeta = {
   title: "Navigation",
   hash: "navigation"
 };
-const handlerMeta = {
+let handlerMeta = {
   title: "Response Handlers",
   hash: "response-handlers"
 };
-const renderingMeta = {
+let renderingMeta = {
   title: "Rendering",
   hash: "rendering"
 };
 
-const contents = [routerMeta, navigationMeta, handlerMeta, renderingMeta];
+let contents = [routerMeta, navigationMeta, handlerMeta, renderingMeta];
 
 function GettingStartedGuide() {
   return (
@@ -63,8 +63,8 @@ function GettingStartedGuide() {
           {`import { createRouter, prepareRoutes } from '@curi/router';
 import { browser } from "@hickory/browser";
 
-const routes = prepareRoutes([...]);
-const router = createRouter(browser, routes);`}
+let routes = prepareRoutes([...]);
+let router = createRouter(browser, routes);`}
         </CodeBlock>
       </HashSection>
 
@@ -83,22 +83,22 @@ const router = createRouter(browser, routes);`}
         </p>
 
         <CodeBlock>
-          {`const routes = prepareRoutes([
+          {`let routes = prepareRoutes([
   { name: "Home", path: "" },
   { name: "Contact", path: "contact/:method" }
 ]);
-const router = createRouter(browser, routes);
+let router = createRouter(browser, routes);
 
-const homeURL = router.url({ name: "Home" });
+let homeURL = router.url({ name: "Home" });
 // "/"
 
-const phoneURL = router.url({
+let phoneURL = router.url({
   name: "Contact",
   params: { method: "phone" }
 });
 // "/contact/phone"
 
-const queryURL = router.url({
+let queryURL = router.url({
   name: "Home",
   query: "value=7"
 });
@@ -112,13 +112,13 @@ const queryURL = router.url({
 
         <CodeBlock>
           {`import { parse, stringify } from "qs";
-const router = createRouter(browser, routes, {
+let router = createRouter(browser, routes, {
   history: {
     query: { parse, stringify }
   }
 });
 
-const queryURL = router.url({
+let queryURL = router.url({
   name: "Home",
   query: { value: "6" }
 });
@@ -194,7 +194,7 @@ const queryURL = router.url({
         </p>
 
         <CodeBlock>
-          {`const router = createRouter(browser, routes, {
+          {`let router = createRouter(browser, routes, {
   sideEffects: [scroll(), title(...)]
 })`}
         </CodeBlock>
@@ -206,7 +206,7 @@ const queryURL = router.url({
         </p>
 
         <CodeBlock>
-          {`const router = createRouter(browser, routes);
+          {`let router = createRouter(browser, routes);
 // wait for the initial route's async action to complete
 router.once(() => {
   // this is not called until the initial response is ready

@@ -14,7 +14,7 @@ import {
 describe("useRouter", () => {
   let node;
   let router, Router;
-  const routes = prepareRoutes([
+  let routes = prepareRoutes([
     { name: "Home", path: "" },
     { name: "About", path: "about" },
     { name: "Catch All", path: "(.*)" }
@@ -32,7 +32,7 @@ describe("useRouter", () => {
 
   it("provides access to the router object", () => {
     function App() {
-      const contextRouter = useRouter();
+      let contextRouter = useRouter();
       expect(contextRouter).toBe(router);
       return null;
     }
@@ -48,19 +48,19 @@ describe("useRouter", () => {
   });
 
   it("does not need to re-render when there is a new response", () => {
-    const Test = jest.fn(() => {
-      const contextRouter = useRouter();
+    let Test = jest.fn(() => {
+      let contextRouter = useRouter();
       return null;
     });
 
-    const Pure = () => {
+    let Pure = () => {
       return <Test />;
     };
 
-    const Memoized = React.memo(Pure);
+    let Memoized = React.memo(Pure);
 
-    const App = jest.fn(() => {
-      const { response } = useResponse();
+    let App = jest.fn(() => {
+      let { response } = useResponse();
       return (
         <React.Fragment>
           <div>{response.name}</div>
@@ -84,7 +84,7 @@ describe("useRouter", () => {
     expect(App.mock.calls.length).toBe(1);
 
     act(() => {
-      const url = router.url({ name: "About" });
+      let url = router.url({ name: "About" });
       router.navigate({ url });
     });
 

@@ -6,20 +6,20 @@ import {
   MultiSandbox
 } from "../../components/example/common";
 
-const meta = {
+let meta = {
   title: "Route Transitions"
 };
 
-const explanationMeta = {
+let explanationMeta = {
   title: "Explanation",
   hash: "explanation"
 };
-const demoMeta = {
+let demoMeta = {
   title: "Live Demo",
   hash: "demo"
 };
 
-const contents = [explanationMeta, demoMeta];
+let contents = [explanationMeta, demoMeta];
 
 function TransitionsExample() {
   return (

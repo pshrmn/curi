@@ -10,47 +10,47 @@ import {
   Cmp
 } from "../../components/guide/common";
 
-const meta = {
+let meta = {
   title: "History"
 };
 
-const browserMeta = {
+let browserMeta = {
   title: "Browser History",
   hash: "browser"
 };
-const hashMeta = {
+let hashMeta = {
   title: "Hash History",
   hash: "hash"
 };
-const inMemoryMeta = {
+let inMemoryMeta = {
   title: "In Memory History",
   hash: "in-memory"
 };
-const typesMeta = {
+let typesMeta = {
   title: "Types of History",
   hash: "types",
   children: [browserMeta, hashMeta, inMemoryMeta]
 };
 
-const queryMeta = {
+let queryMeta = {
   title: "Query Objects",
   hash: "query-objects"
 };
-const locationsMeta = {
+let locationsMeta = {
   title: "Locations",
   hash: "locations",
   children: [queryMeta]
 };
 
-const goMeta = { title: "go", hash: "go" };
-const navigateMeta = { title: "navigate", hash: "navigate" };
-const navigationMeta = {
+let goMeta = { title: "go", hash: "go" };
+let navigateMeta = { title: "navigate", hash: "navigate" };
+let navigationMeta = {
   title: "Navigation",
   hash: "navigation",
   children: [goMeta, navigateMeta]
 };
 
-const contents = [typesMeta, locationsMeta, navigationMeta];
+let contents = [typesMeta, locationsMeta, navigationMeta];
 
 function HistoryGuide() {
   return (
@@ -72,7 +72,7 @@ function HistoryGuide() {
         </p>
 
         <CodeBlock>{`import { browser } from "@hickory/browser";
-const router = createRouter(browser, routes);`}</CodeBlock>
+let router = createRouter(browser, routes);`}</CodeBlock>
 
         <p>
           You most likely will not need to interact directly with the
@@ -90,7 +90,7 @@ const router = createRouter(browser, routes);`}</CodeBlock>
         <HashSection meta={browserMeta} tag="h3">
           <CodeBlock>
             {`import { browser } from "@hickory/browser";
-const router = createRouter(browser, routes);`}
+let router = createRouter(browser, routes);`}
           </CodeBlock>
 
           <p>
@@ -121,7 +121,7 @@ const router = createRouter(browser, routes);`}
         <HashSection meta={hashMeta} tag="h3">
           <CodeBlock>
             {`import { hash } from "@hickory/hash";
-const router = createRouter(Hash, routes);`}
+let router = createRouter(Hash, routes);`}
           </CodeBlock>
 
           <p>
@@ -136,10 +136,10 @@ const router = createRouter(Hash, routes);`}
           <CodeBlock>
             {`import { inMemory, createReusable } from "@hickory/in-memory";
 
-const router = createRouter(inMemory, routes);
+let router = createRouter(inMemory, routes);
 // or
-const reusable = createReusable();
-const router = createRouter(reusable, routes);`}
+let reusable = createReusable();
+let router = createRouter(reusable, routes);`}
           </CodeBlock>
 
           <p>
@@ -225,7 +225,7 @@ location = {
             {`import { parse, stringify } from "qs";
 import { browser } from "@hickory/browser";
 
-const router = createRouter(browser, routes, {
+let router = createRouter(browser, routes, {
   history: {
     query: { parse, stringify }
   }

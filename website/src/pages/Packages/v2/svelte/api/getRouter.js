@@ -6,7 +6,7 @@ import {
   IJS
 } from "../../../../../components/package/common";
 
-export const meta = {
+export let meta = {
   title: "getRouter",
   hash: "getRouter"
 };
@@ -25,9 +25,9 @@ export function GetRouterAPI() {
 <script>
   import { getRouter } from "@curi/svelte";
 
-  const router = getRouter();
+  let router = getRouter();
 
-  const homeRoute = router.route("Home");
+  let homeRoute = router.route("Home");
 </script>`}
       </CodeBlock>
     </HashSection>

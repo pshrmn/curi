@@ -9,26 +9,26 @@ import {
   IJS
 } from "../../components/guide/common";
 
-const meta = {
+let meta = {
   title: "Responses"
 };
 
-const propertiesMeta = {
+let propertiesMeta = {
   title: "The Properties of a Response Object",
   hash: "response-properties"
 };
 
-const bodyMeta = {
+let bodyMeta = {
   title: "Response Body",
   hash: "response-body"
 };
 
-const redirectMeta = {
+let redirectMeta = {
   title: "Redirect Response",
   hash: "redirect-properties"
 };
 
-const contents = [propertiesMeta, bodyMeta, redirectMeta];
+let contents = [propertiesMeta, bodyMeta, redirectMeta];
 
 function ResponsesGuide() {
   return (
@@ -150,7 +150,7 @@ function ResponsesGuide() {
         <CodeBlock>
           {`// do NOT do this
 // mixing body shapes complicates rendering
-const routes = prepareRoutes([
+let routes = prepareRoutes([
   {
     respond() {
       return { body: One }
@@ -202,7 +202,7 @@ const routes = prepareRoutes([
         </p>
 
         <CodeBlock>
-          {`const router = createRouter(browser, routes, {
+          {`let router = createRouter(browser, routes, {
   invisibleRedirects: true
 });`}
         </CodeBlock>

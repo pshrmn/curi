@@ -8,26 +8,26 @@ import {
   IJS
 } from "../../components/guide/common";
 
-const meta = {
+let meta = {
   title: "Route Interactions"
 };
 
-const callingMeta = {
+let callingMeta = {
   title: "Calling Interactions",
   hash: "calling"
 };
 
-const providedMeta = {
+let providedMeta = {
   title: "Provided Interactions",
   hash: "provided"
 };
 
-const routePropertiesMeta = {
+let routePropertiesMeta = {
   title: "Route Properties",
   hash: "route-properties"
 };
 
-const contents = [providedMeta, callingMeta, routePropertiesMeta];
+let contents = [providedMeta, callingMeta, routePropertiesMeta];
 
 function RouterInteractionsGuide() {
   return (
@@ -95,8 +95,8 @@ function RouterInteractionsGuide() {
 
         <CodeBlock>
           {`import { pathname } from "@curi/interactions";
-const route = router.route("Home");
-const path = pathname(route);`}
+let route = router.route("Home");
+let path = pathname(route);`}
         </CodeBlock>
       </HashSection>
 

@@ -1,6 +1,6 @@
 import versions from "./versions";
 
-const packages = [
+let packages = [
   {
     name: "router",
     globalName: "Curi",

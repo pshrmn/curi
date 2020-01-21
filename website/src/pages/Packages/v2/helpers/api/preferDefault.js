@@ -6,7 +6,7 @@ import {
   IJS
 } from "../../../../../components/package/common";
 
-export const meta = {
+export let meta = {
   title: "preferDefault",
   hash: "preferDefault"
 };
@@ -27,7 +27,7 @@ export function PreferDefaultAPI() {
       <CodeBlock>
         {`import { preferDefault } from "@curi/helpers";
 
-const routes = prepareRoutes([
+let routes = prepareRoutes([
   {
     name: "Menu",
     path: "menu",

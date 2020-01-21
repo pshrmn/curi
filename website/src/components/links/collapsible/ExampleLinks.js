@@ -3,7 +3,7 @@ import React from "react";
 import EXAMPLE_API from "../../../constants/examples";
 import ActiveLink from "../ActiveLink";
 
-const Category = ({ examples }) => {
+let Category = ({ examples }) => {
   return (
     <ul className="link-list">
       {examples.map(e => {
@@ -20,7 +20,7 @@ const Category = ({ examples }) => {
 };
 
 function ExampleLinks() {
-  const examples = EXAMPLE_API.all();
+  let examples = EXAMPLE_API.all();
   return <Category examples={examples} />;
 }
 

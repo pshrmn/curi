@@ -3,7 +3,7 @@ import { createRouter, prepareRoutes } from "@curi/router";
 
 import app from "./app.svelte";
 
-const routes = prepareRoutes([
+let routes = prepareRoutes([
   { name: "Home", path: "" },
   { name: "Sync", path: "sync" },
   {
@@ -27,24 +27,24 @@ const routes = prepareRoutes([
   { name: "Catch All", path: "(.*)" }
 ]);
 
-const router = createRouter(inMemory, routes);
+let router = createRouter(inMemory, routes);
 
 export default function render() {
-  const target = document.createElement("div");
+  let target = document.createElement("div");
   new app.default({ target, props: { router } });
 
-  const button = target.querySelector("button");
+  let button = target.querySelector("button");
 
-  const { response: beforeResponse } = router.current();
+  let { response: beforeResponse } = router.current();
   expect(beforeResponse.name).toBe("Home");
 
   expect(button.textContent).toBe("No op");
 
-  const url = router.url({ name: "Sync" });
+  let url = router.url({ name: "Sync" });
   router.navigate({ url });
 
   expect(button.textContent).toBe("No op");
 
-  const { response: afterResponse } = router.current();
+  let { response: afterResponse } = router.current();
   expect(afterResponse.name).toBe("Sync");
 }

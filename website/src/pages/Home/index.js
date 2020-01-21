@@ -6,27 +6,27 @@ import { color, screen } from "../../constants/styles";
 import { PlainSection } from "../../components/layout/Sections";
 import { CodeBlock } from "../../components/layout/Groups";
 
-const StyledH1 = styled("h1")`
+let StyledH1 = styled("h1")`
   font-size: 1.75em;
   text-align: center;
   color: ${color.purple};
   margin: 0;
 `;
 
-const StyledH2 = styled("h2")`
+let StyledH2 = styled("h2")`
   font-size: 1.2em;
   text-align: center;
   color: ${color.darkGray};
   margin: 0;
 `;
 
-const Tiles = styled("div")`
+let Tiles = styled("div")`
   margin: 25px auto 0;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
 `;
 
-const Tile = styled("section")`
+let Tile = styled("section")`
   margin: 0 25px 25px 0;
 
   h3 {
@@ -63,13 +63,13 @@ export default function HomePage() {
           {`import { prepareRoutes, createRouter, announce } from "@curi/router";
 import { browser } from "@hickory/browser";
 
-const routes = prepareRoutes([
+let routes = prepareRoutes([
   { name: "Home", path: "" },
   { name: "About", path: "about" },
   { name: "Catch All", path: "(.*)" }
 ]);
 
-const router = createRouter(browser, routes, {
+let router = createRouter(browser, routes, {
   sideEffects: [
     announce(({ response }) => {
       return \`Navigated to \${response.location.pathname}\`;

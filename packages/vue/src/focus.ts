@@ -9,7 +9,7 @@ export interface FocusDirectiveProperties {
 }
 
 function focus(el: HTMLElement, options: FocusDirectiveProperties) {
-  const { preserve = false, preventScroll = false } = options;
+  let { preserve = false, preventScroll = false } = options;
   if (preserve && el.contains(document.activeElement)) {
     return;
   }
@@ -19,7 +19,7 @@ function focus(el: HTMLElement, options: FocusDirectiveProperties) {
   });
 }
 
-const focusDirective: DirectiveOptions = {
+let focusDirective: DirectiveOptions = {
   inserted(el, binding) {
     if (process.env.NODE_ENV !== "production") {
       if (!el.hasAttribute("tabIndex") && el.tabIndex === -1) {

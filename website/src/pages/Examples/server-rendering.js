@@ -9,16 +9,16 @@ import {
   onGitHubMeta
 } from "../../components/example/common";
 
-const meta = {
+let meta = {
   title: "Server Rendering"
 };
 
-const explanationMeta = {
+let explanationMeta = {
   title: "Explanation",
   hash: "explanation"
 };
 
-const contents = [explanationMeta, onGitHubMeta];
+let contents = [explanationMeta, onGitHubMeta];
 
 function ServerRenderingExample() {
   return (
@@ -35,20 +35,20 @@ function ServerRenderingExample() {
 import { createReusable } from "@curi/in-memory";
 
 // 1. Create a history function
-const reusable = createReusable();
+let reusable = createReusable();
 
 function catchAll(req, res) {
   // 2. Create a router using the current location
   //    and the root React routing component
-  const router = createRouter(reusable, routes, {
+  let router = createRouter(reusable, routes, {
     history: { location: req.url }
   });
-  const Router = createRouterComponent(router);
+  let Router = createRouterComponent(router);
 
   // 3. Wait for the response to be generated
   router.once(({ response, navigation }) => {
     // 4. Generate the HTML markup by rendering the <Router>
-    const markup = renderToString(
+    let markup = renderToString(
       <Router>
         {renderFunction}
       </Router>

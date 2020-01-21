@@ -3,7 +3,7 @@
 
   export let check;
 
-  const router = getRouter();
+  let router = getRouter();
 
   check(router);
 </script>

@@ -8,20 +8,20 @@ import {
   onGitHubMeta
 } from "../../components/example/common";
 
-const meta = {
+let meta = {
   title: "Twitch Clone"
 };
 
-const explanationMeta = {
+let explanationMeta = {
   title: "Explanation",
   hash: "explanation"
 };
-const demoMeta = {
+let demoMeta = {
   title: "Live Demo",
   hash: "demo"
 };
 
-const contents = [explanationMeta, demoMeta, onGitHubMeta];
+let contents = [explanationMeta, demoMeta, onGitHubMeta];
 
 function TwitchExample() {
   return (

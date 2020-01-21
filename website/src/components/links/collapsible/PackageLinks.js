@@ -4,7 +4,7 @@ import PACKAGE_API from "../../../constants/packages";
 import ActiveLink from "../ActiveLink";
 import CollapsibleGroup from "./CollapsibleGroup";
 
-const GroupPackages = ({ packages }) => (
+let GroupPackages = ({ packages }) => (
   <ul className="link-list">
     {packages.map(p => (
       <li key={p.name} className="solo">
@@ -20,7 +20,7 @@ const GroupPackages = ({ packages }) => (
 );
 
 function PackageLinks() {
-  const groups = PACKAGE_API.versioned("v2");
+  let groups = PACKAGE_API.versioned("v2");
   return Object.keys(groups).map(title => (
     <CollapsibleGroup key={title} title={title} initial={false}>
       <GroupPackages packages={groups[title]} />

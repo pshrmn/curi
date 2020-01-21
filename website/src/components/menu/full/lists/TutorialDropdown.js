@@ -6,7 +6,7 @@ import Container from "./Container";
 import StyledDropdownMenu from "./DropdownMenu";
 import usePrefetch from "./usePrefetch";
 
-const GroupTutorials = ({ tutorials }) => (
+let GroupTutorials = ({ tutorials }) => (
   <ul className="link-list">
     {tutorials.map(g => (
       <li key={g.title} className="solo">
@@ -18,8 +18,8 @@ const GroupTutorials = ({ tutorials }) => (
   </ul>
 );
 
-const tutorialGroups = TUTORIAL_API.grouped();
-const flatTutorials = TUTORIAL_API.all().map(t => ({
+let tutorialGroups = TUTORIAL_API.grouped();
+let flatTutorials = TUTORIAL_API.all().map(t => ({
   name: "Tutorial",
   params: { slug: t.slug }
 }));

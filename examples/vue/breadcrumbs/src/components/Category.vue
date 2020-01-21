@@ -21,7 +21,7 @@ export default {
   name: "contact-method",
   methods: {
     title(name) {
-      const productRoute = this.$router.route("Product");
+      let productRoute = this.$router.route("Product");
       return title(productRoute, { name });
     },
     linkParams(productID) {

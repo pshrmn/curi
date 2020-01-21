@@ -10,56 +10,56 @@ import {
   IJS
 } from "../../components/guide/common";
 
-const meta = {
+let meta = {
   title: "Routes"
 };
 
-const pathMeta = {
+let pathMeta = {
   title: "Route path",
   hash: "route-path"
 };
-const namesMeta = {
+let namesMeta = {
   title: "Route names",
   hash: "route-names"
 };
-const asyncMeta = {
+let asyncMeta = {
   title: "Asynchronous Routes",
   hash: "async"
 };
-const responseMeta = {
+let responseMeta = {
   title: "The Response Function",
   hash: "route-response"
 };
-const propertiesMeta = {
+let propertiesMeta = {
   title: "Route Properties",
   hash: "properties",
   children: [pathMeta, namesMeta, asyncMeta, , responseMeta]
 };
 
-const prepareMeta = {
+let prepareMeta = {
   title: "Preparing Routes",
   hash: "prepareRoutes"
 };
 
-const noMatchMeta = {
+let noMatchMeta = {
   title: "No Matching Route",
   hash: "no-match"
 };
-const walkthroughMeta = {
+let walkthroughMeta = {
   title: "Route Matching Walkthrough",
   hash: "match-walkthrough"
 };
-const optionsMeta = {
+let optionsMeta = {
   title: "Path Matching Options",
   hash: "options"
 };
-const matchingMeta = {
+let matchingMeta = {
   title: "Matching Routes",
   hash: "matching-routes",
   children: [noMatchMeta, walkthroughMeta]
 };
 
-const contents = [propertiesMeta, matchingMeta, prepareMeta];
+let contents = [propertiesMeta, matchingMeta, prepareMeta];
 
 function RoutesGuide() {
   return (
@@ -97,7 +97,7 @@ function RoutesGuide() {
           </p>
 
           <CodeBlock>
-            {`const routes = prepareRoutes([
+            {`let routes = prepareRoutes([
   {
     path: "" // matches the root "/"
   },
@@ -115,7 +115,7 @@ function RoutesGuide() {
           </p>
 
           <CodeBlock>
-            {`const routes = prepareRoutes([
+            {`let routes = prepareRoutes([
   {
     name: "Home",
     path: ""
@@ -143,8 +143,8 @@ function RoutesGuide() {
           </p>
 
           <CodeBlock>
-            {`const route = router.route("Album");
-const path = pathname(route, { id: "abcd" });
+            {`let route = router.route("Album");
+let path = pathname(route, { id: "abcd" });
 // pathname = "/a/abcd"`}
           </CodeBlock>
         </HashSection>
@@ -169,13 +169,13 @@ const path = pathname(route, { id: "abcd" });
   path: "u/:id",
   resolve({ params }) {
     // run code to verify the user can view the page
-    const authorized = Promise.resolve(true);
+    let authorized = Promise.resolve(true);
 
     // import the User component using the import() API
-    const body = import("./components/User");
+    let body = import("./components/User");
 
     // get specific data using the route's params
-    const data = UserAPI.get(params.id);
+    let data = UserAPI.get(params.id);
     return Promise.all([ authorized, body, data ]);
   }
 }`}
@@ -230,7 +230,7 @@ const path = pathname(route, { id: "abcd" });
           <CodeBlock>
             {`import User from "./components/User";
 
-const routes = prepareRoutes([
+let routes = prepareRoutes([
   {
     name: "User",
     path: "u/:id",
@@ -270,7 +270,7 @@ const routes = prepareRoutes([
         </p>
 
         <CodeBlock lang="js">
-          {`const routes = prepareRoutes([
+          {`let routes = prepareRoutes([
   { name: "One", path: "one" },
   { name: "Two", path: "two", children: [
     { name: "And a half", path: "point-five" },
@@ -312,7 +312,7 @@ const routes = prepareRoutes([
 
         <HashSection meta={walkthroughMeta} tag="h3">
           <CodeBlock>
-            {`const routes = prepareRoutes([
+            {`let routes = prepareRoutes([
   {
     name: 'Home',
     path: '',
@@ -353,7 +353,7 @@ const routes = prepareRoutes([
           </p>
 
           <CodeBlock>
-            {`const routes = prepareRoutes([
+            {`let routes = prepareRoutes([
   {
     name: 'Home',
     path: '',
@@ -426,7 +426,7 @@ const routes = prepareRoutes([
           {`import { prepareRoutes } from "@curi/router";
 
 // plain routes
-const routes = [...]
+let routes = [...]
 
 // prepared routes
 export default prepareRoutes(routes);`}

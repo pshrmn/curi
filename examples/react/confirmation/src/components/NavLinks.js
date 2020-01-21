@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "@curi/react-dom";
 
-const NavLinks = () => (
+let NavLinks = () => (
   <nav>
     <ul>
       <li>

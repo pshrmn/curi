@@ -8,20 +8,20 @@ import Modal from "./Modal";
  * should be rendered as a modal. If it should, it will use navigation.previous
  * to render the background.
  */
-const Display = () => {
-  const { response, navigation } = useResponse();
-  const { body: Body, location } = response;
+let Display = () => {
+  let { response, navigation } = useResponse();
+  let { body: Body, location } = response;
 
   // check if location.state.modal is set
   // and if there is a previous response
-  const isModal = !!(
+  let isModal = !!(
     location.state &&
     location.state.modal &&
     navigation.previous
   );
 
   if (isModal) {
-    const { body: PrevBody } = navigation.previous;
+    let { body: PrevBody } = navigation.previous;
     return (
       <div>
         <PrevBody response={navigation.previous} />

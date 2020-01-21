@@ -1,9 +1,9 @@
 import React from "react";
 import { Link } from "@curi/react-dom";
 
-const albums = [1, 2, 3, 4, 5];
+let albums = [1, 2, 3, 4, 5];
 
-const NavLinks = () => (
+let NavLinks = () => (
   <nav>
     <ul>
       <li>

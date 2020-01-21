@@ -2,7 +2,7 @@ import React from "react";
 import { AsyncLink } from "@curi/react-dom";
 import Spinner from "react-spinkit";
 
-const styles = {
+let styles = {
   container: {
     display: "flex",
     flexFlow: "column nowrap"
@@ -22,7 +22,7 @@ const styles = {
   }
 };
 
-const Home = ({ response }) => (
+let Home = ({ response }) => (
   <div style={styles.container}>
     {response.data.map(movie => (
       <AsyncLink

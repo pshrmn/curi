@@ -8,7 +8,7 @@ import routes from "./routes";
 import store from "./store";
 import App from "./components/App";
 
-const router = createRouter(browser, routes, {
+let router = createRouter(browser, routes, {
   history: {
     query: { parse, stringify }
   },
@@ -21,7 +21,7 @@ const router = createRouter(browser, routes, {
 
 Vue.use(CuriPlugin, { router });
 
-const vm = new Vue({
+let vm = new Vue({
   el: "#app",
   store,
   template: "<app />",

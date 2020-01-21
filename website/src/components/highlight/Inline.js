@@ -3,7 +3,7 @@ import styled from "@emotion/styled";
 
 import { color } from "../../constants/styles";
 
-const StyledCode = styled("code")`
+let StyledCode = styled("code")`
   padding: 0.1em;
   border-radius: 0.3em;
   white-space: normal;
@@ -18,10 +18,10 @@ const StyledCode = styled("code")`
   }
 `;
 
-export const InlineJS = ({ children }) => (
+export let InlineJS = ({ children }) => (
   <StyledCode className="inline-code">{children}</StyledCode>
 );
 
-export const InlineComponent = ({ children }) => (
+export let InlineComponent = ({ children }) => (
   <StyledCode className="inline-code">&lt;{children}&gt;</StyledCode>
 );

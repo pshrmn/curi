@@ -2,7 +2,7 @@ import React from "react";
 import styled from "@emotion/styled";
 import { Tabs, TabPanels } from "@reach/tabs";
 
-export const StyledTabs = styled(Tabs)`
+export let StyledTabs = styled(Tabs)`
   [data-reach-tab-panel] {
     outline: none;
   }
@@ -40,6 +40,6 @@ export const StyledTabs = styled(Tabs)`
   }
 `;
 
-export const PaddedPanels = styled(TabPanels)`
+export let PaddedPanels = styled(TabPanels)`
   padding: 0 15px;
 `;

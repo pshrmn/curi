@@ -13,7 +13,7 @@ import {
 
 describe("createRouterComponent()", () => {
   let node;
-  const routes = prepareRoutes([
+  let routes = prepareRoutes([
     { name: "Home", path: "" },
     { name: "About", path: "about" },
     { name: "Catch All", path: "(.*)" }
@@ -31,13 +31,13 @@ describe("createRouterComponent()", () => {
 
   describe("children prop", () => {
     it("renders children", () => {
-      const routes = prepareRoutes([{ name: "Catch All", path: "(.*)" }]);
-      const router = createRouter(inMemory, routes);
+      let routes = prepareRoutes([{ name: "Catch All", path: "(.*)" }]);
+      let router = createRouter(inMemory, routes);
 
-      const App = jest.fn(() => {
+      let App = jest.fn(() => {
         return null;
       });
-      const Router = createRouterComponent(router);
+      let Router = createRouterComponent(router);
       ReactDOM.render(
         <Router>
           <App />
@@ -48,16 +48,16 @@ describe("createRouterComponent()", () => {
     });
 
     it("works with multiple children", () => {
-      const routes = prepareRoutes([{ name: "Catch All", path: "(.*)" }]);
-      const router = createRouter(inMemory, routes);
+      let routes = prepareRoutes([{ name: "Catch All", path: "(.*)" }]);
+      let router = createRouter(inMemory, routes);
 
-      const One = jest.fn(() => {
+      let One = jest.fn(() => {
         return null;
       });
-      const Two = jest.fn(() => {
+      let Two = jest.fn(() => {
         return null;
       });
-      const Router = createRouterComponent(router);
+      let Router = createRouterComponent(router);
       ReactDOM.render(
         <Router>
           <One />
@@ -70,17 +70,17 @@ describe("createRouterComponent()", () => {
     });
 
     it("re-renders when the location changes", async () => {
-      const router = createRouter(inMemory, routes);
+      let router = createRouter(inMemory, routes);
 
       let currentResponse;
 
-      const App = jest.fn(() => {
-        const { response } = useResponse();
+      let App = jest.fn(() => {
+        let { response } = useResponse();
         currentResponse = response;
         return null;
       });
 
-      const Router = createRouterComponent(router);
+      let Router = createRouterComponent(router);
 
       act(() => {
         ReactDOM.render(
@@ -94,7 +94,7 @@ describe("createRouterComponent()", () => {
       expect(currentResponse.name).toBe("Home");
 
       act(() => {
-        const url = router.url({ name: "About" });
+        let url = router.url({ name: "About" });
         router.navigate({ url });
       });
 
@@ -104,23 +104,23 @@ describe("createRouterComponent()", () => {
 
   describe("context", () => {
     it("makes response, navigation, and router available on context", () => {
-      const router = createRouter(inMemory, routes);
+      let router = createRouter(inMemory, routes);
 
-      const ContextLogger: React.ComponentType = () => {
-        const {
+      let ContextLogger: React.ComponentType = () => {
+        let {
           response: ctxResponse,
           navigation: ctxNavigation
         } = useResponse();
-        const ctxRouter = useRouter();
+        let ctxRouter = useRouter();
         expect(ctxResponse).toBe(emittedResponse);
         expect(ctxRouter).toBe(router);
         expect(ctxNavigation).toBe(emittedNavigation);
         return null;
       };
 
-      const Router = createRouterComponent(router);
+      let Router = createRouterComponent(router);
 
-      const {
+      let {
         response: emittedResponse,
         navigation: emittedNavigation
       } = router.current();

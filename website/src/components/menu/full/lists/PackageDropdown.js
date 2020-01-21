@@ -6,7 +6,7 @@ import Container from "./Container";
 import StyledDropdownMenu from "./DropdownMenu";
 import usePrefetch from "./usePrefetch";
 
-const GroupPackages = ({ packages }) => (
+let GroupPackages = ({ packages }) => (
   <ul className="link-list">
     {packages.map(p => (
       <li key={p.name} className="solo">
@@ -21,8 +21,8 @@ const GroupPackages = ({ packages }) => (
   </ul>
 );
 
-const groups = PACKAGE_API.versioned("v2");
-const pkgs = PACKAGE_API.all().map(pkg => ({
+let groups = PACKAGE_API.versioned("v2");
+let pkgs = PACKAGE_API.all().map(pkg => ({
   name: "Package",
   params: {
     package: pkg.name,

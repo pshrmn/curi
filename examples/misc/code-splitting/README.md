@@ -9,9 +9,9 @@ A plain JavaScript object works fine for this, you just need to handle what happ
 You will also need to use the route's `call` property instead of its `value` property. The `call` function should return the stored value.
 
 ```js
-const store = {};
+let store = {};
 
-const routes = [
+let routes = [
   // ...,
   {
     name: 'User',

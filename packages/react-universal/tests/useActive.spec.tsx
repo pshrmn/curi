@@ -13,7 +13,7 @@ import {
 describe("useActive", () => {
   let node;
   let router, Router;
-  const routes = prepareRoutes([
+  let routes = prepareRoutes([
     { name: "Home", path: "" },
     {
       name: "Contact",
@@ -35,7 +35,7 @@ describe("useActive", () => {
   describe("name", () => {
     it('uses the "name" to determine if it is active', () => {
       function App() {
-        const active = useActive({ name: "Home" });
+        let active = useActive({ name: "Home" });
         expect(active).toBe(true);
         return null;
       }
@@ -50,14 +50,14 @@ describe("useActive", () => {
 
   describe("params", () => {
     it('uses the "params" to determine if it is active', () => {
-      const router = createRouter(inMemory, routes, {
+      let router = createRouter(inMemory, routes, {
         history: {
           locations: [{ url: "/contact/email" }]
         }
       });
-      const Router = createRouterComponent(router);
+      let Router = createRouterComponent(router);
       function App() {
-        const active = useActive({
+        let active = useActive({
           name: "Method",
           params: { method: "email" }
         });
@@ -75,14 +75,14 @@ describe("useActive", () => {
 
   describe("partial", () => {
     it("returns true for partial matches when partial=true", () => {
-      const router = createRouter(inMemory, routes, {
+      let router = createRouter(inMemory, routes, {
         history: {
           locations: [{ url: "/contact/email" }]
         }
       });
-      const Router = createRouterComponent(router);
+      let Router = createRouterComponent(router);
       function App() {
-        const active = useActive({ name: "Contact", partial: true });
+        let active = useActive({ name: "Contact", partial: true });
         expect(active).toBe(true);
         return null;
       }
@@ -97,18 +97,18 @@ describe("useActive", () => {
 
   describe("components", () => {
     it("is called with location if route is active", () => {
-      const router = createRouter(inMemory, routes, {
+      let router = createRouter(inMemory, routes, {
         history: {
           locations: [{ url: "/contact" }]
         }
       });
-      const components = jest.fn();
+      let components = jest.fn();
       let theLocation;
-      const Router = createRouterComponent(router);
+      let Router = createRouterComponent(router);
       function App() {
-        const { response } = useResponse();
+        let { response } = useResponse();
         theLocation = response.location;
-        const active = useActive({ name: "Contact", components });
+        let active = useActive({ name: "Contact", components });
         return null;
       }
       ReactDOM.render(
@@ -122,14 +122,14 @@ describe("useActive", () => {
     });
 
     it("is not called if route is not active", () => {
-      const router = createRouter(inMemory, routes);
-      const components = jest.fn();
+      let router = createRouter(inMemory, routes);
+      let components = jest.fn();
       let theResponse;
-      const Router = createRouterComponent(router);
+      let Router = createRouterComponent(router);
       function App() {
-        const { response } = useResponse();
+        let { response } = useResponse();
         theResponse = response;
-        const active = useActive({ name: "Contact", components });
+        let active = useActive({ name: "Contact", components });
         return null;
       }
       ReactDOM.render(
@@ -142,14 +142,14 @@ describe("useActive", () => {
     });
 
     it("returns true if route matches and response check returns true", () => {
-      const router = createRouter(inMemory, routes, {
+      let router = createRouter(inMemory, routes, {
         history: {
           locations: [{ url: "/contact/email" }]
         }
       });
-      const Router = createRouterComponent(router);
+      let Router = createRouterComponent(router);
       function App() {
-        const active = useActive({
+        let active = useActive({
           name: "Contact",
           partial: true,
           components: () => true
@@ -166,14 +166,14 @@ describe("useActive", () => {
     });
 
     it("returns false if route matches, but location check returns false", () => {
-      const router = createRouter(inMemory, routes, {
+      let router = createRouter(inMemory, routes, {
         history: {
           locations: [{ url: "/contact/email" }]
         }
       });
-      const Router = createRouterComponent(router);
+      let Router = createRouterComponent(router);
       function App() {
-        const active = useActive({
+        let active = useActive({
           name: "Contact",
           partial: true,
           components: () => false

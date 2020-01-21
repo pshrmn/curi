@@ -1,4 +1,4 @@
-const plugins = [
+let plugins = [
   "@babel/plugin-proposal-class-properties",
   "@babel/plugin-proposal-object-rest-spread",
   "emotion"
@@ -15,7 +15,7 @@ switch (process.env.BABEL_ENV) {
     modules = false;
 }
 
-const config = {
+let config = {
   presets: [
     "@babel/preset-react",
     [

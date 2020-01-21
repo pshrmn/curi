@@ -6,7 +6,7 @@ import {
   IJS
 } from "../../../../../components/package/common";
 
-export const meta = {
+export let meta = {
   title: "getResponse",
   hash: "getResponse"
 };
@@ -26,7 +26,7 @@ export function GetResponseAPI() {
 <script>
   import { getResponse } from "@curi/svelte";
 
-  const response = getResponse();
+  let response = getResponse();
 </script>`}
       </CodeBlock>
     </HashSection>

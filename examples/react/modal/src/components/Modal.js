@@ -1,8 +1,8 @@
 import React from "react";
 import { useRouter } from "@curi/react-dom";
 
-const Modal = ({ children }) => {
-  const router = useRouter();
+let Modal = ({ children }) => {
+  let router = useRouter();
   return (
     <div className="modal">
       {children}

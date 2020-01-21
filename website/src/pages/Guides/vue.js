@@ -10,30 +10,30 @@ import {
   Cmp
 } from "../../components/guide/common";
 
-const meta = {
+let meta = {
   title: "Vue"
 };
 
-const renderingMeta = {
+let renderingMeta = {
   title: "Rendering with the response",
   hash: "rendering-response"
 };
-const a11yMeta = {
+let a11yMeta = {
   title: "Accessibility",
   hash: "accessibility"
 };
-const pluginMeta = {
+let pluginMeta = {
   title: "The Curi Plugin",
   hash: "plugin",
   children: [renderingMeta]
 };
 
-const navigatingMeta = {
+let navigatingMeta = {
   title: "Navigating",
   hash: "navigating"
 };
 
-const contents = [pluginMeta, navigatingMeta];
+let contents = [pluginMeta, navigatingMeta];
 
 function VueGuide() {
   return (
@@ -111,7 +111,7 @@ Vue.use(CuriPlugin, { router });`}
 
           <CodeBlock lang="html">
             {`<script>
-const routes = prepareRoutes([
+let routes = prepareRoutes([
   {
     name: "Home",
     path: "",

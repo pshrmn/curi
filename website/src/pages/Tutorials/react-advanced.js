@@ -12,50 +12,50 @@ import {
   CodeSandboxDemo
 } from "../../components/tutorial/common";
 
-const demoMeta = {
+let demoMeta = {
   title: "Demo",
   hash: "demo"
 };
 
-const setupMeta = { title: "Setup", hash: "setup" };
+let setupMeta = { title: "Setup", hash: "setup" };
 
-const initialMeta = { title: "Initial Render", hash: "initial-render" };
-const asyncMeta = {
+let initialMeta = { title: "Initial Render", hash: "initial-render" };
+let asyncMeta = {
   title: "Asynchronous Routes",
   hash: "async",
   children: [initialMeta]
 };
 
-const splittingMeta = {
+let splittingMeta = {
   title: "Code Splitting",
   hash: "code-splitting"
 };
-const splitMeta = {
+let splitMeta = {
   title: "Code Splitting in Routes",
   hash: "code-splitting-routes",
   children: [splittingMeta]
 };
 
-const fakeMeta = { title: "The Fake API", hash: "fake-api" };
-const preloadMeta = {
+let fakeMeta = { title: "The Fake API", hash: "fake-api" };
+let preloadMeta = {
   title: "Preloading Data",
   hash: "preloading-data",
   children: [fakeMeta]
 };
 
-const navigatingMeta = {
+let navigatingMeta = {
   title: "Link is navigating?",
   hash: "link-navigating"
 };
-const loadingMeta = {
+let loadingMeta = {
   title: "Visualizing Loading",
   hash: "loading",
   children: [navigatingMeta]
 };
 
-const caveatsMeta = { title: "Async Caveats", hash: "caveats" };
+let caveatsMeta = { title: "Async Caveats", hash: "caveats" };
 
-const contents = [
+let contents = [
   demoMeta,
   setupMeta,
   asyncMeta,
@@ -147,16 +147,16 @@ npm run start`}
   name: "A Route",
   path: "route/:id",
   resolve({ params }) {
-    const body = import("./components/SomeComponent")
+    let body = import("./components/SomeComponent")
       .then(preferDefault);
-    const data = fetch(\`/api/data/$\{params.id\}\`);
+    let data = fetch(\`/api/data/$\{params.id\}\`);
     return Promise.all([ component, data ]);
   },
   respond({ resolved, error }) {
     if (error) {
       // handle an uncaught error
     }
-    const [body, data] = resolved;
+    let [body, data] = resolved;
     return { body, data };
   }
 }`}
@@ -188,21 +188,21 @@ npm run start`}
         <CodeBlock>
           {`import { preferDefault } from "@curi/helpers";
 
-const routes = prepareRoutes([
+let routes = prepareRoutes([
   {
     name: "A Route",
     path: "route/:id",
     resolve({ params }) {
-      const body = import("./components/SomeComponent")
+      let body = import("./components/SomeComponent")
         .then(preferDefault);
-      const data = fetch(\`/api/data/$\{params.id\}\`);
+      let data = fetch(\`/api/data/$\{params.id\}\`);
       return Promise.all([ component, data ]);
     },
     respond({ resolved, error }) {
       if (error) {
         // handle an uncaught error
       }
-      const [body, data] = resolved;
+      let [body, data] = resolved;
       return { body, data };
     }
   }
@@ -260,11 +260,11 @@ router.once(() => {
           <CodeBlock>
             {`// render fallback when response is null
 function App() {
-  const { response } = useResponse();
+  let { response } = useResponse();
   if (response === undefined) {
     return <p>Loading...</p>;
   }
-  const { body:Body } = response;
+  let { body:Body } = response;
   return <Body response={response} />;
 }`}
           </CodeBlock>
@@ -355,7 +355,7 @@ import(/* webpackChunkName: "Test" */ "./components/Test.js")`}
         <CodeBlock>
           {`import { preferDefault } from "@curi/helpers";
 
-const routes = prepareRoutes([
+let routes = prepareRoutes([
   {
     name: "Test",
     path: "test",
@@ -380,7 +380,7 @@ const routes = prepareRoutes([
         <CodeBlock>
           {`import displayLoadError from "./components/LoadError";
 
-const routes = prepareRoutes([
+let routes = prepareRoutes([
   {
     name: "One",
     path: "one",
@@ -482,14 +482,14 @@ import './index.css';
 import NavMenu from './components/NavMenu';
 import registerServiceWorker from './registerServiceWorker';
 
-const router = createRouter(browser, routes, {
+let router = createRouter(browser, routes, {
   sideEffects: [
     announce(({ response }) => {
       return \`Navigated to \${response.location.pathname}\`;
     })
   ]
 });
-const Router = createRouterComponent(router);
+let Router = createRouterComponent(router);
 
 router.once(() => {
   ReactDOM.render((
@@ -564,10 +564,10 @@ registerServiceWorker();`}
             {`// src/api.js
 import books from "./books";
 
-export const BOOKS = () => Promise.resolve(books);
+export let BOOKS = () => Promise.resolve(books);
 
-export const BOOK = id => Promise.resolve(
-  const intID = parseInt(id, 10);
+export let BOOK = id => Promise.resolve(
+  let intID = parseInt(id, 10);
   books.find(b => b.id === intID)
 );`}
           </CodeBlock>
@@ -597,7 +597,7 @@ import NavMenu from './components/NavMenu';
 import * as bookAPI from "./api";
 import registerServiceWorker from './registerServiceWorker';
 
-const router = createRouter(browser, routes, {
+let router = createRouter(browser, routes, {
   sideEffects: [
     announce(({ response }) => {
       return \`Navigated to \${response.location.pathname}\`;
@@ -607,7 +607,7 @@ const router = createRouter(browser, routes, {
     bookAPI
   }
 });
-const Router = createRouterComponent(router);
+let Router = createRouterComponent(router);
 
 router.once(() => {
   ReactDOM.render((
@@ -657,13 +657,13 @@ export default prepareRoutes([
     name: "Home",
     path: "",
     resolve(_, external) {
-      const body = import("./components/Home")
+      let body = import("./components/Home")
         .then(preferDefault);
-      const books = external.bookAPI.BOOKS();
+      let books = external.bookAPI.BOOKS();
       return Promise.all([body, books]);
     },
     respond({ resolved }) {
-      const [body, books] = resolved;
+      let [body, books] = resolved;
       return {
         body,
         data: { books }
@@ -674,13 +674,13 @@ export default prepareRoutes([
     name: "Book",
     path: "book/:id",
     resolve({ params }, external) {
-      const body = import("./components/Book")
+      let body = import("./components/Book")
         .then(preferDefault);
-      const book = external.bookAPI.BOOK(params.id);
+      let book = external.bookAPI.BOOK(params.id);
       return Promise.all([body, books]);
     },
     respond({ resolved }) {
-      const [body, book] = resolved;
+      let [body, book] = resolved;
       return {
         body,
         data: { book }
@@ -760,8 +760,8 @@ import { useRouter } from '@curi/react-dom';
 import cart from '../cart';
 
 export default function Book({ response }) {
-  const router = useRouter();
-  const { book } = response.data;
+  let router = useRouter();
+  let { book } = response.data;
   if (!book) {
     return <article>The requested book could not be found</article>;
   }
@@ -775,7 +775,7 @@ export default function Book({ response }) {
         type="button"
         onClick={() => {
           cart.add(book, 1);
-          const url = router.url({ name: "Checkout" });
+          let url = router.url({ name: "Checkout" });
           router.navigate({ url });
         }}
       >
@@ -808,23 +808,23 @@ export default function Book({ response }) {
           {`// src/api.js
 import books from "./books";
 
-export const BOOKS = () => new Promise(resolve => {
+export let BOOKS = () => new Promise(resolve => {
   // artificial delay
   setTimeout(() => {
     resolve(books);
   }, 1000);
 });
 
-const BOOK_CACHE = {};
-export const BOOK = id => new Promise(resolve => {
+let BOOK_CACHE = {};
+export let BOOK = id => new Promise(resolve => {
   if (BOOK_CACHE[id]) {
     resolve(BOOK_CACHE[id]);
     return;
   }
-  const intID = parseInt(id, 10);
+  let intID = parseInt(id, 10);
   // artificial delay on first call
   setTimeout(() => {
-    const book = books.find(b => b.id === id);
+    let book = books.find(b => b.id === id);
     BOOK_CACHE[id] = book;
     resolve(book);
   }, 2500);

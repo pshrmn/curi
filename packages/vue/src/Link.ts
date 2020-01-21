@@ -13,7 +13,7 @@ export interface LinkComponent extends Vue {
   click(e: MouseEvent): void;
 }
 
-const Link: ComponentOptions<LinkComponent> = {
+let Link: ComponentOptions<LinkComponent> = {
   name: "curi-link",
 
   props: ["name", "params", "hash", "query", "state", "click"],

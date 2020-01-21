@@ -8,25 +8,25 @@ import {
   Note
 } from "../../../../../components/package/common";
 
-const historyArgMeta = { title: "history", hash: "history" };
-const routesArgMeta = { title: "routes", hash: "routes" };
-const optionsArgMeta = { title: "options", hash: "options" };
-const argumentsMeta = {
+let historyArgMeta = { title: "history", hash: "history" };
+let routesArgMeta = { title: "routes", hash: "routes" };
+let optionsArgMeta = { title: "options", hash: "options" };
+let argumentsMeta = {
   title: "Arguments",
   hash: "createRouter-arguments",
   children: [historyArgMeta, routesArgMeta, optionsArgMeta]
 };
 
-const urlMeta = { title: "url", hash: "url" };
-const navigateMeta = { title: "navigate", hash: "navigate" };
-const onceMeta = { title: "once", hash: "once" };
-const observeMeta = { title: "observe", hash: "observe" };
-const cancelMeta = { title: "cancel", hash: "cancel-property" };
-const currentMeta = { title: "current", hash: "current-property" };
-const routeMeta = { title: "route", hash: "router-route" };
-const historyMeta = { title: "history", hash: "history-property" };
-const externalMeta = { title: "external", hash: "router-external" };
-const propertiesMeta = {
+let urlMeta = { title: "url", hash: "url" };
+let navigateMeta = { title: "navigate", hash: "navigate" };
+let onceMeta = { title: "once", hash: "once" };
+let observeMeta = { title: "observe", hash: "observe" };
+let cancelMeta = { title: "cancel", hash: "cancel-property" };
+let currentMeta = { title: "current", hash: "current-property" };
+let routeMeta = { title: "route", hash: "router-route" };
+let historyMeta = { title: "history", hash: "history-property" };
+let externalMeta = { title: "external", hash: "router-external" };
+let propertiesMeta = {
   title: "Router",
   hash: "router",
   children: [
@@ -42,7 +42,7 @@ const propertiesMeta = {
   ]
 };
 
-export const meta = {
+export let meta = {
   title: "createRouter",
   hash: "createRouter"
 };
@@ -57,7 +57,7 @@ export function CreateRouterAPI() {
       <CodeBlock>
         {`import { createRouter } from "@curi/router";
 
-const router = createRouter(browser, routes, options);`}
+let router = createRouter(browser, routes, options);`}
       </CodeBlock>
 
       <HashSection tag="h3" meta={argumentsMeta}>
@@ -75,7 +75,7 @@ const router = createRouter(browser, routes, options);`}
           <CodeBlock lang="jsx">
             {`import { browser } from "@hickory/browser";
 
-const router = createRouter(browser, routes);`}
+let router = createRouter(browser, routes);`}
           </CodeBlock>
         </HashSection>
 
@@ -89,12 +89,12 @@ const router = createRouter(browser, routes);`}
           </p>
 
           <CodeBlock lang="jsx">
-            {`const routes = prepareRoutes([
+            {`let routes = prepareRoutes([
   { name: "Home", path: "" },
   { name: "About", path: "about" }
 ]);
 
-const router = createRouter(browser, routes);`}
+let router = createRouter(browser, routes);`}
           </CodeBlock>
         </HashSection>
 
@@ -122,7 +122,7 @@ const router = createRouter(browser, routes);`}
             <CodeBlock>
               {`import { createRouter, scroll } from "@curi/router";
 
-const router = createRouter(browser, routes, {
+let router = createRouter(browser, routes, {
   sideEffects: [scroll()]
 });`}
             </CodeBlock>
@@ -143,13 +143,13 @@ const router = createRouter(browser, routes, {
             </p>
 
             <CodeBlock>
-              {`const client = new ApolloClient();
-const router = createRouter(browser, routes, {
+              {`let client = new ApolloClient();
+let router = createRouter(browser, routes, {
   external: { client, greeting: "Hi!" }
 });`}
             </CodeBlock>
             <CodeBlock>
-              {`const routes = prepareRoutes([
+              {`let routes = prepareRoutes([
   {
     name: "User",
     path: "user/:id",
@@ -194,7 +194,7 @@ const router = createRouter(browser, routes, {
             </p>
 
             <CodeBlock>
-              {`const routes = prepareRoutes([
+              {`let routes = prepareRoutes([
   {
     name: "Old",
     path: "old/:id",
@@ -214,7 +214,7 @@ const router = createRouter(browser, routes, {
   }
 ]);
 
-const router = createRouter(browser, routes, {
+let router = createRouter(browser, routes, {
   invisibleRedirects: false
 });
 // navigating to "/old/2" will automatically redirect
@@ -436,7 +436,7 @@ const router = createRouter(browser, routes, {
           </p>
 
           <CodeBlock>
-            {`const stopObserving = router.observe(fn);
+            {`let stopObserving = router.observe(fn);
 // the router will call the response handler for all responses
 
 stopObserving();
@@ -515,7 +515,7 @@ stopObserving();
           </p>
 
           <CodeBlock>
-            {`const stopCancelling = router.cancel(fn);
+            {`let stopCancelling = router.cancel(fn);
 // fn will be called for async navigation
 
 stopCancelling();
@@ -578,13 +578,13 @@ stopCancelling();
           </Note>
 
           <CodeBlock>
-            {`const router = createRouter(browser, routes);
-const tooSoon = router.current();
+            {`let router = createRouter(browser, routes);
+let tooSoon = router.current();
 // tooSoon.response === undefined
 // tooSoon.navigation === undefined
 
 router.once(({ response, navigation }) => {
-  const perfect = router.current();
+  let perfect = router.current();
   // perfect.response === response
   // perfect.navigation === navigation
 });`}

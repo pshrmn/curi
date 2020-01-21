@@ -9,20 +9,20 @@ import {
   IJS
 } from "../../components/guide/common";
 
-const meta = {
+let meta = {
   title: "Loading Route Data"
 };
 
-const resolveMeta = {
+let resolveMeta = {
   title: "resolve",
   hash: "resolve"
 };
-const responseMeta = {
+let responseMeta = {
   title: "response",
   hash: "response"
 };
 
-const contents = [resolveMeta, responseMeta];
+let contents = [resolveMeta, responseMeta];
 
 function LoadingGuide() {
   return (
@@ -48,7 +48,7 @@ function LoadingGuide() {
         </p>
 
         <CodeBlock>
-          {`const routes = prepareRoutes([
+          {`let routes = prepareRoutes([
   {
     name: 'Recipe',
     path: 'recipe/:id'

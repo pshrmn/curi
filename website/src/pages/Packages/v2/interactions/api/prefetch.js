@@ -8,11 +8,11 @@ import {
   Note
 } from "../../../../../components/package/common";
 
-const argumentsMeta = {
+let argumentsMeta = {
   title: "Arguments",
   hash: "arguments"
 };
-export const meta = {
+export let meta = {
   title: "prefetch",
   hash: "prefetch"
 };
@@ -28,7 +28,7 @@ export function PrefetchAPI() {
         {`
 import { prefetch } from '@curi/router';
 
-const route = router.route("Async Route");
+let route = router.route("Async Route");
 prefetch(route).then(...);`}
       </CodeBlock>
 
@@ -59,7 +59,7 @@ prefetch(route).then(...);`}
           </p>
 
           <CodeBlock>
-            {`const router = createRouter(browser, routes, {
+            {`let router = createRouter(browser, routes, {
   external
 });
 
@@ -94,7 +94,7 @@ prefetch(route, {
             </p>
 
             <CodeBlock>
-              {`const router = createRouter(browser, routes, {
+              {`let router = createRouter(browser, routes, {
   external: {...}
 });
 

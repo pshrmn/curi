@@ -1,7 +1,7 @@
 import { Route } from "@curi/types";
 
 function ancestors(route: Route): Array<Route> {
-  const ancestors = [];
+  let ancestors = [];
   let parent: Route | undefined = route.parent;
   while (parent !== undefined) {
     ancestors.unshift(parent);

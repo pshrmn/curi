@@ -17,7 +17,7 @@
   export let name;
   export let params;
 
-  const router = getRouter();
+  let router = getRouter();
 
   let route = router.route(name);
   let ancestors = ancestorsInteraction(route);

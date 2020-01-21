@@ -1,14 +1,14 @@
 require("@babel/register");
-const start = new Date();
-const path = require("path");
-const { staticFiles } = require("@curi/static");
+let start = new Date();
+let path = require("path");
+let { staticFiles } = require("@curi/static");
 
-const render = require("./render");
-const pages = require("./pages");
+let render = require("./render");
+let pages = require("./pages");
 
-const routes = require("../src/routes").default;
+let routes = require("../src/routes").default;
 
-const OUTPUT_DIR = path.join(__dirname, "..", "gh-pages");
+let OUTPUT_DIR = path.join(__dirname, "..", "gh-pages");
 
 function stringifyResult(result) {
   return result.success
@@ -17,9 +17,9 @@ function stringifyResult(result) {
 }
 
 function logResults(results) {
-  const end = new Date();
+  let end = new Date();
 
-  const { successes, failures } = results.reduce(
+  let { successes, failures } = results.reduce(
     (acc, curr) => {
       if (curr.success) {
         acc.successes.push(curr);
@@ -31,8 +31,8 @@ function logResults(results) {
     { successes: [], failures: [] }
   );
 
-  const successOutput = successes.map(stringifyResult).join("\n");
-  const failureOutput = failures.map(stringifyResult).join("\n");
+  let successOutput = successes.map(stringifyResult).join("\n");
+  let failureOutput = failures.map(stringifyResult).join("\n");
   console.log(
     `Successes: (${successes.length})
 ${successOutput}

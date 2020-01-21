@@ -41,18 +41,18 @@ describe("useStatefulNavigationHandler", () => {
 
   describe("event handler", () => {
     it("it uses nav props (name, params, hash, query, and state) to generate nav location", () => {
-      const mockNavigate = jest.fn();
-      const routes = prepareRoutes([
+      let mockNavigate = jest.fn();
+      let routes = prepareRoutes([
         { name: "Test", path: "test" },
         { name: "Catch All", path: "(.*)" }
       ]);
-      const router = createRouter(inMemory, routes);
+      let router = createRouter(inMemory, routes);
       router.history.navigate = mockNavigate;
-      const Router = createRouterComponent(router);
+      let Router = createRouterComponent(router);
 
       function AsyncLink(props) {
-        const url = useURL(props);
-        const { eventHandler, navigating } = useStatefulNavigationHandler({
+        let url = useURL(props);
+        let { eventHandler, navigating } = useStatefulNavigationHandler({
           url,
           ...props
         });
@@ -71,10 +71,10 @@ describe("useStatefulNavigationHandler", () => {
         </Router>,
         node
       );
-      const a = node.querySelector("a");
-      const leftClickEvent = createClick();
+      let a = node.querySelector("a");
+      let leftClickEvent = createClick();
       Simulate.click(a, leftClickEvent);
-      const mockURL = mockNavigate.mock.calls[0][0];
+      let mockURL = mockNavigate.mock.calls[0][0];
       expect(mockURL).toMatchObject({
         url: "/test?one=1#thing",
         state: "yo"
@@ -82,19 +82,19 @@ describe("useStatefulNavigationHandler", () => {
     });
 
     it("calls onNav prop func if provided", () => {
-      const mockNavigate = jest.fn();
-      const onNav = jest.fn();
-      const routes = prepareRoutes([
+      let mockNavigate = jest.fn();
+      let onNav = jest.fn();
+      let routes = prepareRoutes([
         { name: "Test", path: "test" },
         { name: "Catch All", path: "(.*)" }
       ]);
-      const router = createRouter(inMemory, routes);
+      let router = createRouter(inMemory, routes);
       router.history.navigate = mockNavigate;
-      const Router = createRouterComponent(router);
+      let Router = createRouterComponent(router);
 
       function AsyncLink(props) {
-        const url = useURL(props);
-        const { eventHandler, navigating } = useStatefulNavigationHandler({
+        let url = useURL(props);
+        let { eventHandler, navigating } = useStatefulNavigationHandler({
           url,
           ...props
         });
@@ -113,8 +113,8 @@ describe("useStatefulNavigationHandler", () => {
         </Router>,
         node
       );
-      const a = node.querySelector("a");
-      const leftClickEvent = createClick();
+      let a = node.querySelector("a");
+      let leftClickEvent = createClick();
       Simulate.click(a, leftClickEvent);
       expect(onNav.mock.calls.length).toBe(1);
       expect(mockNavigate.mock.calls.length).toBe(1);
@@ -126,18 +126,18 @@ describe("useStatefulNavigationHandler", () => {
       }
 
       it("does not call history.navigate if canNavigate returns false", () => {
-        const mockNavigate = jest.fn();
-        const routes = prepareRoutes([
+        let mockNavigate = jest.fn();
+        let routes = prepareRoutes([
           { name: "Test", path: "test" },
           { name: "Catch All", path: "(.*)" }
         ]);
-        const router = createRouter(inMemory, routes);
+        let router = createRouter(inMemory, routes);
         router.history.navigate = mockNavigate;
-        const Router = createRouterComponent(router);
+        let Router = createRouterComponent(router);
 
         function AsyncLink(props) {
-          const url = useURL(props);
-          const { eventHandler, navigating } = useStatefulNavigationHandler({
+          let url = useURL(props);
+          let { eventHandler, navigating } = useStatefulNavigationHandler({
             url,
             canNavigate,
             ...props
@@ -155,8 +155,8 @@ describe("useStatefulNavigationHandler", () => {
           </Router>,
           node
         );
-        const a = node.querySelector("a");
-        const leftClickEvent = createClick();
+        let a = node.querySelector("a");
+        let leftClickEvent = createClick();
 
         Simulate.click(a, leftClickEvent);
 
@@ -167,16 +167,16 @@ describe("useStatefulNavigationHandler", () => {
 
   describe("navigating", () => {
     it("is false on initial render", () => {
-      const routes = prepareRoutes([
+      let routes = prepareRoutes([
         { name: "Test", path: "test" },
         { name: "Catch All", path: "(.*)" }
       ]);
-      const router = createRouter(inMemory, routes);
-      const Router = createRouterComponent(router);
+      let router = createRouter(inMemory, routes);
+      let Router = createRouterComponent(router);
 
       function AsyncLink(props) {
-        const url = useURL(props);
-        const { eventHandler, navigating } = useStatefulNavigationHandler({
+        let url = useURL(props);
+        let { eventHandler, navigating } = useStatefulNavigationHandler({
           url,
           ...props
         });
@@ -199,7 +199,7 @@ describe("useStatefulNavigationHandler", () => {
     });
 
     it("is true when navigation starts", () => {
-      const routes = prepareRoutes([
+      let routes = prepareRoutes([
         { name: "Test", path: "test" },
         {
           name: "Slow",
@@ -219,11 +219,11 @@ describe("useStatefulNavigationHandler", () => {
         },
         { name: "Catch All", path: "(.*)" }
       ]);
-      const router = createRouter(inMemory, routes);
-      const Router = createRouterComponent(router);
+      let router = createRouter(inMemory, routes);
+      let Router = createRouterComponent(router);
 
       function AsyncLink(props) {
-        const { eventHandler, navigating } = useStatefulNavigationHandler({
+        let { eventHandler, navigating } = useStatefulNavigationHandler({
           url: "/slow",
           ...props
         });
@@ -239,18 +239,18 @@ describe("useStatefulNavigationHandler", () => {
         node
       );
 
-      const a = node.querySelector("a");
+      let a = node.querySelector("a");
 
       expect(a.textContent).toBe("false");
 
-      const leftClickEvent = createClick();
+      let leftClickEvent = createClick();
       Simulate.click(a, leftClickEvent);
 
       expect(a.textContent).toBe("true");
     });
 
     it("is false when navigation finishes", async () => {
-      const routes = prepareRoutes([
+      let routes = prepareRoutes([
         { name: "Test", path: "test" },
         {
           name: "Slow",
@@ -270,11 +270,11 @@ describe("useStatefulNavigationHandler", () => {
         },
         { name: "Catch All", path: "(.*)" }
       ]);
-      const router = createRouter(inMemory, routes);
-      const Router = createRouterComponent(router);
+      let router = createRouter(inMemory, routes);
+      let Router = createRouterComponent(router);
 
       function AsyncLink(props) {
-        const { eventHandler, navigating } = useStatefulNavigationHandler({
+        let { eventHandler, navigating } = useStatefulNavigationHandler({
           url: "/slow",
           ...props
         });
@@ -290,11 +290,11 @@ describe("useStatefulNavigationHandler", () => {
         node
       );
 
-      const a = node.querySelector("a");
+      let a = node.querySelector("a");
 
       expect(a.textContent).toBe("false");
 
-      const leftClickEvent = createClick();
+      let leftClickEvent = createClick();
       Simulate.click(a, leftClickEvent);
 
       expect(a.textContent).toBe("true");

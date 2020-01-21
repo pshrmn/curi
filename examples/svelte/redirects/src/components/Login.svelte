@@ -8,12 +8,12 @@
   import { getRouter, getResponse } from "@curi/svelte";
   import fakeAuth from "../fakeAuth";
 
-  const router = getRouter();
-  const response = getResponse();
+  let router = getRouter();
+  let response = getResponse();
 
   function loginAndRedirect() {
     fakeAuth.login();
-    const { query } = $response.location;
+    let { query } = $response.location;
     router.navigate({ url: query.next || "/", method: "replace" });
   }
 </script>

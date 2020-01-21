@@ -6,7 +6,7 @@ import {
   IJS
 } from "../../../../../components/package/common";
 
-export const meta = {
+export let meta = {
   title: "useResponse",
   hash: "useResponse"
 };
@@ -24,7 +24,7 @@ export function UseResponseAPI() {
         {`import { useResponse } from '@curi/react-native';
 
 function App() {
-  const {
+  let {
     response,
     navigation
   } = useResponse();

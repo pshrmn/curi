@@ -6,7 +6,7 @@ import Installation from "./Installation";
 import GitHubLink from "./GitHubLink";
 import NPMLink from "./NPMLink";
 
-const StyledPackageInfo = styled("section")`
+let StyledPackageInfo = styled("section")`
   display: flex;
   flex-flow: column nowrap;
   align-items: flex-start;
@@ -38,8 +38,8 @@ export default function BasePackage({
   sections
 }) {
   if (name !== undefined) {
-    const major = params.version !== undefined ? params.version : latest;
-    const currentVersion = versions[major];
+    let major = params.version !== undefined ? params.version : latest;
+    let currentVersion = versions[major];
     return (
       <React.Fragment>
         <h1 tabIndex={-1} style={{ outline: "none" }}>

@@ -6,8 +6,8 @@ import Container from "./Container";
 import StyledDropdownMenu from "./DropdownMenu";
 import usePrefetch from "./usePrefetch";
 
-const examples = EXAMPLE_API.all();
-const exampleParams = Object.keys(examples).reduce((acc, e) => {
+let examples = EXAMPLE_API.all();
+let exampleParams = Object.keys(examples).reduce((acc, e) => {
   acc.push({
     name: "Example",
     params: { slug: e.slug }

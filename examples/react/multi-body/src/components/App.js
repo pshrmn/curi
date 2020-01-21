@@ -2,8 +2,8 @@ import React from "react";
 import { useResponse } from "@curi/react-dom";
 
 export default function App() {
-  const { response } = useResponse();
-  const { Main, Menu } = response.body;
+  let { response } = useResponse();
+  let { Main, Menu } = response.body;
   return (
     <div>
       {Menu ? <Menu /> : null}

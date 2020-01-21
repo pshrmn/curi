@@ -13,71 +13,71 @@ import {
   ScrollableTable
 } from "../../components/tutorial/common";
 
-const demoMeta = {
+let demoMeta = {
   title: "Demo",
   hash: "demo"
 };
 
-const setupMeta = { title: "Setup", hash: "setup" };
+let setupMeta = { title: "Setup", hash: "setup" };
 
-const historyMeta = { title: "History and Locations", hash: "history" };
+let historyMeta = { title: "History and Locations", hash: "history" };
 
-const pathMeta = {
+let pathMeta = {
   title: "Path basics",
   hash: "path-basics"
 };
-const routesMeta = {
+let routesMeta = {
   title: "Defining the Routes",
   hash: "defining-routes",
   children: [pathMeta]
 };
 
-const a11yMeta = {
+let a11yMeta = {
   title: "Announcing Navigation",
   hash: "announcing-navigation"
 };
-const pluginMeta = { title: "The Vue Plugin", hash: "plugin" };
-const routerMeta = {
+let pluginMeta = { title: "The Vue Plugin", hash: "plugin" };
+let routerMeta = {
   title: "The Router",
   hash: "router",
   children: [a11yMeta, pluginMeta]
 };
 
-const responseMeta = {
+let responseMeta = {
   title: "Responses and Navigation",
   hash: "responses"
 };
-const renderingMeta = {
+let renderingMeta = {
   title: "Rendering with Vue",
   hash: "rendering",
   children: [responseMeta]
 };
 
-const linkMeta = {
+let linkMeta = {
   title: "The <curi-link> Component",
   hash: "link-component"
 };
-const menuMeta = { title: "A Navigation Menu", hash: "nav-menu" };
-const bookLinkMeta = { title: "Linking to Books", hash: "book-links" };
-const navigatingMeta = {
+let menuMeta = { title: "A Navigation Menu", hash: "nav-menu" };
+let bookLinkMeta = { title: "Linking to Books", hash: "book-links" };
+let navigatingMeta = {
   title: "Navigating between locations",
   hash: "navigating",
   children: [linkMeta, menuMeta, bookLinkMeta]
 };
 
-const urlAndNavigateMeta = {
+let urlAndNavigateMeta = {
   title: "The Router's URL & Navigate Methods",
   hash: "url-nav-method"
 };
-const shoppingMeta = {
+let shoppingMeta = {
   title: "Let's go shopping",
   hash: "shopping",
   children: [urlAndNavigateMeta]
 };
 
-const nextMeta = { title: "What's next?", hash: "next" };
+let nextMeta = { title: "What's next?", hash: "next" };
 
-const contents = [
+let contents = [
   //demoMeta,
   setupMeta,
   historyMeta,
@@ -407,7 +407,7 @@ import App from './App.vue';
 
 Vue.config.productionTip = false;
 
-const router = createRouter(browser, routes);
+let router = createRouter(browser, routes);
 
 new Vue({
   render: h => h(App)
@@ -478,7 +478,7 @@ import App from './App.vue';
 
 Vue.config.productionTip = false;
 
-const router = createRouter(browser, routes, {
+let router = createRouter(browser, routes, {
   sideEffects: [
     announce(({ response }) => {
       return \`Navigated to \${response.location.pathname}\`;
@@ -518,7 +518,7 @@ import App from './App.vue';
 
 Vue.config.productionTip = false;
 
-const router = createRouter(browser, routes, {
+let router = createRouter(browser, routes, {
   sideEffects: [
     announce(({ response }) => {
       return \`Navigated to \${response.location.pathname}\`;
@@ -984,7 +984,7 @@ export default [
     name: 'book',
     computed: {
       book() {
-        const id = parseInt(this.$curi.response.params.id, 10);
+        let id = parseInt(this.$curi.response.params.id, 10);
         return books.find(b => b.id === id);
       }
     }
@@ -1011,14 +1011,14 @@ export default [
 
         <CodeBlock lang="javascript">
           {`// src/cart.js
-const cart = new Map();
+let cart = new Map();
 
 export default {
   add(book, quantity) {
     cart.set(book, quantity);
   },
   items() {
-    const books = [];
+    let books = [];
     for (let [book, quantity] of cart.entries()) {
       books.push({
         title: book.title,
@@ -1050,7 +1050,7 @@ export default {
             params.
           </p>
 
-          <CodeBlock>{`const url = router.url({ name: "New" });`}</CodeBlock>
+          <CodeBlock>{`let url = router.url({ name: "New" });`}</CodeBlock>
 
           <p>
             The router's <IJS>navigate</IJS> method is used to navigate; it
@@ -1147,14 +1147,14 @@ router.navigate({ url: "/new", method: "anchor" });
     name: 'book',
     computed: {
       book() {
-        const id = parseInt(this.$curi.response.params.id, 10);
+        let id = parseInt(this.$curi.response.params.id, 10);
         return books.find(b => b.id === id);
       }
     },
     methods: {
       onClick: function() {
         cart.add(this.book, 1);
-        const url = this.$router.url({ name: "Checkout "});
+        let url = this.$router.url({ name: "Checkout "});
         this.$router.navigate({ url });
       }
     }
@@ -1221,7 +1221,7 @@ router.navigate({ url: "/new", method: "anchor" });
     methods: {
       onClick: function() {
         this.books = cart.reset();
-        const url = this.$router.url({
+        let url = this.$router.url({
           name: "Checkout",
           hash: "thanks"
         });

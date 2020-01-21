@@ -21,8 +21,8 @@ export default {
       name: "Tutorial",
       path: ":slug/",
       resolve({ params }) {
-        const tutorial = TUTORIAL_API.find(params.slug);
-        const content = tutorial
+        let tutorial = TUTORIAL_API.find(params.slug);
+        let content = tutorial
           ? tutorial
               .import()
               .catch(catchImportError(`tutorial: ${params.slug}`))
@@ -31,7 +31,7 @@ export default {
         return Promise.all([tutorial, content]);
       },
       respond: ({ resolved }) => {
-        const [tutorial, content] = resolved;
+        let [tutorial, content] = resolved;
         return {
           body: Tutorial,
           data: {

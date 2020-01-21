@@ -4,7 +4,7 @@ import Package from "./Package";
 import * as Package404 from "./404";
 import catchImportError from "../catchImportError";
 
-const UNKNOWN_VERSION = "unknown version";
+let UNKNOWN_VERSION = "unknown version";
 
 export default {
   name: "Packages",
@@ -23,7 +23,7 @@ export default {
       name: "Package",
       path: "@curi/:package/",
       resolve({ params }) {
-        const pkg = PACKAGE_API.find(params.package);
+        let pkg = PACKAGE_API.find(params.package);
         if (!pkg) {
           return Promise.all([undefined, Package404]);
         }
@@ -47,7 +47,7 @@ export default {
           });
         }
 
-        const content = pkg
+        let content = pkg
           ? pkg
               .import(params.version)
               .catch(catchImportError(`package: ${params.package}`))
@@ -59,7 +59,7 @@ export default {
           return error.returns;
         }
 
-        const [pkg, content] = resolved;
+        let [pkg, content] = resolved;
         return {
           body: Package,
           meta: {

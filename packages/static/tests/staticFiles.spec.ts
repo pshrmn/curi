@@ -8,20 +8,20 @@ import { staticFiles } from "@curi/static";
 
 import { Emitted } from "@curi/types";
 
-const FIXTURES_ROOT = join(__dirname, "fixtures");
+let FIXTURES_ROOT = join(__dirname, "fixtures");
 
-const DEFAULT_RENDER = (emitted: Emitted) => {
+let DEFAULT_RENDER = (emitted: Emitted) => {
   return `<html><body>${emitted.response.body}</body</html>`;
 };
 
 describe("staticFiles()", () => {
   describe("output files", () => {
     it("creates HTML files for each route in the correct location", async () => {
-      const fixtures = join(FIXTURES_ROOT, "basic");
+      let fixtures = join(FIXTURES_ROOT, "basic");
       await remove(fixtures);
       await ensureDir(fixtures);
 
-      const routes = prepareRoutes([
+      let routes = prepareRoutes([
         {
           name: "Home",
           path: "",
@@ -37,7 +37,7 @@ describe("staticFiles()", () => {
           }
         }
       ]);
-      const pages = [{ name: "Home" }, { name: "About" }];
+      let pages = [{ name: "Home" }, { name: "About" }];
       await staticFiles({
         pages,
         router: {
@@ -48,7 +48,7 @@ describe("staticFiles()", () => {
           dir: fixtures
         }
       });
-      const expectedPaths = [
+      let expectedPaths = [
         join(fixtures, "index.html"),
         join(fixtures, "about", "index.html")
       ];
@@ -59,11 +59,11 @@ describe("staticFiles()", () => {
 
     describe("fallback", () => {
       it("generates a catch all file if provided", async () => {
-        const fixtures = join(FIXTURES_ROOT, "basic-fallback");
+        let fixtures = join(FIXTURES_ROOT, "basic-fallback");
         await remove(fixtures);
         await ensureDir(fixtures);
 
-        const routes = prepareRoutes([
+        let routes = prepareRoutes([
           {
             name: "Home",
             path: "",
@@ -86,7 +86,7 @@ describe("staticFiles()", () => {
             }
           }
         ]);
-        const pages = [{ name: "Home" }, { name: "About" }];
+        let pages = [{ name: "Home" }, { name: "About" }];
         await staticFiles({
           pages,
           fallback: {
@@ -101,7 +101,7 @@ describe("staticFiles()", () => {
             dir: fixtures
           }
         });
-        const expectedPaths = [
+        let expectedPaths = [
           join(fixtures, "index.html"),
           join(fixtures, "about", "index.html"),
           join(fixtures, "404.html")
@@ -115,7 +115,7 @@ describe("staticFiles()", () => {
 
   describe("redirects", () => {
     it("handles render functions that throw ", async () => {
-      const fixtures = join(FIXTURES_ROOT, "redirect-throws");
+      let fixtures = join(FIXTURES_ROOT, "redirect-throws");
       await remove(fixtures);
       await ensureDir(fixtures);
 
@@ -126,7 +126,7 @@ describe("staticFiles()", () => {
         return `<html><body>${emitted.response.body}</body</html>`;
       }
 
-      const routes = prepareRoutes([
+      let routes = prepareRoutes([
         {
           name: "Home",
           path: "",
@@ -142,8 +142,8 @@ describe("staticFiles()", () => {
           }
         }
       ]);
-      const pages = [{ name: "Home" }, { name: "About" }];
-      const results = await staticFiles({
+      let pages = [{ name: "Home" }, { name: "About" }];
+      let results = await staticFiles({
         pages,
         router: {
           routes
@@ -154,7 +154,7 @@ describe("staticFiles()", () => {
         }
       });
 
-      const [homeResult, aboutResult] = results;
+      let [homeResult, aboutResult] = results;
       expect(homeResult).toMatchObject({
         pathname: "/",
         success: false
@@ -164,7 +164,7 @@ describe("staticFiles()", () => {
         success: true
       });
 
-      const expectedPaths = [
+      let expectedPaths = [
         { path: join(fixtures, "index.html"), exists: false },
         { path: join(fixtures, "about", "index.html"), exists: true }
       ];
@@ -174,11 +174,11 @@ describe("staticFiles()", () => {
     });
 
     it("treats the redirect like any other response ", async () => {
-      const fixtures = join(FIXTURES_ROOT, "redirect-render");
+      let fixtures = join(FIXTURES_ROOT, "redirect-render");
       await remove(fixtures);
       await ensureDir(fixtures);
 
-      const routes = prepareRoutes([
+      let routes = prepareRoutes([
         {
           name: "Home",
           path: "",
@@ -197,7 +197,7 @@ describe("staticFiles()", () => {
           }
         }
       ]);
-      const pages = [{ name: "Home" }, { name: "About" }];
+      let pages = [{ name: "Home" }, { name: "About" }];
       await staticFiles({
         pages,
         router: {
@@ -208,7 +208,7 @@ describe("staticFiles()", () => {
           dir: fixtures
         }
       });
-      const expectedPaths = [
+      let expectedPaths = [
         { path: join(fixtures, "index.html"), exists: true },
         { path: join(fixtures, "about", "index.html"), exists: true }
       ];
@@ -220,11 +220,11 @@ describe("staticFiles()", () => {
 
   describe("render()", () => {
     it("calls render() with the emitted response information", async () => {
-      const fixtures = join(FIXTURES_ROOT, "render");
+      let fixtures = join(FIXTURES_ROOT, "render");
       await remove(fixtures);
       await ensureDir(fixtures);
 
-      const routes = prepareRoutes([
+      let routes = prepareRoutes([
         {
           name: "Home",
           path: "",
@@ -233,8 +233,8 @@ describe("staticFiles()", () => {
           }
         }
       ]);
-      const pages = [{ name: "Home" }];
-      const render = jest.fn(({ response }) => response.body);
+      let pages = [{ name: "Home" }];
+      let render = jest.fn(({ response }) => response.body);
       await staticFiles({
         pages,
         router: {
@@ -259,11 +259,11 @@ describe("staticFiles()", () => {
 
   describe("router.options", () => {
     it("passes provided options to router", async () => {
-      const fixtures = join(FIXTURES_ROOT, "routerOptions");
+      let fixtures = join(FIXTURES_ROOT, "routerOptions");
       await remove(fixtures);
       await ensureDir(fixtures);
 
-      const routes = prepareRoutes([
+      let routes = prepareRoutes([
         {
           name: "Home",
           path: "",
@@ -273,12 +273,12 @@ describe("staticFiles()", () => {
           }
         }
       ]);
-      const pages = [{ name: "Home" }];
+      let pages = [{ name: "Home" }];
 
       // verify that provided options are used by checking that the
       // provided external is available to routes
-      const providedExternal = {};
-      const options = { external: providedExternal };
+      let providedExternal = {};
+      let options = { external: providedExternal };
       await staticFiles({
         pages,
         router: {
@@ -295,11 +295,11 @@ describe("staticFiles()", () => {
 
   describe("history", () => {
     it("uses provided history options in history instance", async done => {
-      const fixtures = join(FIXTURES_ROOT, "history");
+      let fixtures = join(FIXTURES_ROOT, "history");
       await remove(fixtures);
       await ensureDir(fixtures);
 
-      const routes = prepareRoutes([
+      let routes = prepareRoutes([
         {
           name: "Home",
           path: "",
@@ -308,7 +308,7 @@ describe("staticFiles()", () => {
           }
         }
       ]);
-      const pages = [{ name: "Home" }];
+      let pages = [{ name: "Home" }];
       await staticFiles({
         pages,
         router: {
@@ -322,7 +322,7 @@ describe("staticFiles()", () => {
         },
         output: {
           render: (emitted: Emitted) => {
-            const url = emitted.router.history.url({
+            let url = emitted.router.history.url({
               pathname: "/",
               query: { x: "y" }
             });
@@ -339,11 +339,11 @@ describe("staticFiles()", () => {
   describe("errors", () => {
     describe("async routes", () => {
       it("catches errors", async () => {
-        const fixtures = join(FIXTURES_ROOT, "render-errors");
+        let fixtures = join(FIXTURES_ROOT, "render-errors");
         await remove(fixtures);
         await ensureDir(fixtures);
 
-        const routes = prepareRoutes([
+        let routes = prepareRoutes([
           {
             name: "Home",
             path: "",
@@ -355,8 +355,8 @@ describe("staticFiles()", () => {
             }
           }
         ]);
-        const pages = [{ name: "Home" }];
-        const results = await staticFiles({
+        let pages = [{ name: "Home" }];
+        let results = await staticFiles({
           pages,
           router: {
             routes

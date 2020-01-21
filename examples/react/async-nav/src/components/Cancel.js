@@ -2,7 +2,7 @@ import React from "react";
 import { useNavigating } from "@curi/react-dom";
 
 export default function Cancel() {
-  const cancel = useNavigating();
+  let cancel = useNavigating();
   return cancel ? (
     <button
       onClick={() => {

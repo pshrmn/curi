@@ -1,11 +1,11 @@
 import React from "react";
 import { Link } from "@curi/react-dom";
 
-export const Contact = () => {
+export let Contact = () => {
   return <div>Contact Page.</div>;
 };
 
-export const ContactMenu = props => {
+export let ContactMenu = props => {
   return (
     <nav>
       <ul>

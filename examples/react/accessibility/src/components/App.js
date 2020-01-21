@@ -4,11 +4,11 @@ import { useResponse, useNavigationFocus } from "@curi/react-dom";
 import NavLinks from "./NavLinks";
 
 export default function App() {
-  const { response } = useResponse();
-  const ref = React.useRef(null);
+  let { response } = useResponse();
+  let ref = React.useRef(null);
   useNavigationFocus(ref);
 
-  const { body: Body } = response;
+  let { body: Body } = response;
   return (
     <div>
       <NavLinks />

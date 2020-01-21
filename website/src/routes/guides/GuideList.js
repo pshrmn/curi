@@ -8,7 +8,7 @@ import {
   PlainSection
 } from "../../components/layout/Sections";
 
-const GroupGuides = ({ guides }) => (
+let GroupGuides = ({ guides }) => (
   <ul className="link-list">
     {guides.map(g => (
       <li key={g.name} className="solo">
@@ -21,7 +21,7 @@ const GroupGuides = ({ guides }) => (
 );
 
 function GuideLinks() {
-  const groups = GUIDE_API.grouped();
+  let groups = GUIDE_API.grouped();
   return (
     <menu>
       {Object.keys(groups).map(title => (

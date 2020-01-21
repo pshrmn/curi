@@ -6,7 +6,7 @@ import {
   IJS
 } from "../../../../../components/package/common";
 
-export const meta = {
+export let meta = {
   title: "getNavigation",
   hash: "getNavigation"
 };
@@ -26,7 +26,7 @@ export function GetNavigationAPI() {
 <script>
   import { getNavigation } from "@curi/svelte";
 
-  const navigation = getNavigation();
+  let navigation = getNavigation();
 </script>`}
       </CodeBlock>
     </HashSection>

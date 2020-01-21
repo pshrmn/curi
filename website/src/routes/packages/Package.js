@@ -5,7 +5,7 @@ import PageMenu from "../../components/layout/PageMenu";
 import BasePackage from "../../components/package";
 
 export default function PackagePage({ response }) {
-  const { sections, contents } = response.data.content;
+  let { sections, contents } = response.data.content;
   return (
     <FancyPage
       base={

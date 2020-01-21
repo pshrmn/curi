@@ -7,11 +7,11 @@ import {
   IJS
 } from "../../../../../components/package/common";
 
-const propsMeta = {
+let propsMeta = {
   title: "Props",
   hash: "AsyncLink-props"
 };
-export const meta = {
+export let meta = {
   title: "AsyncLink",
   hash: "AsyncLink"
 };

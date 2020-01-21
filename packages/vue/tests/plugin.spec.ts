@@ -6,35 +6,35 @@ import { createRouter, prepareRoutes } from "@curi/router";
 import { CuriPlugin } from "@curi/vue";
 
 describe("CuriPlugin", () => {
-  const routes = prepareRoutes([{ name: "Catch All", path: "(.*)" }]);
-  const router = createRouter(inMemory, routes);
+  let routes = prepareRoutes([{ name: "Catch All", path: "(.*)" }]);
+  let router = createRouter(inMemory, routes);
 
   describe("$router", () => {
     it("Adds the router to global Vue vars as $router", () => {
-      const Vue = createLocalVue();
-      const FakeComponent = {
+      let Vue = createLocalVue();
+      let FakeComponent = {
         render: function(h) {
           return h("div");
         }
       };
       Vue.use(CuriPlugin, { router });
-      const el = new Vue();
+      let el = new Vue();
       expect(el.$router).toBe(router);
     });
   });
 
   describe("$curi", () => {
     it("Adds $curi property to all components", () => {
-      const Vue = createLocalVue();
-      const FakeComponent = {
+      let Vue = createLocalVue();
+      let FakeComponent = {
         render: function(h) {
           return h("div");
         }
       };
-      const { response, navigation } = router.current();
+      let { response, navigation } = router.current();
       Vue.use(CuriPlugin, { router });
 
-      const el = new Vue();
+      let el = new Vue();
       expect(el.$curi.response).toBe(response);
       expect(el.$curi.navigation).toBe(navigation);
     });
@@ -57,7 +57,7 @@ describe("CuriPlugin", () => {
       }
 
       let router;
-      const routes = prepareRoutes([
+      let routes = prepareRoutes([
         { name: "Contact", path: "contact" },
         { name: "Catch All", path: "(.*)" }
       ]);
@@ -67,8 +67,8 @@ describe("CuriPlugin", () => {
       });
 
       it("re-renders when updating curi object", done => {
-        const Vue = createLocalVue();
-        const FakeComponent = makeFake(done);
+        let Vue = createLocalVue();
+        let FakeComponent = makeFake(done);
 
         let el;
         Vue.use(CuriPlugin, { router });
@@ -77,14 +77,14 @@ describe("CuriPlugin", () => {
             template: "<div><FakeComponent /></div>",
             components: { FakeComponent }
           }).$mount();
-          const url = router.url({ name: "Contact" });
+          let url = router.url({ name: "Contact" });
           router.navigate({ url });
         }
       });
 
       it("re-renders nested components", done => {
-        const Vue = createLocalVue();
-        const FakeComponent = makeFake(done);
+        let Vue = createLocalVue();
+        let FakeComponent = makeFake(done);
 
         let wrapper;
         Vue.use(CuriPlugin, { router });
@@ -94,7 +94,7 @@ describe("CuriPlugin", () => {
             template: "<div><FakeComponent /></div>",
             components: { FakeComponent }
           }).$mount();
-          const url = router.url({ name: "Contact" });
+          let url = router.url({ name: "Contact" });
           router.navigate({ url });
         }
       });
@@ -103,7 +103,7 @@ describe("CuriPlugin", () => {
 
   describe("registering components components", () => {
     it("Registers the Link component as <curi-link>", () => {
-      const Vue = createLocalVue();
+      let Vue = createLocalVue();
       Vue.use(CuriPlugin, { router });
       expect(Vue.options.components["curi-link"]).toBeDefined();
     });

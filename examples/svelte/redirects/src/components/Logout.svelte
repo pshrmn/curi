@@ -8,7 +8,7 @@
   import { getRouter } from "@curi/svelte";
   import fakeAuth from "../fakeAuth";
 
-  const router = getRouter();
+  let router = getRouter();
 
   function logoutAndRedirect() {
     fakeAuth.logout();

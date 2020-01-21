@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "@curi/react-dom";
 
-const Preview = ({ color }) => (
+let Preview = ({ color }) => (
   <div
     style={{
       width: 20,
@@ -11,7 +11,7 @@ const Preview = ({ color }) => (
   />
 );
 
-const Product = ({ response }) => (
+let Product = ({ response }) => (
   <div>
     Paint color: {response.location.state.name || "Unknown"}
     <Preview color={response.params.color} />

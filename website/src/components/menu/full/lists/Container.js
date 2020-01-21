@@ -3,7 +3,7 @@ import styled from "@emotion/styled";
 
 import { color } from "../../../../constants/styles";
 
-const StyledContainer = styled("div")`
+let StyledContainer = styled("div")`
   display: none;
 
   &.active {
@@ -32,7 +32,7 @@ const StyledContainer = styled("div")`
   }
 `;
 
-const FlexContainer = styled("ul")`
+let FlexContainer = styled("ul")`
   display: flex;
   flex-flow: row nowrap;
   justify-content: flex-start;
@@ -44,7 +44,7 @@ const FlexContainer = styled("ul")`
   }
 `;
 
-const Background = styled("div")`
+let Background = styled("div")`
   background: rgba(0.1, 0.1, 0.1, 0.5);
   width: 100vw;
   height: 100vh;

@@ -1,8 +1,8 @@
 import React from "react";
 
 function PrismCode(props) {
-  const ref = React.createRef();
-  const { component: Wrapper, children, ...rest } = props;
+  let ref = React.createRef();
+  let { component: Wrapper, children, ...rest } = props;
 
   React.useEffect(() => {
     // relies on Prism global...

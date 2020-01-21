@@ -3,8 +3,8 @@ import { Link, useRouter } from "@curi/react-dom";
 import title from "../titleInteraction";
 
 function Products({ response: { data } }) {
-  const router = useRouter();
-  const categoryRoute = router.route("Category");
+  let router = useRouter();
+  let categoryRoute = router.route("Category");
   return (
     <div>
       <h1>Products Page</h1>

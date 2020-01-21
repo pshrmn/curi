@@ -1,6 +1,6 @@
-const { VueLoaderPlugin } = require("vue-loader");
+let { VueLoaderPlugin } = require("vue-loader");
 
-const config = {
+let config = {
   mode: "development",
   output: {
     filename: "js/bundle.js",

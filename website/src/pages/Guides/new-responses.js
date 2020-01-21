@@ -9,39 +9,39 @@ import {
   IJS
 } from "../../components/guide/common";
 
-const meta = {
+let meta = {
   title: "New Responses"
 };
 
-const handlerMeta = {
+let handlerMeta = {
   title: "Response Handlers",
   hash: "response-handlers"
 };
 
-const registeringMeta = {
+let registeringMeta = {
   title: "Registering Response Handlers",
   hash: "registering"
 };
 
-const setupMeta = {
+let setupMeta = {
   title: "Setup",
   hash: "setup"
 };
-const renderingMeta = {
+let renderingMeta = {
   title: "Rendering",
   hash: "rendering"
 };
-const sideEffectsMeta = {
+let sideEffectsMeta = {
   title: "Side Effects",
   hash: "side-effects"
 };
-const useCaseMeta = {
+let useCaseMeta = {
   title: "Use Cases",
   hash: "use-cases",
   children: [setupMeta, renderingMeta, sideEffectsMeta]
 };
 
-const contents = [handlerMeta, registeringMeta, useCaseMeta];
+let contents = [handlerMeta, registeringMeta, useCaseMeta];
 
 function NewResponsesGuide() {
   return (
@@ -114,7 +114,7 @@ function NewResponsesGuide() {
 router.once(fn);
 
 // obs will be called for every new response
-const stop = router.observe(fn);`}
+let stop = router.observe(fn);`}
         </CodeBlock>
       </HashSection>
 
@@ -141,7 +141,7 @@ const stop = router.observe(fn);`}
           </Note>
 
           <CodeBlock lang="jsx">
-            {`const Router = createRouterComponent(router);
+            {`let Router = createRouterComponent(router);
 
 function setup() {
   ReactDOM.render((
@@ -249,7 +249,7 @@ router.observe(observer);`}
 }
 
 // as a side-effect
-const router = createRouter(browser, routes, {
+let router = createRouter(browser, routes, {
   sideEffects: [{ fn: logger }]
 });
 

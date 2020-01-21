@@ -8,6 +8,6 @@ function Example404() {
   );
 }
 
-const contents = [];
+let contents = [];
 
 export { Example404 as component, contents };

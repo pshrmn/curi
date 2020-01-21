@@ -11,7 +11,7 @@ export interface CuriPluginOptions {
   router: CuriRouter;
 }
 
-const CuriPlugin: PluginObject<CuriPluginOptions> = {
+let CuriPlugin: PluginObject<CuriPluginOptions> = {
   install: function(_Vue: typeof Vue, options: CuriPluginOptions) {
     _Vue.component(Link.name, Link);
     _Vue.component(AsyncLink.name, AsyncLink);
@@ -20,7 +20,7 @@ const CuriPlugin: PluginObject<CuriPluginOptions> = {
 
     // create a reactive object so that components will receive
     // the new response/navigation when a new response is emitted
-    const reactive: ReactiveResponse = new Vue({
+    let reactive: ReactiveResponse = new Vue({
       data: options.router.current()
     });
 

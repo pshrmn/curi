@@ -1,4 +1,4 @@
-const building = process.env.BABEL_ENV === "build";
+let building = process.env.BABEL_ENV === "build";
 
 module.exports = {
   presets: [

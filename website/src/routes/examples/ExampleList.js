@@ -9,7 +9,7 @@ import {
 } from "../../components/layout/Sections";
 
 function ExampleLinks() {
-  const examples = EXAMPLE_API.all();
+  let examples = EXAMPLE_API.all();
   return (
     <menu>
       <ul className="link-list">

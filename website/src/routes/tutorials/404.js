@@ -8,6 +8,6 @@ export default function Tutorial404() {
   );
 }
 
-const contents = [];
+let contents = [];
 
 export { Tutorial404 as component, contents };

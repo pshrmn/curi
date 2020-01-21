@@ -3,7 +3,7 @@ import { Link } from "@curi/react-dom";
 
 import fakeAuth from "../fakeAuth";
 
-const NavLinks = () => (
+let NavLinks = () => (
   <nav>
     <ul>
       <li>

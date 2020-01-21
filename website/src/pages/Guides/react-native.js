@@ -10,36 +10,36 @@ import {
   Cmp
 } from "../../components/guide/common";
 
-const meta = {
+let meta = {
   title: "React Native"
 };
 
-const responseMeta = {
+let responseMeta = {
   title: "What to render",
   hash: "render-response"
 };
-const renderingMeta = {
+let renderingMeta = {
   title: "Rendering Responses",
   hash: "rendering",
   children: [responseMeta]
 };
 
-const navigatingMeta = {
+let navigatingMeta = {
   title: "Navigating",
   hash: "navigating"
 };
 
-const backMeta = {
+let backMeta = {
   title: "Back Button",
   hash: "back-button"
 };
-const tipsMeta = {
+let tipsMeta = {
   title: "React Native Tips",
   hash: "tips",
   children: [backMeta]
 };
 
-const contents = [renderingMeta, navigatingMeta, tipsMeta];
+let contents = [renderingMeta, navigatingMeta, tipsMeta];
 
 function ReactNativeGuide() {
   return (
@@ -108,15 +108,15 @@ function ReactNativeGuide() {
 } from '@curi/react-native';
 
 import router from "./router";
-const Router = createRouterComponent(router);
+let Router = createRouterComponent(router);
 
 function App() {
-  const router = userRouter();
-  const {
+  let router = userRouter();
+  let {
     response,
     navigation
   } = useResponse();
-  const { body:Body } = response;
+  let { body:Body } = response;
   return <Body />
 }
 
@@ -157,8 +157,8 @@ function MyReactNativeApp = () => (
 
           <CodeBlock lang="jsx">
             {`function App() {
-  const { response } = useResponse();
-  const { body:Body } = response;
+  let { response } = useResponse();
+  let { body:Body } = response;
   return <Body response={response} />
 }
 
@@ -188,7 +188,7 @@ function MyReactNativeApp() {
           </Note>
 
           <CodeBlock lang="jsx" data-line="22,26,29">
-            {`const routes = prepareRoutes([
+            {`let routes = prepareRoutes([
   {
     name: "Home",
     path: "",
@@ -205,8 +205,8 @@ function MyReactNativeApp() {
 ]);
 
 function App() {
-  const { response } = useResponse();
-  const { Main, Menu } = response.body;
+  let { response } = useResponse();
+  let { Main, Menu } = response.body;
   return (
     <React.Fragment>
       <Menu />
@@ -239,7 +239,7 @@ function App() {
         <CodeBlock lang="jsx">
           {`import { Link } from "@curi/react-native";
 
-const NavLinks = () => (
+let NavLinks = () => (
   <View>
     <Link name="Home">
       <Text>Home</Text>
@@ -307,7 +307,7 @@ const NavLinks = () => (
             {`import { BackHandler } from 'react-native';
 
 // create your router
-const router = createRouter(browser, routes);
+let router = createRouter(browser, routes);
 
 BackHandler.addEventListener(
   "hardwareBackPress",

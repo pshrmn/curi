@@ -3,7 +3,7 @@ import styled from "@emotion/styled";
 
 import { color, screen, font } from "../../../constants/styles";
 
-const StyledMenuButton = styled("button")`
+let StyledMenuButton = styled("button")`
   height: 40px;
   border: 0;
   font-size: 1em;
@@ -20,7 +20,7 @@ const StyledMenuButton = styled("button")`
 `;
 
 export function MenuButton(props) {
-  const classNames = [props.active && "active", "main"]
+  let classNames = [props.active && "active", "main"]
     .filter(c => c !== undefined)
     .join(" ");
 

@@ -5,7 +5,7 @@ import { preferDefault } from "@curi/helpers";
 describe("preferDefault()", () => {
   it('resolves with the "default" export if it exists', done => {
     function fakeDefault() {}
-    const withDefault = {
+    let withDefault = {
       default: fakeDefault
     };
     Promise.resolve(withDefault)
@@ -17,7 +17,7 @@ describe("preferDefault()", () => {
   });
 
   it('resolves with the entire module if "default" does not exist', done => {
-    const noDefault = {};
+    let noDefault = {};
     Promise.resolve(noDefault)
       .then(preferDefault)
       .then(module => {
