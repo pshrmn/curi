@@ -14,77 +14,77 @@ import {
   ScrollableTable
 } from "../../components/tutorial/common";
 
-const demoMeta = {
+let demoMeta = {
   title: "Demo",
   hash: "demo"
 };
 
-const setupMeta = { title: "Setup", hash: "setup" };
+let setupMeta = { title: "Setup", hash: "setup" };
 
-const pathMeta = {
+let pathMeta = {
   title: "Path basics",
   hash: "path-basics"
 };
-const routesMeta = {
+let routesMeta = {
   title: "Routes",
   hash: "routes",
   children: [pathMeta]
 };
 
-const historyMeta = { title: "History", hash: "history" };
+let historyMeta = { title: "History", hash: "history" };
 
-const a11yMeta = {
+let a11yMeta = {
   title: "Announcing Navigation",
   hash: "announcing-navigation"
 };
-const routerMeta = {
+let routerMeta = {
   title: "The Router",
   hash: "router",
   children: [a11yMeta]
 };
 
-const responseMeta = {
+let responseMeta = {
   title: "Responses and Navigation",
   hash: "responses"
 };
-const respondFnMeta = {
+let respondFnMeta = {
   title: "route.respond",
   hash: "route-respond"
 };
-const renderingMeta = {
+let renderingMeta = {
   title: "Rendering with React",
   hash: "rendering",
   children: [responseMeta, respondFnMeta]
 };
 
-const linkMeta = {
+let linkMeta = {
   title: "The <Link> Component",
   hash: "link-component"
 };
-const menuMeta = { title: "A Navigation Menu", hash: "nav-menu" };
-const bookLinkMeta = { title: "Linking to Books", hash: "book-links" };
-const navigatingMeta = {
+let menuMeta = { title: "A Navigation Menu", hash: "nav-menu" };
+let bookLinkMeta = { title: "Linking to Books", hash: "book-links" };
+let navigatingMeta = {
   title: "Navigating between locations",
   hash: "navigating",
   children: [linkMeta, menuMeta, bookLinkMeta]
 };
 
-const urlAndNavigateMeta = {
+let urlAndNavigateMeta = {
   title: "The Router's URL & Navigate Methods",
   hash: "url-nav-method"
 };
-const shoppingMeta = {
+let shoppingMeta = {
   title: "A Shopping API",
   hash: "shopping"
 };
-const useRouterMeta = {
+let useRouterMeta = {
   title: "Using useRouter",
   hash: "useRouter",
   children: [urlAndNavigateMeta]
 };
-const nextMeta = { title: "What's next?", hash: "next" };
+let nextMeta = { title: "What's next?", hash: "next" };
 
-const contents = [
+let contents = [
   demoMeta,
   setupMeta,
   routesMeta,
@@ -446,7 +446,7 @@ import './index.css';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 
-const router = createRouter(browser, routes);
+let router = createRouter(browser, routes);
 
 ReactDOM.render(<App />, document.getElementById('root'));
 registerServiceWorker();`}
@@ -510,7 +510,7 @@ import './index.css';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 
-const router = createRouter(browser, routes, {
+let router = createRouter(browser, routes, {
   sideEffects: [
     announce(({ response }) => {
       return \`Navigated to \${response.location.pathname}\`;
@@ -556,14 +556,14 @@ import './index.css';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 
-const router = createRouter(browser, routes, {
+let router = createRouter(browser, routes, {
   sideEffects: [
     announce(({ response }) => {
       return \`Navigated to \${response.location.pathname}\`;
     })
   ]
 });
-const Router = createRouterComponent(router);
+let Router = createRouterComponent(router);
 
 ReactDOM.render(<App />, document.getElementById('root'));
 registerServiceWorker();`}
@@ -594,14 +594,14 @@ import './index.css';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 
-const router = createRouter(browser, routes, {
+let router = createRouter(browser, routes, {
   sideEffects: [
     announce(({ response }) => {
       return \`Navigated to \${response.location.pathname}\`;
     })
   ]
 });
-const Router = createRouterComponent(router);
+let Router = createRouterComponent(router);
 
 ReactDOM.render((
   <Router>
@@ -751,7 +751,7 @@ import React from "react";
 import { useResponse } from "@curi/react-dom";
 
 export default function App() {
-  const { response } = useResponse();
+  let { response } = useResponse();
 }`}
         </CodeBlock>
 
@@ -884,8 +884,8 @@ import React from "react";
 import { useResponse } from "@curi/react-dom";
 
 export default function App() {
-  const { response } = useResponse();
-  const { body:Body } = response;
+  let { response } = useResponse();
+  let { body:Body } = response;
   return <Body response={response} />
 }`}
         </CodeBlock>
@@ -1000,8 +1000,8 @@ import { useResponse } from "@curi/react-dom";
 import NavMenu from './components/NavMenu';
 
 export default function App() {
-  const { response } = useResponse();
-  const { body:Body } = response;
+  let { response } = useResponse();
+  let { body:Body } = response;
   return (
     <React.Fragment>
       <header>
@@ -1125,8 +1125,8 @@ import React from 'react';
 import books from '../books';
 
 export default function Book({ response }) {
-  const id = parseInt(response.params.id, 10);
-  const book = books.find(b => b.id === id);
+  let id = parseInt(response.params.id, 10);
+  let book = books.find(b => b.id === id);
   if (!book) {
     return (
       <article>
@@ -1171,14 +1171,14 @@ export default function Book({ response }) {
 
         <CodeBlock>
           {`// src/cart.js
-const cart = new Map();
+let cart = new Map();
 
 export default {
   add(book, quantity) {
     cart.set(book, quantity);
   },
   items() {
-    const books = [];
+    let books = [];
     for (let [book, quantity] of cart.entries()) {
       books.push({
         title: book.title,
@@ -1221,7 +1221,7 @@ export default {
             params.
           </p>
 
-          <CodeBlock>{`const url = router.url({ name: "New" });`}</CodeBlock>
+          <CodeBlock>{`let url = router.url({ name: "New" });`}</CodeBlock>
 
           <p>
             The router's <IJS>navigate</IJS> method is used to navigate; it
@@ -1301,9 +1301,9 @@ import books from '../books';
 import cart from '../cart';
 
 export default function Book({ response }) {
-  const router = useRouter();
-  const id = parseInt(response.params.id, 10);
-  const book = books.find(b => b.id === id);
+  let router = useRouter();
+  let id = parseInt(response.params.id, 10);
+  let book = books.find(b => b.id === id);
   if (!book) {
     return (
       <article>
@@ -1321,7 +1321,7 @@ export default function Book({ response }) {
         type="button"
         onClick={() => {
           cart.add(book, 1);
-          const url = router.url({ name: "Checkout" });
+          let url = router.url({ name: "Checkout" });
           router.navigate({ url });
         }}
       >
@@ -1356,8 +1356,8 @@ import { useRouter } from '@curi/react-dom';
 import cart from '../cart';
 
 export default function Checkout({ response }) {
-  const router = useRouter();
-  const books = cart.items();
+  let router = useRouter();
+  let books = cart.items();
   if (!books.length) {
     return response.location.hash === 'thanks'
       ? <article>
@@ -1390,7 +1390,7 @@ export default function Checkout({ response }) {
         type="button"
         onClick={() => {
           cart.reset();
-          const url = router.url({
+          let url = router.url({
             name: "Checkout",
             hash: "thanks"
           });

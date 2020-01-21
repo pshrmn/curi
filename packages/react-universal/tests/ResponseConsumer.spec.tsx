@@ -9,7 +9,7 @@ import { createRouterComponent, ResponseConsumer } from "@curi/react-universal";
 
 describe("ResponseConsumer", () => {
   let node;
-  const routes = prepareRoutes([
+  let routes = prepareRoutes([
     { name: "Home", path: "" },
     { name: "About", path: "about" },
     { name: "Catch All", path: "(.*)" }
@@ -24,9 +24,9 @@ describe("ResponseConsumer", () => {
   });
 
   it("returns response and navigation objects", () => {
-    const router = createRouter(inMemory, routes);
-    const Router = createRouterComponent(router);
-    const { response, navigation } = router.current();
+    let router = createRouter(inMemory, routes);
+    let Router = createRouterComponent(router);
+    let { response, navigation } = router.current();
     function App() {
       return (
         <ResponseConsumer>
@@ -49,8 +49,8 @@ describe("ResponseConsumer", () => {
   });
 
   it("is called when there is a new response", () => {
-    const router = createRouter(inMemory, routes);
-    const Router = createRouterComponent(router);
+    let router = createRouter(inMemory, routes);
+    let Router = createRouterComponent(router);
     let fromContext;
     function App() {
       return (
@@ -72,16 +72,16 @@ describe("ResponseConsumer", () => {
       );
     });
 
-    const first = router.current();
+    let first = router.current();
     expect(fromContext.response).toBe(first.response);
     expect(fromContext.navigation).toBe(first.navigation);
 
     act(() => {
-      const url = router.url({ name: "About" });
+      let url = router.url({ name: "About" });
       router.navigate({ url });
     });
 
-    const second = router.current();
+    let second = router.current();
     expect(fromContext.response).toBe(second.response);
     expect(fromContext.navigation).toBe(second.navigation);
   });

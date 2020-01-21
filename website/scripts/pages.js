@@ -1,18 +1,18 @@
-const packagesAPI = require("../src/constants/packages").default;
-const guidesAPI = require("../src/constants/guides").default;
-const examplesAPI = require("../src/constants/examples").default;
-const tutorialsAPI = require("../src/constants/tutorials").default;
+let packagesAPI = require("../src/constants/packages").default;
+let guidesAPI = require("../src/constants/guides").default;
+let examplesAPI = require("../src/constants/examples").default;
+let tutorialsAPI = require("../src/constants/tutorials").default;
 
-const packageParams = packagesAPI.all().reduce((acc, pkg) => {
-  const pkgs = Object.keys(pkg.versions).map(version => ({
+let packageParams = packagesAPI.all().reduce((acc, pkg) => {
+  let pkgs = Object.keys(pkg.versions).map(version => ({
     package: pkg.name,
     version
   }));
   return acc.concat(pkgs);
 }, []);
-const guideParams = guidesAPI.all().map(p => ({ slug: p.slug }));
-const exampleParams = examplesAPI.all().map(e => ({ slug: e.slug }));
-const tutorialParams = tutorialsAPI.all().map(t => ({ slug: t.slug }));
+let guideParams = guidesAPI.all().map(p => ({ slug: p.slug }));
+let exampleParams = examplesAPI.all().map(e => ({ slug: e.slug }));
+let tutorialParams = tutorialsAPI.all().map(t => ({ slug: t.slug }));
 
 module.exports = [
   { name: "Home" },

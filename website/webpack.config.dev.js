@@ -1,11 +1,11 @@
-const webpack = require("webpack");
-const path = require("path");
+let webpack = require("webpack");
+let path = require("path");
 
-const configBase = require("./webpack.config.base.js");
+let configBase = require("./webpack.config.base.js");
 
-const PUBLIC_ROOT = path.join(__dirname, "public");
+let PUBLIC_ROOT = path.join(__dirname, "public");
 
-const config = {
+let config = {
   ...configBase,
   mode: "development",
   entry: "./index.js",

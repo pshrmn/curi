@@ -6,11 +6,11 @@ import {
   IJS
 } from "../../../../../components/package/common";
 
-const argumentsMeta = {
+let argumentsMeta = {
   title: "Arguments",
   hash: "arguments"
 };
-export const meta = {
+export let meta = {
   title: "pathname",
   hash: "pathname"
 };
@@ -28,7 +28,7 @@ export function PathnameAPI() {
       <CodeBlock>
         {`import { pathname } from "@curi/router";
 
-const routes = prepareRoutes([
+let routes = prepareRoutes([
   {
     name: "Home",
     path: ""
@@ -39,8 +39,8 @@ const routes = prepareRoutes([
   }
 ]);
 
-const route = router.route("Home");
-const parent = pathname(route); // "/"`}
+let route = router.route("Home");
+let parent = pathname(route); // "/"`}
       </CodeBlock>
 
       <HashSection meta={argumentsMeta} tag="h3">
@@ -63,8 +63,8 @@ const parent = pathname(route); // "/"`}
         </HashSection>
 
         <CodeBlock>
-          {`const route = router.route("User");
-const parent = pathname(route, { id: "1" }); // "/u/1"`}
+          {`let route = router.route("User");
+let parent = pathname(route, { id: "1" }); // "/u/1"`}
         </CodeBlock>
       </HashSection>
     </HashSection>

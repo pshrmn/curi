@@ -1,16 +1,16 @@
-const sveltePlugin = require("rollup-plugin-svelte");
-const babelPlugin = require("rollup-plugin-babel");
+let sveltePlugin = require("rollup-plugin-svelte");
+let babelPlugin = require("rollup-plugin-babel");
 
-const plugins = require("../../utils/rollup-plugins");
+let plugins = require("../../utils/rollup-plugins");
 
-const pkg = require("./package.json");
-const deps = Object.keys(pkg.dependencies).map(key => key);
+let pkg = require("./package.json");
+let deps = Object.keys(pkg.dependencies).map(key => key);
 
-const input = "src/index.js";
-const sourcemap = false;
+let input = "src/index.js";
+let sourcemap = false;
 
-const svelte = sveltePlugin();
-const babel = babelPlugin({
+let svelte = sveltePlugin();
+let babel = babelPlugin({
   exclude: "node_modules/**"
 });
 

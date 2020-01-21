@@ -5,9 +5,9 @@ import { pathname } from "@curi/interactions";
 export default function pathnames(
   config: PathnamesConfiguration
 ): Array<string> {
-  const { routes, pages } = config;
+  let { routes, pages } = config;
   return pages.map(page => {
-    const route = routes.route(page.name);
+    let route = routes.route(page.name);
     if (!route) {
       throw new Error(
         `Failed to create pathname for route "${

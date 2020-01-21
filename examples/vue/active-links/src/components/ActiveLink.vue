@@ -12,8 +12,8 @@ export default {
   props: ["name", "params", "search", "hash", "state", "partial"],
   computed: {
     classes: function() {
-      const route = this.$router.route(this.name);
-      const active = activeInteraction(route, this.$curi.response, {
+      let route = this.$router.route(this.name);
+      let active = activeInteraction(route, this.$curi.response, {
         params: this.params,
         partial: this.partial
       });

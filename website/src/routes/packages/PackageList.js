@@ -10,7 +10,7 @@ import {
 import { Note } from "../../components/Messages";
 import { InlineJS as IJS } from "../../components/highlight/Inline";
 
-const GroupPackages = ({ packages }) => (
+let GroupPackages = ({ packages }) => (
   <ul className="link-list">
     {packages.map(p => (
       <li key={p.name} className="solo">
@@ -23,7 +23,7 @@ const GroupPackages = ({ packages }) => (
 );
 
 function PackageLinks({ version = "v2" }) {
-  const groups = PACKAGE_API.versioned(version);
+  let groups = PACKAGE_API.versioned(version);
   return (
     <menu>
       {Object.keys(groups).map(title => (

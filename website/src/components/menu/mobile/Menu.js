@@ -9,7 +9,7 @@ import { MenuButton } from "./buttons";
 import { StyledTabs, PaddedPanels } from "../../tabs/Tabs";
 import { color, screen } from "../../../constants/styles";
 
-const StyledMenu = styled("menu")`
+let StyledMenu = styled("menu")`
   position: fixed;
   overflow-y: scroll;
   width: 100vw;
@@ -71,7 +71,7 @@ const StyledMenu = styled("menu")`
   }
 `;
 
-const StyledControls = styled("menu")`
+let StyledControls = styled("menu")`
   position: fixed;
   width: 100vw;
   height: 40px;
@@ -84,23 +84,23 @@ const StyledControls = styled("menu")`
 `;
 
 export default function MobileMenu(props) {
-  const [visible, setVisible] = React.useState(false);
-  const { response } = useResponse();
+  let [visible, setVisible] = React.useState(false);
+  let { response } = useResponse();
 
   React.useEffect(() => {
     // reset to hidden when switching pages
     setVisible(false);
   }, [response.location.pathname]);
 
-  const toggleVisible = () => {
+  let toggleVisible = () => {
     setVisible(!visible);
   };
 
-  const { contents } = props;
-  const hasPage = contents !== undefined;
+  let { contents } = props;
+  let hasPage = contents !== undefined;
 
-  const tabs = [<Tab key="main">Main</Tab>];
-  const panels = [
+  let tabs = [<Tab key="main">Main</Tab>];
+  let panels = [
     <TabPanel key="main">
       <MainContents />
     </TabPanel>

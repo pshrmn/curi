@@ -3,11 +3,11 @@ import { useRouter, Link } from "@curi/react-dom";
 import { ancestors } from "@curi/interactions";
 import title from "../titleInteraction";
 
-const Breadcrumbs = ({ name, params }) => {
-  const router = useRouter();
+let Breadcrumbs = ({ name, params }) => {
+  let router = useRouter();
   // assuming the route exists
-  const route = router.route(name);
-  const ancestorNames = ancestors(route);
+  let route = router.route(name);
+  let ancestorNames = ancestors(route);
   return (
     <ul className="breadcrumbs">
       {ancestorNames.map(a => {

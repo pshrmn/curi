@@ -4,7 +4,7 @@ import Package from "./Package";
 import * as Package404 from "./404";
 import catchImportError from "../catchImportError";
 
-const UNKNOWN_VERSION = "unknown version";
+let UNKNOWN_VERSION = "unknown version";
 
 export default {
   name: "Legacy Packages",

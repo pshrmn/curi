@@ -6,11 +6,11 @@ import {
   IJS
 } from "../../../../../components/package/common";
 
-const optsMeta = {
+let optsMeta = {
   title: "Options",
   hash: "useURL-opts"
 };
-export const meta = {
+export let meta = {
   title: "useURL",
   hash: "useURL"
 };
@@ -25,7 +25,7 @@ export function UseURLAPI() {
       <CodeBlock lang="jsx">
         {`import { useURL } from '@curi/react-dom';
 
-const href = useURL({
+let href = useURL({
   name: "Video",
   params: { id: "jaifeo9" } },
   hash: "comments",

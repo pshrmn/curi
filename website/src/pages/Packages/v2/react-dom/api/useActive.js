@@ -9,11 +9,11 @@ import {
   Note
 } from "../../../../../components/package/common";
 
-const optsMeta = {
+let optsMeta = {
   title: "Options",
   hash: "useActive-opts"
 };
-export const meta = {
+export let meta = {
   title: "useActive",
   hash: "useActive"
 };
@@ -36,7 +36,7 @@ function ActiveLink({
   partial,
   children
 }) {
-  const active = useActive({ name, params, partial });
+  let active = useActive({ name, params, partial });
   return (
     <Link
       name={name}

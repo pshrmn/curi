@@ -16,9 +16,9 @@ export interface ActiveHookProps {
 }
 
 export default function useActive(props: ActiveHookProps) {
-  const router = useRouter();
-  const { response } = useResponse();
-  const route = router.route(props.name);
+  let router = useRouter();
+  let { response } = useResponse();
+  let route = router.route(props.name);
   if (!route) {
     return false;
   }

@@ -6,11 +6,11 @@ import {
   IJS
 } from "../../../../../components/package/common";
 
-const argumentsMeta = {
+let argumentsMeta = {
   title: "Arguments",
   hash: "pathnames-arguments"
 };
-export const meta = {
+export let meta = {
   title: "pathnames",
   hash: "pathnames"
 };
@@ -44,7 +44,7 @@ export function PathnamesAPI() {
 ]);
 
 
-const paths = pathnames({
+let paths = pathnames({
   // ...
   routes
 });`}
@@ -63,14 +63,14 @@ const paths = pathnames({
           </p>
 
           <CodeBlock>
-            {`const pages = [
+            {`let pages = [
   { name: "Home" },
   { name: "User", params: { id: 1 }},
   { name: "User", params: { id: 2 }},
 ];
 
 
-const paths = pathnames({
+let paths = pathnames({
   // ...
   pages
 });`}
@@ -88,11 +88,11 @@ const paths = pathnames({
 
           <CodeBlock>
             {`import active from "@curi/active";
-const routerOptions = {
+let routerOptions = {
   routes: [active()]
 };
 
-const paths = pathnames({
+let paths = pathnames({
   // ...
   routerOptions
 });`}

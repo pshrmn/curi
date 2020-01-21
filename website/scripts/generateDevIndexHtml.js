@@ -1,9 +1,9 @@
-const { outputFile } = require("fs-extra");
-const path = require("path");
-const insert = require("./html");
+let { outputFile } = require("fs-extra");
+let path = require("path");
+let insert = require("./html");
 
-const html = insert("", "dev");
-const outputFilename = path.join(process.cwd(), "public", "index.html");
+let html = insert("", "dev");
+let outputFilename = path.join(process.cwd(), "public", "index.html");
 
 outputFile(outputFilename, html).then(() => {
   console.log("output public/index.html");

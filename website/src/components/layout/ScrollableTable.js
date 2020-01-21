@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "@emotion/styled";
 
-const ScrollableContainer = styled("div")`
+let ScrollableContainer = styled("div")`
   overflow-x: auto;
 `;
 

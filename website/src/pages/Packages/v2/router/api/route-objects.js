@@ -9,7 +9,7 @@ import {
   Warning
 } from "../../../../../components/package/common";
 
-export const meta = {
+export let meta = {
   title: "Route Objects",
   hash: "route-objects"
 };
@@ -123,7 +123,7 @@ export function RoutePropertiesAPI() {
         </p>
 
         <CodeBlock>
-          {`const about = {
+          {`let about = {
   name: 'About',
   path: 'about',
   resolve({ name, params, partials, location }) {
@@ -151,7 +151,7 @@ export function RoutePropertiesAPI() {
         </p>
 
         <CodeBlock>
-          {`const about = {
+          {`let about = {
   name: 'About',
   path: 'about',
   resolve({ name, params, partials, location }) {
@@ -275,7 +275,7 @@ export function RoutePropertiesAPI() {
 
               <CodeBlock>
                 {`// attach resolved data to the response
-const user = {
+let user = {
   name: 'User',
   path: ':id',
   resolve({ params, location }) {
@@ -308,7 +308,7 @@ const user = {
 
               <CodeBlock>
                 {`// check if any of a route's resolve functions threw
-const user = {
+let user = {
   name: 'User',
   path: ':id',
   resolve({ params, location }) {
@@ -345,7 +345,7 @@ const user = {
 
             <CodeBlock>
               {`import Home from "./components/Home";
-const routes = prepareRoutes([
+let routes = prepareRoutes([
   {
     name: "Home",
     path: "",
@@ -515,7 +515,7 @@ const routes = prepareRoutes([
         </p>
 
         <CodeBlock>
-          {`const routes = prepareRoutes([
+          {`let routes = prepareRoutes([
   {
     name: 'Number',
     path: 'number/:num',
@@ -535,7 +535,7 @@ const routes = prepareRoutes([
         </p>
 
         <CodeBlock>
-          {`const routes = prepareRoutes([
+          {`let routes = prepareRoutes([
   {
     name: 'Not Found',
     path: '(.*)',
@@ -623,7 +623,7 @@ const routes = prepareRoutes([
         </p>
 
         <CodeBlock>
-          {`const routes = prepareRoutes([
+          {`let routes = prepareRoutes([
   {
     name: 'A Route',
     path: 'a-route',

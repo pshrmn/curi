@@ -4,14 +4,14 @@ import styled from "@emotion/styled";
 
 import { font } from "../../constants/styles";
 
-const StyledSelect = styled("select")`
+let StyledSelect = styled("select")`
   font-size: 20px;
   font-family: ${font.serif};
   margin: 5px 0;
 `;
 
 export default function Version({ versions, major, params }) {
-  const router = useRouter();
+  let router = useRouter();
 
   // only render dropdown for packages with multiple versions
   if (Object.keys(versions).length > 1) {
@@ -21,7 +21,7 @@ export default function Version({ versions, major, params }) {
         <StyledSelect
           value={major}
           onChange={e => {
-            const url = router.url({
+            let url = router.url({
               name: "Package",
               params: { ...params, version: e.target.value }
             });

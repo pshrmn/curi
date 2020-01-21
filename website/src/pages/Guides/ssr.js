@@ -10,68 +10,68 @@ import {
   Cmp
 } from "../../components/guide/common";
 
-const meta = {
+let meta = {
   title: "Server-Side Rendering"
 };
 
-const reuseMeta = {
+let reuseMeta = {
   title: "Reusing Code",
   hash: "reuse"
 };
 
-const frameworkMeta = {
+let frameworkMeta = {
   title: "Web Framework",
   hash: "framework"
 };
 
-const clientMeta = {
+let clientMeta = {
   title: "Client-Side Routes",
   hash: "client-side-routes"
 };
-const staticMeta = {
+let staticMeta = {
   title: "Static Assets",
   hash: "static-assets"
 };
-const orderMeta = {
+let orderMeta = {
   title: "Path Order",
   hash: "path-order"
 };
-const requestMeta = {
+let requestMeta = {
   title: "Request Matching",
   hash: "request-matching",
   children: [clientMeta, staticMeta, orderMeta]
 };
 
-const handlerMeta = {
+let handlerMeta = {
   title: "Render Handler",
   hash: "handler"
 };
 
-const historyMeta = {
+let historyMeta = {
   title: "History",
   hash: "history"
 };
-const routesMeta = {
+let routesMeta = {
   title: "Routes",
   hash: "routes"
 };
-const routerMeta = {
+let routerMeta = {
   title: "Router",
   hash: "router",
   children: [historyMeta, routesMeta]
 };
 
-const redirectMeta = {
+let redirectMeta = {
   title: "Redirect Responses",
   hash: "redirect-responses"
 };
-const responseMeta = {
+let responseMeta = {
   title: "Handling the Response",
   hash: "handling-response",
   children: [redirectMeta]
 };
 
-const contents = [
+let contents = [
   reuseMeta,
   frameworkMeta,
   requestMeta,
@@ -159,9 +159,9 @@ function SSRGuide() {
 
         <CodeBlock>
           {`// server.js
-const express = require("express");
+let express = require("express");
 
-const app = express();
+let app = express();
 
 // ...
 
@@ -281,7 +281,7 @@ function renderHandler(req, res) {
 }
 
 // server.js
-const renderHandler = require("./renderer");
+let renderHandler = require("./renderer");
 
 app.get("*", renderHandler)`}
         </CodeBlock>
@@ -295,7 +295,7 @@ app.get("*", renderHandler)`}
         </Note>
 
         <CodeBlock>
-          {`const index = path.join(__dirname, "public", "index.html");
+          {`let index = path.join(__dirname, "public", "index.html");
 
 function renderHandler(req, res) {
   res.sendFile(index);
@@ -330,10 +330,10 @@ function renderHandler(req, res) {
 import { createRouter } from "@curi/router";
 import { createReusable } from "@hickory/in-memory";
 
-const reusable = createReusable();
+let reusable = createReusable();
 
 function handler(req, res) {
-  const router = createRouter(reusable, routes, {
+  let router = createRouter(reusable, routes, {
     history: { location: req.url }
   });
   router.once(({ response }) => {
@@ -377,7 +377,7 @@ function handler(req, res) {
 import { createRouter } from "@curi/router";
 import { createReusable } from "@hickory/in-memory";
 
-const reusable = createReusable();`}
+let reusable = createReusable();`}
           </CodeBlock>
 
           <p>
@@ -387,7 +387,7 @@ const reusable = createReusable();`}
 
           <CodeBlock>
             {`function handler(req, res) {
-  const router = createRouter(reusable, routes, {
+  let router = createRouter(reusable, routes, {
     history: { location: req.url }
   });
   // ...
@@ -460,7 +460,7 @@ export default prepareRoutes([
 
         <CodeBlock data-line="5-7">
           {`function renderHandler(req, res) {
-  const router = createRouter(reusable, routes, {
+  let router = createRouter(reusable, routes, {
     history: { location: req.url }
   });
   router.once(({ response }) => {
@@ -495,12 +495,12 @@ export default prepareRoutes([
 import { createRouterComponent } from "@curi/react-dom";
 
 function renderHandler(req, res) {
-  const router = createRouter(reusable, routes, {
+  let router = createRouter(reusable, routes, {
     history: { location: req.url }
   });
   router.once(({ response }) => {
-    const Router = createRouterComponent(router);
-    const markup = renderToString(
+    let Router = createRouterComponent(router);
+    let markup = renderToString(
       <Router>
         <App />
       </Router>
@@ -561,17 +561,17 @@ function insertMarkup(markup, title) {
 }
 
 function renderHandler(req, res) {
-  const router = createRouter(reusable, routes, {
+  let router = createRouter(reusable, routes, {
     history: { location: req.url }
   });
   router.once(({ response }) => {
-    const Router = createRouterComponent(router);
-    const markup = renderToString(
+    let Router = createRouterComponent(router);
+    let markup = renderToString(
       <Router>
         <App />
       </Router>
     );
-    const html = insertMarkup(markup, response.meta.title);
+    let html = insertMarkup(markup, response.meta.title);
     res.send(html);
   });
 }`}
@@ -599,7 +599,7 @@ function renderHandler(req, res) {
 import { createRouterComponent } from "@curi/react-dom";
 
 function renderHandler(req, res) {
-  const router = createRouter(reusable, routes, {
+  let router = createRouter(reusable, routes, {
     history: { location: req.url }
   });
   router.once(({ response }) => {

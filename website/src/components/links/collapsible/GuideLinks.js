@@ -4,7 +4,7 @@ import GUIDE_API from "../../../constants/guides";
 import ActiveLink from "../ActiveLink";
 import CollapsibleGroup from "./CollapsibleGroup";
 
-const GroupGuides = ({ guides }) => (
+let GroupGuides = ({ guides }) => (
   <ul className="link-list">
     {guides.map(g => (
       <li key={g.name} className="solo">
@@ -17,7 +17,7 @@ const GroupGuides = ({ guides }) => (
 );
 
 function GuideLinks() {
-  const groups = GUIDE_API.grouped();
+  let groups = GUIDE_API.grouped();
   return Object.keys(groups).map(title => (
     <CollapsibleGroup key={title} title={title} initial={false}>
       <GroupGuides guides={groups[title]} />

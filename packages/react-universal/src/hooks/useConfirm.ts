@@ -4,7 +4,7 @@ import useRouter from "./useRouter";
 import { ConfirmationFunction } from "@hickory/root";
 
 export default function useConfirm(fn?: ConfirmationFunction) {
-  const router = useRouter();
+  let router = useRouter();
   React.useEffect(() => {
     router.history.confirm(fn);
 

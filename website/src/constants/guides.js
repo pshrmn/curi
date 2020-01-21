@@ -1,4 +1,4 @@
-const guides = [
+let guides = [
   {
     name: "Installation",
     slug: "installation",

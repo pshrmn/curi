@@ -7,7 +7,7 @@ import {
   Note
 } from "../../../../../components/package/common";
 
-export const meta = {
+export let meta = {
   title: "once",
   hash: "once"
 };
@@ -39,20 +39,20 @@ export function OnceAPI() {
       <CodeBlock>
         {`import { once } from "@curi/helpers";
 
-const cachedGetItems = once(() => api.getItems());
+let cachedGetItems = once(() => api.getItems());
 
-const routes = prepareRoutes([
+let routes = prepareRoutes([
   {
     name: "Menu",
     path: "menu",
     resolve() {
       // this function will be called every time the user
       // navigates to the "Menu" route
-      const nonCached = api.getItems();
+      let nonCached = api.getItems();
 
       // this function is only called the first time the
       // user navigates to the "Menu" route
-      const cached = cachedGetItems();
+      let cached = cachedGetItems();
       return Promise.all([nonCached, cached]);
     }
   }

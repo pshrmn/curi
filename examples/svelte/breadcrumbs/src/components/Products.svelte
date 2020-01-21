@@ -18,10 +18,10 @@
   import Link from "@curi/svelte/components/Link.svelte";
   import title from "../titleInteraction";
 
-  const router = getRouter();
-  const response = getResponse();
+  let router = getRouter();
+  let response = getResponse();
 
-  const categoryRoute = router.route("Category");
+  let categoryRoute = router.route("Category");
 
   $: categories = $response.data.categories;
 </script>

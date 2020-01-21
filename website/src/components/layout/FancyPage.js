@@ -4,19 +4,19 @@ import styled from "@emotion/styled";
 import Page from "./TwoColumnPage";
 import { screen, color } from "../../constants/styles";
 
-const StyledPage = styled(Page)`
+let StyledPage = styled(Page)`
   @media only screen and (min-width: ${screen.medium}) {
     max-width: 100vw;
   }
 `;
 
-const StyledBase = styled("article")`
+let StyledBase = styled("article")`
   @media only screen and (min-width: ${screen.medium}) {
     margin-left: 275px;
   }
 `;
 
-const StyledMenuWrapper = styled("div")`
+let StyledMenuWrapper = styled("div")`
   display: none;
 
   @media only screen and (min-width: ${screen.medium}) {

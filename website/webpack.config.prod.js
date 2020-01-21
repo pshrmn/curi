@@ -1,6 +1,6 @@
-const configBase = require("./webpack.config.base.js");
+let configBase = require("./webpack.config.base.js");
 
-const config = {
+let config = {
   ...configBase,
   mode: "production",
   entry: {

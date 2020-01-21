@@ -6,8 +6,8 @@ import Main from "./blocks/Main";
 import Menu from "./menu/Menu";
 
 export default function App() {
-  const { response } = useResponse();
-  const { body: Body } = response;
+  let { response } = useResponse();
+  let { body: Body } = response;
   let contents;
   if (response.data && response.data.content) {
     contents = response.data.content.contents;

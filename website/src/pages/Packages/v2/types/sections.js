@@ -14,7 +14,7 @@ export default {
 
 import { CuriRouter } from "@curi/types";
 
-const router: CuriRouter = createRouter(browser, routes);`}
+let router: CuriRouter = createRouter(browser, routes);`}
       </CodeBlock>
     </About>
   ),

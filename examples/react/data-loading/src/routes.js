@@ -24,7 +24,7 @@ export default prepareRoutes([
       return fakeAPI(params.id);
     },
     respond({ error, resolved }) {
-      const resp = {
+      let resp = {
         body: Album
       };
       if (error) {

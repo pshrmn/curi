@@ -6,7 +6,7 @@ import styled from "@emotion/styled";
 
 import { color, screen } from "../../constants/styles";
 
-const sectionCSS = css`
+let sectionCSS = css`
   margin-top: 15px;
 
   p {
@@ -27,11 +27,11 @@ const sectionCSS = css`
   }
 `;
 
-const StyledSection = styled("section")`
+let StyledSection = styled("section")`
   ${sectionCSS}
 `;
 
-const StyledAside = styled("aside")`
+let StyledAside = styled("aside")`
   ${sectionCSS}
 
   padding: 5px 10px;
@@ -44,7 +44,7 @@ const StyledAside = styled("aside")`
   }
 `;
 
-const tagCSS = css`
+let tagCSS = css`
   .header-link {
     text-decoration: none;
 

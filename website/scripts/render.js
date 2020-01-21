@@ -1,17 +1,17 @@
-const React = require("react");
-const { renderToString } = require("react-dom/server");
-const { createRouterComponent } = require("@curi/react-dom");
+let React = require("react");
+let { renderToString } = require("react-dom/server");
+let { createRouterComponent } = require("@curi/react-dom");
 
-const insert = require("./html");
-const App = require("../src/components/App").default;
+let insert = require("./html");
+let App = require("../src/components/App").default;
 
 module.exports = function render(emitted) {
-  const { response, router } = emitted;
+  let { response, router } = emitted;
   if (response.redirect) {
     throw new Error(`Skipping rendering ${response.location.pathname}`);
   }
-  const Router = createRouterComponent(router);
-  const html = renderToString(
+  let Router = createRouterComponent(router);
+  let html = renderToString(
     React.createElement(Router, null, React.createElement(App))
   );
   return insert(html, response.meta.title, response.meta.description);

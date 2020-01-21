@@ -6,6 +6,6 @@
  * a string.
  */
 export default function title(route, params) {
-  const fn = route.extra && route.extra.title;
+  let fn = route.extra && route.extra.title;
   return fn ? fn(params) : route.name;
 }

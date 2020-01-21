@@ -1,9 +1,9 @@
-const { uglify } = require("rollup-plugin-uglify");
-const replace = require("rollup-plugin-replace");
-const commonjs = require("rollup-plugin-commonjs");
-const resolve = require("rollup-plugin-node-resolve");
-const { sizeSnapshot } = require("rollup-plugin-size-snapshot");
-const typescript = require("rollup-plugin-typescript2");
+let { uglify } = require("rollup-plugin-uglify");
+let replace = require("rollup-plugin-replace");
+let commonjs = require("rollup-plugin-commonjs");
+let resolve = require("rollup-plugin-node-resolve");
+let { sizeSnapshot } = require("rollup-plugin-size-snapshot");
+let typescript = require("rollup-plugin-typescript2");
 
 exports.replaceWithProduction = replace({
   "process.env.NODE_ENV": `"production"`

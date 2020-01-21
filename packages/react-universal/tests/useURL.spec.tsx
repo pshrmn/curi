@@ -9,7 +9,7 @@ import { createRouterComponent, useURL } from "@curi/react-universal";
 
 describe("useURL", () => {
   let node;
-  const routes = prepareRoutes([
+  let routes = prepareRoutes([
     { name: "Home", path: "" },
     { name: "User", path: "u/:id" },
     { name: "Catch All", path: "(.*)" }
@@ -25,10 +25,10 @@ describe("useURL", () => {
 
   describe("pathname", () => {
     it("returns route's pathname", () => {
-      const router = createRouter(inMemory, routes);
-      const Router = createRouterComponent(router);
+      let router = createRouter(inMemory, routes);
+      let Router = createRouterComponent(router);
       function App() {
-        const result = useURL({ name: "Home" });
+        let result = useURL({ name: "Home" });
         expect(result).toBe("/");
         return null;
       }
@@ -41,10 +41,10 @@ describe("useURL", () => {
     });
 
     it("returns route's pathname using params", () => {
-      const router = createRouter(inMemory, routes);
-      const Router = createRouterComponent(router);
+      let router = createRouter(inMemory, routes);
+      let Router = createRouterComponent(router);
       function App() {
-        const result = useURL({ name: "User", params: { id: "1" } });
+        let result = useURL({ name: "User", params: { id: "1" } });
         expect(result).toBe("/u/1");
         return null;
       }
@@ -57,14 +57,14 @@ describe("useURL", () => {
     });
 
     it("has no pathname component if name is not provided", () => {
-      const router = createRouter(inMemory, routes, {
+      let router = createRouter(inMemory, routes, {
         history: {
           locations: [{ url: "/example" }]
         }
       });
-      const Router = createRouterComponent(router);
+      let Router = createRouterComponent(router);
       function App() {
-        const result = useURL({ hash: "test" });
+        let result = useURL({ hash: "test" });
         expect(result).toBe("#test");
         return null;
       }
@@ -79,10 +79,10 @@ describe("useURL", () => {
 
   describe("query", () => {
     it("returns provided query", () => {
-      const router = createRouter(inMemory, routes);
-      const Router = createRouterComponent(router);
+      let router = createRouter(inMemory, routes);
+      let Router = createRouterComponent(router);
       function App() {
-        const result = useURL({ name: "Home", query: "hi=yo" });
+        let result = useURL({ name: "Home", query: "hi=yo" });
         expect(result).toBe("/?hi=yo");
         return null;
       }
@@ -95,7 +95,7 @@ describe("useURL", () => {
     });
 
     it("works with custom history parse/stringifiers", () => {
-      const router = createRouter(inMemory, routes, {
+      let router = createRouter(inMemory, routes, {
         history: {
           query: {
             parse: qs.parse,
@@ -103,10 +103,10 @@ describe("useURL", () => {
           }
         }
       });
-      const Router = createRouterComponent(router);
+      let Router = createRouterComponent(router);
 
       function App() {
-        const result = useURL({ name: "Home", query: { hi: "yo" } });
+        let result = useURL({ name: "Home", query: { hi: "yo" } });
         expect(result).toBe("/?hi=yo");
         return null;
       }
@@ -121,10 +121,10 @@ describe("useURL", () => {
 
   describe("hash", () => {
     it("returns provided hash", () => {
-      const router = createRouter(inMemory, routes);
-      const Router = createRouterComponent(router);
+      let router = createRouter(inMemory, routes);
+      let Router = createRouterComponent(router);
       function App() {
-        const result = useURL({ name: "Home", hash: "test" });
+        let result = useURL({ name: "Home", hash: "test" });
         expect(result).toBe("/#test");
         return null;
       }

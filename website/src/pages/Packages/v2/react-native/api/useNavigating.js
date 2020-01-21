@@ -7,7 +7,7 @@ import {
   Note
 } from "../../../../../components/package/common";
 
-export const meta = {
+export let meta = {
   title: "useNavigating",
   hash: "useNavigating"
 };
@@ -30,7 +30,7 @@ export function UseNavigatingAPI() {
         {`import { useNavigating } from "@curi/react-native";
 
 function CancelNavigation() {
-  const cancel = useNavigating();
+  let cancel = useNavigating();
 
   return cancel
     ? <button onClick={cancel}>Cancel</button>

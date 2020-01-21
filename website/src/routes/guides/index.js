@@ -21,14 +21,14 @@ export default {
       name: "Guide",
       path: ":slug/",
       resolve({ params }) {
-        const guide = GUIDE_API.find(params.slug);
-        const content = guide
+        let guide = GUIDE_API.find(params.slug);
+        let content = guide
           ? guide.import().catch(catchImportError(`guide: ${params.slug}`))
           : Guide404;
         return Promise.all([guide, content]);
       },
       respond: ({ resolved }) => {
-        const [guide, content] = resolved;
+        let [guide, content] = resolved;
         return {
           body: Guide,
           data: {

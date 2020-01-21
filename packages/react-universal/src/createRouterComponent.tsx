@@ -15,13 +15,11 @@ export default function createRouterComponent(
   }
 
   return function Router(props: RouterProps) {
-    const [response, setResponse] = React.useState<ResponseAndNav>(
-      initialState
-    );
+    let [response, setResponse] = React.useState<ResponseAndNav>(initialState);
 
     React.useEffect(() => {
       let removed = false;
-      const stop = router.observe(
+      let stop = router.observe(
         ({ response, navigation }) => {
           if (!removed) {
             setResponse({ response, navigation });

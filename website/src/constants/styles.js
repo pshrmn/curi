@@ -1,4 +1,4 @@
-export const color = {
+export let color = {
   purple: "#222233",
 
   orange: "#ffb74d",
@@ -25,10 +25,10 @@ export const color = {
   buttonRed: "#ef9a9a"
 };
 
-export const screen = {
+export let screen = {
   medium: "751px"
 };
 
-export const font = {
+export let font = {
   serif: `"Zilla Slab", serif`
 };

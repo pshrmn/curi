@@ -8,9 +8,9 @@ export default function scroll(): Observer {
 
     // wait until after the re-render to scroll
     setTimeout(() => {
-      const { hash } = response.location;
+      let { hash } = response.location;
       if (hash !== "") {
-        const element = document.getElementById(hash);
+        let element = document.getElementById(hash);
         if (element && element.scrollIntoView) {
           element.scrollIntoView();
           return;

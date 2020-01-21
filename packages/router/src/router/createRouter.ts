@@ -39,13 +39,13 @@ export default function createRouter<O = HistoryOptions>(
   let latestResponse: Response;
   let latestNavigation: Navigation;
 
-  const history = historyConstructor((pendingNav: PendingNavigation) => {
-    const navigation: Navigation = {
+  let history = historyConstructor((pendingNav: PendingNavigation) => {
+    let navigation: Navigation = {
       action: pendingNav.action,
       previous: latestResponse
     };
 
-    const matched = routes.match(pendingNav.location);
+    let matched = routes.match(pendingNav.location);
     if (!matched) {
       if (process.env.NODE_ENV !== "production") {
         console.warn(
@@ -60,7 +60,7 @@ export default function createRouter<O = HistoryOptions>(
       finishAndResetNavCallbacks();
       return;
     }
-    const { route, match } = matched;
+    let { route, match } = matched;
     if (!isAsyncRoute(route)) {
       finalizeResponseAndEmit(route, match, pendingNav, navigation, null);
     } else {
@@ -95,7 +95,7 @@ export default function createRouter<O = HistoryOptions>(
   ) {
     asyncNavComplete();
     pending.finish();
-    const response = finishResponse(
+    let response = finishResponse(
       route,
       match,
       resolved,
@@ -106,7 +106,7 @@ export default function createRouter<O = HistoryOptions>(
     emitImmediate(response, navigation);
   }
 
-  const { invisibleRedirects = false } = options;
+  let { invisibleRedirects = false } = options;
 
   function emitImmediate(response: Response, navigation: Navigation) {
     if (
@@ -116,7 +116,7 @@ export default function createRouter<O = HistoryOptions>(
     ) {
       latestResponse = response;
       latestNavigation = navigation;
-      const emit = { response, navigation, router };
+      let emit = { response, navigation, router };
       callObservers(emit);
       callOneTimersAndSideEffects(emit);
     }
@@ -149,10 +149,10 @@ export default function createRouter<O = HistoryOptions>(
   /* router.observer & router.once */
 
   let observers: Array<Observer> = [];
-  const oneTimers: Array<Observer> = [];
+  let oneTimers: Array<Observer> = [];
 
   function observe(fn: Observer, options?: ResponseHandlerOptions) {
-    const { initial = true } = options || {};
+    let { initial = true } = options || {};
 
     observers.push(fn);
     if (latestResponse && initial) {
@@ -170,7 +170,7 @@ export default function createRouter<O = HistoryOptions>(
   }
 
   function once(fn: Observer, options?: ResponseHandlerOptions) {
-    const { initial = true } = options || {};
+    let { initial = true } = options || {};
 
     if (latestResponse && initial) {
       fn({
@@ -188,7 +188,7 @@ export default function createRouter<O = HistoryOptions>(
     let { name, params, hash, query } = details;
     let pathname;
     if (name) {
-      const route = router.route(name);
+      let route = router.route(name);
       if (route) {
         pathname = pathnameInteraction(route, params);
       }
@@ -271,7 +271,7 @@ export default function createRouter<O = HistoryOptions>(
     }
   }
 
-  const router: CuriRouter = {
+  let router: CuriRouter = {
     route: routes.route,
     history,
     external: options.external,

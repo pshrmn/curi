@@ -5,7 +5,7 @@ import { parse, stringify } from "qs";
 import routes from "./routes";
 import app from "./components/App.svelte";
 
-const router = createRouter(browser, routes, {
+let router = createRouter(browser, routes, {
   invisibleRedirects: true,
   history: {
     query: { parse, stringify }
@@ -17,5 +17,5 @@ const router = createRouter(browser, routes, {
   ]
 });
 
-const target = document.getElementById("root");
-const view = new app({ target, props: { router } });
+let target = document.getElementById("root");
+let view = new app({ target, props: { router } });

@@ -4,7 +4,7 @@ import styled from "@emotion/styled";
 import { Up, Down } from "../../svg";
 import { color, font } from "../../../constants/styles";
 
-const StyledList = styled("ul")`
+let StyledList = styled("ul")`
   a {
     color: ${color.purple};
   }
@@ -18,7 +18,7 @@ const StyledList = styled("ul")`
   }
 `;
 
-const StyledButton = styled("button")`
+let StyledButton = styled("button")`
   cursor: pointer;
   font-size: 24px;
   font-family: ${font.serif};
@@ -31,9 +31,9 @@ const StyledButton = styled("button")`
 `;
 
 export default function CollapsibleGroup(props) {
-  const [collapsed, setCollapsed] = React.useState(props.initial || false);
+  let [collapsed, setCollapsed] = React.useState(props.initial || false);
 
-  const { title, children } = props;
+  let { title, children } = props;
   return (
     <StyledList>
       <li>

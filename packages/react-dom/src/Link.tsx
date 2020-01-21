@@ -23,39 +23,42 @@ export type AsyncLinkProps = BaseLinkProps &
     children: NavigatingChildren;
   };
 
-export const Link = React.forwardRef(
-  (props: LinkProps, ref: React.Ref<any>) => {
-    const {
-      // url
-      name,
-      params,
-      query,
-      hash,
-      // navigation
-      state,
-      onNav,
-      method,
-      // props
-      children,
-      anchor: Anchor = "a",
-      ...rest
-    } = props;
-    const url = useURL({ name, params, query, hash });
-    const { eventHandler } = useNavigationHandler<
-      React.MouseEvent<HTMLElement>
-    >({ url, state, onNav, method, canNavigate, target: rest.target });
+export let Link = React.forwardRef((props: LinkProps, ref: React.Ref<any>) => {
+  let {
+    // url
+    name,
+    params,
+    query,
+    hash,
+    // navigation
+    state,
+    onNav,
+    method,
+    // props
+    children,
+    anchor: Anchor = "a",
+    ...rest
+  } = props;
+  let url = useURL({ name, params, query, hash });
+  let { eventHandler } = useNavigationHandler<React.MouseEvent<HTMLElement>>({
+    url,
+    state,
+    onNav,
+    method,
+    canNavigate,
+    target: rest.target
+  });
 
-    return (
-      <Anchor {...rest} onClick={eventHandler} href={url} ref={ref}>
-        {children}
-      </Anchor>
-    );
-  }
-);
+  return (
+    <Anchor {...rest} onClick={eventHandler} href={url} ref={ref}>
+      {children}
+    </Anchor>
+  );
+});
 
-export const AsyncLink = React.forwardRef(
+export let AsyncLink = React.forwardRef(
   (props: AsyncLinkProps, ref: React.Ref<any>) => {
-    const {
+    let {
       // url
       name,
       params,
@@ -70,8 +73,8 @@ export const AsyncLink = React.forwardRef(
       anchor: Anchor = "a",
       ...rest
     } = props;
-    const url = useURL({ name, params, query, hash });
-    const { eventHandler, navigating } = useStatefulNavigationHandler<
+    let url = useURL({ name, params, query, hash });
+    let { eventHandler, navigating } = useStatefulNavigationHandler<
       React.MouseEvent<HTMLElement>
     >({ url, state, onNav, method, canNavigate, target: rest.target });
 

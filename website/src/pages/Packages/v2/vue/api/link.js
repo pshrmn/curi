@@ -7,11 +7,11 @@ import {
   Cmp
 } from "../../../../../components/package/common";
 
-const propsMeta = {
+let propsMeta = {
   title: "Props",
   hash: "props"
 };
-export const meta = {
+export let meta = {
   title: "curi-link",
   hash: "link"
 };

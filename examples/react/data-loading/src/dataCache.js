@@ -1,4 +1,4 @@
-const cache = {};
+let cache = {};
 
 export default {
   set: (name, data) => {

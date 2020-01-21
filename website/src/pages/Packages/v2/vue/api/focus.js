@@ -8,11 +8,11 @@ import {
   Note
 } from "../../../../../components/package/common";
 
-const propertiesMeta = {
+let propertiesMeta = {
   title: "Properties",
   hash: "focus-properties"
 };
-export const meta = {
+export let meta = {
   title: "curi-focus",
   hash: "focus"
 };

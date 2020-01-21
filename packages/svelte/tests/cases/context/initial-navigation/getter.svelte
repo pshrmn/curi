@@ -3,7 +3,7 @@
 
   export let check;
 
-  const navigation = getNavigation();
+  let navigation = getNavigation();
 
   check($navigation);
 </script>

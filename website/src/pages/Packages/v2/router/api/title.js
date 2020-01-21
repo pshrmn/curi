@@ -7,7 +7,7 @@ import {
   Warning
 } from "../../../../../components/package/common";
 
-export const meta = {
+export let meta = {
   title: "title",
   hash: "title"
 };
@@ -31,7 +31,7 @@ export function TitleAPI() {
       <CodeBlock>
         {`import { createRouter, title } from '@curi/router';
 
-const router = createRouter(history, routes, {
+let router = createRouter(history, routes, {
   sideEffects: [
     title(({ response }) => {
       return \`\${response.meta.title} | My Site\`;

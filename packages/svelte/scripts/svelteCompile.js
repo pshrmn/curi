@@ -1,9 +1,9 @@
-const { compile } = require("svelte/compiler");
+let { compile } = require("svelte/compiler");
 
-const dev = process.env.TEST_ENV !== "cjs";
+let dev = process.env.TEST_ENV !== "cjs";
 
 exports.process = function process(src) {
-  const result = compile(src, {
+  let result = compile(src, {
     format: "cjs",
     dev
   });

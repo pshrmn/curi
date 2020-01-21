@@ -10,7 +10,7 @@
 
   let router = getRouter();
 
-  const canNavigate = (event, target) => {
+  let canNavigate = (event, target) => {
     return (
       !event.defaultPrevented &&
       !target &&
@@ -28,7 +28,7 @@
 
   let navigating = false;
 
-  const {
+  let {
     name: _name,
     params: _params,
     hash: _hash,

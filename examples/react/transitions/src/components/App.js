@@ -5,9 +5,9 @@ import { TransitionGroup, CSSTransition } from "react-transition-group";
 import NavLinks from "./NavLinks";
 
 export default function App() {
-  const { response } = useResponse();
+  let { response } = useResponse();
 
-  const { location, body: Body } = response;
+  let { location, body: Body } = response;
   return (
     <div>
       <NavLinks />

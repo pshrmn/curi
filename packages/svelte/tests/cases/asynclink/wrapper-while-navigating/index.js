@@ -12,7 +12,7 @@ function sleep(ms) {
   });
 }
 
-const routes = prepareRoutes([
+let routes = prepareRoutes([
   { name: "Home", path: "" },
   {
     name: "Test",
@@ -28,10 +28,10 @@ const routes = prepareRoutes([
   { name: "Not Found", path: "(.*)" }
 ]);
 
-const router = createRouter(inMemory, routes);
+let router = createRouter(inMemory, routes);
 
 export default function render(done) {
-  const target = document.createElement("div");
+  let target = document.createElement("div");
   new app.default({ target, props: { router } });
 
   router.once(
@@ -45,7 +45,7 @@ export default function render(done) {
     { initial: false }
   );
 
-  const a = target.querySelector("a");
+  let a = target.querySelector("a");
   expect(cleanText(a.textContent)).toBe("false Test");
 
   a.click();

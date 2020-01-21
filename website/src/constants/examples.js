@@ -1,4 +1,4 @@
-const examples = [
+let examples = [
   {
     name: "Basic",
     slug: "basic",

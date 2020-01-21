@@ -7,7 +7,7 @@ import { CuriPlugin } from "@curi/vue";
 
 describe("<curi-link>", () => {
   let Vue, node, router, wrapper;
-  const routes = prepareRoutes([
+  let routes = prepareRoutes([
     { name: "Place", path: "place/:name" },
     { name: "Catch All", path: "(.*)" }
   ]);
@@ -39,7 +39,7 @@ describe("<curi-link>", () => {
           </div>
         `
       });
-      const a = document.querySelector("a");
+      let a = document.querySelector("a");
       expect(a.tagName).toBe("A");
     });
 
@@ -59,13 +59,13 @@ describe("<curi-link>", () => {
           </div>
         `
       });
-      const a = document.querySelector("a");
+      let a = document.querySelector("a");
       expect(a.getAttribute("href")).toBe("/place/Jamaica?two=2#island-life");
     });
 
     it("has no pathname component if name is not provided", () => {
-      const Vue = createLocalVue();
-      const router = createRouter(inMemory, routes, {
+      let Vue = createLocalVue();
+      let router = createRouter(inMemory, routes, {
         history: {
           locations: [{ url: "/place/somewhere" }]
         }
@@ -80,7 +80,7 @@ describe("<curi-link>", () => {
           </div>
         `
       });
-      const a = document.querySelector("a");
+      let a = document.querySelector("a");
       expect(a.getAttribute("href")).toBe("#test");
     });
 
@@ -95,7 +95,7 @@ describe("<curi-link>", () => {
           </div>
         `
       });
-      const a = document.querySelector("a");
+      let a = document.querySelector("a");
       expect(a.textContent).toBe("Kokomo");
     });
 
@@ -114,7 +114,7 @@ describe("<curi-link>", () => {
           </div>
         `
       });
-      const a = document.querySelector("a");
+      let a = document.querySelector("a");
       expect(a.classList.contains("hooray")).toBe(true);
     });
   });
@@ -146,7 +146,7 @@ describe("<curi-link>", () => {
           </div>
         `
       });
-      const a = document.querySelector("a");
+      let a = document.querySelector("a");
 
       expect(mockNavigate.mock.calls.length).toBe(0);
       a.dispatchEvent(
@@ -176,9 +176,9 @@ describe("<curi-link>", () => {
           }
         }
       });
-      const a = document.querySelector("a");
+      let a = document.querySelector("a");
       expect(mockNavigate.mock.calls.length).toBe(0);
-      const event = new MouseEvent("click", {
+      let event = new MouseEvent("click", {
         button: 0,
         cancelable: true
       });
@@ -197,11 +197,11 @@ describe("<curi-link>", () => {
           </div>
         `
       });
-      const a = document.querySelector("a");
+      let a = document.querySelector("a");
       expect(mockNavigate.mock.calls.length).toBe(0);
-      const modifiers = ["metaKey", "altKey", "ctrlKey", "shiftKey"];
+      let modifiers = ["metaKey", "altKey", "ctrlKey", "shiftKey"];
       modifiers.forEach(m => {
-        const event = new MouseEvent("click", {
+        let event = new MouseEvent("click", {
           [m]: true,
           button: 0
         });
@@ -221,9 +221,9 @@ describe("<curi-link>", () => {
           </div>
         `
       });
-      const a = document.querySelector("a");
+      let a = document.querySelector("a");
       expect(mockNavigate.mock.calls.length).toBe(0);
-      const event = new MouseEvent("click", {
+      let event = new MouseEvent("click", {
         button: 1
       });
       a.dispatchEvent(event);
@@ -247,8 +247,8 @@ describe("<curi-link>", () => {
             }
           }
         });
-        const a = document.querySelector("a");
-        const event = new MouseEvent("click", {
+        let a = document.querySelector("a");
+        let event = new MouseEvent("click", {
           button: 0
         });
         a.dispatchEvent(event);
@@ -271,8 +271,8 @@ describe("<curi-link>", () => {
             }
           }
         });
-        const a = document.querySelector("a");
-        const event = new MouseEvent("click", {
+        let a = document.querySelector("a");
+        let event = new MouseEvent("click", {
           button: 0,
           cancelable: true
         });

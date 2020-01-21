@@ -28,43 +28,41 @@ function canNavigate(event: GestureResponderEvent) {
   return !event.defaultPrevented;
 }
 
-export const Link = React.forwardRef(
-  (props: LinkProps, ref: React.Ref<any>) => {
-    const {
-      // url
-      name,
-      params,
-      query,
-      hash,
-      // navigation
-      state,
-      onNav,
-      method,
-      // props
-      children,
-      anchor: Anchor = TouchableHighlight,
-      ...rest
-    } = props;
-    const url = useURL({ name, params, query, hash });
-    const { eventHandler } = useNavigationHandler<GestureResponderEvent>({
-      url,
-      state,
-      onNav,
-      method,
-      canNavigate
-    });
+export let Link = React.forwardRef((props: LinkProps, ref: React.Ref<any>) => {
+  let {
+    // url
+    name,
+    params,
+    query,
+    hash,
+    // navigation
+    state,
+    onNav,
+    method,
+    // props
+    children,
+    anchor: Anchor = TouchableHighlight,
+    ...rest
+  } = props;
+  let url = useURL({ name, params, query, hash });
+  let { eventHandler } = useNavigationHandler<GestureResponderEvent>({
+    url,
+    state,
+    onNav,
+    method,
+    canNavigate
+  });
 
-    return (
-      <Anchor {...rest} onPress={eventHandler} ref={ref}>
-        {children}
-      </Anchor>
-    );
-  }
-);
+  return (
+    <Anchor {...rest} onPress={eventHandler} ref={ref}>
+      {children}
+    </Anchor>
+  );
+});
 
-export const AsyncLink = React.forwardRef(
+export let AsyncLink = React.forwardRef(
   (props: AsyncLinkProps, ref: React.Ref<any>) => {
-    const {
+    let {
       // url
       name,
       params,
@@ -79,8 +77,8 @@ export const AsyncLink = React.forwardRef(
       anchor: Anchor = TouchableHighlight,
       ...rest
     } = props;
-    const url = useURL({ name, params, query, hash });
-    const { eventHandler, navigating } = useStatefulNavigationHandler<
+    let url = useURL({ name, params, query, hash });
+    let { eventHandler, navigating } = useStatefulNavigationHandler<
       GestureResponderEvent
     >({ url, state, onNav, method, canNavigate });
 

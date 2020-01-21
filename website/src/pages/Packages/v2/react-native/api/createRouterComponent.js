@@ -8,15 +8,15 @@ import {
   Note
 } from "../../../../../components/package/common";
 
-const argumentsMeta = {
+let argumentsMeta = {
   title: "Arguments",
   hash: "createRouterComponent-arguments"
 };
-const returnMeta = {
+let returnMeta = {
   title: "Return Value",
   hash: "createRouterComponent-return"
 };
-export const meta = {
+export let meta = {
   title: "createRouterComponent",
   hash: "createRouterComponent"
 };
@@ -31,8 +31,8 @@ export function CreateRouterComponentAPI() {
       <CodeBlock lang="jsx">
         {`import { createRouterComponent } from '@curi/react-native';
 
-const router = createRouter(browser, routes);
-const Router = createRouterComponent(router);`}
+let router = createRouter(browser, routes);
+let Router = createRouterComponent(router);`}
       </CodeBlock>
 
       <Note>

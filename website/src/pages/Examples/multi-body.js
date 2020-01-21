@@ -7,20 +7,20 @@ import {
   IJS
 } from "../../components/example/common";
 
-const meta = {
+let meta = {
   title: "Multi-body Responses"
 };
 
-const explanationMeta = {
+let explanationMeta = {
   title: "Explanation",
   hash: "explanation"
 };
-const demoMeta = {
+let demoMeta = {
   title: "Live Demo",
   hash: "demo"
 };
 
-const contents = [explanationMeta, demoMeta];
+let contents = [explanationMeta, demoMeta];
 
 function MultiBodyExample() {
   return (

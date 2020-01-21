@@ -4,9 +4,9 @@ import { useResponse } from "@curi/react-dom";
 import Cancel from "./Cancel";
 
 export default function App() {
-  const { response } = useResponse();
+  let { response } = useResponse();
 
-  const { body: Body } = response;
+  let { body: Body } = response;
 
   return (
     <React.Fragment>

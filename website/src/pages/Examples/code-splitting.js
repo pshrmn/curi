@@ -9,16 +9,16 @@ import {
   onGitHubMeta
 } from "../../components/example/common";
 
-const meta = {
+let meta = {
   title: "Code Splitting"
 };
 
-const explanationMeta = {
+let explanationMeta = {
   title: "Explanation",
   hash: "explanation"
 };
 
-const contents = [explanationMeta, onGitHubMeta];
+let contents = [explanationMeta, onGitHubMeta];
 
 function CodeSplittingExample() {
   return (

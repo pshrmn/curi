@@ -4,8 +4,8 @@ import Breadcrumbs from "./Breadcrumbs";
 import title from "../titleInteraction";
 
 function Category({ response: { params, data: products } }) {
-  const router = useRouter();
-  const productRoute = router.route("Product");
+  let router = useRouter();
+  let productRoute = router.route("Product");
   return (
     <div>
       <Breadcrumbs name="Category" params={params} />
@@ -13,7 +13,7 @@ function Category({ response: { params, data: products } }) {
       <p>List of products</p>
       <ul>
         {products.map(p => {
-          const productParams = { ...params, productID: p.id };
+          let productParams = { ...params, productID: p.id };
           return (
             <li key={p.id}>
               <Link name="Product" params={productParams}>

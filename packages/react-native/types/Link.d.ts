@@ -11,10 +11,10 @@ export declare type LinkProps = BaseLinkProps & NavigationHookProps<GestureRespo
 export declare type AsyncLinkProps = BaseLinkProps & NavigationHookProps<GestureResponderEvent> & {
     children: NavigatingChildren;
 };
-export declare const Link: React.ForwardRefExoticComponent<BaseLinkProps & NavigationHookProps<GestureResponderEvent> & {
+export declare let Link: React.ForwardRefExoticComponent<BaseLinkProps & NavigationHookProps<GestureResponderEvent> & {
     children: React.ReactNode;
 } & React.RefAttributes<any>>;
-export declare const AsyncLink: React.ForwardRefExoticComponent<BaseLinkProps & NavigationHookProps<GestureResponderEvent> & {
+export declare let AsyncLink: React.ForwardRefExoticComponent<BaseLinkProps & NavigationHookProps<GestureResponderEvent> & {
     children: NavigatingChildren;
 } & React.RefAttributes<any>>;
 export {};

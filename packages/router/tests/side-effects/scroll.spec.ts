@@ -26,7 +26,7 @@ describe("scroll", () => {
   });
 
   it("does not scroll after pop", () => {
-    const sideEffect = scroll();
+    let sideEffect = scroll();
     sideEffect({
       response: { location: {} },
       navigation: {
@@ -40,7 +40,7 @@ describe("scroll", () => {
   });
 
   it("scrolls to 0 after push", () => {
-    const sideEffect = scroll();
+    let sideEffect = scroll();
     sideEffect({
       response: { location: {} },
       navigation: {
@@ -54,7 +54,7 @@ describe("scroll", () => {
   });
 
   it("scrolls to 0 after replace", () => {
-    const sideEffect = scroll();
+    let sideEffect = scroll();
     sideEffect({
       response: { location: {} },
       navigation: {
@@ -68,11 +68,11 @@ describe("scroll", () => {
   });
 
   it("scrolls to matching element if there is a location.hash", () => {
-    const div = document.createElement("div");
+    let div = document.createElement("div");
     div.setAttribute("id", "test");
     document.body.appendChild(div);
 
-    const sideEffect = scroll();
+    let sideEffect = scroll();
     sideEffect({
       response: { location: { hash: "test" } },
       navigation: {
@@ -89,7 +89,7 @@ describe("scroll", () => {
   });
 
   it("scrolls to top if there is location.hash but no matching element", () => {
-    const sideEffect = scroll();
+    let sideEffect = scroll();
     sideEffect({
       response: { location: { hash: "test" } },
       navigation: {
@@ -104,7 +104,7 @@ describe("scroll", () => {
   });
 
   it("scrolls to top if location.hash is empty string", () => {
-    const sideEffect = scroll();
+    let sideEffect = scroll();
     sideEffect({
       response: { location: { hash: "" } },
       navigation: {

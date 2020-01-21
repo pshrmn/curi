@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "@curi/react-dom";
 import styled from "@emotion/styled";
 
-const StyledMenu = styled("menu")`
+let StyledMenu = styled("menu")`
   width: 200px;
   padding: 0;
   margin: 0;

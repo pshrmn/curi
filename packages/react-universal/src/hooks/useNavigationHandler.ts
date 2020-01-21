@@ -22,7 +22,7 @@ function defaultCanNavigate() {
 export function useNavigationHandler<T extends React.BaseSyntheticEvent>(
   props: NavigationHookProps<T>
 ) {
-  const {
+  let {
     url,
     onNav,
     method,
@@ -30,8 +30,8 @@ export function useNavigationHandler<T extends React.BaseSyntheticEvent>(
     state,
     canNavigate = defaultCanNavigate
   } = props;
-  const router = useRouter();
-  const eventHandler = React.useCallback(
+  let router = useRouter();
+  let eventHandler = React.useCallback(
     function eventHandler(event: T) {
       if (onNav) {
         onNav(event);
@@ -53,7 +53,7 @@ export function useNavigationHandler<T extends React.BaseSyntheticEvent>(
 export function useStatefulNavigationHandler<
   T extends React.BaseSyntheticEvent
 >(props: NavigationHookProps<T>) {
-  const {
+  let {
     url,
     onNav,
     method,
@@ -61,9 +61,9 @@ export function useStatefulNavigationHandler<
     state,
     canNavigate = defaultCanNavigate
   } = props;
-  const router = useRouter();
-  const removeCallbacks = React.useRef(undefined);
-  const [navigating, setNavigating] = React.useState(false);
+  let router = useRouter();
+  let removeCallbacks = React.useRef(undefined);
+  let [navigating, setNavigating] = React.useState(false);
 
   React.useEffect(() => {
     return () => {
@@ -73,7 +73,7 @@ export function useStatefulNavigationHandler<
     };
   }, []);
 
-  const eventHandler = React.useCallback(
+  let eventHandler = React.useCallback(
     function eventHandler(event: T) {
       if (onNav) {
         onNav(event);
@@ -81,7 +81,7 @@ export function useStatefulNavigationHandler<
 
       if (canNavigate(event, target)) {
         event.preventDefault();
-        const done = () => {
+        let done = () => {
           removeCallbacks.current = undefined;
           setNavigating(false);
         };

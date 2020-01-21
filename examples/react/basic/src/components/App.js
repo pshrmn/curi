@@ -4,9 +4,9 @@ import { useResponse } from "@curi/react-dom";
 import NavLinks from "./NavLinks";
 
 export default function App() {
-  const { response } = useResponse();
+  let { response } = useResponse();
 
-  const { body: Body } = response;
+  let { body: Body } = response;
   return (
     <div>
       <NavLinks />

@@ -6,11 +6,11 @@ import {
   IJS
 } from "../../../../../components/package/common";
 
-const argumentsMeta = {
+let argumentsMeta = {
   title: "Arguments",
   hash: "useConfirm-arguments"
 };
-export const meta = {
+export let meta = {
   title: "useConfirm",
   hash: "useConfirm"
 };

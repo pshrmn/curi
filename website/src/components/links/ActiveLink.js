@@ -1,9 +1,9 @@
 import React from "react";
 import { useActive, Link } from "@curi/react-dom";
 
-const ActiveLink = React.forwardRef(
+let ActiveLink = React.forwardRef(
   ({ name, params, className = "", ...rest }, ref) => {
-    const active = useActive({ name, params, partial: true });
+    let active = useActive({ name, params, partial: true });
     return (
       <Link
         ref={ref}

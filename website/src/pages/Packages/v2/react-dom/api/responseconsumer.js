@@ -6,11 +6,11 @@ import {
   IJS
 } from "../../../../../components/package/common";
 
-const propsMeta = {
+let propsMeta = {
   title: "Props",
   hash: "ResponseConsumer-props"
 };
-export const meta = {
+export let meta = {
   title: "ResponseConsumer",
   hash: "ResponseConsumer"
 };

@@ -1,45 +1,44 @@
-const fs = require('fs');
-const path = require('path');
-const cp = require('child_process');
+let fs = require("fs");
+let path = require("path");
+let cp = require("child_process");
 
 function runCommand(folder, args) {
-  cp.spawn('npm', args, { env: process.env, cwd: folder, stdio: 'inherit' })
+  cp.spawn("npm", args, { env: process.env, cwd: folder, stdio: "inherit" });
 }
 
 function getPackages(category) {
-  const folder = path.join(__dirname, category);
-  return fs.readdirSync(folder)
-    .map(function (dir) {
-      const fullPath = path.join(folder, dir);
+  let folder = path.join(__dirname, category);
+  return fs
+    .readdirSync(folder)
+    .map(function(dir) {
+      let fullPath = path.join(folder, dir);
       // check for a package.json file
-      if (!fs.existsSync(path.join(fullPath, 'package.json'))) {
-        return
+      if (!fs.existsSync(path.join(fullPath, "package.json"))) {
+        return;
       }
       return fullPath;
     })
     .filter(function(pkg) {
       return pkg !== undefined;
-    })
+    });
 }
 
 function runCommandInCategory(category, args) {
-  const pkgs = getPackages(category);
-  
+  let pkgs = getPackages(category);
+
   pkgs.forEach(function(pkg) {
     runCommand(pkg, args);
   });
 }
 
-const CATEGORIES = ['react', 'vue', 'svelte', 'misc'];
-const category = process.argv[2];
-const args = process.argv.slice(3);
+let CATEGORIES = ["react", "vue", "svelte", "misc"];
+let category = process.argv[2];
+let args = process.argv.slice(3);
 
-if (category === 'all') {
+if (category === "all") {
   CATEGORIES.forEach(function(c) {
     runCommandInCategory(c, args);
   });
 } else {
   runCommandInCategory(category, args);
 }
-
-

@@ -3,7 +3,7 @@ import styled from "@emotion/styled";
 
 import { HashSection } from "../layout/Sections";
 
-const StyledAPIBlock = styled(HashSection)`
+let StyledAPIBlock = styled(HashSection)`
   .section {
     padding-left: 10px;
     margin-bottom: 5px;

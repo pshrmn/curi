@@ -5,5 +5,5 @@
   import { getResponse } from "@curi/svelte";
   import NavLink from './NavLinks.svelte';
 
-  const response = getResponse();
+  let response = getResponse();
 </script>

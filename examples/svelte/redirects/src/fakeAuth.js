@@ -1,6 +1,6 @@
 import { writable, get } from "svelte/store";
 
-const store = writable(false);
+let store = writable(false);
 
 export default {
   subscribe: store.subscribe,

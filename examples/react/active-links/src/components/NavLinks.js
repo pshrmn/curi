@@ -1,8 +1,8 @@
 import React from "react";
 import { useActive, Link } from "@curi/react-dom";
 
-const ActiveLink = ({ name, params, partial, className = "", ...rest }) => {
-  const active = useActive({ name, params, partial });
+let ActiveLink = ({ name, params, partial, className = "", ...rest }) => {
+  let active = useActive({ name, params, partial });
   return (
     <Link
       name={name}
@@ -13,7 +13,7 @@ const ActiveLink = ({ name, params, partial, className = "", ...rest }) => {
   );
 };
 
-const NavLinks = () => (
+let NavLinks = () => (
   <nav>
     <ul>
       <li>

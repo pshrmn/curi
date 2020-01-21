@@ -9,5 +9,5 @@ export interface LinkComponent extends Vue {
     url: string;
     click(e: MouseEvent): void;
 }
-declare const Link: ComponentOptions<LinkComponent>;
+declare let Link: ComponentOptions<LinkComponent>;
 export default Link;

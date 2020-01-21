@@ -8,24 +8,24 @@ import {
   IJS
 } from "../../components/guide/common";
 
-const meta = {
+let meta = {
   title: "Code Splitting"
 };
 
-const noSplitMeta = {
+let noSplitMeta = {
   title: "An app without code splitting",
   hash: "no-split"
 };
-const importMeta = {
+let importMeta = {
   title: "import() in resolve",
   hash: "import"
 };
-const otherMeta = {
+let otherMeta = {
   title: "Other Approaches",
   hash: "other"
 };
 
-const contents = [noSplitMeta, importMeta, otherMeta];
+let contents = [noSplitMeta, importMeta, otherMeta];
 
 function CodeSplittingGuide() {
   return (
@@ -60,7 +60,7 @@ function CodeSplittingGuide() {
 import Contact from './components/Contact';
 import ContactMethod from './components/ContactMethod';
 
-const routes = prepareRoutes([
+let routes = prepareRoutes([
   {
     name: 'Home',
     path: '',
@@ -125,7 +125,7 @@ const routes = prepareRoutes([
         </p>
 
         <CodeBlock>
-          {`const routes = prepareRoutes([
+          {`let routes = prepareRoutes([
   {
     name: 'Home',
     path: '',

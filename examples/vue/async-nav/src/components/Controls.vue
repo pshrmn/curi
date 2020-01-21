@@ -1,11 +1,11 @@
 <template>
   <div class="controls">
     <p>
-      Use the controls to adjust the data load time and to clear the cache
-      of loaded data.
+      Use the controls to adjust the data load time and to clear the cache of
+      loaded data.
     </p>
     <div>
-      <label htmlFor="delay">Delay: {{this.delay}}</label>
+      <label htmlFor="delay">Delay: {{ this.delay }}</label>
       <input
         type="range"
         :value="this.delay"
@@ -35,7 +35,7 @@ export default {
   },
   methods: {
     delayHandler(event) {
-      const value = delay(parseInt(event.target.value, 10));
+      let value = delay(parseInt(event.target.value, 10));
       this.delay = value;
     },
     clearCache() {

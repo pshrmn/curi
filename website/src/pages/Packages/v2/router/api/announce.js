@@ -7,7 +7,7 @@ import {
   Warning
 } from "../../../../../components/package/common";
 
-export const meta = {
+export let meta = {
   title: "announce",
   hash: "announce"
 };
@@ -51,16 +51,16 @@ export function AnnounceAPI() {
       <CodeBlock>
         {`import { createRouter, announce } from '@curi/router';
 
-const announcer = announce(
+let announcer = announce(
   ({ response }) => \`Navigated to \${response.meta.title}\`
 );
 
-const politeAnnouncer = announce(
+let politeAnnouncer = announce(
   ({ response }) => \`Navigated to \${response.meta.title}\`,
   "polite"
 );
 
-const router = curi(history, routes, {
+let router = curi(history, routes, {
   sideEffects: [announcer]
 });`}
       </CodeBlock>

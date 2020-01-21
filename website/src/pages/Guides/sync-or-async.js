@@ -8,16 +8,16 @@ import {
   IJS
 } from "../../components/guide/common";
 
-const meta = {
+let meta = {
   title: "Sync or Async"
 };
 
-const thinkMeta = {
+let thinkMeta = {
   title: "Async Things to Think About",
   hash: "think"
 };
 
-const contents = [thinkMeta];
+let contents = [thinkMeta];
 
 function SyncAndAsyncGuide() {
   return (
@@ -71,7 +71,7 @@ function SyncAndAsyncGuide() {
             </p>
 
             <CodeBlock>
-              {`const router = createRouter(browser, routes);
+              {`let router = createRouter(browser, routes);
 router.once(() => {
   // the initial response is ready,
   // so it is safe to render

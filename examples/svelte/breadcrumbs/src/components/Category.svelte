@@ -19,10 +19,10 @@
   import Breadcrumbs from "./Breadcrumbs.svelte";
   import title from "../titleInteraction";
 
-  const router = getRouter();
-  const response = getResponse();
+  let router = getRouter();
+  let response = getResponse();
 
-  const productRoute = router.route("Product");
+  let productRoute = router.route("Product");
 
   $: params = $response.params;
   $: products = $response.data.products;

@@ -1,19 +1,19 @@
 import React from "react";
 import { CuriRouter, ResponseAndNav } from "@curi/types";
 
-const key: ResponseAndNav = {
+let key: ResponseAndNav = {
   response: null,
   navigation: null
 };
 
-const responseContext = React.createContext<ResponseAndNav>(key);
-const {
+let responseContext = React.createContext<ResponseAndNav>(key);
+let {
   Provider: ResponseProvider,
   Consumer: ResponseConsumer
 } = responseContext;
 
-const routerContext = React.createContext<CuriRouter>(null);
-const { Provider: RouterProvider, Consumer: RouterConsumer } = routerContext;
+let routerContext = React.createContext<CuriRouter>(null);
+let { Provider: RouterProvider, Consumer: RouterConsumer } = routerContext;
 
 export {
   ResponseProvider,

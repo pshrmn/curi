@@ -6,7 +6,7 @@ import Container from "./Container";
 import StyledDropdownMenu from "./DropdownMenu";
 import usePrefetch from "./usePrefetch";
 
-const GroupGuides = ({ guides }) => (
+let GroupGuides = ({ guides }) => (
   <ul className="link-list">
     {guides.map(g => (
       <li key={g.name} className="solo">
@@ -18,8 +18,8 @@ const GroupGuides = ({ guides }) => (
   </ul>
 );
 
-const groups = GUIDE_API.grouped();
-const guides = GUIDE_API.all().map(g => ({
+let groups = GUIDE_API.grouped();
+let guides = GUIDE_API.all().map(g => ({
   name: "Guide",
   params: {
     slug: g.slug

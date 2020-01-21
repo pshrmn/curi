@@ -1,11 +1,11 @@
-const plugins = require("../../utils/rollup-plugins");
+let plugins = require("../../utils/rollup-plugins");
 
-const pkg = require("./package.json");
-const deps = Object.keys(pkg.dependencies).map(key => key);
+let pkg = require("./package.json");
+let deps = Object.keys(pkg.dependencies).map(key => key);
 
-const input = "src/index.ts";
-const sourcemap = false;
-const globals = {
+let input = "src/index.ts";
+let sourcemap = false;
+let globals = {
   vue: "Vue"
 };
 

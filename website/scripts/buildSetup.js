@@ -1,10 +1,10 @@
-const fs = require("fs-extra");
-const join = require("path").join;
+let fs = require("fs-extra");
+let join = require("path").join;
 
-const BASE_DIR = join(__dirname, "..");
-const STATIC_DIR = join(BASE_DIR, "public", "static");
-const GH_PAGES = join(BASE_DIR, "gh-pages");
-const GH_STATIC_DIR = join(GH_PAGES, "static");
+let BASE_DIR = join(__dirname, "..");
+let STATIC_DIR = join(BASE_DIR, "public", "static");
+let GH_PAGES = join(BASE_DIR, "gh-pages");
+let GH_STATIC_DIR = join(GH_PAGES, "static");
 
 fs.removeSync(GH_PAGES);
 console.log("Removed files");

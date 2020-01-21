@@ -4,12 +4,12 @@ import { Emitted } from "@curi/types";
 import { title } from "@curi/router";
 
 describe("title", () => {
-  const fakeResponse = {
+  let fakeResponse = {
     response: { meta: { title: "Test Title; Please Ignore" } }
   } as Emitted;
 
   it("sets document.title to value returned by provided callback", () => {
-    const sideEffect = title(({ response }) => {
+    let sideEffect = title(({ response }) => {
       return `My Site | ${response.meta.title}`;
     });
     sideEffect(fakeResponse);

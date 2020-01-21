@@ -1,6 +1,6 @@
 import React from "react";
 
-const ContactMethod = ({ params }) => (
+let ContactMethod = ({ params }) => (
   <div>Please do not contact us by {params.method}</div>
 );
 

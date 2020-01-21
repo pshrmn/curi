@@ -1,4 +1,4 @@
-const config = {
+let config = {
   mode: "development",
   output: {
     filename: "js/bundle.js",

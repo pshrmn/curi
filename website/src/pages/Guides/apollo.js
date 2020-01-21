@@ -9,29 +9,29 @@ import {
   IJS
 } from "../../components/guide/common";
 
-const meta = {
+let meta = {
   title: "Apollo Integration"
 };
 
-const setupMeta = {
+let setupMeta = {
   title: "Setup",
   hash: "setup"
 };
-const looseMeta = {
+let looseMeta = {
   title: "Loose Pairing",
   hash: "loose-pairing"
 };
-const prefetchMeta = {
+let prefetchMeta = {
   title: "Prefetching",
   hash: "prefetch"
 };
-const tightMeta = {
+let tightMeta = {
   title: "Tight Pairing",
   hash: "tight-pairing",
   children: [prefetchMeta]
 };
 
-const contents = [setupMeta, looseMeta, tightMeta];
+let contents = [setupMeta, looseMeta, tightMeta];
 
 function ApolloGuide() {
   return (
@@ -77,7 +77,7 @@ function ApolloGuide() {
           {`import { ApolloProvider } from "react-apollo";
 import { createRouterComponent } from "@curi/react-dom";
 
-const Router = createRouterComponent(router);
+let Router = createRouterComponent(router);
 
 ReactDOM.render((
   <ApolloProvider client={client}>
@@ -101,7 +101,7 @@ ReactDOM.render((
 import Noun from "./pages/Noun";
 
 // nothing Apollo related in here
-const routes = prepareRoutes([
+let routes = prepareRoutes([
   {
     name: 'Noun',
     path: 'noun/:word',
@@ -125,8 +125,8 @@ const routes = prepareRoutes([
           {`import { useResponse } from "@curi/react-dom";
 
 function App() {
-  const { response } = useResponse();
-  const { body:Body } = response;
+  let { response } = useResponse();
+  let { body:Body } = response;
   return <Body response={response} />;
 }`}
         </CodeBlock>
@@ -141,7 +141,7 @@ function App() {
           {`// pages/Nouns.js
 import { Query } from "react-apollo";
 
-const GET_NOUN = gql\`
+let GET_NOUN = gql\`
   query noun(\$word: String!) {
     noun(word: $word) {
       word,
@@ -153,7 +153,7 @@ const GET_NOUN = gql\`
 
 // use the "word" param from the response props
 // to query the correct data
-const Noun = ({ response }) => (
+let Noun = ({ response }) => (
   <Query
     query={GET_NOUN}
     variables={{ word: response.params.word }}
@@ -195,14 +195,14 @@ const Noun = ({ response }) => (
         <CodeBlock>
           {`import client from "./apollo";
 
-const router = createRouter(browser, routes, {
+let router = createRouter(browser, routes, {
   external: { client }
 });`}
         </CodeBlock>
         <CodeBlock>
           {`import { EXAMPLE_QUERY } from "./queries";
 
-const routes = prepareRoutes([
+let routes = prepareRoutes([
   {
     name: "Example",
     path: "example/:id",
@@ -266,7 +266,7 @@ export default [
 
         <CodeBlock lang="jsx">
           {`// pages/Verb.js
-const Verb = ({ response }) => (
+let Verb = ({ response }) => (
   <article>
     <h1>{response.data.verb.word}</h1>
     <p>
@@ -315,7 +315,7 @@ export default [
           {`// pages/Verb.js
 import { GET_VERB } from "../queries";
 
-const Verb = ({ response }) => (
+let Verb = ({ response }) => (
   <Query
     query={GET_VERB}
     variables={{ word: response.params.word }}
@@ -358,7 +358,7 @@ const Verb = ({ response }) => (
             {`// index.js
 import { prefetch } from "@curi/router";
 
-const routes = prepareRoutes([
+let routes = prepareRoutes([
   {
     name: "Example",
     path: "example/:id",
@@ -371,11 +371,11 @@ const routes = prepareRoutes([
   }
 ]);
 
-const router = createRouter(browser, routes);
+let router = createRouter(browser, routes);
 
 // this will call the GET_EXAMPLES query
 // and Apollo will cache the results
-const exampleRoute = router.route("Example");
+let exampleRoute = router.route("Example");
 prefetch(exampleRoute, { params: { id: 2 }});`}
           </CodeBlock>
         </HashSection>

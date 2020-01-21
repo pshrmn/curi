@@ -1,11 +1,11 @@
 import React from "react";
 import { Link } from "@curi/react-dom";
 
-export const Home = () => {
+export let Home = () => {
   return <div>Home.</div>;
 };
 
-export const HomeMenu = props => {
+export let HomeMenu = props => {
   return (
     <nav>
       <ul>

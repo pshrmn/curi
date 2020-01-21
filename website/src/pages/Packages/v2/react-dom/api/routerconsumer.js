@@ -6,11 +6,11 @@ import {
   IJS
 } from "../../../../../components/package/common";
 
-const propsMeta = {
+let propsMeta = {
   title: "Props",
   hash: "RouterConsumer-props"
 };
-export const meta = {
+export let meta = {
   title: "RouterConsumer",
   hash: "RouterConsumer"
 };
@@ -34,7 +34,7 @@ class MyComponent {
           return (
             <button onClick={e => {
               login();
-              const url = router.url({ name: "Home" });
+              let url = router.url({ name: "Home" });
               router.navigate({ url });
             }}>
               Submit

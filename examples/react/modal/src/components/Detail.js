@@ -1,6 +1,6 @@
 import React from "react";
 
-const Detail = ({ response }) => (
+let Detail = ({ response }) => (
   <div>
     <div
       style={{

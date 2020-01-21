@@ -3,18 +3,18 @@ import { createRouter, prepareRoutes } from "@curi/router";
 
 import app from "./app.svelte";
 
-const routes = prepareRoutes([
+let routes = prepareRoutes([
   { name: "Home", path: "" },
   { name: "User", path: "u/:id" },
   { name: "Not Found", path: "(.*)" }
 ]);
 
-const router = createRouter(inMemory, routes);
+let router = createRouter(inMemory, routes);
 
 export default function render() {
-  const target = document.createElement("div");
+  let target = document.createElement("div");
 
-  const { response } = router.current();
+  let { response } = router.current();
 
   new app.default({
     target,

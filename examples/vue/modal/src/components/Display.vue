@@ -17,7 +17,7 @@ export default {
   props: ["response", "navigation"],
   computed: {
     isModal: function() {
-      const location = this.response.location;
+      let location = this.response.location;
       return !!(
         location.state &&
         location.state.modal &&

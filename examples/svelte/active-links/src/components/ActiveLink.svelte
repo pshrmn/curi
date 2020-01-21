@@ -11,8 +11,8 @@
   import Link from "@curi/svelte/components/Link.svelte";
   import { active as activeInteraction } from "@curi/router";
 
-  const router = getRouter();
-  const response = getResponse();
+  let router = getRouter();
+  let response = getResponse();
 
   export let name;
   export let params;

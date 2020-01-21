@@ -7,26 +7,26 @@ import {
   IJS
 } from "../../components/guide/common";
 
-const meta = {
+let meta = {
   title: "Installation"
 };
 
-const npmMeta = {
+let npmMeta = {
   title: "NPM",
   hash: "npm"
 };
 
-const unpkgMeta = {
+let unpkgMeta = {
   title: "Unpkg",
   hash: "unpkg"
 };
 
-const promisesMeta = {
+let promisesMeta = {
   title: "Promises",
   hash: "promises"
 };
 
-const contents = [npmMeta, unpkgMeta, promisesMeta];
+let contents = [npmMeta, unpkgMeta, promisesMeta];
 
 function InstallationGuide() {
   return (

@@ -14,7 +14,7 @@ export interface AsyncLinkComponent extends Vue {
   navigating: boolean;
 }
 
-const Link: ComponentOptions<AsyncLinkComponent> = {
+let Link: ComponentOptions<AsyncLinkComponent> = {
   name: "curi-async-link",
 
   props: ["name", "params", "hash", "query", "state", "click"],

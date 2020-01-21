@@ -7,7 +7,7 @@ import { createRouterComponent } from "@curi/react-dom";
 import routes from "./routes";
 import App from "./components/App";
 
-const router = createRouter(browser, routes, {
+let router = createRouter(browser, routes, {
   invisibleRedirects: true,
   sideEffects: [
     announce(({ response }) => {
@@ -15,7 +15,7 @@ const router = createRouter(browser, routes, {
     })
   ]
 });
-const Router = createRouterComponent(router);
+let Router = createRouterComponent(router);
 
 router.once(() => {
   ReactDOM.hydrate(

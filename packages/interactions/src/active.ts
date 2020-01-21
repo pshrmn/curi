@@ -31,14 +31,14 @@ export default function active(
   ) {
     return false;
   }
-  const keys = route.keys;
+  let keys = route.keys;
   if (keys.length) {
     if (!options.params) {
       return false;
     }
     for (let r = 0, length = keys.length; r < length; r++) {
-      const key = keys[r];
-      const param = options.params[key];
+      let key = keys[r];
+      let param = options.params[key];
       if (!param || param !== response.params[key]) {
         return false;
       }

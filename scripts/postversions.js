@@ -1,34 +1,29 @@
-const glob = require("glob");
-const path = require("path");
-const fs = require("fs-extra");
-const git = require("simple-git")(process.cwd());
+let glob = require("glob");
+let path = require("path");
+let fs = require("fs-extra");
+let git = require("simple-git")(process.cwd());
 
-const root = process.cwd();
+let root = process.cwd();
 
-const packagesDir = path.join(root, "packages");
-const examplesDir = path.join(root, "examples");
-const docsDir = path.join(root, "website");
-const docConstantVersions = path.join(
-  docsDir,
-  "src",
-  "constants",
-  "versions.js"
-);
+let packagesDir = path.join(root, "packages");
+let examplesDir = path.join(root, "examples");
+let docsDir = path.join(root, "website");
+let docConstantVersions = path.join(docsDir, "src", "constants", "versions.js");
 
 console.log("Updating CHANGELOG versions...");
 // This relies on a README beginning with the string "## Next".
 // If those aren't the first seven characters of the file, this
 // will fail.
 glob.sync(`${packagesDir}/**/CHANGELOG.md`).forEach(readme => {
-  const buffer = fs.readFileSync(readme);
+  let buffer = fs.readFileSync(readme);
   if (buffer.indexOf("## Next") !== 0) {
     return;
   }
 
-  const pathname = readme.substr(0, readme.indexOf("/CHANGELOG.md"));
-  const pkg = require(`${pathname}/package.json`);
-  const versionBuffer = Buffer.from(`## ${pkg.version}`);
-  const output = Buffer.concat([versionBuffer, buffer.slice(7)]);
+  let pathname = readme.substr(0, readme.indexOf("/CHANGELOG.md"));
+  let pkg = require(`${pathname}/package.json`);
+  let versionBuffer = Buffer.from(`## ${pkg.version}`);
+  let output = Buffer.concat([versionBuffer, buffer.slice(7)]);
 
   fs.outputFileSync(readme, output);
   git.add(readme);
@@ -36,7 +31,7 @@ glob.sync(`${packagesDir}/**/CHANGELOG.md`).forEach(readme => {
 
 console.log("Updating example dependencies...");
 // get the dependencies from the actual packages
-const pkgs = glob
+let pkgs = glob
   .sync(`${packagesDir}/**/package.json`)
   .map(pkgPath => require(pkgPath))
   .map(pkg => ({
@@ -73,7 +68,7 @@ glob
   });
 
 console.log("Updating package versions in docs...");
-const mappedVersions = Object.keys(pkgs).reduce((acc, name) => {
+let mappedVersions = Object.keys(pkgs).reduce((acc, name) => {
   acc[name.slice(6)] = pkgs[name];
   return acc;
 }, {});

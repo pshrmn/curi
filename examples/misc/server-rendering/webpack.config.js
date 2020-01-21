@@ -1,7 +1,7 @@
-const webpack = require("webpack");
-const path = require("path");
+let webpack = require("webpack");
+let path = require("path");
 
-const config = {
+let config = {
   mode: "production",
   entry: "./src/index.js",
   output: {

@@ -1,11 +1,11 @@
 import React from "react";
 import { Link } from "@curi/react-dom";
 
-export const NotFound = () => {
+export let NotFound = () => {
   return <div>The requested page could not be found :(.</div>;
 };
 
-export const NotFoundMenu = props => {
+export let NotFoundMenu = props => {
   return (
     <nav>
       <ul>

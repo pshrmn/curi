@@ -24,8 +24,8 @@ export interface PreparedRoute {
 export default function prepareRoutes(
   routes: Array<RouteDescriptor>
 ): RouteMatcher {
-  const mappedRoutes: { [key: string]: Route } = {};
-  const prepared = routes.map(route => createRoute(route, mappedRoutes));
+  let mappedRoutes: { [key: string]: Route } = {};
+  let prepared = routes.map(route => createRoute(route, mappedRoutes));
 
   return {
     match(location: SessionLocation) {

@@ -1,7 +1,7 @@
-const VERSION = "16.8.6";
-const dev = process.env.NODE_ENV !== "production";
-const REACT_BUILD = dev ? "react.development.js" : "react.production.min.js";
-const REACT_DOM_BUILD = dev
+let VERSION = "16.8.6";
+let dev = process.env.NODE_ENV !== "production";
+let REACT_BUILD = dev ? "react.development.js" : "react.production.min.js";
+let REACT_DOM_BUILD = dev
   ? "react-dom.development.js"
   : "react-dom.production.min.js";
 

@@ -5,7 +5,7 @@ import { pathnames } from "@curi/static";
 
 describe("pathnames()", () => {
   it("returns an array of pathname strings from the given routes/page descriptors", () => {
-    const routes = prepareRoutes([
+    let routes = prepareRoutes([
       {
         name: "Home",
         path: ""
@@ -25,7 +25,7 @@ describe("pathnames()", () => {
         ]
       }
     ]);
-    const pages = [
+    let pages = [
       { name: "Home" },
       { name: "About" },
       { name: "Album", params: { albumID: 0 } },
@@ -37,7 +37,7 @@ describe("pathnames()", () => {
       { name: "Song", params: { albumID: 1, songID: 6 } },
       { name: "Song", params: { albumID: 2, songID: 7 } }
     ];
-    const urls = pathnames({ routes, pages });
+    let urls = pathnames({ routes, pages });
     expect(urls).toEqual(
       expect.arrayContaining([
         "/",

@@ -8,15 +8,15 @@ export default prepareRoutes([
     name: "Home",
     path: "",
     resolve() {
-      const body = import(/* webpackChunkName: "Home" */ "./pages/Home").then(
+      let body = import(/* webpackChunkName: "Home" */ "./pages/Home").then(
         preferDefault
       );
-      const movies = MOVIES();
+      let movies = MOVIES();
       return Promise.all([body, movies]);
     },
     respond({ resolved, error }) {
       console.log({ resolved, error });
-      const [body, data] = resolved;
+      let [body, data] = resolved;
       return { body, data };
     }
   },
@@ -24,17 +24,17 @@ export default prepareRoutes([
     name: "Movie",
     path: "movie/:id",
     resolve({ params }) {
-      const body = import(/* webpackChunkName: "Movie" */ "./pages/Movie").then(
+      let body = import(/* webpackChunkName: "Movie" */ "./pages/Movie").then(
         module => module.default
       );
-      const movie = MOVIE(params.id).then(
+      let movie = MOVIE(params.id).then(
         movie => ({ error: false, movie }),
         e => ({ error: true })
       );
       return Promise.all([body, movie]);
     },
     respond({ resolved }) {
-      const [body, data] = resolved;
+      let [body, data] = resolved;
       return {
         body,
         data

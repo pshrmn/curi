@@ -6,7 +6,7 @@ export default function announce(
   fmt: (emitted: Emitted) => string,
   mode: AriaLiveValue = "assertive"
 ): Observer {
-  const announcer = document.createElement("div");
+  let announcer = document.createElement("div");
   announcer.setAttribute("aria-live", mode);
   // https://hugogiraudel.com/2016/10/13/css-hide-and-seek/
   announcer.setAttribute(

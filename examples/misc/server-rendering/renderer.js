@@ -6,19 +6,19 @@ import { createRouterComponent } from "@curi/react-dom";
 import routes from "./src/routes";
 import App from "./src/components/App";
 
-const ServerHistory = createReusable();
+let ServerHistory = createReusable();
 
 export default function(req, res) {
-  const router = createRouter(ServerHistory, routes, {
+  let router = createRouter(ServerHistory, routes, {
     history: { location: req.url }
   });
-  const Router = createRouterComponent(router);
+  let Router = createRouterComponent(router);
   router.once(({ response }) => {
     if (response.redirect !== undefined) {
       res.redirect(302, response.redirect.pathname);
       return;
     }
-    const markup = renderToString(
+    let markup = renderToString(
       <Router>
         <App />
       </Router>

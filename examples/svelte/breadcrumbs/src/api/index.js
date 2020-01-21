@@ -1,11 +1,11 @@
 import data from "./data";
 
 // prefilter the data
-const categories = {};
-const products = {};
+let categories = {};
+let products = {};
 {
   data.forEach(d => {
-    const { category, id } = d;
+    let { category, id } = d;
     products[id] = d;
     if (categories[category]) {
       categories[category].push(d);

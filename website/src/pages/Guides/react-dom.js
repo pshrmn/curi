@@ -11,30 +11,30 @@ import {
   Cmp
 } from "../../components/guide/common";
 
-const meta = {
+let meta = {
   title: "React DOM"
 };
 
-const responseMeta = {
+let responseMeta = {
   title: "What to render",
   hash: "render-response"
 };
-const a11yMeta = {
+let a11yMeta = {
   title: "Accessibility",
   hash: "accessibility"
 };
-const renderingMeta = {
+let renderingMeta = {
   title: "Rendering Responses",
   hash: "rendering",
   children: [responseMeta, a11yMeta]
 };
 
-const navigatingMeta = {
+let navigatingMeta = {
   title: "Navigating",
   hash: "navigating"
 };
 
-const contents = [renderingMeta, navigatingMeta];
+let contents = [renderingMeta, navigatingMeta];
 
 function ReactDOMGuide() {
   return (
@@ -100,14 +100,14 @@ function ReactDOMGuide() {
           {`import { createRouterComponent, useResponse } from '@curi/react-dom';
 
 import router from "./router";
-const Router = createRouterComponent(router);
+let Router = createRouterComponent(router);
 
 function App() {
-  const {
+  let {
     response,
     navigation
   } = useResponse();
-  const { body:Body } = response;
+  let { body:Body } = response;
   return <Body />
 }
 
@@ -152,8 +152,8 @@ router.once(() => {
 
           <CodeBlock lang="jsx">
             {`function App() {
-  const { response } = useResponse();
-  const { body:Body } = response;
+  let { response } = useResponse();
+  let { body:Body } = response;
   return <Body response={response} />
 }
 
@@ -185,7 +185,7 @@ ReactDOM.render((
           </Note>
 
           <CodeBlock lang="jsx" data-line="20,24,27">
-            {`const routes = prepareRoutes([
+            {`let routes = prepareRoutes([
   {
     name: "Home",
     path: "",
@@ -202,8 +202,8 @@ ReactDOM.render((
 ]);
 
 function App() {
-  const { response } = useResponse();
-  const { Main, Menu } = response.body;
+  let { response } = useResponse();
+  let { Main, Menu } = response.body;
   return (
     <React.Fragment>
       <header>
@@ -244,11 +244,11 @@ function App() {
             {`import { useResponse, useNavigationFocus } from "@curi/react-dom";
 
 function App()
-  const { response } = useResponse();
-  const ref = React.createRef(null);
+  let { response } = useResponse();
+  let ref = React.createRef(null);
   useNavigationFocus(ref);
 
-  const { body:Body } = response;
+  let { body:Body } = response;
   return (
     <React.Fragment>
       <header>
@@ -284,7 +284,7 @@ function App()
         <CodeBlock lang="jsx">
           {`import { Link } from "@curi/react-dom";
 
-const NavLinks = () => (
+let NavLinks = () => (
   <nav>
     <ul>
       <li>

@@ -8,14 +8,14 @@ import { prefetch } from "@curi/interactions";
 describe("prefetch route interaction", () => {
   describe("routes", () => {
     it("resolves with error for synchronous routes", () => {
-      const routes = prepareRoutes([
+      let routes = prepareRoutes([
         { name: "Sync", path: "sync" },
         { name: "Catch All", path: "(.*)" }
       ]);
       // This is a bit roundabout, but we verify that the paths did not register
       // by resolving from catch
       expect.assertions(1);
-      const route = routes.route("Sync");
+      let route = routes.route("Sync");
       return prefetch(route).then(resolved => {
         expect(resolved.error).toBe(
           "Could not prefetch data for Sync because it does not have a resolve function."
@@ -26,7 +26,7 @@ describe("prefetch route interaction", () => {
 
   describe("calling prefetch()", () => {
     it("returns a Promise that resolved with object ({ resolved, error })", () => {
-      const routes = prepareRoutes([
+      let routes = prepareRoutes([
         {
           name: "Player",
           path: "player/:id",
@@ -36,14 +36,14 @@ describe("prefetch route interaction", () => {
         },
         { name: "Catch All", path: "(.*)" }
       ]);
-      const route = routes.route("Player");
+      let route = routes.route("Player");
       expect(prefetch(route).then).toBeDefined();
     });
 
     it("returns Promise with error message when resolve throws", () => {
-      const name = "Thrower";
-      const errorMessage = "woops!";
-      const routes = prepareRoutes([
+      let name = "Thrower";
+      let errorMessage = "woops!";
+      let routes = prepareRoutes([
         {
           name,
           path: "throws",
@@ -53,9 +53,9 @@ describe("prefetch route interaction", () => {
         },
         { name: "Catch All", path: "(.*)" }
       ]);
-      const route = routes.route(name);
-      const locationToPass = {} as SessionLocation;
-      const output = prefetch(route, {
+      let route = routes.route(name);
+      let locationToPass = {} as SessionLocation;
+      let output = prefetch(route, {
         match: { name, params: { id: 123 }, location: locationToPass }
       });
       expect.assertions(2);
@@ -67,7 +67,7 @@ describe("prefetch route interaction", () => {
 
     describe("match", () => {
       it("passes arguments to route's resolve function", done => {
-        const routes = prepareRoutes([
+        let routes = prepareRoutes([
           {
             name: "Player",
             path: "player/:id",
@@ -83,9 +83,9 @@ describe("prefetch route interaction", () => {
           },
           { name: "Catch All", path: "(.*)" }
         ]);
-        const paramsToPass = { id: 1 };
-        const locationToPass = {} as SessionLocation;
-        const route = routes.route("Player");
+        let paramsToPass = { id: 1 };
+        let locationToPass = {} as SessionLocation;
+        let route = routes.route("Player");
         prefetch(route, {
           match: {
             name: "Player",
@@ -98,9 +98,9 @@ describe("prefetch route interaction", () => {
 
     describe("external", () => {
       it("passes external argument to resolve function call", done => {
-        const external = {};
+        let external = {};
 
-        const routes = prepareRoutes([
+        let routes = prepareRoutes([
           {
             name: "Player",
             path: "player",
@@ -112,7 +112,7 @@ describe("prefetch route interaction", () => {
           },
           { name: "Catch All", path: "(.*)" }
         ]);
-        const route = routes.route("Player");
+        let route = routes.route("Player");
         prefetch(route, { external });
       });
     });

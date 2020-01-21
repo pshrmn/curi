@@ -7,14 +7,14 @@ import { createRouterComponent } from "@curi/react-dom";
 import routes from "./routes";
 import App from "./components/App";
 
-const router = createRouter(browser, routes, {
+let router = createRouter(browser, routes, {
   sideEffects: [
     announce(({ response }) => {
       return `Navigated to ${response.location.pathname}`;
     })
   ]
 });
-const Router = createRouterComponent(router);
+let Router = createRouterComponent(router);
 
 ReactDOM.render(
   <Router>

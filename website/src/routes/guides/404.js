@@ -8,6 +8,6 @@ function Guide404() {
   );
 }
 
-const contents = [];
+let contents = [];
 
 export { Guide404 as component, contents };

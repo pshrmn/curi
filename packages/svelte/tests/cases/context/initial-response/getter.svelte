@@ -3,7 +3,7 @@
 
   export let check;
 
-  const response = getResponse();
+  let response = getResponse();
 
   check($response);
 </script>

@@ -3,7 +3,7 @@ import styled from "@emotion/styled";
 
 import { screen } from "../constants/styles";
 
-const StyledDemo = styled("figure")`
+let StyledDemo = styled("figure")`
   p {
     font-style: italic;
     text-align: center;

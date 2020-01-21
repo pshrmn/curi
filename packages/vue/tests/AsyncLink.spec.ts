@@ -7,7 +7,7 @@ import { CuriPlugin } from "@curi/vue";
 
 describe("<curi-async-link>", () => {
   let Vue, node, router, wrapper;
-  const routes = prepareRoutes([
+  let routes = prepareRoutes([
     { name: "Place", path: "place/:name" },
     { name: "Catch All", path: "(.*)" }
   ]);
@@ -41,7 +41,7 @@ describe("<curi-async-link>", () => {
           </div>
         `
       });
-      const a = document.querySelector("a");
+      let a = document.querySelector("a");
       expect(a.tagName).toBe("A");
     });
 
@@ -56,7 +56,7 @@ describe("<curi-async-link>", () => {
           </div>
         `
       });
-      const a = document.querySelector("a");
+      let a = document.querySelector("a");
       expect(a.textContent).toEqual("false");
     });
 
@@ -76,13 +76,13 @@ describe("<curi-async-link>", () => {
           </div>
         `
       });
-      const a = document.querySelector("a");
+      let a = document.querySelector("a");
       expect(a.getAttribute("href")).toBe("/place/Jamaica?two=2#island-life");
     });
 
     it("has no pathname component if name is not provided", () => {
-      const Vue = createLocalVue();
-      const router = createRouter(inMemory, routes, {
+      let Vue = createLocalVue();
+      let router = createRouter(inMemory, routes, {
         history: {
           locations: [{ url: "/place/somewhere" }]
         }
@@ -97,7 +97,7 @@ describe("<curi-async-link>", () => {
           </div>
         `
       });
-      const a = document.querySelector("a");
+      let a = document.querySelector("a");
       expect(a.getAttribute("href")).toBe("#test");
     });
 
@@ -112,7 +112,7 @@ describe("<curi-async-link>", () => {
           </div>
         `
       });
-      const a = document.querySelector("a");
+      let a = document.querySelector("a");
       expect(a.textContent).toBe("Kokomo");
     });
 
@@ -131,7 +131,7 @@ describe("<curi-async-link>", () => {
           </div>
         `
       });
-      const a = document.querySelector("a");
+      let a = document.querySelector("a");
       expect(a.classList.contains("hooray")).toBe(true);
     });
   });
@@ -163,7 +163,7 @@ describe("<curi-async-link>", () => {
           </div>
         `
       });
-      const a = document.querySelector("a");
+      let a = document.querySelector("a");
 
       expect(mockNavigate.mock.calls.length).toBe(0);
       a.dispatchEvent(
@@ -178,7 +178,7 @@ describe("<curi-async-link>", () => {
     });
 
     describe("navigating", () => {
-      const routes = prepareRoutes([
+      let routes = prepareRoutes([
         {
           name: "Test",
           path: "test",
@@ -194,14 +194,14 @@ describe("<curi-async-link>", () => {
       ]);
 
       it("navigating = true after clicking", done => {
-        const router = createRouter(inMemory, routes);
-        const Vue = createLocalVue();
+        let router = createRouter(inMemory, routes);
+        let Vue = createLocalVue();
         Vue.use(CuriPlugin, { router });
 
         // if a link has no on methods, finished will be called almost
         // immediately (although this style should only be used for routes
         // with on methods)
-        const LoadChecker = {
+        let LoadChecker = {
           props: ["navigating"],
           render(h) {
             return h("div", this.navigating);
@@ -226,7 +226,7 @@ describe("<curi-async-link>", () => {
             LoadChecker
           }
         });
-        const a = document.querySelector("#after-click");
+        let a = document.querySelector("#after-click");
 
         a.dispatchEvent(
           new MouseEvent("click", {
@@ -236,8 +236,8 @@ describe("<curi-async-link>", () => {
       });
 
       it("navigating = false after navigation completes", done => {
-        const router = createRouter(inMemory, routes);
-        const Vue = createLocalVue();
+        let router = createRouter(inMemory, routes);
+        let Vue = createLocalVue();
         Vue.use(CuriPlugin, { router });
 
         // if a link has no on methods, finished will be called almost
@@ -255,7 +255,7 @@ describe("<curi-async-link>", () => {
             </div>
           `
         });
-        const a = document.querySelector("#nav-complete");
+        let a = document.querySelector("#nav-complete");
         a.dispatchEvent(
           new MouseEvent("click", {
             button: 0
@@ -275,7 +275,7 @@ describe("<curi-async-link>", () => {
       });
 
       it("navigating = false after navigation is cancelled", done => {
-        const routes = prepareRoutes([
+        let routes = prepareRoutes([
           {
             name: "Slow",
             path: "slow",
@@ -296,8 +296,8 @@ describe("<curi-async-link>", () => {
           },
           { name: "Catch All", path: "(.*)" }
         ]);
-        const router = createRouter(inMemory, routes);
-        const Vue = createLocalVue();
+        let router = createRouter(inMemory, routes);
+        let Vue = createLocalVue();
         Vue.use(CuriPlugin, { router });
 
         // if a link has no on methods, finished will be called almost
@@ -320,8 +320,8 @@ describe("<curi-async-link>", () => {
             </div>
           `
         });
-        const slowLink = document.querySelector("#slow");
-        const fastLink = document.querySelector("#slow");
+        let slowLink = document.querySelector("#slow");
+        let fastLink = document.querySelector("#slow");
 
         expect(slowLink.textContent.trim()).toBe("false");
 
@@ -367,9 +367,9 @@ describe("<curi-async-link>", () => {
           }
         }
       });
-      const a = document.querySelector("a");
+      let a = document.querySelector("a");
       expect(mockNavigate.mock.calls.length).toBe(0);
-      const event = new MouseEvent("click", {
+      let event = new MouseEvent("click", {
         button: 0,
         cancelable: true
       });
@@ -388,11 +388,11 @@ describe("<curi-async-link>", () => {
           </div>
         `
       });
-      const a = document.querySelector("a");
+      let a = document.querySelector("a");
       expect(mockNavigate.mock.calls.length).toBe(0);
-      const modifiers = ["metaKey", "altKey", "ctrlKey", "shiftKey"];
+      let modifiers = ["metaKey", "altKey", "ctrlKey", "shiftKey"];
       modifiers.forEach(m => {
-        const event = new MouseEvent("click", {
+        let event = new MouseEvent("click", {
           [m]: true,
           button: 0
         });
@@ -412,9 +412,9 @@ describe("<curi-async-link>", () => {
           </div>
         `
       });
-      const a = document.querySelector("a");
+      let a = document.querySelector("a");
       expect(mockNavigate.mock.calls.length).toBe(0);
-      const event = new MouseEvent("click", {
+      let event = new MouseEvent("click", {
         button: 1
       });
       a.dispatchEvent(event);
@@ -438,8 +438,8 @@ describe("<curi-async-link>", () => {
             }
           }
         });
-        const a = document.querySelector("a");
-        const event = new MouseEvent("click", {
+        let a = document.querySelector("a");
+        let event = new MouseEvent("click", {
           button: 0
         });
         a.dispatchEvent(event);
@@ -462,8 +462,8 @@ describe("<curi-async-link>", () => {
             }
           }
         });
-        const a = document.querySelector("a");
-        const event = new MouseEvent("click", {
+        let a = document.querySelector("a");
+        let event = new MouseEvent("click", {
           button: 0,
           cancelable: true
         });

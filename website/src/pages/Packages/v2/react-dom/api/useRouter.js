@@ -7,7 +7,7 @@ import {
   Note
 } from "../../../../../components/package/common";
 
-export const meta = {
+export let meta = {
   title: "useRouter",
   hash: "useRouter"
 };
@@ -23,7 +23,7 @@ export function UseRouterAPI() {
         {`import { useRouter } from '@curi/react-dom';
 
 function App() {
-  const router = useRouter();
+  let router = useRouter();
   // ...
 }`}
       </CodeBlock>

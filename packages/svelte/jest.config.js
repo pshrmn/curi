@@ -1,5 +1,5 @@
 let mappedModule;
-const mappedComponent = "<rootDir>/components/$1";
+let mappedComponent = "<rootDir>/components/$1";
 switch (process.env.TEST_ENV) {
   case "cjs":
     mappedModule = "<rootDir>/dist/curi-svelte.js";

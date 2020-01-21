@@ -1,8 +1,8 @@
-const express = require("express");
-const path = require("path");
-const renderer = require("./renderer").default;
+let express = require("express");
+let path = require("path");
+let renderer = require("./renderer").default;
 
-const app = express();
+let app = express();
 
 app.use("/static", express.static(path.join(__dirname, "public")));
 

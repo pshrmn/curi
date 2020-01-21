@@ -15,7 +15,7 @@
   import AsyncLink from "@curi/svelte/components/AsyncLink.svelte";
   import SpinWhileNavigating from "../components/SpinWhileNavigating.svelte";
 
-  const response = getResponse();
+  let response = getResponse();
 </script>
 
 <style>

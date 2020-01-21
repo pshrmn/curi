@@ -15,10 +15,10 @@ export default function useNavigationFocus(
   // values are used, but not used in the comparison array because
   // changing these values would steal the app's focus even though
   // the location hasn't changed.
-  const { response } = useResponse();
-  const { preserve, preventScroll = false } = props;
+  let { response } = useResponse();
+  let { preserve, preventScroll = false } = props;
   React.useEffect(() => {
-    const ele = ref.current;
+    let ele = ref.current;
     if (ele === null) {
       if (process.env.NODE_ENV !== "production") {
         console.warn(

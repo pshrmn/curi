@@ -5,11 +5,11 @@ import {
   CodeBlock
 } from "../../../../../components/package/common";
 
-const argumentsMeta = {
+let argumentsMeta = {
   title: "Arguments",
   hash: "arguments"
 };
-export const meta = {
+export let meta = {
   title: "ancestors",
   hash: "ancestors"
 };
@@ -28,7 +28,7 @@ export function AncestorsAPI() {
       <CodeBlock>
         {`import { ancestors } from "@curi/router";
 
-const routes = prepareRoutes([
+let routes = prepareRoutes([
   {
     name: "Grandparent", path: "g",
     children: [
@@ -42,8 +42,8 @@ const routes = prepareRoutes([
   }
 ]);
 
-const route = router.route("Child");
-const family = ancestors(route);
+let route = router.route("Child");
+let family = ancestors(route);
 // [
 //   { meta: { name: "Grandparent", ... }, ... },
 //   { meta: { name: "Parent", ... }, ... },

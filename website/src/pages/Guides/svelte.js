@@ -10,26 +10,26 @@ import {
   Cmp
 } from "../../components/guide/common";
 
-const meta = {
+let meta = {
   title: "Svelte"
 };
 
-const renderingMeta = {
+let renderingMeta = {
   title: "Rendering with the response",
   hash: "rendering-response"
 };
-const storeMeta = {
+let storeMeta = {
   title: "Store Integration",
   hash: "store",
   children: [renderingMeta]
 };
 
-const navigatingMeta = {
+let navigatingMeta = {
   title: "Navigating",
   hash: "navigating"
 };
 
-const contents = [storeMeta, navigatingMeta];
+let contents = [storeMeta, navigatingMeta];
 
 function SvelteGuide() {
   return (
@@ -46,7 +46,7 @@ function SvelteGuide() {
         <CodeBlock>
           {`import App from "./components/App.svelte";
 
-const router = createRouter(browser, routes);
+let router = createRouter(browser, routes);
 new App({ target, props: { router } });`}
         </CodeBlock>
 
@@ -79,9 +79,9 @@ new App({ target, props: { router } });`}
           {`<script>
   import { getRouter, getResponse, getNavigation } from "@curi/svelte";
 
-  const router = getRouter();
-  const response = getResponse();
-  const navigation = getNavigation();
+  let router = getRouter();
+  let response = getResponse();
+  let navigation = getNavigation();
 </script>`}
         </CodeBlock>
 
@@ -119,7 +119,7 @@ new App({ target, props: { router } });`}
   import { getResponse } from "@curi/svelte";
   import NavLinks from "./NavLinks";
 
-  const response = getResponse();
+  let response = getResponse();
 </script>`}
           </CodeBlock>
 
@@ -136,7 +136,7 @@ new App({ target, props: { router } });`}
           </p>
 
           <CodeBlock>
-            {`const routes = prepareRoutes([
+            {`let routes = prepareRoutes([
   {
     name: "Home",
     path: "",
@@ -164,7 +164,7 @@ new App({ target, props: { router } });`}
 <script>
   import { getResponse } from "@curi/svelte";
 
-  const response = getResponse();
+  let response = getResponse();
   $: main = $response.body.main;
   $: menu = $response.body.menu;
 </script>`}

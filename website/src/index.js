@@ -5,8 +5,8 @@ import { createRouterComponent } from "@curi/react-dom";
 import router from "./router";
 import App from "./components/App";
 
-const Router = createRouterComponent(router);
-const render =
+let Router = createRouterComponent(router);
+let render =
   process.env.NODE_ENV !== "production" ? ReactDOM.render : ReactDOM.hydrate;
 
 router.once(() => {
@@ -21,8 +21,8 @@ router.once(() => {
 if (process.env.NODE_ENV !== "production") {
   if (module.hot) {
     module.hot.accept("./router", () => {
-      const nextRouter = require("./router").default;
-      const Router = createRouterComponent(nextRouter);
+      let nextRouter = require("./router").default;
+      let Router = createRouterComponent(nextRouter);
       nextRouter.once(() => {
         render(
           <Router>

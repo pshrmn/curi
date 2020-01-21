@@ -6,7 +6,7 @@ import { browser } from "@hickory/browser";
 import App from "./components/App";
 import routes from "./routes";
 
-const router = createRouter(browser, routes, {
+let router = createRouter(browser, routes, {
   sideEffects: [
     announce(({ response }) => {
       return `Navigated to ${response.location.pathname}`;
@@ -16,7 +16,7 @@ const router = createRouter(browser, routes, {
 
 Vue.use(CuriPlugin, { router });
 
-const vm = new Vue({
+let vm = new Vue({
   el: "#app",
   template: "<app />",
   components: { app: App }

@@ -10,33 +10,33 @@ import {
   Cmp
 } from "../../components/guide/common";
 
-const meta = {
+let meta = {
   title: "Accessibility"
 };
 
-const announceMeta = {
+let announceMeta = {
   title: "Announcing Navigation",
   hash: "aria-live"
 };
-const focusReactMeta = {
+let focusReactMeta = {
   title: "Focusing in React Applications",
   hash: "focus-react"
 };
-const focusVueMeta = {
+let focusVueMeta = {
   title: "Focusing in Vue Applications",
   hash: "focus-vue"
 };
-const focusMeta = {
+let focusMeta = {
   title: "Focusing Content",
   hash: "focus",
   children: [focusReactMeta, focusVueMeta]
 };
-const moreMeta = {
+let moreMeta = {
   title: "More Resources",
   hash: "more"
 };
 
-const contents = [announceMeta, focusMeta, moreMeta];
+let contents = [announceMeta, focusMeta, moreMeta];
 
 function AccessibilityGuide() {
   return (
@@ -86,7 +86,7 @@ function AccessibilityGuide() {
         <CodeBlock>
           {`import { announce } from "@curi/router";
 
-const routes = prepareRoutes([
+let routes = prepareRoutes([
   {
     name: "Home",
     path: "",
@@ -98,7 +98,7 @@ const routes = prepareRoutes([
   }
 ]);
 
-const router = createRouter(browser, routes, {
+let router = createRouter(browser, routes, {
   sideEffects: [announce(
     ({ response }) => \`Navigated to \${response.meta.title}\`
   )]
@@ -183,11 +183,11 @@ const router = createRouter(browser, routes, {
             {`import { useResponse, useNavigationFocus } from "@curi/react-dom";
 
 function App() {
-  const { response } = useResponse();
-  const ref = React.createRef(null);
+  let { response } = useResponse();
+  let ref = React.createRef(null);
   useNavigationFocus(ref);
 
-  const { body:Body } = response;
+  let { body:Body } = response;
   return (
     <Header />
     <main ref={ref} tabIndex={-1}>

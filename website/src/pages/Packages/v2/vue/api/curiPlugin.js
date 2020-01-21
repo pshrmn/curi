@@ -6,7 +6,7 @@ import {
   IJS
 } from "../../../../../components/package/common";
 
-export const meta = {
+export let meta = {
   title: "CuriPlugin",
   hash: "CuriPlugin"
 };
@@ -36,7 +36,7 @@ export function CuriPluginAPI() {
       <CodeBlock>
         {`import { CuriPlugin } from '@curi/vue';
 
-const router = createRouter(history, routes);
+let router = createRouter(history, routes);
 Vue.use(CuriPlugin, { router });`}
       </CodeBlock>
     </HashSection>

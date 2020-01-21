@@ -39,18 +39,18 @@ describe("useNavigationHandler", () => {
 
   describe("event handler", () => {
     it("it uses nav props (name, params, hash, query, and state) to generate nav location", () => {
-      const mockNavigate = jest.fn();
-      const routes = prepareRoutes([
+      let mockNavigate = jest.fn();
+      let routes = prepareRoutes([
         { name: "Test", path: "test" },
         { name: "Catch All", path: "(.*)" }
       ]);
-      const router = createRouter(inMemory, routes);
+      let router = createRouter(inMemory, routes);
       router.history.navigate = mockNavigate;
-      const Router = createRouterComponent(router);
+      let Router = createRouterComponent(router);
 
       function Link(props) {
-        const url = useURL(props);
-        const { eventHandler } = useNavigationHandler({ url, ...props });
+        let url = useURL(props);
+        let { eventHandler } = useNavigationHandler({ url, ...props });
         return (
           <a href="#" onClick={eventHandler}>
             {props.children}
@@ -66,10 +66,10 @@ describe("useNavigationHandler", () => {
         </Router>,
         node
       );
-      const a = node.querySelector("a");
-      const leftClickEvent = createClick();
+      let a = node.querySelector("a");
+      let leftClickEvent = createClick();
       Simulate.click(a, leftClickEvent);
-      const mockURL = mockNavigate.mock.calls[0][0];
+      let mockURL = mockNavigate.mock.calls[0][0];
       expect(mockURL).toMatchObject({
         url: "/test?one=1#thing",
         state: "yo"
@@ -77,19 +77,19 @@ describe("useNavigationHandler", () => {
     });
 
     it("calls onNav prop func if provided", () => {
-      const mockNavigate = jest.fn();
-      const onNav = jest.fn();
-      const routes = prepareRoutes([
+      let mockNavigate = jest.fn();
+      let onNav = jest.fn();
+      let routes = prepareRoutes([
         { name: "Test", path: "test" },
         { name: "Catch All", path: "(.*)" }
       ]);
-      const router = createRouter(inMemory, routes);
+      let router = createRouter(inMemory, routes);
       router.history.navigate = mockNavigate;
-      const Router = createRouterComponent(router);
+      let Router = createRouterComponent(router);
 
       function Link(props) {
-        const url = useURL(props);
-        const { eventHandler } = useNavigationHandler({ url, ...props });
+        let url = useURL(props);
+        let { eventHandler } = useNavigationHandler({ url, ...props });
         return (
           <a href="#" onClick={eventHandler}>
             {props.children}
@@ -105,8 +105,8 @@ describe("useNavigationHandler", () => {
         </Router>,
         node
       );
-      const a = node.querySelector("a");
-      const leftClickEvent = createClick();
+      let a = node.querySelector("a");
+      let leftClickEvent = createClick();
       Simulate.click(a, leftClickEvent);
       expect(onNav.mock.calls.length).toBe(1);
       expect(mockNavigate.mock.calls.length).toBe(1);
@@ -118,18 +118,18 @@ describe("useNavigationHandler", () => {
       }
 
       it("does not call history.navigate if canNavigate returns false", () => {
-        const mockNavigate = jest.fn();
-        const routes = prepareRoutes([
+        let mockNavigate = jest.fn();
+        let routes = prepareRoutes([
           { name: "Test", path: "test" },
           { name: "Catch All", path: "(.*)" }
         ]);
-        const router = createRouter(inMemory, routes);
+        let router = createRouter(inMemory, routes);
         router.history.navigate = mockNavigate;
-        const Router = createRouterComponent(router);
+        let Router = createRouterComponent(router);
 
         function Link(props) {
-          const url = useURL(props);
-          const { eventHandler } = useNavigationHandler({
+          let url = useURL(props);
+          let { eventHandler } = useNavigationHandler({
             url,
             canNavigate,
             ...props
@@ -147,8 +147,8 @@ describe("useNavigationHandler", () => {
           </Router>,
           node
         );
-        const a = node.querySelector("a");
-        const leftClickEvent = createClick();
+        let a = node.querySelector("a");
+        let leftClickEvent = createClick();
 
         Simulate.click(a, leftClickEvent);
 

@@ -8,16 +8,16 @@ import {
   onGitHubMeta
 } from "../../components/example/common";
 
-const meta = {
+let meta = {
   title: "Script Tags"
 };
 
-const explanationMeta = {
+let explanationMeta = {
   title: "Explanation",
   hash: "explanation"
 };
 
-const contents = [explanationMeta, onGitHubMeta];
+let contents = [explanationMeta, onGitHubMeta];
 function ScriptTagExample() {
   return (
     <Page title={meta.title}>

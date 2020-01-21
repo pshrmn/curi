@@ -8,11 +8,11 @@ import {
   Note
 } from "../../../../../components/package/common";
 
-const argumentsMeta = {
+let argumentsMeta = {
   title: "Arguments",
   hash: "staticFiles-arguments"
 };
-export const meta = {
+export let meta = {
   title: "staticFiles",
   hash: "staticFiles"
 };
@@ -61,7 +61,7 @@ staticFiles({
       <CodeBlock>
         {`staticFiles({...})
   .then(results => {
-    const resultString = results
+    let resultString = results
       .map(result => {
         return result.success
           ? \`✔ \${result.pathname}\`
@@ -89,7 +89,7 @@ staticFiles({
           </p>
 
           <CodeBlock>
-            {`const pages = [
+            {`let pages = [
   { name: "Home" },
   { name: "User", params: { id: 1 }},
   { name: "User", params: { id: 2 }},
@@ -123,7 +123,7 @@ staticFiles({
             </p>
 
             <CodeBlock>
-              {`const routes = prepare_routes([
+              {`let routes = prepare_routes([
   {
     name: "Home",
     path: "",
@@ -242,15 +242,15 @@ import { renderToString } from "react-dom";
 import { createRouterComponent } from "@curi/react-dom";
 
 function render(emitted) {
-  const { router, response } = emitted;
+  let { router, response } = emitted;
   // if the route shouldn't be rendered, throw
   if (response.redirect) {
     throw new Error(\`\${response.location.pathname} redirects\`);
   }
 
-  const Router = createRouterComponent(router);
+  let Router = createRouterComponent(router);
   // generate markup
-  const markup = renderToString(
+  let markup = renderToString(
     <Router>
       <App />
     </Router>

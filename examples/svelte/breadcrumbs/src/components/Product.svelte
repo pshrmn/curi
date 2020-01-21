@@ -8,7 +8,7 @@
   import { getResponse } from "@curi/svelte";
   import Breadcrumbs from "./Breadcrumbs.svelte";
 
-  const response = getResponse();
+  let response = getResponse();
 
   $: params = $response.params;
   $: product = $response.data.product;

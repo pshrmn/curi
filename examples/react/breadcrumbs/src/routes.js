@@ -36,11 +36,11 @@ export default prepareRoutes([
         name: "Category",
         path: ":category",
         respond: ({ match }) => {
-          const { params } = match;
-          const modifiers = {
+          let { params } = match;
+          let modifiers = {
             body: Category
           };
-          const products = api.category(params.category);
+          let products = api.category(params.category);
           if (products == null) {
             modifiers.error = "Category does not exist";
           }
@@ -57,11 +57,11 @@ export default prepareRoutes([
             name: "Product",
             path: ":productID",
             respond({ match }) {
-              const { params } = match;
-              const modifiers = {
+              let { params } = match;
+              let modifiers = {
                 body: Product
               };
-              const product = api.product(params.productID);
+              let product = api.product(params.productID);
               if (!product) {
                 modifiers.error = "Product does not exist";
               } else {

@@ -7,15 +7,15 @@ import {
   IJS
 } from "../../components/guide/common";
 
-const meta = {
+let meta = {
   title: "Development Tips"
 };
 
-const hmrMeta = {
+let hmrMeta = {
   title: "Hot Module Replacement",
   hash: "hmr"
 };
-const contents = [hmrMeta];
+let contents = [hmrMeta];
 
 function DevTipsGuide() {
   return (
@@ -62,7 +62,7 @@ render(router);
 
 if (module.hot) {
   module.hot.accept("./router.js", function() {
-    const nextRouter = require("./router").default;
+    let nextRouter = require("./router").default;
     render(nextRouter);
   });
 }`}
@@ -80,8 +80,8 @@ if (module.hot) {
           {`if (process.env.NODE_ENV !== "production") {
   if (module.hot) {
     module.hot.accept("./router", () => {
-      const nextRouter = require("./router").default;
-      const Router = createRouterComponent(nextRouter);
+      let nextRouter = require("./router").default;
+      let Router = createRouterComponent(nextRouter);
       render(
         <Router>
           <App />
