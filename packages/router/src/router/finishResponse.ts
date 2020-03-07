@@ -1,4 +1,4 @@
-import { isExternalRedirect } from "./typeGuards";
+import { isExternalRedirect, isRedirectLocation } from "./typeGuards";
 
 import {
   CuriRouter,
@@ -81,14 +81,16 @@ export default function finishResponse(
 }
 
 function createRedirect(
-  redirect: RedirectProps | ExternalRedirect,
+  redirect: RedirectProps | RedirectLocation | ExternalRedirect,
   router: CuriRouter
 ): RedirectLocation | ExternalRedirect {
   if (isExternalRedirect(redirect)) {
     return redirect;
   }
   let { name, params, query, hash, state } = redirect;
-  let url = router.url({ name, params, query, hash });
+  let url = isRedirectLocation(redirect)
+    ? redirect.url
+    : router.url({ name, params, query, hash });
   return {
     name,
     params,

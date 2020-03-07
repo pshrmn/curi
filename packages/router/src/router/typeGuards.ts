@@ -15,3 +15,9 @@ export function isExternalRedirect(
 ): redirect is ExternalRedirect {
   return "externalURL" in redirect;
 }
+
+export function isRedirectLocation(
+  redirect: ExternalRedirect | RedirectLocation | RedirectProps
+): redirect is RedirectLocation {
+  return "url" in redirect;
+}
