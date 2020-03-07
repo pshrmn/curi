@@ -1966,6 +1966,31 @@ describe("createRouter", () => {
               });
             });
 
+            it("works with redirect that provides URL", () => {
+              let routes = prepareRoutes([
+                {
+                  name: "A Route",
+                  path: "",
+                  respond: () => {
+                    return {
+                      redirect: {
+                        url: "/some-page"
+                      }
+                    };
+                  }
+                }
+              ]);
+              let router = createRouter(inMemory, routes, {
+                history: {
+                  locations: [{ url: "/" }]
+                }
+              });
+              let { response } = router.current();
+              expect(response.redirect).toMatchObject({
+                url: "/some-page"
+              });
+            });
+
             it("works with external redirects", () => {
               let routes = prepareRoutes([
                 {
