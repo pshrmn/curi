@@ -1,6 +1,6 @@
 {
   "name": "@curi/react-native",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "React Native components to use with Curi",
   "main": "dist/curi-react-native.js",
   "module": "dist/curi-react-native.es.js",
