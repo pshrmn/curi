@@ -26,7 +26,7 @@ export function PrefetchAPI() {
 
       <CodeBlock>
         {`
-import { prefetch } from '@curi/router';
+import { prefetch } from '@curi/interactions';
 
 let route = router.route("Async Route");
 prefetch(route).then(...);`}

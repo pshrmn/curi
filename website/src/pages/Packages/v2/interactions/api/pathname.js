@@ -26,7 +26,7 @@ export function PathnameAPI() {
       </p>
 
       <CodeBlock>
-        {`import { pathname } from "@curi/router";
+        {`import { pathname } from "@curi/interactions";
 
 let routes = prepareRoutes([
   {

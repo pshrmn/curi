@@ -29,7 +29,7 @@ export function ActiveAPI() {
       </p>
 
       <CodeBlock>
-        {`import { active } from "@curi/router";
+        {`import { active } from "@curi/interactions";
 
 let routes = prepareRoutes([
   {

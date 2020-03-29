@@ -26,7 +26,7 @@ export function AncestorsAPI() {
       </p>
 
       <CodeBlock>
-        {`import { ancestors } from "@curi/router";
+        {`import { ancestors } from "@curi/interactions";
 
 let routes = prepareRoutes([
   {
