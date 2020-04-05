@@ -6,23 +6,26 @@ import {
   useURL
 } from "@curi/react-universal";
 
-import { GestureResponderEvent } from "react-native";
+import { GestureResponderEvent, TouchableHighlightProps } from "react-native";
+import { NavType } from "@hickory/root";
 import { RouteLocation } from "@curi/types";
-import { NavigatingChildren, NavigationHookProps } from "@curi/react-universal";
+import { NavigatingChildren } from "@curi/react-universal";
 
-interface BaseLinkProps extends RouteLocation {
-  anchor?: React.ReactType;
+type BaseLinkProps = RouteLocation &
+  TouchableHighlightProps & {
+    anchor?: React.ReactType;
+    onNav?: (e: GestureResponderEvent) => void;
+    method?: NavType;
+    target?: string;
+  };
+
+export interface LinkProps extends BaseLinkProps {
+  children: React.ReactNode;
 }
 
-export type LinkProps = BaseLinkProps &
-  NavigationHookProps<GestureResponderEvent> & {
-    children: React.ReactNode;
-  };
-
-export type AsyncLinkProps = BaseLinkProps &
-  NavigationHookProps<GestureResponderEvent> & {
-    children: NavigatingChildren;
-  };
+export interface AsyncLinkProps extends BaseLinkProps {
+  children: NavigatingChildren;
+}
 
 function canNavigate(event: GestureResponderEvent) {
   return !event.defaultPrevented;

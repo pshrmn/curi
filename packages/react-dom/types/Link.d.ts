@@ -1,19 +1,19 @@
 import React from "react";
 import { RouteLocation } from "@curi/types";
-import { NavigatingChildren, NavigationHookProps } from "@curi/react-universal";
-interface BaseLinkProps extends RouteLocation {
+import { NavType } from "@hickory/root";
+import { NavigatingChildren } from "@curi/react-universal";
+declare type BaseLinkProps = RouteLocation & React.AnchorHTMLAttributes<HTMLAnchorElement> & {
     anchor?: React.ReactType;
+    onNav?: (e: React.MouseEvent<HTMLElement>) => void;
+    method?: NavType;
+    target?: string;
+};
+export interface LinkProps extends BaseLinkProps {
+    children: React.ReactNode;
 }
-export declare type LinkProps = BaseLinkProps & NavigationHookProps<React.MouseEvent<HTMLElement>> & {
-    children: React.ReactNode;
-};
-export declare type AsyncLinkProps = BaseLinkProps & NavigationHookProps<React.MouseEvent<HTMLElement>> & {
+export interface AsyncLinkProps extends BaseLinkProps {
     children: NavigatingChildren;
-};
-export declare let Link: React.ForwardRefExoticComponent<BaseLinkProps & NavigationHookProps<React.MouseEvent<HTMLElement, MouseEvent>> & {
-    children: React.ReactNode;
-} & React.RefAttributes<any>>;
-export declare let AsyncLink: React.ForwardRefExoticComponent<BaseLinkProps & NavigationHookProps<React.MouseEvent<HTMLElement, MouseEvent>> & {
-    children: NavigatingChildren;
-} & React.RefAttributes<any>>;
+}
+export declare let Link: React.ForwardRefExoticComponent<LinkProps & React.RefAttributes<any>>;
+export declare let AsyncLink: React.ForwardRefExoticComponent<AsyncLinkProps & React.RefAttributes<any>>;
 export {};

@@ -7,21 +7,24 @@ import {
 import { canNavigate } from "./utils";
 
 import { RouteLocation } from "@curi/types";
-import { NavigatingChildren, NavigationHookProps } from "@curi/react-universal";
+import { NavType } from "@hickory/root";
+import { NavigatingChildren } from "@curi/react-universal";
 
-interface BaseLinkProps extends RouteLocation {
-  anchor?: React.ReactType;
+type BaseLinkProps = RouteLocation &
+  React.AnchorHTMLAttributes<HTMLAnchorElement> & {
+    anchor?: React.ReactType;
+    onNav?: (e: React.MouseEvent<HTMLElement>) => void;
+    method?: NavType;
+    target?: string;
+  };
+
+export interface LinkProps extends BaseLinkProps {
+  children: React.ReactNode;
 }
 
-export type LinkProps = BaseLinkProps &
-  NavigationHookProps<React.MouseEvent<HTMLElement>> & {
-    children: React.ReactNode;
-  };
-
-export type AsyncLinkProps = BaseLinkProps &
-  NavigationHookProps<React.MouseEvent<HTMLElement>> & {
-    children: NavigatingChildren;
-  };
+export interface AsyncLinkProps extends BaseLinkProps {
+  children: NavigatingChildren;
+}
 
 export let Link = React.forwardRef((props: LinkProps, ref: React.Ref<any>) => {
   let {
