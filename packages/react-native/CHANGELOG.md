@@ -1,3 +1,7 @@
+## Next
+
+* Fix `Link` and `AsyncLink` types.
+
 ## 2.0.0
 
 Consolidated CHANGELOG for v2:
