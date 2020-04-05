@@ -9,7 +9,7 @@
   "author": "Paul Sherman",
   "license": "MIT",
   "dependencies": {
-    "@curi/react-dom": "2.0.1",
+    "@curi/react-dom": "2.0.2",
     "@curi/router": "2.1.0",
     "@hickory/browser": "^2.1.0",
     "prop-types": "^15.6.0",

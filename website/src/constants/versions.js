@@ -2,8 +2,8 @@
 export default {
   "helpers": "2.0.1",
   "interactions": "2.0.1",
-  "react-dom": "2.0.1",
-  "react-native": "2.0.1",
+  "react-dom": "2.0.2",
+  "react-native": "2.0.2",
   "react-universal": "2.0.1",
   "router": "2.1.0",
   "static": "2.0.2",

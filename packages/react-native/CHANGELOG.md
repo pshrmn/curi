@@ -1,4 +1,4 @@
-## Next
+## 2.0.2
 
 * Fix `Link` and `AsyncLink` types.
 
