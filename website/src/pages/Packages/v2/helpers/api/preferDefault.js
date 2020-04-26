@@ -2,6 +2,7 @@ import React from "react";
 
 import {
   HashSection,
+  Paragraph,
   CodeBlock,
   IJS
 } from "../../../../../components/package/common";
@@ -14,7 +15,7 @@ export let meta = {
 export function PreferDefaultAPI() {
   return (
     <HashSection meta={meta} tag="h2">
-      <p>
+      <Paragraph>
         When using dynamic import syntax (<IJS>import("someModule")</IJS>
         ), the resolved module is a module object containing all of the exports
         from that module. If the module has a default export (
@@ -22,7 +23,7 @@ export function PreferDefaultAPI() {
         <IJS>default</IJS> property. The <IJS>preferDefault</IJS> function will
         resolve with the <IJS>default</IJS> property of the module if it exists
         and with the module if it does not.
-      </p>
+      </Paragraph>
 
       <CodeBlock>
         {`import { preferDefault } from "@curi/helpers";

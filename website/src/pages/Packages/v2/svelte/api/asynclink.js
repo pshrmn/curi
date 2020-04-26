@@ -3,6 +3,7 @@ import { Link } from "@curi/react-dom";
 
 import {
   HashSection,
+  Paragraph,
   CodeBlock,
   IJS
 } from "../../../../../components/package/common";
@@ -19,14 +20,14 @@ export let meta = {
 export function AsyncLinkAPI() {
   return (
     <HashSection meta={meta} tag="h2">
-      <p>
+      <Paragraph>
         The <IJS>AsyncLink</IJS> component is used to create an anchor for
         navigating to another route. This is similar to the the{" "}
         <Link hash="link">
           <IJS>Link</IJS>
         </Link>
         , but also takes a <IJS>wrapper</IJS> component for
-      </p>
+      </Paragraph>
 
       <CodeBlock lang="html">
         {`<menu>
@@ -45,29 +46,29 @@ export function AsyncLinkAPI() {
           meta={{ title: "wrapper", hash: "asynclink-wrapper" }}
           tag="h4"
         >
-          <p>
+          <Paragraph>
             A wrapper component to be rendered around the anchor. The wrapper
             will receive a <IJS>navigating</IJS> prop that defaults to{" "}
             <IJS>false</IJS>, is set to <IJS>true</IJS> when a user clicks the
             anchor to begin a navigation, and resets to <IJS>false</IJS> when
             the navigation completes.
-          </p>
+          </Paragraph>
 
           <CodeBlock lang="html">
             {`<AsyncLink wrapper={NavSpinner} name="Home">Home</AsyncLink>`}
           </CodeBlock>
 
-          <p>
+          <Paragraph>
             For a demonstration, please check out the{" "}
             <Link name="Example" params={{ slug: "async" }}>
               asynchronous navigation example
             </Link>
             .
-          </p>
+          </Paragraph>
         </HashSection>
 
         <HashSection meta={{ title: "name", hash: "asynclink-name" }} tag="h4">
-          <p>The name of the route to link to.</p>
+          <Paragraph>The name of the route to link to.</Paragraph>
 
           <CodeBlock lang="html">
             {`<AsyncLink name="Home" wrapper={NavSpinner}>Home</AsyncLink>
@@ -79,7 +80,7 @@ export function AsyncLinkAPI() {
           meta={{ title: "params", hash: "asynclink-params" }}
           tag="h4"
         >
-          <p>An object of route params for the linked route.</p>
+          <Paragraph>An object of route params for the linked route.</Paragraph>
 
           <CodeBlock lang="html">
             {`<AsyncLink
@@ -94,7 +95,7 @@ export function AsyncLinkAPI() {
         </HashSection>
 
         <HashSection meta={{ title: "hash", hash: "asynclink-hash" }} tag="h4">
-          <p>The hash for the location to link to.</p>
+          <Paragraph>The hash for the location to link to.</Paragraph>
 
           <CodeBlock lang="html">
             {`<AsyncLink
@@ -110,7 +111,7 @@ export function AsyncLinkAPI() {
           meta={{ title: "query", hash: "asynclink-query" }}
           tag="h4"
         >
-          <p>The query for the location to link to.</p>
+          <Paragraph>The query for the location to link to.</Paragraph>
 
           <CodeBlock lang="html">
             {`<AsyncLink

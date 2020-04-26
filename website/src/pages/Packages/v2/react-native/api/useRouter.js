@@ -2,9 +2,9 @@ import React from "react";
 
 import {
   HashSection,
+  Paragraph,
   CodeBlock,
-  IJS,
-  Note
+  IJS
 } from "../../../../../components/package/common";
 
 export let meta = {
@@ -15,9 +15,9 @@ export let meta = {
 export function UseRouterAPI() {
   return (
     <HashSection meta={meta} tag="h2">
-      <p>
+      <Paragraph>
         The <IJS>useRouter</IJS> hook returns the <IJS>router</IJS> object.
-      </p>
+      </Paragraph>
 
       <CodeBlock lang="jsx">
         {`import { useRouter } from '@curi/react-native';

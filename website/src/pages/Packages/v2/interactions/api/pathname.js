@@ -2,8 +2,8 @@ import React from "react";
 
 import {
   HashSection,
-  CodeBlock,
-  IJS
+  Paragraph,
+  CodeBlock
 } from "../../../../../components/package/common";
 
 let argumentsMeta = {
@@ -18,12 +18,14 @@ export let meta = {
 export function PathnameAPI() {
   return (
     <HashSection meta={meta} tag="h2">
-      <p>An interaction function to generate a pathname string for a route.</p>
+      <Paragraph>
+        An interaction function to generate a pathname string for a route.
+      </Paragraph>
 
-      <p>
+      <Paragraph>
         If the route requires an params, they should be provided as the second
         argument to the function call.
-      </p>
+      </Paragraph>
 
       <CodeBlock>
         {`import { pathname } from "@curi/interactions";
@@ -48,18 +50,18 @@ let parent = pathname(route); // "/"`}
           tag="h4"
           meta={{ title: "route", hash: "pathname-arguments-route" }}
         >
-          <p>The route to generate a pathname string for.</p>
+          <Paragraph>The route to generate a pathname string for.</Paragraph>
         </HashSection>
 
         <HashSection
           tag="h4"
           meta={{ title: "params", hash: "pathname-arguments-params" }}
         >
-          <p>
+          <Paragraph>
             An object of params used to generate the pathname. If the route
             and/or any of its ancestor routes require params, then this argument
             must be provided.
-          </p>
+          </Paragraph>
         </HashSection>
 
         <CodeBlock>

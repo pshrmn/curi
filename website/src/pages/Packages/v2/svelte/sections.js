@@ -1,7 +1,11 @@
 import React from "react";
 import { Link } from "@curi/react-dom";
 
-import { About, APIBlock } from "../../../../components/package/common";
+import {
+  About,
+  Paragraph,
+  APIBlock
+} from "../../../../components/package/common";
 import { RouterAPI } from "./api/router";
 import { LinkAPI } from "./api/link";
 import { AsyncLinkAPI } from "./api/asynclink";
@@ -13,14 +17,16 @@ import { GetNavigationAPI } from "./api/getNavigation";
 export default {
   about: (
     <About>
-      <p>This package enables you to use Curi alongside Svelte.</p>
-      <p>
+      <Paragraph>
+        This package enables you to use Curi alongside Svelte.
+      </Paragraph>
+      <Paragraph>
         For more information on using Curi with Svelte, please check out the{" "}
         <Link name="Guide" params={{ slug: "svelte" }}>
           Svelte guide
         </Link>
         .
-      </p>
+      </Paragraph>
     </About>
   ),
   api: (

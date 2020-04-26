@@ -9,6 +9,8 @@ let Router = createRouterComponent(router);
 let render =
   process.env.NODE_ENV !== "production" ? ReactDOM.render : ReactDOM.hydrate;
 
+import "./index.css";
+
 router.once(() => {
   render(
     <Router>

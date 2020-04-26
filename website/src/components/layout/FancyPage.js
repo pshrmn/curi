@@ -1,38 +1,36 @@
 import React from "react";
-import styled from "@emotion/styled";
 
 import Page from "./TwoColumnPage";
-import { screen, color } from "../../constants/styles";
 
-let StyledPage = styled(Page)`
-  @media only screen and (min-width: ${screen.medium}) {
-    max-width: 100vw;
-  }
-`;
+let StyledPage = ({ children, ...rest }) => {
+  return (
+    <Page {...rest} className="md:max-w-full">
+      {children}
+    </Page>
+  );
+};
 
-let StyledBase = styled("article")`
-  @media only screen and (min-width: ${screen.medium}) {
-    margin-left: 275px;
-  }
-`;
+let StyledBase = ({ children, ...rest }) => {
+  return (
+    <article {...rest} className="md:ml-64 md:pl-8">
+      {children}
+    </article>
+  );
+};
 
-let StyledMenuWrapper = styled("div")`
-  display: none;
-
-  @media only screen and (min-width: ${screen.medium}) {
-    background: ${color.lightGray};
-    display: block;
-    position: fixed;
-    top: 50px;
-    bottom: 0px;
-    overflow: auto;
-
-    flex: 0 0;
-    order: -1;
-    padding: 25px;
-    margin-right: 25px;
-  }
-`;
+// top: 50px;
+// bottom: 0px;
+let StyledMenuWrapper = ({ children, ...rest }) => {
+  return (
+    <div
+      {...rest}
+      className="hidden md:block md:w-64 md:bg-gray-100 md:fixed md:bottom-0 md:overflow-auto md:flex-grow-0 md:flex-shrink-0 md:p-6 md:mr-6 md:order-first"
+      style={{ top: "50px" }}
+    >
+      {children}
+    </div>
+  );
+};
 
 export default function FancyPage({ base, menu }) {
   return (

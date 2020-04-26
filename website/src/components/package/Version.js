@@ -1,14 +1,7 @@
 import React from "react";
 import { useRouter } from "@curi/react-dom";
-import styled from "@emotion/styled";
 
-import { font } from "../../constants/styles";
-
-let StyledSelect = styled("select")`
-  font-size: 20px;
-  font-family: ${font.serif};
-  margin: 5px 0;
-`;
+const CLASSNAMES = "m-0 mr-1 mb-1";
 
 export default function Version({ versions, major, params }) {
   let router = useRouter();
@@ -16,9 +9,9 @@ export default function Version({ versions, major, params }) {
   // only render dropdown for packages with multiple versions
   if (Object.keys(versions).length > 1) {
     return (
-      <label>
+      <label className={CLASSNAMES}>
         Version:{" "}
-        <StyledSelect
+        <select
           value={major}
           onChange={e => {
             let url = router.url({
@@ -27,6 +20,7 @@ export default function Version({ versions, major, params }) {
             });
             router.navigate({ url });
           }}
+          className="font-serif my-1 mx-0 text-xl"
         >
           {Object.keys(versions).map(m => {
             return (
@@ -35,10 +29,10 @@ export default function Version({ versions, major, params }) {
               </option>
             );
           })}
-        </StyledSelect>
+        </select>
       </label>
     );
   }
 
-  return <p>v{versions[major]}</p>;
+  return <p className={CLASSNAMES}>v{versions[major]}</p>;
 }

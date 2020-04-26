@@ -2,6 +2,7 @@ import React from "react";
 
 import {
   HashSection,
+  Paragraph,
   CodeBlock,
   IJS
 } from "../../../../../components/package/common";
@@ -14,7 +15,7 @@ export let meta = {
 export function CuriPluginAPI() {
   return (
     <HashSection meta={meta} tag="h2">
-      <p>What does the plugin do?</p>
+      <Paragraph>What does the plugin do?</Paragraph>
       <ol>
         <li>
           Register <IJS>curi-link</IJS> and <IJS>curi-block</IJS> components

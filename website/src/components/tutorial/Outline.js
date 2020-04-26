@@ -1,30 +1,15 @@
 import React from "react";
-import styled from "@emotion/styled";
-
-import { color } from "../../constants/styles";
-
-let StyledAside = styled("aside")`
-  border: 1px solid ${color.borderBlue};
-  padding: 10px;
-  margin: 5px 0;
-  background: ${color.lightBlue};
-
-  p {
-    margin: 0;
-  }
-
-  .inline-code {
-    background: ${color.blue} !important;
-  }
-`;
 
 export default function Outline({ children }) {
+  // .inline-code {
+  //   background: ${color.blue} !important;
+  // }
   return (
-    <StyledAside>
-      <p>
+    <aside className="border border-border-blue p-2 my-1 mx-0 bg-light-blue">
+      <p className="m-0">
         <strong>We will be doing the following:</strong>
       </p>
-      {children}
-    </StyledAside>
+      <ul className="list-inside list-disc ml-5">{children}</ul>
+    </aside>
   );
 }

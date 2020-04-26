@@ -2,7 +2,7 @@ import React from "react";
 
 function PrismCode(props) {
   let ref = React.createRef();
-  let { component: Wrapper, children, ...rest } = props;
+  let { component: Wrapper, children, className, ...rest } = props;
 
   React.useEffect(() => {
     // relies on Prism global...
@@ -10,7 +10,11 @@ function PrismCode(props) {
   }, [children]);
 
   return (
-    <Wrapper ref={ref} {...rest}>
+    <Wrapper
+      ref={ref}
+      {...rest}
+      className={`${className} md:whitespace-pre-wrap`}
+    >
       {children}
     </Wrapper>
   );

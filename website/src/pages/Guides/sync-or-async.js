@@ -4,6 +4,7 @@ import { Link } from "@curi/react-dom";
 import {
   TitledPlainSection,
   HashSection,
+  Paragraph,
   CodeBlock,
   IJS
 } from "../../components/guide/common";
@@ -23,20 +24,20 @@ function SyncAndAsyncGuide() {
   return (
     <React.Fragment>
       <TitledPlainSection title={meta.title}>
-        <p>
+        <Paragraph>
           With Curi, routes can be synchronous or asynchronous. By default,
           routes are synchronous. If a route has a <IJS>resolve</IJS> function,
           it becomes async.
-        </p>
+        </Paragraph>
 
-        <p>
+        <Paragraph>
           When a navigation event is triggered (e.g. clicking a link or button),
           the router will match a route. If the route is synchronous, the
           response will be emitted immediately. If the route is asynchronous,
           the response will not be emitted until the route's async functions
           have finished. Asynchronous routes are useful for code splitting and
           preloading data.
-        </p>
+        </Paragraph>
 
         <CodeBlock>
           {`// sync
@@ -55,20 +56,20 @@ function SyncAndAsyncGuide() {
       </TitledPlainSection>
 
       <HashSection meta={thinkMeta} tag="h2">
-        <p>
+        <Paragraph>
           For the most part, it shouldn't matter to you (or your users) whether
           routes are sync or async, but there are a couple of things that you
           should be aware of when it comes to async matching.
-        </p>
+        </Paragraph>
 
         <ol>
           <li>
-            <p>
+            <Paragraph>
               If the initial route that matches is async and you try to render
               immediately, the <IJS>response</IJS> will be <IJS>undefined</IJS>.
               You can wait to render until the initial response is ready with{" "}
               <IJS>router.once</IJS>.
-            </p>
+            </Paragraph>
 
             <CodeBlock>
               {`let router = createRouter(browser, routes);
@@ -80,16 +81,16 @@ router.once(() => {
             </CodeBlock>
           </li>
           <li>
-            <p>
+            <Paragraph>
               With async routes, there is a delay between when the user clicks a
               link and when the new response is emitted (the delay being the
               time it takes for the asynchronous actions to run). During this
               time, the navigation can be interrupted with a new navigation. It
               can be useful to update your UI after a link/button is clicked to
               indicate that the next page is loading.
-            </p>
+            </Paragraph>
 
-            <p>
+            <Paragraph>
               You can see an example of this in the{" "}
               <Link
                 name="Example"
@@ -98,7 +99,7 @@ router.once(() => {
                 Asynchronous Navigation Example
               </Link>
               .
-            </p>
+            </Paragraph>
           </li>
         </ol>
       </HashSection>

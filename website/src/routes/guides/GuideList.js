@@ -5,13 +5,14 @@ import GUIDE_API from "../../constants/guides";
 import Page from "../../components/layout/Page";
 import {
   TitledPlainSection,
-  PlainSection
+  PlainSection,
+  Paragraph
 } from "../../components/layout/Sections";
 
 let GroupGuides = ({ guides }) => (
-  <ul className="link-list">
+  <ul>
     {guides.map(g => (
-      <li key={g.name} className="solo">
+      <li key={g.name}>
         <Link name="Guide" params={{ slug: g.slug }}>
           {g.name}
         </Link>
@@ -38,30 +39,30 @@ export default function GuideList() {
   return (
     <Page>
       <TitledPlainSection title="Curi Guides">
-        <p>
+        <Paragraph>
           There are a number of guides to help you make the most of Curi in your
           application.
-        </p>
+        </Paragraph>
 
-        <p>
+        <Paragraph>
           The "basic" guides are designed to give you a solid understanding of
           how to use Curi and how it works.
-        </p>
+        </Paragraph>
 
-        <p>
+        <Paragraph>
           The "rendering" guides give an overview of how to use Curi with the
           currently supported renderers.
-        </p>
+        </Paragraph>
 
-        <p>
+        <Paragraph>
           The "advanced" guides will help you take advantage of more Curi
           features to get the most out of Curi.
-        </p>
+        </Paragraph>
 
-        <p>
+        <Paragraph>
           The "migration" guides are helpful for transitioning to Curi from
           other single-page application routers.
-        </p>
+        </Paragraph>
       </TitledPlainSection>
 
       <PlainSection>

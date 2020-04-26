@@ -4,6 +4,7 @@ import { Link } from "@curi/react-dom";
 import {
   TitledPlainSection,
   HashSection,
+  Paragraph,
   CodeBlock,
   IJS
 } from "../../components/guide/common";
@@ -32,19 +33,19 @@ function UsingSideEffectsGuide() {
   return (
     <React.Fragment>
       <TitledPlainSection title={meta.title}>
-        <p>
+        <Paragraph>
           Curi side effects are permanent router response handlers that are run
           after those registered using <IJS>router.observe</IJS> and{" "}
           <IJS>router.once</IJS>.
-        </p>
+        </Paragraph>
 
-        <p>
+        <Paragraph>
           Whenever a new response is generated, all of the side effect functions
           will be called. They will be given an object with the new{" "}
           <IJS>response</IJS> object, a <IJS>navigation</IJS> object with some
           extra routing data (the navigation action the previous response), and
           the <IJS>router</IJS> object.
-        </p>
+        </Paragraph>
 
         <CodeBlock>
           {`function logResponse({ response }) {
@@ -54,11 +55,11 @@ function UsingSideEffectsGuide() {
       </TitledPlainSection>
 
       <HashSection meta={addingMeta} tag="h2">
-        <p>
+        <Paragraph>
           Side effects are provided to your router with the{" "}
           <IJS>sideEffects</IJS> property of the options object. This is an
           array of observer functions.
-        </p>
+        </Paragraph>
 
         <CodeBlock>
           {`let router = createRouter(browser, routes, {
@@ -66,13 +67,13 @@ function UsingSideEffectsGuide() {
 });`}
         </CodeBlock>
 
-        <p>
+        <Paragraph>
           Side effects are always run after observers registered using{" "}
           <IJS>router.observe</IJS> and <IJS>router.once</IJS>. Because those
           forms of response handler registration are primarily used for
           rendering the application, this means that the side effects will be
           called after the application has re-rendered.
-        </p>
+        </Paragraph>
 
         <CodeBlock>
           {`let router = createRouter(browser, routes, {
@@ -91,9 +92,9 @@ router.observe(render);
       </HashSection>
 
       <HashSection meta={providedMeta} tag="h2">
-        <p>
+        <Paragraph>
           Curi's <IJS>@curi/router</IJS> package provides three side effects:
-        </p>
+        </Paragraph>
         <ul>
           <li>
             The{" "}
@@ -148,10 +149,10 @@ let router = createRouter(browser, routes, {
       </HashSection>
 
       <HashSection meta={creatingMeta} tag="h2">
-        <p>
+        <Paragraph>
           When creating your own side effect, you can write a regular function
           or a side effect "factory".
-        </p>
+        </Paragraph>
 
         <CodeBlock>
           {`function mySideEffect({ response, navigation }) {
@@ -164,9 +165,9 @@ let router = createRouter(browser, routes, {
 });`}
         </CodeBlock>
 
-        <p>
+        <Paragraph>
           A side effect factory lets create a more customizable side effect.
-        </p>
+        </Paragraph>
 
         <CodeBlock>
           {`function AnalyticsLogger(options) {
@@ -180,7 +181,7 @@ let router = createRouter(browser, routes, {
 }`}
         </CodeBlock>
 
-        <p>
+        <Paragraph>
           You may want to review the{" "}
           <Link
             name="Guide"
@@ -190,7 +191,7 @@ let router = createRouter(browser, routes, {
             response properties
           </Link>{" "}
           to know which properties you should expect a response to have.
-        </p>
+        </Paragraph>
       </HashSection>
     </React.Fragment>
   );

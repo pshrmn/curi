@@ -1,15 +1,18 @@
 import React from "react";
-import { Link } from "@curi/react-dom";
 
 import TUTORIAL_API from "../../../constants/tutorials";
 import ActiveLink from "../ActiveLink";
 import CollapsibleGroup from "./CollapsibleGroup";
 
 let GroupTutorials = ({ tutorials }) => (
-  <ul className="link-list">
+  <ul className="ml-2">
     {tutorials.map(g => (
-      <li key={g.title} className="solo">
-        <ActiveLink name="Tutorial" params={{ slug: g.slug }}>
+      <li key={g.title}>
+        <ActiveLink
+          name="Tutorial"
+          params={{ slug: g.slug }}
+          activeClassName="font-bold"
+        >
           {g.title}
         </ActiveLink>
       </li>

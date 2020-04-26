@@ -4,6 +4,7 @@ import { Link } from "@curi/react-dom";
 import {
   TitledPlainSection,
   HashSection,
+  Paragraph,
   CodeBlock,
   Note,
   IJS
@@ -40,15 +41,15 @@ function GettingStartedGuide() {
   return (
     <React.Fragment>
       <TitledPlainSection title={meta.title}>
-        <p>
+        <Paragraph>
           The core of a single-page application is its router. The router is
           responsible for matching locations to its known routes and for
           powering navigation within the application.
-        </p>
+        </Paragraph>
       </TitledPlainSection>
 
       <HashSection meta={routerMeta} tag="h2">
-        <p>
+        <Paragraph>
           A router is created using a{" "}
           <Link name="Guide" params={{ slug: "history" }}>
             <IJS>history</IJS> function
@@ -57,7 +58,7 @@ function GettingStartedGuide() {
           <Link name="Guide" params={{ slug: "routes" }}>
             <IJS>routes</IJS> array.
           </Link>
-        </p>
+        </Paragraph>
 
         <CodeBlock>
           {`import { createRouter, prepareRoutes } from '@curi/router';
@@ -69,18 +70,18 @@ let router = createRouter(browser, routes);`}
       </HashSection>
 
       <HashSection meta={urlsMeta} tag="h2">
-        <p>
+        <Paragraph>
           Locations are represented using URLs. URLs are a combination of a{" "}
           <IJS>pathname</IJS> string, a <IJS>query</IJS>, and a <IJS>hash</IJS>.
-        </p>
+        </Paragraph>
 
-        <p>
+        <Paragraph>
           The router provides a <IJS>url</IJS> method for automatically
           generating a URL. The method takes the name of the route and the
           route's params to generate the URL's <IJS>pathname</IJS>.
           Additionally, <IJS>query</IJS> and <IJS>hash</IJS> values can be
           provided.
-        </p>
+        </Paragraph>
 
         <CodeBlock>
           {`let routes = prepareRoutes([
@@ -105,10 +106,10 @@ let queryURL = router.url({
 // "/?value=7"`}
         </CodeBlock>
 
-        <p>
+        <Paragraph>
           By default, a <IJS>query</IJS> is a string, but you can also configure
           your history to use a query library.
-        </p>
+        </Paragraph>
 
         <CodeBlock>
           {`import { parse, stringify } from "qs";
@@ -127,14 +128,14 @@ let queryURL = router.url({
       </HashSection>
 
       <HashSection meta={navigationMeta} tag="h2">
-        <p>
+        <Paragraph>
           There are two types of navigation within a single-page application:
           in-app navigation (e.g. clicking a link) and platform navigation (e.g.
           clicking the back button or typing a URL in the address bar and
           hitting enter).
-        </p>
+        </Paragraph>
 
-        <p>
+        <Paragraph>
           A Curi router object has a <IJS>navigate</IJS> method to let you
           navigate with code. The function takes an object with a <IJS>url</IJS>{" "}
           property of the URL to navigate to; this pairs well with the router's{" "}
@@ -147,7 +148,7 @@ let queryURL = router.url({
             other optional arguments to <IJS>navigate</IJS>
           </Link>
           .
-        </p>
+        </Paragraph>
 
         <CodeBlock>
           {`router.navigate({
@@ -156,7 +157,7 @@ let queryURL = router.url({
         </CodeBlock>
 
         <Note>
-          <p>
+          <Paragraph>
             Render packages, like{" "}
             <Link
               name="Package"
@@ -166,24 +167,24 @@ let queryURL = router.url({
             </Link>
             , will call <IJS>router.nagivate</IJS> for you when the user clicks
             a link.
-          </p>
+          </Paragraph>
         </Note>
       </HashSection>
 
       <HashSection meta={handlerMeta} tag="h2">
-        <p>
+        <Paragraph>
           When Curi matches a location to a route, it creates a "response"
           object. Respons objects provide information about the route that
           matched.
-        </p>
+        </Paragraph>
 
-        <p>
+        <Paragraph>
           Response handlers are functions that will be called when there is a
           new response. There are three types of response handlers: side
           effects, one time functions, and observers.
-        </p>
+        </Paragraph>
 
-        <p>
+        <Paragraph>
           Side effects are passed to the router when you are creating it. These
           are best suited for non-rendering tasks. You can read more about them
           in the{" "}
@@ -191,7 +192,7 @@ let queryURL = router.url({
             side effects guide
           </Link>
           .
-        </p>
+        </Paragraph>
 
         <CodeBlock>
           {`let router = createRouter(browser, routes, {
@@ -199,11 +200,11 @@ let queryURL = router.url({
 })`}
         </CodeBlock>
 
-        <p>
+        <Paragraph>
           Response handlers registered with <IJS>router.once</IJS> will only be
           called one time. This is primarily useful for waiting for asynchronous
           actions to finish before the initial render.
-        </p>
+        </Paragraph>
 
         <CodeBlock>
           {`let router = createRouter(browser, routes);
@@ -214,17 +215,17 @@ router.once(() => {
 });`}
         </CodeBlock>
 
-        <p>
+        <Paragraph>
           Observers are passed to the router using <IJS>router.observe</IJS>.
           Unlike one time functions, these will be called every time there is a
           new response.
-        </p>
+        </Paragraph>
 
-        <p>
+        <Paragraph>
           Render packages, like <IJS>@curi/react-dom</IJS>, use{" "}
           <IJS>router.observe</IJS> internally in order to re-render when there
           is a new response.
-        </p>
+        </Paragraph>
 
         <CodeBlock>
           {`router.observe(({ response }) => {
@@ -234,11 +235,11 @@ router.once(() => {
       </HashSection>
 
       <HashSection meta={renderingMeta} tag="h2">
-        <p>
+        <Paragraph>
           Curi adapts its API to work with different UI libraries. You can check
           out the respective guides for the officially supported libraries to
           see how to use them.
-        </p>
+        </Paragraph>
 
         <ul>
           <li>

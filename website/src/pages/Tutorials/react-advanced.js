@@ -5,6 +5,7 @@ import {
   TitledPlainSection,
   HashSection,
   HashAside,
+  Paragraph,
   CodeBlock,
   Outline,
   Note,
@@ -69,25 +70,25 @@ function ReactAdvancedTutorial() {
   return (
     <React.Fragment>
       <TitledPlainSection title="React Advanced Tutorial">
-        <p>
+        <Paragraph>
           In this tutorial, we will be expanding on the website built in the{" "}
           <Link name="Tutorial" params={{ slug: "react-basics" }}>
             React basics tutorial
           </Link>
           . We will take advantage of Curi's async features to add code
           splitting and data preloading to the application.
-        </p>
+        </Paragraph>
 
         <Outline>
-          <ul>
-            <li>Add code splitting to routes.</li>
-            <li>Preload route data with asynchronous navigation.</li>
-          </ul>
+          <li>Add code splitting to routes.</li>
+          <li>Preload route data with asynchronous navigation.</li>
         </Outline>
       </TitledPlainSection>
 
       <HashSection meta={demoMeta} tag="h2">
-        <p>You can run a demo of the site we are building with CodeSandbox.</p>
+        <Paragraph>
+          You can run a demo of the site we are building with CodeSandbox.
+        </Paragraph>
 
         <CodeSandboxDemo
           id="github/curijs/react-advanced-tutorial/tree/master/"
@@ -96,7 +97,7 @@ function ReactAdvancedTutorial() {
       </HashSection>
 
       <HashSection meta={setupMeta} tag="h2">
-        <p>
+        <Paragraph>
           If you did not complete the React basics tutorial, you should either
           clone its{" "}
           <a href="https://github.com/curijs/react-basic-tutorial/">repo</a> or
@@ -105,11 +106,11 @@ function ReactAdvancedTutorial() {
             sandbox
           </a>
           .
-        </p>
-        <p>
+        </Paragraph>
+        <Paragraph>
           If you are cloning the repo, you should also install its dependencies
           and then start the development server.
-        </p>
+        </Paragraph>
 
         <CodeBlock lang="bash">
           {`git clone https://github.com/curijs/react-basic-tutorial react-advanced-tutorial
@@ -120,27 +121,27 @@ npm run start`}
       </HashSection>
 
       <HashSection meta={asyncMeta} tag="h2">
-        <p>
+        <Paragraph>
           Curi lets you attach async functions to a route through its{" "}
           <IJS>resolve</IJS> function. When that route matches, a response will
           not be emitted until the <IJS>resolve</IJS> has resolved.
-        </p>
-        <p>
+        </Paragraph>
+        <Paragraph>
           <IJS>resolve</IJS> be passed an object of the matched route
           properties, which you may use to specify what data to load.
-        </p>
-        <p>
+        </Paragraph>
+        <Paragraph>
           The results of the async functions will be available in a route's{" "}
           <IJS>respond</IJS> function through the <IJS>resolved</IJS> object.
           Each result will be stored in the object using the async function's
           name.
-        </p>
-        <p>
+        </Paragraph>
+        <Paragraph>
           If any of the async functions throws an uncaught error, that error
           will be available in the <IJS>respond</IJS> function through the{" "}
           <IJS>error</IJS> property. That said, it is preferable for you to
           catch and handle the errors yourself.
-        </p>
+        </Paragraph>
 
         <CodeBlock>
           {`{
@@ -163,7 +164,7 @@ npm run start`}
         </CodeBlock>
 
         <Note>
-          <p>
+          <Paragraph>
             These async functions are called every time a route matches. If you
             have functions that should re-use the results from previous calls,
             you will probably want to implement some caching. Curi provides a{" "}
@@ -176,14 +177,14 @@ npm run start`}
             </Link>{" "}
             function for simple caching, but leaves more advanced caching
             solutions to the user.
-          </p>
+          </Paragraph>
         </Note>
 
-        <p>
+        <Paragraph>
           Curi uses Promises to manage async code, so async functions should
           return Promises. <IJS>Promise.resolve</IJS> can be used to wrap a
           return value in a Promise.
-        </p>
+        </Paragraph>
 
         <CodeBlock>
           {`import { preferDefault } from "@curi/helpers";
@@ -210,34 +211,36 @@ let routes = prepareRoutes([
         </CodeBlock>
 
         <HashAside meta={initialMeta} tag="h3">
-          <p>
+          <Paragraph>
             There is one caveat to async routes: we cannot safely render the
             application immediately on load because the initial response might
             not be ready yet.
-          </p>
+          </Paragraph>
 
-          <p>
+          <Paragraph>
             Curi does not emit a response object to its observers until it is
             ready. If the initial route that matches is asynchronous, then there
             is a delay between when the application is ready to render and when
             there is a response to render.
-          </p>
+          </Paragraph>
 
-          <p>
+          <Paragraph>
             If you attempt to render immediately after creating a router and the
             initial response is still being created, the <IJS>response</IJS>{" "}
             that will be passed to the <IJS>Router</IJS>'s <IJS>children</IJS>{" "}
             will be <IJS>undefined</IJS>.
-          </p>
+          </Paragraph>
 
-          <p>There are a few possible ways to handle this situation.</p>
+          <Paragraph>
+            There are a few possible ways to handle this situation.
+          </Paragraph>
 
-          <p>
+          <Paragraph>
             The first is to delay rendering by placing your{" "}
             <IJS>ReactDOM.render</IJS> call inside of a <IJS>router.once</IJS>{" "}
             callback. This will guarantee that the render isn't called until the
             first response is ready.
-          </p>
+          </Paragraph>
 
           <CodeBlock>
             {`// delay rendering
@@ -251,67 +254,67 @@ router.once(() => {
 `}
           </CodeBlock>
 
-          <p>
+          <Paragraph>
             Alternatively, you can update the root <IJS>App</IJS> component to
             detect when the <IJS>response</IJS> is <IJS>undefined</IJS> and
             render a loading message.
-          </p>
+          </Paragraph>
 
           <CodeBlock>
             {`// render fallback when response is null
 function App() {
   let { response } = useResponse();
   if (response === undefined) {
-    return <p>Loading...</p>;
+    return <Paragraph>Loading...</Paragraph>;
   }
   let { body:Body } = response;
   return <Body response={response} />;
 }`}
           </CodeBlock>
 
-          <p>
+          <Paragraph>
             Which approach is best will depend on the specifics of an
             application. If there are routes that will take a long time for the
             initial load, you will probably want to render something while they
             load. For async code with short loading times, a blank screen might
             be more acceptable.
-          </p>
+          </Paragraph>
         </HashAside>
 
-        <p>
+        <Paragraph>
           For more information on async route properties, please refer to the{" "}
           <Link name="Guide" params={{ slug: "routes" }}>
             routes guide
           </Link>
           .
-        </p>
+        </Paragraph>
       </HashSection>
 
       <HashSection meta={splitMeta} tag="h2">
-        <p>
+        <Paragraph>
           Currently, the <IJS>routes.js</IJS> module imports all of the route
           modules at the top of the file. This results in a single bundle of all
           of a website's code. This can be improved by adding code splitting to
           an application, which will result in more, but smaller, bundles.
-        </p>
+        </Paragraph>
 
         <HashAside meta={splittingMeta} tag="h3">
-          <p>
+          <Paragraph>
             Code splitting works by "dynamically" importing modules using the{" "}
             <IJS>import</IJS> function. When bundlers like Webpack see{" "}
             <IJS>import</IJS> functions, they know to create a separate bundle
             for that module (and that module's imports, etc.).
-          </p>
+          </Paragraph>
 
-          <p>
+          <Paragraph>
             You can set a chunk's name using the{" "}
             <a href="https://webpack.js.org/api/module-methods/#magic-comments">
               <IJS>webpackChunkName</IJS>
             </a>{" "}
             magic comment with an <IJS>import</IJS> call.
-          </p>
+          </Paragraph>
 
-          <p>
+          <Paragraph>
             Create React App's default configuration is already setup to support
             code splitting, but if you were creating your own Webpack
             configuration, you would need to use{" "}
@@ -319,18 +322,18 @@ function App() {
               <IJS>output.chunkFilename</IJS>
             </a>{" "}
             to support code splitting.
-          </p>
+          </Paragraph>
 
           <CodeBlock>
             {`// this creates a "Test" bundle
 import(/* webpackChunkName: "Test" */ "./components/Test.js")`}
           </CodeBlock>
 
-          <p>
+          <Paragraph>
             <IJS>import</IJS> returns a module object, so if you want to access
             a module's default export, you can use a <IJS>then</IJS> function to
             get that value.
-          </p>
+          </Paragraph>
 
           <CodeBlock>
             {`import("some-module.js")
@@ -338,19 +341,19 @@ import(/* webpackChunkName: "Test" */ "./components/Test.js")`}
           </CodeBlock>
         </HashAside>
 
-        <p>
+        <Paragraph>
           Currently <IJS>respond</IJS> function returns an object whose{" "}
           <IJS>body</IJS> property is a module imported at the top of the file.
           In order to add code splitting to routes, we can add a{" "}
           <IJS>resolve</IJS> function that imports the module.
-        </p>
+        </Paragraph>
 
-        <p>
+        <Paragraph>
           The <IJS>@curi/helpers</IJS> package provides a{" "}
           <IJS>preferDefault</IJS> function. This function will return an
           imported module's default property if it exists, and returns the
           entire module if it doesn't have a default property.
-        </p>
+        </Paragraph>
 
         <CodeBlock>
           {`import { preferDefault } from "@curi/helpers";
@@ -368,14 +371,14 @@ let routes = prepareRoutes([
 ]);`}
         </CodeBlock>
 
-        <p>
+        <Paragraph>
           When a module fails to load, the error will be passed to the{" "}
           <IJS>respond</IJS> function through the <IJS>error</IJS> property. We
           won't be incorporating this into the application here, but in a real
           application you probably want to have a fallback component to display
           an error message (especially if you have an offline mode with service
           workers).
-        </p>
+        </Paragraph>
 
         <CodeBlock>
           {`import displayLoadError from "./components/LoadError";
@@ -398,17 +401,17 @@ let routes = prepareRoutes([
 ]);`}
         </CodeBlock>
 
-        <p>
+        <Paragraph>
           We can now update the <IJS>routes.js</IJS> module to remove the
           imports at the top of the file and use <IJS>import</IJS> to import the
           route components. We will use <IJS>preferDefault</IJS> to only resolve
           the component instead of the entire module object.
-        </p>
-        <p>
+        </Paragraph>
+        <Paragraph>
           The <IJS>respond</IJS> functions should also be updated to set the
           return object's <IJS>body</IJS> property to <IJS>resolved.body</IJS>{" "}
           instead of the import at the top of the file.
-        </p>
+        </Paragraph>
 
         <CodeBlock data-line="3,10-16,21-27,32-38,43-49">
           {`// src/routes.js
@@ -463,11 +466,11 @@ export default prepareRoutes([
 ]);`}
         </CodeBlock>
 
-        <p>
+        <Paragraph>
           For this tutorial, we will use <IJS>router.once</IJS> to delay the
           initial render while we wait for the initial response. We should
           update the <IJS>index.js</IJS> module to do this.
-        </p>
+        </Paragraph>
 
         <CodeBlock data-line="22-28">
           {`// src/index.js
@@ -501,64 +504,64 @@ router.once(() => {
 registerServiceWorker();`}
         </CodeBlock>
 
-        <p>
+        <Paragraph>
           With those changes, Webpack will now split the application into
           multiple bundles. The initial render will be delayed until after the
           code split bundle for the first route has been loaded.
-        </p>
+        </Paragraph>
       </HashSection>
 
       <HashSection meta={preloadMeta} tag="h2">
-        <p>
+        <Paragraph>
           Preloading data lets you delay navigation until after the data for a
           route has loaded. This can save you from having to render a partial
           page with spinners if the data takes a while to load.
-        </p>
-        <p>
+        </Paragraph>
+        <Paragraph>
           While the data is loading, the user will be able to continue
           interacting with the current page. This means that the user can also
           start a new navigation while the current navigation is running. When
           this happens, Curi knows to to cancel the previous navigation and
           perform the new navigation instead.
-        </p>
-        <p>
+        </Paragraph>
+        <Paragraph>
           We have two routes that need to load data: <IJS>Home</IJS> and{" "}
           <IJS>Book</IJS>. The <IJS>Home</IJS> route will load the known books,
           while the <IJS>Book</IJS> route will load data about a specific book.
-        </p>
-        <p>
+        </Paragraph>
+        <Paragraph>
           Currently the data for both of these routes is imported in their
           components. In a real site you would most likely make API calls to a
           REST or GraphQL endpoint, but here we will simulate this with a fake
           API.
-        </p>
+        </Paragraph>
 
         <HashSection meta={fakeMeta} tag="h3">
-          <p>
+          <Paragraph>
             The fake API will simulate asynchronous calls to the server by
             returning Promises, similarly to the{" "}
             <a href="https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API">
               Fetch API
             </a>
             .
-          </p>
+          </Paragraph>
 
-          <p>
+          <Paragraph>
             First, we will create an <IJS>api.js</IJS> module that exports the
             fake API functions.
-          </p>
+          </Paragraph>
 
           <CodeBlock lang="bash">{`touch src/api.js`}</CodeBlock>
 
-          <p>
+          <Paragraph>
             In the API module, we will import the <IJS>books.js</IJS> data.
-          </p>
-          <p>
+          </Paragraph>
+          <Paragraph>
             We need to write two functions. The first returns a list of all
             books and the second returns the data for a specific book. For both,
             we can use <IJS>Promise.resolve</IJS> to return a Promise, even
             though we don't really have any asynchronous code being run.
-          </p>
+          </Paragraph>
 
           <CodeBlock>
             {`// src/api.js
@@ -573,7 +576,7 @@ export let BOOK = id => Promise.resolve(
           </CodeBlock>
         </HashSection>
 
-        <p>
+        <Paragraph>
           When the router is created, it can take a third argument, which is an
           options object. One of the properties of this object is{" "}
           <IJS>external</IJS>, which is used to pass in external values that
@@ -581,7 +584,7 @@ export let BOOK = id => Promise.resolve(
           <IJS>respond</IJS> functions. This is particularly useful for data
           that is initialized at runtime, like an Apollo store, but we will also
           use it here.
-        </p>
+        </Paragraph>
 
         <CodeBlock data-line="11,20-22">
           {`// src/index.js
@@ -619,24 +622,24 @@ router.once(() => {
 registerServiceWorker();`}
         </CodeBlock>
 
-        <p>
+        <Paragraph>
           What do we want to do with the data loaded from the API calls? Along
           with the <IJS>body</IJS> property, another valid return property for{" "}
           <IJS>respond</IJS> functions is <IJS>data</IJS>. This is a convenient
           way to attach any data to a response, which we can read from while
           rendering.
-        </p>
-        <p>
+        </Paragraph>
+        <Paragraph>
           The <IJS>Home</IJS> route already has an asynchronous action:
           importing the <IJS>body</IJS> component. We will name the async call
           to load the books data <IJS>"books"</IJS>.
-        </p>
-        <p>
+        </Paragraph>
+        <Paragraph>
           The <IJS>Book</IJS> route's <IJS>respond</IJS> function also needs to
           be updated to attach the books data (<IJS>resolved.books</IJS>) to the
           response.
-        </p>
-        <p>
+        </Paragraph>
+        <Paragraph>
           The <IJS>book</IJS> API call expects to be given the <IJS>id</IJS>{" "}
           number of the book it should return data for. We can grab the correct
           param (<IJS>id</IJS>) from the <IJS>params</IJS> property. However,
@@ -645,7 +648,7 @@ registerServiceWorker();`}
           how to parse the <IJS>id</IJS>. By giving it a function that calls{" "}
           <IJS>parseInt</IJS> on the provided value, <IJS>params.id</IJS> will
           be a number instead of a string.
-        </p>
+        </Paragraph>
 
         <CodeBlock data-line="10,13,17-21,27,30,34-38">
           {`// src/routes.js
@@ -712,16 +715,16 @@ export default prepareRoutes([
 ]);`}
         </CodeBlock>
 
-        <p>
+        <Paragraph>
           With the data attached to our responses, we can remove the data
           imports from the components and just read from the response.
-        </p>
+        </Paragraph>
 
-        <p>
+        <Paragraph>
           In the <IJS>Home</IJS> component's module, we can remove the{" "}
           <IJS>books.js</IJS> import and grab the response from the component's
           props. The books data can be access as <IJS>response.data.books</IJS>.
-        </p>
+        </Paragraph>
 
         <CodeBlock lang="jsx" data-line="5,9">
           {`// src/components/Home.js
@@ -745,12 +748,12 @@ export default function Home({ response }) {
 }`}
         </CodeBlock>
 
-        <p>
+        <Paragraph>
           Likewise, we can remove the <IJS>books.js</IJS> import from the{" "}
           <IJS>Book</IJS> component's module and grab the book data from{" "}
           <IJS>response.data</IJS> instead of searching for it in the books
           array.
-        </p>
+        </Paragraph>
 
         <CodeBlock lang="jsx" data-line="9">
           {`// src/components/Book.js
@@ -769,8 +772,8 @@ export default function Book({ response }) {
     <article>
       <h1>{book.title}</h1>
       <h2>by {book.author}</h2>
-      <p>Published in {book.published}</p>
-      <p>{book.pages} pages</p>
+      <Paragraph>Published in {book.published}</Paragraph>
+      <Paragraph>{book.pages} pages</Paragraph>
       <button
         type="button"
         onClick={() => {
@@ -788,13 +791,13 @@ export default function Book({ response }) {
       </HashSection>
 
       <HashSection meta={loadingMeta} tag="h2">
-        <p>
+        <Paragraph>
           At this point, we have the same functionality as the basic tutorial,
           but we have added async data loading. The bundle importing has real
           loading times, but the fake API calls resolve immediately, which
           doesn't necessarily reflect real world performance.
-        </p>
-        <p>
+        </Paragraph>
+        <Paragraph>
           We can update the fake API to delay resolving so that we can take a
           look at some of the <IJS>@curi/react-dom</IJS> components that are
           navigation-aware. The implementation here isn't important, so you can
@@ -802,7 +805,7 @@ export default function Book({ response }) {
           <IJS>BOOKS</IJS> function has a one second delay and the{" "}
           <IJS>BOOK</IJS> function has a 2.5 second delay the first time a book
           is requested (and responds instantly on subsequent calls).
-        </p>
+        </Paragraph>
 
         <CodeBlock>
           {`// src/api.js
@@ -832,7 +835,7 @@ export let BOOK = id => new Promise(resolve => {
         </CodeBlock>
 
         <HashSection meta={navigatingMeta} tag="h3">
-          <p>
+          <Paragraph>
             The <IJS>Link</IJS> component has a sibling component called{" "}
             <IJS>AsyncLink</IJS>, can takes a render-invoked function as its{" "}
             <IJS>children</IJS> prop. The function is called with a{" "}
@@ -840,13 +843,13 @@ export let BOOK = id => new Promise(resolve => {
             currently navigating to that link. This is useful for when you know
             that there is a long (multiple seconds) delay between when the user
             clicks the link and when the navigation will occur.
-          </p>
+          </Paragraph>
 
-          <p>
+          <Paragraph>
             We can replace the <IJS>Link</IJS>s in the <IJS>Home</IJS> component
             with <IJS>AsyncLink</IJS>s and use render-invoked functions to
             display a loading spinner while we wait for the book data to load.
-          </p>
+          </Paragraph>
 
           <CodeBlock lang="jsx">
             {`import { AsyncLink } from "@curi/react-dom";
@@ -861,31 +864,31 @@ export let BOOK = id => new Promise(resolve => {
 </AsyncLink>`}
           </CodeBlock>
 
-          <p>
+          <Paragraph>
             We will use the{" "}
             <a href="https://github.com/KyleAMathews/react-spinkit">
               <IJS>react-spinkit</IJS>
             </a>{" "}
             package, which provides a variety of spinner components.
-          </p>
+          </Paragraph>
 
           <CodeBlock lang="bash">{`npm install react-spinkit`}</CodeBlock>
 
-          <p>
+          <Paragraph>
             In the <IJS>Home</IJS> component's module, we need to import the{" "}
             <IJS>Spinner</IJS> component. The <IJS>Link</IJS> needs to be
             swapped from a React element to a render-invoked function. We wrap
             the contents in a <IJS>React.Fragment</IJS> to avoid unnecessary DOM
             elements. In the function, we render a <IJS>Spinner</IJS> when the{" "}
             <IJS>Link</IJS> is navigating and <IJS>null</IJS> when it is not.
-          </p>
+          </Paragraph>
           <Note>
-            <p>
+            <Paragraph>
               <IJS>react-spinkit</IJS> is highly customizable, but we are
               sticking with the defaults here. <IJS>react-spinkit</IJS> has a
               default one second render delay, which is why the spinner does not
               display immediately.
-            </p>
+            </Paragraph>
           </Note>
 
           <CodeBlock lang="jsx" data-line="3-4,12-19">
@@ -919,12 +922,12 @@ export default function Home({ response }) {
       </HashSection>
 
       <HashSection meta={caveatsMeta} tag="h2">
-        <p>
+        <Paragraph>
           Adding asynchronous loading to an application can help reduce initial
           load size and speed up user interactions, however it also has some
           issues that you will need to consider.
-        </p>
-        <p>
+        </Paragraph>
+        <Paragraph>
           The biggest consideration is that there is nothing the frontend can do
           to get the data for the initial render faster. Your application's
           frontend can only fetch data as it discovers it needs it. If you are
@@ -936,8 +939,8 @@ export default function Home({ response }) {
             with redux
           </a>
           ).
-        </p>
-        <p>
+        </Paragraph>
+        <Paragraph>
           Another consideration is whether or not you want to "hoist" data
           requirements. Curi's async functionality relies on you knowing all of
           the data requirements for a route, but you might prefer to keep the
@@ -947,7 +950,7 @@ export default function Home({ response }) {
           code splitting routes. Whether your should hoist other data
           requirements is something that should be determined on a case-by-case
           basis.
-        </p>
+        </Paragraph>
       </HashSection>
     </React.Fragment>
   );

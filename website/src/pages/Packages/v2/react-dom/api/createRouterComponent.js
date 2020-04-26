@@ -3,6 +3,7 @@ import { Link } from "@curi/react-dom";
 
 import {
   HashSection,
+  Paragraph,
   CodeBlock,
   IJS,
   Note
@@ -24,9 +25,9 @@ export let meta = {
 export function CreateRouterComponentAPI() {
   return (
     <HashSection meta={meta} tag="h2">
-      <p>
+      <Paragraph>
         A higher-order component that returns a <IJS>Router</IJS> component.
-      </p>
+      </Paragraph>
 
       <CodeBlock lang="jsx">
         {`import { createRouterComponent } from '@curi/react-dom';
@@ -42,12 +43,12 @@ ReactDOM.render((
       </CodeBlock>
 
       <Note>
-        <p>
+        <Paragraph>
           Why a higher-order component not regular component? Props signify
           values that can change, but an application should only ever have one
           router. Using a higher-order component hard-codes the provided{" "}
           <IJS>router</IJS> as the one and only router.
-        </p>
+        </Paragraph>
       </Note>
 
       <HashSection tag="h3" meta={argumentsMeta}>
@@ -55,7 +56,7 @@ ReactDOM.render((
           tag="h4"
           meta={{ title: "router", hash: "createRouterComponent-router" }}
         >
-          <p>
+          <Paragraph>
             A Curi{" "}
             <Link
               name="Package"
@@ -65,24 +66,24 @@ ReactDOM.render((
               router
             </Link>
             .
-          </p>
+          </Paragraph>
         </HashSection>
       </HashSection>
 
       <HashSection tag="h3" meta={returnMeta}>
-        <p>
+        <Paragraph>
           A component that sets routing context data. Any component that relies
           on routing data must be a descendant of the <IJS>Router</IJS>.
-        </p>
+        </Paragraph>
 
         <HashSection
           tag="h4"
           meta={{ title: "children", hash: "createRouterComponent-children" }}
         >
-          <p>
+          <Paragraph>
             The <IJS>Router</IJS> takes any valid React node (elements, strings,
             etc.) as its <IJS>children</IJS>.
-          </p>
+          </Paragraph>
         </HashSection>
       </HashSection>
     </HashSection>

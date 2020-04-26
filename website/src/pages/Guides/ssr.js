@@ -3,6 +3,7 @@ import React from "react";
 import {
   TitledPlainSection,
   HashSection,
+  Paragraph,
   CodeBlock,
   Note,
   Warning,
@@ -84,12 +85,12 @@ function SSRGuide() {
   return (
     <React.Fragment>
       <TitledPlainSection title={meta.title}>
-        <p>
+        <Paragraph>
           Server-side rendering (SSR) is used to generate the HTML for pages
           when the server receives a request for them. While not strictly
           necessary for single-page applications, server-side rendering can
           potentially be beneficial by:
-        </p>
+        </Paragraph>
         <ol>
           <li>Speeding up the initial render time.</li>
           <li>
@@ -97,65 +98,65 @@ function SSRGuide() {
             (which <em>may</em> improve SEO).
           </li>
         </ol>
-        <p>
+        <Paragraph>
           This guide will cover how to setup server-side rendering and some of
           the issues that you may run into.
-        </p>
+        </Paragraph>
       </TitledPlainSection>
 
       <HashSection meta={reuseMeta} tag="h2">
-        <p>
+        <Paragraph>
           Being able to reuse code on the client and server is one of the
           benefits of JavaScript. If you are using syntax in your client-side
           code that Node doesn't know how to parse, such as import/export or
           JSX, you may run into issues.
-        </p>
-        <p>
+        </Paragraph>
+        <Paragraph>
           The <a href="https://babeljs.io/">Babel</a> package{" "}
           <IJS>@babel/node</IJS> lets Babel compile your code on the fly to
           syntax that Node understands. Anywhere that you would call{" "}
           <IJS>{`node <command>`}</IJS>, you should call{" "}
           <IJS>{`babel-node <command>`}</IJS> instead.
-        </p>
+        </Paragraph>
 
         <CodeBlock lang="bash">
           {`npm install --save-dev @babel/node`}
         </CodeBlock>
 
         <Warning>
-          <p>
+          <Paragraph>
             <IJS>@babel/node</IJS> should only be used in development. For
             production, the server's modules should be pre-compiled (using
             Babel).
-          </p>
+          </Paragraph>
         </Warning>
       </HashSection>
 
       <HashSection meta={frameworkMeta} tag="h2">
-        <p>
+        <Paragraph>
           In order to render JavaScript on the server, you will need to use
           Node. This guide will be using the{" "}
           <a href="https://expressjs.com/">Express</a> web framework.
-        </p>
+        </Paragraph>
 
         <Note>
-          <p>
+          <Paragraph>
             There are ways to mix Node server-side rendering with non-Node
             frameworks, but that is outside the scope of this guide.
-          </p>
+          </Paragraph>
         </Note>
 
-        <p>
+        <Paragraph>
           Familiarity with Express is not expected, so to get you started, this
           guide will provide some code snippets for a basic setup.
-        </p>
+        </Paragraph>
 
         <CodeBlock lang="bash">{`npm install express`}</CodeBlock>
 
-        <p>
+        <Paragraph>
           The server's setup code can be placed anywhere, but we will follow
           Node's convention and save it in a <IJS>server.js</IJS> file.
-        </p>
+        </Paragraph>
 
         <CodeBlock>
           {`// server.js
@@ -176,26 +177,26 @@ app.listen("8080", () => {
 babel-node server.js`}
         </CodeBlock>
 
-        <p>
+        <Paragraph>
           With the server ready to go, we can start configuring it to render a
           single-page application.
-        </p>
+        </Paragraph>
       </HashSection>
 
       <HashSection meta={requestMeta} tag="h2">
-        <p>
+        <Paragraph>
           A web framework receives requests from the client and returns
           responses.
-        </p>
-        <p>
+        </Paragraph>
+        <Paragraph>
           In the client-side application, we define the routes that are valid
           for the application. Similarly, the server needs to define which
           request paths are valid so that it can properly respond to them.
-        </p>
-        <p>
+        </Paragraph>
+        <Paragraph>
           Server paths are given handler functions. These can do a variety of
           things, but we will only be using them to send responses.
-        </p>
+        </Paragraph>
 
         <CodeBlock>
           {`app.use("/hi", function(req, res) {
@@ -204,11 +205,11 @@ babel-node server.js`}
         </CodeBlock>
 
         <HashSection tag="h3" meta={clientMeta}>
-          <p>
+          <Paragraph>
             Instead of telling the server about every single valid client-side
             route, a wildcard path is used to match every request. Determining
             what to render for the request will be done by Curi.
-          </p>
+          </Paragraph>
 
           <CodeBlock>
             {`// the wildcard matches every GET request
@@ -216,32 +217,32 @@ app.get("*", renderHandler);`}
           </CodeBlock>
 
           <Note>
-            <p>
+            <Paragraph>
               The <IJS>*</IJS> wildcard handler is similar to the Curi path{" "}
               <IJS>(.*)</IJS>. Express and Curi both use{" "}
               <IJS>path-to-regexp</IJS> for path matching. However, Express uses
               an old version. <IJS>path-to-regexp</IJS> removed support for the
               barebones <IJS>*</IJS> pattern in the version that Curi uses,
               which is why we have to use <IJS>(.*)</IJS> in Curi routes.
-            </p>
+            </Paragraph>
           </Note>
         </HashSection>
 
         <HashSection tag="h3" meta={staticMeta}>
-          <p>
+          <Paragraph>
             Page requests aren't the only requests that the framework will
             handle. Requests for static resources, like scripts, stylesheet, and
             images shouldn't be handled by Curi. Express provides a{" "}
             <IJS>static</IJS> method to map request locations "real" (files
             exist on the server) locations.
-          </p>
+          </Paragraph>
 
           <CodeBlock>{`app.use("/static", express.static());`}</CodeBlock>
 
-          <p>
+          <Paragraph>
             Using the above static file handler, all static file requests in
             HTML/JavaScript should begin with <IJS>/static</IJS>.
-          </p>
+          </Paragraph>
 
           <CodeBlock lang="html">
             {`<img src="/static/img/circle.png" />`}
@@ -249,15 +250,15 @@ app.get("*", renderHandler);`}
         </HashSection>
 
         <HashSection tag="h3" meta={orderMeta}>
-          <p>
+          <Paragraph>
             Express matches against paths in the order that they are registered,
             so the static files path needs to be defined before the wildcard
             path.
-          </p>
-          <p>
+          </Paragraph>
+          <Paragraph>
             Any other non-page paths, like APIs, would also need to be defined
             before the catch-all.
-          </p>
+          </Paragraph>
 
           <CodeBlock>
             {`app.use("/static", express.static());
@@ -268,11 +269,11 @@ app.get("*", renderHandler);`}
       </HashSection>
 
       <HashSection meta={handlerMeta} tag="h2">
-        <p>
+        <Paragraph>
           The render handler function receives the request object and a response
           object. The response object is used to build and send a response to
           the user.
-        </p>
+        </Paragraph>
 
         <CodeBlock>
           {`// renderer.js
@@ -287,11 +288,11 @@ app.get("*", renderHandler)`}
         </CodeBlock>
 
         <Note>
-          <p>
+          <Paragraph>
             If you are setting up a server without server-side rendering, the{" "}
             <IJS>renderHandler</IJS> function could use <IJS>res.sendFile</IJS>{" "}
             to return a universal HTML file for every route.
-          </p>
+          </Paragraph>
         </Note>
 
         <CodeBlock>
@@ -304,13 +305,15 @@ function renderHandler(req, res) {
       </HashSection>
 
       <HashSection meta={routerMeta} tag="h2">
-        <p>
+        <Paragraph>
           A router instance will be created for every single request. The router
           will match the requested location to its routes and generate a
           response, which can be used to render the HTML.
-        </p>
+        </Paragraph>
 
-        <p>Curi has two optimizations to make this more efficient:</p>
+        <Paragraph>
+          Curi has two optimizations to make this more efficient:
+        </Paragraph>
 
         <ol>
           <li>
@@ -343,34 +346,34 @@ function handler(req, res) {
         </CodeBlock>
 
         <HashSection tag="h3" meta={historyMeta}>
-          <p>
+          <Paragraph>
             On the client-side, a single-page application uses{" "}
             <IJS>@hickory/browser</IJS> to create a history instance. However,
             that uses browser only APIs. On the server, the{" "}
             <IJS>@hickory/in-memory</IJS> package is used to create a history
             instance that only exists in memory.
-          </p>
+          </Paragraph>
 
           <CodeBlock lang="bash">{`npm install @hickory/in-memory`}</CodeBlock>
 
-          <p>
+          <Paragraph>
             The server doesn't need a fully functional history object. Instead,
             the server only needs a history object that knows its location and
             how to generate URLs.
-          </p>
+          </Paragraph>
 
-          <p>
+          <Paragraph>
             The <IJS>createReusable</IJS> function exported by{" "}
             <IJS>@hickory/in-memory</IJS> is made specifically for this job.{" "}
             <IJS>createReusable</IJS> takes history options and returns a
             history function.
-          </p>
+          </Paragraph>
 
-          <p>
+          <Paragraph>
             <IJS>createReusable</IJS> creates internal functions for location
             parsing/stringifying ahead of time so that they don't need to be
             recreated for every request.
-          </p>
+          </Paragraph>
 
           <CodeBlock>
             {`// handler.js
@@ -380,10 +383,10 @@ import { createReusable } from "@hickory/in-memory";
 let reusable = createReusable();`}
           </CodeBlock>
 
-          <p>
+          <Paragraph>
             When creating the router, we must pass a <IJS>history</IJS> option
             with the location of the request.
-          </p>
+          </Paragraph>
 
           <CodeBlock>
             {`function handler(req, res) {
@@ -396,32 +399,32 @@ let reusable = createReusable();`}
         </HashSection>
 
         <HashSection tag="h3" meta={routesMeta}>
-          <p>
+          <Paragraph>
             As stated above, the <IJS>prepareRoutes</IJS> function is used to
             pre-compile routes, which means that they don't end up being
             re-compiled for every single request. If all of an application's
             routes are synchronous (they don't use <IJS>route.resolve</IJS>),
             then they don't need to do anything else for server-side rendering.
-          </p>
+          </Paragraph>
 
-          <p>
+          <Paragraph>
             Ideally, you will be able to re-use your client side routes on the
             server, but if the client routes use browser only APIs, you may need
             to adapt the routes to work on the server.
-          </p>
+          </Paragraph>
 
           <CodeBlock>
             {`// handler.js
 import routes from "../client/routes";`}
           </CodeBlock>
 
-          <p>
+          <Paragraph>
             One approach to client/server routes is to keep two copies: one for
             the client and one for the server. However, this should be a last
             resort because it can lead to inconsistencies if you update one file
             but not the other.
-          </p>
-          <p>
+          </Paragraph>
+          <Paragraph>
             A more reusable approach would be to use "universal" wrappers around
             any environment specific APIs. For example, the{" "}
             <a href="https://github.com/matthew-andrews/isomorphic-fetch">
@@ -429,7 +432,7 @@ import routes from "../client/routes";`}
             </a>{" "}
             package could be used to support <IJS>fetch</IJS> in the browser and
             Node.
-          </p>
+          </Paragraph>
 
           <CodeBlock>
             {`// routes.js
@@ -450,13 +453,13 @@ export default prepareRoutes([
       </HashSection>
 
       <HashSection meta={responseMeta} tag="h2">
-        <p>
+        <Paragraph>
           When the router is created, it will start generating a response by
           matching its <IJS>history</IJS> object's current location. If the
           application has any asynchronous routes, the <IJS>response</IJS> may
           not be ready immediately. The safest approach is to use{" "}
           <IJS>router.once</IJS> to wait for the <IJS>response</IJS>.
-        </p>
+        </Paragraph>
 
         <CodeBlock data-line="5-7">
           {`function renderHandler(req, res) {
@@ -469,26 +472,26 @@ export default prepareRoutes([
 }`}
         </CodeBlock>
 
-        <p>
+        <Paragraph>
           Once the response is generated, we are ready to render. This step will
           generate the HTML string for the application. How exactly you do this
           depends on what UI renderer you are using, but the process is
           approximately the same for most renderering libraries.
-        </p>
+        </Paragraph>
 
-        <p>
+        <Paragraph>
           Here, we will assume that you are using React. The{" "}
           <IJS>react-dom/server</IJS> module provides a{" "}
           <IJS>renderToString</IJS> method, which will render an application as
           a string.
-        </p>
+        </Paragraph>
 
-        <p>
+        <Paragraph>
           Rendering with React on the server is essentially the same as
           rendering on the client. We create a <IJS>Router</IJS> and use{" "}
           <IJS>renderToString</IJS> (instead of <IJS>ReactDOM.render</IJS>) to
           render the component.
-        </p>
+        </Paragraph>
 
         <CodeBlock data-line="1-2,9-14">
           {`import { renderToString } from "react-dom/server";
@@ -509,39 +512,39 @@ function renderHandler(req, res) {
 }`}
         </CodeBlock>
 
-        <p>
+        <Paragraph>
           Rendering with <IJS>renderToString</IJS> only generates an HTML string
           for the application. We are missing the <Cmp>html</Cmp>,{" "}
           <Cmp>head</Cmp>,<Cmp>body</Cmp>, <Cmp>script</Cmp>, etc. tags that are
           required for the full HTML page to properly function.
-        </p>
+        </Paragraph>
 
-        <p>
+        <Paragraph>
           We can write a function that takes the string created by{" "}
           <IJS>renderToString</IJS>
           and inserts it into the full HTML string for a page.
-        </p>
+        </Paragraph>
 
-        <p>
+        <Paragraph>
           For a React application, the markup string should be set as the child
           of its container element. If you render into the <IJS>#root</IJS>{" "}
           element on the client, the HTML should have a <IJS>#root</IJS>{" "}
           element.
-        </p>
+        </Paragraph>
 
-        <p>
+        <Paragraph>
           Any JavaScript scripts that need to be rendered should also be
           included in the HTML. Make sure that their paths are absolute; if the
           path is relative, then you will run into errors resolving the location
           for nested routes!
-        </p>
+        </Paragraph>
 
-        <p>
+        <Paragraph>
           The <IJS>meta</IJS> property of a <IJS>response</IJS> is useful for
           server-side rendering. For example, routes can set{" "}
           <IJS>meta.title</IJS> to be the page's title, which can be inserted
           into the generated HTML.
-        </p>
+        </Paragraph>
 
         <CodeBlock data-line="4-15,28-29">
           {`import { renderToString } from "react-dom/server";
@@ -578,21 +581,21 @@ function renderHandler(req, res) {
         </CodeBlock>
 
         <Note>
-          <p>
+          <Paragraph>
             If you server render a React application, you should use{" "}
             <IJS>ReactDOM.hydrate</IJS> instead of <IJS>ReactDOM.render</IJS> on
             the client.
-          </p>
+          </Paragraph>
         </Note>
 
         <HashSection tag="h3" meta={redirectMeta}>
-          <p>
+          <Paragraph>
             If a route matches and it redirects, you can handle it without
             rendering the application. A <IJS>response</IJS> is a redirect if it
             has a <IJS>redirect</IJS> property. <IJS>redirect.url</IJS> is that
             full URL (<IJS>pathname</IJS>, <IJS>query</IJS>, and <IJS>hash</IJS>
             ).
-          </p>
+          </Paragraph>
 
           <CodeBlock data-line="9-12">
             {`import { renderToString } from "react-dom/server";

@@ -1,15 +1,14 @@
 import React from "react";
-import styled from "@emotion/styled";
 
-import { screen } from "../../constants/styles";
-
-let StyledPage = styled("div")`
-  position: relative;
-
-  @media only screen and (min-width: ${screen.medium}) {
-    display: flex;
-    flex-flow: row nowrap;
-  }
-`;
+let StyledPage = ({ children, className = "", ...rest }) => {
+  return (
+    <div
+      {...rest}
+      className={`relative md:flex md:flex-row md:flex-no-wrap ${className}`}
+    >
+      {children}
+    </div>
+  );
+};
 
 export default StyledPage;

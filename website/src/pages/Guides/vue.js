@@ -5,6 +5,7 @@ import {
   TitledPlainSection,
   PlainSection,
   HashSection,
+  Paragraph,
   CodeBlock,
   IJS,
   Cmp
@@ -41,7 +42,7 @@ function VueGuide() {
       <TitledPlainSection title={meta.title} />
 
       <HashSection meta={pluginMeta} tag="h2">
-        <p>
+        <Paragraph>
           The <IJS>CuriPlugin</IJS> for Vue allows you to interface your router
           with a Vue application. The plugin sets up a reactive object for
           tracking responses using an{" "}
@@ -50,11 +51,11 @@ function VueGuide() {
           </Link>
           , so whenever there is a new response, the parts of your application
           that use the response will be re-rendered.
-        </p>
-        <p>
+        </Paragraph>
+        <Paragraph>
           The plugin also makes the <IJS>response</IJS> accessible to every
           component in your application through the <IJS>$curi</IJS> property.
-        </p>
+        </Paragraph>
 
         <CodeBlock lang="jsx">
           {`import Vue from "vue";
@@ -66,18 +67,18 @@ Vue.use(CuriPlugin, { router });`}
         </CodeBlock>
 
         <HashSection meta={renderingMeta} tag="h3">
-          <p>
+          <Paragraph>
             Vue allows you to render dynamic components using the{" "}
             <Cmp>component :is</Cmp> syntax. If you set Vue components as the{" "}
             <IJS>body</IJS> properties on your responses, you can combine{" "}
             <Cmp>component :is</Cmp> and <IJS>response.body</IJS> to render the
             appropriate component for a <IJS>response</IJS>.
-          </p>
-          <p>
+          </Paragraph>
+          <Paragraph>
             A root component is a good place to perform general application
             layout, like menus, in addition to rendering the response's{" "}
             <IJS>body</IJS>.
-          </p>
+          </Paragraph>
 
           <CodeBlock lang="html">
             {`<template>
@@ -97,17 +98,17 @@ Vue.use(CuriPlugin, { router });`}
 </script>`}
           </CodeBlock>
 
-          <p>
+          <Paragraph>
             If your routes use an object to attach multiple components to a
             response, splitting them apart in computed properties may give your
             templates a cleaner look.
-          </p>
-          <p>
+          </Paragraph>
+          <Paragraph>
             If you do attach multiple components to a response, please remember
             that you want every route to set the same <IJS>body</IJS> shape.
             Otherwise, you'll have to determine the shape and change how you
             render, which can quickly become messy.
-          </p>
+          </Paragraph>
 
           <CodeBlock lang="html">
             {`<script>
@@ -151,31 +152,31 @@ let routes = prepareRoutes([
 </script>`}
           </CodeBlock>
 
-          <p>
+          <Paragraph>
             In addition to the <IJS>response</IJS>, the current{" "}
             <IJS>navigation</IJS> object (the <IJS>previous</IJS> response and
             the navigation <IJS>action</IJS>) is globally available through{" "}
             <IJS>$curi.navigation</IJS>
-          </p>
-          <p>
+          </Paragraph>
+          <Paragraph>
             The router is globally available as <IJS>$router</IJS>.
-          </p>
+          </Paragraph>
         </HashSection>
 
         <HashSection meta={a11yMeta} tag="h3">
-          <p>
+          <Paragraph>
             Managing the application's focus when navigating is useful for users
             who use screen readers. The <IJS>curi-focus</IJS> directive provides
             a convenient way to focus a page's main content when it renders a
             new response.
-          </p>
-          <p>
+          </Paragraph>
+          <Paragraph>
             You can read some more about accessibility in the{" "}
             <Link name="Guide" params={{ slug: "accessibility" }}>
               accessibility
             </Link>{" "}
             guide.
-          </p>
+          </Paragraph>
 
           <CodeBlock lang="html" data-line="5">
             {`<template>
@@ -198,21 +199,21 @@ let routes = prepareRoutes([
       </HashSection>
 
       <HashSection meta={navigatingMeta} tag="h2">
-        <p>
+        <Paragraph>
           The <IJS>curi-link</IJS> component is used to navigate between routes
           within an application. When it renders in the DOM, it will render as
           an anchor (<Cmp>a</Cmp>) element.
-        </p>
-        <p>
+        </Paragraph>
+        <Paragraph>
           The <IJS>curi-link</IJS>'s <IJS>name</IJS> prop describes which route
           clicking the link should navigate to. If you pass an invalid route
           name, Curi will warn you.
-        </p>
-        <p>
+        </Paragraph>
+        <Paragraph>
           If a route has any params (or if any of a route's ancestors have
           params for nested routes), the <IJS>params</IJS> prop is used to pass
           these to the <IJS>curi-link</IJS>.
-        </p>
+        </Paragraph>
 
         <CodeBlock lang="html">
           {`<template>
@@ -234,11 +235,11 @@ let routes = prepareRoutes([
 </template>`}
         </CodeBlock>
 
-        <p>
+        <Paragraph>
           The <IJS>curi-link</IJS> also takes <IJS>hash</IJS>, <IJS>query</IJS>,
           and <IJS>state</IJS> props to attach their values to the location that
           will be navigated to.
-        </p>
+        </Paragraph>
 
         <CodeBlock lang="jsx">
           {`<curi-link name="Home" hash="details">Home</curi-link>
@@ -248,7 +249,7 @@ let routes = prepareRoutes([
       </HashSection>
 
       <PlainSection>
-        <p>
+        <Paragraph>
           Please check out the full{" "}
           <Link
             name="Package"
@@ -258,7 +259,7 @@ let routes = prepareRoutes([
             <IJS>@curi/vue</IJS>
           </Link>{" "}
           API documentation to see every component that the package provides.
-        </p>
+        </Paragraph>
       </PlainSection>
     </React.Fragment>
   );

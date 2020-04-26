@@ -21,13 +21,14 @@ function ExampleLinks({ hidden }) {
   return (
     <Container hidden={hidden}>
       <StyledDropdownMenu>
-        <ul className="link-list" style={{ margin: "0 25px" }}>
+        <ul style={{ margin: "0 25px" }}>
           {examples.map(e => {
             return (
-              <li key={`${e.category}/${e.slug}`} className="solo">
+              <li key={`${e.category}/${e.slug}`}>
                 <ActiveLink
                   name="Example"
                   params={{ category: e.category, slug: e.slug }}
+                  activeClassName="font-bold"
                 >
                   {e.name}
                 </ActiveLink>

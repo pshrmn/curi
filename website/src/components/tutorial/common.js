@@ -4,7 +4,8 @@ import {
   HashSection,
   HashAside,
   PlainSection,
-  TitledPlainSection
+  TitledPlainSection,
+  Paragraph
 } from "../layout/Sections";
 import { CodeBlock } from "../layout/Groups";
 import { Note } from "../Messages";
@@ -16,6 +17,7 @@ export {
   HashSection,
   HashAside,
   TitledPlainSection,
+  Paragraph,
   CodeBlock,
   Outline,
   Note,

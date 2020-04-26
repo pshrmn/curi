@@ -47,7 +47,6 @@
     "babel-loader": "^8.0.5",
     "babel-plugin-dynamic-import": "^1.0.0",
     "babel-plugin-dynamic-import-node": "^2.1.0",
-    "babel-plugin-emotion": "^10.0.6",
     "babel-preset-react-native": "^4.0.1",
     "cross-env": "^5.1.1",
     "css-loader": "^2.1.1",

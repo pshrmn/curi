@@ -1,20 +1,4 @@
 import React from "react";
-import styled from "@emotion/styled";
-
-import { screen } from "../constants/styles";
-
-let StyledDemo = styled("figure")`
-  p {
-    font-style: italic;
-    text-align: center;
-    margin: 0;
-  }
-
-  @media only screen and (min-width: ${screen.medium}) {
-    max-width: 80vw;
-    margin: 0 auto;
-  }
-`;
 
 export default function CodeSandboxDemo({
   id,
@@ -25,7 +9,7 @@ export default function CodeSandboxDemo({
   let helpText = null;
   if (help) {
     helpText = (
-      <p>
+      <p className="m-0 text-center iatlic">
         Use the three buttons at the top of the Sandbox to toggle view modes.
         Clicking the menu button in the top left corner opens a menu to switch
         between files.
@@ -33,7 +17,7 @@ export default function CodeSandboxDemo({
     );
   }
   return (
-    <StyledDemo>
+    <figure className="md:w-4/5 md:my-0 md:mx-auto">
       <iframe
         title={name}
         src={`https://codesandbox.io/embed/${id}?view=${view}`}
@@ -43,6 +27,6 @@ export default function CodeSandboxDemo({
         tabIndex={-1}
       />
       {helpText}
-    </StyledDemo>
+    </figure>
   );
 }

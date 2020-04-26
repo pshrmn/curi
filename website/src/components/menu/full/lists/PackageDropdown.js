@@ -7,12 +7,13 @@ import StyledDropdownMenu from "./DropdownMenu";
 import usePrefetch from "./usePrefetch";
 
 let GroupPackages = ({ packages }) => (
-  <ul className="link-list">
+  <ul>
     {packages.map(p => (
-      <li key={p.name} className="solo">
+      <li key={p.name}>
         <ActiveLink
           name="Package"
           params={{ package: p.name, version: p.latest }}
+          activeClassName="font-bold"
         >
           {p.name}
         </ActiveLink>

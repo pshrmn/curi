@@ -1,38 +1,16 @@
 import React from "react";
 import PrismCode from "../highlight/PrismCode";
-import styled from "@emotion/styled";
 
-import { screen } from "../../constants/styles";
-
-let StyledCodeBlock = styled("figure")`
-  width: 100%;
-  margin: 0 0 25px;
-  font-size: 0.8em;
-
-  pre {
-    white-space: pre-wrap;
-    height: 100%;
-    vertical-align: top;
-  }
-
-  @media only screen and (min-width: ${screen.medium}) {
-    font-size: 1em;
-
-    code {
-      min-width: 200px;
-      white-space: pre-wrap;
-    }
-  }
-`;
-
-let CodeBlock = ({ children, lang = "javascript", ...rest }) => (
-  <StyledCodeBlock>
-    <pre {...rest}>
-      <PrismCode component="code" className={`language-${lang}`}>
-        {children}
-      </PrismCode>
-    </pre>
-  </StyledCodeBlock>
-);
+let CodeBlock = ({ children, lang = "javascript", ...rest }) => {
+  return (
+    <figure className="max-w-4xl m-0 mb-4">
+      <pre {...rest} className="align-top h-full whitespace-pre-wrap">
+        <PrismCode component="code" className={`language-${lang}`}>
+          {children}
+        </PrismCode>
+      </pre>
+    </figure>
+  );
+};
 
 export { CodeBlock };

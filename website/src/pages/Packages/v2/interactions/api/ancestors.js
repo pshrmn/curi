@@ -2,6 +2,7 @@ import React from "react";
 
 import {
   HashSection,
+  Paragraph,
   CodeBlock
 } from "../../../../../components/package/common";
 
@@ -17,13 +18,15 @@ export let meta = {
 export function AncestorsAPI() {
   return (
     <HashSection meta={meta} tag="h2">
-      <p>An interaction function to get the ancestors of a route.</p>
+      <Paragraph>
+        An interaction function to get the ancestors of a route.
+      </Paragraph>
 
-      <p>
+      <Paragraph>
         The interaction returns the public route data for each of the route's
         ancestors. The first item in the array is the root-most ancestor, while
         the last item in the array is the route's parent.
-      </p>
+      </Paragraph>
 
       <CodeBlock>
         {`import { ancestors } from "@curi/interactions";
@@ -55,7 +58,7 @@ let family = ancestors(route);
           tag="h4"
           meta={{ title: "route", hash: "ancestor-arguments-route" }}
         >
-          <p>The route to get the ancestors of.</p>
+          <Paragraph>The route to get the ancestors of.</Paragraph>
         </HashSection>
       </HashSection>
     </HashSection>

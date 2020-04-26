@@ -2,6 +2,7 @@ import React from "react";
 
 import {
   HashSection,
+  Paragraph,
   CodeBlock,
   IJS,
   Cmp
@@ -19,17 +20,17 @@ export let meta = {
 export function LinkAPI() {
   return (
     <HashSection meta={meta} tag="h2">
-      <p>
+      <Paragraph>
         The <IJS>curi-link</IJS> component will render an anchor (<Cmp>a</Cmp>)
         element.
-      </p>
+      </Paragraph>
 
       <HashSection tag="h3" meta={propsMeta}>
         <HashSection tag="h4" meta={{ title: "to", hash: "Link-to" }}>
-          <p>
+          <Paragraph>
             <IJS>name</IJS> - The name of the route to navigate to.{" "}
             <em>This is required</em>.
-          </p>
+          </Paragraph>
 
           <CodeBlock lang="html">
             {`<curi-link name='Home'>Home</curi-link>
@@ -38,12 +39,12 @@ export function LinkAPI() {
         </HashSection>
 
         <HashSection tag="h4" meta={{ title: "params", hash: "Link-params" }}>
-          <p>
+          <Paragraph>
             <IJS>params</IJS> - An object containing the key-value params for
             the route. For example, if you are linking to a route with the path{" "}
             <IJS>album/:title</IJS>, the params object should have a{" "}
             <IJS>title</IJS> property.
-          </p>
+          </Paragraph>
 
           <CodeBlock lang="html">
             {`<curi-link
@@ -56,9 +57,9 @@ export function LinkAPI() {
         </HashSection>
 
         <HashSection tag="h4" meta={{ title: "hash", hash: "Link-hash" }}>
-          <p>
+          <Paragraph>
             <IJS>hash</IJS> - the hash for the location to link to
-          </p>
+          </Paragraph>
 
           <CodeBlock lang="html">
             {`<curi-link name="Home" hash="test">Home</curi-link>
@@ -67,9 +68,9 @@ export function LinkAPI() {
         </HashSection>
 
         <HashSection tag="h4" meta={{ title: "query", hash: "Link-query" }}>
-          <p>
+          <Paragraph>
             <IJS>query</IJS> - the query for the location to link to
-          </p>
+          </Paragraph>
 
           <CodeBlock lang="html">
             {`<curi-link name="Home" query="one=1">Home</curi-link>
@@ -82,17 +83,17 @@ export function LinkAPI() {
         </HashSection>
 
         <HashSection tag="h4" meta={{ title: "slots", hash: "Link-slots" }}>
-          <p>
+          <Paragraph>
             The <IJS>curi-link</IJS>'s can take either a regular slot or a
             scoped slot.
-          </p>
-          <p>
+          </Paragraph>
+          <Paragraph>
             When given a scoped slot, the <IJS>curi-link</IJS> will inject the
             link's navigation state (a <IJS>navigating</IJS> property). The
             navigation state is <IJS>false</IJS> by default, <IJS>true</IJS>{" "}
             when the <IJS>curi-link</IJS> is clicked, and <IJS>false</IJS> when
             the the navigation finishes/is cancelled.
-          </p>
+          </Paragraph>
 
           <CodeBlock lang="html">
             {`<!-- a regular slot -->

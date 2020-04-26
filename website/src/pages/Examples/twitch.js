@@ -3,6 +3,7 @@ import React from "react";
 import {
   Page,
   HashSection,
+  Paragraph,
   CodeSandboxDemo,
   OnGithub,
   onGitHubMeta
@@ -27,11 +28,11 @@ function TwitchExample() {
   return (
     <Page title={meta.title}>
       <HashSection meta={explanationMeta} tag="h2">
-        <p>
+        <Paragraph>
           A clone of <a href="https://twitch.tv">Twitch</a> without all of the
           "good stuff" (streaming video). This application uses Vue for
           rendering and Curi for routing.
-        </p>
+        </Paragraph>
       </HashSection>
 
       <HashSection meta={demoMeta} tag="h2">

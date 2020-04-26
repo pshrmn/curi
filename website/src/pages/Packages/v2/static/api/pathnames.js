@@ -2,6 +2,7 @@ import React from "react";
 
 import {
   HashSection,
+  Paragraph,
   CodeBlock,
   IJS
 } from "../../../../../components/package/common";
@@ -18,18 +19,20 @@ export let meta = {
 export function PathnamesAPI() {
   return (
     <HashSection meta={meta} tag="h2">
-      <p>
+      <Paragraph>
         The <IJS>pathnames</IJS> function is used to generate pathnames from an
         array of provided page descriptors. This can be useful for generating a
         sitemap.
-      </p>
+      </Paragraph>
 
       <HashSection tag="h3" meta={argumentsMeta}>
         <HashSection
           tag="h4"
           meta={{ title: "routes", hash: "pathnames-routes" }}
         >
-          <p>The array of route descriptors that is passed to a router.</p>
+          <Paragraph>
+            The array of route descriptors that is passed to a router.
+          </Paragraph>
 
           <CodeBlock>
             {`routes = prepare_routes([
@@ -55,12 +58,12 @@ let paths = pathnames({
           tag="h4"
           meta={{ title: "pages", hash: "pathnames-pages" }}
         >
-          <p>
+          <Paragraph>
             An array of page descriptors. A page descriptor is an object with a{" "}
             <IJS>name</IJS> property defining which route to generate a page
             for. If the route (or any of its ancestors) has any params, they
             should be passed as an object with the <IJS>params</IJS> property.
-          </p>
+          </Paragraph>
 
           <CodeBlock>
             {`let pages = [
@@ -81,10 +84,10 @@ let paths = pathnames({
           tag="h4"
           meta={{ title: "routerOptions", hash: "pathnames-routerOptions" }}
         >
-          <p>
+          <Paragraph>
             The options for a router, predominantly useful for passing any route
             interactions the application may need while rendering.
-          </p>
+          </Paragraph>
 
           <CodeBlock>
             {`import active from "@curi/active";

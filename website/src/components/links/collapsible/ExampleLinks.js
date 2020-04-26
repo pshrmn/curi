@@ -5,11 +5,15 @@ import ActiveLink from "../ActiveLink";
 
 let Category = ({ examples }) => {
   return (
-    <ul className="link-list">
+    <ul>
       {examples.map(e => {
         return (
-          <li key={e.slug} className="solo">
-            <ActiveLink name="Example" params={{ slug: e.slug }}>
+          <li key={e.slug}>
+            <ActiveLink
+              name="Example"
+              params={{ slug: e.slug }}
+              activeClassName="font-bold"
+            >
               {e.name}
             </ActiveLink>
           </li>

@@ -2,6 +2,7 @@ import React from "react";
 
 import {
   HashSection,
+  Paragraph,
   CodeBlock,
   IJS,
   Warning
@@ -15,16 +16,18 @@ export let meta = {
 export function ScrollAPI() {
   return (
     <HashSection meta={meta} tag="h2">
-      <p>
+      <Paragraph>
         The <IJS>scroll</IJS> side effect will scroll the page after a
         navigation.
-      </p>
+      </Paragraph>
 
       <Warning>
-        <p>This side effect should only be used in the browser.</p>
+        <Paragraph>
+          This side effect should only be used in the browser.
+        </Paragraph>
       </Warning>
 
-      <p>
+      <Paragraph>
         When Curi is running in a browser, it relies on the{" "}
         <a href="https://developer.mozilla.org/en-US/docs/Web/API/History_API">
           History API
@@ -32,12 +35,12 @@ export function ScrollAPI() {
         to change locations. Navigating using the History API does not trigger
         scrolling to the top of the page after navigation, so this side effect
         scrolls for you.
-      </p>
+      </Paragraph>
 
-      <p>
+      <Paragraph>
         Pop navigation, such as clicking the browser's back and forward buttons,
         will rely on the browser to correctly restore the scroll position.
-      </p>
+      </Paragraph>
 
       <CodeBlock>
         {`import { createRouter, scroll } from "@curi/router";

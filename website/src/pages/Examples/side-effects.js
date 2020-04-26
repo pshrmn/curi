@@ -3,6 +3,7 @@ import React from "react";
 import {
   Page,
   HashSection,
+  Paragraph,
   CodeBlock,
   IJS,
   CodeSandboxDemo,
@@ -29,18 +30,18 @@ function SideEffectExample() {
   return (
     <Page title={meta.title}>
       <HashSection meta={explanationMeta} tag="h2">
-        <p>
+        <Paragraph>
           Side effects are observer functions that are run when a new response
           is created. They are called after other response handlers (observers
           that were set using <IJS>router.observe</IJS> and one time functions
           that were set using <IJS>router.once</IJS>). They receive the new
           response and an object with information about the navigation.
-        </p>
+        </Paragraph>
 
-        <p>
+        <Paragraph>
           Side effect functions are registered when creating a router using the{" "}
           <IJS>sideEffects</IJS> property of the options object.
-        </p>
+        </Paragraph>
 
         <CodeBlock lang="javascript">
           {`import { createRouter } from "@curi/router";

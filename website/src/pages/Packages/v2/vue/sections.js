@@ -1,7 +1,11 @@
 import React from "react";
 import { Link } from "@curi/react-dom";
 
-import { About, APIBlock } from "../../../../components/package/common";
+import {
+  About,
+  Paragraph,
+  APIBlock
+} from "../../../../components/package/common";
 import { CuriPluginAPI } from "./api/curiPlugin";
 import { LinkAPI } from "./api/link";
 import { FocusAPI } from "./api/focus";
@@ -9,14 +13,16 @@ import { FocusAPI } from "./api/focus";
 export default {
   about: (
     <About>
-      <p>This package enables you to use Curi alongside VueJS.</p>
-      <p>
+      <Paragraph>
+        This package enables you to use Curi alongside VueJS.
+      </Paragraph>
+      <Paragraph>
         For more information on using Curi with Vue, please check out the{" "}
         <Link name="Guide" params={{ slug: "vue" }}>
           Vue guide
         </Link>
         .
-      </p>
+      </Paragraph>
     </About>
   ),
   api: (

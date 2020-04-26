@@ -1,3 +1,3 @@
 module.exports = {
-  plugins: [require("autoprefixer"), require("css-mqpacker")]
+  plugins: [require("tailwindcss"), require("autoprefixer")]
 };

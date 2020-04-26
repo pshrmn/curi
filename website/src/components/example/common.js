@@ -1,4 +1,4 @@
-import { PlainSection, HashSection } from "../layout/Sections";
+import { PlainSection, HashSection, Paragraph } from "../layout/Sections";
 import { CodeBlock } from "../layout/Groups";
 import { Note, Warning } from "../Messages";
 import { InlineJS as IJS, InlineComponent as Cmp } from "../highlight/Inline";
@@ -10,6 +10,7 @@ import Page from "./Page";
 export {
   PlainSection,
   HashSection,
+  Paragraph,
   CodeBlock,
   IJS,
   Cmp,

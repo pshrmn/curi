@@ -3,6 +3,7 @@ import { Link } from "@curi/react-dom";
 
 import {
   HashSection,
+  Paragraph,
   CodeBlock,
   IJS,
   Note,
@@ -18,10 +19,10 @@ export function RoutePropertiesAPI() {
   return (
     <HashSection meta={meta} tag="h2">
       <HashSection meta={{ title: "route.name", hash: "name" }} tag="h3">
-        <p>
+        <Paragraph>
           A string that will be used to identify a route. This must be unique
           for every route.
-        </p>
+        </Paragraph>
 
         <CodeBlock>
           {`[
@@ -33,10 +34,10 @@ export function RoutePropertiesAPI() {
       </HashSection>
 
       <HashSection meta={{ title: "route.path", hash: "path" }} tag="h3">
-        <p>
+        <Paragraph>
           A string pattern describing what the route matches. <IJS>path</IJS>{" "}
           strings should not have a leading slash.
-        </p>
+        </Paragraph>
 
         <CodeBlock>
           {`[
@@ -45,13 +46,13 @@ export function RoutePropertiesAPI() {
 ]`}
         </CodeBlock>
 
-        <p>
+        <Paragraph>
           A route's <IJS>path</IJS> is used to check if it matches a location's{" "}
           <IJS>pathname</IJS>. When the <IJS>path</IJS> matches, the route is
           selected.
-        </p>
+        </Paragraph>
 
-        <p>
+        <Paragraph>
           Path matching is done using regular expressions compiled by{" "}
           <a href="https://github.com/pillarjs/path-to-regexp">
             <IJS>path-to-regexp</IJS>
@@ -63,7 +64,7 @@ export function RoutePropertiesAPI() {
           , which are dynamic variables that are parsed from a location's{" "}
           <IJS>pathname</IJS>. For advanced path formatting, please read{" "}
           <IJS>path-to-regexp</IJS>'s documentaion.
-        </p>
+        </Paragraph>
 
         <CodeBlock>
           {`[
@@ -79,20 +80,20 @@ export function RoutePropertiesAPI() {
         </CodeBlock>
 
         <Warning>
-          <p>
+          <Paragraph>
             <IJS>path-to-regexp</IJS> supports arrays and RegExps, but Curi only
             supports string paths.
-          </p>
+          </Paragraph>
         </Warning>
       </HashSection>
 
       <HashSection meta={{ title: "route.resolve", hash: "resolve" }} tag="h3">
-        <p>
+        <Paragraph>
           The <IJS>resolve</IJS> property is a function that returns a Promise.
           It is used to run asynchronous actions for a route prior to rendering.
-        </p>
+        </Paragraph>
 
-        <p>
+        <Paragraph>
           A route with a <IJS>resolve</IJS> function is asynchronous, while one
           with no <IJS>resolve</IJS> functions is synchronous. You can read more
           about this in the{" "}
@@ -100,9 +101,9 @@ export function RoutePropertiesAPI() {
             sync or async
           </Link>{" "}
           guide.
-        </p>
+        </Paragraph>
 
-        <p>
+        <Paragraph>
           Every time that a route with a <IJS>resolve</IJS> function matches,
           the route's <IJS>resolve</IJS> function will be called. Simple caching
           can be done with the <IJS>once</IJS> function from{" "}
@@ -114,13 +115,13 @@ export function RoutePropertiesAPI() {
             <IJS>@curi/helpers</IJS>
           </Link>
           , while more advanced caching is left to the user.
-        </p>
+        </Paragraph>
 
-        <p>
+        <Paragraph>
           The function will be passed an object with the matched route
           properties: <IJS>name</IJS>, <IJS>params</IJS>, <IJS>partials</IJS>,
           and <IJS>location</IJS>.
-        </p>
+        </Paragraph>
 
         <CodeBlock>
           {`let about = {
@@ -133,22 +134,22 @@ export function RoutePropertiesAPI() {
         </CodeBlock>
 
         <Note>
-          <p>
+          <Paragraph>
             You should not perform side effects (e.g. passing the loaded data to
             a Redux store) in <IJS>resolve</IJS> because it is possible that
             navigating to the route might be cancelled. If you must perform side
             effects for a route, you should do so in the route's{" "}
             <IJS>respond</IJS> function, but even that should be avoided.
-          </p>
+          </Paragraph>
         </Note>
 
-        <p>
+        <Paragraph>
           The value returned by the <IJS>resolve</IJS> function will be passed
           to the route's <IJS>respond</IJS> function through its{" "}
           <IJS>resolved</IJS> property. If there is an uncaught error,{" "}
           <IJS>resolved</IJS> will be <IJS>null</IJS> and the <IJS>error</IJS>{" "}
           will be passed.
-        </p>
+        </Paragraph>
 
         <CodeBlock>
           {`let about = {
@@ -167,18 +168,18 @@ export function RoutePropertiesAPI() {
       </HashSection>
 
       <HashSection meta={{ title: "route.respond", hash: "respond" }} tag="h3">
-        <p>A function for modifying the response object.</p>
+        <Paragraph>A function for modifying the response object.</Paragraph>
 
-        <p>
+        <Paragraph>
           The object returned by a route's <IJS>respond</IJS> function will be
           merged with the route's intrinsic match properties to create the
           response object.
-        </p>
+        </Paragraph>
 
-        <p>
+        <Paragraph>
           Only valid properties will be merged onto the response; everything
           else will be ignored. The valid properties are:
-        </p>
+        </Paragraph>
 
         <HashSection
           tag="h4"
@@ -188,10 +189,10 @@ export function RoutePropertiesAPI() {
             tag="h5"
             meta={{ title: "options", hash: "response-options" }}
           >
-            <p>
+            <Paragraph>
               A <IJS>respond</IJS> function is passed an object with a number of
               properties that can be useful for modifying the response.
-            </p>
+            </Paragraph>
 
             <CodeBlock>
               {`{
@@ -205,15 +206,15 @@ export function RoutePropertiesAPI() {
               tag="h6"
               meta={{ title: "match", hash: "response-options-match" }}
             >
-              <p>
+              <Paragraph>
                 An object with the intrinsic route properties of a response.
-              </p>
+              </Paragraph>
 
               <HashSection
                 tag="h6"
                 meta={{ title: "name", hash: "response-options-match-name" }}
               >
-                <p>The name of the matched route.</p>
+                <Paragraph>The name of the matched route.</Paragraph>
               </HashSection>
 
               <HashSection
@@ -223,7 +224,9 @@ export function RoutePropertiesAPI() {
                   hash: "response-options-match-params"
                 }}
               >
-                <p>Route parameters parsed from the location.</p>
+                <Paragraph>
+                  Route parameters parsed from the location.
+                </Paragraph>
               </HashSection>
 
               <HashSection
@@ -233,7 +236,9 @@ export function RoutePropertiesAPI() {
                   hash: "response-options-match-partials"
                 }}
               >
-                <p>The names of any ancestor routes of the matched route.</p>
+                <Paragraph>
+                  The names of any ancestor routes of the matched route.
+                </Paragraph>
               </HashSection>
 
               <HashSection
@@ -243,19 +248,21 @@ export function RoutePropertiesAPI() {
                   hash: "response-options-match-location"
                 }}
               >
-                <p>The location that was used to match the route.</p>
+                <Paragraph>
+                  The location that was used to match the route.
+                </Paragraph>
               </HashSection>
 
               <HashSection
                 tag="h6"
                 meta={{ title: "key", hash: "response-options-match-key" }}
               >
-                <p>
+                <Paragraph>
                   A two number tuple. The first number is the location's place
                   in the session array. The second number starts and zero and is
                   incremented by <IJS>replace</IJS> navigation (<IJS>[1,0]</IJS>{" "}
                   would be replaced by <IJS>[1,1]</IJS>).
-                </p>
+                </Paragraph>
               </HashSection>
             </HashSection>
 
@@ -263,15 +270,15 @@ export function RoutePropertiesAPI() {
               tag="h6"
               meta={{ title: "resolved", hash: "response-options-resolved" }}
             >
-              <p>
+              <Paragraph>
                 An object with the value returned by the route's{" "}
                 <IJS>resolve</IJS> function.
-              </p>
+              </Paragraph>
 
-              <p>
+              <Paragraph>
                 If a route isn't async, <IJS>resolved</IJS> will be{" "}
                 <IJS>null</IJS>.
-              </p>
+              </Paragraph>
 
               <CodeBlock>
                 {`// attach resolved data to the response
@@ -295,16 +302,16 @@ let user = {
               tag="h6"
               meta={{ title: "error", hash: "response-options-error" }}
             >
-              <p>
+              <Paragraph>
                 If the route has a <IJS>resolve</IJS> function that throws an
                 uncaught error, the <IJS>error</IJS> property will be that
                 error. Otherwise, the property will be <IJS>null</IJS>.
-              </p>
+              </Paragraph>
 
-              <p>
+              <Paragraph>
                 Ideally, the <IJS>resolve</IJS> function will always catch its
                 errors, but <IJS>error</IJS> serves as a safety check.
-              </p>
+              </Paragraph>
 
               <CodeBlock>
                 {`// check if any of a route's resolve functions threw
@@ -338,10 +345,10 @@ let user = {
           meta={{ title: "Return Value", hash: "response-return" }}
         >
           <HashSection tag="h5" meta={{ title: "body", hash: "response-body" }}>
-            <p>
+            <Paragraph>
               Typically, the <IJS>body</IJS> is a component (or components) that
               will be rendered.
-            </p>
+            </Paragraph>
 
             <CodeBlock>
               {`import Home from "./components/Home";
@@ -363,12 +370,12 @@ let routes = prepareRoutes([
             tag="h5"
             meta={{ title: "meta", hash: "response-return-meta" }}
           >
-            <p>
+            <Paragraph>
               An object whose properties are metadata about the response. This
               may include the status of the response (200, 301, etc.), a title
               string for the document, or a description to be set as a page's{" "}
               <IJS>{`<meta name="Description">`}</IJS>.
-            </p>
+            </Paragraph>
 
             <CodeBlock>
               {`{
@@ -389,7 +396,7 @@ let routes = prepareRoutes([
             tag="h5"
             meta={{ title: "data", hash: "response-return-data" }}
           >
-            <p>Anything you want it to be.</p>
+            <Paragraph>Anything you want it to be.</Paragraph>
 
             <CodeBlock>
               {`{
@@ -405,17 +412,17 @@ let routes = prepareRoutes([
             tag="h5"
             meta={{ title: "redirect", hash: "response-return-redirect" }}
           >
-            <p>
+            <Paragraph>
               An object with the <IJS>name</IJS> of the route to redirect to,{" "}
               <IJS>params</IJS> (if required), and optional <IJS>hash</IJS>,{" "}
               <IJS>query</IJS>, and <IJS>state</IJS> properties.
-            </p>
+            </Paragraph>
 
-            <p>
+            <Paragraph>
               The other values are copied directly, but <IJS>redirect</IJS> will
               be turned into a location object using the object's{" "}
               <IJS>name</IJS> (and <IJS>params</IJS> if required).
-            </p>
+            </Paragraph>
 
             <CodeBlock>
               {`[
@@ -437,11 +444,11 @@ let routes = prepareRoutes([
 // response = { redirect: { pathname: "/p/1", ... } }`}
             </CodeBlock>
 
-            <p>
+            <Paragraph>
               The <IJS>redirect</IJS> property can also be used to specify a
               redirect to an external location. An external redirect object has
               only one property: <IJS>exernalURL</IJS>.
-            </p>
+            </Paragraph>
 
             <CodeBlock>
               {`{
@@ -457,25 +464,27 @@ let routes = prepareRoutes([
 }`}
             </CodeBlock>
 
-            <p>
+            <Paragraph>
               Responses with an external redirect are always emitted, even when{" "}
               <IJS>invisibleRedirects</IJS> is <IJS>true</IJS>. The actual
               location changing is left to the application.
-            </p>
+            </Paragraph>
           </HashSection>
         </HashSection>
       </HashSection>
 
       <HashSection meta={{ title: "children", hash: "children" }} tag="h3">
-        <p>An optional array of route objects for creating nested routes.</p>
+        <Paragraph>
+          An optional array of route objects for creating nested routes.
+        </Paragraph>
 
-        <p>
+        <Paragraph>
           Any child routes will be matched relative to their parent route's{" "}
           <IJS>path</IJS>. This means that if a parent route's <IJS>path</IJS>{" "}
           string is <IJS>"one"</IJS> and a child route's <IJS>path</IJS> string
           is <IJS>"two"</IJS>, the child will match a location whose pathname is{" "}
           <IJS>/one/two</IJS>.
-        </p>
+        </Paragraph>
 
         <CodeBlock>
           {`// '/a/Coloring+Book/All+Night' will be matched
@@ -495,24 +504,24 @@ let routes = prepareRoutes([
       </HashSection>
 
       <HashSection meta={{ title: "params", hash: "params" }} tag="h3">
-        <p>
+        <Paragraph>
           When <IJS>path-to-regexp</IJS> matches paths, all parameters are
           extracted as strings. The <IJS>params</IJS> object is used to specify
           functions to transform the extracted value.
-        </p>
+        </Paragraph>
 
-        <p>
+        <Paragraph>
           Properties of the <IJS>route.params</IJS> object are the names of
           params to be parsed. The paired value should be a function that takes
           a string (the value from the <IJS>pathname</IJS>) and returns a new
           value (transformed using the function you provide).
-        </p>
+        </Paragraph>
 
-        <p>
+        <Paragraph>
           By default, each param is decoded using <IJS>decodeURIComponent</IJS>.
           A param function can be used to leave the param in its encoded form or
           to parse an integer param into a number.
-        </p>
+        </Paragraph>
 
         <CodeBlock>
           {`let routes = prepareRoutes([
@@ -530,9 +539,9 @@ let routes = prepareRoutes([
 // instead of { num: "1" }`}
         </CodeBlock>
 
-        <p>
+        <Paragraph>
           Unnamed params are referred to by their index in the <IJS>path</IJS>.
-        </p>
+        </Paragraph>
 
         <CodeBlock>
           {`let routes = prepareRoutes([
@@ -552,13 +561,13 @@ let routes = prepareRoutes([
         meta={{ title: "pathOptions", hash: "pathOptions" }}
         tag="h3"
       >
-        <p>
+        <Paragraph>
           An object for configuring how the{" "}
           <a href="https://github.com/pillarjs/path-to-regexp">
             <IJS>path-to-regexp</IJS>
           </a>{" "}
           handles the <IJS>path</IJS>.
-        </p>
+        </Paragraph>
 
         <CodeBlock>
           {`{
@@ -579,25 +588,25 @@ let routes = prepareRoutes([
           tag="h4"
           meta={{ title: "match", hash: "pathOptions-match" }}
         >
-          <p>
+          <Paragraph>
             Properties for parsing the <IJS>path</IJS> into a regular
             expression.
-          </p>
+          </Paragraph>
 
-          <p>
+          <Paragraph>
             You can see the options and their default values in the{" "}
             <a href="https://github.com/pillarjs/path-to-regexp#usage">
               <IJS>path-to-regexp</IJS> documentation
             </a>
             .
-          </p>
+          </Paragraph>
 
           <Note>
-            <p>
+            <Paragraph>
               If a route has a children array property, it will{" "}
               <strong>always</strong> have the <IJS>end</IJS> path option set to{" "}
               <IJS>false</IJS>.
-            </p>
+            </Paragraph>
           </Note>
         </HashSection>
 
@@ -605,22 +614,22 @@ let routes = prepareRoutes([
           tag="h4"
           meta={{ title: "compile", hash: "pathOptions-compile" }}
         >
-          <p>
+          <Paragraph>
             For pathname generation, the options are passed through a{" "}
             <IJS>compile</IJS> object. There is only one possible option, which
             is an <IJS>encode</IJS> function for encoding params. The default{" "}
             <IJS>encode</IJS> function encodes params using{" "}
             <IJS>encodeURIComponent</IJS>.
-          </p>
+          </Paragraph>
         </HashSection>
       </HashSection>
 
       <HashSection meta={{ title: "extra", hash: "extra" }} tag="h3">
-        <p>
+        <Paragraph>
           If you have any additional properties that you want attached to a
           route, use the <IJS>extra</IJS> property. You will be able to use{" "}
           <IJS>route.extra</IJS> in any custom route interactions.
-        </p>
+        </Paragraph>
 
         <CodeBlock>
           {`let routes = prepareRoutes([

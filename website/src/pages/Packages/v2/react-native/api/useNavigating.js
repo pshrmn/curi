@@ -2,6 +2,7 @@ import React from "react";
 
 import {
   HashSection,
+  Paragraph,
   CodeBlock,
   IJS,
   Note
@@ -15,16 +16,16 @@ export let meta = {
 export function UseNavigatingAPI() {
   return (
     <HashSection meta={meta} tag="h2">
-      <p>
+      <Paragraph>
         The <IJS>useNavigating</IJS> hook is used to determine if the
         application is currently navigating. It pairs up with{" "}
         <IJS>router.cancel</IJS> to enable cancelling asynchronous navigation.
-      </p>
+      </Paragraph>
 
-      <p>
+      <Paragraph>
         This is only useful for asynchronous routes because with synchronous
         routes, navigation happens immediately.
-      </p>
+      </Paragraph>
 
       <CodeBlock lang="jsx">
         {`import { useNavigating } from "@curi/react-native";
@@ -39,11 +40,11 @@ function CancelNavigation() {
       </CodeBlock>
 
       <Note>
-        <p>
+        <Paragraph>
           Ideally, browsers would natively handle asynchronous navigation and
           this would be unnecessary. For the time being, this is the next best
           solution.
-        </p>
+        </Paragraph>
       </Note>
     </HashSection>
   );

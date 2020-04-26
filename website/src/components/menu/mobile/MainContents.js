@@ -9,7 +9,7 @@ import TutorialLinks from "../../links/collapsible/TutorialLinks";
 
 export default function MainContents() {
   return (
-    <ul>
+    <ul className="my-1 mx-0 p-0 list-none">
       <li>
         <ActiveLink name="Home" className="home-link">
           Curi

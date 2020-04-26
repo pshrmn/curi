@@ -1,22 +1,12 @@
 import React from "react";
-import styled from "@emotion/styled";
 
-import { screen, color } from "../../constants/styles";
-
-let StyledMain = styled("main")`
-  width: 100vw;
-  max-width: 100%;
-  padding: 10px 10px 0;
-  margin-bottom: 45px;
-
-  a {
-    color: ${color.purple};
-  }
-
-  @media only screen and (min-width: ${screen.medium}) {
-    padding: 50px 0 0;
-    margin-bottom: 0;
-  }
-`;
-
-export default StyledMain;
+export default function StyledMain({ children, ...rest }) {
+  return (
+    <main
+      {...rest}
+      className="w-screen max-w-full pt-3 px-3 pb-0 mb-12 md:pt-12 md:px-0 md:mb-0"
+    >
+      {children}
+    </main>
+  );
+}

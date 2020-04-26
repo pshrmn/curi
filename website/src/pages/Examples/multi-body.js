@@ -3,6 +3,7 @@ import React from "react";
 import {
   Page,
   HashSection,
+  Paragraph,
   MultiSandbox,
   IJS
 } from "../../components/example/common";
@@ -26,10 +27,10 @@ function MultiBodyExample() {
   return (
     <Page title={meta.title}>
       <HashSection meta={explanationMeta} tag="h2">
-        <p>
+        <Paragraph>
           A response's <IJS>body</IJS> can contain multiple components for
           advanced layouts.
-        </p>
+        </Paragraph>
       </HashSection>
 
       <HashSection meta={demoMeta} tag="h2">

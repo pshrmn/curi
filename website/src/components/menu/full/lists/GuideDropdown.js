@@ -7,10 +7,14 @@ import StyledDropdownMenu from "./DropdownMenu";
 import usePrefetch from "./usePrefetch";
 
 let GroupGuides = ({ guides }) => (
-  <ul className="link-list">
+  <ul>
     {guides.map(g => (
-      <li key={g.name} className="solo">
-        <ActiveLink name="Guide" params={{ slug: g.slug }}>
+      <li key={g.name}>
+        <ActiveLink
+          name="Guide"
+          params={{ slug: g.slug }}
+          activeClassName="font-bold"
+        >
           {g.name}
         </ActiveLink>
       </li>

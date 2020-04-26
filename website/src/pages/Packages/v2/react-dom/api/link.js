@@ -2,10 +2,10 @@ import React from "react";
 
 import {
   HashSection,
+  Paragraph,
   CodeBlock,
   IJS,
   Cmp,
-  Note,
   Warning
 } from "../../../../../components/package/common";
 
@@ -21,19 +21,19 @@ export let meta = {
 export function LinkAPI() {
   return (
     <HashSection meta={meta} tag="h2">
-      <p>
+      <Paragraph>
         A <IJS>Link</IJS> is use for in-app navigation. By default, the
         component renders an anchor element (<Cmp>a</Cmp>). When the rendered
         element is clicked, instead of reloading the page it will use the router
         to navigate.
-      </p>
+      </Paragraph>
 
-      <p>
+      <Paragraph>
         With the <IJS>Link</IJS>, instead of providing a URI to navigate to, you
         specify the name of the route that you want to link to. The pathname of
         the URI you want the component to link to will be automatically
         generated for you.
-      </p>
+      </Paragraph>
 
       <CodeBlock lang="jsx">
         {`import { Link } from '@curi/react-dom';
@@ -44,16 +44,16 @@ export function LinkAPI() {
 
       <HashSection tag="h3" meta={propsMeta}>
         <HashSection tag="h4" meta={{ title: "name", hash: "Link-name" }}>
-          <p>
+          <Paragraph>
             The name of the route that the <IJS>Link</IJS> should navigate to
             when it is clicked.
-          </p>
+          </Paragraph>
 
-          <p>
+          <Paragraph>
             To navigate within the same location, the <IJS>name</IJS> can be
             skipped. This is useful for linking to hashes within the current
             page.
-          </p>
+          </Paragraph>
 
           <CodeBlock lang="jsx">
             {`// Home route is { name: "Home", path: "" }
@@ -62,10 +62,10 @@ export function LinkAPI() {
         </HashSection>
 
         <HashSection tag="h4" meta={{ title: "params", hash: "Link-params" }}>
-          <p>
+          <Paragraph>
             If the named route (or any of its parents) include path parameters,
             they must be provided using the <IJS>params</IJS> prop.
-          </p>
+          </Paragraph>
 
           <CodeBlock lang="jsx">
             {`// User route is { name: 'User', path: '/user/:id' }
@@ -80,10 +80,10 @@ export function LinkAPI() {
             hash: "Link-hash-query-state"
           }}
         >
-          <p>
+          <Paragraph>
             The <IJS>query</IJS>, <IJS>hash</IJS>, and <IJS>state</IJS> values
             for the location to navigate to.
-          </p>
+          </Paragraph>
 
           <CodeBlock lang="jsx">
             {`<Link
@@ -106,10 +106,10 @@ export function LinkAPI() {
           tag="h4"
           meta={{ title: "children", hash: "Link-children" }}
         >
-          <p>
+          <Paragraph>
             A valid React Node (e.g. a React element, a string, or{" "}
             <IJS>null</IJS>).
-          </p>
+          </Paragraph>
           <CodeBlock lang="jsx">
             {`// a React node
 <Link name="Home">
@@ -119,26 +119,26 @@ export function LinkAPI() {
         </HashSection>
 
         <HashSection tag="h4" meta={{ title: "anchor", hash: "Link-anchor" }}>
-          <p>
+          <Paragraph>
             A <IJS>Link</IJS> renders an anchor element by default, but this can
             be changed using the <IJS>anchor</IJS> prop. This can be useful for
             using styled components.
-          </p>
+          </Paragraph>
           <Warning>
-            <p>
+            <Paragraph>
               You can provide any component that you want, but you{" "}
               <em>should</em> stick with an anchor (or a component that renders
               an anchor). There are accessibility issues that will occur when
               you use other DOM elements, such as a div or a button, as links.
-            </p>
+            </Paragraph>
           </Warning>
         </HashSection>
 
         <HashSection tag="h4" meta={{ title: "rest", hash: "Link-rest" }}>
-          <p>
+          <Paragraph>
             Any additional props attached to the <IJS>Link</IJS> will be
             attached to the element rendered by the <IJS>Link</IJS>.
-          </p>
+          </Paragraph>
 
           <CodeBlock lang="jsx">
             {`<Link

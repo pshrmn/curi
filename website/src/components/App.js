@@ -1,7 +1,7 @@
 import React from "react";
 import { useResponse } from "@curi/react-dom";
 
-import GlobalCSS from "./layout/GlobalCSS";
+import Root from "./blocks/Root";
 import Main from "./blocks/Main";
 import Menu from "./menu/Menu";
 
@@ -13,12 +13,11 @@ export default function App() {
     contents = response.data.content.contents;
   }
   return (
-    <React.Fragment>
-      <GlobalCSS />
+    <Root>
       <Menu contents={contents} />
-      <Main tabIndex={-1} style={{ outline: "none" }}>
+      <Main tabIndex={-1}>
         <Body response={response} />
       </Main>
-    </React.Fragment>
+    </Root>
   );
 }

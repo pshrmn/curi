@@ -1,6 +1,6 @@
 import React from "react";
 import { InlineJS as IJS } from "../highlight/Inline";
-import { HashSection } from "../layout/Sections";
+import { HashSection, Paragraph } from "../layout/Sections";
 import { CodeBlock } from "../layout/Groups";
 
 function NPM({ name }) {
@@ -13,11 +13,11 @@ function NPM({ name }) {
 
 function Unpkg({ name, version, globalName }) {
   return (
-    <p>
+    <Paragraph>
       UMD scripts script are also available through{" "}
       <a href={`https://unpkg.com/@curi/${name}@${version}/dist/`}>Unpkg</a>.
       You can access the package's exports using <IJS>window.{globalName}</IJS>.
-    </p>
+    </Paragraph>
   );
 }
 

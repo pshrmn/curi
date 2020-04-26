@@ -5,10 +5,14 @@ import ActiveLink from "../ActiveLink";
 import CollapsibleGroup from "./CollapsibleGroup";
 
 let GroupGuides = ({ guides }) => (
-  <ul className="link-list">
+  <ul className="ml-2">
     {guides.map(g => (
-      <li key={g.name} className="solo">
-        <ActiveLink name="Guide" params={{ slug: g.slug }}>
+      <li key={g.name}>
+        <ActiveLink
+          name="Guide"
+          params={{ slug: g.slug }}
+          activeClassName="font-bold"
+        >
           {g.name}
         </ActiveLink>
       </li>

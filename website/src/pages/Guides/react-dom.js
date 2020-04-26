@@ -5,6 +5,7 @@ import {
   TitledPlainSection,
   PlainSection,
   HashSection,
+  Paragraph,
   CodeBlock,
   Note,
   IJS,
@@ -42,24 +43,24 @@ function ReactDOMGuide() {
       <TitledPlainSection title={meta.title} />
 
       <HashSection meta={renderingMeta} tag="h2">
-        <p>
+        <Paragraph>
           The <IJS>createRouterComponent</IJS> function is used to create the
           component at the root of a Curi + React application. You can call this
           component anything that you want, but here it will be referred to as
           the <IJS>Router</IJS>.
-        </p>
+        </Paragraph>
 
         <Note>
-          <p>
+          <Paragraph>
             Why does <IJS>@curi/react-dom</IJS> export a function to create a
             component and not a component? Props signify values that can change,
             but an application should only ever have one router. By hard-coding
             the <IJS>router</IJS> into a component, we avoid having to handle
             the possibility of switching routers (which should not happen).
-          </p>
+          </Paragraph>
         </Note>
 
-        <p>
+        <Paragraph>
           <IJS>createRouterComponent</IJS> is passed the application's Curi
           router to create a <IJS>Router</IJS> component. The <IJS>Router</IJS>{" "}
           will automatically add an{" "}
@@ -72,9 +73,9 @@ function ReactDOMGuide() {
           </Link>{" "}
           to the Curi router when it mounts, so that it can re-render when there
           are new responses.
-        </p>
+        </Paragraph>
 
-        <p>
+        <Paragraph>
           Along with setting up an observer to react to new responses, the{" "}
           <IJS>Router</IJS> sets up contexts for routing values. The
           <IJS>response</IJS> and <IJS>navigation</IJS> can be read using the{" "}
@@ -94,7 +95,7 @@ function ReactDOMGuide() {
             <IJS>useRouter</IJS> hook
           </Link>
           .
-        </p>
+        </Paragraph>
 
         <CodeBlock lang="jsx">
           {`import { createRouterComponent, useResponse } from '@curi/react-dom';
@@ -123,32 +124,32 @@ router.once(() => {
         </CodeBlock>
 
         <HashSection meta={responseMeta} tag="h3">
-          <p>
+          <Paragraph>
             The <IJS>Router</IJS> component sets up the application's routing,
             while its children render the application's content. The Curi router
             generates <IJS>response</IJS> objects from matched locations; those
             are core for figuring out what to render.
-          </p>
+          </Paragraph>
 
-          <p>
+          <Paragraph>
             If you use <IJS>route.respond</IJS> to set React components as the{" "}
             <IJS>body</IJS> properties on your responses, you can create a React
             element for the <IJS>body</IJS> component.
-          </p>
+          </Paragraph>
 
-          <p>
+          <Paragraph>
             The <IJS>Body</IJS> element (it is useful to rename the{" "}
             <IJS>response</IJS>'s <IJS>body</IJS> to <IJS>Body</IJS> for JSX
             transformation) is a placeholder for the "real" component that you
             render for a route. This means that the "real" component will be
             different for every route.
-          </p>
+          </Paragraph>
 
-          <p>
+          <Paragraph>
             While not a strict requirement, it is useful to pass the{" "}
             <IJS>response</IJS> object as a prop to the rendered <IJS>Body</IJS>{" "}
             component.
-          </p>
+          </Paragraph>
 
           <CodeBlock lang="jsx">
             {`function App() {
@@ -169,19 +170,19 @@ ReactDOM.render((
 ), document.getElementById("root"));`}
           </CodeBlock>
 
-          <p>
+          <Paragraph>
             If your routes use an object to attach multiple components to a
             response, the <IJS>children</IJS> function also provides a good
             place to split these apart.
-          </p>
+          </Paragraph>
 
           <Note>
-            <p>
+            <Paragraph>
               If you do take this approach, please remember that you want every
               route to set the same <IJS>body</IJS> shape. Otherwise, you'll
               have to determine the shape and change how you render in the{" "}
               <IJS>children</IJS> function, which can quickly become messy.
-            </p>
+            </Paragraph>
           </Note>
 
           <CodeBlock lang="jsx" data-line="20,24,27">
@@ -219,7 +220,7 @@ function App() {
         </HashSection>
 
         <HashSection meta={a11yMeta} tag="h3">
-          <p>
+          <Paragraph>
             Managing the application's focus when navigating is useful for users
             who use screen readers. The{" "}
             <Link
@@ -231,14 +232,14 @@ function App() {
             </Link>
             provides a convenient way to focus a page's main content when it
             renders a new response.
-          </p>
-          <p>
+          </Paragraph>
+          <Paragraph>
             You can read some more about accessibility in the{" "}
             <Link name="Guide" params={{ slug: "accessibility" }}>
               accessibility
             </Link>{" "}
             guide.
-          </p>
+          </Paragraph>
 
           <CodeBlock lang="jsx" data-line="5-6,14">
             {`import { useResponse, useNavigationFocus } from "@curi/react-dom";
@@ -265,21 +266,21 @@ function App()
       </HashSection>
 
       <HashSection meta={navigatingMeta} tag="h2">
-        <p>
+        <Paragraph>
           The <IJS>Link</IJS> component is used to navigate between routes
           within an application. When it renders in the DOM, it will render as
           an anchor (<Cmp>a</Cmp>) element.
-        </p>
-        <p>
+        </Paragraph>
+        <Paragraph>
           The <IJS>Link</IJS>'s <IJS>name</IJS> prop describes which route
           clicking the link should navigate to. If you pass an invalid route
           name, Curi will warn you.
-        </p>
-        <p>
+        </Paragraph>
+        <Paragraph>
           If a route has any params (or if any of a route's ancestors have
           params for nested routes), the <IJS>params</IJS> prop is used to pass
           these to the <IJS>Link</IJS>.
-        </p>
+        </Paragraph>
 
         <CodeBlock lang="jsx">
           {`import { Link } from "@curi/react-dom";
@@ -301,11 +302,11 @@ let NavLinks = () => (
 );`}
         </CodeBlock>
 
-        <p>
+        <Paragraph>
           The <IJS>Link</IJS> also takes <IJS>hash</IJS>, <IJS>query</IJS>, and{" "}
           <IJS>state</IJS> props to attach their values to the location that
           will be navigated to.
-        </p>
+        </Paragraph>
 
         <CodeBlock lang="jsx">
           {`<Link name="Home" hash="details">Home</Link>
@@ -315,7 +316,7 @@ let NavLinks = () => (
       </HashSection>
 
       <PlainSection>
-        <p>
+        <Paragraph>
           Please check out the full{" "}
           <Link
             name="Package"
@@ -325,7 +326,7 @@ let NavLinks = () => (
             <IJS>@curi/react-dom</IJS>
           </Link>{" "}
           API documentation to see every component that the package provides.
-        </p>
+        </Paragraph>
       </PlainSection>
     </React.Fragment>
   );

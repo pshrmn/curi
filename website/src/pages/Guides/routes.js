@@ -4,6 +4,7 @@ import { Link } from "@curi/react-dom";
 import {
   TitledPlainSection,
   HashSection,
+  Paragraph,
   CodeBlock,
   Note,
   Warning,
@@ -65,14 +66,14 @@ function RoutesGuide() {
   return (
     <React.Fragment>
       <TitledPlainSection title={meta.title}>
-        <p>
+        <Paragraph>
           Routes are JavaScript objects that describe valid locations within an
           application.
-        </p>
+        </Paragraph>
       </TitledPlainSection>
 
       <HashSection meta={propertiesMeta} tag="h2">
-        <p>
+        <Paragraph>
           Routes have two required properties—
           <IJS>name</IJS> and <IJS>path</IJS>—and a number of{" "}
           <Link
@@ -83,10 +84,10 @@ function RoutesGuide() {
             optional properties
           </Link>
           .
-        </p>
+        </Paragraph>
 
         <HashSection meta={pathMeta} tag="h3">
-          <p>
+          <Paragraph>
             A route's <IJS>path</IJS> is used to determine if a route matches a
             location. Path strings use{" "}
             <a href="https://github.com/pillarjs/path-to-regexp">
@@ -94,7 +95,7 @@ function RoutesGuide() {
             </a>{" "}
             formatting, which allows you to define dynamic path parameters that
             a route should match.
-          </p>
+          </Paragraph>
 
           <CodeBlock>
             {`let routes = prepareRoutes([
@@ -110,9 +111,9 @@ function RoutesGuide() {
         </HashSection>
 
         <HashSection meta={namesMeta} tag="h3">
-          <p>
+          <Paragraph>
             A route's <IJS>name</IJS> is a unique identifier for a route.
-          </p>
+          </Paragraph>
 
           <CodeBlock>
             {`let routes = prepareRoutes([
@@ -128,7 +129,7 @@ function RoutesGuide() {
 ]);`}
           </CodeBlock>
 
-          <p>
+          <Paragraph>
             The uniqueness of names is important so that you can interact with
             routes. The router's <IJS>route</IJS> method is used for getting
             data about a route using its name. Curi also has a concept of{" "}
@@ -140,7 +141,7 @@ function RoutesGuide() {
             URL. This is particularly useful for routes with path params, since
             the <IJS>pathname</IJS> interaction will automatically insert these
             for you.
-          </p>
+          </Paragraph>
 
           <CodeBlock>
             {`let route = router.route("Album");
@@ -150,18 +151,18 @@ let path = pathname(route, { id: "abcd" });
         </HashSection>
 
         <HashSection meta={asyncMeta} tag="h3">
-          <p>
+          <Paragraph>
             When a route matches, you might want to perform some actions before
             the application re-renders. This can include validating that a user
             is authorized to navigate to a route and loading data based on the
             path parameters parsed from the location.
-          </p>
-          <p>
+          </Paragraph>
+          <Paragraph>
             A route's <IJS>resolve</IJS> property is a function that runs
             asynchronous actions and returns a Promise. A response will not be
             emitted until after a route's <IJS>resolve</IJS> function has
             resolved.
-          </p>
+          </Paragraph>
 
           <CodeBlock>
             {`{
@@ -181,18 +182,18 @@ let path = pathname(route, { id: "abcd" });
 }`}
           </CodeBlock>
 
-          <p>
+          <Paragraph>
             A route with <IJS>resolve</IJS> properties is asynchronous, which
             has some effects to be aware of. You can read about these in the{" "}
             <Link name="Guide" params={{ slug: "sync-or-async" }}>
               Sync or Async
             </Link>{" "}
             guide.
-          </p>
+          </Paragraph>
         </HashSection>
 
         <HashSection meta={responseMeta} tag="h3">
-          <p>
+          <Paragraph>
             Each route can have a <IJS>respond</IJS> function. When a route
             matches, a response object with "match" properties is generated. An
             object returned by the <IJS>respond</IJS> function gets merged with
@@ -201,16 +202,16 @@ let path = pathname(route, { id: "abcd" });
               responses guide
             </Link>{" "}
             covers all of the response properties.
-          </p>
+          </Paragraph>
 
-          <p>
+          <Paragraph>
             <em>* Only valid properties are merged.</em>
-          </p>
+          </Paragraph>
 
-          <p>
+          <Paragraph>
             The <IJS>respond</IJS> function receives an object with a number of
             properties.
-          </p>
+          </Paragraph>
 
           <ol>
             <li>
@@ -254,20 +255,20 @@ let routes = prepareRoutes([
       </HashSection>
 
       <HashSection meta={matchingMeta} tag="h2">
-        <p>
+        <Paragraph>
           When you create a router, you pass an array of all of the valid routes
           for the application. Whenever Curi receives a new location, it matches
           the new location's <IJS>pathname</IJS> against the valid routes to
           determine which one matches.
-        </p>
+        </Paragraph>
 
-        <p>
+        <Paragraph>
           Route matching tests the route objects in the order that they are
           defined in the array. If a route partially matches (i.e. it matches
           the beginning of the pathname, but there are leftover unmatched
           segments of the pathname), and it has <IJS>children</IJS> routes,
           those will be checked before moving to the route's next sibling.
-        </p>
+        </Paragraph>
 
         <CodeBlock lang="js">
           {`let routes = prepareRoutes([
@@ -288,18 +289,18 @@ let routes = prepareRoutes([
         </CodeBlock>
 
         <HashSection meta={noMatchMeta} tag="h3">
-          <p>
+          <Paragraph>
             If none of your routes match a location, Curi will do nothing! Your
             routes should include a "catch all" route to match these locations.
             The path <IJS>"(.*)"</IJS> matches every pathname, so using that as
             the path of the last route will catch every location.
-          </p>
+          </Paragraph>
 
           <Warning>
-            <p>
+            <Paragraph>
               The catch all path should be used on the last route, otherwise it
               will match locations that might have a better match.
-            </p>
+            </Paragraph>
           </Warning>
 
           <CodeBlock>
@@ -329,28 +330,28 @@ let routes = prepareRoutes([
           </CodeBlock>
 
           <Note>
-            <p>
+            <Paragraph>
               Curi's default matching behavior is to match locations exactly.
               This means that when the route only matches part of the pathname,
               it does not consider that a match. Routes can be configured to
               allow partial matching, but exact matching is usually preferable.
-            </p>
+            </Paragraph>
           </Note>
 
-          <p>
+          <Paragraph>
             If the user navigates to a location with the pathname{" "}
             <IJS>"/a/red/yellow"</IJS>, the <IJS>Album</IJS> route will only
             partially match, so Curi will move on to the next route,{" "}
             <IJS>Not Found</IJS>. <IJS>Not Found</IJS> has a catch all{" "}
             <IJS>path</IJS> that matches every pathname, so it will match the
             location.
-          </p>
+          </Paragraph>
 
-          <p>
+          <Paragraph>
             If a route has children, Curi will check if any of those routes form
             a complete match before moving on to the next route in the routes
             array.
-          </p>
+          </Paragraph>
 
           <CodeBlock>
             {`let routes = prepareRoutes([
@@ -375,7 +376,7 @@ let routes = prepareRoutes([
 ]);`}
           </CodeBlock>
 
-          <p>
+          <Paragraph>
             If the pathname is <IJS>'/a/Coloring+Book/All+Night'</IJS>, the{" "}
             <IJS>Album</IJS> route will partially match the pathname (
             <IJS>"/a/Coloring+Book"</IJS>). That route has children routes, so
@@ -383,18 +384,18 @@ let routes = prepareRoutes([
             against those routes. The <IJS>Song</IJS> route matches the
             remaining segments, so the router matches the <IJS>Song</IJS> route
             to the location.
-          </p>
+          </Paragraph>
         </HashSection>
 
         <HashSection meta={optionsMeta} tag="h3">
-          <p>
+          <Paragraph>
             You can control whether a route does exact or partial matching with{" "}
             <Link hash="pathOptions">
               <IJS>pathOptions</IJS>
             </Link>{" "}
             property. If you set <IJS>{`{ end: false }`}</IJS>, a route that
             partially matches will consider itself matched.
-          </p>
+          </Paragraph>
 
           <CodeBlock>
             {`// when the pathname is
@@ -415,12 +416,12 @@ let routes = prepareRoutes([
       </HashSection>
 
       <HashSection meta={prepareMeta} tag="h2">
-        <p>
+        <Paragraph>
           The routes array should be wrapped in a <IJS>prepareRoutes</IJS> call.
           This will pre-build the routes for the router, which is especially
           useful for server rendering, where a new router is created for every
           request.
-        </p>
+        </Paragraph>
 
         <CodeBlock>
           {`import { prepareRoutes } from "@curi/router";

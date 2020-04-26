@@ -4,10 +4,10 @@ import { Link } from "@curi/react-dom";
 import {
   TitledPlainSection,
   HashSection,
+  Paragraph,
   CodeBlock,
   Note,
-  IJS,
-  Cmp
+  IJS
 } from "../../components/guide/common";
 
 let meta = {
@@ -47,23 +47,23 @@ function ReactNativeGuide() {
       <TitledPlainSection title={meta.title} />
 
       <HashSection meta={renderingMeta} tag="h2">
-        <p>
+        <Paragraph>
           The <IJS>createRouterComponent</IJS> function is used to create the
           component at the root of a Curi + React application. You can call this
           component anything that you want, but here it will be referred to as
           the <IJS>Router</IJS>.
-        </p>
+        </Paragraph>
         <Note>
-          <p>
+          <Paragraph>
             Why does <IJS>@curi/react-native</IJS> export a function to create a
             component and not a component? Props signify values that can change,
             but an application should only ever have one router. By hard-coding
             the <IJS>router</IJS> into a component, we avoid having to handle
             the possibility of switching routers (which should not happen).
-          </p>
+          </Paragraph>
         </Note>
 
-        <p>
+        <Paragraph>
           <IJS>createRouterComponent</IJS> is passed the application's Curi
           router to create a <IJS>Router</IJS> component. The <IJS>Router</IJS>{" "}
           will automatically add an{" "}
@@ -76,9 +76,9 @@ function ReactNativeGuide() {
           </Link>{" "}
           to the Curi router when it mounts, so that it can re-render when there
           are new responses.
-        </p>
+        </Paragraph>
 
-        <p>
+        <Paragraph>
           Along with setting up an observer to react to new responses, the{" "}
           <IJS>Router</IJS> sets up contexts for routing values. The
           <IJS>response</IJS> and <IJS>navigation</IJS> can be read using the{" "}
@@ -98,7 +98,7 @@ function ReactNativeGuide() {
             <IJS>useRouter</IJS> hook
           </Link>
           .
-        </p>
+        </Paragraph>
 
         <CodeBlock lang="jsx">
           {`import {
@@ -128,32 +128,32 @@ function MyReactNativeApp = () => (
         </CodeBlock>
 
         <HashSection meta={responseMeta} tag="h3">
-          <p>
+          <Paragraph>
             The <IJS>Router</IJS> component sets up the application's routing,
             while its children render the application's content. The Curi router
             generates <IJS>response</IJS> objects from matched locations; those
             are core for figuring out what to render.
-          </p>
+          </Paragraph>
 
-          <p>
+          <Paragraph>
             If you use <IJS>route.respond</IJS> to set React components as the{" "}
             <IJS>body</IJS> properties on your responses, you can create a React
             element for the <IJS>body</IJS> component.
-          </p>
+          </Paragraph>
 
-          <p>
+          <Paragraph>
             The <IJS>Body</IJS> element (it is useful to rename the{" "}
             <IJS>response</IJS>'s <IJS>body</IJS> to <IJS>Body</IJS> for JSX
             transformation) is a placeholder for the "real" component that you
             render for a route. This means that the "real" component will be
             different for every route.
-          </p>
+          </Paragraph>
 
-          <p>
+          <Paragraph>
             While not a strict requirement, it is useful to pass the{" "}
             <IJS>response</IJS> object as a prop to the rendered <IJS>Body</IJS>{" "}
             component.
-          </p>
+          </Paragraph>
 
           <CodeBlock lang="jsx">
             {`function App() {
@@ -172,19 +172,19 @@ function MyReactNativeApp() {
 }`}
           </CodeBlock>
 
-          <p>
+          <Paragraph>
             If your routes use an object to attach multiple components to a
             response, the <IJS>children</IJS> function also provides a good
             place to split these apart.
-          </p>
+          </Paragraph>
 
           <Note>
-            <p>
+            <Paragraph>
               If you do take this approach, please remember that you want every
               route to set the same <IJS>body</IJS> shape. Otherwise, you'll
               have to determine the shape and change how you render in the{" "}
               <IJS>children</IJS> function, which can quickly become messy.
-            </p>
+            </Paragraph>
           </Note>
 
           <CodeBlock lang="jsx" data-line="22,26,29">
@@ -219,22 +219,22 @@ function App() {
       </HashSection>
 
       <HashSection meta={navigatingMeta} tag="h2">
-        <p>
+        <Paragraph>
           The <IJS>Link</IJS> component is used to navigate between routes
           within an application. By default, the <IJS>Link</IJS> will render as
           a <IJS>TouchableHighlight</IJS>, but you can specify a different
           component using the <IJS>anchor</IJS> prop.
-        </p>
-        <p>
+        </Paragraph>
+        <Paragraph>
           The <IJS>Link</IJS>'s <IJS>name</IJS> prop describes which route
           clicking the link should navigate to. If you pass an invalid route
           name, Curi will warn you.
-        </p>
-        <p>
+        </Paragraph>
+        <Paragraph>
           If a route has any params (or if any of a route's ancestors have
           params for nested routes), the <IJS>params</IJS> prop is used to pass
           these to the <IJS>Link</IJS>.
-        </p>
+        </Paragraph>
 
         <CodeBlock lang="jsx">
           {`import { Link } from "@curi/react-native";
@@ -254,11 +254,11 @@ let NavLinks = () => (
 );`}
         </CodeBlock>
 
-        <p>
+        <Paragraph>
           The <IJS>Link</IJS> also takes <IJS>hash</IJS>, <IJS>query</IJS>, and{" "}
           <IJS>state</IJS> props to attach their values to the location that
           will be navigated to.
-        </p>
+        </Paragraph>
 
         <CodeBlock lang="jsx">
           {`<Link name="Home" hash="details">
@@ -267,7 +267,7 @@ let NavLinks = () => (
         </CodeBlock>
       </HashSection>
 
-      <p>
+      <Paragraph>
         Please check out the full{" "}
         <Link
           name="Package"
@@ -277,31 +277,31 @@ let NavLinks = () => (
           <IJS>@curi/react-dom</IJS>
         </Link>{" "}
         API documentation to see every component that the package provides.
-      </p>
+      </Paragraph>
 
       <HashSection meta={tipsMeta} tag="h2">
         <Note>
-          <p>
+          <Paragraph>
             This guide assumes that you are already familiar with React Native.
-          </p>
+          </Paragraph>
         </Note>
 
         <HashSection meta={backMeta} tag="h3">
-          <p>
+          <Paragraph>
             To add back button support, you need to use your <IJS>history</IJS>{" "}
             object (which you can access through your router as{" "}
             <IJS>router.history</IJS>).
-          </p>
-          <p>
+          </Paragraph>
+          <Paragraph>
             The <IJS>history.go</IJS> method is used for jumping between
             locations, so passing it <IJS>-1</IJS> will jump back to the
             previous location.
-          </p>
-          <p>
+          </Paragraph>
+          <Paragraph>
             When the app is at the initial location, you may want to return{" "}
             <IJS>false</IJS> to close the app when the user presses the back
             button.
-          </p>
+          </Paragraph>
 
           <CodeBlock>
             {`import { BackHandler } from 'react-native';

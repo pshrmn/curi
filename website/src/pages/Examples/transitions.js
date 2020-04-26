@@ -3,6 +3,7 @@ import React from "react";
 import {
   Page,
   HashSection,
+  Paragraph,
   MultiSandbox
 } from "../../components/example/common";
 
@@ -25,10 +26,10 @@ function TransitionsExample() {
   return (
     <Page title={meta.title}>
       <HashSection meta={explanationMeta} tag="h2">
-        <p>
+        <Paragraph>
           Route transitions can be animated by rendering both the previous and
           new content.
-        </p>
+        </Paragraph>
       </HashSection>
 
       <HashSection meta={demoMeta} tag="h2">

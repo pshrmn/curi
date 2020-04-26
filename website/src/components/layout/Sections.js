@@ -1,83 +1,16 @@
 import React from "react";
 import { Link } from "@curi/react-dom";
-/** @jsx jsx */
-import { jsx, css } from "@emotion/core";
-import styled from "@emotion/styled";
 
-import { color, screen } from "../../constants/styles";
-
-let sectionCSS = css`
-  margin-top: 15px;
-
-  p {
-    margin: 0 0 25px;
-    font-size: 0.8em;
-  }
-
-  @media only screen and (min-width: ${screen.medium}) {
-    max-width: ${screen.medium};
-
-    p {
-      font-size: 1em;
-    }
-
-    &.centered {
-      margin: 0 auto;
-    }
-  }
-`;
-
-let StyledSection = styled("section")`
-  ${sectionCSS}
-`;
-
-let StyledAside = styled("aside")`
-  ${sectionCSS}
-
-  padding: 5px 10px;
-  border-left: 2px solid ${color.borderGreen};
-  background: ${color.lightGreen};
-  margin-top: 15px;
-
-  .inline-code {
-    background: ${color.green} !important;
-  }
-`;
-
-let tagCSS = css`
-  .header-link {
-    text-decoration: none;
-
-    &::after {
-      content: "#";
-      color: ${color.darkGray};
-      margin-left: 5px;
-    }
-  }
-
-  @media only screen and (min-width: ${screen.medium}) {
-    margin-top: -50px;
-    padding-top: 50px;
-
-    .header-link {
-      &::after {
-        display: none;
-      }
-
-      &:hover::after {
-        display: inline-block;
-      }
-    }
-  }
-`;
+const SECTION_CLASSNAMES = "mt-3";
+const ASIDE_CLASSNAMES = `${SECTION_CLASSNAMES} py-1 px-2 border-l-2 border-border-green bg-light-green `;
 
 export function PlainSection({
   children,
-  wrapper: Wrapper = "section",
-  className = "section"
+  className = "",
+  wrapper: Wrapper = "section"
 }) {
   return (
-    <Wrapper css={sectionCSS} className={className}>
+    <Wrapper className={`${SECTION_CLASSNAMES} ${className}`}>
       {children}
     </Wrapper>
   );
@@ -86,7 +19,7 @@ export function PlainSection({
 export function TitledPlainSection({ title, children, ...rest }) {
   return (
     <PlainSection {...rest}>
-      <h1 tabIndex={-1} style={{ outline: "none" }}>
+      <h1 className="outline-none" tabIndex={-1}>
         {title}
       </h1>
       {children}
@@ -94,28 +27,40 @@ export function TitledPlainSection({ title, children, ...rest }) {
   );
 }
 
-function ArticleSection({
-  meta: { title, hash },
-  children,
-  tag: Tag,
-  wrapper: Wrapper
-}) {
+function ArticleSection({ meta: { title, hash }, children, tag: Tag }) {
   return (
-    <Wrapper>
-      <Tag id={hash} css={tagCSS} tabIndex={-1} style={{ outline: "none" }}>
-        <Link hash={hash} className="header-link">
+    <>
+      <Tag id={hash} className="hash-anchor-fix outline-none" tabIndex={-1}>
+        <Link hash={hash} className="header-link no-underline">
           {title}
         </Link>
       </Tag>
       {children}
-    </Wrapper>
+    </>
   );
 }
 
 export function HashSection(props) {
-  return <ArticleSection {...props} wrapper={StyledSection} />;
+  return (
+    <section className={SECTION_CLASSNAMES}>
+      <ArticleSection {...props} />
+    </section>
+  );
 }
 
 export function HashAside(props) {
-  return <ArticleSection {...props} wrapper={StyledAside} />;
+  // .inline-code {
+  //   background: ${color.green} !important;
+  // }
+  return (
+    <section className={ASIDE_CLASSNAMES}>
+      <ArticleSection {...props} />
+    </section>
+  );
+}
+
+export function Paragraph({ children }) {
+  return (
+    <p className="m-0 mb-4 md:max-w-4xl text-base md:text-lg">{children}</p>
+  );
 }
