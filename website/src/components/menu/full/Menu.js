@@ -38,14 +38,14 @@ let StyledNav = ({ children, ...rest }) => {
 
 let ListItem = ({ children, ...rest }) => {
   return (
-    <li {...rest} className="py-0 pr-4 pl-0">
+    <li {...rest} className="p-0 pr-2 pl-0">
       {children}
     </li>
   );
 };
 
 const BASE_LINK_CLASSNAMES =
-  "text-gray-100 text-xl no-underline h-12 flex items-center px-2 border-0 border-b-2 border-purple";
+  "text-gray-100 text-xl no-underline h-10 flex items-center px-2 border-0 border-b-2 border-purple";
 const HOVER_CLASSNAMES = "hover:text-bright-orange";
 const LINK_CLASSNAMES = [BASE_LINK_CLASSNAMES, HOVER_CLASSNAMES].join(" ");
 const ACTIVATED_DROPDOWN_CLASSNAMES = `text-border-blue border-border-blue hover:text-border-blue`;

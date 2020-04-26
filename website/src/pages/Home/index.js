@@ -30,7 +30,7 @@ let TileTitle = ({ children }) => {
 export default function HomePage() {
   return (
     <React.Fragment>
-      <PlainSection className="md:my-0 md:mx-auto md:max-w-3xl">
+      <PlainSection className="md:my-0 md:mx-auto">
         <h1
           tabIndex={-1}
           className="text-3xl text-center color-purple m-0 outline-none"
@@ -42,7 +42,7 @@ export default function HomePage() {
         </h2>
       </PlainSection>
 
-      <PlainSection className="md:my-0 md:mx-auto md:max-w-3xl">
+      <PlainSection className="md:my-0 md:mx-auto">
         <CodeBlock>
           {`import { prepareRoutes, createRouter, announce } from "@curi/router";
 import { browser } from "@hickory/browser";
@@ -63,7 +63,7 @@ let router = createRouter(browser, routes, {
         </CodeBlock>
       </PlainSection>
 
-      <PlainSection className="md:my-0 md:mx-auto md:max-w-3xl">
+      <PlainSection className="md:my-0 md:mx-auto">
         <h2>What is Curi?</h2>
         <Tiles>
           <Tile>
@@ -131,7 +131,7 @@ let router = createRouter(browser, routes, {
         </Tiles>
       </PlainSection>
 
-      <PlainSection className="md:my-0 md:mx-auto md:max-w-3xl">
+      <PlainSection className="md:my-0 md:mx-auto">
         <h2>Resources</h2>
         <Tiles>
           <Tile>

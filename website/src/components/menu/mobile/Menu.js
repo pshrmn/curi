@@ -36,10 +36,6 @@ const MobileMenu = ({ contents }) => {
     setVisible(false);
   }, [response.location.pathname]);
 
-  let toggleVisible = () => {
-    setVisible(!visible);
-  };
-
   let hasPage = contents !== undefined;
 
   let tabs = [<Tab key="main">Main</Tab>];
@@ -61,7 +57,9 @@ const MobileMenu = ({ contents }) => {
     <React.Fragment>
       <StyledControls>
         <button
-          onClick={toggleVisible}
+          onClick={() => {
+            setVisible(!visible);
+          }}
           className={`h-8 flex-grow text-xl border-0 ${
             visible ? "bg-button-red" : "bg-button-green"
           } md:hidden`}

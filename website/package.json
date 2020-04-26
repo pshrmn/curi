@@ -5,7 +5,7 @@
   "description": "The documentation website for the Curi router",
   "scripts": {
     "prebuild": "npm run build:setup && npm run build:bundle",
-    "build:bundle": "webpack-cli --config webpack.config.prod.js",
+    "build:bundle": "NODE_ENV=production webpack-cli --config webpack.config.prod.js",
     "build:setup": "node ./scripts/buildSetup",
     "build": "cross-env BABEL_ENV=node NODE_ENV=production node ./scripts/build",
     "predev": "node ./scripts/generateDevIndexHtml",
@@ -30,12 +30,5 @@
     "react": "16.12.0",
     "react-dom": "16.12.0",
     "tailwindcss": "^1.3.5"
-  },
-  "devDependencies": {
-    "@fullhuman/postcss-purgecss": "^2.1.2",
-    "css-loader": "^3.5.3",
-    "mini-css-extract-plugin": "^0.9.0",
-    "postcss-loader": "^3.0.0",
-    "style-loader": "^1.2.0"
   }
 }

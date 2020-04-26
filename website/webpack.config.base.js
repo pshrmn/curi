@@ -25,10 +25,6 @@ let config = {
             loader: "babel-loader"
           }
         ]
-      },
-      {
-        test: /\.css$/,
-        use: ["style-loader", "css-loader", "postcss-loader"]
       }
     ]
   },

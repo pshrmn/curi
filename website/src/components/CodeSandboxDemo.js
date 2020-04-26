@@ -9,7 +9,7 @@ export default function CodeSandboxDemo({
   let helpText = null;
   if (help) {
     helpText = (
-      <p className="m-0 text-center iatlic">
+      <p className="m-0 text-center italic">
         Use the three buttons at the top of the Sandbox to toggle view modes.
         Clicking the menu button in the top left corner opens a menu to switch
         between files.

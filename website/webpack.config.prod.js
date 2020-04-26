@@ -1,3 +1,5 @@
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+
 let configBase = require("./webpack.config.base.js");
 
 let config = {
@@ -17,7 +19,27 @@ let config = {
         }
       }
     }
-  }
+  },
+  module: {
+    ...configBase.module,
+    rules: [
+      ...configBase.module.rules,
+      {
+        test: /\.css$/,
+        use: [
+          MiniCssExtractPlugin.loader,
+          {
+            loader: "css-loader",
+            options: {
+              importLoaders: 1
+            }
+          },
+          "postcss-loader"
+        ]
+      }
+    ]
+  },
+  plugins: [...configBase.plugins, new MiniCssExtractPlugin()]
 };
 
 module.exports = config;
