@@ -2,16 +2,9 @@ import React from "react";
 
 import { Up, Down } from "../../svg";
 
-`
-  ul {
-    margin-left: 10px;
-  }
-`;
+let CollapsibleGroup = ({ initial, title, children }) => {
+  let [collapsed, setCollapsed] = React.useState(initial || false);
 
-export default function CollapsibleGroup(props) {
-  let [collapsed, setCollapsed] = React.useState(props.initial || false);
-
-  let { title, children } = props;
   return (
     <ul>
       <li className="mb-3">
@@ -29,4 +22,6 @@ export default function CollapsibleGroup(props) {
       </li>
     </ul>
   );
-}
+};
+
+export default CollapsibleGroup;

@@ -30,7 +30,7 @@ let guides = GUIDE_API.all().map(g => ({
   }
 }));
 
-function GuideLinks({ hidden }) {
+let GuideLinks = ({ hidden }) => {
   usePrefetch(guides, !hidden);
 
   return (
@@ -43,6 +43,6 @@ function GuideLinks({ hidden }) {
       ))}
     </Container>
   );
-}
+};
 
 export default React.memo(GuideLinks);

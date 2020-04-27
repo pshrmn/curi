@@ -7,7 +7,7 @@ export let meta = {
   hash: "source"
 };
 
-export function OnGithub({ path, repo = true }) {
+export let OnGithub = ({ path, repo = true }) => {
   let href = repo
     ? `https://github.com/pshrmn/curi/tree/master/examples/${path}`
     : path;
@@ -19,4 +19,4 @@ export function OnGithub({ path, repo = true }) {
       </Paragraph>
     </HashSection>
   );
-}
+};

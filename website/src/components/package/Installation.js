@@ -3,15 +3,11 @@ import { InlineJS as IJS } from "../highlight/Inline";
 import { HashSection, Paragraph } from "../layout/Sections";
 import { CodeBlock } from "../layout/Groups";
 
-function NPM({ name }) {
-  return (
-    <React.Fragment>
-      <CodeBlock lang="bash">{`npm install @curi/${name}`}</CodeBlock>
-    </React.Fragment>
-  );
-}
+let NPM = ({ name }) => {
+  return <CodeBlock lang="bash">{`npm install @curi/${name}`}</CodeBlock>;
+};
 
-function Unpkg({ name, version, globalName }) {
+let Unpkg = ({ name, version, globalName }) => {
   return (
     <Paragraph>
       UMD scripts script are also available through{" "}
@@ -19,9 +15,9 @@ function Unpkg({ name, version, globalName }) {
       You can access the package's exports using <IJS>window.{globalName}</IJS>.
     </Paragraph>
   );
-}
+};
 
-export default function Installation({ name, version, globalName, script }) {
+let Installation = ({ name, version, globalName, script }) => {
   return (
     <HashSection
       meta={{ title: "Installation", hash: "installation" }}
@@ -33,4 +29,6 @@ export default function Installation({ name, version, globalName, script }) {
       ) : null}
     </HashSection>
   );
-}
+};
+
+export default Installation;

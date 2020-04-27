@@ -1,10 +1,9 @@
 import React from "react";
 import { useResponse } from "@curi/react-dom";
 
-import Main from "./blocks/Main";
 import Menu from "./menu/Menu";
 
-export default function App() {
+let App = () => {
   let { response } = useResponse();
   let { body: Body } = response;
   let contents;
@@ -14,9 +13,14 @@ export default function App() {
   return (
     <>
       <Menu contents={contents} />
-      <Main tabIndex={-1}>
+      <main
+        tabIndex={-1}
+        className="w-screen max-w-full pt-3 px-3 pb-0 mb-10 md:pt-10 md:px-0 md:mb-0"
+      >
         <Body response={response} />
-      </Main>
+      </main>
     </>
   );
-}
+};
+
+export default React.memo(App);

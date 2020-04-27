@@ -28,7 +28,7 @@ let flatTutorials = TUTORIAL_API.all().map(t => ({
   params: { slug: t.slug }
 }));
 
-function TutorialLinks({ hidden }) {
+let TutorialLinks = ({ hidden }) => {
   usePrefetch(flatTutorials, !hidden);
 
   return (
@@ -41,6 +41,6 @@ function TutorialLinks({ hidden }) {
       ))}
     </Container>
   );
-}
+};
 
 export default React.memo(TutorialLinks);

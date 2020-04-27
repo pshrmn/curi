@@ -20,13 +20,13 @@ let GroupPackages = ({ packages }) => (
   </ul>
 );
 
-function PackageLinks() {
+let PackageLinks = () => {
   let groups = PACKAGE_API.versioned("v2");
   return Object.keys(groups).map(title => (
     <CollapsibleGroup key={title} title={title} initial={false}>
       <GroupPackages packages={groups[title]} />
     </CollapsibleGroup>
   ));
-}
+};
 
 export default React.memo(PackageLinks);

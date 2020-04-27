@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function GitHubLink({ name, dir }) {
+let GitHubLink = ({ name, dir }) => {
   return (
     <a
       href={`https://github.com/pshrmn/curi/tree/master/packages/${
@@ -9,12 +9,13 @@ export default function GitHubLink({ name, dir }) {
       className="m-0 mr-1 mb-1"
     >
       <img
-        style={{ height: 16, marginRight: 5 }}
         src="/static/img/github-logo.png"
         alt="GitHub logo"
-        className="inline-block"
+        className="inline-block mr-2 h-4"
       />
       GitHub Repo
     </a>
   );
-}
+};
+
+export default GitHubLink;

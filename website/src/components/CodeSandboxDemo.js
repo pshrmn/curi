@@ -1,11 +1,6 @@
 import React from "react";
 
-export default function CodeSandboxDemo({
-  id,
-  view = "split",
-  help = true,
-  name
-}) {
+let CodeSandboxDemo = ({ id, view = "split", help = true, name }) => {
   let helpText = null;
   if (help) {
     helpText = (
@@ -29,4 +24,6 @@ export default function CodeSandboxDemo({
       {helpText}
     </figure>
   );
-}
+};
+
+export default CodeSandboxDemo;

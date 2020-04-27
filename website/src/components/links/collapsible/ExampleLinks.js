@@ -3,7 +3,8 @@ import React from "react";
 import EXAMPLE_API from "../../../constants/examples";
 import ActiveLink from "../ActiveLink";
 
-let Category = ({ examples }) => {
+let ExampleLinks = () => {
+  let examples = EXAMPLE_API.all();
   return (
     <ul>
       {examples.map(e => {
@@ -22,10 +23,5 @@ let Category = ({ examples }) => {
     </ul>
   );
 };
-
-function ExampleLinks() {
-  let examples = EXAMPLE_API.all();
-  return <Category examples={examples} />;
-}
 
 export default React.memo(ExampleLinks);

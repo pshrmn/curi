@@ -1,6 +1,6 @@
 import React from "react";
 
-function PrismCode(props) {
+let PrismCode = props => {
   let ref = React.createRef();
   let { component: Wrapper, children, className, ...rest } = props;
 
@@ -18,6 +18,6 @@ function PrismCode(props) {
       {children}
     </Wrapper>
   );
-}
+};
 
 export default React.memo(PrismCode);

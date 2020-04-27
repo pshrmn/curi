@@ -51,14 +51,14 @@ const LINK_CLASSNAMES = [BASE_LINK_CLASSNAMES, HOVER_CLASSNAMES].join(" ");
 const ACTIVATED_DROPDOWN_CLASSNAMES = `text-border-blue border-border-blue hover:text-border-blue`;
 const ACTIVE_LINK_CLASSNAMES = "text-bright-orange border-bright-orange";
 
-export function unmodifiedLeftClick(event) {
+export let unmodifiedLeftClick = event => {
   return (
     event.button === 0 &&
     !(event.metaKey || event.altKey || event.ctrlKey || event.shiftKey)
   );
-}
+};
 
-function MenuItem({ name, params, text, show, hide, Submenu, group }) {
+let MenuItem = ({ name, params, text, show, hide, Submenu, group }) => {
   let active = group === name;
   return (
     <ListItem
@@ -86,9 +86,9 @@ function MenuItem({ name, params, text, show, hide, Submenu, group }) {
       <Submenu hidden={!active} />
     </ListItem>
   );
-}
+};
 
-function DropdownLink({ name, text, activated, show, hide, ...rest }) {
+let DropdownLink = ({ name, text, activated, show, hide, ...rest }) => {
   return (
     <ActiveLink
       name={name}
@@ -111,9 +111,9 @@ function DropdownLink({ name, text, activated, show, hide, ...rest }) {
       {text}
     </ActiveLink>
   );
-}
+};
 
-export default function Header() {
+let Header = () => {
   let [group, setGroup] = React.useState();
 
   let showDropdown = group => {
@@ -192,4 +192,6 @@ export default function Header() {
       </StyledNav>
     </StyledHeader>
   );
-}
+};
+
+export default Header;

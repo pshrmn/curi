@@ -31,7 +31,7 @@ let pkgs = PACKAGE_API.all().map(pkg => ({
   }
 }));
 
-function PackageLinks({ hidden }) {
+let PackageLinks = ({ hidden }) => {
   usePrefetch(pkgs, !hidden);
 
   return (
@@ -46,6 +46,6 @@ function PackageLinks({ hidden }) {
       ))}
     </Container>
   );
-}
+};
 
 export default React.memo(PackageLinks);

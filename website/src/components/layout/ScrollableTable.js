@@ -1,9 +1,11 @@
 import React from "react";
 
-export default function ScrollableTable(props) {
+let ScrollableTable = props => {
   return (
     <div className="overflow-x-auto">
       <table {...props} />
     </div>
   );
-}
+};
+
+export default ScrollableTable;

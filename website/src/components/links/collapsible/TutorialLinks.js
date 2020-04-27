@@ -20,13 +20,13 @@ let GroupTutorials = ({ tutorials }) => (
   </ul>
 );
 
-function TutorialLinks() {
+let TutorialLinks = () => {
   let groups = TUTORIAL_API.grouped();
   return Object.keys(groups).map(title => (
     <CollapsibleGroup key={title} title={title} initial={false}>
       <GroupTutorials tutorials={groups[title]} />
     </CollapsibleGroup>
   ));
-}
+};
 
 export default React.memo(TutorialLinks);

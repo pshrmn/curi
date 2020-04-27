@@ -1,6 +1,6 @@
 import React from "react";
 
-export function Down() {
+export let Down = () => {
   return (
     <svg
       width="25"
@@ -12,9 +12,9 @@ export function Down() {
       <path d="M2,5 l5,5 l5,-5" fill="none" stroke="black" strokeWidth={3} />
     </svg>
   );
-}
+};
 
-export function Up() {
+export let Up = () => {
   return (
     <svg
       width="25"
@@ -26,4 +26,4 @@ export function Up() {
       <path d="M2,10 l5,-5 l5,5" fill="none" stroke="black" strokeWidth={3} />
     </svg>
   );
-}
+};

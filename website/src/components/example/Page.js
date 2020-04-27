@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function ExamplePage({ title, children }) {
+let ExamplePage = ({ title, children }) => {
   return (
     <React.Fragment>
       <h1 tabIndex={-1} className="outline-none">
@@ -9,4 +9,6 @@ export default function ExamplePage({ title, children }) {
       {children}
     </React.Fragment>
   );
-}
+};
+
+export default ExamplePage;

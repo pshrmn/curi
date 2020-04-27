@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function Outline({ children }) {
+let Outline = ({ children }) => {
   // .inline-code {
   //   background: ${color.blue} !important;
   // }
@@ -12,4 +12,6 @@ export default function Outline({ children }) {
       <ul className="list-inside list-disc ml-5">{children}</ul>
     </aside>
   );
-}
+};
+
+export default Outline;

@@ -3,7 +3,7 @@ import { TabList, Tab, Tabs, TabPanels, TabPanel } from "@reach/tabs";
 
 import CodeSandboxDemo from "../CodeSandboxDemo";
 
-export default function MultiSandbox({ sandboxes }) {
+let MultiSandbox = ({ sandboxes }) => {
   return (
     <Tabs>
       <TabList>
@@ -21,4 +21,6 @@ export default function MultiSandbox({ sandboxes }) {
       </TabPanels>
     </Tabs>
   );
-}
+};
+
+export default MultiSandbox;

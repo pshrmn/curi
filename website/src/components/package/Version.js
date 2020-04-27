@@ -3,7 +3,7 @@ import { useRouter } from "@curi/react-dom";
 
 const CLASSNAMES = "m-0 mr-1 mb-1";
 
-export default function Version({ versions, major, params }) {
+let Version = ({ versions, major, params }) => {
   let router = useRouter();
 
   // only render dropdown for packages with multiple versions
@@ -35,4 +35,6 @@ export default function Version({ versions, major, params }) {
   }
 
   return <p className={CLASSNAMES}>v{versions[major]}</p>;
-}
+};
+
+export default Version;

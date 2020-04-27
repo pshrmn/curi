@@ -15,7 +15,7 @@ function getDir(name) {
   }
 }
 
-export default function BasePackage({
+let BasePackage = ({
   name,
   params,
   versions,
@@ -24,7 +24,7 @@ export default function BasePackage({
   children,
   script = true,
   sections
-}) {
+}) => {
   if (name !== undefined) {
     let major = params.version !== undefined ? params.version : latest;
     let currentVersion = versions[major];
@@ -51,4 +51,6 @@ export default function BasePackage({
   } else {
     return children;
   }
-}
+};
+
+export default BasePackage;

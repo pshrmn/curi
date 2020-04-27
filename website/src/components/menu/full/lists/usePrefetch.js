@@ -2,7 +2,7 @@ import React from "react";
 import { useRouter } from "@curi/react-dom";
 import { prefetch } from "@curi/interactions";
 
-export default function usePrefetch(routes, active) {
+let usePrefetch = (routes, active) => {
   let router = useRouter();
   let hasPrefetched = React.useRef(false);
   React.useEffect(() => {
@@ -16,4 +16,6 @@ export default function usePrefetch(routes, active) {
       });
     }
   }, [active]);
-}
+};
+
+export default usePrefetch;

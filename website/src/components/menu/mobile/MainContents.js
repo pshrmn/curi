@@ -7,7 +7,7 @@ import GuideLinks from "../../links/collapsible/GuideLinks";
 import ExampleLinks from "../../links/collapsible/ExampleLinks";
 import TutorialLinks from "../../links/collapsible/TutorialLinks";
 
-export default function MainContents() {
+let MainContents = () => {
   return (
     <ul className="my-1 mx-0 p-0 list-none">
       <li>
@@ -40,4 +40,6 @@ export default function MainContents() {
       </li>
     </ul>
   );
-}
+};
+
+export default MainContents;

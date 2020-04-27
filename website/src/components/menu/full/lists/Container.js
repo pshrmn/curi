@@ -22,14 +22,12 @@ let FlexContainer = ({ children, ...rest }) => {
   );
 };
 
-// > div {
-//   margin: 0 25px;
-// }
-
-export default function Container({ hidden, children }) {
+let Container = ({ hidden, children }) => {
   return (
     <StyledContainer className={hidden ? "hidden" : "block"}>
       <FlexContainer>{children}</FlexContainer>
     </StyledContainer>
   );
-}
+};
+
+export default Container;

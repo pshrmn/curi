@@ -15,7 +15,7 @@ let exampleParams = Object.keys(examples).reduce((acc, e) => {
   return acc;
 }, []);
 
-function ExampleLinks({ hidden }) {
+let ExampleLinks = ({ hidden }) => {
   usePrefetch(exampleParams, !hidden);
 
   return (
@@ -39,6 +39,6 @@ function ExampleLinks({ hidden }) {
       </StyledDropdownMenu>
     </Container>
   );
-}
+};
 
 export default React.memo(ExampleLinks);
