@@ -6,49 +6,12 @@ import GuideDropdown from "./lists/GuideDropdown";
 import ExampleDropdown from "./lists/ExampleDropdown";
 import TutorialDropdown from "./lists/TutorialDropdown";
 
-let StyledHeader = ({ children, ...rest }) => {
-  return (
-    <header
-      {...rest}
-      className="hidden md:block w-screen max-w-full bg-purple p-0 fixed z-10"
-    >
-      {children}
-    </header>
-  );
-};
-
-let FlexList = ({ children, ...rest }) => {
-  return (
-    <ul
-      {...rest}
-      className="flex flex-row flex-wrap items-end p-0 m-0 max-w-full"
-    >
-      {children}
-    </ul>
-  );
-};
-
-let StyledNav = ({ children, ...rest }) => {
-  return (
-    <nav {...rest} className="text-gray-100">
-      {children}
-    </nav>
-  );
-};
-
-let ListItem = ({ children, ...rest }) => {
-  return (
-    <li {...rest} className="p-0 pr-2 pl-0">
-      {children}
-    </li>
-  );
-};
-
+const LIST_ITEM_CLASSNAMES = "p-0 pr-2 pl-0";
 const BASE_LINK_CLASSNAMES =
   "text-gray-100 text-xl no-underline h-10 flex items-center px-2 border-0 border-b-2 border-purple";
 const HOVER_CLASSNAMES = "hover:text-bright-orange";
 const LINK_CLASSNAMES = [BASE_LINK_CLASSNAMES, HOVER_CLASSNAMES].join(" ");
-const ACTIVATED_DROPDOWN_CLASSNAMES = `text-border-blue border-border-blue hover:text-border-blue`;
+const VISIBLE_DROPDOWN_CLASSNAMES = `text-border-blue border-border-blue hover:text-border-blue`;
 const ACTIVE_LINK_CLASSNAMES = "text-bright-orange border-bright-orange";
 
 export let unmodifiedLeftClick = event => {
@@ -59,9 +22,10 @@ export let unmodifiedLeftClick = event => {
 };
 
 let MenuItem = ({ name, params, text, show, hide, Submenu, group }) => {
-  let active = group === name;
+  let visible = group === name;
   return (
-    <ListItem
+    <li
+      className={LIST_ITEM_CLASSNAMES}
       aria-haspopup="true"
       onBlur={e => {
         if (!e.currentTarget.contains(e.relatedTarget)) {
@@ -75,41 +39,29 @@ let MenuItem = ({ name, params, text, show, hide, Submenu, group }) => {
         hide(name);
       }}
     >
-      <DropdownLink
+      <ActiveLink
         name={name}
         params={params}
-        text={text}
-        activated={active}
-        show={show}
-        hide={hide}
-      />
-      <Submenu hidden={!active} />
-    </ListItem>
-  );
-};
-
-let DropdownLink = ({ name, text, activated, show, hide, ...rest }) => {
-  return (
-    <ActiveLink
-      name={name}
-      onNav={e => {
-        if (unmodifiedLeftClick(e)) {
-          // don't navigate!
-          e.preventDefault();
+        onNav={e => {
+          if (unmodifiedLeftClick(e)) {
+            // don't navigate!
+            e.preventDefault();
+            show(name);
+          }
+        }}
+        onFocus={() => {
           show(name);
-        }
-      }}
-      onFocus={e => {
-        show(name);
-      }}
-      className={`${LINK_CLASSNAMES} ${
-        activated ? ACTIVATED_DROPDOWN_CLASSNAMES : ""
-      }`}
-      activeClassName={ACTIVE_LINK_CLASSNAMES}
-      {...rest}
-    >
-      {text}
-    </ActiveLink>
+        }}
+        className={`${LINK_CLASSNAMES} ${
+          visible ? VISIBLE_DROPDOWN_CLASSNAMES : ""
+        }`}
+        activeClassName={ACTIVE_LINK_CLASSNAMES}
+      >
+        {text}
+      </ActiveLink>
+
+      <Submenu hidden={!visible} />
+    </li>
   );
 };
 
@@ -125,7 +77,8 @@ let Header = () => {
   };
 
   return (
-    <StyledHeader
+    <header
+      className="hidden md:block w-screen max-w-full bg-purple p-0 fixed z-10"
       onKeyDown={
         group === undefined
           ? null
@@ -136,9 +89,12 @@ let Header = () => {
             }
       }
     >
-      <StyledNav>
-        <FlexList role="menubar">
-          <ListItem>
+      <nav className="text-gray-100">
+        <ul
+          role="menubar"
+          className="flex flex-row flex-wrap items-end p-0 m-0 max-w-full"
+        >
+          <li className={LIST_ITEM_CLASSNAMES}>
             <ActiveLink
               name="Home"
               className={`${LINK_CLASSNAMES} md:text-2xl md:text-bright-orange`}
@@ -146,7 +102,7 @@ let Header = () => {
             >
               Curi
             </ActiveLink>
-          </ListItem>
+          </li>
           <MenuItem
             name="Packages"
             params={{ version: "v2" }}
@@ -180,17 +136,17 @@ let Header = () => {
             hide={hideDropdown}
             Submenu={ExampleDropdown}
           />
-          <ListItem>
+          <li className={LIST_ITEM_CLASSNAMES}>
             <a
               className={LINK_CLASSNAMES}
               href="https://github.com/pshrmn/curi"
             >
               GitHub
             </a>
-          </ListItem>
-        </FlexList>
-      </StyledNav>
-    </StyledHeader>
+          </li>
+        </ul>
+      </nav>
+    </header>
   );
 };
 

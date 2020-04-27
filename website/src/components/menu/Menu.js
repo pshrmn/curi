@@ -5,10 +5,10 @@ import FullSizeMenu from "./full/Menu";
 
 let Menu = ({ contents }) => {
   return (
-    <React.Fragment>
+    <>
       <FullSizeMenu />
       <MobileMenu contents={contents} />
-    </React.Fragment>
+    </>
   );
 };
 

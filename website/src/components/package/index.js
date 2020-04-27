@@ -29,8 +29,8 @@ let BasePackage = ({
     let major = params.version !== undefined ? params.version : latest;
     let currentVersion = versions[major];
     return (
-      <React.Fragment>
-        <h1 tabIndex={-1} clasName="outline-none">
+      <>
+        <h1 tabIndex={-1} className="outline-none">
           @curi/{name}
         </h1>
         <section className="flex flex-col flex-no-wrap items-start">
@@ -46,7 +46,7 @@ let BasePackage = ({
           script={script}
         />
         {sections.api}
-      </React.Fragment>
+      </>
     );
   } else {
     return children;

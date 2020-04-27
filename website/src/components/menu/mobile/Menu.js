@@ -5,28 +5,6 @@ import { TabList, Tab, Tabs, TabPanels, TabPanel } from "@reach/tabs";
 import MainContents from "./MainContents";
 import PageMenu from "../../layout/PageMenu";
 
-let StyledMenu = ({ children, className = "", ...rest }) => {
-  return (
-    <menu
-      {...rest}
-      className={`${className} fixed overflow-y-scroll w-screen h-screen bg-gray-100 z-40 p-0 pb-10 md:hidden`}
-    >
-      {children}
-    </menu>
-  );
-};
-
-let StyledControls = ({ children, ...rest }) => {
-  return (
-    <menu
-      {...rest}
-      className="fixed w-screen h-8 left-0 bottom-0 flex flex-row flex-no-wrap justify-between z-50"
-    >
-      {children}
-    </menu>
-  );
-};
-
 const MobileMenu = ({ contents }) => {
   let [visible, setVisible] = React.useState(false);
   let { response } = useResponse();
@@ -54,8 +32,8 @@ const MobileMenu = ({ contents }) => {
   }
 
   return (
-    <React.Fragment>
-      <StyledControls>
+    <>
+      <menu className="fixed w-screen h-8 left-0 bottom-0 flex flex-row flex-no-wrap justify-between z-50">
         <button
           onClick={() => {
             setVisible(!visible);
@@ -66,22 +44,24 @@ const MobileMenu = ({ contents }) => {
         >
           {visible ? "Hide" : "Menu"}
         </button>
-      </StyledControls>
-      <StyledMenu
+      </menu>
+      <menu
         hidden={!visible}
-        className={visible ? "block" : ""}
         onClick={e => {
           if (e.target.tagName === "A") {
             setVisible(false);
           }
         }}
+        className={`${
+          visible ? "block" : ""
+        } fixed overflow-y-scroll w-screen h-screen bg-gray-100 z-40 p-0 pb-10 md:hidden`}
       >
         <Tabs>
           <TabList>{tabs}</TabList>
           <TabPanels className="py-0 px-3">{panels}</TabPanels>
         </Tabs>
-      </StyledMenu>
-    </React.Fragment>
+      </menu>
+    </>
   );
 };
 

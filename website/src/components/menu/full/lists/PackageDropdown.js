@@ -3,7 +3,7 @@ import React from "react";
 import PACKAGE_API from "../../../../constants/packages";
 import ActiveLink from "../../../links/ActiveLink";
 import Container from "./Container";
-import StyledDropdownMenu from "./DropdownMenu";
+import DropdownMenu from "./DropdownMenu";
 import usePrefetch from "./usePrefetch";
 
 let GroupPackages = ({ packages }) => (
@@ -38,10 +38,10 @@ let PackageLinks = ({ hidden }) => {
     <Container hidden={hidden}>
       {Object.keys(groups).map(title => (
         <li key={title}>
-          <StyledDropdownMenu>
+          <DropdownMenu>
             <h3>{title}</h3>
             <GroupPackages packages={groups[title]} />
-          </StyledDropdownMenu>
+          </DropdownMenu>
         </li>
       ))}
     </Container>

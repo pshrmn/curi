@@ -3,7 +3,7 @@ import React from "react";
 import GUIDE_API from "../../../../constants/guides";
 import ActiveLink from "../../../links/ActiveLink";
 import Container from "./Container";
-import StyledDropdownMenu from "./DropdownMenu";
+import DropdownMenu from "./DropdownMenu";
 import usePrefetch from "./usePrefetch";
 
 let GroupGuides = ({ guides }) => (
@@ -36,10 +36,10 @@ let GuideLinks = ({ hidden }) => {
   return (
     <Container hidden={hidden}>
       {Object.keys(groups).map(title => (
-        <StyledDropdownMenu key={title}>
+        <DropdownMenu key={title}>
           <h3>{title}</h3>
           <GroupGuides guides={groups[title]} />
-        </StyledDropdownMenu>
+        </DropdownMenu>
       ))}
     </Container>
   );

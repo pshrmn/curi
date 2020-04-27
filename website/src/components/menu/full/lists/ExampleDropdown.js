@@ -3,7 +3,7 @@ import React from "react";
 import EXAMPLE_API from "../../../../constants/examples";
 import ActiveLink from "../../../links/ActiveLink";
 import Container from "./Container";
-import StyledDropdownMenu from "./DropdownMenu";
+import DropdownMenu from "./DropdownMenu";
 import usePrefetch from "./usePrefetch";
 
 let examples = EXAMPLE_API.all();
@@ -20,7 +20,7 @@ let ExampleLinks = ({ hidden }) => {
 
   return (
     <Container hidden={hidden}>
-      <StyledDropdownMenu>
+      <DropdownMenu>
         <ul style={{ margin: "0 25px" }}>
           {examples.map(e => {
             return (
@@ -36,7 +36,7 @@ let ExampleLinks = ({ hidden }) => {
             );
           })}
         </ul>
-      </StyledDropdownMenu>
+      </DropdownMenu>
     </Container>
   );
 };

@@ -1,6 +1,6 @@
 import React from "react";
 
-let StyledDropdownMenu = ({ children, ...rest }) => {
+let DropdownMenu = ({ children, ...rest }) => {
   return (
     <menu {...rest} className="my-0 mx-5">
       {children}
@@ -8,4 +8,4 @@ let StyledDropdownMenu = ({ children, ...rest }) => {
   );
 };
 
-export default StyledDropdownMenu;
+export default DropdownMenu;

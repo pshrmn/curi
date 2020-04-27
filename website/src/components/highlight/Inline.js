@@ -1,9 +1,8 @@
 import React from "react";
 
-let StyledCode = ({ children, className = "", ...rest }) => {
+let Code = ({ children, className = "" }) => {
   return (
     <code
-      {...rest}
       className={`${className} p-1 rounded whitespace-normal background-white text-purple`}
       style={{ textShadow: "none" }}
     >
@@ -12,10 +11,10 @@ let StyledCode = ({ children, className = "", ...rest }) => {
   );
 };
 
-export let InlineJS = ({ children }) => (
-  <StyledCode className="inline-code">{children}</StyledCode>
+export let InlineJS = ({ children, className }) => (
+  <Code className={className}>{children}</Code>
 );
 
-export let InlineComponent = ({ children }) => (
-  <StyledCode className="inline-code">&lt;{children}&gt;</StyledCode>
+export let InlineComponent = ({ children, className }) => (
+  <Code className={className}>&lt;{children}&gt;</Code>
 );

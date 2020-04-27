@@ -1,9 +1,6 @@
 import React from "react";
 
 let Outline = ({ children }) => {
-  // .inline-code {
-  //   background: ${color.blue} !important;
-  // }
   return (
     <aside className="border border-border-blue p-2 my-1 mx-0 bg-light-blue">
       <p className="m-0">
