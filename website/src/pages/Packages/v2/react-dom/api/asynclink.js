@@ -3,6 +3,7 @@ import { Link } from "@curi/react-dom";
 
 import {
   HashSection,
+  Paragraph,
   CodeBlock,
   IJS
 } from "../../../../../components/package/common";
@@ -19,14 +20,14 @@ export let meta = {
 export function AsyncLinkAPI() {
   return (
     <HashSection meta={meta} tag="h2">
-      <p>
+      <Paragraph>
         An <IJS>AsyncLink</IJS> is similar to a{" "}
         <Link hash="Link">
           <IJS>Link</IJS>
         </Link>
         , but uses a render-invoked function as its <IJS>children</IJS>{" "}
         component.
-      </p>
+      </Paragraph>
 
       <CodeBlock lang="jsx">
         {`import { AsyncLink } from '@curi/react-dom';
@@ -48,18 +49,18 @@ export function AsyncLinkAPI() {
 
       <HashSection tag="h3" meta={propsMeta}>
         <HashSection tag="h4" meta={{ title: "name", hash: "AsyncLink-name" }}>
-          <p>
+          <Paragraph>
             See <Link hash="Link-name">Link name</Link>
-          </p>
+          </Paragraph>
         </HashSection>
 
         <HashSection
           tag="h4"
           meta={{ title: "params", hash: "AsyncLink-params" }}
         >
-          <p>
+          <Paragraph>
             See <Link hash="Link-params">Link params</Link>
-          </p>
+          </Paragraph>
         </HashSection>
 
         <HashSection
@@ -69,23 +70,23 @@ export function AsyncLinkAPI() {
             hash: "AsyncLink-hash-query-state"
           }}
         >
-          <p>
+          <Paragraph>
             See{" "}
             <Link hash="Link-hash-query-state">Link hash, query & state</Link>
-          </p>
+          </Paragraph>
         </HashSection>
 
         <HashSection
           tag="h4"
           meta={{ title: "children", hash: "AsyncLink-children" }}
         >
-          <p>
+          <Paragraph>
             A render-invoked <IJS>children</IJS> function that is called with
             the <IJS>AsyncLink</IJS>'s navigation state. The navigation state is{" "}
             <IJS>false</IJS> to start, <IJS>true</IJS> when the{" "}
             <IJS>AsyncLink</IJS> is clicked, and <IJS>false</IJS> when the the
             navigation finishes/is cancelled.
-          </p>
+          </Paragraph>
 
           <CodeBlock lang="jsx">
             {`<AsyncLink name="User" params={{ id: 1 }}>
@@ -103,15 +104,15 @@ export function AsyncLinkAPI() {
           tag="h4"
           meta={{ title: "anchor", hash: "AsyncLink-anchor" }}
         >
-          <p>
+          <Paragraph>
             See <Link hash="Link-anchor">Link anchor</Link>
-          </p>
+          </Paragraph>
         </HashSection>
 
         <HashSection tag="h4" meta={{ title: "rest", hash: "AsyncLink-rest" }}>
-          <p>
+          <Paragraph>
             See <Link hash="Link-rest">Link rest</Link>
-          </p>
+          </Paragraph>
         </HashSection>
       </HashSection>
     </HashSection>

@@ -3,6 +3,7 @@ import React from "react";
 import {
   Page,
   HashSection,
+  Paragraph,
   MultiSandbox
 } from "../../components/example/common";
 
@@ -25,10 +26,10 @@ function ConfirmationExample() {
   return (
     <Page title={meta.title}>
       <HashSection meta={explanationMeta} tag="h2">
-        <p>
+        <Paragraph>
           A Curi application that uses navigation confirmation to verify that
           the user wants to leave the current page.
-        </p>
+        </Paragraph>
       </HashSection>
 
       <HashSection meta={demoMeta} tag="h2">

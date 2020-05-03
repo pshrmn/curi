@@ -3,6 +3,7 @@ import React from "react";
 import {
   Page,
   HashSection,
+  Paragraph,
   MultiSandbox
 } from "../../components/example/common";
 
@@ -25,10 +26,10 @@ function BasicExample() {
   return (
     <Page title={meta.title}>
       <HashSection meta={explanationMeta} tag="h2">
-        <p>
+        <Paragraph>
           A basic Curi application that defines routes and uses links to
           navigate between them.
-        </p>
+        </Paragraph>
       </HashSection>
 
       <HashSection meta={demoMeta} tag="h2">

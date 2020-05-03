@@ -3,6 +3,7 @@ import React from "react";
 import {
   Page,
   HashSection,
+  Paragraph,
   CodeSandboxDemo,
   OnGithub,
   onGitHubMeta
@@ -27,11 +28,11 @@ function SpotifyExample() {
   return (
     <Page title={meta.title}>
       <HashSection meta={explanationMeta} tag="h2">
-        <p>
+        <Paragraph>
           A clone of <a href="https://open.spotify.com">Spotify</a> without all
           of the good stuff (aka being able to listen to music). This
           application uses React DOM for rendering and Curi for routing.
-        </p>
+        </Paragraph>
       </HashSection>
 
       <HashSection meta={demoMeta} tag="h2">

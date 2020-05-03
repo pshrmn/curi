@@ -3,7 +3,7 @@ import React from "react";
 import EXAMPLE_API from "../../../../constants/examples";
 import ActiveLink from "../../../links/ActiveLink";
 import Container from "./Container";
-import StyledDropdownMenu from "./DropdownMenu";
+import DropdownMenu from "./DropdownMenu";
 import usePrefetch from "./usePrefetch";
 
 let examples = EXAMPLE_API.all();
@@ -15,19 +15,20 @@ let exampleParams = Object.keys(examples).reduce((acc, e) => {
   return acc;
 }, []);
 
-function ExampleLinks({ hidden }) {
+let ExampleLinks = ({ hidden }) => {
   usePrefetch(exampleParams, !hidden);
 
   return (
     <Container hidden={hidden}>
-      <StyledDropdownMenu>
-        <ul className="link-list" style={{ margin: "0 25px" }}>
+      <DropdownMenu>
+        <ul style={{ margin: "0 25px" }}>
           {examples.map(e => {
             return (
-              <li key={`${e.category}/${e.slug}`} className="solo">
+              <li key={`${e.category}/${e.slug}`}>
                 <ActiveLink
                   name="Example"
                   params={{ category: e.category, slug: e.slug }}
+                  activeClassName="font-bold"
                 >
                   {e.name}
                 </ActiveLink>
@@ -35,9 +36,9 @@ function ExampleLinks({ hidden }) {
             );
           })}
         </ul>
-      </StyledDropdownMenu>
+      </DropdownMenu>
     </Container>
   );
-}
+};
 
 export default React.memo(ExampleLinks);

@@ -3,6 +3,7 @@ import React from "react";
 import {
   Page,
   HashSection,
+  Paragraph,
   CodeBlock,
   IJS,
   OnGithub,
@@ -24,11 +25,11 @@ function ServerRenderingExample() {
   return (
     <Page title={meta.title}>
       <HashSection meta={explanationMeta} tag="h2">
-        <p>
+        <Paragraph>
           Server rendering with Curi is pretty similar to client side rendering.
           The server should have a catch all route handler that will respond to
           all (non-static file) requests.
-        </p>
+        </Paragraph>
 
         <CodeBlock lang="javascript">
           {`// express
@@ -61,10 +62,10 @@ function catchAll(req, res) {
 app.get("*", catchAll);`}
         </CodeBlock>
 
-        <p>
+        <Paragraph>
           The above example is very basic. Some other things that you might need
           to consider are:
-        </p>
+        </Paragraph>
 
         <ul>
           <li>
@@ -96,9 +97,9 @@ app.get("*", catchAll);`}
     }
   }`}
             </CodeBlock>
-            <p>
+            <Paragraph>
               Then, when starting the server, make sure that BABEL_ENV=server.
-            </p>
+            </Paragraph>
             <CodeBlock lang="markup">
               {`cross-env BABEL_ENV=server npm start`}
             </CodeBlock>

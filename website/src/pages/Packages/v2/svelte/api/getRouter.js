@@ -2,6 +2,7 @@ import React from "react";
 
 import {
   HashSection,
+  Paragraph,
   CodeBlock,
   IJS
 } from "../../../../../components/package/common";
@@ -14,10 +15,10 @@ export let meta = {
 export function GetRouterAPI() {
   return (
     <HashSection meta={meta} tag="h2">
-      <p>
+      <Paragraph>
         The <IJS>getRouter</IJS> function is used to read the <IJS>router</IJS>{" "}
         from Svelte's context.
-      </p>
+      </Paragraph>
 
       <CodeBlock lang="html">
         {`<h1>{pathname}</h1>

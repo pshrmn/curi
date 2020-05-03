@@ -5,6 +5,7 @@ import {
   TitledPlainSection,
   PlainSection,
   HashSection,
+  Paragraph,
   CodeBlock,
   IJS
 } from "../../components/guide/common";
@@ -28,24 +29,24 @@ function LoadingGuide() {
   return (
     <React.Fragment>
       <TitledPlainSection title={meta.title}>
-        <p>
+        <Paragraph>
           In the code splitting guide, we added a function that uses dynamic{" "}
           <IJS>import</IJS> in a route's <IJS>resolve</IJS> function to
           dynamically load modules. We can do the same thing for other data.
-        </p>
+        </Paragraph>
       </TitledPlainSection>
 
       <HashSection meta={resolveMeta} tag="h2">
-        <p>
+        <Paragraph>
           An async function (with any name you want it to have) can be added to
           the <IJS>resolve</IJS> function and the value it resolves will be
           available in the route's <IJS>respond</IJS> function.
-        </p>
+        </Paragraph>
 
-        <p>
+        <Paragraph>
           When the <IJS>Recipe</IJS> route matches, we want to fetch data for
           that specific recipe (using the <IJS>id</IJS> param from the path).
-        </p>
+        </Paragraph>
 
         <CodeBlock>
           {`let routes = prepareRoutes([
@@ -56,18 +57,18 @@ function LoadingGuide() {
 ]);`}
         </CodeBlock>
 
-        <p>
+        <Paragraph>
           The <IJS>resolve</IJS> function is passed an object that contains the
           matched route response properties, including the route{" "}
           <IJS>params</IJS>.
-        </p>
+        </Paragraph>
 
-        <p>
+        <Paragraph>
           Now, when we navigate to <IJS>/recipe/cookies</IJS>, the{" "}
           <IJS>resolve</IJS> function will call the fake API function to load
           the <IJS>"cookies"</IJS> recipe. The function will resolve with the
           loaded data.
-        </p>
+        </Paragraph>
 
         <CodeBlock>
           {`{
@@ -81,13 +82,13 @@ function LoadingGuide() {
       </HashSection>
 
       <HashSection meta={responseMeta} tag="h2">
-        <p>
+        <Paragraph>
           While <IJS>resolve</IJS> starts our data loading, it doesn't actually
           do anything. Instead, we should handle any loaded data with the{" "}
           <IJS>respond</IJS> function.
-        </p>
+        </Paragraph>
 
-        <p>
+        <Paragraph>
           The <IJS>respond</IJS> and <IJS>resolve</IJS> functions are separate
           because while a route is resolving, the user may navigate again, which
           overrides the current navigation. We cannot cancel the{" "}
@@ -95,9 +96,9 @@ function LoadingGuide() {
           performs any side effects, our application is stuck with them. To
           avoid this, the <IJS>respond</IJS> function is not called until we
           know that the current navigation will complete.
-        </p>
+        </Paragraph>
 
-        <p>
+        <Paragraph>
           The <IJS>respond</IJS> function will receive an object with a number
           of properties. These are covered in in the{" "}
           <Link
@@ -109,7 +110,7 @@ function LoadingGuide() {
           </Link>{" "}
           guide, but the only one we care about right now is <IJS>resolved</IJS>
           .
-        </p>
+        </Paragraph>
 
         <CodeBlock>
           {`{
@@ -127,23 +128,23 @@ function LoadingGuide() {
 }`}
         </CodeBlock>
 
-        <p>
+        <Paragraph>
           If at some point in time we decide that we want to change our URI
           pathname structure, we can also use the <IJS>respond</IJS> function to
           redirect.
-        </p>
+        </Paragraph>
 
-        <p>
+        <Paragraph>
           You can specify the route to redirect to with <IJS>redirect</IJS>.
           This takes the <IJS>name</IJS> of the route to redirect to,{" "}
           <IJS>params</IJS> if the route (or ancestor routes) have route params.{" "}
           <IJS>hash</IJS>, <IJS>query</IJS>, and <IJS>state</IJS> can also be
           provided.
-        </p>
-        <p>
+        </Paragraph>
+        <Paragraph>
           After Curi emits the response, it will also automatically redirect to
           the new location!
-        </p>
+        </Paragraph>
 
         <CodeBlock>
           {`{
@@ -165,7 +166,7 @@ function LoadingGuide() {
       </HashSection>
 
       <PlainSection>
-        <p>
+        <Paragraph>
           A route's <IJS>resolve</IJS> and <IJS>respond</IJS> functions offer a
           convenient way to do data loading prior to actually rendering the
           route, but please remember that your application will not be
@@ -177,7 +178,7 @@ function LoadingGuide() {
             async examples
           </Link>{" "}
           shows one approach to how to do this.
-        </p>
+        </Paragraph>
       </PlainSection>
     </React.Fragment>
   );

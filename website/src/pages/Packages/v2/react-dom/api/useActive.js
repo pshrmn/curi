@@ -1,12 +1,10 @@
 import React from "react";
-import { Link } from "@curi/react-dom";
 
 import {
   HashSection,
+  Paragraph,
   CodeBlock,
-  IJS,
-  Cmp,
-  Note
+  IJS
 } from "../../../../../components/package/common";
 
 let optsMeta = {
@@ -21,11 +19,11 @@ export let meta = {
 export function UseActiveAPI() {
   return (
     <HashSection meta={meta} tag="h2">
-      <p>
+      <Paragraph>
         The <IJS>useActive</IJS> hook determines if a route is active by
         comparing a route name (and possibly params) to a <IJS>response</IJS>{" "}
         object.
-      </p>
+      </Paragraph>
 
       <CodeBlock lang="jsx">
         {`import { useActive, Link } from '@curi/react-dom';
@@ -52,32 +50,34 @@ function ActiveLink({
       </CodeBlock>
 
       <HashSection tag="h3" meta={optsMeta}>
-        <p>
+        <Paragraph>
           <IJS>useActive</IJS> takes a single argument, an options object.
-        </p>
+        </Paragraph>
 
         <HashSection tag="h4" meta={{ title: "name", hash: "useActive-name" }}>
-          <p>The name of the route to compare against the response object.</p>
+          <Paragraph>
+            The name of the route to compare against the response object.
+          </Paragraph>
         </HashSection>
 
         <HashSection
           tag="h4"
           meta={{ title: "params", hash: "useActive-params" }}
         >
-          <p>
+          <Paragraph>
             An object containing route parameters. These will be compared
             against the route params of the response object.
-          </p>
+          </Paragraph>
         </HashSection>
 
         <HashSection
           tag="h4"
           meta={{ title: "partial", hash: "useActive-partial" }}
         >
-          <p>
+          <Paragraph>
             Allows ancestor routes to be considered active when true. Defaults
             to false.
-          </p>
+          </Paragraph>
 
           <CodeBlock lang="jsx">
             {`// response = { name: "User Album", params: { id: "abcde" }}
@@ -93,11 +93,11 @@ useActive({ name: "User", partial: true }); // true`}
         tag="h4"
         meta={{ title: "components", hash: "useActive-components" }}
       >
-        <p>
+        <Paragraph>
           The base active check only checks that the route (i.e. pathname) is
           active. <IJS>components</IJS> allows you to check if other components
           of the location are also active.
-        </p>
+        </Paragraph>
 
         <CodeBlock lang="jsx">
           {`useActive({

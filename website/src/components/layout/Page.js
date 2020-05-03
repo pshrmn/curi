@@ -1,14 +1,11 @@
 import React from "react";
-import styled from "@emotion/styled";
 
-import { screen } from "../../constants/styles";
+let Page = ({ children, ...rest }) => {
+  return (
+    <div {...rest} className="relative md:pt-4 md:pr-0 md:pb-0 md:pl-4">
+      {children}
+    </div>
+  );
+};
 
-let StyledPage = styled("div")`
-  position: relative;
-
-  @media only screen and (min-width: ${screen.medium}) {
-    padding: 25px 0 0 25px;
-  }
-`;
-
-export default StyledPage;
+export default Page;

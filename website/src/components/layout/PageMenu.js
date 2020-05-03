@@ -1,57 +1,34 @@
 import React from "react";
 import { Link } from "@curi/react-dom";
-import styled from "@emotion/styled";
 
-let StyledMenu = styled("menu")`
-  width: 200px;
-  padding: 0;
-  margin: 0;
-
-  p {
-    margin: 0;
-  }
-
-  a {
-    text-decoration: none;
-    display: block;
-  }
-
-  ol {
-    padding-left: 0;
-    margin-top: 0;
-    list-style-type: none;
-    ol {
-      padding-left: 15px;
-      font-size: 0.9em;
-    }
-  }
-`;
-
-function MenuItem({ item }) {
+let MenuItem = ({ item, level }) => {
   return (
     <li>
-      <Link hash={item.hash}>{item.title}</Link>
-      {item.children ? <Group items={item.children} /> : null}
+      <Link hash={item.hash} className="no-underline">
+        {item.title}
+      </Link>
+      {item.children ? <Group items={item.children} level={level} /> : null}
     </li>
   );
-}
+};
 
-function Group({ items }) {
+let Group = ({ items, level }) => {
+  const leftPadding = level === 0 ? "p-0" : "pl-3";
   return (
-    <ol>
+    <ol className={`my-1 mx-0 p-0 list-none ${leftPadding}`}>
       {items.map(i => (
-        <MenuItem key={i.hash} item={i} />
+        <MenuItem key={i.hash} item={i} level={level + 1} />
       ))}
     </ol>
   );
-}
+};
 
-function PageMenu({ contents }) {
+let PageMenu = ({ contents }) => {
   return (
-    <StyledMenu>
-      <Group items={contents} />
-    </StyledMenu>
+    <menu className="max-w-full p-0 m-0">
+      <Group items={contents} level={0} />
+    </menu>
   );
-}
+};
 
 export default React.memo(PageMenu);

@@ -5,6 +5,7 @@ import {
   TitledPlainSection,
   HashSection,
   HashAside,
+  Paragraph,
   CodeBlock,
   Outline,
   Note,
@@ -101,30 +102,30 @@ function ReactBasicsTutorial() {
   return (
     <React.Fragment>
       <TitledPlainSection title="React Basics Tutorial">
-        <p>
+        <Paragraph>
           In this tutorial, we will be building the front end of a website for a
           bookstore.
-        </p>
+        </Paragraph>
 
         <Outline>
-          <ul>
-            <li>
-              Creating a React application using{" "}
-              <a href="https://facebook.github.io/create-react-app/">
-                Create React App
-              </a>
-              .
-            </li>
-            <li>Defining the website's valid routes</li>
-            <li>Setting up a router</li>
-            <li>Rendering different content based on the current location.</li>
-            <li>Writing links to navigate within the application.</li>
-          </ul>
+          <li>
+            Creating a React application using{" "}
+            <a href="https://facebook.github.io/create-react-app/">
+              Create React App
+            </a>
+            .
+          </li>
+          <li>Defining the website's valid routes</li>
+          <li>Setting up a router</li>
+          <li>Rendering different content based on the current location.</li>
+          <li>Writing links to navigate within the application.</li>
         </Outline>
       </TitledPlainSection>
 
       <HashSection meta={demoMeta} tag="h2">
-        <p>You can run a demo of the site we are building with CodeSandbox.</p>
+        <Paragraph>
+          You can run a demo of the site we are building with CodeSandbox.
+        </Paragraph>
         <CodeSandboxDemo
           id="github/curijs/react-basic-tutorial/tree/master/"
           title="Curi React basic tutorial"
@@ -132,56 +133,56 @@ function ReactBasicsTutorial() {
       </HashSection>
 
       <HashSection meta={setupMeta} tag="h2">
-        <p>
+        <Paragraph>
           We will be using{" "}
           <a href="https://github.com/facebook/create-react-app">
             <IJS>create-react-app</IJS>
           </a>{" "}
           to develop this website.
-        </p>
+        </Paragraph>
 
         <Note>
-          <p>
+          <Paragraph>
             The instructions here assume that you have NodeJS and NPM installed
             on your computer. If you do not, cannot, or prefer to avoid setup
             altogether, you can follow along using{" "}
             <a href="https://codesandbox.io/">CodeSandbox</a>. Some of the
             boilerplate will be different, but the differences are minor.
-          </p>
+          </Paragraph>
         </Note>
 
-        <p>
+        <Paragraph>
           Begin by opening a terminal and navigating to the directory where you
           want to save your code. Then, we will use <IJS>npx</IJS> to create the
           application.
-        </p>
+        </Paragraph>
 
         <CodeBlock lang="bash">
           {`npx create-react-app curi-react-bookstore # create the app
 cd curi-react-bookstore # enter the new app directory`}
         </CodeBlock>
 
-        <p>
+        <Paragraph>
           There are three routing related packages that we will be using, so
           let's install them now.
-        </p>
+        </Paragraph>
 
-        <p>
+        <Paragraph>
           The <IJS>@hickory/browser</IJS> manages locations and navigation
           within an application. <IJS>@curi/router</IJS> creates our router.{" "}
           <IJS>@curi/react-dom</IJS> provides React components that interact
           with the router.
-        </p>
+        </Paragraph>
 
         <CodeBlock lang="bash">
           {`npm install @hickory/browser @curi/router @curi/react-dom`}
         </CodeBlock>
 
-        <p>
+        <Paragraph>
           Next, we can start <IJS>create-react-app</IJS>'s dev server. The dev
           server will automatically update when we change files, so we can leave
           that running.
-        </p>
+        </Paragraph>
 
         <CodeBlock lang="bash">
           {`npm run start # start the dev server`}
@@ -189,45 +190,45 @@ cd curi-react-bookstore # enter the new app directory`}
       </HashSection>
 
       <HashSection meta={routesMeta} tag="h2">
-        <p>
+        <Paragraph>
           A single-page application is made up of a number of "routes", which
           are the valid locations within the application. The router matches the
           application against its routes to determine which one matches.
-        </p>
-        <p>
+        </Paragraph>
+        <Paragraph>
           With Curi, routes are JavaScript objects. They have two required
           properties: <IJS>name</IJS> and <IJS>path</IJS>.
-        </p>
+        </Paragraph>
 
         <CodeBlock>
           {`// this is a route
 { name: "Home", path: "" }`}
         </CodeBlock>
 
-        <p>
+        <Paragraph>
           A route's <IJS>name</IJS> needs to be unique. Route names are used to
           identify which route to interact with for different functionality,
           like navigation.
-        </p>
-        <p>
+        </Paragraph>
+        <Paragraph>
           A route's <IJS>path</IJS> is what the router uses to identify if a
           location matches the route. The <IJS>path</IJS> is only matched
           against the location's pathname, the other parts of a URL are not used
           for matching.
-        </p>
+        </Paragraph>
 
         <HashAside meta={pathMeta} tag="h3">
-          <p>
+          <Paragraph>
             Route paths are strings describing the pathname segments of a URL
             that they should match.
-          </p>
+          </Paragraph>
 
           <CodeBlock>
             {`{ path: '' } // matches "/"
 { path: 'about/stuff' } // matches "/about/stuff"`}
           </CodeBlock>
 
-          <p>Paths never begin with a slash.</p>
+          <Paragraph>Paths never begin with a slash.</Paragraph>
 
           <CodeBlock>
             {`// yes
@@ -236,11 +237,11 @@ cd curi-react-bookstore # enter the new app directory`}
 { path: '/' }`}
           </CodeBlock>
 
-          <p>
+          <Paragraph>
             Paths can include dynamic parameters. These are specified with a
             string that starts with a colon (<IJS>:</IJS>) followed by the name
             of the params.
-          </p>
+          </Paragraph>
 
           <CodeBlock>
             {`// a param named "id"
@@ -248,12 +249,12 @@ cd curi-react-bookstore # enter the new app directory`}
 // user/abc -> { id: "abc" }`}
           </CodeBlock>
 
-          <p>
+          <Paragraph>
             Routes can be nested using the <IJS>children</IJS> property of a
             route. A nested route inherits the path from its ancestor route(s),
             so its <IJS>path</IJS> is only the additional part of the pathname
             that should be matched.
-          </p>
+          </Paragraph>
 
           <CodeBlock>
             {`{
@@ -269,7 +270,7 @@ cd curi-react-bookstore # enter the new app directory`}
           </CodeBlock>
         </HashAside>
 
-        <p>The website will start with four routes.</p>
+        <Paragraph>The website will start with four routes.</Paragraph>
 
         <ScrollableTable>
           <thead>
@@ -319,30 +320,32 @@ cd curi-react-bookstore # enter the new app directory`}
         </ScrollableTable>
 
         <Note>
-          <p>
+          <Paragraph>
             Curi uses the{" "}
             <a href="https://github.com/pillarjs/path-to-regexp">
               <IJS>path-to-regexp</IJS>
             </a>{" "}
             package for route matching. You can read its documentation to learn
             about more advanced path syntax.
-          </p>
+          </Paragraph>
         </Note>
-        <p>
+        <Paragraph>
           Inside of the <IJS>src</IJS> directory, we will create a{" "}
           <IJS>routes.js</IJS> file where we can define the application's
           routes.
-        </p>
+        </Paragraph>
 
         <CodeBlock lang="bash">{`touch src/routes.js`}</CodeBlock>
 
-        <p>We can create an array of routes using the above names and paths.</p>
-        <p>
+        <Paragraph>
+          We can create an array of routes using the above names and paths.
+        </Paragraph>
+        <Paragraph>
           <IJS>@curi/router</IJS> provides a <IJS>prepareRoutes</IJS> function,
           which is used to setup routes for the router. We will pass the routes
           array to <IJS>prepareRoutes</IJS> and export the result of that
           function call.
-        </p>
+        </Paragraph>
 
         <CodeBlock>
           {`// src/routes.js
@@ -368,10 +371,10 @@ export default prepareRoutes([
 ]);`}
         </CodeBlock>
 
-        <p>
+        <Paragraph>
           We will be creating the router in the <IJS>index.js</IJS> file, so the
           routes array should be imported there.
-        </p>
+        </Paragraph>
 
         <CodeBlock lang="jsx" data-line="5">
           {`// src/index.js
@@ -389,25 +392,25 @@ registerServiceWorker();`}
       </HashSection>
 
       <HashSection meta={historyMeta} tag="h2">
-        <p>
+        <Paragraph>
           The routes define what the application renders for a particular
           location, but we also need to define how the application navigates.
           When we create the router, we will pass it a history function that
           will be used to enable navigation.
-        </p>
+        </Paragraph>
 
-        <p>
+        <Paragraph>
           Curi uses the <a href="https://github.com/pshrmn/hickory">Hickory</a>{" "}
           library for its history. There are a few Hickory packages to choose
           from for different environments. For most websites, the{" "}
           <IJS>@hickory/browser</IJS> is the right choice for the front end.
-        </p>
+        </Paragraph>
 
-        <p>
+        <Paragraph>
           We can import the <IJS>browser</IJS> function from{" "}
           <IJS>@hickory/browser</IJS> in our index file (<IJS>src/index.js</IJS>
           , which <IJS>create-react-app</IJS> created for us).
-        </p>
+        </Paragraph>
 
         <CodeBlock lang="jsx" data-line="4">
           {`// src/index.js
@@ -426,13 +429,13 @@ registerServiceWorker();`}
       </HashSection>
 
       <HashSection meta={routerMeta} tag="h2">
-        <p>
+        <Paragraph>
           We are now ready to create the router. In the <IJS>src/index.js</IJS>{" "}
           file, we should import the <IJS>createRouter</IJS> function from{" "}
           <IJS>@curi/router</IJS>. To create the router, call the{" "}
           <IJS>createRouter</IJS> function passing it the history function and
           the <IJS>routes</IJS> array.
-        </p>
+        </Paragraph>
 
         <CodeBlock lang="jsx" data-line="4,12">
           {`// src/index.js
@@ -452,28 +455,28 @@ ReactDOM.render(<App />, document.getElementById('root'));
 registerServiceWorker();`}
         </CodeBlock>
 
-        <p>
+        <Paragraph>
           The router is now ready and we can render the application, but first
           we should do something really important: make the site more
           accessible.
-        </p>
+        </Paragraph>
 
         <HashSection meta={a11yMeta} tag="h3">
-          <p>
+          <Paragraph>
             In a multi-page application, a screen reader will announce
             navigation to users. This happens automatically when a new Document
             is loaded. A single-page application reuses its Document, which is
             great for removing unnecessary server requests, but also means that
             the navigation is no longer automatically announced.
-          </p>
+          </Paragraph>
 
-          <p>
+          <Paragraph>
             Curi has a concept of "side effects". These are functions that are
             called after a navigation happens and are passed an object with data
             about the navigation.
-          </p>
+          </Paragraph>
 
-          <p>
+          <Paragraph>
             The <IJS>@curi/router</IJS> package provides a few side effects that
             are useful for websites. For now, we will focus on the{" "}
             <Link
@@ -490,13 +493,13 @@ registerServiceWorker();`}
             </a>
             . Screen readers will detect the changed text and read it to the
             users.
-          </p>
+          </Paragraph>
 
-          <p>
+          <Paragraph>
             Let's go ahead and add the <IJS>announce</IJS> side effect to the
             router. We will have it return a string of the response's{" "}
             <IJS>pathname</IJS>.
-          </p>
+          </Paragraph>
 
           <CodeBlock lang="jsx" data-line="4,12-18">
             {`// src/index.js
@@ -525,22 +528,22 @@ registerServiceWorker();`}
       </HashSection>
 
       <HashSection meta={renderingMeta} tag="h2">
-        <p>
+        <Paragraph>
           The <IJS>@curi/react-dom</IJS> provides the components that we will
           use to interact with the router.
-        </p>
-        <p>
+        </Paragraph>
+        <Paragraph>
           We create a <IJS>Router</IJS> component by passing the router to the{" "}
           <IJS>createRouterComponent</IJS> higher-order component.
-        </p>
+        </Paragraph>
 
         <Note>
-          <p>
+          <Paragraph>
             Curi uses a higher-order component to create a component instead of
             a regular component because the router is a permanent "prop". An
             application should only have one router, so this approach
             discourages trying to swap routers.
-          </p>
+          </Paragraph>
         </Note>
 
         <CodeBlock lang="jsx" data-line="6,20">
@@ -569,17 +572,17 @@ ReactDOM.render(<App />, document.getElementById('root'));
 registerServiceWorker();`}
         </CodeBlock>
 
-        <p>
+        <Paragraph>
           The <IJS>Router</IJS> component will re-render the application
           whenever there is in-app navigation. It also sets up a React context,
           so any <IJS>@curi/react-dom</IJS> components and hooks need to be
           descendants of the <IJS>Router</IJS> in order to access the context.
-        </p>
+        </Paragraph>
 
-        <p>
+        <Paragraph>
           We will pass the <IJS>Router</IJS> the <IJS>App</IJS> element, which
           is where we will render the application's content.
-        </p>
+        </Paragraph>
 
         <CodeBlock lang="jsx" data-line="22-26">
           {`// src/index.js
@@ -611,12 +614,12 @@ ReactDOM.render((
 registerServiceWorker();`}
         </CodeBlock>
 
-        <p>
+        <Paragraph>
           The existing content from <IJS>src/App.js</IJS> can be removed and we
           will start from scratch.
-        </p>
+        </Paragraph>
 
-        <p>
+        <Paragraph>
           We will import the{" "}
           <Link
             name="Package"
@@ -629,7 +632,7 @@ registerServiceWorker();`}
           data that was set by the <IJS>Router</IJS>. <IJS>useResponse</IJS>{" "}
           returns three objects: <IJS>router</IJS>, <IJS>response</IJS>, and{" "}
           <IJS>navigation</IJS>.
-        </p>
+        </Paragraph>
 
         <CodeBlock lang="jsx">
           {`// src/App.js
@@ -641,17 +644,17 @@ export default function App() {
 }`}
         </CodeBlock>
 
-        <p>
+        <Paragraph>
           The <IJS>router</IJS> property is our Curi router, but what are the
           other two?
-        </p>
+        </Paragraph>
 
         <HashAside meta={responseMeta} tag="h3">
-          <p>
+          <Paragraph>
             Whenever Curi receives a location, it matches its routes against it
             and creates a response object, which contains data about the route
             that matched the location.
-          </p>
+          </Paragraph>
 
           <CodeBlock>
             {`// a sample response object
@@ -668,7 +671,7 @@ export default function App() {
 }`}
           </CodeBlock>
 
-          <p>
+          <Paragraph>
             The router uses the{" "}
             <a href="https://en.wikipedia.org/wiki/Observer_pattern">
               observer pattern
@@ -677,14 +680,14 @@ export default function App() {
             created. The <IJS>Router</IJS> automatically observes the router so
             that it can re-render the application whenever there is a new
             response.
-          </p>
-          <p>
+          </Paragraph>
+          <Paragraph>
             The <IJS>navigation</IJS> object contains additional information
             about a navigation that doesn't make sense to include in the
             response object. This includes the navigation's "action" (
             <IJS>push</IJS>, <IJS>pop</IJS>, or <IJS>replace</IJS>) and the
             previous response object.
-          </p>
+          </Paragraph>
 
           <CodeBlock>
             {`// a sample navigation object
@@ -695,29 +698,29 @@ export default function App() {
           </CodeBlock>
         </HashAside>
 
-        <p>
+        <Paragraph>
           The response is the most useful of these three properties, but the
           other two may can be handy. For example, the <IJS>navigation</IJS> can
           be useful for animating route transitions.
-        </p>
-        <p>
+        </Paragraph>
+        <Paragraph>
           How do we render using the <IJS>response</IJS>? Any way you want! The
           best way is to use a <IJS>response</IJS>'s <IJS>body</IJS> property.
-        </p>
+        </Paragraph>
 
         <HashAside meta={respondFnMeta} tag="h3">
-          <p>
+          <Paragraph>
             Route's can have a <IJS>respond</IJS> property, which is a function
             that returns an object. The (valid) properties of the object will be
             merged onto the response object.
-          </p>
+          </Paragraph>
 
-          <p>
+          <Paragraph>
             One of these valid properties is <IJS>body</IJS>, so if the{" "}
             <IJS>respond</IJS> function returns an object with a <IJS>body</IJS>{" "}
             property, we can access it from the response as{" "}
             <IJS>response.body</IJS>.
-          </p>
+          </Paragraph>
 
           <CodeBlock>
             {`{
@@ -740,10 +743,10 @@ export default function App() {
           </CodeBlock>
         </HashAside>
 
-        <p>
+        <Paragraph>
           We can update the <IJS>App</IJS> to get the response using{" "}
           <IJS>useResponse</IJS>.
-        </p>
+        </Paragraph>
 
         <CodeBlock lang="jsx" data-line="6">
           {`// src/App.js
@@ -755,11 +758,11 @@ export default function App() {
 }`}
         </CodeBlock>
 
-        <p>
+        <Paragraph>
           If a response's <IJS>body</IJS> is a React component, we can render
           it! We haven't actually defined components for our routes yet, so we
           should throw together some placeholders.
-        </p>
+        </Paragraph>
 
         <CodeBlock lang="bash">
           {`mkdir -p src/components
@@ -774,7 +777,7 @@ import React from 'react';
 export default function Home() {
   return (
     <article>
-      <p>Home</p>
+      <Paragraph>Home</Paragraph>
     </article>
   );
 }`}
@@ -787,7 +790,7 @@ import React from 'react';
 export default function Book(){
   return (
     <article>
-      <p>Book</p>
+      <Paragraph>Book</Paragraph>
     </article>
   );
 }`}
@@ -800,7 +803,7 @@ import React from 'react';
 export default function Checkout() {
   return (
     <article>
-      <p>Checkout</p>
+      <Paragraph>Checkout</Paragraph>
     </article>
   );
 }`}
@@ -813,17 +816,17 @@ import React from 'react';
 export default function NotFound() {
   return (
     <article>
-      <p>Not Found</p>
+      <Paragraph>Not Found</Paragraph>
     </article>
   );
 }`}
         </CodeBlock>
 
-        <p>
+        <Paragraph>
           These components can be imported in <IJS>src/routes.js</IJS>. Each
           route can be given a <IJS>respond</IJS> function which returns an
           object with their respective component as its <IJS>body</IJS>.
-        </p>
+        </Paragraph>
 
         <CodeBlock data-line="4-7,13-15,20-22,27-29,34-36">
           {`// src/routes.js
@@ -866,17 +869,17 @@ export default prepareRoutes([
 ]);`}
         </CodeBlock>
 
-        <p>
+        <Paragraph>
           Now that the responses have <IJS>body</IJS> properties that are React
           components, we can update the <IJS>App</IJS> to render them.
-        </p>
+        </Paragraph>
 
-        <p>
+        <Paragraph>
           We will also pass the <IJS>response</IJS> as a prop to the rendered
           component, which means that each of the route components will have
           access to the <IJS>response</IJS> when they are rendered. This isn't
           strictly necessary, but can come in handy.
-        </p>
+        </Paragraph>
 
         <CodeBlock lang="jsx" data-line="7-8">
           {`// src/App.js
@@ -890,25 +893,25 @@ export default function App() {
 }`}
         </CodeBlock>
 
-        <p>
+        <Paragraph>
           At this point in time our app is rendering, but is isn't very
           interesting because we cannot navigate between locations.
-        </p>
+        </Paragraph>
       </HashSection>
 
       <HashSection meta={navigatingMeta} tag="h2">
-        <p>
+        <Paragraph>
           The <IJS>@curi/react-dom</IJS> package provides a <IJS>Link</IJS>{" "}
           component that we can use to navigate between locations within our
           application.
-        </p>
+        </Paragraph>
 
         <HashAside meta={linkMeta} tag="h3">
-          <p>
+          <Paragraph>
             Navigation isn't done by manually typing the pathname of the
             location the link should navigate to. Instead, we specify the name
             of the route using the <IJS>name</IJS> prop.
-          </p>
+          </Paragraph>
 
           <CodeBlock lang="jsx">
             {`// { name: "Home", path: "" }
@@ -916,11 +919,11 @@ export default function App() {
 // <a href="/">Home</a>`}
           </CodeBlock>
 
-          <p>
+          <Paragraph>
             If a route has params, we provide these to the <IJS>Link</IJS> as a{" "}
             <IJS>params</IJS> object. For a nested route, we would also need to
             provide params for any ancestor routes.
-          </p>
+          </Paragraph>
 
           <CodeBlock lang="jsx">
             {`// { name: "Book", path: "book/:id" }
@@ -928,10 +931,10 @@ export default function App() {
 // <a href="/book/7">The Dark Forest</a>`}
           </CodeBlock>
 
-          <p>
+          <Paragraph>
             The <IJS>Link</IJS> is only for in-app navigation. If you want to
             link to pages outside of the application, use an anchor.
-          </p>
+          </Paragraph>
 
           <CodeBlock lang="jsx">
             {`// in-app
@@ -941,10 +944,10 @@ export default function App() {
 <a href="https://github.com">GitHub</a>`}
           </CodeBlock>
 
-          <p>
+          <Paragraph>
             If you need to attach query or hash data to a <IJS>Link</IJS>, use
             the <IJS>query</IJS> and <IJS>hash</IJS> props.
-          </p>
+          </Paragraph>
 
           <CodeBlock lang="jsx">
             {`// { name: "Checkout", path: "checkout" }
@@ -954,17 +957,17 @@ export default function App() {
         </HashAside>
 
         <HashSection meta={menuMeta} tag="h3">
-          <p>
+          <Paragraph>
             The application will have a navigation menu component with links to
             our home page and checkout page.
-          </p>
+          </Paragraph>
 
           <CodeBlock lang="bash">{`touch src/components/NavMenu.js`}</CodeBlock>
 
-          <p>
+          <Paragraph>
             In order to link to these routes, we only need to know their name,
             not the actual pathname for the URL.
-          </p>
+          </Paragraph>
 
           <CodeBlock lang="jsx">
             {`// src/components/NavMenu.js
@@ -986,11 +989,11 @@ export default function NavMenu() {
   );
 }`}
           </CodeBlock>
-          <p>
+          <Paragraph>
             The menu can be rendered by the <IJS>App</IJS> component. We can
             also add structure to the site by rendering <Cmp>header</Cmp> and{" "}
             <Cmp>main</Cmp> elements around their respective content.
-          </p>
+          </Paragraph>
 
           <CodeBlock lang="jsx" data-line="5,10-19">
             {`// src/App.js
@@ -1017,19 +1020,19 @@ export default function App() {
         </HashSection>
 
         <HashSection meta={bookLinkMeta} tag="h3">
-          <p>
+          <Paragraph>
             The website should link to individual books from its home page. To
             do this, we need data about the available books. Since we don't have
             a backend to fetch book data from, we'll hard-code the books data in
             the <IJS>src/books.js</IJS> module.
-          </p>
+          </Paragraph>
 
           <CodeBlock lang="bash">{`touch src/books.js`}</CodeBlock>
 
-          <p>
+          <Paragraph>
             You can copy+paste or modify the data, but the structure of the
             provided data should stay the same.
-          </p>
+          </Paragraph>
 
           <CodeBlock>
             {`// src/books.js
@@ -1072,10 +1075,10 @@ export default [
 ];`}
           </CodeBlock>
 
-          <p>
+          <Paragraph>
             The data can be imported in the <IJS>Home</IJS> component and we can
             iterate over the books to render a <IJS>Link</IJS> to each one.
-          </p>
+          </Paragraph>
 
           <CodeBlock lang="jsx" data-line="5,8-20">
             {`// src/components/Home.js
@@ -1101,22 +1104,22 @@ export default function Home() {
 }`}
           </CodeBlock>
 
-          <p>
+          <Paragraph>
             Now that we can navigate to the books, we should fill out the UI for
             the <IJS>Book</IJS> component. Up above, we passed the{" "}
             <IJS>response</IJS> object as a prop to the <IJS>response.body</IJS>{" "}
             component. Now, we can use that object in the <IJS>Book</IJS>{" "}
             component to access the captured route params so that we know which
             book to show.
-          </p>
-          <p>
+          </Paragraph>
+          <Paragraph>
             We will once again import the <IJS>books.js</IJS> data. We can use{" "}
             <IJS>params.id</IJS> to select the correct book.{" "}
             <IJS>params.id</IJS> is a string, so we will need to parse it into
             an integer. Sometimes there won't be a valid book for the{" "}
             <IJS>params.id</IJS>. In that case, we will also want to display a
             message that the requested book could not be found.
-          </p>
+          </Paragraph>
 
           <CodeBlock lang="jsx" data-line="4,6-20">
             {`// src/components/Book.js
@@ -1130,7 +1133,7 @@ export default function Book({ response }) {
   if (!book) {
     return (
       <article>
-        <p>The requested book could not be found</p>
+        <Paragraph>The requested book could not be found</Paragraph>
       </article>
     );
   }
@@ -1138,8 +1141,8 @@ export default function Book({ response }) {
     <article>
       <h1>{book.title}</h1>
       <h2>by {book.author}</h2>
-      <p>Published in {book.published}</p>
-      <p>{book.pages} pages</p>
+      <Paragraph>Published in {book.published}</Paragraph>
+      <Paragraph>{book.pages} pages</Paragraph>
     </article>
   );
 }`}
@@ -1148,25 +1151,25 @@ export default function Book({ response }) {
       </HashSection>
 
       <HashSection meta={shoppingMeta} tag="h2">
-        <p>
+        <Paragraph>
           Users of the website should be able to add books to their shopping
           cart. For brevity, we will store the cart data in memory (i.e. it will
           be lost when refreshing the page).
-        </p>
+        </Paragraph>
 
         <CodeBlock lang="bash">{`touch src/cart.js`}</CodeBlock>
 
-        <p>
+        <Paragraph>
           The shopping cart implementation will be a JavaScript <IJS>Map</IJS>.
           We can call its <IJS>set</IJS> method to add books, its{" "}
           <IJS>clear</IJS> method to reset the cart, and iterate over its{" "}
           <IJS>entries</IJS> with a <IJS>for...of</IJS> loop.
-        </p>
+        </Paragraph>
         <Note>
-          <p>
+          <Paragraph>
             The <IJS>Map</IJS> or some of its features may not work in older
             browsers.
-          </p>
+          </Paragraph>
         </Note>
 
         <CodeBlock>
@@ -1195,45 +1198,45 @@ export default {
       </HashSection>
 
       <HashSection meta={useRouterMeta} tag="h2">
-        <p>
+        <Paragraph>
           The <IJS>useRouter</IJS> hook allows us to access our router from
           anywhere in our component tree (that is a descendant of the{" "}
           <Cmp>Router</Cmp>).
-        </p>
+        </Paragraph>
 
-        <p>
+        <Paragraph>
           While links are generally the best way to navigate, sometimes an
           application should navigate as the result of another action. For
           instance, after a user login is authenticated, the application may
           redirect to another page.
-        </p>
+        </Paragraph>
 
-        <p>
+        <Paragraph>
           We will implement something similar in the <IJS>Book</IJS> component
           by having the application navigate to their shopping cart after they
           add a book to it.
-        </p>
+        </Paragraph>
 
         <HashAside meta={urlAndNavigateMeta} tag="h3">
-          <p>
+          <Paragraph>
             The router has a <IJS>url</IJS> method that is used to generate a
             URL string using the name of a route and an object of the route's
             params.
-          </p>
+          </Paragraph>
 
           <CodeBlock>{`let url = router.url({ name: "New" });`}</CodeBlock>
 
-          <p>
+          <Paragraph>
             The router's <IJS>navigate</IJS> method is used to navigate; it
             takes a URL (such as one defined using <IJS>router.url</IJS>). The
             function can also take a <IJS>method</IJS> type for the navigation:{" "}
             <IJS>push</IJS>, <IJS>replace</IJS>, or <IJS>anchor</IJS>.
-          </p>
+          </Paragraph>
 
-          <p>
+          <Paragraph>
             <IJS>push</IJS> pushes a new location after the current index,
             removing any locations after the current location.
-          </p>
+          </Paragraph>
 
           <CodeBlock>
             {`// session = ['/one', '/two', '/three']
@@ -1245,9 +1248,9 @@ router.navigate({ url: "/new", method: "push" });
 // current = '/new'`}
           </CodeBlock>
 
-          <p>
+          <Paragraph>
             <IJS>replace</IJS> replaces the location at the current index.
-          </p>
+          </Paragraph>
 
           <CodeBlock>
             {`// session = ['/one', '/two', '/three']
@@ -1259,16 +1262,16 @@ router.navigate({ url: "/replacement", method: "replace" });
 // current = '/replacement'`}
           </CodeBlock>
 
-          <p>
+          <Paragraph>
             <IJS>anchor</IJS> is a mix between <IJS>push</IJS> and{" "}
             <IJS>replace</IJS>. It mimics the behavior of clicking on links, so
             if you navigate to the same location as the current one it will
             replace, and if you navigate to a new location it will push.
-          </p>
-          <p>
+          </Paragraph>
+          <Paragraph>
             If <IJS>method.navigate</IJS> is called without a navigation{" "}
             <IJS>method</IJS>, it will default to <IJS>anchor</IJS>.
-          </p>
+          </Paragraph>
 
           <CodeBlock>
             {`// session = ['/one', '/two', '/three']
@@ -1286,11 +1289,11 @@ router.navigate({ url: "/new", method: "anchor" });
           </CodeBlock>
         </HashAside>
 
-        <p>
+        <Paragraph>
           In the <IJS>Book</IJS> components module, we should import the{" "}
           <IJS>useRouter</IJS> hook from <IJS>@curi/react-dom</IJS> as well as
           our shopping cart API.
-        </p>
+        </Paragraph>
 
         <CodeBlock lang="jsx" data-line="3,6,21-30">
           {`// src/components/Book.js
@@ -1307,7 +1310,7 @@ export default function Book({ response }) {
   if (!book) {
     return (
       <article>
-        <p>The requested book could not be found</p>
+        <Paragraph>The requested book could not be found</Paragraph>
       </article>
     );
   }
@@ -1315,8 +1318,8 @@ export default function Book({ response }) {
     <article>
       <h1>{book.title}</h1>
       <h2>by {book.author}</h2>
-      <p>Published in {book.published}</p>
-      <p>{book.pages} pages</p>
+      <Paragraph>Published in {book.published}</Paragraph>
+      <Paragraph>{book.pages} pages</Paragraph>
       <button
         type="button"
         onClick={() => {
@@ -1332,13 +1335,13 @@ export default function Book({ response }) {
 }`}
         </CodeBlock>
 
-        <p>
+        <Paragraph>
           Finally, we can update our <IJS>Checkout</IJS> component to display
           the books in the shopping cart. To do this, we will import our cart
           and books. Our cart only stores book <IJS>id</IJS>s, so we will need
           to merge the book data with the cart data.
-        </p>
-        <p>
+        </Paragraph>
+        <Paragraph>
           When a user "buys" the books in their shopping cart, we need to clear
           out the cart. We will also replace the current location with one whose{" "}
           <IJS>location.hash</IJS> is the string "thanks". When that is present
@@ -1346,7 +1349,7 @@ export default function Book({ response }) {
           instead of the cart's contents. Once again, we will use the{" "}
           <IJS>useRouter</IJS> hook to access the router in order to change
           locations.
-        </p>
+        </Paragraph>
 
         <CodeBlock lang="jsx">
           {`// src/components/Checkout.js
@@ -1361,10 +1364,10 @@ export default function Checkout({ response }) {
   if (!books.length) {
     return response.location.hash === 'thanks'
       ? <article>
-          <p>Thanks for your purchase!</p>
+          <Paragraph>Thanks for your purchase!</Paragraph>
         </article>
       : <article>
-          <p>The cart is currently empty</p>
+          <Paragraph>The cart is currently empty</Paragraph>
         </article>;
   }
   return (
@@ -1406,24 +1409,24 @@ export default function Checkout({ response }) {
       </HashSection>
 
       <HashSection meta={nextMeta} tag="h2">
-        <p>
+        <Paragraph>
           We now have a functional website built with React and Curi. What
           should you do next? Build another site!
-        </p>
+        </Paragraph>
 
-        <p>
+        <Paragraph>
           There is an{" "}
           <Link name="Tutorial" params={{ slug: "react-advanced" }}>
             advanced React tutorial
           </Link>{" "}
           that continues where this tutorial leaves off. The advanced tutorial
           implements code splitting and data prefetching.
-        </p>
+        </Paragraph>
 
-        <p>
+        <Paragraph>
           You can also check out the <Link name="Guides">guides</Link> for
           information on other advanced techniques.
-        </p>
+        </Paragraph>
       </HashSection>
     </React.Fragment>
   );

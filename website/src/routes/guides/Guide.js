@@ -1,11 +1,14 @@
 import React from "react";
 
-import FancyPage from "../../components/layout/FancyPage";
+import TwoColumnPage from "../../components/layout/TwoColumnPage";
 import PageMenu from "../../components/layout/PageMenu";
 
 export default function GuidePage({ response }) {
   let { component: Component, contents } = response.data.content;
   return (
-    <FancyPage base={<Component />} menu={<PageMenu contents={contents} />} />
+    <TwoColumnPage
+      base={<Component />}
+      menu={<PageMenu contents={contents} />}
+    />
   );
 }

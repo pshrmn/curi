@@ -3,16 +3,17 @@ import React from "react";
 import PACKAGE_API from "../../../../constants/packages";
 import ActiveLink from "../../../links/ActiveLink";
 import Container from "./Container";
-import StyledDropdownMenu from "./DropdownMenu";
+import DropdownMenu from "./DropdownMenu";
 import usePrefetch from "./usePrefetch";
 
 let GroupPackages = ({ packages }) => (
-  <ul className="link-list">
+  <ul>
     {packages.map(p => (
-      <li key={p.name} className="solo">
+      <li key={p.name}>
         <ActiveLink
           name="Package"
           params={{ package: p.name, version: p.latest }}
+          activeClassName="font-bold"
         >
           {p.name}
         </ActiveLink>
@@ -30,21 +31,21 @@ let pkgs = PACKAGE_API.all().map(pkg => ({
   }
 }));
 
-function PackageLinks({ hidden }) {
+let PackageLinks = ({ hidden }) => {
   usePrefetch(pkgs, !hidden);
 
   return (
     <Container hidden={hidden}>
       {Object.keys(groups).map(title => (
         <li key={title}>
-          <StyledDropdownMenu>
+          <DropdownMenu>
             <h3>{title}</h3>
             <GroupPackages packages={groups[title]} />
-          </StyledDropdownMenu>
+          </DropdownMenu>
         </li>
       ))}
     </Container>
   );
-}
+};
 
 export default React.memo(PackageLinks);

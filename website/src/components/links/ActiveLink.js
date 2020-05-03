@@ -2,7 +2,7 @@ import React from "react";
 import { useActive, Link } from "@curi/react-dom";
 
 let ActiveLink = React.forwardRef(
-  ({ name, params, className = "", ...rest }, ref) => {
+  ({ name, params, className = "", activeClassName, ...rest }, ref) => {
     let active = useActive({ name, params, partial: true });
     return (
       <Link
@@ -10,7 +10,7 @@ let ActiveLink = React.forwardRef(
         name={name}
         params={params}
         {...rest}
-        className={`${className} ${active ? "active" : ""}`}
+        className={`${active ? activeClassName : ""} ${className}`}
       />
     );
   }

@@ -3,6 +3,7 @@ import { Link } from "@curi/react-dom";
 
 import {
   HashSection,
+  Paragraph,
   CodeBlock,
   IJS
 } from "../../../../../components/package/common";
@@ -23,11 +24,11 @@ export let meta = {
 export function PrepareRoutesAPI() {
   return (
     <HashSection meta={meta} tag="h2">
-      <p>
+      <Paragraph>
         The <IJS>prepareRoutes</IJS> function takes an application's routes and
         route interactions and returns an object. The returned object will be
         passed to <IJS>createRouter</IJS>.
-      </p>
+      </Paragraph>
 
       <CodeBlock>
         {`import { prepareRoutes } from '@curi/router';
@@ -39,11 +40,11 @@ let routes = prepareRoutes([
 ]);`}
       </CodeBlock>
 
-      <p>
+      <Paragraph>
         <IJS>prepareRoutes</IJS> creates a reusable routing object, which means
         that it can be reused on the server instead of recompiling it for every
         request.
-      </p>
+      </Paragraph>
 
       <HashSection tag="h3" meta={argumentsMeta}>
         <HashSection tag="h4" meta={routesArgMeta}>

@@ -5,13 +5,14 @@ import TUTORIAL_API from "../../constants/tutorials";
 import Page from "../../components/layout/Page";
 import {
   TitledPlainSection,
-  PlainSection
+  PlainSection,
+  Paragraph
 } from "../../components/layout/Sections";
 
 let GroupTutorials = ({ tutorials }) => (
-  <ul className="link-list">
+  <ul>
     {tutorials.map(g => (
-      <li key={g.title} className="solo">
+      <li key={g.title}>
         <Link name="Tutorial" params={{ slug: g.slug }}>
           {g.title}
         </Link>
@@ -38,7 +39,9 @@ export default function TutorialList() {
   return (
     <Page>
       <TitledPlainSection title="Curi Tutorials">
-        <p>A few tutorials to help get you up to speed with Curi.</p>
+        <Paragraph>
+          A few tutorials to help get you up to speed with Curi.
+        </Paragraph>
       </TitledPlainSection>
 
       <PlainSection>

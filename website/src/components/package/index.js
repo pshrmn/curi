@@ -1,21 +1,9 @@
 import React from "react";
-import styled from "@emotion/styled";
 
 import Version from "./Version";
 import Installation from "./Installation";
 import GitHubLink from "./GitHubLink";
 import NPMLink from "./NPMLink";
-
-let StyledPackageInfo = styled("section")`
-  display: flex;
-  flex-flow: column nowrap;
-  align-items: flex-start;
-
-  > * {
-    margin-right: 5px;
-    margin-bottom: 5px;
-  }
-`;
 
 function getDir(name) {
   if (name.indexOf("route-") === 0) {
@@ -27,7 +15,7 @@ function getDir(name) {
   }
 }
 
-export default function BasePackage({
+let BasePackage = ({
   name,
   params,
   versions,
@@ -36,20 +24,20 @@ export default function BasePackage({
   children,
   script = true,
   sections
-}) {
+}) => {
   if (name !== undefined) {
     let major = params.version !== undefined ? params.version : latest;
     let currentVersion = versions[major];
     return (
-      <React.Fragment>
-        <h1 tabIndex={-1} style={{ outline: "none" }}>
+      <>
+        <h1 tabIndex={-1} className="outline-none">
           @curi/{name}
         </h1>
-        <StyledPackageInfo>
+        <section className="flex flex-col flex-no-wrap items-start">
           <Version major={major} versions={versions} params={params} />
           <GitHubLink name={name} dir={getDir(name)} />
           <NPMLink name={name} />
-        </StyledPackageInfo>
+        </section>
         {sections.about}
         <Installation
           name={name}
@@ -58,9 +46,11 @@ export default function BasePackage({
           script={script}
         />
         {sections.api}
-      </React.Fragment>
+      </>
     );
   } else {
     return children;
   }
-}
+};
+
+export default BasePackage;

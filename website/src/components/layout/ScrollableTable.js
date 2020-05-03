@@ -1,14 +1,11 @@
 import React from "react";
-import styled from "@emotion/styled";
 
-let ScrollableContainer = styled("div")`
-  overflow-x: auto;
-`;
-
-export default function ScrollableTable(props) {
+let ScrollableTable = props => {
   return (
-    <ScrollableContainer>
+    <div className="overflow-x-auto">
       <table {...props} />
-    </ScrollableContainer>
+    </div>
   );
-}
+};
+
+export default ScrollableTable;

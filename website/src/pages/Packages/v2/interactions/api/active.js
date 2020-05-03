@@ -2,6 +2,7 @@ import React from "react";
 
 import {
   HashSection,
+  Paragraph,
   CodeBlock,
   IJS
 } from "../../../../../components/package/common";
@@ -18,15 +19,15 @@ export let meta = {
 export function ActiveAPI() {
   return (
     <HashSection meta={meta} tag="h2">
-      <p>
+      <Paragraph>
         An interaction function that uses a response object to determine if a
         route is "active".
-      </p>
+      </Paragraph>
 
-      <p>
+      <Paragraph>
         The interaction requires two arguments, the first being the route data
         and the second being a response object.
-      </p>
+      </Paragraph>
 
       <CodeBlock>
         {`import { active } from "@curi/interactions";
@@ -47,14 +48,14 @@ let isActive = active(route, response, { id: "1" });`}
           tag="h4"
           meta={{ title: "route", hash: "active-arguments-route" }}
         >
-          <p>The route to determine if it is active.</p>
+          <Paragraph>The route to determine if it is active.</Paragraph>
         </HashSection>
 
         <HashSection
           tag="h4"
           meta={{ title: "response", hash: "active-arguments-response" }}
         >
-          <p>A response object emitted by the router.</p>
+          <Paragraph>A response object emitted by the router.</Paragraph>
 
           <CodeBlock>
             {`let { response } = router.current();
@@ -66,7 +67,7 @@ active(route, response);`}
           tag="h4"
           meta={{ title: "options", hash: "active-arguments-options" }}
         >
-          <p>An object with additional options</p>
+          <Paragraph>An object with additional options</Paragraph>
 
           <CodeBlock>{`active(route, response, options);`}</CodeBlock>
 
@@ -74,32 +75,32 @@ active(route, response);`}
             tag="h4"
             meta={{ title: "params", hash: "active-arguments-params" }}
           >
-            <p>
+            <Paragraph>
               If the route requires params, these are the params that should be
               compared against the response's params.
-            </p>
+            </Paragraph>
           </HashSection>
 
           <HashSection
             tag="h4"
             meta={{ title: "partial", hash: "active-arguments-partial" }}
           >
-            <p>
+            <Paragraph>
               When true (defaults to false), a route that is an ancestor of the
               response's route can be considered active if its params match the
               response's params.
-            </p>
+            </Paragraph>
           </HashSection>
 
           <HashSection
             tag="h4"
             meta={{ title: "components", hash: "active-arguments-components" }}
           >
-            <p>
+            <Paragraph>
               A function to compare the other location components (
               <IJS>hash</IJS> and <IJS>query</IJS>) against the response's
               location.
-            </p>
+            </Paragraph>
           </HashSection>
         </HashSection>
       </HashSection>

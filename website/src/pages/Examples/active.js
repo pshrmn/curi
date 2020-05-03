@@ -4,6 +4,7 @@ import { Link } from "@curi/react-dom";
 import {
   Page,
   HashSection,
+  Paragraph,
   MultiSandbox,
   IJS
 } from "../../components/example/common";
@@ -27,7 +28,7 @@ function ActiveLinksExample() {
   return (
     <Page title={meta.title}>
       <HashSection meta={explanationMeta} tag="h2">
-        <p>
+        <Paragraph>
           Curi can use the{" "}
           <Link
             name="Package"
@@ -38,7 +39,7 @@ function ActiveLinksExample() {
           </Link>{" "}
           interaction to determine if a route is active. This is useful if an
           application wants to style "active" content.
-        </p>
+        </Paragraph>
       </HashSection>
 
       <HashSection meta={demoMeta} tag="h2">

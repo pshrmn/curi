@@ -2,6 +2,7 @@ import React from "react";
 
 import {
   HashSection,
+  Paragraph,
   CodeBlock,
   IJS
 } from "../../../../../components/package/common";
@@ -18,10 +19,10 @@ export let meta = {
 export function UseConfirmAPI() {
   return (
     <HashSection meta={meta} tag="h2">
-      <p>
+      <Paragraph>
         The <IJS>useConfirm</IJS> hook adds and removes a navigation
         confirmation.
-      </p>
+      </Paragraph>
 
       <CodeBlock lang="jsx">
         {`import { useConfirm } from '@curi/react-native';
@@ -35,16 +36,16 @@ useConfirm();
 
       <HashSection tag="h3" meta={argumentsMeta}>
         <HashSection tag="h4" meta={{ title: "fn", hash: "useConfirm-fn" }}>
-          <p>
+          <Paragraph>
             When passed a function, the function will be called when the user
             navigates and give them the option to confirm or prevent the
             navigation.
-          </p>
+          </Paragraph>
 
-          <p>
+          <Paragraph>
             When called with no argument, the existing navigation confirmation
             will be removed.
-          </p>
+          </Paragraph>
         </HashSection>
       </HashSection>
     </HashSection>

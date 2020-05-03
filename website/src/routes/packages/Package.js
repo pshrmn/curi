@@ -1,13 +1,13 @@
 import React from "react";
 
-import FancyPage from "../../components/layout/FancyPage";
+import TwoColumnPage from "../../components/layout/TwoColumnPage";
 import PageMenu from "../../components/layout/PageMenu";
 import BasePackage from "../../components/package";
 
 export default function PackagePage({ response }) {
   let { sections, contents } = response.data.content;
   return (
-    <FancyPage
+    <TwoColumnPage
       base={
         <BasePackage
           name={response.data.name}

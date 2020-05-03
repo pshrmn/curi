@@ -5,7 +5,7 @@
   "description": "The documentation website for the Curi router",
   "scripts": {
     "prebuild": "npm run build:setup && npm run build:bundle",
-    "build:bundle": "webpack-cli --config webpack.config.prod.js",
+    "build:bundle": "NODE_ENV=production webpack-cli --config webpack.config.prod.js",
     "build:setup": "node ./scripts/buildSetup",
     "build": "cross-env BABEL_ENV=node NODE_ENV=production node ./scripts/build",
     "predev": "node ./scripts/generateDevIndexHtml",
@@ -24,12 +24,11 @@
     "@curi/react-dom": "file:../packages/react-dom",
     "@curi/router": "file:../packages/router",
     "@curi/static": "file:../packages/static",
-    "@emotion/core": "^10.0.6",
-    "@emotion/styled": "^10.0.6",
     "@hickory/browser": "^2.1.0",
     "@hickory/in-memory": "^2.1.0",
     "@reach/tabs": "^0.1.5",
     "react": "16.12.0",
-    "react-dom": "16.12.0"
+    "react-dom": "16.12.0",
+    "tailwindcss": "^1.3.5"
   }
 }

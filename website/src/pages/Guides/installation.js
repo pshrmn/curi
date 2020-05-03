@@ -3,6 +3,7 @@ import React from "react";
 import {
   HashSection,
   TitledPlainSection,
+  Paragraph,
   CodeBlock,
   IJS
 } from "../../components/guide/common";
@@ -34,20 +35,20 @@ function InstallationGuide() {
       <TitledPlainSection title={meta.title} />
 
       <HashSection meta={npmMeta} tag="h2">
-        <p>
+        <Paragraph>
           There are a number of Curi packages, all of which can be installed
           using NPM. The only one that every application requires is{" "}
           <IJS>@curi/router</IJS>, which provides the core routing/navigation
           functionality.
-        </p>
+        </Paragraph>
 
-        <p>
+        <Paragraph>
           Curi also requires that you create your own history object. There are
           three packages to choose from: <IJS>@hickory/browser</IJS>,{" "}
           <IJS>@hickory/hash</IJS>, and <IJS>@hickory/in-memory</IJS>. Which
           package you need depends on the application, but the browser package
           is best for most websites.
-        </p>
+        </Paragraph>
 
         <CodeBlock lang="bash">
           npm install @hickory/browser @curi/router
@@ -55,10 +56,10 @@ function InstallationGuide() {
       </HashSection>
 
       <HashSection meta={unpkgMeta} tag="h2">
-        <p>
+        <Paragraph>
           These packages can also be loaded from{" "}
           <a href="https://unpkg.com">Unpkg</a>.
-        </p>
+        </Paragraph>
 
         <CodeBlock lang="markup">
           {`<script
@@ -71,12 +72,12 @@ function InstallationGuide() {
       </HashSection>
 
       <HashSection meta={promisesMeta} tag="h2">
-        <p>
+        <Paragraph>
           Curi uses Promises, so you may need to include a polyfill to add
           Promise support for older browsers (including IE 11).
-        </p>
+        </Paragraph>
 
-        <p>
+        <Paragraph>
           If you need a general ES2015 polyfill, you can check out the one
           provided by Babel's{" "}
           <a href="https://babeljs.io/docs/usage/polyfill/#usage-in-browser">
@@ -87,7 +88,7 @@ function InstallationGuide() {
           package or{" "}
           <a href="https://polyfill.io/v2/docs/features/">polyfill.io</a> should
           do the trick.
-        </p>
+        </Paragraph>
 
         <CodeBlock lang="html">
           {`<script

@@ -5,6 +5,7 @@ import {
   TitledPlainSection,
   PlainSection,
   HashSection,
+  Paragraph,
   CodeBlock,
   IJS,
   Cmp
@@ -37,11 +38,11 @@ function SvelteGuide() {
       <TitledPlainSection title={meta.title} />
 
       <HashSection meta={storeMeta} tag="h2">
-        <p>
+        <Paragraph>
           Curi's Svelte integration relies on stores and context. These are
           setup automatically if you pass a Curi router to the <IJS>Router</IJS>{" "}
           component.
-        </p>
+        </Paragraph>
 
         <CodeBlock>
           {`import App from "./components/App.svelte";
@@ -50,10 +51,10 @@ let router = createRouter(browser, routes);
 new App({ target, props: { router } });`}
         </CodeBlock>
 
-        <p>
+        <Paragraph>
           The <IJS>Router</IJS> component makes router related data available
           throughout the application.
-        </p>
+        </Paragraph>
 
         <CodeBlock lang="html">
           {`<!-- /components/App.svelte -->
@@ -69,11 +70,11 @@ new App({ target, props: { router } });`}
 </script>`}
         </CodeBlock>
 
-        <p>
+        <Paragraph>
           Components that need to access the <IJS>router</IJS>,{" "}
           <IJS>response</IJS>, or <IJS>navigation</IJS> can do so with their
           corresponding getter functions.
-        </p>
+        </Paragraph>
 
         <CodeBlock lang="html">
           {`<script>
@@ -85,26 +86,26 @@ new App({ target, props: { router } });`}
 </script>`}
         </CodeBlock>
 
-        <p>
+        <Paragraph>
           The <IJS>getRouter</IJS> function returns the actual router, while{" "}
           <IJS>getResponse</IJS> and <IJS>getNavigation</IJS> return stores that
           update whenever the application navigates.
-        </p>
+        </Paragraph>
 
         <HashSection meta={renderingMeta} tag="h3">
-          <p>
+          <Paragraph>
             Svelte allows you to render dynamic components using the{" "}
             <Cmp>svelte:component this</Cmp> syntax. If you set Svelte
             components as the <IJS>body</IJS> properties on your responses, you
             can combine <Cmp>svelte:component this</Cmp> and{" "}
             <IJS>response.body</IJS> to render the appropriate component for a{" "}
             <IJS>response</IJS>.
-          </p>
-          <p>
+          </Paragraph>
+          <Paragraph>
             A root component is a good place to perform general application
             layout, like menus, in addition to rendering the response's{" "}
             <IJS>body</IJS>.
-          </p>
+          </Paragraph>
 
           <CodeBlock lang="html">
             {`<!-- components/Content.svelte -->
@@ -123,17 +124,17 @@ new App({ target, props: { router } });`}
 </script>`}
           </CodeBlock>
 
-          <p>
+          <Paragraph>
             If your routes use an object to attach multiple components to a
             response, splitting them apart in computed properties may give your
             templates a cleaner look.
-          </p>
-          <p>
+          </Paragraph>
+          <Paragraph>
             If you do attach multiple components to a response, please remember
             that you want every route to set the same <IJS>body</IJS> shape.
             Otherwise, you'll have to determine the shape and change how you
             render, which can quickly become messy.
-          </p>
+          </Paragraph>
 
           <CodeBlock>
             {`let routes = prepareRoutes([
@@ -173,21 +174,21 @@ new App({ target, props: { router } });`}
       </HashSection>
 
       <HashSection meta={navigatingMeta} tag="h2">
-        <p>
+        <Paragraph>
           The <IJS>Link</IJS> component is used to navigate between routes
           within an application. When it renders in the DOM, it will render as
           an anchor (<Cmp>a</Cmp>) element.
-        </p>
-        <p>
+        </Paragraph>
+        <Paragraph>
           The <IJS>Link</IJS>'s <IJS>name</IJS> prop describes which route
           clicking the link should navigate to. If you pass an invalid route
           name, Curi will warn you.
-        </p>
-        <p>
+        </Paragraph>
+        <Paragraph>
           If a route has any params (or if any of a route's ancestors have
           params for nested routes), the <IJS>params</IJS> prop is used to pass
           these to the <IJS>Link</IJS>.
-        </p>
+        </Paragraph>
 
         <CodeBlock lang="html">
           {`<template>
@@ -213,11 +214,11 @@ new App({ target, props: { router } });`}
 </script>`}
         </CodeBlock>
 
-        <p>
+        <Paragraph>
           The <IJS>Link</IJS> also takes <IJS>hash</IJS>, <IJS>query</IJS>, and{" "}
           <IJS>state</IJS> props to attach their values to the location that
           will be navigated to.
-        </p>
+        </Paragraph>
 
         <CodeBlock lang="jsx">
           {`<Link name="Home" hash="details">Home</Link>
@@ -227,7 +228,7 @@ new App({ target, props: { router } });`}
       </HashSection>
 
       <PlainSection>
-        <p>
+        <Paragraph>
           Please check out the full{" "}
           <Link
             name="Package"
@@ -237,7 +238,7 @@ new App({ target, props: { router } });`}
             <IJS>@curi/svelte</IJS>
           </Link>{" "}
           API documentation to see every component that the package provides.
-        </p>
+        </Paragraph>
       </PlainSection>
     </React.Fragment>
   );

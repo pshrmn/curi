@@ -2,6 +2,7 @@ import React from "react";
 
 import {
   HashSection,
+  Paragraph,
   CodeBlock,
   IJS
 } from "../../../../../components/package/common";
@@ -18,16 +19,16 @@ export let meta = {
 export function NavigatingAPI() {
   return (
     <HashSection meta={meta} tag="h2">
-      <p>
+      <Paragraph>
         The <IJS>Navigating</IJS> component is used to cancel an active
         asynchronous navigation.
-      </p>
-      <p>
+      </Paragraph>
+      <Paragraph>
         A component is passed to <IJS>Navigating</IJS>. When there is an active
         asynchronous navigation, the component will be given a <IJS>cancel</IJS>{" "}
         function. When there is not an active asynchronous navigation,{" "}
         <IJS>cancel</IJS> will be <IJS>undefined</IJS>.
-      </p>
+      </Paragraph>
 
       <CodeBlock lang="html">
         {`<Navigating component={Cancel} />
@@ -43,10 +44,10 @@ export function NavigatingAPI() {
           meta={{ title: "component", hash: "navigating-component" }}
           tag="h4"
         >
-          <p>
+          <Paragraph>
             A component that receives a <IJS>cancel</IJS> function when there is
             an active asynchronous navigation.
-          </p>
+          </Paragraph>
 
           <CodeBlock lang="html">
             {`{#if typeof cancel === "function"}

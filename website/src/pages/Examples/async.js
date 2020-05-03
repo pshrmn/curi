@@ -3,6 +3,7 @@ import React from "react";
 import {
   Page,
   HashSection,
+  Paragraph,
   MultiSandbox,
   IJS
 } from "../../components/example/common";
@@ -26,12 +27,12 @@ function AsyncExample() {
   return (
     <Page title={meta.title}>
       <HashSection meta={explanationMeta} tag="h2">
-        <p>
+        <Paragraph>
           Route's with a <IJS>resolve</IJS> property are asynchronous. When they
           match, a response will not be emitted until the <IJS>resolve</IJS>{" "}
           function's asynchronous actions complete. While waiting, the links can
           render loading notifications.
-        </p>
+        </Paragraph>
       </HashSection>
 
       <HashSection meta={demoMeta} tag="h2">

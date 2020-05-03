@@ -4,6 +4,7 @@ import { Link } from "@curi/react-dom";
 import {
   TitledPlainSection,
   HashSection,
+  Paragraph,
   CodeBlock,
   Note,
   IJS
@@ -37,41 +38,41 @@ function ApolloGuide() {
   return (
     <React.Fragment>
       <TitledPlainSection title={meta.title}>
-        <p>
+        <Paragraph>
           <a href="https://apollographql.com">Apollo</a> is a great solution for
           managing an application's data using{" "}
           <a href="http://graphql.org">GraphQL</a>.
-        </p>
+        </Paragraph>
 
-        <p>
+        <Paragraph>
           There are a few different implementation strategies for integrating
           Apollo and Curi based on how tightly you want them to be paired.
-        </p>
+        </Paragraph>
 
         <Note>
-          <p>
+          <Paragraph>
             This guide only covers integration between Curi and Apollo. If you
             are not already familiar with how to use Apollo, you will want to
             learn that first.
-          </p>
+          </Paragraph>
 
-          <p>
+          <Paragraph>
             Also, this guide will only be referencing Apollo's React
             implementation, but the principles are the same no matter how you
             render your application.
-          </p>
+          </Paragraph>
         </Note>
       </TitledPlainSection>
 
       <HashSection meta={setupMeta} tag="h2">
-        <p>
+        <Paragraph>
           Apollo's React package provides an <IJS>ApolloProvider</IJS> component
           for accessing your Apollo client throughout the application. The{" "}
           <IJS>Router</IJS> (or whatever you name the root Curi component)
           should be a descendant of the <IJS>ApolloProvider</IJS> because we
           don't need to re-render the <IJS>ApolloProvider</IJS> for every new
           response.
-        </p>
+        </Paragraph>
 
         <CodeBlock lang="jsx">
           {`import { ApolloProvider } from "react-apollo";
@@ -90,11 +91,11 @@ ReactDOM.render((
       </HashSection>
 
       <HashSection meta={looseMeta} tag="h2">
-        <p>
+        <Paragraph>
           Apollo and Curi don't actually have to know about each other. Curi can
           create a response without doing any data fetching and let Apollo
           handle that with its <IJS>Query</IJS> component.
-        </p>
+        </Paragraph>
 
         <CodeBlock>
           {`// routes.js
@@ -114,12 +115,12 @@ let routes = prepareRoutes([
 ]);`}
         </CodeBlock>
 
-        <p>
+        <Paragraph>
           Any location data that a query needs can be taken from the response
           object. The best way to access this is to read the current{" "}
           <IJS>response</IJS> from the context. This can either be done in the
           component or the response can be passed down from the root app.
-        </p>
+        </Paragraph>
 
         <CodeBlock lang="jsx">
           {`import { useResponse } from "@curi/react-dom";
@@ -131,11 +132,11 @@ function App() {
 }`}
         </CodeBlock>
 
-        <p>
+        <Paragraph>
           Because we pass the <IJS>response</IJS> to the route's <IJS>body</IJS>{" "}
           component, we can pass a <IJS>Query</IJS> the response's location
           params using <IJS>props.response.params</IJS>.
-        </p>
+        </Paragraph>
 
         <CodeBlock lang="jsx">
           {`// pages/Nouns.js
@@ -167,7 +168,7 @@ let Noun = ({ response }) => (
       return (
         <article>
           <h1>{data.noun.word}</h1>
-          <p>{data.noun.definition}</p>
+          <Paragraph>{data.noun.definition}</Paragraph>
         </article>
       )
     }}
@@ -177,7 +178,7 @@ let Noun = ({ response }) => (
       </HashSection>
 
       <HashSection meta={tightMeta} tag="h2">
-        <p>
+        <Paragraph>
           You can use your Apollo client instance to call queries in a route's{" "}
           <IJS>resolve</IJS> function. <IJS>resolve</IJS> is expected to return
           a Promise, which is exactly what <IJS>client.query</IJS> returns.
@@ -185,12 +186,12 @@ let Noun = ({ response }) => (
           <IJS>resolve</IJS> to return a <IJS>client.query</IJS> call. This will
           delay navigation until after a route's GraphQL data has been loaded by
           Apollo.
-        </p>
+        </Paragraph>
 
-        <p>
+        <Paragraph>
           The <IJS>external</IJS> option can be used when creating the router to
           make the Apollo client accessible from routes.
-        </p>
+        </Paragraph>
 
         <CodeBlock>
           {`import client from "./apollo";
@@ -216,19 +217,19 @@ let routes = prepareRoutes([
 ]);`}
         </CodeBlock>
 
-        <p>There are two strategies for doing this.</p>
+        <Paragraph>There are two strategies for doing this.</Paragraph>
 
-        <p>
+        <Paragraph>
           The first approach is to avoid the <IJS>Query</IJS> altogether.
           Instead, you can use a route's <IJS>response</IJS> property to attach
           the data fetched by Apollo directly to a response through its{" "}
           <IJS>data</IJS> property.
-        </p>
-        <p>
+        </Paragraph>
+        <Paragraph>
           While we know at this point that the query has executed, we should
           also check <IJS>error</IJS> in the <IJS>respond</IJS> function to
           ensure that the query was executed successfully.
-        </p>
+        </Paragraph>
 
         <CodeBlock>
           {`// routes.js
@@ -259,30 +260,30 @@ export default [
 ];`}
         </CodeBlock>
 
-        <p>
+        <Paragraph>
           When rendering, you can access the query data through the{" "}
           <IJS>response</IJS>'s <IJS>data</IJS> property.
-        </p>
+        </Paragraph>
 
         <CodeBlock lang="jsx">
           {`// pages/Verb.js
 let Verb = ({ response }) => (
   <article>
     <h1>{response.data.verb.word}</h1>
-    <p>
+    <Paragraph>
       {response.data.verb.definition}
-    </p>
+    </Paragraph>
   </article>
 )`}
         </CodeBlock>
 
-        <p>
+        <Paragraph>
           The second approach is to use the <IJS>resolve</IJS> function as a way
           to cache the data, but also use <IJS>Query</IJS>. With this approach,
           we do not have to attach the query data to the response; we are
           relying on the fact that Apollo will execute and cache the results
           prior to navigation.
-        </p>
+        </Paragraph>
 
         <CodeBlock>
           {`// routes.js
@@ -304,12 +305,12 @@ export default [
 ];`}
         </CodeBlock>
 
-        <p>
+        <Paragraph>
           The route's component will render a <IJS>Query</IJS> to also call the
           query. Because the query has already been executed, Apollo will grab
           the data from its cache instead of re-sending a request to your
           server.
-        </p>
+        </Paragraph>
 
         <CodeBlock lang="jsx">
           {`// pages/Verb.js
@@ -325,9 +326,9 @@ let Verb = ({ response }) => (
       return (
         <article>
           <h1>{data.verb.word}</h1>
-          <p>
+          <Paragraph>
             {data.verb.definition}
-          </p>
+          </Paragraph>
         </article>
       );
     }}
@@ -336,12 +337,12 @@ let Verb = ({ response }) => (
         </CodeBlock>
 
         <HashSection meta={prefetchMeta} tag="h3">
-          <p>
+          <Paragraph>
             One additional benefit of adding queries to routes using{" "}
             <IJS>resolve</IJS> is that you can prefetch data for a route.
-          </p>
+          </Paragraph>
 
-          <p>
+          <Paragraph>
             The{" "}
             <Link
               name="Package"
@@ -352,7 +353,7 @@ let Verb = ({ response }) => (
             </Link>{" "}
             interaction lets you programmatically fetch the data for a route
             prior to navigating to a location.
-          </p>
+          </Paragraph>
 
           <CodeBlock>
             {`// index.js

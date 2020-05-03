@@ -1,0 +1,127 @@
+@tailwind base;
+
+/* hide outlines from mouse users */
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  @apply font-normal my-1 mx-0 truncate;
+}
+
+p {
+  @apply break-words my-1 mx-0;
+}
+
+h1 {
+  @apply text-3xl leading-normal;
+}
+
+h2 {
+  @apply text-2xl leading-tight;
+}
+
+h3 {
+  @apply text-xl leading-tight;
+}
+
+h4 {
+  @apply text-lg leading-tight;
+}
+
+h5,
+h6 {
+  @apply text-base leading-tight;
+}
+
+table,
+th,
+td {
+  @apply border border-solid border-gray-300 border-collapse;
+}
+
+table {
+  @apply mb-2;
+}
+
+th {
+  @apply text-left;
+}
+
+th,
+td {
+  @apply p-2;
+}
+
+/* prismjs overrides */
+pre[class*="language-"] {
+  @apply bg-purple m-0;
+}
+
+:not(pre) > code[class*="language-"] {
+  @apply whitespace-no-wrap;
+}
+
+menu {
+  @apply p-0 m-0;
+}
+
+main a {
+  @apply text-purple underline;
+}
+
+/*
+code .token {
+  @apply text-purple;
+} */
+
+[data-reach-tab-panel] {
+  outline: none;
+}
+
+[data-reach-tab-list] {
+  display: flex;
+  background: hsla(0, 0%, 0%, 0.05);
+}
+
+[data-reach-tab] {
+  @apply inline-block py-1 px-2 m-0 bg-transparent cursor-pointer border-b border-transparent;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
+[data-reach-tab]:active {
+  background: hsla(0, 0%, 0%, 0.05);
+}
+
+[data-reach-tab]:disabled {
+  @apply opacity-25 cursor-default;
+}
+
+[data-reach-tab][data-selected] {
+  @apply border-purple;
+}
+
+.hash-anchor-fix {
+  @apply -mt-10 pt-10;
+}
+
+.header-link::after {
+  content: "#";
+  @apply text-gray-400 ml-1;
+}
+
+@tailwind components;
+
+@tailwind utilities;

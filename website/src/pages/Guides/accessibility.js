@@ -4,6 +4,7 @@ import { Link } from "@curi/react-dom";
 import {
   TitledPlainSection,
   HashSection,
+  Paragraph,
   CodeBlock,
   Warning,
   IJS,
@@ -42,22 +43,22 @@ function AccessibilityGuide() {
   return (
     <React.Fragment>
       <TitledPlainSection title={meta.title}>
-        <p>
+        <Paragraph>
           It is important to keep in mind that some visitors to your site rely
           on screen readers, so you should ensure that they have a pleasant
           experience. One "issue" with single-page applications is that they
           traditionally are more difficult for screen reader users because they
           do not have a great way for detecting navigation.
-        </p>
+        </Paragraph>
 
-        <p>
+        <Paragraph>
           Curi provides a couple approaches to help you make your site
           accessible.
-        </p>
+        </Paragraph>
       </TitledPlainSection>
 
       <HashSection meta={announceMeta} tag="h2">
-        <p>
+        <Paragraph>
           When the content of{" "}
           <a href="https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/ARIA_Live_Regions">
             ARIA live regions
@@ -73,15 +74,15 @@ function AccessibilityGuide() {
           function exported by the <IJS>@curi/router</IJS> package is a side
           effect for creating a live region and updating its content to announce
           navigation.
-        </p>
+        </Paragraph>
 
-        <p>
+        <Paragraph>
           The side effect takes a function which returns a string that should be
           read by screen readers. This can be whatever you want it to be, but
           screen readers normally read a page's title, so if you are setting{" "}
           <IJS>meta.title</IJS>s for your responses, it is probably a good idea
           to have those announced.
-        </p>
+        </Paragraph>
 
         <CodeBlock>
           {`import { announce } from "@curi/router";
@@ -110,7 +111,7 @@ let router = createRouter(browser, routes, {
       </HashSection>
 
       <HashSection meta={focusMeta} tag="h2">
-        <p>
+        <Paragraph>
           Screen readers read the content of elements in the page that are
           focused. They can move through the page to read different elements.
           When you navigate, the content of the site will be re-rendered, so it
@@ -118,14 +119,14 @@ let router = createRouter(browser, routes, {
           screen readers don't have to tab around looking for the new content.
           This is focus management and there are a couple things to keep in mind
           when implementing it.
-        </p>
+        </Paragraph>
 
-        <p>
+        <Paragraph>
           When you focus an element, make sure to focus the specific content for
           a page. If you were to just focus the page's <Cmp>body</Cmp> or a root{" "}
           <Cmp>div</Cmp>, then the user might have to tab through less important
           content, like the page's menus, while looking for the new content.
-        </p>
+        </Paragraph>
 
         <CodeBlock lang="html">
           {`<!--
@@ -138,20 +139,20 @@ let router = createRouter(browser, routes, {
 </div>`}
         </CodeBlock>
 
-        <p>
+        <Paragraph>
           The element that you focus needs to be focusable. Elements can be
           natively focusable (e.g. <Cmp>input</Cmp>s and <Cmp>a</Cmp>s) or you
           can use the <IJS>tabIndex</IJS> property. A <IJS>tabIndex</IJS> of{" "}
           <IJS>-1</IJS> lets you focus an element, but keeps screen readers from
           accidentally focusing it when a user is tabbing through the page's
           contents.
-        </p>
+        </Paragraph>
 
         <Warning>
-          <p>
+          <Paragraph>
             If you try to focus an element that is not focusable, then the
             document's <Cmp>body</Cmp> will be focused instead.
-          </p>
+          </Paragraph>
         </Warning>
 
         <CodeBlock lang="html">
@@ -165,7 +166,7 @@ let router = createRouter(browser, routes, {
         </CodeBlock>
 
         <HashSection meta={focusReactMeta} tag="h3">
-          <p>
+          <Paragraph>
             The <IJS>@curi/react-dom</IJS> package provides a{" "}
             <Link
               name="Package"
@@ -177,7 +178,7 @@ let router = createRouter(browser, routes, {
             that gives you a <IJS>ref</IJS> to attach to the component that
             should be focused. Whenever the user navigates, it will re-focus so
             that the screen reader is focused on the correct content.
-          </p>
+          </Paragraph>
 
           <CodeBlock lang="jsx">
             {`import { useResponse, useNavigationFocus } from "@curi/react-dom";
@@ -199,12 +200,12 @@ function App() {
         </HashSection>
 
         <HashSection meta={focusVueMeta} tag="h3">
-          <p>
+          <Paragraph>
             The <IJS>@curi/vue</IJS> package provides a directive for focusing
             an element. The directive needs to be passed something that changes
             when the user navigates, so you can pass it the current{" "}
             <IJS>response</IJS>.
-          </p>
+          </Paragraph>
 
           <CodeBlock lang="html">
             {`<template>
@@ -218,13 +219,13 @@ function App() {
       </HashSection>
 
       <HashSection meta={moreMeta} tag="h2">
-        <p>
+        <Paragraph>
           The above content is great for making navigation within your
           application accessible, but those aren't the only steps that you
           should take to making your site more accessible.
-        </p>
+        </Paragraph>
 
-        <p>
+        <Paragraph>
           If you are interested in other resources for improving the
           accessibility of your website, I would recommend Google's{" "}
           <a href="https://developers.google.com/web/fundamentals/accessibility/">
@@ -233,9 +234,9 @@ function App() {
           . WebAIM also provides a good{" "}
           <a href="https://webaim.org/standards/wcag/checklist">checklist</a> to
           consult.
-        </p>
+        </Paragraph>
 
-        <p>
+        <Paragraph>
           The{" "}
           <a href="https://chrome.google.com/webstore/detail/chromevox/kgejglhpjiefppelpmljglcjbhoiplfn?hl=en">
             ChromeVox
@@ -245,7 +246,7 @@ function App() {
           documentation site uses the above announcement and focus techniques,
           so you can see how they work by activating a screen reader and
           navigating throughout this site.
-        </p>
+        </Paragraph>
       </HashSection>
     </React.Fragment>
   );

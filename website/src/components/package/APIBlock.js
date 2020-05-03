@@ -1,19 +1,17 @@
 import React from "react";
-import styled from "@emotion/styled";
 
 import { HashSection } from "../layout/Sections";
 
-let StyledAPIBlock = styled(HashSection)`
-  .section {
-    padding-left: 10px;
-    margin-bottom: 5px;
-  }
-`;
-
-export default function APIBlock({ children }) {
+let APIBlock = ({ children }) => {
+  // .section {
+  //   padding-left: 10px;
+  //   margin-bottom: 5px;
+  // }
   return (
-    <StyledAPIBlock meta={{ title: "API", hash: "API" }} tag="h2">
+    <HashSection meta={{ title: "API", hash: "API" }} tag="h2">
       {children}
-    </StyledAPIBlock>
+    </HashSection>
   );
-}
+};
+
+export default APIBlock;

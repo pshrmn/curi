@@ -4,6 +4,7 @@ import { Link } from "@curi/react-dom";
 import {
   Page,
   HashSection,
+  Paragraph,
   MultiSandbox,
   IJS
 } from "../../components/example/common";
@@ -27,7 +28,7 @@ function BreadcrumbsExample() {
   return (
     <Page title={meta.title}>
       <HashSection meta={explanationMeta} tag="h2">
-        <p>
+        <Paragraph>
           Curi can use the{" "}
           <Link
             name="Package"
@@ -38,7 +39,7 @@ function BreadcrumbsExample() {
           </Link>{" "}
           interaction to access its ancestor routes. These, in turn, can be used
           to generate breadcrumb links.
-        </p>
+        </Paragraph>
       </HashSection>
 
       <HashSection meta={demoMeta} tag="h2">

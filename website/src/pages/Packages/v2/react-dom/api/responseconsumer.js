@@ -2,6 +2,7 @@ import React from "react";
 
 import {
   HashSection,
+  Paragraph,
   CodeBlock,
   IJS
 } from "../../../../../components/package/common";
@@ -18,10 +19,10 @@ export let meta = {
 export function ResponseConsumerAPI() {
   return (
     <HashSection meta={meta} tag="h2">
-      <p>
+      <Paragraph>
         A context consumer component for injecting response values into
         components. Its primary use case is in class components.
-      </p>
+      </Paragraph>
 
       <CodeBlock lang="jsx">
         {`import { ResponseConsumer } from '@curi/react-dom';
@@ -50,11 +51,11 @@ class MyComponent {
           tag="h4"
           meta={{ title: "children", hash: "ResponseConsumer-children" }}
         >
-          <p>
+          <Paragraph>
             A render-invoked function that returns a React element. This
             function will receive an object with <IJS>response</IJS> and{" "}
             <IJS>navigation</IJS> properties.
-          </p>
+          </Paragraph>
         </HashSection>
       </HashSection>
     </HashSection>

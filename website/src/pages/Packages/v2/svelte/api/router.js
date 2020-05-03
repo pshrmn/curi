@@ -2,6 +2,7 @@ import React from "react";
 
 import {
   HashSection,
+  Paragraph,
   CodeBlock,
   IJS
 } from "../../../../../components/package/common";
@@ -18,10 +19,10 @@ export let meta = {
 export function RouterAPI() {
   return (
     <HashSection meta={meta} tag="h2">
-      <p>
+      <Paragraph>
         The <IJS>Router</IJS> component is used to make router related data
         available to components throughout the application.
-      </p>
+      </Paragraph>
 
       <CodeBlock lang="html">
         {`<Router {router}>
@@ -37,7 +38,7 @@ export function RouterAPI() {
 
       <HashSection meta={propsMeta} tag="h3">
         <HashSection meta={{ title: "router", hash: "router-router" }} tag="h4">
-          <p>A Curi router.</p>
+          <Paragraph>A Curi router.</Paragraph>
         </HashSection>
       </HashSection>
     </HashSection>

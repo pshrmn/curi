@@ -1,6 +1,6 @@
 {
   "dist/curi-react-native.es.js": {
-    "bundled": 3668,
+    "bundled": 3667,
     "minified": 1748,
     "gzipped": 748,
     "treeshaked": {
@@ -14,7 +14,7 @@
     }
   },
   "dist/curi-react-native.js": {
-    "bundled": 4109,
+    "bundled": 4108,
     "minified": 2074,
     "gzipped": 866
   }

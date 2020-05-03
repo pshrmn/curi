@@ -1,7 +1,12 @@
 import React from "react";
 import { Link } from "@curi/react-dom";
 
-import { About, APIBlock, IJS } from "../../../../components/package/common";
+import {
+  About,
+  Paragraph,
+  APIBlock,
+  IJS
+} from "../../../../components/package/common";
 import { CreateRouterComponentAPI } from "./api/createRouterComponent";
 import { LinkAPI } from "./api/link";
 import { AsyncLinkAPI } from "./api/asynclink";
@@ -18,17 +23,17 @@ import { RouterConsumerAPI } from "./api/routerconsumer";
 export default {
   about: (
     <About>
-      <p>
+      <Paragraph>
         The <IJS>@curi/react-dom</IJS> package provides a number of React
         components that you can use for rendering your application.
-      </p>
-      <p>
+      </Paragraph>
+      <Paragraph>
         For more information on using Curi with React DOM, please check out the{" "}
         <Link name="Guide" params={{ slug: "react-dom" }}>
           React DOM guide
         </Link>
         .
-      </p>
+      </Paragraph>
     </About>
   ),
   api: (

@@ -22,6 +22,25 @@ let config = {
     publicPath: "http://localhost:8080/static/",
     compress: true,
     hot: true
+  },
+  module: {
+    ...configBase.module,
+    rules: [
+      ...configBase.module.rules,
+      {
+        test: /\.css$/,
+        use: [
+          "style-loader",
+          {
+            loader: "css-loader",
+            options: {
+              importLoaders: 1
+            }
+          },
+          "postcss-loader"
+        ]
+      }
+    ]
   }
 };
 

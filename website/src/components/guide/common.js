@@ -1,6 +1,7 @@
 import { InlineJS as IJS, InlineComponent as Cmp } from "../highlight/Inline";
 import {
   HashSection,
+  Paragraph,
   PlainSection,
   TitledPlainSection
 } from "../layout/Sections";
@@ -11,6 +12,7 @@ import ScrollableTable from "../layout/ScrollableTable";
 export {
   HashSection,
   PlainSection,
+  Paragraph,
   TitledPlainSection,
   CodeBlock,
   Note,

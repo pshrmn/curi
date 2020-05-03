@@ -1,8 +1,11 @@
 import React from "react";
-import styled from "@emotion/styled";
 
-let StyledDropdownMenu = styled("menu")`
-  margin: 0 25px;
-`;
+let DropdownMenu = ({ children, ...rest }) => {
+  return (
+    <menu {...rest} className="my-0 mx-5">
+      {children}
+    </menu>
+  );
+};
 
-export default StyledDropdownMenu;
+export default DropdownMenu;

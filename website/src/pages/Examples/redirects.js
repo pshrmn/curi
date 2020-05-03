@@ -3,6 +3,7 @@ import React from "react";
 import {
   Page,
   HashSection,
+  Paragraph,
   MultiSandbox,
   IJS
 } from "../../components/example/common";
@@ -26,11 +27,11 @@ function RedirectsExample() {
   return (
     <Page title={meta.title}>
       <HashSection meta={explanationMeta} tag="h2">
-        <p>
+        <Paragraph>
           When a route matches, it can redirect to another route. This is done
           using the route's <IJS>respond</IJS> function that returns an object
           with a <IJS>redirect</IJS> property.
-        </p>
+        </Paragraph>
       </HashSection>
 
       <HashSection meta={demoMeta} tag="h2">

@@ -2,6 +2,7 @@ import React from "react";
 
 import {
   HashSection,
+  Paragraph,
   CodeBlock,
   IJS,
   Warning
@@ -15,18 +16,20 @@ export let meta = {
 export function TitleAPI() {
   return (
     <HashSection meta={meta} tag="h2">
-      <p>
+      <Paragraph>
         The <IJS>title</IJS> side effect will set the document's title.
-      </p>
+      </Paragraph>
 
       <Warning>
-        <p>This side effect should only be used in the browser.</p>
+        <Paragraph>
+          This side effect should only be used in the browser.
+        </Paragraph>
       </Warning>
 
-      <p>
+      <Paragraph>
         The function takes a single argument, which is a function that takes the
         object emitted by a router and returns the string to set as the title.
-      </p>
+      </Paragraph>
 
       <CodeBlock>
         {`import { createRouter, title } from '@curi/router';
@@ -40,10 +43,10 @@ let router = createRouter(history, routes, {
 });`}
       </CodeBlock>
 
-      <p>
+      <Paragraph>
         The recommended approach for determining a title is to have routes set
         their <IJS>meta.title</IJS> property in their <IJS>respond</IJS> method.
-      </p>
+      </Paragraph>
 
       <CodeBlock>
         {`{

@@ -1,7 +1,6 @@
 let plugins = [
   "@babel/plugin-proposal-class-properties",
-  "@babel/plugin-proposal-object-rest-spread",
-  "emotion"
+  "@babel/plugin-proposal-object-rest-spread"
 ];
 
 let modules;

@@ -4,6 +4,7 @@ import { Link } from "@curi/react-dom";
 import {
   TitledPlainSection,
   HashSection,
+  Paragraph,
   CodeBlock,
   Note,
   IJS
@@ -34,20 +35,20 @@ function ResponsesGuide() {
   return (
     <React.Fragment>
       <TitledPlainSection title={meta.title}>
-        <p>
+        <Paragraph>
           When Curi receives a location, it compares the location's{" "}
           <IJS>pathname</IJS> to each route's <IJS>path</IJS> to find which one
           matches best and uses that route to create a response object.
-        </p>
+        </Paragraph>
       </TitledPlainSection>
 
       <HashSection meta={propertiesMeta} tag="h2">
-        <p>There are two types of response properties.</p>
+        <Paragraph>There are two types of response properties.</Paragraph>
 
-        <p>
+        <Paragraph>
           The "match" properties are set based on the route that matches a
           location. A response always has these properties.
-        </p>
+        </Paragraph>
 
         <CodeBlock>
           {`// match properties
@@ -69,36 +70,38 @@ function ResponsesGuide() {
 }`}
         </CodeBlock>
 
-        <p>
+        <Paragraph>
           The "settable" properties are ones that are added by a matched route's{" "}
           <IJS>respond</IJS> function. These only exist on the response when
           they are returned by a route's <IJS>respond</IJS> function.
-        </p>
-        <p>The "settable" properties are:</p>
+        </Paragraph>
+        <Paragraph>The "settable" properties are:</Paragraph>
 
         <HashSection tag="h3" meta={{ title: "body", hash: "settable-body" }}>
-          <p>The component(s) that should be rendered for a route.</p>
+          <Paragraph>
+            The component(s) that should be rendered for a route.
+          </Paragraph>
         </HashSection>
 
         <HashSection tag="h3" meta={{ title: "meta", hash: "settable-meta" }}>
-          <p>An object with metadata for a response.</p>
+          <Paragraph>An object with metadata for a response.</Paragraph>
         </HashSection>
 
         <HashSection tag="h3" meta={{ title: "data", hash: "settable-data" }}>
-          <p>
+          <Paragraph>
             A place to attach any data you want to the response, such as data
             loaded in the route's <IJS>resolve</IJS> function.
-          </p>
+          </Paragraph>
         </HashSection>
 
         <HashSection
           tag="h3"
           meta={{ title: "redirect", hash: "settable-redirect" }}
         >
-          <p>
+          <Paragraph>
             An object describing a route that Curi should automatically redirect
             to.
-          </p>
+          </Paragraph>
         </HashSection>
 
         <CodeBlock>
@@ -126,7 +129,7 @@ function ResponsesGuide() {
       </HashSection>
 
       <HashSection meta={bodyMeta} tag="h2">
-        <p>
+        <Paragraph>
           Curi isn't strict about how you use responses, but you will most
           likely always want to use a route's <IJS>respond</IJS> function to
           attach a <IJS>body</IJS> property to a response. The usual pattern is
@@ -138,13 +141,13 @@ function ResponsesGuide() {
             advanced layouts
           </Link>
           .
-        </p>
+        </Paragraph>
         <Note>
-          <p>
+          <Paragraph>
             Each route should use the same <IJS>body</IJS> "shape". If one route
             returns a single component while another route return an object, you
             will be making rendering more complicated for yourself.
-          </p>
+          </Paragraph>
         </Note>
 
         <CodeBlock>
@@ -171,7 +174,7 @@ let routes = prepareRoutes([
       </HashSection>
 
       <HashSection meta={redirectMeta} tag="h2">
-        <p>
+        <Paragraph>
           When a route's <IJS>respond</IJS> function returns an object with a{" "}
           <Link
             name="Package"
@@ -182,7 +185,7 @@ let routes = prepareRoutes([
           </Link>
           , the router will use it to generate a location object that Curi will
           automatically redirect to.
-        </p>
+        </Paragraph>
 
         <CodeBlock>
           {`{
@@ -192,14 +195,14 @@ let routes = prepareRoutes([
 }`}
         </CodeBlock>
 
-        <p>
+        <Paragraph>
           When creating a router, you can set the <IJS>invisibleRedirects</IJS>{" "}
           option to <IJS>true</IJS> and the response will not be sent to
           observers and one time functions. Instead, the response for the
           location that is redirected to will be the next emitted response. In
           either case, the router will automatically redirect to the route
           specified by <IJS>response.redirect</IJS>.
-        </p>
+        </Paragraph>
 
         <CodeBlock>
           {`let router = createRouter(browser, routes, {
@@ -207,14 +210,14 @@ let routes = prepareRoutes([
 });`}
         </CodeBlock>
 
-        <p>
+        <Paragraph>
           This property can also be used to specify an external redirect (a
           redirect to a location that is not within the application). This is
           done by setting an <IJS>externalURL</IJS> property on the{" "}
           <IJS>redirect</IJS> object. It is up to the application to redirect to
           the external location. Responses with an external redirect will be
           emitted when <IJS>invisibleRedirects</IJS> is <IJS>true</IJS>.
-        </p>
+        </Paragraph>
 
         <CodeBlock>
           {`// a route with an external redirect

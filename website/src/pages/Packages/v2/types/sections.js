@@ -1,14 +1,18 @@
 import React from "react";
 
-import { About, CodeBlock } from "../../../../components/package/common";
+import {
+  About,
+  Paragraph,
+  CodeBlock
+} from "../../../../components/package/common";
 
 export default {
   about: (
     <About>
-      <p>
+      <Paragraph>
         This package is for TypeScript users. It provides the common Curi types
         used by the various packages.
-      </p>
+      </Paragraph>
       <CodeBlock>
         {`import { createRouter } from "@curi/router";
 

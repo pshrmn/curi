@@ -1,12 +1,11 @@
 import React from "react";
-import { TabList, Tab, TabPanels, TabPanel } from "@reach/tabs";
+import { TabList, Tab, Tabs, TabPanels, TabPanel } from "@reach/tabs";
 
-import { StyledTabs } from "../tabs/Tabs";
 import CodeSandboxDemo from "../CodeSandboxDemo";
 
-export default function MultiSandbox({ sandboxes }) {
+let MultiSandbox = ({ sandboxes }) => {
   return (
-    <StyledTabs>
+    <Tabs>
       <TabList>
         {sandboxes.map(sandbox => (
           <Tab key={sandbox.name}>{sandbox.name}</Tab>
@@ -20,6 +19,8 @@ export default function MultiSandbox({ sandboxes }) {
           </TabPanel>
         ))}
       </TabPanels>
-    </StyledTabs>
+    </Tabs>
   );
-}
+};
+
+export default MultiSandbox;
