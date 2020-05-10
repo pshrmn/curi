@@ -115,7 +115,7 @@ export interface RouteDescriptor {
     compile?: PathFunctionOptions;
   };
   params?: ParamParsers;
-  children?: Array<RouteDescriptor>;
+  children?: RouteDescriptor[];
   respond?: RespondFn;
   resolve?: Resolver;
   extra?: RouteExtra;
@@ -124,9 +124,9 @@ export interface RouteDescriptor {
 // the public prepared route interface
 export interface Route<R = unknown> {
   name: string;
-  keys: Array<string | number>;
+  keys: (string | number)[];
   parent: Route | undefined;
-  children: Array<Route>;
+  children: Route[];
   extra?: RouteExtra;
   methods: {
     pathname: PathFunction;
@@ -134,8 +134,8 @@ export interface Route<R = unknown> {
     respond?: RespondFn;
   };
 }
-export interface SyncRoute extends Route<undefined> {}
-export interface AsyncRoute extends Route<Resolver> {}
+export type SyncRoute = Route<undefined>;
+export type AsyncRoute = Route<Resolver>;
 
 export type Resolver = (
   matched?: Readonly<IntrinsicResponse>,
@@ -184,4 +184,4 @@ export interface ResolveResults {
 }
 
 // the interface of an object used to create a route interaction
-export type Interaction = (route: Readonly<Route>, ...rest: Array<any>) => any;
+export type Interaction = (route: Readonly<Route>, ...rest: any[]) => any;

@@ -1,4 +1,4 @@
-import * as fs from "fs-extra";
+import { outputFile } from "fs-extra";
 import { join } from "path";
 import { createRouter } from "@curi/router";
 import { createReusable } from "@hickory/in-memory";
@@ -11,7 +11,7 @@ import { StaticConfiguration, Result } from "./types";
 
 export default async function staticFiles(
   config: StaticConfiguration
-): Promise<Array<Result>> {
+): Promise<Result[]> {
   let {
     pages,
     router: { routes, options: routerOptions = {} },
@@ -63,7 +63,7 @@ export default async function staticFiles(
             (emitted: Emitted) => {
               try {
                 let html = render(emitted);
-                fs.outputFile(outputPath, html).then(() => {
+                outputFile(outputPath, html).then(() => {
                   resolve({ pathname, success: true });
                 });
               } catch (e) {

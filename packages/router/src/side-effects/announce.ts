@@ -2,10 +2,10 @@ import { Observer, Emitted } from "@curi/types";
 
 export type AriaLiveValue = "assertive" | "polite" | "off";
 
-export default function announce(
+let announce = (
   fmt: (emitted: Emitted) => string,
   mode: AriaLiveValue = "assertive"
-): Observer {
+): Observer => {
   let announcer = document.createElement("div");
   announcer.setAttribute("aria-live", mode);
   // https://hugogiraudel.com/2016/10/13/css-hide-and-seek/
@@ -30,4 +30,6 @@ export default function announce(
   return function(emitted) {
     announcer.textContent = fmt(emitted);
   };
-}
+};
+
+export default announce;

@@ -1,2 +1,3 @@
-export declare type AnyFn = (...args: Array<any>) => Promise<any>;
-export default function once(fn: AnyFn): AnyFn;
+export declare type AnyFn = (...args: any[]) => Promise<any>;
+declare let once: (fn: AnyFn) => AnyFn;
+export default once;

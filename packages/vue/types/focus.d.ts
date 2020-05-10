@@ -1,6 +1,4 @@
-import Vue, { DirectiveOptions } from "vue";
-export interface FocusComponent extends Vue {
-}
+import { DirectiveOptions } from "vue";
 export interface FocusDirectiveProperties {
     key: any;
     preventScroll?: boolean;

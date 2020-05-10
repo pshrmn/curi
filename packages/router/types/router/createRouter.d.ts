@@ -1,9 +1,10 @@
 import { HistoryConstructor, HistoryOptions } from "@hickory/root";
 import { RouteMatcher, CuriRouter, Observer } from "@curi/types";
 export interface RouterOptions<O = HistoryOptions> {
-    sideEffects?: Array<Observer>;
+    sideEffects?: Observer[];
     invisibleRedirects?: boolean;
     external?: any;
     history?: O;
 }
-export default function createRouter<O = HistoryOptions>(historyConstructor: HistoryConstructor<O>, routes: RouteMatcher, options?: RouterOptions<O>): CuriRouter;
+declare let createRouter: <O = import("@hickory/root").LocationUtilOptions>(historyConstructor: HistoryConstructor<O>, routes: RouteMatcher, options?: RouterOptions<O>) => CuriRouter;
+export default createRouter;

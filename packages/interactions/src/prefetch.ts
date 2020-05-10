@@ -10,10 +10,10 @@ export interface PrefetchCallOptions {
   external?: any;
 }
 
-export default function prefetch(
+let prefetch = (
   route: Route,
   options: PrefetchCallOptions = {}
-): Promise<ResolveResults> {
+): Promise<ResolveResults> => {
   if (!route.methods.resolve) {
     return Promise.resolve({
       resolved: null,
@@ -28,4 +28,6 @@ export default function prefetch(
       resolved => ({ resolved, error: null }),
       error => ({ error, resolved: null })
     );
-}
+};
+
+export default prefetch;

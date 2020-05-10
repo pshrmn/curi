@@ -1,5 +1,7 @@
 import { Route, Params } from "@curi/types";
 
-export default function pathname(route: Route, params?: Params): string {
+let pathname = (route: Route, params?: Params) => {
   return route.methods.pathname(params);
-}
+};
+
+export default pathname;

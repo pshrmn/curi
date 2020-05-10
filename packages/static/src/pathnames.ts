@@ -2,9 +2,7 @@ import { PathnamesConfiguration } from "./types";
 
 import { pathname } from "@curi/interactions";
 
-export default function pathnames(
-  config: PathnamesConfiguration
-): Array<string> {
+let pathnames = (config: PathnamesConfiguration) => {
   let { routes, pages } = config;
   return pages.map(page => {
     let route = routes.route(page.name);
@@ -17,4 +15,6 @@ export default function pathnames(
     }
     return pathname(route, page.params);
   });
-}
+};
+
+export default pathnames;

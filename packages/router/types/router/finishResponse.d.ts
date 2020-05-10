@@ -1,2 +1,3 @@
 import { CuriRouter, Response, ResolveResults, IntrinsicResponse, Route } from "@curi/types";
-export default function finishResponse(route: Route, match: IntrinsicResponse, resolvedResults: ResolveResults | null, router: CuriRouter, external: any): Response;
+declare let finishResponse: (route: Route<unknown>, match: IntrinsicResponse, resolvedResults: ResolveResults | null, router: CuriRouter, external: any) => Response;
+export default finishResponse;

@@ -12,13 +12,34 @@ import {
   ExternalRedirect
 } from "@curi/types";
 
-export default function finishResponse(
+let createRedirect = (
+  redirect: RedirectProps | RedirectLocation | ExternalRedirect,
+  router: CuriRouter
+): RedirectLocation | ExternalRedirect => {
+  if (isExternalRedirect(redirect)) {
+    return redirect;
+  }
+  let { name, params, query, hash, state } = redirect;
+  let url = isRedirectLocation(redirect)
+    ? redirect.url
+    : router.url({ name, params, query, hash });
+  return {
+    name,
+    params,
+    query,
+    hash,
+    state,
+    url
+  };
+};
+
+let finishResponse = (
   route: Route,
   match: IntrinsicResponse,
   resolvedResults: ResolveResults | null,
   router: CuriRouter,
   external: any
-): Response {
+): Response => {
   let { resolved = null, error = null } = resolvedResults || {};
 
   let response: Response = {
@@ -62,7 +83,7 @@ export default function finishResponse(
       redirect: true
     };
     Object.keys(results).forEach(property => {
-      if (!validProperties.hasOwnProperty(property)) {
+      if (!(property in validProperties)) {
         console.warn(`"${property}" is not a valid response property. The valid properties are:
 
   ${Object.keys(validProperties).join(", ")}`);
@@ -78,25 +99,6 @@ export default function finishResponse(
   }
 
   return response;
-}
+};
 
-function createRedirect(
-  redirect: RedirectProps | RedirectLocation | ExternalRedirect,
-  router: CuriRouter
-): RedirectLocation | ExternalRedirect {
-  if (isExternalRedirect(redirect)) {
-    return redirect;
-  }
-  let { name, params, query, hash, state } = redirect;
-  let url = isRedirectLocation(redirect)
-    ? redirect.url
-    : router.url({ name, params, query, hash });
-  return {
-    name,
-    params,
-    query,
-    hash,
-    state,
-    url
-  };
-}
+export default finishResponse;

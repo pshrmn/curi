@@ -3,11 +3,12 @@ import { RouteMatcher, RouteDescriptor, Route, ParamParsers } from "@curi/types"
 export interface PreparedRoute {
     public: Route;
     matching: {
-        children: Array<PreparedRoute>;
+        children: PreparedRoute[];
         exact: boolean;
         re: RegExp;
-        keys: Array<Key>;
+        keys: Key[];
         parsers: ParamParsers;
     };
 }
-export default function prepareRoutes(routes: Array<RouteDescriptor>): RouteMatcher;
+declare let prepareRoutes: (routes: RouteDescriptor[]) => RouteMatcher;
+export default prepareRoutes;

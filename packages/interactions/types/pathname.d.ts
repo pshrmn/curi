@@ -1,2 +1,3 @@
 import { Route, Params } from "@curi/types";
-export default function pathname(route: Route, params?: Params): string;
+declare let pathname: (route: Route<unknown>, params?: Params | undefined) => string;
+export default pathname;
