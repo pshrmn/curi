@@ -1,6 +1,6 @@
 {
   "dist/curi-router.es.js": {
-    "bundled": 17425,
+    "bundled": 17406,
     "minified": 6759,
     "gzipped": 2679,
     "treeshaked": {
@@ -14,17 +14,17 @@
     }
   },
   "dist/curi-router.js": {
-    "bundled": 17738,
+    "bundled": 17719,
     "minified": 7022,
     "gzipped": 2776
   },
   "dist/curi-router.umd.js": {
-    "bundled": 30622,
+    "bundled": 30603,
     "minified": 9362,
     "gzipped": 3926
   },
   "dist/curi-router.min.js": {
-    "bundled": 29005,
+    "bundled": 28987,
     "minified": 8488,
     "gzipped": 3522
   }
