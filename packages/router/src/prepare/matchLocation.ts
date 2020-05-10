@@ -28,8 +28,8 @@ let matchRoute = (route: PreparedRoute, pathname: string): MatchingRoute[] => {
 
   // match that ends with a strips it from the remainder
   let fullSegments = withLeadingSlash(remainder);
-  for (let i = 0, length = children.length; i < length; i++) {
-    let matched = matchRoute(children[i], fullSegments);
+  for (let child of children) {
+    let matched = matchRoute(child, fullSegments);
     if (matched.length) {
       return matches.concat(matched);
     }
@@ -68,8 +68,8 @@ export let matchLocation = (
   location: SessionLocation,
   routes: PreparedRoute[]
 ) => {
-  for (let i = 0, len = routes.length; i < len; i++) {
-    let routeMatches = matchRoute(routes[i], location.pathname);
+  for (let route of routes) {
+    let routeMatches = matchRoute(route, location.pathname);
     if (routeMatches.length) {
       return createMatch(routeMatches, location);
     }

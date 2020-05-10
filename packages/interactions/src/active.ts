@@ -36,8 +36,7 @@ let active = (
     if (!options.params) {
       return false;
     }
-    for (let r = 0, length = keys.length; r < length; r++) {
-      let key = keys[r];
+    for (let key of keys) {
       let param = options.params[key];
       if (!param || param !== response.params[key]) {
         return false;
