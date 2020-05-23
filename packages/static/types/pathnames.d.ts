@@ -1,2 +1,3 @@
 import { PathnamesConfiguration } from "./types";
-export default function pathnames(config: PathnamesConfiguration): Array<string>;
+declare let pathnames: (config: PathnamesConfiguration) => string[];
+export default pathnames;

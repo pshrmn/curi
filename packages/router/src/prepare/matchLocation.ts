@@ -7,25 +7,10 @@ import { PreparedRoute } from "./prepareRoutes";
 
 interface MatchingRoute {
   route: PreparedRoute;
-  parsed: Array<string>;
+  parsed: string[];
 }
 
-export function matchLocation(
-  location: SessionLocation,
-  routes: Array<PreparedRoute>
-): Match | undefined {
-  for (let i = 0, len = routes.length; i < len; i++) {
-    let routeMatches = matchRoute(routes[i], location.pathname);
-    if (routeMatches.length) {
-      return createMatch(routeMatches, location);
-    }
-  }
-}
-
-function matchRoute(
-  route: PreparedRoute,
-  pathname: string
-): Array<MatchingRoute> {
+let matchRoute = (route: PreparedRoute, pathname: string): MatchingRoute[] => {
   let { re, children, exact } = route.matching;
   let regExpMatch = re.exec(pathname);
 
@@ -34,7 +19,7 @@ function matchRoute(
   }
 
   let [matchedSegment, ...parsed] = regExpMatch;
-  let matches: Array<MatchingRoute> = [{ route, parsed }];
+  let matches: MatchingRoute[] = [{ route, parsed }];
 
   let remainder = pathname.slice(matchedSegment.length);
   if (!children.length || remainder === "") {
@@ -43,20 +28,20 @@ function matchRoute(
 
   // match that ends with a strips it from the remainder
   let fullSegments = withLeadingSlash(remainder);
-  for (let i = 0, length = children.length; i < length; i++) {
-    let matched = matchRoute(children[i], fullSegments);
+  for (let child of children) {
+    let matched = matchRoute(child, fullSegments);
     if (matched.length) {
       return matches.concat(matched);
     }
   }
 
   return exact ? [] : matches;
-}
+};
 
-function createMatch(
-  routeMatches: Array<MatchingRoute>,
+let createMatch = (
+  routeMatches: MatchingRoute[],
   location: SessionLocation
-): Match {
+): Match => {
   let route = routeMatches[routeMatches.length - 1].route.public;
 
   return {
@@ -77,4 +62,16 @@ function createMatch(
       )
     }
   };
-}
+};
+
+export let matchLocation = (
+  location: SessionLocation,
+  routes: PreparedRoute[]
+) => {
+  for (let route of routes) {
+    let routeMatches = matchRoute(route, location.pathname);
+    if (routeMatches.length) {
+      return createMatch(routeMatches, location);
+    }
+  }
+};

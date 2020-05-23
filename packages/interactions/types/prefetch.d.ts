@@ -3,4 +3,5 @@ export interface PrefetchCallOptions {
     match?: IntrinsicResponse;
     external?: any;
 }
-export default function prefetch(route: Route, options?: PrefetchCallOptions): Promise<ResolveResults>;
+declare let prefetch: (route: Route<unknown>, options?: PrefetchCallOptions) => Promise<ResolveResults>;
+export default prefetch;

@@ -12,13 +12,9 @@ describe("CuriPlugin", () => {
   describe("$router", () => {
     it("Adds the router to global Vue vars as $router", () => {
       let Vue = createLocalVue();
-      let FakeComponent = {
-        render: function(h) {
-          return h("div");
-        }
-      };
       Vue.use(CuriPlugin, { router });
       let el = new Vue();
+      // @ts-ignore
       expect(el.$router).toBe(router);
     });
   });
@@ -26,16 +22,13 @@ describe("CuriPlugin", () => {
   describe("$curi", () => {
     it("Adds $curi property to all components", () => {
       let Vue = createLocalVue();
-      let FakeComponent = {
-        render: function(h) {
-          return h("div");
-        }
-      };
       let { response, navigation } = router.current();
       Vue.use(CuriPlugin, { router });
 
       let el = new Vue();
+      // @ts-ignore
       expect(el.$curi.response).toBe(response);
+      // @ts-ignore
       expect(el.$curi.navigation).toBe(navigation);
     });
 
@@ -105,6 +98,7 @@ describe("CuriPlugin", () => {
     it("Registers the Link component as <curi-link>", () => {
       let Vue = createLocalVue();
       Vue.use(CuriPlugin, { router });
+      // @ts-ignore
       expect(Vue.options.components["curi-link"]).toBeDefined();
     });
   });

@@ -9,17 +9,17 @@ import { PreparedRoute } from "./prepareRoutes";
 
 interface ParentData {
   path: string;
-  keys: Array<string | number>;
+  keys: (string | number)[];
 }
 
-export function createRoute(
+export let createRoute = (
   props: RouteDescriptor,
   map: { [key: string]: Route },
   parent: ParentData = {
     path: "",
     keys: []
   }
-): PreparedRoute {
+): PreparedRoute => {
   if (process.env.NODE_ENV !== "production") {
     if (props.name in map) {
       throw new Error(
@@ -49,15 +49,15 @@ export function createRoute(
     matchOptions.end = false;
   }
 
-  let keys: Array<Key> = [];
+  let keys: Key[] = [];
   let re = PathToRegexp(withLeadingSlash(props.path), keys, matchOptions);
   let keyNames = keys.map(key => key.name);
   if (parent.keys.length) {
     keyNames = parent.keys.concat(keyNames);
   }
 
-  let childRoutes: Array<PreparedRoute> = [];
-  let children: Array<Route> = [];
+  let childRoutes: PreparedRoute[] = [];
+  let children: Route[] = [];
   if (props.children && props.children.length) {
     childRoutes = props.children.map((child: RouteDescriptor) => {
       return createRoute(child, map, {
@@ -102,4 +102,4 @@ export function createRoute(
   }
 
   return route;
-}
+};

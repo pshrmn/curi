@@ -1,6 +1,6 @@
 import { Route } from "@curi/types";
 
-function ancestors(route: Route): Array<Route> {
+let ancestors = (route: Route): Route[] => {
   let ancestors = [];
   let parent: Route | undefined = route.parent;
   while (parent !== undefined) {
@@ -8,6 +8,6 @@ function ancestors(route: Route): Array<Route> {
     parent = parent.parent;
   }
   return ancestors;
-}
+};
 
 export default ancestors;

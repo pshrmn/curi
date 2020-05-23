@@ -6,18 +6,18 @@ import {
   RedirectProps
 } from "@curi/types";
 
-export function isAsyncRoute(route: Route): route is AsyncRoute {
+export let isAsyncRoute = (route: Route): route is AsyncRoute => {
   return typeof route.methods.resolve !== "undefined";
-}
+};
 
-export function isExternalRedirect(
+export let isExternalRedirect = (
   redirect: ExternalRedirect | RedirectLocation | RedirectProps
-): redirect is ExternalRedirect {
+): redirect is ExternalRedirect => {
   return "externalURL" in redirect;
-}
+};
 
-export function isRedirectLocation(
+export let isRedirectLocation = (
   redirect: ExternalRedirect | RedirectLocation | RedirectProps
-): redirect is RedirectLocation {
+): redirect is RedirectLocation => {
   return "url" in redirect;
-}
+};

@@ -25,19 +25,133 @@ import {
 } from "@curi/types";
 
 export interface RouterOptions<O = HistoryOptions> {
-  sideEffects?: Array<Observer>;
+  sideEffects?: Observer[];
   invisibleRedirects?: boolean;
   external?: any;
   history?: O;
 }
 
-export default function createRouter<O = HistoryOptions>(
+let createRouter = <O = HistoryOptions>(
   historyConstructor: HistoryConstructor<O>,
   routes: RouteMatcher,
   options: RouterOptions<O> = {}
-): CuriRouter {
+): CuriRouter => {
+  let { invisibleRedirects = false } = options;
+
   let latestResponse: Response;
   let latestNavigation: Navigation;
+
+  let cancelWith: (() => void) | undefined;
+  let asyncNavNotifiers: Cancellable[] = [];
+  let observers: Observer[] = [];
+  let oneTimers: Observer[] = [];
+  let cancelCallback: (() => void) | undefined;
+  let finishCallback: (() => void) | undefined;
+
+  let resetCallbacks = () => {
+    cancelCallback = undefined;
+    finishCallback = undefined;
+  };
+
+  let cancelAndResetNavCallbacks = () => {
+    if (cancelCallback) {
+      cancelCallback();
+    }
+    resetCallbacks();
+  };
+
+  let finishAndResetNavCallbacks = () => {
+    if (finishCallback) {
+      finishCallback();
+    }
+    resetCallbacks();
+  };
+
+  let asyncNavComplete = () => {
+    if (cancelWith) {
+      cancelWith = undefined;
+      asyncNavNotifiers.forEach(fn => {
+        fn();
+      });
+    }
+  };
+
+  let callObservers = (emitted: Emitted) => {
+    observers.forEach(fn => {
+      fn(emitted);
+    });
+  };
+
+  let callOneTimersAndSideEffects = (emitted: Emitted) => {
+    oneTimers.splice(0).forEach(fn => {
+      fn(emitted);
+    });
+    if (options.sideEffects) {
+      options.sideEffects.forEach(fn => {
+        fn(emitted);
+      });
+    }
+  };
+
+  let emitImmediate = (response: Response, navigation: Navigation) => {
+    if (
+      !response.redirect ||
+      !invisibleRedirects ||
+      isExternalRedirect(response.redirect)
+    ) {
+      latestResponse = response;
+      latestNavigation = navigation;
+      /* eslint-disable-next-line @typescript-eslint/no-use-before-define */
+      let emit = { response, navigation, router };
+      callObservers(emit);
+      callOneTimersAndSideEffects(emit);
+    }
+
+    if (
+      response.redirect !== undefined &&
+      !isExternalRedirect(response.redirect)
+    ) {
+      /* eslint-disable-next-line @typescript-eslint/no-use-before-define */
+      history.navigate(response.redirect, "replace");
+    }
+  };
+
+  let finalizeResponseAndEmit = (
+    route: Route,
+    match: IntrinsicResponse,
+    pending: PendingNavigation,
+    navigation: Navigation,
+    resolved: ResolveResults | null
+  ) => {
+    asyncNavComplete();
+    pending.finish();
+    let response = finishResponse(
+      route,
+      match,
+      resolved,
+      /* eslint-disable-next-line @typescript-eslint/no-use-before-define */
+      router,
+      options.external
+    );
+    finishAndResetNavCallbacks();
+    emitImmediate(response, navigation);
+  };
+
+  // let any async navigation listeners (observers from router.cancel)
+  // know that there is an asynchronous navigation happening
+  let announceAsyncNav = () => {
+    if (asyncNavNotifiers.length && cancelWith === undefined) {
+      cancelWith = () => {
+        /* eslint-disable-next-line @typescript-eslint/no-use-before-define */
+        history.cancel();
+        asyncNavComplete();
+        cancelAndResetNavCallbacks();
+      };
+      asyncNavNotifiers.forEach(fn => {
+        fn(cancelWith);
+      });
+    }
+  };
 
   let history = historyConstructor((pendingNav: PendingNavigation) => {
     let navigation: Navigation = {
@@ -84,202 +198,73 @@ export default function createRouter<O = HistoryOptions>(
           );
         });
     }
-  }, options.history || <O>{});
-
-  function finalizeResponseAndEmit(
-    route: Route,
-    match: IntrinsicResponse,
-    pending: PendingNavigation,
-    navigation: Navigation,
-    resolved: ResolveResults | null
-  ) {
-    asyncNavComplete();
-    pending.finish();
-    let response = finishResponse(
-      route,
-      match,
-      resolved,
-      router,
-      options.external
-    );
-    finishAndResetNavCallbacks();
-    emitImmediate(response, navigation);
-  }
-
-  let { invisibleRedirects = false } = options;
-
-  function emitImmediate(response: Response, navigation: Navigation) {
-    if (
-      !response.redirect ||
-      !invisibleRedirects ||
-      isExternalRedirect(response.redirect)
-    ) {
-      latestResponse = response;
-      latestNavigation = navigation;
-      let emit = { response, navigation, router };
-      callObservers(emit);
-      callOneTimersAndSideEffects(emit);
-    }
-
-    if (
-      response.redirect !== undefined &&
-      !isExternalRedirect(response.redirect)
-    ) {
-      history.navigate(response.redirect, "replace");
-    }
-  }
-
-  function callObservers(emitted: Emitted) {
-    observers.forEach(fn => {
-      fn(emitted);
-    });
-  }
-
-  function callOneTimersAndSideEffects(emitted: Emitted) {
-    oneTimers.splice(0).forEach(fn => {
-      fn(emitted);
-    });
-    if (options.sideEffects) {
-      options.sideEffects.forEach(fn => {
-        fn(emitted);
-      });
-    }
-  }
-
-  /* router.observer & router.once */
-
-  let observers: Array<Observer> = [];
-  let oneTimers: Array<Observer> = [];
-
-  function observe(fn: Observer, options?: ResponseHandlerOptions) {
-    let { initial = true } = options || {};
-
-    observers.push(fn);
-    if (latestResponse && initial) {
-      fn({
-        response: latestResponse,
-        navigation: latestNavigation,
-        router
-      });
-    }
-    return () => {
-      observers = observers.filter(obs => {
-        return obs !== fn;
-      });
-    };
-  }
-
-  function once(fn: Observer, options?: ResponseHandlerOptions) {
-    let { initial = true } = options || {};
-
-    if (latestResponse && initial) {
-      fn({
-        response: latestResponse,
-        navigation: latestNavigation,
-        router
-      });
-    } else {
-      oneTimers.push(fn);
-    }
-  }
-
-  /* router.url */
-  function url(details: RouteLocation): string {
-    let { name, params, hash, query } = details;
-    let pathname;
-    if (name) {
-      let route = router.route(name);
-      if (route) {
-        pathname = pathnameInteraction(route, params);
-      }
-    }
-    return history.url({ pathname, hash, query });
-  }
-
-  /* router.navigate */
-
-  let cancelCallback: (() => void) | undefined;
-  let finishCallback: (() => void) | undefined;
-
-  function navigate(details: NavigationDetails) {
-    cancelAndResetNavCallbacks();
-
-    let { url, state, method } = details;
-    history.navigate({ url, state }, method);
-
-    if (details.cancelled || details.finished) {
-      cancelCallback = details.cancelled;
-      finishCallback = details.finished;
-      return resetCallbacks;
-    }
-  }
-
-  function cancelAndResetNavCallbacks() {
-    if (cancelCallback) {
-      cancelCallback();
-    }
-    resetCallbacks();
-  }
-
-  function finishAndResetNavCallbacks() {
-    if (finishCallback) {
-      finishCallback();
-    }
-    resetCallbacks();
-  }
-
-  function resetCallbacks() {
-    cancelCallback = undefined;
-    finishCallback = undefined;
-  }
-
-  /* router.cancel */
-
-  let cancelWith: (() => void) | undefined;
-  let asyncNavNotifiers: Array<Cancellable> = [];
-
-  function cancel(fn: Cancellable) {
-    asyncNavNotifiers.push(fn);
-    return () => {
-      asyncNavNotifiers = asyncNavNotifiers.filter(can => {
-        return can !== fn;
-      });
-    };
-  }
-
-  // let any async navigation listeners (observers from router.cancel)
-  // know that there is an asynchronous navigation happening
-  function announceAsyncNav() {
-    if (asyncNavNotifiers.length && cancelWith === undefined) {
-      cancelWith = () => {
-        history.cancel();
-        asyncNavComplete();
-        cancelAndResetNavCallbacks();
-      };
-      asyncNavNotifiers.forEach(fn => {
-        fn(cancelWith);
-      });
-    }
-  }
-
-  function asyncNavComplete() {
-    if (cancelWith) {
-      cancelWith = undefined;
-      asyncNavNotifiers.forEach(fn => {
-        fn();
-      });
-    }
-  }
+  }, options.history || ({} as O));
 
   let router: CuriRouter = {
     route: routes.route,
     history,
     external: options.external,
-    observe,
-    once,
-    cancel,
-    url,
-    navigate,
+    observe(fn: Observer, options?: ResponseHandlerOptions) {
+      let { initial = true } = options || {};
+
+      observers.push(fn);
+      if (latestResponse && initial) {
+        fn({
+          response: latestResponse,
+          navigation: latestNavigation,
+          router
+        });
+      }
+      return () => {
+        observers = observers.filter(obs => {
+          return obs !== fn;
+        });
+      };
+    },
+    once(fn: Observer, options?: ResponseHandlerOptions) {
+      let { initial = true } = options || {};
+
+      if (latestResponse && initial) {
+        fn({
+          response: latestResponse,
+          navigation: latestNavigation,
+          router
+        });
+      } else {
+        oneTimers.push(fn);
+      }
+    },
+    cancel(fn: Cancellable) {
+      asyncNavNotifiers.push(fn);
+      return () => {
+        asyncNavNotifiers = asyncNavNotifiers.filter(can => {
+          return can !== fn;
+        });
+      };
+    },
+    url(details: RouteLocation): string {
+      let { name, params, hash, query } = details;
+      let pathname;
+      if (name) {
+        let route = router.route(name);
+        if (route) {
+          pathname = pathnameInteraction(route, params);
+        }
+      }
+      return history.url({ pathname, hash, query });
+    },
+    navigate(details: NavigationDetails) {
+      cancelAndResetNavCallbacks();
+
+      let { url, state, method } = details;
+      history.navigate({ url, state }, method);
+
+      if (details.cancelled || details.finished) {
+        cancelCallback = details.cancelled;
+        finishCallback = details.finished;
+        return resetCallbacks;
+      }
+    },
     current() {
       return {
         response: latestResponse,
@@ -293,4 +278,6 @@ export default function createRouter<O = HistoryOptions>(
 
   history.current();
   return router;
-}
+};
+
+export default createRouter;

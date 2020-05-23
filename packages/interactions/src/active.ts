@@ -9,7 +9,7 @@ export interface ActiveCheckOptions {
   components?: ValidateComponents;
 }
 
-function find(name: string, children: Array<Route>): boolean {
+let find = (name: string, children: Route[]): boolean => {
   return children.some(node => {
     if (node.name === name) {
       return true;
@@ -18,13 +18,13 @@ function find(name: string, children: Array<Route>): boolean {
     }
     return false;
   });
-}
+};
 
-export default function active(
+let active = (
   route: Route,
   response: Response,
   options: ActiveCheckOptions = {}
-): boolean {
+) => {
   if (
     response.name !== route.name &&
     (!options.partial || !find(response.name, route.children))
@@ -36,8 +36,7 @@ export default function active(
     if (!options.params) {
       return false;
     }
-    for (let r = 0, length = keys.length; r < length; r++) {
-      let key = keys[r];
+    for (let key of keys) {
       let param = options.params[key];
       if (!param || param !== response.params[key]) {
         return false;
@@ -48,4 +47,6 @@ export default function active(
     return options.components(response.location);
   }
   return true;
-}
+};
+
+export default active;

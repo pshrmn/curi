@@ -13,17 +13,15 @@ import {
 export interface PreparedRoute {
   public: Route;
   matching: {
-    children: Array<PreparedRoute>;
+    children: PreparedRoute[];
     exact: boolean;
     re: RegExp;
-    keys: Array<Key>;
+    keys: Key[];
     parsers: ParamParsers;
   };
 }
 
-export default function prepareRoutes(
-  routes: Array<RouteDescriptor>
-): RouteMatcher {
+let prepareRoutes = (routes: RouteDescriptor[]): RouteMatcher => {
   let mappedRoutes: { [key: string]: Route } = {};
   let prepared = routes.map(route => createRoute(route, mappedRoutes));
 
@@ -40,4 +38,6 @@ export default function prepareRoutes(
       return mappedRoutes[name];
     }
   };
-}
+};
+
+export default prepareRoutes;

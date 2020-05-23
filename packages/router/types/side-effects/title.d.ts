@@ -1,3 +1,4 @@
 import { Observer, Emitted } from "@curi/types";
 export declare type TitleBuilder = (emitted: Emitted) => string;
-export default function title(callback: TitleBuilder): Observer;
+declare let title: (callback: TitleBuilder) => Observer;
+export default title;

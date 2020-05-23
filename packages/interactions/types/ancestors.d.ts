@@ -1,3 +1,3 @@
 import { Route } from "@curi/types";
-declare function ancestors(route: Route): Array<Route>;
+declare let ancestors: (route: Route<unknown>) => Route<unknown>[];
 export default ancestors;

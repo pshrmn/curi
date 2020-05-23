@@ -242,7 +242,7 @@ describe("<curi-link>", () => {
             </div>
           `,
           data: {
-            click: function(event) {
+            click: function() {
               expect(mockNavigate.mock.calls.length).toBe(0);
             }
           }

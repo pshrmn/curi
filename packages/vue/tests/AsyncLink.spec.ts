@@ -263,7 +263,7 @@ describe("<curi-async-link>", () => {
         );
 
         router.once(
-          ({ response }) => {
+          () => {
             // navigation is complete, wait for Vue to re-render
             Vue.nextTick(() => {
               expect(a.textContent.trim()).toBe("false");
@@ -338,7 +338,7 @@ describe("<curi-async-link>", () => {
             })
           );
           router.once(
-            ({ response }) => {
+            () => {
               // navigation is cancelled, wait for Vue to re-render
               Vue.nextTick(() => {
                 expect(slowLink.textContent.trim()).toBe("false");
@@ -433,7 +433,7 @@ describe("<curi-async-link>", () => {
             </div>
           `,
           data: {
-            click: function(event) {
+            click: function() {
               expect(mockNavigate.mock.calls.length).toBe(0);
             }
           }

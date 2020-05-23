@@ -1,1 +1,2 @@
-export default function preferDefault(module: any): Promise<any>;
+declare let preferDefault: (module: any) => Promise<any>;
+export default preferDefault;

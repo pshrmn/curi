@@ -6,4 +6,5 @@ export interface ActiveCheckOptions {
     partial?: boolean;
     components?: ValidateComponents;
 }
-export default function active(route: Route, response: Response, options?: ActiveCheckOptions): boolean;
+declare let active: (route: Route<unknown>, response: Response, options?: ActiveCheckOptions) => boolean;
+export default active;

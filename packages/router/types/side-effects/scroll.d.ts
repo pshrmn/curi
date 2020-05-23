@@ -1,2 +1,3 @@
 import { Observer } from "@curi/types";
-export default function scroll(): Observer;
+declare let scroll: () => Observer;
+export default scroll;

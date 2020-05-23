@@ -82,16 +82,16 @@ export interface RouteDescriptor {
         compile?: PathFunctionOptions;
     };
     params?: ParamParsers;
-    children?: Array<RouteDescriptor>;
+    children?: RouteDescriptor[];
     respond?: RespondFn;
     resolve?: Resolver;
     extra?: RouteExtra;
 }
 export interface Route<R = unknown> {
     name: string;
-    keys: Array<string | number>;
+    keys: (string | number)[];
     parent: Route | undefined;
-    children: Array<Route>;
+    children: Route[];
     extra?: RouteExtra;
     methods: {
         pathname: PathFunction;
@@ -99,10 +99,8 @@ export interface Route<R = unknown> {
         respond?: RespondFn;
     };
 }
-export interface SyncRoute extends Route<undefined> {
-}
-export interface AsyncRoute extends Route<Resolver> {
-}
+export declare type SyncRoute = Route<undefined>;
+export declare type AsyncRoute = Route<Resolver>;
 export declare type Resolver = (matched?: Readonly<IntrinsicResponse>, external?: any) => Promise<any>;
 export interface Match {
     route: Route;
@@ -132,4 +130,4 @@ export interface ResolveResults {
     resolved: any;
     error: any;
 }
-export declare type Interaction = (route: Readonly<Route>, ...rest: Array<any>) => any;
+export declare type Interaction = (route: Readonly<Route>, ...rest: any[]) => any;

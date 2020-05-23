@@ -18,7 +18,7 @@ export interface StaticRouter {
     options?: RouterOptions;
 }
 export interface StaticConfiguration {
-    pages: Array<PageDescriptor>;
+    pages: PageDescriptor[];
     fallback?: FallbackDescriptor;
     router: StaticRouter;
     output: StaticOutput;
@@ -31,5 +31,5 @@ export interface Result {
 }
 export interface PathnamesConfiguration {
     routes: RouteMatcher;
-    pages: Array<PageDescriptor>;
+    pages: PageDescriptor[];
 }

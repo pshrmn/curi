@@ -2,9 +2,9 @@ import { RouteDescriptor, Route } from "@curi/types";
 import { PreparedRoute } from "./prepareRoutes";
 interface ParentData {
     path: string;
-    keys: Array<string | number>;
+    keys: (string | number)[];
 }
-export declare function createRoute(props: RouteDescriptor, map: {
-    [key: string]: Route;
-}, parent?: ParentData): PreparedRoute;
+export declare let createRoute: (props: RouteDescriptor, map: {
+    [key: string]: Route<unknown>;
+}, parent?: ParentData) => PreparedRoute;
 export {};

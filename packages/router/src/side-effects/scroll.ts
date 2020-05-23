@@ -1,6 +1,6 @@
 import { Observer } from "@curi/types";
 
-export default function scroll(): Observer {
+let scroll = (): Observer => {
   return function({ response, navigation }) {
     if (navigation.action === "pop") {
       return;
@@ -22,4 +22,6 @@ export default function scroll(): Observer {
       window.scrollTo(0, 0);
     }, 0);
   };
-}
+};
+
+export default scroll;
