@@ -1,13 +1,11 @@
 import { pathname as pathnameInteraction } from "@curi/interactions";
-import finishResponse from "./finishResponse";
-import { isAsyncRoute, isExternalRedirect } from "./typeGuards";
 
 import {
+  History,
   HistoryConstructor,
   HistoryOptions,
   PendingNavigation
 } from "@hickory/root";
-
 import {
   RouteMatcher,
   Response,
@@ -21,7 +19,12 @@ import {
   Cancellable,
   ResolveResults,
   Route,
-  IntrinsicResponse
+  AsyncRoute,
+  IntrinsicResponse,
+  RedirectLocation,
+  SettableResponseProperties,
+  RedirectProps,
+  ExternalRedirect
 } from "@curi/types";
 
 export interface RouterOptions<O = HistoryOptions> {
@@ -31,12 +34,120 @@ export interface RouterOptions<O = HistoryOptions> {
   history?: O;
 }
 
-let createRouter = <O = HistoryOptions>(
+let isAsyncRoute = (route: Route): route is AsyncRoute => {
+  return typeof route.methods.resolve !== "undefined";
+};
+
+let isExternalRedirect = (
+  redirect: ExternalRedirect | RedirectLocation | RedirectProps
+): redirect is ExternalRedirect => {
+  return "externalURL" in redirect;
+};
+
+let createRedirect = (
+  redirect: RedirectProps | RedirectLocation | ExternalRedirect,
+  router: CuriRouter
+): RedirectLocation | ExternalRedirect => {
+  if (isExternalRedirect(redirect)) {
+    return redirect;
+  }
+  let { name, params, query, hash, state } = redirect;
+  let url =
+    "url" in redirect
+      ? redirect.url
+      : router.url({ name, params, query, hash });
+  return {
+    name,
+    params,
+    query,
+    hash,
+    state,
+    url
+  };
+};
+
+let finishResponse = (
+  route: Route,
+  match: IntrinsicResponse,
+  resolvedResults: ResolveResults | null,
+  router: CuriRouter,
+  external: any
+): Response => {
+  let { resolved = null, error = null } = resolvedResults || {};
+
+  let response: Response = {
+    data: undefined,
+    body: undefined,
+    meta: undefined
+  } as Response;
+  for (let key in match) {
+    response[key as keyof Response] = match[key as keyof IntrinsicResponse];
+  }
+
+  if (!route.methods.respond) {
+    return response;
+  }
+
+  let results = route.methods.respond({
+    resolved,
+    error,
+    match,
+    external
+  });
+
+  if (!results) {
+    if (process.env.NODE_ENV !== "production") {
+      console.warn(
+        `"${
+          match.name
+        }"'s response function did not return anything. Did you forget to include a return statement?`
+      );
+    }
+    return response;
+  }
+
+  if (process.env.NODE_ENV !== "production") {
+    let validProperties: {
+      [key in keyof SettableResponseProperties]: boolean
+    } = {
+      meta: true,
+      body: true,
+      data: true,
+      redirect: true
+    };
+    Object.keys(results).forEach(property => {
+      if (!(property in validProperties)) {
+        console.warn(`"${property}" is not a valid response property. The valid properties are:
+
+  ${Object.keys(validProperties).join(", ")}`);
+      }
+    });
+  }
+
+  response["meta"] = results["meta"];
+  response["body"] = results["body"];
+  response["data"] = results["data"];
+  if (results["redirect"]) {
+    response["redirect"] = createRedirect(results["redirect"], router);
+  }
+
+  return response;
+};
+
+export let createRouter = <O = HistoryOptions>(
   historyConstructor: HistoryConstructor<O>,
   routes: RouteMatcher,
   options: RouterOptions<O> = {}
 ): CuriRouter => {
-  let { invisibleRedirects = false } = options;
+  let {
+    history: historyOptions = {} as O,
+    sideEffects,
+    external,
+    invisibleRedirects = false
+  } = options;
+
+  let history: History;
+  let router: CuriRouter;
 
   let latestResponse: Response;
   let latestNavigation: Navigation;
@@ -45,6 +156,7 @@ let createRouter = <O = HistoryOptions>(
   let asyncNavNotifiers: Cancellable[] = [];
   let observers: Observer[] = [];
   let oneTimers: Observer[] = [];
+
   let cancelCallback: (() => void) | undefined;
   let finishCallback: (() => void) | undefined;
 
@@ -67,6 +179,15 @@ let createRouter = <O = HistoryOptions>(
     resetCallbacks();
   };
 
+  let assignCallbacks = (
+    cancelled: (() => void) | undefined,
+    finished: (() => void) | undefined
+  ) => {
+    cancelCallback = cancelled;
+    finishCallback = finished;
+    return resetCallbacks;
+  };
+
   let asyncNavComplete = () => {
     if (cancelWith) {
       cancelWith = undefined;
@@ -86,8 +207,8 @@ let createRouter = <O = HistoryOptions>(
     oneTimers.splice(0).forEach(fn => {
       fn(emitted);
     });
-    if (options.sideEffects) {
-      options.sideEffects.forEach(fn => {
+    if (sideEffects) {
+      sideEffects.forEach(fn => {
         fn(emitted);
       });
     }
@@ -101,7 +222,6 @@ let createRouter = <O = HistoryOptions>(
     ) {
       latestResponse = response;
       latestNavigation = navigation;
-      /* eslint-disable-next-line @typescript-eslint/no-use-before-define */
       let emit = { response, navigation, router };
       callObservers(emit);
       callOneTimersAndSideEffects(emit);
@@ -111,7 +231,6 @@ let createRouter = <O = HistoryOptions>(
       response.redirect !== undefined &&
       !isExternalRedirect(response.redirect)
     ) {
-      /* eslint-disable-next-line @typescript-eslint/no-use-before-define */
       history.navigate(response.redirect, "replace");
     }
   };
@@ -125,14 +244,7 @@ let createRouter = <O = HistoryOptions>(
   ) => {
     asyncNavComplete();
     pending.finish();
-    let response = finishResponse(
-      route,
-      match,
-      resolved,
-      /* eslint-disable-next-line @typescript-eslint/no-use-before-define */
-      router,
-      options.external
-    );
+    let response = finishResponse(route, match, resolved, router, external);
     finishAndResetNavCallbacks();
     emitImmediate(response, navigation);
   };
@@ -142,7 +254,6 @@ let createRouter = <O = HistoryOptions>(
   let announceAsyncNav = () => {
     if (asyncNavNotifiers.length && cancelWith === undefined) {
       cancelWith = () => {
-        /* eslint-disable-next-line @typescript-eslint/no-use-before-define */
         history.cancel();
         asyncNavComplete();
         cancelAndResetNavCallbacks();
@@ -153,7 +264,7 @@ let createRouter = <O = HistoryOptions>(
     }
   };
 
-  let history = historyConstructor((pendingNav: PendingNavigation) => {
+  history = historyConstructor((pendingNav: PendingNavigation) => {
     let navigation: Navigation = {
       action: pendingNav.action,
       previous: latestResponse
@@ -180,7 +291,7 @@ let createRouter = <O = HistoryOptions>(
     } else {
       announceAsyncNav();
       route.methods
-        .resolve(match, options.external)
+        .resolve(match, external)
         .then(
           resolved => ({ resolved, error: null }),
           error => ({ error, resolved: null })
@@ -198,12 +309,12 @@ let createRouter = <O = HistoryOptions>(
           );
         });
     }
-  }, options.history || ({} as O));
+  }, historyOptions);
 
-  let router: CuriRouter = {
+  router = {
     route: routes.route,
     history,
-    external: options.external,
+    external,
     observe(fn: Observer, options?: ResponseHandlerOptions) {
       let { initial = true } = options || {};
 
@@ -260,9 +371,7 @@ let createRouter = <O = HistoryOptions>(
       history.navigate({ url, state }, method);
 
       if (details.cancelled || details.finished) {
-        cancelCallback = details.cancelled;
-        finishCallback = details.finished;
-        return resetCallbacks;
+        return assignCallbacks(details.cancelled, details.finished);
       }
     },
     current() {
@@ -279,5 +388,3 @@ let createRouter = <O = HistoryOptions>(
   history.current();
   return router;
 };
-
-export default createRouter;

@@ -4,8 +4,8 @@ import {
   useStatefulNavigationHandler,
   useURL
 } from "@curi/react-universal";
-import { canNavigate } from "./utils";
 
+import { MouseEvent } from "react";
 import { RouteLocation } from "@curi/types";
 import { NavType } from "@hickory/root";
 import { NavigatingChildren } from "@curi/react-universal";
@@ -25,6 +25,15 @@ export interface LinkProps extends BaseLinkProps {
 export interface AsyncLinkProps extends BaseLinkProps {
   children: NavigatingChildren;
 }
+
+let canNavigate = (event: MouseEvent<HTMLElement>, target?: string) => {
+  return (
+    !event.defaultPrevented &&
+    !target &&
+    event.button === 0 &&
+    !(event.metaKey || event.altKey || event.ctrlKey || event.shiftKey)
+  );
+};
 
 export let Link = React.forwardRef((props: LinkProps, ref: React.Ref<any>) => {
   let {
