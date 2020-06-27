@@ -1,3 +1,5 @@
+let path = require("path");
+
 let config = {
   mode: "development",
   output: {
@@ -5,7 +7,11 @@ let config = {
     publicPath: "/static/"
   },
   resolve: {
-    extensions: [".mjs", ".js"]
+    alias: {
+      svelte: path.resolve("node_modules", "svelte")
+    },
+    extensions: [".mjs", ".js"],
+    mainFields: ["svelte", "browser", "module", "main"]
   },
   module: {
     rules: [

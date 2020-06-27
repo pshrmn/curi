@@ -1,5 +1,5 @@
-<a {...rest} href={url} on:click={handleClick}>
-  <svelte:component this={wrapper} navigating={navigating}>
+<a {...$$restProps} href="{url}" on:click="{handleClick}">
+  <svelte:component this="{wrapper}" navigating="{navigating}">
     <slot></slot>
   </svelte:component>
 </a>
@@ -28,20 +28,8 @@
 
   let navigating = false;
 
-  let {
-    name: _name,
-    params: _params,
-    hash: _hash,
-    query: _query,
-    state: _state,
-    wrapper: _wrapper,
-    '$$slots': _slots,
-    '$$scope': _scope,
-    ...rest
-  } = $$props;
-
   $: url = router.url({ name, params, hash, query });
-  $: target = rest.target;
+  $: target = $$restProps.target;
 
   let cancelCallbacks;
 
@@ -59,7 +47,7 @@
         url,
         state,
         cancelled,
-        finished
+        finished,
       });
     }
   }

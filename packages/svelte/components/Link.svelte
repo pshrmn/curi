@@ -1,9 +1,8 @@
-<a {...rest} href={url} on:click={handleClick}>
+<a {...$$restProps} href="{url}" on:click="{handleClick}">
   <slot></slot>
 </a>
 
 <script>
-  import { getContext } from "svelte";
   import { getRouter } from "@curi/svelte";
 
   let router = getRouter();
@@ -23,20 +22,8 @@
   export let query = undefined;
   export let state = null;
 
-  let {
-    name: _name,
-    params: _params,
-    hash: _hash,
-    query: _query,
-    state: _state,
-    wrapped: _wrapper,
-    '$$slots': _slots,
-    '$$scope': _scope,
-    ...rest
-  } = $$props;
-
   $: url = router.url({ name, params, hash, query });
-  $: target = rest.target;
+  $: target = $$restProps.target;
 
   function handleClick(event) {
     if (canNavigate(event, target)) {

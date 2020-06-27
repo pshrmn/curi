@@ -4,4 +4,5 @@
   import { getResponse } from "@curi/svelte";
 
   let response = getResponse();
+  console.log({ params: $response.params });
 </script>

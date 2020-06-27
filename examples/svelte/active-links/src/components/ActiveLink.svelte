@@ -9,7 +9,7 @@
 <script>
   import { getRouter, getResponse } from "@curi/svelte";
   import Link from "@curi/svelte/components/Link.svelte";
-  import { active as activeInteraction } from "@curi/router";
+  import { active as activeInteraction } from "@curi/interactions";
 
   let router = getRouter();
   let response = getResponse();
