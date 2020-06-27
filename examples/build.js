@@ -1,4 +1,3 @@
-let fs = require("fs");
 let path = require("path");
 let { execSync } = require("child_process");
 
