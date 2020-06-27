@@ -1,8 +1,8 @@
 {
   "dist/curi-interactions.es.js": {
-    "bundled": 1966,
+    "bundled": 1967,
     "minified": 909,
-    "gzipped": 450,
+    "gzipped": 449,
     "treeshaked": {
       "rollup": {
         "code": 0,
@@ -14,17 +14,17 @@
     }
   },
   "dist/curi-interactions.js": {
-    "bundled": 2109,
+    "bundled": 2110,
     "minified": 1036,
     "gzipped": 508
   },
   "dist/curi-interactions.umd.js": {
-    "bundled": 2532,
+    "bundled": 2533,
     "minified": 1121,
     "gzipped": 571
   },
   "dist/curi-interactions.min.js": {
-    "bundled": 2532,
+    "bundled": 2533,
     "minified": 1121,
     "gzipped": 571
   }

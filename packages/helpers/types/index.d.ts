@@ -1,4 +1,3 @@
-export { AnyFn } from "./once";
-import once from "./once";
-import preferDefault from "./preferDefault";
-export { once, preferDefault };
+export declare type AnyFn = (...args: any[]) => Promise<any>;
+export declare let once: (fn: AnyFn) => AnyFn;
+export declare let preferDefault: (module: any) => Promise<any>;

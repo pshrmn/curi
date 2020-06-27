@@ -6,5 +6,4 @@ export interface RouterOptions<O = HistoryOptions> {
     external?: any;
     history?: O;
 }
-declare let createRouter: <O = import("@hickory/root").LocationUtilOptions>(historyConstructor: HistoryConstructor<O>, routes: RouteMatcher, options?: RouterOptions<O>) => CuriRouter;
-export default createRouter;
+export declare let createRouter: <O = import("@hickory/root").LocationUtilOptions>(historyConstructor: HistoryConstructor<O>, routes: RouteMatcher, options?: RouterOptions<O>) => CuriRouter;
