@@ -6,5 +6,4 @@
   import NavLink from './NavLinks.svelte';
 
   let response = getResponse();
-  console.log({ response });
 </script>
