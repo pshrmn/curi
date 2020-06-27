@@ -10,9 +10,9 @@
   "author": "Paul Sherman",
   "license": "MIT",
   "dependencies": {
-    "@curi/helpers": "2.0.1",
-    "@curi/router": "2.1.0",
-    "@curi/svelte": "2.0.0-beta.5",
+    "@curi/helpers": "2.0.2",
+    "@curi/router": "2.1.1",
+    "@curi/svelte": "2.0.0-beta.6",
     "@hickory/browser": "^2.1.0",
     "svelte-spinner": "^2.0.0"
   },

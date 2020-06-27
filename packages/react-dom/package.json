@@ -1,6 +1,6 @@
 {
   "name": "@curi/react-dom",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "description": "React DOM components to use with Curi",
   "main": "dist/curi-react-dom.js",
   "module": "dist/curi-react-dom.es.js",
