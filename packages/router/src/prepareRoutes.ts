@@ -177,7 +177,9 @@ let createMatch = (
     for (let i = 0, len = parsed.length; i < len; i++) {
       let name = keys[i].name;
       let fn = parsers[name] || decodeURIComponent;
-      params[name] = fn(parsed[i]);
+      if (parsed[i] !== undefined) {
+        params[name] = fn(parsed[i]);
+      }
     }
   }
 
