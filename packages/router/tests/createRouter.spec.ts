@@ -1902,6 +1902,24 @@ describe("createRouter", () => {
                 });
               });
 
+              it("does not include optional param if it does not exist", () => {
+                let routes = prepareRoutes([
+                  {
+                    name: "Profile",
+                    path: "user/:firstName/:lastName?"
+                  }
+                ]);
+                let router = createRouter(inMemory, routes, {
+                  history: {
+                    locations: [{ url: "/user/tina" }]
+                  }
+                });
+                let { response } = router.current();
+                expect(response.name).toBe("Profile");
+                expect("firstName" in response.params).toBe(true);
+                expect("lastName" in response.params).toBe(false);
+              });
+
               it("throws if param parser throws", () => {
                 let routes = prepareRoutes([
                   {
@@ -1974,7 +1992,7 @@ describe("createRouter", () => {
                   respond: () => {
                     return {
                       redirect: {
-                        url: "/some-page"
+                        externalURL: "/some-page"
                       }
                     };
                   }
@@ -1987,7 +2005,7 @@ describe("createRouter", () => {
               });
               let { response } = router.current();
               expect(response.redirect).toMatchObject({
-                url: "/some-page"
+                externalURL: "/some-page"
               });
             });
 
