@@ -1,4 +1,4 @@
-## Next
+## 2.1.2
 
 * Omit undefined optional params from match params
 
