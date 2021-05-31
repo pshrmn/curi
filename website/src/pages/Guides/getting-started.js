@@ -174,7 +174,7 @@ let queryURL = router.url({
       <HashSection meta={handlerMeta} tag="h2">
         <Paragraph>
           When Curi matches a location to a route, it creates a "response"
-          object. Respons objects provide information about the route that
+          object. Response objects provide information about the route that
           matched.
         </Paragraph>
 
