@@ -165,7 +165,7 @@ let queryURL = router.url({
             >
               <IJS>@curi/react-dom</IJS>
             </Link>
-            , will call <IJS>router.nagivate</IJS> for you when the user clicks
+            , will call <IJS>router.navigate</IJS> for you when the user clicks
             a link.
           </Paragraph>
         </Note>
